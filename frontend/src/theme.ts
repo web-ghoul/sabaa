@@ -1,0 +1,202 @@
+import { createTheme } from "@mui/material";
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#00A4E4",
+      dark: "#5271FF",
+    },
+    secondary: {
+      main: "#36405E",
+      light: "#4F5875",
+    },
+    common: {
+      black: "#333333",
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 540,
+      sm: 768,
+      md: 992,
+      lg: 1200,
+      xl: 1440,
+    },
+    unit: "px",
+  },
+  typography: {
+    fontFamily: "Cairo",
+    h1: {
+      fontSize: "28px",
+      "@media (max-width: 1200px)": {
+        fontSize: "27px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "26px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "25px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "24px",
+      },
+    },
+    h2: {
+      fontSize: "26px",
+      "@media (max-width: 1200px)": {
+        fontSize: "25px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "24px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "23px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "22px",
+      },
+    },
+    h3: {
+      fontSize: "24px",
+      "@media (max-width: 1200px)": {
+        fontSize: "23px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "22px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "21px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "20px",
+      },
+    },
+    h4: {
+      fontSize: "22px",
+      "@media (max-width: 1200px)": {
+        fontSize: "21px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "20px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "19px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "18px",
+      },
+    },
+    h5: {
+      fontSize: "20px",
+      "@media (max-width: 1200px)": {
+        fontSize: "19px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "18px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "17px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "16px",
+      },
+    },
+    h6: {
+      fontSize: "18px",
+      lineHeight: "1",
+      "@media (max-width: 1200px)": {
+        fontSize: "17px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "16px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "15px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "14px",
+      },
+    },
+    button: {
+      fontSize: "18px",
+      lineHeight: "1",
+      textTransform: "capitalize",
+      "@media (max-width: 1200px)": {
+        fontSize: "17px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "16px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "15px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "14px",
+      },
+    },
+    subtitle1: {
+      fontSize: "16px",
+      lineHeight: "1",
+      "@media (max-width: 1200px)": {
+        fontSize: "15px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "14px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "13px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "12px",
+      },
+    },
+    subtitle2: {
+      fontSize: "15px",
+      "@media (max-width: 1200px)": {
+        fontSize: "14px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "13px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "12px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "11px",
+      },
+    },
+    body1: {
+      fontSize: "16px",
+    },
+    body2: {
+      fontSize: "14px",
+    },
+  },
+  shadows: [
+    "none",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
+    "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+    "0 0 5px rgba(0, 0, 0, 0.1)",
+  ],
+});
