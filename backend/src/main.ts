@@ -1,0 +1,24 @@
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as dotenv from 'dotenv';
+import { join } from 'path';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+async function bootstrap() {
+  dotenv.config();
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(join(__dirname, '../..', 'upload'), {
+    prefix: '/api/upload/',
+  });
+  app.setGlobalPrefix('api');
+  app.enableCors();
+  // app.use(csurf());
+  const config = new DocumentBuilder()
+  .build();
+const document = SwaggerModule.createDocument(app, config);
+SwaggerModule.setup('ApiDoc', app, document);
+  await app.listen(3000);
+}
+bootstrap();

@@ -1,0 +1,51 @@
+[{
+  "_id": {
+    "$oid": "65fd73869495ed008ea65076"
+  },
+  "name": "Amr",
+  "password": "$2a$10$vO7f8s5/GRQ0RZ/5r1ChjOr6GwoIoaFn1IMF3Rf0qdhOZbkxYdIMm",
+  "email": "amr@gmail.com",
+  "role": "Admin",
+  "phone": "01013714763",
+  "createdAt": {
+    "$date": "2024-03-22T12:03:18.645Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-22T12:03:18.645Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65fd73a19495ed008ea6507a"
+  },
+  "name": "Amr",
+  "password": "$2a$10$.JOWBN.Srn7Wba/m21hYDemw8Ybmka9E3egdb/cXZV8shDiZ0rNRq",
+  "email": "admin@gmail.com",
+  "role": "Admin",
+  "phone": "01013714763",
+  "createdAt": {
+    "$date": "2024-03-22T12:03:45.079Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-22T12:03:45.079Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65fd73a79495ed008ea6507d"
+  },
+  "name": "Amr",
+  "password": "$2a$10$ugMFQjSBCePf4kRhvuVAz.tQSW6VjgV2gLmb/M/lMi21M69vf7FXO",
+  "email": "admin006@gmail.com",
+  "role": "Admin",
+  "phone": "01013714763",
+  "createdAt": {
+    "$date": "2024-03-22T12:03:51.453Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-22T12:03:51.453Z"
+  },
+  "__v": 0
+}]

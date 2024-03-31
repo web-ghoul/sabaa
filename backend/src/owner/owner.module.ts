@@ -1,0 +1,26 @@
+import { Module } from '@nestjs/common';
+import { OwnerService } from './owner.service';
+import { OwnerController } from './owner.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Owner, OwnerSchema } from 'schemas/owner.schema';
+import { diskStorage } from 'multer';
+import { MulterModule } from '@nestjs/platform-express';
+import * as path from 'path';
+import { Company, CompanySchema } from 'schemas/company.schema';
+
+@Module({
+  imports: [MongooseModule.forFeature([{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema }]),MulterModule.register({
+    storage: diskStorage({
+      destination: './upload/owner',
+      filename: (req, file, cb) => {
+        // Generate a unique suffix
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        // Construct the filename using the original fieldname and unique suffix
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+      },
+    }),
+  })],
+  controllers: [OwnerController],
+  providers: [OwnerService],
+})
+export class OwnerModule {}
