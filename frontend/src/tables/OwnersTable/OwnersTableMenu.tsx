@@ -4,27 +4,24 @@ import {
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
-<<<<<<< HEAD
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
-=======
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../contexts/AppContext";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import TableMenuItem from "../TableMenuItem";
 
 const OwnersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-<<<<<<< HEAD
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { handleOpenEditOwnerModal, handleOpenDeleteModal, editableOwnerData } =
-    useContext(FormsContext);
+  const {
+    handleOpenEditOwnerModal,
+    handleOpenDeleteModal,
+    editableOwnerData,
+    setDeleteType,
+  } = useContext(FormsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
@@ -52,23 +49,13 @@ const OwnersTableMenu = () => {
       handleDeleteOwnerFromSheet();
     } else {
       handleOpenDeleteModal();
+      setDeleteType("owner");
     }
   };
 
   useEffect(() => {
     setSheet(pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`);
   }, [pathname, sheet]);
-=======
-  const navigate = useNavigate();
-
-  const handleView = () => {};
-
-  const handleEdit = () => {
-    navigate(`${import.meta.env.VITE_EDIT_OWNER_ROUTE}`);
-  };
-
-  const handleDelete = () => {};
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   return (
     <Menu
@@ -86,7 +73,6 @@ const OwnersTableMenu = () => {
         horizontal: "right",
       }}
     >
-<<<<<<< HEAD
       {!sheet && (
         <TableMenuItem
           icon={<VisibilityRounded />}
@@ -94,14 +80,6 @@ const OwnersTableMenu = () => {
           handling={handleView}
         />
       )}
-=======
-      <TableMenuItem
-        icon={<VisibilityRounded />}
-        title={"View"}
-        color={""}
-        handling={handleView}
-      />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}

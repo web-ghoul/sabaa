@@ -1,11 +1,7 @@
 import { Box, Typography } from "@mui/material";
-<<<<<<< HEAD
 import { useEffect } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-=======
-import { RiFileExcel2Fill } from "react-icons/ri";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import { useNavigate } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import Forms from "../forms/Forms";
@@ -13,16 +9,12 @@ import { handleAlert } from "../functions/handleAlert";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { PrimaryButton } from "../mui/buttons/PrimaryButton";
-<<<<<<< HEAD
 import { AppDispatch, RootState } from "../store/store";
 import { getUsers } from "../store/usersSlice";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import UsersTable from "../tables/UsersTable/UsersTable";
 
 const Users = () => {
   const navigate = useNavigate();
-<<<<<<< HEAD
   const dispatch = useDispatch<AppDispatch>();
   const { users, isLoading } = useSelector((state: RootState) => state.users);
 
@@ -32,11 +24,6 @@ const Users = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer className={`grid justify-stretch items-start gap-6`}>
-=======
-  return (
-    <PrimaryBox>
-      <PrimaryContainer className={`grid justify-stretch items-center gap-2`}>
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Box className={`flex justify-between items-center gap-4`}>
           <BreadCrumbs>
             <Typography key="2">Users</Typography>
@@ -79,11 +66,7 @@ const Users = () => {
             </PrimaryButton>
           </Box>
         </Box>
-<<<<<<< HEAD
         <UsersTable data={users} isLoading={isLoading} />
-=======
-        <UsersTable />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

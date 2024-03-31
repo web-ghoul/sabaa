@@ -3,17 +3,13 @@ import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
 import { PrimaryAutoComplete } from "../../mui/autoCompletes/PrimaryAutoComplete";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { AutoCompleteSearchTypes } from "../../types/components.types";
-<<<<<<< HEAD
 import { AllFormiksTypes, FormiksTypes } from "../../types/forms.types";
 import { NationalityTypes, OwnerTypes } from "../../types/store.types";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
 export default function AutoCompleteSearch({
   label,
   loading,
   multiple,
-<<<<<<< HEAD
   options,
   formik,
   name,
@@ -40,21 +36,10 @@ export default function AutoCompleteSearch({
         }
         const typedOption = option as OwnerTypes;
         return typedOption ? `${typedOption.name} ( ${typedOption._id} )` : "";
-=======
-}: AutoCompleteSearchTypes) {
-  return (
-    <PrimaryAutoComplete
-      multiple={multiple}
-      options={data}
-      getOptionLabel={(option) => {
-        const typedOption = option as OptionTypes;
-        return typedOption ? typedOption.nationality : "";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       }}
       renderInput={(params: AutocompleteRenderInputParams) => (
         <PrimaryTextField
           {...params}
-<<<<<<< HEAD
           id={name}
           type={"text"}
           name={name}
@@ -64,9 +49,6 @@ export default function AutoCompleteSearch({
           onBlur={formik.handleBlur}
           error={error}
           helperText={helperText}
-=======
-          onChange={(e) => console.log(e.target.value)}
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -78,27 +60,8 @@ export default function AutoCompleteSearch({
               </>
             ),
           }}
-<<<<<<< HEAD
-=======
-          label={label}
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         />
       )}
     />
   );
 }
-<<<<<<< HEAD
-=======
-
-interface OptionTypes {
-  nationality: string;
-  ID: string;
-}
-
-const data: readonly OptionTypes[] = [
-  { nationality: "UAE", ID: "1564753624645" },
-  { nationality: "USA", ID: "2324235364637547" },
-  { nationality: "EGP", ID: "3675425345357" },
-  { nationality: "AS", ID: "4657475362645234626" },
-];
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949

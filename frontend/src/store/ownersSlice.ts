@@ -1,17 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { OwnersValuesTypes } from "../types/store.types.ts";
+import { OwnersArgsTypes, OwnersValuesTypes } from "../types/store.types.ts";
 
-export const getOwners = createAsyncThunk("/owners/getOwners", async () => {
-  const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-  const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/owner`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res.data;
-});
+export const getOwners = createAsyncThunk(
+  "/owners/getOwners",
+  async (args: OwnersArgsTypes) => {
+    const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/owner?search=${
+        (args && args.search) || ""
+      }&sort=${args?.sort || ""}&limit=${
+        import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  }
+);
 
 const initialState: OwnersValuesTypes = {
   isLoading: true,

@@ -1,7 +1,6 @@
 interface AuthValuesTypes {
   token: string | null;
   userId: string | null;
-<<<<<<< HEAD
   user: UserTypes | null;
   isLoading: boolean;
 }
@@ -21,6 +20,12 @@ interface OwnersValuesTypes {
   owners: OwnerTypes[] | null;
 }
 
+interface OwnersArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+}
+
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
@@ -29,6 +34,30 @@ interface CompanyValuesTypes {
 interface CompaniesValuesTypes {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
+}
+
+interface CompaniesArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+}
+
+interface JobsArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+}
+
+interface NationalitiesArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+}
+
+interface UsersArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
 }
 
 interface NationalitiesValuesTypes {
@@ -143,24 +172,24 @@ interface UserTypes {
 
 export type {
   AuthValuesTypes,
+  CompaniesArgsTypes,
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
   EmployeeTypes,
   JobTypes,
+  JobsArgsTypes,
   JobsValuesTypes,
+  NationalitiesArgsTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
   OwnerTypes,
   OwnerValuesTypes,
+  OwnersArgsTypes,
   OwnersValuesTypes,
   PROTypes,
   UserTypes,
   UserValuesTypes,
+  UsersArgsTypes,
   UsersValuesTypes,
 };
-=======
-}
-
-export type { AuthValuesTypes };
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949

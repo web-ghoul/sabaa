@@ -20,12 +20,9 @@ const LoadingCompaniesRow = () => {
       <PrimaryTableCell align="right">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-<<<<<<< HEAD
       <PrimaryTableCell align="right">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     </CompaniesTableRow>
   );
 };

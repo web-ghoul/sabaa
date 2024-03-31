@@ -1,5 +1,4 @@
 import { MouseEvent } from "react";
-<<<<<<< HEAD
 import {
   CompanyTypes,
   JobTypes,
@@ -7,8 +6,6 @@ import {
   OwnerTypes,
   UserTypes,
 } from "./store.types";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
 interface AppContextProps {
   defaultAvatar: string;
@@ -28,7 +25,6 @@ interface SidebarsContextProps {
   handleOpenSidebar: () => void;
 }
 
-<<<<<<< HEAD
 interface ExcelsContextProps {
   ownersSheets: OwnersSheetTypes[];
   ownerIndex: { fileIndex: number; index: number };
@@ -102,6 +98,16 @@ interface FormsContextTypes {
   handleCloseEditCompanyModal: () => void;
   deleteType: string;
   setDeleteType: (type: string) => void;
+  searchForOwners: string;
+  setSearchForOwners: (search: string) => void;
+  searchForCompanies: string;
+  setSearchForCompanies: (search: string) => void;
+  searchForUsers: string;
+  setSearchForUsers: (search: string) => void;
+  searchForJobs: string;
+  setSearchForJobs: (search: string) => void;
+  searchForNationalities: string;
+  setSearchForNationalities: (search: string) => void;
   openForgotPasswordModal: boolean;
   handleOpenForgotPasswordModal: () => void;
   handleCloseForgotPasswordModal: () => void;
@@ -152,6 +158,3 @@ export type {
   SidebarsContextProps,
   UsersSheetTypes,
 };
-=======
-export type { AppContextProps, SidebarsContextProps };
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949

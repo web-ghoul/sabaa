@@ -9,9 +9,6 @@ export const PrimaryTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-<<<<<<< HEAD
     padding: "10px 16px",
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   },
 }));

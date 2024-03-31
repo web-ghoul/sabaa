@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -20,16 +19,6 @@ const EditUser = () => {
           <Typography key="2">Edit User</Typography>
         </BreadCrumbs>
         <Forms type={"editUser"} />
-=======
-import UnderDevelopment from "../components/UnderDevelopment/UnderDevelopment";
-import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
-import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-const EditUser = () => {
-  return (
-    <PrimaryBox>
-      <PrimaryContainer>
-        <UnderDevelopment />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

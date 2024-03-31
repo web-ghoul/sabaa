@@ -27,7 +27,6 @@ const AddUserForm = ({ formik }: FormiksTypes) => {
       )}
 
       <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
-<<<<<<< HEAD
         <Input
           formik={formik}
           label={"Username"}
@@ -36,11 +35,6 @@ const AddUserForm = ({ formik }: FormiksTypes) => {
         />
         <Input formik={formik} label={"Email"} name={"email"} />
         <Input formik={formik} label={"Phone"} type={"tel"} name={"phone"} />
-=======
-        <Input formik={formik} label={"Username"} name={"_id"} />
-        <Input formik={formik} label={"Email"} name={"name"} />
-        <Input formik={formik} label={"Phone"} type={"tel"} name={"nameAr"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Input
           formik={formik}
           label={"Role"}
@@ -60,21 +54,14 @@ const AddUserForm = ({ formik }: FormiksTypes) => {
           label={"Password"}
           type={"password"}
           name={"password"}
-<<<<<<< HEAD
           ac={"current-password"}
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         />
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>Add</SubmitButton>
         <PrimaryButton
-<<<<<<< HEAD
           onClick={() => navigate(`${import.meta.env.VITE_USERS_ROUTE}`)}
-=======
-          onClick={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
           className={`!bg-error`}
         >
           Cancel

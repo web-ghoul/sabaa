@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-<<<<<<< HEAD
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -8,21 +7,15 @@ import {
   OwnerTypes,
   UserTypes,
 } from "../types/store.types";
-=======
-import { FormsContextTypes } from "../types/forms.types";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import { AppContext } from "./AppContext";
 
 export const FormsContext = createContext<FormsContextTypes>({
   formsLoading: false,
   handleCloseFormsLoading: () => {},
   handleOpenFormsLoading: () => {},
-<<<<<<< HEAD
   openDeleteModal: false,
   handleOpenDeleteModal: () => {},
   handleCloseDeleteModal: () => {},
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   openForgotPasswordModal: false,
   handleOpenForgotPasswordModal: () => {},
   handleCloseForgotPasswordModal: () => {},
@@ -32,24 +25,30 @@ export const FormsContext = createContext<FormsContextTypes>({
   openEditJobModal: false,
   handleOpenEditJobModal: () => {},
   handleCloseEditJobModal: () => {},
-<<<<<<< HEAD
   openEditOwnerModal: false,
   handleOpenEditOwnerModal: () => {},
   handleCloseEditOwnerModal: () => {},
   openEditCompanyModal: false,
   handleOpenEditCompanyModal: () => {},
   handleCloseEditCompanyModal: () => {},
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   openAddNationalityModal: false,
   handleOpenAddNationalityModal: () => {},
   handleCloseAddNationalityModal: () => {},
   openEditNationalityModal: false,
   handleOpenEditNationalityModal: () => {},
   handleCloseEditNationalityModal: () => {},
-<<<<<<< HEAD
   deleteType: "",
   setDeleteType: () => {},
+  searchForOwners: "",
+  setSearchForOwners: () => {},
+  searchForJobs: "",
+  setSearchForJobs: () => {},
+  searchForUsers: "",
+  setSearchForUsers: () => {},
+  searchForCompanies: "",
+  setSearchForCompanies: () => {},
+  searchForNationalities: "",
+  setSearchForNationalities: () => {},
   addCompanyImage: "",
   setAddCompanyImage: () => {},
   editCompanyImage: "",
@@ -72,29 +71,24 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableUserData: () => {},
   editableCompanyData: null,
   setEditableCompanyData: () => {},
-=======
-  addCompanyImage: "",
-  setAddCompanyImage: () => {},
-  addOwnerImage: "",
-  setAddOwnerImage: () => {},
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const { defaultAvatar, defaultCompany } = useContext(AppContext);
-<<<<<<< HEAD
 
   //Loading Form
   const [formsLoading, setFormsLoading] = useState(false);
+
+  //Search
+  const [searchForOwners, setSearchForOwners] = useState("");
+  const [searchForCompanies, setSearchForCompanies] = useState("");
+  const [searchForUsers, setSearchForUsers] = useState("");
+  const [searchForJobs, setSearchForJobs] = useState("");
+  const [searchForNationalities, setSearchForNationalities] = useState("");
 
   //Delete Type
   const [deleteType, setDeleteType] = useState("");
 
-=======
-  //Loading Form
-  const [formsLoading, setFormsLoading] = useState(false);
-
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   const handleCloseFormsLoading = () => {
     setFormsLoading(false);
   };
@@ -103,7 +97,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setFormsLoading(true);
   };
 
-<<<<<<< HEAD
   //Delete
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
@@ -115,8 +108,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenDeleteModal(true);
   };
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   //Forgot Password
   const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false);
 
@@ -149,7 +140,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const handleOpenEditJobModal = () => {
     setOpenEditJobModal(true);
   };
-<<<<<<< HEAD
 
   //Edit Owner
   const [openEditOwnerModal, setOpenEditOwnerModal] = useState(false);
@@ -174,10 +164,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   //Add Nationality
-=======
-  //Add Nationality
-
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   const [openAddNationalityModal, setOpenAddNationalityModal] = useState(false);
 
   const handleCloseAddNationalityModal = () => {
@@ -206,20 +192,16 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     defaultCompany
   );
 
-<<<<<<< HEAD
   //Edit Company Image
   const [editCompanyImage, setEditCompanyImage] = useState<File | string>(
     defaultCompany
   );
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   //Add Owner Image
   const [addOwnerImage, setAddOwnerImage] = useState<File | string>(
     defaultAvatar
   );
 
-<<<<<<< HEAD
   //Edit Owner Image
   const [editOwnerImage, setEditOwnerImage] = useState<File | string>(
     defaultAvatar
@@ -256,8 +238,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableCompanyData, setEditableCompanyData] =
     useState<CompanyTypes | null>(null);
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   const values = {
     formsLoading,
     handleCloseFormsLoading,
@@ -266,7 +246,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenForgotPasswordModal,
     handleCloseForgotPasswordModal,
     openAddJobModal,
-<<<<<<< HEAD
     editCompanyImage,
     setEditCompanyImage,
     openDeleteModal,
@@ -286,10 +265,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openEditOwnerModal,
     handleCloseEditOwnerModal,
     handleOpenEditOwnerModal,
-=======
-    handleCloseAddJobModal,
-    handleOpenAddJobModal,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     openAddNationalityModal,
     handleCloseAddNationalityModal,
     handleOpenAddNationalityModal,
@@ -299,28 +274,32 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openEditJobModal,
     handleCloseEditJobModal,
     handleOpenEditJobModal,
-<<<<<<< HEAD
     editableOwnerData,
     setEditableOwnerData,
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     addCompanyImage,
     setAddCompanyImage,
     addOwnerImage,
     setAddOwnerImage,
-<<<<<<< HEAD
     editableJobData,
     setEditableJobData,
     editableNationalityData,
     setEditableNationalityData,
     editableUserData,
+    searchForOwners,
+    setSearchForOwners,
+    searchForCompanies,
+    searchForUsers,
+    setSearchForUsers,
+    setSearchForCompanies,
+    searchForJobs,
+    setSearchForJobs,
+    searchForNationalities,
+    setSearchForNationalities,
     setEditableUserData,
     addUserImage,
     setAddUserImage,
     editableCompanyData,
     setEditableCompanyData,
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

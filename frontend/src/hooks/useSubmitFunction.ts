@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useContext } from "react";
-<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExcelsContext } from "../contexts/ExcelsContext";
@@ -26,12 +25,6 @@ import {
   EditNationalityFormTypes,
   EditOwnerFormTypes,
   EditUserFormTypes,
-=======
-import { FormsContext } from "../contexts/FormsContext";
-import { handleCatchError } from "../functions/handleCatchError";
-import {
-  AllFormsTypes,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   ForgotPasswordFormTypes,
   LoginFormTypes,
   ResetPasswordFormTypes,
@@ -42,7 +35,6 @@ const server = axios.create({
 });
 
 const useSubmitFunction = (type: string) => {
-<<<<<<< HEAD
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
@@ -90,25 +82,17 @@ const useSubmitFunction = (type: string) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
-=======
-  const { handleOpenFormsLoading, handleCloseFormsLoading } =
-    useContext(FormsContext);
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   const login = async (values: LoginFormTypes) => {
     handleOpenFormsLoading();
     await server
       .post(`/login`, values)
       .then((res) => {
-<<<<<<< HEAD
         handleAlert({ msg: "Login Successfully", status: "success" });
         navigate(`${import.meta.env.VITE_DASHBOARD_ROUTE}`);
         dispatch(
           loginAction({ token: res.data.token, userId: res.data.userId })
         );
-=======
-        console.log(res);
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       })
       .catch((err) => {
         handleCatchError(err);
@@ -119,17 +103,13 @@ const useSubmitFunction = (type: string) => {
   const resetPassword = (values: ResetPasswordFormTypes) => {
     handleOpenFormsLoading();
     console.log(values);
-<<<<<<< HEAD
     handleAlert({ msg: "Under Development...", status: "error" });
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     handleCloseFormsLoading();
   };
 
   const forgotPassword = (values: ForgotPasswordFormTypes) => {
     handleOpenFormsLoading();
     console.log(values);
-<<<<<<< HEAD
     handleAlert({ msg: "Under Development...", status: "error" });
     handleCloseFormsLoading();
   };
@@ -702,12 +682,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   const handleSubmit = (values: AllFormsTypes | unknown) => {
-=======
-    handleCloseFormsLoading();
-  };
-
-  const handleSubmit = (values: AllFormsTypes) => {
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     switch (type) {
       case "forgotPassword":
         forgotPassword(values as ForgotPasswordFormTypes);
@@ -718,7 +692,6 @@ const useSubmitFunction = (type: string) => {
       case "login":
         login(values as LoginFormTypes);
         break;
-<<<<<<< HEAD
       case "addJob":
         addJob(values as AddJobFormTypes);
         break;
@@ -764,8 +737,6 @@ const useSubmitFunction = (type: string) => {
       case "delete":
         handleDelete();
         break;
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       default:
         return () => {};
     }

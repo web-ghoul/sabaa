@@ -12,7 +12,6 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     setAddCompanyImage,
     addOwnerImage,
     setAddOwnerImage,
-<<<<<<< HEAD
     editOwnerImage,
     setEditOwnerImage,
     addUserImage,
@@ -21,13 +20,10 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     editCompanyImage,
     editUserImage,
     setEditUserImage,
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   } = useContext(FormsContext);
   const [chosenImage, setChosenImage] = useState(
     variant === "addCompany"
       ? addCompanyImage || defaultCompany
-<<<<<<< HEAD
       : variant === "editCompany"
       ? editCompanyImage || defaultCompany
       : variant === "addOwner"
@@ -38,10 +34,6 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       ? addUserImage || defaultAvatar
       : variant === "editUser"
       ? editUserImage || defaultAvatar
-=======
-      : variant === "addOwner"
-      ? addOwnerImage || defaultAvatar
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       : defaultAvatar
   );
 
@@ -51,7 +43,6 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       const image = files[0];
       if (variant === "addCompany") {
         setAddCompanyImage(image);
-<<<<<<< HEAD
       } else if (variant === "editCompany") {
         setEditCompanyImage(image);
       } else if (variant === "addOwner") {
@@ -62,10 +53,6 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         setAddUserImage(image);
       } else if (variant === "editUser") {
         setEditUserImage(image);
-=======
-      } else if (variant === "addOwner") {
-        setAddOwnerImage(image);
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       }
       setChosenImage(image);
     }
@@ -86,16 +73,12 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
           backgroundImage: `url(${
             chosenImage instanceof File
               ? URL.createObjectURL(chosenImage)
-<<<<<<< HEAD
               : chosenImage.split("/")[1] === "images"
               ? chosenImage
               : `${import.meta.env.VITE_SERVER_URL}/${chosenImage}`.replaceAll(
                   "\\",
                   "/"
                 )
-=======
-              : chosenImage
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
           })`,
         }}
       >

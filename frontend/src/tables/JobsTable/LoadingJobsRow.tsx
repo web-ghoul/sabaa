@@ -14,12 +14,9 @@ const LoadingJobsRow = () => {
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-<<<<<<< HEAD
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     </JobsTableRow>
   );
 };

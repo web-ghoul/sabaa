@@ -1,6 +1,5 @@
 import { FormikProps, useFormik } from "formik";
 import {
-<<<<<<< HEAD
   AddCompanyInitailValues,
   AddCompanySchema,
 } from "../forms/AddCompanyForm/AddCompanySchema";
@@ -27,8 +26,6 @@ import useEditNationalitySchema from "../forms/EditNationalityForm/useEditNation
 import useEditOwnerSchema from "../forms/EditOwnerForm/useEditOwnerSchema";
 import useEditUserSchema from "../forms/EditUserForm/useEditUserSchema";
 import {
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   ForgotPasswordInitailValues,
   ForgotPasswordSchema,
 } from "../forms/ForgotPasswordForm/ForgotPasswordSchema";
@@ -41,7 +38,6 @@ import {
   ResetPasswordSchema,
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
 import {
-<<<<<<< HEAD
   AddCompanyFormTypes,
   AddCompanyFormikTypes,
   AddJobFormTypes,
@@ -66,10 +62,6 @@ import {
   EditOwnerFormikTypes,
   EditUserFormTypes,
   EditUserFormikTypes,
-=======
-  AllFormiksTypes,
-  AllFormsTypes,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   ForgotPasswordFormTypes,
   ForgotPasswordFormikTypes,
   LoginFormTypes,
@@ -81,7 +73,6 @@ import useSubmitFunction from "./useSubmitFunction";
 
 const useSubmitForm = (type: string) => {
   const { handleSubmit } = useSubmitFunction(type);
-<<<<<<< HEAD
   const { EditJobInitailValues, EditJobSchema } = useEditJobSchema();
   const { EditNationalityInitailValues, EditNationalitySchema } =
     useEditNationalitySchema();
@@ -90,8 +81,6 @@ const useSubmitForm = (type: string) => {
   const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
   const { EditCompanyInitailValues, EditCompanySchema } =
     useEditCompanySchema();
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   const chosenFormik = (): AllFormiksTypes => {
     switch (type) {
@@ -118,7 +107,6 @@ const useSubmitForm = (type: string) => {
           onSubmit: (values: LoginFormTypes) => {
             handleSubmit(values);
           },
-<<<<<<< HEAD
         } as unknown as LoginFormikTypes;
       case "addJob":
         return {
@@ -208,17 +196,6 @@ const useSubmitForm = (type: string) => {
             handleSubmit(values);
           },
         } as unknown as DeleteFormikTypes;
-=======
-        } as LoginFormikTypes;
-      default:
-        return {
-          initialValues: LoginInitailValues,
-          validationSchema: LoginSchema,
-          onSubmit: (values: LoginFormTypes) => {
-            alert(JSON.stringify(values, null, 2));
-          },
-        } as LoginFormikTypes;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     }
   };
 

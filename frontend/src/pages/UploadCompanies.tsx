@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -46,10 +45,6 @@ const UploadCompanies = () => {
       </PrimaryContainer>
     </PrimaryBox>
   );
-=======
-const UploadCompanies = () => {
-  return <div>UploadCompanies</div>;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 };
 
 export default UploadCompanies;

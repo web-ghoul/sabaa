@@ -1,17 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { UsersValuesTypes } from "../types/store.types.ts";
+import { UsersArgsTypes, UsersValuesTypes } from "../types/store.types.ts";
 
-export const getUsers = createAsyncThunk("/users/getJobs", async () => {
-  const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-  const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res.data;
-});
+export const getUsers = createAsyncThunk(
+  "/users/getJobs",
+  async (args: UsersArgsTypes) => {
+    const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/user?search=${
+        (args && args.search) || ""
+      }&sort=${args?.sort || ""}&limit=${
+        import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  }
+);
 
 const initialState: UsersValuesTypes = {
   isLoading: true,

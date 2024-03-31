@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-<<<<<<< HEAD
 import {
   CompanyTypes,
   EmployeeTypes,
@@ -8,8 +7,6 @@ import {
   PROTypes,
   UserTypes,
 } from "./store.types";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
 interface LogoTypes {
   color?: string;
@@ -21,11 +18,7 @@ interface UserBoxTypes {
   role?: string;
   menu?: boolean;
   head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2";
-<<<<<<< HEAD
   size: "small" | "medium" | "large" | "xlarge" | "2xlarge" | "3xlarge";
-=======
-  size: "small" | "medium" | "large";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }
 
 interface BadgeNotificationTypes {
@@ -44,10 +37,8 @@ interface InputTypes {
   type?: string;
   select?: boolean;
   options?: Array<string>;
-<<<<<<< HEAD
   ac?: string;
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
+  change?: (value: string) => void;
 }
 
 interface SubmitButtonTypes {
@@ -86,7 +77,6 @@ interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
   loading?: boolean;
-<<<<<<< HEAD
   options: NationalityTypes[];
   name: string;
 }
@@ -107,32 +97,21 @@ interface DataBoxTypes {
 interface UploadStatusTypes {
   icon: ReactNode;
   text: string;
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }
 
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
-<<<<<<< HEAD
   DataBoxTypes,
   InputTypes,
   LogoTypes,
   MenuItemTypes,
   ProfileDetailsTypes,
-=======
-  InputTypes,
-  LogoTypes,
-  MenuItemTypes,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   SidebarItemTypes,
   SortBoxTypes,
   SubmitButtonTypes,
   TitleTypes,
   UploadImageTypes,
-<<<<<<< HEAD
   UploadStatusTypes,
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   UserBoxTypes,
 };

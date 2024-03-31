@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -43,17 +42,6 @@ const UploadOwners = () => {
             <NoSheetsFound />
           )}
         </Box>
-=======
-import UnderDevelopment from "../components/UnderDevelopment/UnderDevelopment";
-import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
-import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-
-const UploadOwners = () => {
-  return (
-    <PrimaryBox>
-      <PrimaryContainer>
-        <UnderDevelopment />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

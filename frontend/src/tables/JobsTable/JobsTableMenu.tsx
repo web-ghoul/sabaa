@@ -1,22 +1,33 @@
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { Menu } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
-<<<<<<< HEAD
 import { ExcelsContext } from "../../contexts/ExcelsContext";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const JobsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const { handleOpenEditJobModal } = useContext(FormsContext);
-<<<<<<< HEAD
+  const { handleOpenEditJobModal, handleOpenDeleteModal, setDeleteType } =
+    useContext(FormsContext);
   const { handleDeleteJobFromSheet } = useContext(ExcelsContext);
+  const [sheet, setSheet] = useState(false);
+  const { pathname } = useLocation();
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
+  const handleDelete = () => {
+    if (sheet) {
+      handleDeleteJobFromSheet();
+    } else {
+      handleOpenDeleteModal();
+      setDeleteType("job");
+    }
+  };
+
+  useEffect(() => {
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_JOBS_ROUTE}`);
+  }, [pathname]);
+
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -42,10 +53,7 @@ const JobsTableMenu = () => {
         icon={<DeleteRounded />}
         title={"Delete"}
         color={`text-error`}
-<<<<<<< HEAD
-        handling={handleDeleteJobFromSheet}
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
+        handling={handleDelete}
       />
     </Menu>
   );

@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducers from "./auth.ts";
-<<<<<<< HEAD
 import companiesReducers from "./companiesSlice.ts";
 import companyReducers from "./companySlice.ts";
 import jobsReducers from "./jobsSlice.ts";
@@ -21,12 +20,6 @@ export const store = configureStore({
     company: companyReducers,
     owners: ownersReducers,
     owner: ownerReducers,
-=======
-
-export const store = configureStore({
-  reducer: {
-    "auth":authReducers
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   },
 });
 

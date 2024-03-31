@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   DeleteRounded,
   EditRounded,
@@ -9,18 +8,12 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-=======
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
-import { Menu } from "@mui/material";
-import { useContext } from "react";
-import { AppContext } from "../../contexts/AppContext";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import TableMenuItem from "../TableMenuItem";
 
 const UsersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-<<<<<<< HEAD
-  const { editableUserData, handleOpenDeleteModal } = useContext(FormsContext);
+  const { editableUserData, handleOpenDeleteModal, setDeleteType } =
+    useContext(FormsContext);
   const navigate = useNavigate();
 
   const handleView = () => {
@@ -39,8 +32,11 @@ const UsersTableMenu = () => {
     );
   };
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
+  const handleDelete = () => {
+    handleOpenDeleteModal();
+    setDeleteType("user");
+  };
+
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -57,7 +53,6 @@ const UsersTableMenu = () => {
         horizontal: "right",
       }}
     >
-<<<<<<< HEAD
       <TableMenuItem
         icon={<VisibilityRounded />}
         title={"View"}
@@ -68,17 +63,11 @@ const UsersTableMenu = () => {
         title={"Edit"}
         handling={handleEdit}
       />
-=======
-      <TableMenuItem icon={<EditRounded />} title={"Edit"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}
         color={`text-error`}
-<<<<<<< HEAD
-        handling={handleOpenDeleteModal}
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
+        handling={handleDelete}
       />
     </Menu>
   );

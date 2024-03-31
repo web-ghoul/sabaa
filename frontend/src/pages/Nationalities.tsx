@@ -1,12 +1,7 @@
 import { Box, Typography } from "@mui/material";
-<<<<<<< HEAD
 import { useContext, useEffect } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-=======
-import { useContext } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import { useNavigate } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { FormsContext } from "../contexts/FormsContext";
@@ -15,17 +10,13 @@ import { handleAlert } from "../functions/handleAlert";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { PrimaryButton } from "../mui/buttons/PrimaryButton";
-<<<<<<< HEAD
 import { getNationalities } from "../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../store/store";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import NationalitiesTable from "../tables/NationalitiesTable/NationalitiesTable";
 
 const Nationalities = () => {
   const { handleOpenAddNationalityModal } = useContext(FormsContext);
   const navigate = useNavigate();
-<<<<<<< HEAD
   const dispatch = useDispatch<AppDispatch>();
   const { nationalities, isLoading } = useSelector(
     (state: RootState) => state.nationalities
@@ -38,11 +29,6 @@ const Nationalities = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer className={`grid justify-stretch items-start gap-6`}>
-=======
-  return (
-    <PrimaryBox>
-      <PrimaryContainer className={`grid justify-stretch items-center gap-2`}>
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Box className={`flex justify-between items-center gap-4`}>
           <BreadCrumbs>
             <Typography key="2">Nationality</Typography>
@@ -81,11 +67,7 @@ const Nationalities = () => {
             </PrimaryButton>
           </Box>
         </Box>
-<<<<<<< HEAD
         <NationalitiesTable data={nationalities} isLoading={isLoading} />
-=======
-        <NationalitiesTable />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

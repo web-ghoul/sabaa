@@ -9,10 +9,8 @@ const Input = ({
   type,
   select,
   options,
-<<<<<<< HEAD
+  change,
   ac,
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }: InputTypes & FormiksTypes) => {
   const error =
     formik.touched[name as keyof AllFormiksTypes] &&
@@ -29,6 +27,7 @@ const Input = ({
       select
       SelectProps={{
         native: true,
+        "aria-label": label,
       }}
       value={formik.values[name as keyof AllFormiksTypes]}
       onChange={formik.handleChange}
@@ -52,14 +51,16 @@ const Input = ({
       name={name}
       label={label}
       value={formik.values[name as keyof AllFormiksTypes]}
-      onChange={formik.handleChange}
+      onChange={(e) => {
+        if (change) {
+          change(e.target.value);
+        }
+        formik.handleChange(e);
+      }}
       onBlur={formik.handleBlur}
       error={error}
       helperText={helperText}
-<<<<<<< HEAD
       autoComplete={ac}
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     />
   );
 };

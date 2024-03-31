@@ -13,15 +13,9 @@ export const AppContext = createContext<AppContextProps>({
 });
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-<<<<<<< HEAD
   const defaultAvatar = "/images/default_avatar.png";
 
   const defaultCompany = "/images/default_company.png";
-=======
-  const defaultAvatar = "./images/default_avatar.png";
-
-  const defaultCompany = "./images/default_company.png";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   //User Menu
   const [openUserMenu, setOpenUserMenu] = useState<null | HTMLElement>(null);

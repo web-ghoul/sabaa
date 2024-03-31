@@ -1,15 +1,9 @@
 import { FormikProps } from "formik";
-<<<<<<< HEAD
 import { CompanyTypes, OwnerTypes } from "./store.types";
 
 interface FormsTypes {
   type: string;
   index?: number;
-=======
-
-interface FormsTypes {
-  type: string;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }
 
 interface LoginFormTypes {
@@ -59,7 +53,6 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
-<<<<<<< HEAD
 interface AddCompanyFormTypes extends CompanyTypes {}
 
 interface AddCompanyFormikTypes {
@@ -219,8 +212,6 @@ interface DeleteFormikTypes {
   values: DeleteFormTypes;
 }
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 interface OwnersOptionsFormTypes {
   search: string;
   filteryDate: string;
@@ -278,7 +269,6 @@ type AllFormsTypes =
   | ForgotPasswordFormTypes
   | OwnersOptionsFormTypes
   | UsersOptionsFormTypes
-<<<<<<< HEAD
   | CompaniesOptionsFormTypes
   | AddJobFormTypes
   | EditJobFormTypes
@@ -291,9 +281,6 @@ type AllFormsTypes =
   | AddOwnerFormTypes
   | EditOwnerFormTypes
   | DeleteFormTypes;
-=======
-  | CompaniesOptionsFormTypes;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -301,7 +288,6 @@ type AllFormiksTypes =
   | ForgotPasswordFormikTypes
   | OwnersOptionsFormikTypes
   | UsersOptionsFormikTypes
-<<<<<<< HEAD
   | CompaniesOptionsFormikTypes
   | AddJobFormikTypes
   | EditJobFormikTypes
@@ -314,9 +300,6 @@ type AllFormiksTypes =
   | AddOwnerFormikTypes
   | EditOwnerFormikTypes
   | DeleteFormikTypes;
-=======
-  | CompaniesOptionsFormikTypes;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -330,7 +313,6 @@ interface CatchErrorTypes {
   };
 }
 
-<<<<<<< HEAD
 export type {
   AddCompanyFormikTypes,
   AddCompanyFormTypes,
@@ -342,39 +324,10 @@ export type {
   AddOwnerFormTypes,
   AddUserFormikTypes,
   AddUserFormTypes,
-=======
-interface FormsContextTypes {
-  formsLoading: boolean;
-  handleCloseFormsLoading: () => void;
-  handleOpenFormsLoading: () => void;
-  openForgotPasswordModal: boolean;
-  handleOpenForgotPasswordModal: () => void;
-  handleCloseForgotPasswordModal: () => void;
-  openAddJobModal: boolean;
-  handleOpenAddJobModal: () => void;
-  handleCloseAddJobModal: () => void;
-  openEditJobModal: boolean;
-  handleOpenEditJobModal: () => void;
-  handleCloseEditJobModal: () => void;
-  openAddNationalityModal: boolean;
-  handleOpenAddNationalityModal: () => void;
-  handleCloseAddNationalityModal: () => void;
-  openEditNationalityModal: boolean;
-  handleOpenEditNationalityModal: () => void;
-  handleCloseEditNationalityModal: () => void;
-  addCompanyImage: File | string;
-  setAddCompanyImage: (image: File | string) => void;
-  addOwnerImage: File | string;
-  setAddOwnerImage: (image: File | string) => void;
-}
-
-export type {
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,
   CompaniesOptionsFormTypes,
-<<<<<<< HEAD
   DeleteFormikTypes,
   DeleteFormTypes,
   EditCompanyFormikTypes,
@@ -390,12 +343,6 @@ export type {
   ForgotPasswordFormikTypes,
   ForgotPasswordFormTypes,
   FormiksTypes,
-=======
-  ForgotPasswordFormikTypes,
-  ForgotPasswordFormTypes,
-  FormiksTypes,
-  FormsContextTypes,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   FormsTypes,
   LoginFormikTypes,
   LoginFormTypes,
@@ -403,5 +350,6 @@ export type {
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
   UsersOptionsFormikTypes,
-  UsersOptionsFormTypes,
+  UsersOptionsFormTypes
 };
+

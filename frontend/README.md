@@ -60,7 +60,6 @@ Questions For Next Meeting:
   3- Users (All Required)
 
 
-<<<<<<< HEAD
 
 
 
@@ -70,5 +69,3 @@ New Idea
 
 Questions :
   1- What is Company Categories
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949

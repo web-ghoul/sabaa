@@ -42,10 +42,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
       fontSize: "22px",
     },
   },
-<<<<<<< HEAD
   "& select": {
     title: "Select an option",
   },
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }));

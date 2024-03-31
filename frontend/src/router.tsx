@@ -5,33 +5,22 @@ import AddCompany from "./pages/AddCompany.tsx";
 import AddOwner from "./pages/AddOwner.tsx";
 import AddUser from "./pages/AddUser.tsx";
 import Companies from "./pages/Companies.tsx";
-<<<<<<< HEAD
 import Company from "./pages/Company.tsx";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import Dashboard from "./pages/Dashboard.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import EditOwner from "./pages/EditOwner.tsx";
 import EditUser from "./pages/EditUser.tsx";
-<<<<<<< HEAD
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
-=======
-import Employees from "./pages/Employees.tsx";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import FileManager from "./pages/FileManager.tsx";
 import Jobs from "./pages/Jobs.tsx";
 import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
-<<<<<<< HEAD
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
 import PublicRelationOfficer from "./pages/PublicRelationOfficer.tsx";
-=======
-import Owners from "./pages/Owners.tsx";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import PublicRelationOfficers from "./pages/PublicRelationOfficers.tsx";
 import Reports from "./pages/Reports.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
@@ -43,10 +32,7 @@ import UploadJobs from "./pages/UploadJobs.tsx";
 import UploadNationalities from "./pages/UploadNationalities.tsx";
 import UploadOwners from "./pages/UploadOwners.tsx";
 import UploadUsers from "./pages/UploadUsers.tsx";
-<<<<<<< HEAD
 import User from "./pages/User.tsx";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import Users from "./pages/Users.tsx";
 
 export const router = createBrowserRouter([
@@ -71,7 +57,6 @@ export const router = createBrowserRouter([
         element: <Users />,
       },
       {
-<<<<<<< HEAD
         path: "/users/:id",
         element: <User />,
       },
@@ -85,17 +70,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "/users/upload",
-=======
-        path: "/addUser",
-        element: <AddUser />,
-      },
-      {
-        path: "/editUser",
-        element: <EditUser />,
-      },
-      {
-        path: "/uploadUsers",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         element: <UploadUsers />,
       },
       {
@@ -103,7 +77,6 @@ export const router = createBrowserRouter([
         element: <Owners />,
       },
       {
-<<<<<<< HEAD
         path: "/owners/:id",
         element: <Owner />,
       },
@@ -117,17 +90,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "/owners/upload",
-=======
-        path: "/addOwner",
-        element: <AddOwner />,
-      },
-      {
-        path: "/editOwner",
-        element: <EditOwner />,
-      },
-      {
-        path: "/uploadOwners",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         element: <UploadOwners />,
       },
       {
@@ -135,18 +97,14 @@ export const router = createBrowserRouter([
         element: <Employees />,
       },
       {
-<<<<<<< HEAD
         path: "/employees/:id",
         element: <Employee />,
       },
       {
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         path: "/companies",
         element: <Companies />,
       },
       {
-<<<<<<< HEAD
         path: "/companies/:id",
         element: <Company />,
       },
@@ -160,17 +118,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "/companies/upload",
-=======
-        path: "/addCompany",
-        element: <AddCompany />,
-      },
-      {
-        path: "/editCompany",
-        element: <EditCompany />,
-      },
-      {
-        path: "/uploadCompanies",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         element: <UploadCompanies />,
       },
       {
@@ -206,11 +153,7 @@ export const router = createBrowserRouter([
         element: <Nationalities />,
       },
       {
-<<<<<<< HEAD
         path: "/nationalities/upload",
-=======
-        path: "/uploadNationalities",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         element: <UploadNationalities />,
       },
       {
@@ -218,18 +161,13 @@ export const router = createBrowserRouter([
         element: <Jobs />,
       },
       {
-<<<<<<< HEAD
         path: "/jobs/upload",
-=======
-        path: "/uploadJobs",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         element: <UploadJobs />,
       },
       {
         path: "/publicRelationOfficers",
         element: <PublicRelationOfficers />,
       },
-<<<<<<< HEAD
       {
         path: "/publicRelationOfficers/:id",
         element: <PublicRelationOfficer />,
@@ -238,8 +176,6 @@ export const router = createBrowserRouter([
         path: "*",
         element: <Error />,
       },
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     ],
   },
 ]);
