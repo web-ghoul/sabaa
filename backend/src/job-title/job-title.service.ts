@@ -42,7 +42,7 @@ export class JobTitleService {
 
     return this.jobTitleModel.find({
       $or: [
-        { name: { $regex: new RegExp(search, "i") } },
+        { jobTitle: { $regex: new RegExp(search, "i") } },
         { _id: { $regex: new RegExp(search, "i") } } // Exact match for the _id field
     ]  
     })
