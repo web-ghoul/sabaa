@@ -1,7 +1,7 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
 import { MouseEvent, useContext } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
@@ -68,17 +68,15 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
           ? data &&
             data.map((row, i) => (
               <UsersTableRow key={i}>
-                <PrimaryTableCell
-                  onClick={() => handleView(row._id)}
-                  component="th"
-                  scope="row"
-                >
-                  <UserBox
-                    username={row.name}
-                    head={"subtitle1"}
-                    size={"small"}
-                    avatar={row.avatar}
-                  />
+                <PrimaryTableCell onClick={() => handleView(row._id)}>
+                  <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${row._id}`}>
+                    <UserBox
+                      username={row.name}
+                      head={"subtitle1"}
+                      size={"small"}
+                      avatar={row.avatar}
+                    />
+                  </Link>
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.email}</PrimaryTableCell>

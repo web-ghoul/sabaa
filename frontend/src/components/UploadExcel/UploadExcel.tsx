@@ -132,7 +132,6 @@ const UploadExcel = ({
         tenancyContractValue: "",
         tenancyContractExp: "",
         _id: "",
-        user: "",
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;

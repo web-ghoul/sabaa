@@ -1,7 +1,7 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
 import { MouseEvent, useContext } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -89,12 +89,14 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
                   component="th"
                   scope="row"
                 >
-                  <UserBox
-                    username={row.name}
-                    head={"subtitle1"}
-                    size={"small"}
-                    avatar={row.avatar}
-                  />
+                  <Link to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}>
+                    <UserBox
+                      username={row.name}
+                      head={"subtitle1"}
+                      size={"small"}
+                      avatar={row.avatar}
+                    />
+                  </Link>
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
                 <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>

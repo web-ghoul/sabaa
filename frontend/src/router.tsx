@@ -20,6 +20,7 @@ import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
+import Profile from "./pages/Profile.tsx";
 import PublicRelationOfficer from "./pages/PublicRelationOfficer.tsx";
 import PublicRelationOfficers from "./pages/PublicRelationOfficers.tsx";
 import Reports from "./pages/Reports.tsx";
@@ -31,7 +32,6 @@ import UploadCompanies from "./pages/UploadCompanies.tsx";
 import UploadJobs from "./pages/UploadJobs.tsx";
 import UploadNationalities from "./pages/UploadNationalities.tsx";
 import UploadOwners from "./pages/UploadOwners.tsx";
-import UploadUsers from "./pages/UploadUsers.tsx";
 import User from "./pages/User.tsx";
 import Users from "./pages/Users.tsx";
 
@@ -53,6 +53,10 @@ export const router = createBrowserRouter([
         element: <ResetPassword />,
       },
       {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
         path: "/users",
         element: <Users />,
       },
@@ -67,10 +71,6 @@ export const router = createBrowserRouter([
       {
         path: "/users/:id/edit",
         element: <EditUser />,
-      },
-      {
-        path: "/users/upload",
-        element: <UploadUsers />,
       },
       {
         path: "/owners",

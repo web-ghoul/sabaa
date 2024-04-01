@@ -125,7 +125,7 @@ const useSubmitFunction = (type: string) => {
       .then(() => {
         handleAlert({ msg: "Job is Created Successfully", status: "success" });
         handleCloseAddJobModal();
-        dispatch(getJobs());
+        dispatch(getJobs({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -155,7 +155,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           handleCloseEditJobModal();
-          dispatch(getJobs());
+          dispatch(getJobs({}));
         })
         .catch((err) => {
           handleCatchError(err);
@@ -180,7 +180,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_JOBS_ROUTE}`);
-        dispatch(getJobs());
+        dispatch(getJobs({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -202,7 +202,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         handleCloseAddNationalityModal();
-        dispatch(getNationalities());
+        dispatch(getNationalities({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -238,7 +238,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           handleCloseEditNationalityModal();
-          dispatch(getNationalities());
+          dispatch(getNationalities({}));
         })
         .catch((err) => {
           handleCatchError(err);
@@ -263,7 +263,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_NATIONALITIES_ROUTE}`);
-        dispatch(getNationalities());
+        dispatch(getNationalities({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -289,7 +289,7 @@ const useSubmitFunction = (type: string) => {
       })
       .then(() => {
         handleAlert({ msg: "User is Created Successfully", status: "success" });
-        dispatch(getUsers());
+        dispatch(getUsers({}));
         navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
         setAddUserImage("");
       })
@@ -319,7 +319,7 @@ const useSubmitFunction = (type: string) => {
           msg: "User is Updated Successfully",
           status: "success",
         });
-        dispatch(getUsers());
+        dispatch(getUsers({}));
         navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
         setEditUserImage("");
       })
@@ -331,11 +331,6 @@ const useSubmitFunction = (type: string) => {
 
   const addOwner = async (values: AddOwnerFormTypes) => {
     handleOpenFormsLoading();
-    values.idNationality = values.nationality
-      .split("(")[1]
-      .replace(")", "")
-      .trim();
-    values.nationality = values.nationality.split("(")[0].trim();
     const formData = new FormData();
     formData.append("_id", values._id);
     formData.append("personCode", values.personCode);
@@ -363,7 +358,7 @@ const useSubmitFunction = (type: string) => {
           msg: "Owner is Created Successfully",
           status: "success",
         });
-        dispatch(getOwners());
+        dispatch(getOwners({}));
         navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
         setAddOwnerImage("");
       })
@@ -383,11 +378,6 @@ const useSubmitFunction = (type: string) => {
         status: "success",
       });
     } else {
-      values.idNationality = values.nationality
-        .split("(")[1]
-        .replace(")", "")
-        .trim();
-      values.nationality = values.nationality.split("(")[0].trim();
       const formData = new FormData();
       formData.append("avatar", editOwnerImage);
       formData.append("name", values.name);
@@ -416,7 +406,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Owner is Updated Successfully",
             status: "success",
           });
-          dispatch(getOwners());
+          dispatch(getOwners({}));
           navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
           setEditOwnerImage("");
         })
@@ -442,7 +432,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
-        dispatch(getOwners());
+        dispatch(getOwners({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -487,7 +477,7 @@ const useSubmitFunction = (type: string) => {
           msg: "Company is Created Successfully",
           status: "success",
         });
-        dispatch(getCompanies());
+        dispatch(getCompanies({}));
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
         setAddCompanyImage("");
       })
@@ -546,7 +536,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Company is Updated Successfully",
             status: "success",
           });
-          dispatch(getCompanies());
+          dispatch(getCompanies({}));
           navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
           setEditCompanyImage("");
         })
@@ -572,7 +562,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
-        dispatch(getCompanies());
+        dispatch(getCompanies({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -594,7 +584,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Owner is Deleted Successfully",
             status: "success",
           });
-          dispatch(getOwners());
+          dispatch(getOwners({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -612,7 +602,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Job is Deleted Successfully",
             status: "success",
           });
-          dispatch(getJobs());
+          dispatch(getJobs({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -635,7 +625,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Nationality is Deleted Successfully",
             status: "success",
           });
-          dispatch(getNationalities());
+          dispatch(getNationalities({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -653,7 +643,7 @@ const useSubmitFunction = (type: string) => {
             msg: "User is Deleted Successfully",
             status: "success",
           });
-          dispatch(getUsers());
+          dispatch(getUsers({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -671,7 +661,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Company is Deleted Successfully",
             status: "success",
           });
-          dispatch(getCompanies());
+          dispatch(getCompanies({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {

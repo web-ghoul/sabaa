@@ -20,7 +20,9 @@ const Profile = () => {
     <PrimaryBox>
       <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
         <BreadCrumbs>
-          <Typography key="2">Profile</Typography>
+          <Typography variant="h6" key="2">
+            Profile
+          </Typography>
         </BreadCrumbs>
         <UserProfile user={user} isLoading={isLoading} />
       </PrimaryContainer>

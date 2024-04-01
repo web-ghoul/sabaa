@@ -1,9 +1,13 @@
 import { CircularProgress } from "@mui/material";
 import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
+import { SyntheticEvent } from "react";
 import { PrimaryAutoComplete } from "../../mui/autoCompletes/PrimaryAutoComplete";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { AutoCompleteSearchTypes } from "../../types/components.types";
-import { AllFormiksTypes, FormiksTypes } from "../../types/forms.types";
+import {
+  AddCompanyFormikTypes,
+  AddOwnerFormikTypes,
+} from "../../types/forms.types";
 import { NationalityTypes, OwnerTypes } from "../../types/store.types";
 
 export default function AutoCompleteSearch({
@@ -11,15 +15,28 @@ export default function AutoCompleteSearch({
   loading,
   multiple,
   options,
-  formik,
   name,
-}: AutoCompleteSearchTypes & FormiksTypes) {
-  const error =
-    formik.touched[name as keyof AllFormiksTypes] &&
-    Boolean(formik.errors[name as keyof AllFormiksTypes]);
-  const helperText = error
-    ? (formik.errors[name as keyof AllFormiksTypes] as string)
-    : undefined;
+  formik,
+}: AutoCompleteSearchTypes) {
+  const handleChange = (_: SyntheticEvent, newValue: unknown) => {
+    if (name === "nationality") {
+      const nationality = newValue as NationalityTypes;
+      (formik as unknown as AddOwnerFormikTypes).values.nationality =
+        nationality.nationality;
+      (formik as unknown as AddOwnerFormikTypes).values.idNationality =
+        nationality._id;
+    } else if (name === "ownerId") {
+      const owners = newValue as OwnerTypes[];
+      (formik as unknown as AddCompanyFormikTypes).values.ownerId = owners.map(
+        (owner) => owner._id
+      );
+    } else if (name === "proCode") {
+      const owners = newValue as OwnerTypes[];
+      (formik as unknown as AddCompanyFormikTypes).values.ownerId = owners.map(
+        (owner) => owner._id
+      );
+    }
+  };
 
   return (
     <PrimaryAutoComplete
@@ -37,18 +54,12 @@ export default function AutoCompleteSearch({
         const typedOption = option as OwnerTypes;
         return typedOption ? `${typedOption.name} ( ${typedOption._id} )` : "";
       }}
+      onChange={handleChange}
       renderInput={(params: AutocompleteRenderInputParams) => (
         <PrimaryTextField
           {...params}
-          id={name}
           type={"text"}
-          name={name}
-          value={formik.values[name as keyof AllFormiksTypes]}
           label={label}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={error}
-          helperText={helperText}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

@@ -22,7 +22,7 @@ const AddOwnerForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getNationalities());
+    dispatch(getNationalities({}));
   }, [dispatch]);
 
   return (
@@ -52,13 +52,13 @@ const AddOwnerForm = ({ formik }: FormiksTypes) => {
         <Input formik={formik} label={"Emirates ID"} name={"emiratesId"} />
         <Input formik={formik} label={"UID Number"} name={"_id"} />
         <Input formik={formik} label={"Person Code"} name={"personCode"} />
+        <Input formik={formik} label={"Email"} name={"email"} />
+        <Input formik={formik} label={"State"} name={"state"} />
+        <Input formik={formik} label={"Address"} name={"address"} />
         <Box className={`grid justify-stretch items-center gap-2`}>
           <Typography variant="h6">Date of Birth</Typography>
           <Input formik={formik} type={"date"} name={"dob"} />
         </Box>
-        <Input formik={formik} label={"Email"} name={"email"} />
-        <Input formik={formik} label={"State"} name={"state"} />
-        <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} />
       </Box>
 

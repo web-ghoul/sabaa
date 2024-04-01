@@ -24,9 +24,11 @@ const UploadOwners = () => {
               className={`text-black !font-[600] hover:text-primary`}
               key={1}
             >
-              Owners
+              <Typography variant="h6">Owners</Typography>
             </Link>
-            <Typography key="2">Upload Owners</Typography>
+            <Typography variant="h6" key="2">
+              Upload Owners
+            </Typography>
           </BreadCrumbs>
         </Box>
         <Box className={`grid justify-stretch items-start gap-8`}>

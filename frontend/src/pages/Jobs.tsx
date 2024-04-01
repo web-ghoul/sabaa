@@ -1,70 +1,31 @@
-import { Box, Typography } from "@mui/material";
-import { useContext, useEffect } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
+import { Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
-import { FormsContext } from "../contexts/FormsContext";
 import Forms from "../forms/Forms";
-import { handleAlert } from "../functions/handleAlert";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { PrimaryButton } from "../mui/buttons/PrimaryButton";
 import { getJobs } from "../store/jobsSlice";
 import { AppDispatch, RootState } from "../store/store";
 import JobsTable from "../tables/JobsTable/JobsTable";
 
 const Jobs = () => {
-  const { handleOpenAddJobModal } = useContext(FormsContext);
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, jobs } = useSelector((state: RootState) => state.jobs);
 
   useEffect(() => {
-    dispatch(getJobs());
+    dispatch(getJobs({}));
   }, [dispatch]);
 
   return (
     <PrimaryBox>
       <PrimaryContainer className={`grid justify-stretch items-start gap-6`}>
-        <Box className={`flex justify-between items-center gap-4`}>
-          <BreadCrumbs>
-            <Typography key="2">Jobs</Typography>
-          </BreadCrumbs>
-          <Box className={`flex justify-end items-center gap-2`}>
-            <PrimaryButton
-              className="!bg-excel"
-              onClick={() =>
-                navigate(`${import.meta.env.VITE_UPLOAD_JOBS_ROUTE}`)
-              }
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Upload Excel</Typography>
-            </PrimaryButton>
-            <PrimaryButton onClick={handleOpenAddJobModal}>
-              Add Job
-            </PrimaryButton>
-          </Box>
-        </Box>
-        <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-          <Forms type={"jobsOptions"} />
-          <Box className={`flex justify-end items-center gap-4`}>
-            <PrimaryButton
-              className={`!bg-excel`}
-              onClick={() => handleAlert({ msg: "Under Development" })}
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Excel</Typography>
-            </PrimaryButton>
-            <PrimaryButton
-              className={`!bg-excel`}
-              onClick={() => handleAlert({ msg: "Under Development" })}
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Excel All</Typography>
-            </PrimaryButton>
-          </Box>
-        </Box>
+        <BreadCrumbs>
+          <Typography variant="h6" key="2">
+            Jobs
+          </Typography>
+        </BreadCrumbs>
+        <Forms type={"jobsOptions"} />
         <JobsTable data={jobs} isLoading={isLoading} />
       </PrimaryContainer>
     </PrimaryBox>

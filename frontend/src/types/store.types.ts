@@ -13,6 +13,7 @@ interface JobsValuesTypes {
 interface OwnerValuesTypes {
   isLoading: boolean;
   owner: OwnerTypes | null;
+  companies: CompanyTypes | null;
 }
 
 interface OwnersValuesTypes {
@@ -121,7 +122,7 @@ interface CompanyTypes {
   tenancyContractValue: string;
   tenancyContractExp: string;
   remarks: string;
-  user: string;
+  user?: string;
 }
 
 interface EmployeeTypes {

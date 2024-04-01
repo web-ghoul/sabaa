@@ -1,7 +1,8 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
 import { MouseEvent, useContext } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -96,18 +97,24 @@ const CompaniesTable = ({
                   component="th"
                   scope="row"
                 >
-                  <UserBox
-                    username={row.name}
-                    head={"subtitle1"}
-                    avatar={row.logo}
-                    size={"small"}
-                  />
+                  <Link
+                    to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${row._id}`}
+                  >
+                    <UserBox
+                      username={row.name}
+                      head={"subtitle1"}
+                      avatar={row.logo}
+                      size={"small"}
+                    />
+                  </Link>
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
                 <PrimaryTableCell align="center">
                   {row.molCode}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.status}</PrimaryTableCell>
+                <PrimaryTableCell align="center">
+                  <StatusBox status={row.status} />
+                </PrimaryTableCell>
                 <PrimaryTableCell align="center">
                   {handleDate(row.immgCardExpiry)}
                 </PrimaryTableCell>

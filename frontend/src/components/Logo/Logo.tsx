@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { LogoTypes } from "../../types/components.types";
 
-const Logo = ({ color }: LogoTypes) => {
+const Logo = ({ color, noTitle }: LogoTypes) => {
   return (
     <Box className={`flex justify-start items-center gap-2`}>
       <Box className={`rounded-full overflow-hidden`}>
@@ -13,14 +13,16 @@ const Logo = ({ color }: LogoTypes) => {
           height={40}
         />
       </Box>
-      <Typography
-        variant="h5"
-        className={`!font-[700] ${
-          color === "light" ? "text-white" : "text-secondary"
-        }`}
-      >
-        SABAA
-      </Typography>
+      {!noTitle && (
+        <Typography
+          variant="h5"
+          className={`!font-[700] ${
+            color === "light" ? "text-white" : "text-secondary"
+          }`}
+        >
+          SABAA
+        </Typography>
+      )}
     </Box>
   );
 };

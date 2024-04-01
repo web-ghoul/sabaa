@@ -23,7 +23,9 @@ const User = () => {
       <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
         <Box className={`flex justify-between items-center gap-4`}>
           <BreadCrumbs>
-            <Typography key="2">Users</Typography>
+            <Typography variant="h6" key="2">
+              Users
+            </Typography>
           </BreadCrumbs>
         </Box>
         <UserProfile user={user} isLoading={isLoading} />

@@ -10,7 +10,6 @@ import {
   GroupRounded,
   ListAltRounded,
   MenuOpenRounded,
-  MenuRounded,
   PendingActionsRounded,
   ReceiptLongRounded,
   SettingsRounded,
@@ -90,7 +89,7 @@ const Sidebar = () => {
             </>
           ) : (
             <IconButton onClick={handleOpenSidebar}>
-              <MenuRounded className={`text-primary`} />
+              <Logo color={"light"} noTitle={true} />
             </IconButton>
           )}
         </Box>

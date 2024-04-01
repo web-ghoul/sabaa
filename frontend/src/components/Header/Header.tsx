@@ -6,7 +6,7 @@ import { SidebarContext } from "../../contexts/SidebarsContext.tsx";
 import { PrimaryContainer } from "../../mui/boxes&containers/PrimaryContainer.ts";
 import { RootState } from "../../store/store.ts";
 import BadgeNotification from "../BadgeNotification/BadgeNotification.tsx";
-import Logo from "../Logo/Logo.tsx";
+import SpecialsButtons from "../SpecialsButtons/SpecialsButtons.tsx";
 import UserBox from "../UserBox/UserBox.tsx";
 import UserMenu from "../UserMenu/UserMenu.tsx";
 
@@ -48,9 +48,7 @@ const Header = () => {
           className={`!flex justify-between items-center gap-4 relative`}
           sx={{ paddingLeft: `${sidebarWidth}` }}
         >
-          <Box className={`flex justify-start items-center gap-4`}>
-            <Logo />
-          </Box>
+          <SpecialsButtons />
           <Box className={`flex justify-end items-center gap-6`}>
             <BadgeNotification not={4} />
             {!isLoading && user && (

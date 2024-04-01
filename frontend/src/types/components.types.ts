@@ -1,4 +1,6 @@
+import { FormikProps } from "formik";
 import { ReactNode } from "react";
+import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
   EmployeeTypes,
@@ -10,6 +12,7 @@ import {
 
 interface LogoTypes {
   color?: string;
+  noTitle?: boolean;
 }
 
 interface UserBoxTypes {
@@ -77,8 +80,9 @@ interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
   loading?: boolean;
-  options: NationalityTypes[];
+  options: NationalityTypes[] | null;
   name: string;
+  formik: FormikProps<AllFormiksTypes>;
 }
 
 interface ProfileDetailsTypes {

@@ -4,15 +4,15 @@ import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 import { SortBoxTypes } from "../types/components.types";
 
 const SortBox = ({ title, handling, asc, desc, jc }: SortBoxTypes) => {
-  const iconClasses = `!text-[17px] md:!text-[15px] sm:!text-[12px]`;
+  const iconClasses = `!text-[16px] md:!text-[14px] sm:!text-[12px]`;
 
   return (
     <Box
       onClick={handling}
       className={`flex justify-${jc} items-center gap-2 md:gap-1 cursor-pointer`}
     >
-      <Box className={`text-white`}>{title}</Box>
-      <IconButton onClick={handling} className={`!p-0 !text-white`}>
+      {title}
+      <IconButton onClick={handling} className={`!p-0 `}>
         {asc ? (
           <FaSortAmountDown className={iconClasses} />
         ) : desc ? (

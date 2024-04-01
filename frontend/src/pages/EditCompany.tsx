@@ -14,9 +14,11 @@ const EditCompany = () => {
             to={`${import.meta.env.VITE_COMPANIES_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            Companies
+            <Typography variant="h6">Companies</Typography>
           </Link>
-          <Typography key="2">Edit Company</Typography>
+          <Typography variant="h6" key="2">
+            Edit Company
+          </Typography>
         </BreadCrumbs>
         <Forms type={"editCompany"} />
       </PrimaryContainer>

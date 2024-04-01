@@ -24,9 +24,11 @@ const UploadNationalities = () => {
               className={`text-black !font-[600] hover:text-primary`}
               key={1}
             >
-              Nationalities
+              <Typography variant="h6">Nationalities</Typography>
             </Link>
-            <Typography key="2">Upload Nationalities</Typography>
+            <Typography variant="h6" key="2">
+              Upload Nationalities
+            </Typography>
           </BreadCrumbs>
         </Box>
         <Box className={`grid justify-stretch items-start gap-8`}>

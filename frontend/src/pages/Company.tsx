@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
@@ -25,7 +25,15 @@ const Company = () => {
       <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
         <Box className={`flex justify-between items-center gap-4`}>
           <BreadCrumbs>
-            <Typography key="2">Users</Typography>
+            <Link
+              to={`${import.meta.env.VITE_COMPANIES_ROUTE}`}
+              className={`text-black !font-[600] hover:text-primary`}
+            >
+              <Typography variant="h6">Companies</Typography>
+            </Link>
+            <Typography variant="h6" key="2">
+              {company && company.name}
+            </Typography>
           </BreadCrumbs>
         </Box>
         <CompanyProfile company={company} isLoading={isLoading} />

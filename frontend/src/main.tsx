@@ -7,6 +7,7 @@ import AppProvider from "./contexts/AppContext.tsx";
 import ExcelsProvider from "./contexts/ExcelsContext.tsx";
 import FormsProvider from "./contexts/FormsContext.tsx";
 import SidebarProvider from "./contexts/SidebarsContext.tsx";
+import TabsProvider from "./contexts/TabsContext.tsx";
 import "./index.css";
 import { router } from "./router.tsx";
 import { store } from "./store/store.ts";
@@ -24,13 +25,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <ExcelsProvider>
-          <FormsProvider>
-            <SidebarProvider>
-              <AppProvider>
-                <RouterProvider router={router} />
-              </AppProvider>
-            </SidebarProvider>
-          </FormsProvider>
+          <TabsProvider>
+            <FormsProvider>
+              <SidebarProvider>
+                <AppProvider>
+                  <RouterProvider router={router} />
+                </AppProvider>
+              </SidebarProvider>
+            </FormsProvider>
+          </TabsProvider>
         </ExcelsProvider>
       </Provider>
     </ThemeProvider>

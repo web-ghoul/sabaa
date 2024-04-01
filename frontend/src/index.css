@@ -25,3 +25,7 @@ body {
   background-color: #00A4E4;
   border-radius: 30px;
 }
+
+ul.MuiAutocomplete-listbox {
+  font-size: 14px !important
+}

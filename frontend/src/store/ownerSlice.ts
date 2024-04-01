@@ -22,6 +22,7 @@ export const getOwner = createAsyncThunk(
 const initialState: OwnerValuesTypes = {
   isLoading: true,
   owner: null,
+  companies: null,
 };
 
 export const ownerSlice = createSlice({
@@ -34,7 +35,8 @@ export const ownerSlice = createSlice({
     });
     builder.addCase(getOwner.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.owner = payload;
+      state.owner = payload.owner;
+      state.companies = payload.companies;
     });
     builder.addCase(getOwner.rejected, (_, action) => {
       if (action.payload) {

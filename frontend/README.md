@@ -69,3 +69,32 @@ New Idea
 
 Questions :
   1- What is Company Categories
+
+
+
+Notes
+
+Missing in Company Form
+1- Liceanse Issue place
+2- Zipe Code
+3- Tenancy Contract Value
+4- Tenancy Contract Expire
+
+controlled by admin:
+1- Status of company
+2- Estishmnet type of company
+3- MOL Category Of Company
+4- License Issue Place
+5- State of Company  
+
+Search Fro jobs 
+missing search by job title
+
+Change color of Table Head
+
+Edit Table
+https://admin.pixelstrap.net/dunzo/template/list-products.html#
+
+Buttons in header (Add Company , Add PRO , Add Transaction , Add Owner)
+
+Open Sidebar For Owner , Company , Employee , PROs , Transactions

@@ -14,9 +14,11 @@ const EditUser = () => {
             to={`${import.meta.env.VITE_USERS_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            Users
+            <Typography variant="h6">Users</Typography>
           </Link>
-          <Typography key="2">Edit User</Typography>
+          <Typography variant="h6" key="2">
+            Edit User
+          </Typography>
         </BreadCrumbs>
         <Forms type={"editUser"} />
       </PrimaryContainer>

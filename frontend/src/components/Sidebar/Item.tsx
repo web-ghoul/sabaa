@@ -21,11 +21,15 @@ const Item = ({ icon, title, url }: SidebarItemTypes) => {
   ))(({ theme }) => ({
     display: `${openSidebar && "none"}`,
     [`& .${tooltipClasses.arrow}`]: {
-      color: theme.palette.primary.main,
+      opactiy: "0 !important",
+      backgroundColor: "transparent",
+      color: "transparent",
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.main,
       boxShadow: theme.shadows[10],
+      fontSize: `14px !important`,
+      padding: "10px !important",
     },
   }));
 

@@ -58,31 +58,6 @@ interface ExcelsContextProps {
   handleDeleteNationalityFromSheet: () => void;
 }
 
-interface OwnersSheetTypes {
-  fileName: string;
-  data: Array<OwnerTypes>;
-}
-
-interface CompaniesSheetTypes {
-  fileName: string;
-  data: Array<CompanyTypes>;
-}
-
-interface UsersSheetTypes {
-  fileName: string;
-  data: Array<UserTypes>;
-}
-
-interface JobsSheetTypes {
-  fileName: string;
-  data: Array<JobTypes>;
-}
-
-interface NationalitiesSheetTypes {
-  fileName: string;
-  data: Array<NationalityTypes>;
-}
-
 interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
@@ -147,6 +122,40 @@ interface FormsContextTypes {
   setEditableUserData: (user: UserTypes | null) => void;
 }
 
+interface TabsContextProps {
+  userTabsValue: number;
+  setUserTabsValue: (value: number) => void;
+  ownerTabsValue: number;
+  setOwnerTabsValue: (value: number) => void;
+  companyTabsValue: number;
+  setCompanyTabsValue: (value: number) => void;
+}
+
+interface OwnersSheetTypes {
+  fileName: string;
+  data: Array<OwnerTypes>;
+}
+
+interface CompaniesSheetTypes {
+  fileName: string;
+  data: Array<CompanyTypes>;
+}
+
+interface UsersSheetTypes {
+  fileName: string;
+  data: Array<UserTypes>;
+}
+
+interface JobsSheetTypes {
+  fileName: string;
+  data: Array<JobTypes>;
+}
+
+interface NationalitiesSheetTypes {
+  fileName: string;
+  data: Array<NationalityTypes>;
+}
+
 export type {
   AppContextProps,
   CompaniesSheetTypes,
@@ -156,5 +165,6 @@ export type {
   NationalitiesSheetTypes,
   OwnersSheetTypes,
   SidebarsContextProps,
+  TabsContextProps,
   UsersSheetTypes,
 };
