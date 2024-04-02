@@ -66,7 +66,7 @@ export class UserService {
     return {message : "account updated successfully"}
   }
 
-  listUsers(limit: number, page: number, search:string,sortType:string): Promise<User[]> {
+  listUsers(limit: number, page: number, search:string,sortType:string,status:string = '',role:string = ''): Promise<User[]> {
 
     const sort:any = {}
     if(sortType == "name_asc")
@@ -76,10 +76,12 @@ export class UserService {
     {
       sort["createdAt"] = -1; 
     }
-    return this.userModel.find({
-      name: { $regex: new RegExp(search, "i") },
-     
-    }, "-password").limit(limit).skip(page*limit).sort(sort);
+    const query = {
+      name: { $regex: new RegExp(search, "i") },}
+
+    status != '' ? query['status'] = status : null;
+    role != '' ? query['role'] = role : null;
+    return this.userModel.find(query, "-password").limit(limit).skip(page*limit).sort(sort);
 }
   displayUser(id: Schema.Types.ObjectId): Promise<User> {
     return this.userModel.findById(id);

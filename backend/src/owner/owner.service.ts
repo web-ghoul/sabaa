@@ -25,7 +25,7 @@ export class OwnerService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields: string[],sortType:string): Promise<Owner[]> {
+  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,date:string = '',nationality:string = '',state:string = ''): Promise<Owner[]> {
     const projection: any = {};
     if (fields && fields.length > 0) {
         fields.forEach(field => {
@@ -42,16 +42,14 @@ export class OwnerService {
     }else
     {
       sort["createdAt"] = -1; 
-    }
-    let query = {}
+    } 
+    const query = {$or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]}
+    date != '' ? query["dob"] = { $gte: new Date(date) } : null; 
+    nationality != '' ? query["nationality"] = nationality : null;
+    state != '' ? query["state"] = state : null;
+   
 
-    
-    
-
-    return this.ownerModel.find({
-      $or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]
-      
-    }).select(projection).limit(limit).skip(page*limit).sort(sort);
+    return this.ownerModel.find(query).select(projection).limit(limit).skip(page*limit).sort(sort);
   }
 
   async findOne(id: string) {
