@@ -29,7 +29,7 @@ export class NationalityService {
     const sort:any = {}
     if(sortType == "nationality_asc")
     {
-      sort["name"] = 1; 
+      sort["nationality"] = 1; 
     }else if(sortType == "code_asc")
     {
       sort["_id"] = 1; 
@@ -39,9 +39,12 @@ export class NationalityService {
     }
 
     return this.nationalityModel.find({
-      nationality: { $regex: new RegExp(search, "i") },
-      _id: { $regex: new RegExp(search, "i") }
-    }).select(projection).limit(limit).skip(page*limit).sort({createdAt: -1});
+  $or: [
+    { nationality: { $regex: new RegExp(search, "i") } },
+    { _id: { $regex: new RegExp(search, "i") } }
+  ]
+}).select(projection).limit(limit).skip(page * limit).sort({ createdAt: -1 });
+
   }
 
   findOne(id: string) {
