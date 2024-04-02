@@ -38,7 +38,13 @@ const initialState: CompaniesValuesTypes = {
 export const companiesSlice = createSlice({
   name: "companies",
   initialState,
-  reducers: {},
+  reducers: {
+    reverseCompanies: (state) => {
+      if (state.companies) {
+        state.companies = state.companies.reverse();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCompanies.pending, (state) => {
       state.isLoading = true;
@@ -57,4 +63,5 @@ export const companiesSlice = createSlice({
   },
 });
 
+export const { reverseCompanies } = companiesSlice.actions;
 export default companiesSlice.reducer;

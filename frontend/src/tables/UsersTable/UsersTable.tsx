@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -15,8 +15,9 @@ import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { getUsersCounter } from "../../store/usersCounterSlice";
+import { getUsers, reverseUsers } from "../../store/usersSlice";
 import { UsersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -26,7 +27,7 @@ import UsersTableMenu from "./UsersTableMenu";
 import { UsersTableRow } from "./UsersTableRow";
 
 const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
-  const { handleOpenTableMenu } = useContext(AppContext);
+  const { handleOpenTableMenu, setUsersPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
@@ -37,11 +38,22 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   );
   const dispatch = useDispatch<AppDispatch>();
 
+  const getAllParams = () => {
+    setUsersPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    return allParams;
+  };
+
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ sort: "name_desc" });
+      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      dispatch(reverseUsers());
     } else {
-      setSearchParams({ sort: "name_asc" });
+      dispatch(getUsers({ ...getAllParams(), sort: "name_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "name_asc" });
     }
   };
 

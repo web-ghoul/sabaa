@@ -8,7 +8,6 @@ const SortBox = ({ title, handling, asc, desc, jc }: SortBoxTypes) => {
 
   return (
     <Box
-      onClick={handling}
       className={`flex justify-${jc} items-center gap-2 md:gap-1 cursor-pointer`}
     >
       {title}

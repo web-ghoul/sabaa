@@ -7,8 +7,6 @@ export const getOwners = createAsyncThunk(
   "/owners/getOwners",
   async (args: OwnersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-    console.log(args);
-
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/owner?search=${
         (args && args.search) || ""
@@ -35,7 +33,13 @@ const initialState: OwnersValuesTypes = {
 export const ownersSlice = createSlice({
   name: "owners",
   initialState,
-  reducers: {},
+  reducers: {
+    reverseOwners: (state) => {
+      if (state.owners) {
+        state.owners = state.owners.reverse();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getOwners.pending, (state) => {
       state.isLoading = true;
@@ -54,4 +58,5 @@ export const ownersSlice = createSlice({
   },
 });
 
+export const { reverseOwners } = ownersSlice.actions;
 export default ownersSlice.reducer;

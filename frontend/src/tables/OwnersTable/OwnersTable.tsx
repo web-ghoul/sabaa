@@ -15,6 +15,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
+import { getOwners, reverseOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { OwnersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
@@ -25,7 +26,7 @@ import OwnersTableMenu from "./OwnersTableMenu";
 import { OwnersTableRow } from "./OwnersTableRow";
 
 const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
-  const { handleOpenTableMenu } = useContext(AppContext);
+  const { handleOpenTableMenu, setOwnersPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { setOwnerIndex } = useContext(ExcelsContext);
@@ -37,19 +38,32 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
     (state: RootState) => state.ownersCounter
   );
 
+  const getAllParams = () => {
+    setOwnersPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    return allParams;
+  };
+
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ sort: "name_desc" });
+      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      dispatch(reverseOwners());
     } else {
-      setSearchParams({ sort: "name_asc" });
+      dispatch(getOwners({ ...getAllParams(), sort: "name_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "name_asc" });
     }
   };
 
   const handleSortByCode = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ sort: "code_desc" });
+      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      dispatch(reverseOwners());
     } else {
-      setSearchParams({ sort: "code_asc" });
+      dispatch(getOwners({ ...getAllParams(), sort: "code_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "code_asc" });
     }
   };
 
@@ -127,7 +141,9 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
                     {row.phone}
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
+                <PrimaryTableCell align="center">
+                  {row.personCode}
+                </PrimaryTableCell>
                 {!lgScreen && (
                   <PrimaryTableCell align="center">
                     {row.nationality}

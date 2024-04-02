@@ -31,7 +31,13 @@ const initialState: JobsValuesTypes = {
 export const jobsSlice = createSlice({
   name: "jobs",
   initialState,
-  reducers: {},
+  reducers: {
+    reverseJobs: (state) => {
+      if (state.jobs) {
+        state.jobs = state.jobs.reverse();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getJobs.pending, (state) => {
       state.isLoading = true;
@@ -50,4 +56,5 @@ export const jobsSlice = createSlice({
   },
 });
 
+export const { reverseJobs } = jobsSlice.actions;
 export default jobsSlice.reducer;

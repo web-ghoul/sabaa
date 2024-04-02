@@ -14,6 +14,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getJobsCounter } from "../../store/jobsCounterSlice";
+import { getJobs, reverseJobs } from "../../store/jobsSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { JobsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
@@ -24,7 +25,7 @@ import { JobsTableRow } from "./JobsTableRow";
 import LoadingJobsRow from "./LoadingJobsRow";
 
 const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
-  const { handleOpenTableMenu } = useContext(AppContext);
+  const { handleOpenTableMenu, setJobsPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
@@ -32,19 +33,32 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
   const dispatch = useDispatch<AppDispatch>();
 
+  const getAllParams = () => {
+    setJobsPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    return allParams;
+  };
+
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
-      setSearchParams({ sort: "job_title_desc" });
+      setSearchParams({ ...getAllParams(), sort: "job_title_desc" });
+      dispatch(reverseJobs());
     } else {
-      setSearchParams({ sort: "job_title_asc" });
+      dispatch(getJobs({ ...getAllParams(), sort: "job_title_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "job_title_asc" });
     }
   };
 
   const handleSortByMOHRECode = () => {
-    if (searchParams.get("sort") === "MOHRE_code_asc") {
-      setSearchParams({ sort: "MOHRE_code_desc" });
+    if (searchParams.get("sort") === "code_asc") {
+      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      dispatch(reverseJobs());
     } else {
-      setSearchParams({ sort: "MOHRE_code_asc" });
+      dispatch(getJobs({ ...getAllParams(), sort: "code_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "code_asc" });
     }
   };
 
@@ -82,8 +96,8 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
             <SortBox
               title={"MOHRE Code"}
               handling={handleSortByMOHRECode}
-              asc={searchParams.get("sort") === "MOHRE_code_asc"}
-              desc={searchParams.get("sort") === "MOHRE_code_desc"}
+              asc={searchParams.get("sort") === "code_asc"}
+              desc={searchParams.get("sort") === "code_desc"}
               jc={"center"}
             />
           </PrimaryTableCell>
