@@ -66,6 +66,7 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
     setSearchParams({});
     dispatch(getNationalities({}));
     setParams({});
+    (formik as unknown as NationalitiesOptionsFormikTypes).values.limit = "";
   };
 
   useEffect(() => {

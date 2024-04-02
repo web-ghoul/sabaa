@@ -6,13 +6,18 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useSearchParams
+} from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { handleAlert } from "../../functions/handleAlert";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
 import { getOwners, reverseOwners } from "../../store/ownersSlice";
@@ -28,7 +33,6 @@ import { OwnersTableRow } from "./OwnersTableRow";
 const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const { handleOpenTableMenu, setOwnersPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
@@ -37,6 +41,8 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const { ownersCounter } = useSelector(
     (state: RootState) => state.ownersCounter
   );
+  const [sheet, setSheet] = useState(false);
+  const { pathname } = useLocation();
 
   const getAllParams = () => {
     setOwnersPage(1);
@@ -67,8 +73,10 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
     }
   };
 
-  const handleView = (id: string) => {
-    navigate(`${import.meta.env.VITE_OWNERS_ROUTE}/${id}`);
+  const handleView = () => {
+    if (sheet) {
+      handleAlert({ msg: "Under Development" });
+    }
   };
 
   const handleOpenMenu = (
@@ -81,6 +89,14 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
     setOwnerIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
+
+  useEffect(() => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`) {
+      setSheet(true);
+    } else {
+      setSheet(false);
+    }
+  }, [pathname, sheet]);
 
   useEffect(() => {
     dispatch(getOwnersCounter());
@@ -124,20 +140,29 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
               return (
                 <OwnersTableRow key={i}>
                   <PrimaryTableCell
-                    onClick={() => handleView(row._id)}
+                    onClick={() => handleView()}
                     component="th"
                     scope="row"
                   >
-                    <Link
-                      to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}
-                    >
+                    {sheet ? (
                       <UserBox
                         username={row.name}
                         head={"subtitle1"}
                         size={"small"}
                         avatar={row.avatar}
                       />
-                    </Link>
+                    ) : (
+                      <Link
+                        to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}
+                      >
+                        <UserBox
+                          username={row.name}
+                          head={"subtitle1"}
+                          size={"small"}
+                          avatar={row.avatar}
+                        />
+                      </Link>
+                    )}
                   </PrimaryTableCell>
                   {!mdScreen && (
                     <PrimaryTableCell align="center">

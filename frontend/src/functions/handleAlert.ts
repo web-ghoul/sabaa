@@ -18,6 +18,7 @@ export const handleAlert = ({ msg, status, pos, icon, dur }: AlertFunTypes) => {
     duration: dur,
     position: pos,
   };
+  options.style = { fontSize: "16px" };
   if (icon) {
     options.icon = icon;
   }

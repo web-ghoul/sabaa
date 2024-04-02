@@ -22,6 +22,7 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
   useEffect(() => {
     dispatch(getOwners({}));
   }, [dispatch]);
+  console.log(1);
 
   return (
     <Paper

@@ -55,6 +55,7 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
     setSearchParams({});
     dispatch(getJobs({}));
     setParams({});
+    (formik as unknown as JobsOptionsFormikTypes).values.limit = "";
   };
 
   useEffect(() => {

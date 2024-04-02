@@ -118,7 +118,6 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     //   getCompanies({ ...params, page: +value, search: searchForCompanies })
     // );
     console.log(value);
-
     handleAlert({ msg: "Under Development" });
   };
 
@@ -135,6 +134,17 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     setSearchParams({});
     dispatch(getCompanies({}));
     setParams({});
+    (formik as unknown as CompaniesOptionsFormikTypes).values.limit = "";
+    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByState =
+      "";
+    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByStatus =
+      "";
+    (
+      formik as unknown as CompaniesOptionsFormikTypes
+    ).values.filterByMOLCategory = "";
+    (
+      formik as unknown as CompaniesOptionsFormikTypes
+    ).values.filterByEstablishmentType = "";
   };
 
   useEffect(() => {

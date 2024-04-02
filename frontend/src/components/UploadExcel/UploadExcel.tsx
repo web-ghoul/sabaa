@@ -83,6 +83,7 @@ const UploadExcel = ({
         remarks: "",
         state: "",
         proCode: false,
+        createdAt: new Date(),
       };
       owner["personCode"] = `${data[i][0]}`;
       owner["name"] = `${data[i][1]}`;
@@ -130,8 +131,12 @@ const UploadExcel = ({
         remarks: "",
         email: "",
         tenancyContractValue: "",
-        tenancyContractExp: "",
+        tenancyContractExp: new Date(),
         _id: "",
+        country: "",
+        licenseIssuePlace: "",
+        zipCode: "",
+        createdAt: new Date(),
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;

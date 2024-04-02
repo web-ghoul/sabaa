@@ -6,14 +6,15 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { handleAlert } from "../../functions/handleAlert";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getCompaniesCounter } from "../../store/companiesCounterSlice";
@@ -34,7 +35,6 @@ const CompaniesTable = ({
 }: CompaniesTableTypes) => {
   const { handleOpenTableMenu, setCompaniesPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
@@ -43,7 +43,9 @@ const CompaniesTable = ({
   const { companiesCounter } = useSelector(
     (state: RootState) => state.companiesCounter
   );
+  const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const [sheet, setSheet] = useState(false);
 
   const getAllParams = () => {
     setCompaniesPage(1);
@@ -74,8 +76,10 @@ const CompaniesTable = ({
     }
   };
 
-  const handleView = (id: string) => {
-    navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}`);
+  const handleView = () => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
+      handleAlert({ msg: "Under Development" });
+    }
   };
 
   const handleOpenMenu = (
@@ -88,6 +92,14 @@ const CompaniesTable = ({
     setCompanyIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
+
+  useEffect(() => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
+      setSheet(true);
+    } else {
+      setSheet(false);
+    }
+  }, [pathname, sheet]);
 
   useEffect(() => {
     dispatch(getCompaniesCounter());
@@ -132,20 +144,29 @@ const CompaniesTable = ({
             data.map((row, i) => (
               <CompaniesTableRow key={i}>
                 <PrimaryTableCell
-                  onClick={() => handleView(row._id)}
+                  onClick={() => handleView()}
                   component="th"
                   scope="row"
                 >
-                  <Link
-                    to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${row._id}`}
-                  >
+                  {sheet ? (
                     <UserBox
                       username={row.name}
                       head={"subtitle1"}
                       avatar={row.logo}
                       size={"small"}
                     />
-                  </Link>
+                  ) : (
+                    <Link
+                      to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${row._id}`}
+                    >
+                      <UserBox
+                        username={row.name}
+                        head={"subtitle1"}
+                        avatar={row.logo}
+                        size={"small"}
+                      />
+                    </Link>
+                  )}
                 </PrimaryTableCell>
                 {!lgScreen && (
                   <PrimaryTableCell align="center">

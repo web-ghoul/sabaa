@@ -94,6 +94,11 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
     setSearchParams({});
     dispatch(getOwners({}));
     setParams({});
+    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
+      "";
+    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
+      "";
+    (formik as unknown as OwnersOptionsFormikTypes).values.limit = "";
   };
 
   const { nationalities } = useSelector(

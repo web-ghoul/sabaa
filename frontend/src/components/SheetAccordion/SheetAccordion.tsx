@@ -4,6 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Typography,
 } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -21,7 +22,7 @@ const SheetAccordion = ({
         aria-controls="panel1-content"
         id="panel1-header"
       >
-        {title}
+        <Typography variant="h6">{title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Box className={`grid justify-stretch items-center gap-6`}>

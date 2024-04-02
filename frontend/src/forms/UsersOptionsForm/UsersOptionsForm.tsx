@@ -74,6 +74,9 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
     setSearchParams({});
     dispatch(getUsers({}));
     setParams({});
+    (formik as unknown as UsersOptionsFormikTypes).values.role = "";
+    (formik as unknown as UsersOptionsFormikTypes).values.status = "";
+    (formik as unknown as UsersOptionsFormikTypes).values.limit = "";
   };
 
   useEffect(() => {

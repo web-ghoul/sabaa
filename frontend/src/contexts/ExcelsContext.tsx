@@ -103,7 +103,8 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
   const handleEditCompanyInSheet = (company: CompanyTypes) => {
     if (companyIndex) {
       const newCompaniesSheets = [...companiesSheets];
-      newCompaniesSheets[companyIndex.fileIndex].data[jobIndex.index] = company;
+      newCompaniesSheets[companyIndex.fileIndex].data[companyIndex.index] =
+        company;
       setCompaniesSheets(newCompaniesSheets);
     } else {
       handleAlert({ msg: "Error Occurs", status: "error" });
