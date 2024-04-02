@@ -14,13 +14,11 @@ const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
   const [sidebarWidth, setSidebarWidth] = useState("70px");
 
   const handleCloseSidebar = () => {
-    console.log(1);
     setOpenSidebar(false);
     setSidebarWidth("70px");
   };
 
   const handleOpenSidebar = () => {
-    console.log(2);
     setOpenSidebar(true);
     setSidebarWidth("260px");
   };

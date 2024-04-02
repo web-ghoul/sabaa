@@ -127,6 +127,7 @@ interface OwnerTypes {
   proCode: boolean;
   emiratesId: string;
   personCode: string;
+  createdAt: Date;
   user?: string;
 }
 
@@ -160,6 +161,7 @@ interface CompanyTypes {
   tenancyContractValue: string;
   tenancyContractExp: Date;
   remarks: string;
+  createdAt: Date;
   user?: string;
 }
 
@@ -206,6 +208,7 @@ interface UserTypes {
   role: string;
   phone: string;
   avatar: string;
+  createdAt: Date;
   status: string;
 }
 

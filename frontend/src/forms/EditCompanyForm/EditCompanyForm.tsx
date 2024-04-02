@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -14,10 +14,20 @@ import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
 const AddCompanyForm = ({ formik }: FormiksTypes) => {
-  const { formsLoading } = useContext(FormsContext);
+  const { formsLoading, handleCloseEditCompanyModal } =
+    useContext(FormsContext);
   const navigate = useNavigate();
   const { owners, isLoading } = useSelector((state: RootState) => state.owners);
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
+
+  const handleCancel = () => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
+      handleCloseEditCompanyModal();
+    } else {
+      navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
+    }
+  };
 
   useEffect(() => {
     dispatch(getOwners({}));
@@ -144,10 +154,7 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>Edit</SubmitButton>
-        <PrimaryButton
-          onClick={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
-          className={`!bg-error`}
-        >
+        <PrimaryButton onClick={handleCancel} className={`!bg-error`}>
           Cancel
         </PrimaryButton>
       </Box>

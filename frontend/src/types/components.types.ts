@@ -94,7 +94,7 @@ interface ProfileDetailsTypes {
 
 interface DataBoxTypes {
   title: string;
-  value: string;
+  value: string | ReactNode;
   flag?: string;
 }
 

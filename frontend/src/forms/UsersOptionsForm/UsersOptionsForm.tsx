@@ -44,10 +44,8 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      dispatch(getUsers({ ...params, search: value }));
-      setSearchForUsers(value);
-    }
+    dispatch(getUsers({ ...params, search: value }));
+    setSearchForUsers(value);
   };
 
   const handleLimitPage = (value: string) => {
@@ -156,7 +154,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
         >
           <Input
             label={"Filter By Status"}
-            name={"filterByStatus"}
+            name={"status"}
             formik={formik}
             change={handleFilterByStatus}
             options={["Active", "Pending", "Blocked"]}
@@ -164,7 +162,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Input
             label={"Filter By Role"}
-            name={"filterByRole"}
+            name={"role"}
             options={["Admin", "User"]}
             select
             formik={formik}

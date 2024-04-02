@@ -6,6 +6,7 @@ import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
+import { handleDate } from "../functions/handleDate";
 import { login as loginAction } from "../store/auth";
 import { getCompanies } from "../store/companiesSlice";
 import { getJobs } from "../store/jobsSlice";
@@ -464,7 +465,10 @@ const useSubmitFunction = (type: string) => {
     formData.append("website", values.website);
     formData.append("trn", values.trn);
     formData.append("tenancyContractValue", values.tenancyContractValue);
-    formData.append("tenancyContractExp", values.tenancyContractExp);
+    formData.append(
+      "tenancyContractExp",
+      handleDate(values.tenancyContractExp)
+    );
     formData.append("remarks", values.remarks);
     await server
       .post(`/company`, formData, {
@@ -519,7 +523,10 @@ const useSubmitFunction = (type: string) => {
       formData.append("trn", values.trn);
       formData.append("email", values.email);
       formData.append("tenancyContractValue", values.tenancyContractValue);
-      formData.append("tenancyContractExp", values.tenancyContractExp);
+      formData.append(
+        "tenancyContractExp",
+        handleDate(values.tenancyContractExp)
+      );
       formData.append("remarks", values.remarks);
       await server
         .patch(
@@ -585,6 +592,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getOwners({}));
+          navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -603,6 +611,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getJobs({}));
+          navigate(`${import.meta.env.VITE_JOBS_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -626,6 +635,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getNationalities({}));
+          navigate(`${import.meta.env.VITE_NATIONALITIES_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -644,6 +654,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getUsers({}));
+          navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -662,6 +673,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getCompanies({}));
+          navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {

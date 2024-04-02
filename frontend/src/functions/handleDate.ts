@@ -1,9 +1,12 @@
 export const handleDate = (isoDateString: Date): string => {
-  const date = new Date(isoDateString);
-  const options: object = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  return date.toLocaleDateString("ar", options);
+  if (isoDateString && new Date(isoDateString)) {
+    const date = new Date(isoDateString);
+    const options: object = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("ar", options);
+  }
+  return "";
 };

@@ -53,10 +53,8 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      dispatch(getOwners({ ...params, search: value }));
-      setSearchForOwners(value);
-    }
+    dispatch(getOwners({ ...params, search: value }));
+    setSearchForOwners(value);
   };
 
   const handleLimitPage = (value: string) => {

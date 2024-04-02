@@ -39,10 +39,8 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      dispatch(getJobs({ ...params, search: value }));
-      setSearchForJobs(value);
-    }
+    dispatch(getJobs({ ...params, search: value }));
+    setSearchForJobs(value);
   };
 
   const handleLimitPage = (value: string) => {

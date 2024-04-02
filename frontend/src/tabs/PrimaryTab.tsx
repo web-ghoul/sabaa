@@ -1,4 +1,4 @@
-import { Box, Paper, Tab, Tabs, useMediaQuery } from "@mui/material";
+import { Box, Paper, Tab, Tabs } from "@mui/material";
 import { SyntheticEvent, useContext } from "react";
 import { TabsContext } from "../contexts/TabsContext";
 import { PrimaryTabTypes } from "../types/tabs.types";
@@ -31,7 +31,6 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
     setCompanyTabsValue,
     setOwnerTabsValue,
   } = useContext(TabsContext);
-  const mdScreen = useMediaQuery("(max-width:992px)");
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     if (variant === "owner") {
@@ -59,7 +58,7 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
               ? userTabsValue
               : variant === "company" && companyTabsValue
           }
-          orientation={mdScreen ? "horizontal" : "vertical"}
+          orientation={"vertical"}
           onChange={handleChange}
           aria-label="basic tabs example"
         >

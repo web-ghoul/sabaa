@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -18,6 +19,16 @@ const EditOwnerForm = ({ formik }: FormiksTypes) => {
     (state: RootState) => state.nationalities
   );
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`) {
+      handleCloseEditOwnerModal();
+    } else {
+      navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+    }
+  };
 
   useEffect(() => {
     dispatch(getNationalities({}));
@@ -66,10 +77,7 @@ const EditOwnerForm = ({ formik }: FormiksTypes) => {
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>Edit</SubmitButton>
-        <PrimaryButton
-          onClick={handleCloseEditOwnerModal}
-          className={`!bg-error`}
-        >
+        <PrimaryButton onClick={handleCancel} className={`!bg-error`}>
           Cancel
         </PrimaryButton>
       </Box>

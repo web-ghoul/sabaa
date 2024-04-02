@@ -11,23 +11,31 @@ const DataBox = ({ title, flag, value }: DataBoxTypes) => {
       <Typography variant="h6" className={`text-primary !font-[700]`}>
         {title} :
       </Typography>
-      <Typography
-        variant="h6"
-        className={`${value.toLowerCase() === "pending" && "text-yellow-500"} ${
-          value.toLowerCase() === "active" && "text-green-500"
-        } ${
-          value.toLowerCase() === "blocked" && "text-red-500"
-        } flex justify-start items-center gap-1`}
-      >
-        {value.toLowerCase() === "admin" && (
-          <AdminPanelSettingsRounded className={"text-primary !text-[20px]"} />
-        )}
-        {value.toLowerCase() === "user" && (
-          <PersonRounded className={"text-primary !text-[20px]"} />
-        )}
-        {flag && <LazyLoadImage src={flag} alt={"flag"} />}
-        {value}
-      </Typography>
+      {typeof value === "string" ? (
+        <Typography
+          variant="h6"
+          className={`${
+            value.toLowerCase() === "pending" && "text-yellow-500"
+          } ${value.toLowerCase() === "active" && "text-green-500"} ${
+            (value.toLowerCase() === "blocked" ||
+              value.toLowerCase() === "inactive") &&
+            "text-red-500"
+          } flex justify-start items-center gap-1`}
+        >
+          {value.toLowerCase() === "admin" && (
+            <AdminPanelSettingsRounded
+              className={"text-primary !text-[20px]"}
+            />
+          )}
+          {value.toLowerCase() === "user" && (
+            <PersonRounded className={"text-primary !text-[20px]"} />
+          )}
+          {flag && <LazyLoadImage src={flag} alt={"flag"} />}
+          {value}
+        </Typography>
+      ) : (
+        value
+      )}
     </Box>
   );
 };

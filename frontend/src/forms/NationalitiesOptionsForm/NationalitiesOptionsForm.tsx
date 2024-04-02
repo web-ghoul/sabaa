@@ -45,10 +45,8 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      dispatch(getNationalities({ ...params, page: 0, search: value }));
-      setSearchForNationalities(value);
-    }
+    dispatch(getNationalities({ ...params, page: 0, search: value }));
+    setSearchForNationalities(value);
   };
   const handleLimitPage = (value: string) => {
     if (value) {

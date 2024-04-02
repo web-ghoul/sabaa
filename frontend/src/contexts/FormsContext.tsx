@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -237,6 +237,18 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable Company Data
   const [editableCompanyData, setEditableCompanyData] =
     useState<CompanyTypes | null>(null);
+
+  useEffect(() => {
+    if (editableOwnerData) {
+      setEditOwnerImage(editableOwnerData.avatar);
+    }
+    if (editableUserData) {
+      setEditUserImage(editableUserData.avatar);
+    }
+    if (editableCompanyData) {
+      setEditCompanyImage(editableCompanyData.logo);
+    }
+  }, [editableOwnerData, editableUserData, editableCompanyData]);
 
   const values = {
     formsLoading,

@@ -36,7 +36,9 @@ export const ownersSlice = createSlice({
   reducers: {
     reverseOwners: (state) => {
       if (state.owners) {
+        state.isLoading = true;
         state.owners = state.owners.reverse();
+        state.isLoading = false;
       }
     },
   },

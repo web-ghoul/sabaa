@@ -20,7 +20,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         "Transactions",
         "Activities",
       ]}
-      variant={"user"}
+      variant={"company"}
     >
       <CustomTabPanel value={companyTabsValue} index={0}>
         <ProfileDetails

@@ -98,3 +98,10 @@ https://admin.pixelstrap.net/dunzo/template/list-products.html#
 Buttons in header (Add Company , Add PRO , Add Transaction , Add Owner)
 
 Open Sidebar For Owner , Company , Employee , PROs , Transactions
+
+
+
+
+Notes
+1- Reverse of company name
+3- Status in query

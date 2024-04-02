@@ -120,45 +120,49 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
       <TableBody>
         {!isLoading
           ? data &&
-            data.map((row, i) => (
-              <OwnersTableRow key={i}>
-                <PrimaryTableCell
-                  onClick={() => handleView(row._id)}
-                  component="th"
-                  scope="row"
-                >
-                  <Link to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}>
-                    <UserBox
-                      username={row.name}
-                      head={"subtitle1"}
-                      size={"small"}
-                      avatar={row.avatar}
-                    />
-                  </Link>
-                </PrimaryTableCell>
-                {!mdScreen && (
-                  <PrimaryTableCell align="center">
-                    {row.phone}
+            data.map((row, i) => {
+              return (
+                <OwnersTableRow key={i}>
+                  <PrimaryTableCell
+                    onClick={() => handleView(row._id)}
+                    component="th"
+                    scope="row"
+                  >
+                    <Link
+                      to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}
+                    >
+                      <UserBox
+                        username={row.name}
+                        head={"subtitle1"}
+                        size={"small"}
+                        avatar={row.avatar}
+                      />
+                    </Link>
                   </PrimaryTableCell>
-                )}
-                <PrimaryTableCell align="center">
-                  {row.personCode}
-                </PrimaryTableCell>
-                {!lgScreen && (
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.phone}
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
-                    {row.nationality}
+                    {row.personCode}
                   </PrimaryTableCell>
-                )}
-                <PrimaryTableCell align="center">
-                  {row.emiratesId}
-                </PrimaryTableCell>
-                <PrimaryTableCell align="right">
-                  <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                    <MoreVertRounded />
-                  </IconButton>
-                </PrimaryTableCell>
-              </OwnersTableRow>
-            ))
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.nationality}
+                    </PrimaryTableCell>
+                  )}
+                  <PrimaryTableCell align="center">
+                    {row.emiratesId}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="right">
+                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                      <MoreVertRounded />
+                    </IconButton>
+                  </PrimaryTableCell>
+                </OwnersTableRow>
+              );
+            })
           : new Array(handleRandomNumber())
               .fill(0)
               .map((_, i) => <LoadingOwnersRow key={i} />)}

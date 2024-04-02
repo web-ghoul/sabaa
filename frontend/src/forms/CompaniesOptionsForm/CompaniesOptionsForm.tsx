@@ -56,10 +56,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleSearch = (value: string) => {
-    if (value) {
-      dispatch(getCompanies({ ...params, page: 0, search: value }));
-      setSearchForCompanies(value);
-    }
+    dispatch(getCompanies({ ...params, page: 0, search: value }));
+    setSearchForCompanies(value);
   };
 
   const handleLimitPage = (value: string) => {
@@ -234,7 +232,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               name={"filterByStatus"}
               formik={formik}
               change={handleFilterByStatus}
-              options={[]}
+              options={["Active", "Inactive"]}
               select
             />
             <Input
@@ -242,7 +240,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               name={"filterByState"}
               formik={formik}
               change={handleFilterByState}
-              options={[]}
+              options={["dubai"]}
               select
             />
             <Input
