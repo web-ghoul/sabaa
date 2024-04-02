@@ -34,7 +34,13 @@ const initialState: NationalitiesValuesTypes = {
 export const nationalitiesSlice = createSlice({
   name: "nationalities",
   initialState,
-  reducers: {},
+  reducers: {
+    reverseNationalities: (state) => {
+      if (state.nationalities) {
+        state.nationalities = state.nationalities.reverse();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getNationalities.pending, (state) => {
       state.isLoading = true;
@@ -53,4 +59,5 @@ export const nationalitiesSlice = createSlice({
   },
 });
 
+export const { reverseNationalities } = nationalitiesSlice.actions;
 export default nationalitiesSlice.reducer;

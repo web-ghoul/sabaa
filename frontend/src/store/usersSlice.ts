@@ -33,7 +33,13 @@ const initialState: UsersValuesTypes = {
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    reverseUsers: (state) => {
+      if (state.users) {
+        state.users = state.users.reverse();
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsers.pending, (state) => {
       state.isLoading = true;
@@ -52,4 +58,5 @@ export const usersSlice = createSlice({
   },
 });
 
+export const { reverseUsers } = usersSlice.actions;
 export default usersSlice.reducer;

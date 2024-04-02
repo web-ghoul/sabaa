@@ -17,6 +17,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getCompaniesCounter } from "../../store/companiesCounterSlice";
+import { getCompanies, reverseCompanies } from "../../store/companiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { CompaniesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
@@ -31,7 +32,7 @@ const CompaniesTable = ({
   isLoading,
   fileIndex,
 }: CompaniesTableTypes) => {
-  const { handleOpenTableMenu } = useContext(AppContext);
+  const { handleOpenTableMenu, setCompaniesPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { setCompanyIndex } = useContext(ExcelsContext);
@@ -44,19 +45,32 @@ const CompaniesTable = ({
   );
   const dispatch = useDispatch<AppDispatch>();
 
+  const getAllParams = () => {
+    setCompaniesPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    return allParams;
+  };
+
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ sort: "name_desc" });
+      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      dispatch(reverseCompanies());
     } else {
-      setSearchParams({ sort: "name_asc" });
+      dispatch(getCompanies({ ...getAllParams(), sort: "name_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "name_asc" });
     }
   };
 
   const handleSortByCode = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ sort: "code_desc" });
+      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      dispatch(reverseCompanies());
     } else {
-      setSearchParams({ sort: "code_asc" });
+      dispatch(getCompanies({ ...getAllParams(), sort: "code_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "code_asc" });
     }
   };
 

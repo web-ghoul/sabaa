@@ -8,6 +8,10 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getNationalitiesCounter } from "../../store/nationalitiesCounterSlice";
+import {
+  getNationalities,
+  reverseNationalities,
+} from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { NationalitiesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
@@ -22,7 +26,7 @@ const NationalitiesTable = ({
   isLoading,
   fileIndex,
 }: NationalitiesTableTypes) => {
-  const { handleOpenTableMenu } = useContext(AppContext);
+  const { handleOpenTableMenu, setNationalitiesPage } = useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableNationalityData } = useContext(FormsContext);
   const { setNationalityIndex } = useContext(ExcelsContext);
@@ -31,19 +35,34 @@ const NationalitiesTable = ({
     (state: RootState) => state.nationalitiesCounter
   );
 
+  const getAllParams = () => {
+    setNationalitiesPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    return allParams;
+  };
+
   const handleSortByNationality = () => {
     if (searchParams.get("sort") === "nationality_asc") {
-      setSearchParams({ sort: "nationality_desc" });
+      setSearchParams({ ...getAllParams(), sort: "nationality_desc" });
+      dispatch(reverseNationalities());
     } else {
-      setSearchParams({ sort: "nationality_asc" });
+      dispatch(
+        getNationalities({ ...getAllParams(), sort: "nationality_asc" })
+      );
+      setSearchParams({ ...getAllParams(), sort: "nationality_asc" });
     }
   };
 
   const handleSortByNationalityId = () => {
-    if (searchParams.get("sort") === "nationality_id_asc") {
-      setSearchParams({ sort: "nationality_id_desc" });
+    if (searchParams.get("sort") === "code_asc") {
+      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      dispatch(reverseNationalities());
     } else {
-      setSearchParams({ sort: "nationality_id_asc" });
+      dispatch(getNationalities({ ...getAllParams(), sort: "code_asc" }));
+      setSearchParams({ ...getAllParams(), sort: "code_asc" });
     }
   };
 
@@ -78,8 +97,8 @@ const NationalitiesTable = ({
             <SortBox
               title={"ID"}
               handling={handleSortByNationalityId}
-              asc={searchParams.get("sort") === "nationality_id_asc"}
-              desc={searchParams.get("sort") === "nationality_id_desc"}
+              asc={searchParams.get("sort") === "code_asc"}
+              desc={searchParams.get("sort") === "code_desc"}
               jc={"center"}
             />
           </PrimaryTableCell>
