@@ -22,7 +22,7 @@ dotenv.config();
 @Module({
   imports: [UserModule, EmployeeModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
-    limit: 20,
+    limit: 100,
   }]), JobTitleModule, ImmgcardModule],
   controllers: [AppController],
   providers: [AppService,
