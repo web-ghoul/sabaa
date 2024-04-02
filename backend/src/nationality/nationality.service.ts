@@ -37,13 +37,14 @@ export class NationalityService {
     {
       sort["createdAt"] = -1; 
     }
-
+   
+    
     return this.nationalityModel.find({
   $or: [
     { nationality: { $regex: new RegExp(search, "i") } },
     { _id: { $regex: new RegExp(search, "i") } }
   ]
-}).select(projection).limit(limit).skip(page * limit).sort({ createdAt: -1 });
+}).select(projection).limit(limit).skip(page * limit).sort(sort);
 
   }
 
