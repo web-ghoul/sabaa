@@ -20,8 +20,8 @@ export class CompanyController {
   @Get()
   
 
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort') sort:string,@Query('id') id:string): Promise <Company[]> {
-    return this.companyService.findAll(limit,page,search,selectFields,sort,id);
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort') sort:string,@Query('id') id:string,@Query() query: any): Promise <Company[]> {
+    return this.companyService.findAll(limit,page,search,selectFields,sort,id,query);
   }
 
   @Get("ManageOwnersAndPro")

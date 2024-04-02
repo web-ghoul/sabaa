@@ -29,7 +29,7 @@ export class CompanyService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields:string[],sortType:string,id:string): Promise<Company[]> {  
+  findAll(limit: number, page: number, search:string,fields:string[],sortType:string,id:string,filterQuery:any): Promise<Company[]> {  
     const projection: any = {};
     if (fields && fields.length > 0) {
         fields.forEach(field => {
@@ -57,16 +57,20 @@ export class CompanyService {
       sort["createdAt"] = -1; 
     }
     
+    const query = {$or: [
+      { name: { $regex: new RegExp(search, "i") } },
+      { molCode: { $regex: new RegExp(search, "i") } },
+      { immgCardNo: { $regex: new RegExp(search, "i") } },
+      { licenseNo: { $regex: new RegExp(search, "i") } }
+    ]}
+
+    filterQuery?.state != '' ? query["state"] = filterQuery?.state : undefined;
+    filterQuery?.status != '' ? query["status"] = filterQuery?.status : undefined;
+    filterQuery?.establishmentType != '' ? query["establishmentType"] = filterQuery?.establishmentType : undefined;
+    filterQuery?.molCategory != '' ? query["molCategory"] = filterQuery?.molCategory : undefined;
+
     
-    
-    return this.companyModel.find({
-      $or: [
-        { name: { $regex: new RegExp(search, "i") } },
-        { molCode: { $regex: new RegExp(search, "i") } },
-        { immgCardNo: { $regex: new RegExp(search, "i") } },
-        { licenseNo: { $regex: new RegExp(search, "i") } }
-      ]
-    }).select(projection).limit(limit).skip(page * limit).sort(sort);
+    return this.companyModel.find(query).select(projection).limit(limit).skip(page * limit).sort(sort);
   }
 
   findOne(id: string) {
