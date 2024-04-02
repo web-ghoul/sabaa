@@ -18,13 +18,8 @@ const EditNationalityForm = ({ formik }: FormiksTypes) => {
       <Title head={"h4"} align={"center"} title={"Edit Nationality"} />
 
       <Box className={`grid grid-cols-2 justify-stretch items-center gap-6`}>
-<<<<<<< HEAD
         <Input formik={formik} name={"nationality"} label={"Nationality"} />
         <Input formik={formik} label={"Nationality Id"} name={"_id"} />
-=======
-        <Input formik={formik} label={"Nationality Id"} name={"_id"} />
-        <Input formik={formik} name={"nationality"} label={"Nationality"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

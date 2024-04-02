@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -60,17 +59,6 @@ const PublicRelationOfficers = () => {
             </PrimaryButton>
           </Box>
         </Box>
-=======
-import UnderDevelopment from "../components/UnderDevelopment/UnderDevelopment";
-import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
-import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-
-const PublicRelationOfficers = () => {
-  return (
-    <PrimaryBox>
-      <PrimaryContainer>
-        <UnderDevelopment />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

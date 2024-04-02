@@ -4,20 +4,20 @@ import { styled } from "@mui/material/styles";
 export const PrimaryButton = styled(LoadingButton)(({ theme }) => ({
   color: theme.palette.common.white,
   backgroundColor: theme.palette.primary.main,
-  borderRadius: "8px",
+  borderRadius: "4px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "5px",
-  padding: "8px 20px",
+  padding: "7px 16px",
   border: "2px solid transparent",
   boxShadow: theme.shadows[1],
   "& > span > span": {
-    height: "30px !important",
-    width: "30px !important",
+    height: "20px !important",
+    width: "20px !important",
   },
   "& svg": {
-    fontSize: "18px",
+    fontSize: "14px",
   },
   "&:hover": {
     backgroundColor: theme.palette.primary.dark,

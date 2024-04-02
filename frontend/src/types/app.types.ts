@@ -15,6 +15,7 @@ interface ImportMetaEnv {
   VITE_TRANSACTIONS_ROUTE: string;
   VITE_FILE_MANAGER_ROUTE: string;
   VITE_NATIONALITIES_ROUTE: string;
+  VITE_LIMIT_PAGES: string;
   VITE_JOBS_ROUTE: string;
   VITE_PUBLIC_RELATION_OFFICERS_ROUTE: string;
   VITE_TODO_LIST_ROUTE: string;
@@ -31,12 +32,9 @@ interface ImportMetaEnv {
   VITE_UPLOAD_COMPANIES_ROUTE: string;
   VITE_UPLOAD_JOBS_ROUTE: string;
   VITE_UPLOAD_NATIONALITIES_ROUTE: string;
-<<<<<<< HEAD
   VITE_ADD_PUBLIC_RELATION_OFFICER_ROUTE: string;
   VITE_EDIT_USER_ROUTE: string;
   VITE_PROFILE_ROUTE: string;
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }
 
 interface AlertFunTypes {
@@ -46,8 +44,5 @@ interface AlertFunTypes {
   icon?: Renderable;
   dur?: number;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 export type { AlertFunTypes, ImportMetaEnv };

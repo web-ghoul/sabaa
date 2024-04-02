@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   DeleteRounded,
   EditRounded,
@@ -10,17 +9,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
-=======
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
-import { Menu } from "@mui/material";
-import { useContext } from "react";
-import { AppContext } from "../../contexts/AppContext";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import TableMenuItem from "../TableMenuItem";
 
 const CompaniesTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-<<<<<<< HEAD
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -28,6 +20,7 @@ const CompaniesTableMenu = () => {
     handleOpenEditCompanyModal,
     handleOpenDeleteModal,
     editableCompanyData,
+    setDeleteType,
   } = useContext(FormsContext);
   const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
 
@@ -56,14 +49,13 @@ const CompaniesTableMenu = () => {
       handleDeleteCompanyFromSheet();
     } else {
       handleOpenDeleteModal();
+      setDeleteType("company");
     }
   };
 
   useEffect(() => {
     setSheet(pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`);
   }, [pathname, sheet]);
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -80,7 +72,6 @@ const CompaniesTableMenu = () => {
         horizontal: "right",
       }}
     >
-<<<<<<< HEAD
       {!sheet && (
         <TableMenuItem
           icon={<VisibilityRounded />}
@@ -93,17 +84,11 @@ const CompaniesTableMenu = () => {
         title={"Edit"}
         handling={handleEdit}
       />
-=======
-      <TableMenuItem icon={<EditRounded />} title={"Edit"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}
         color={`text-error`}
-<<<<<<< HEAD
         handling={handleDelete}
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       />
     </Menu>
   );

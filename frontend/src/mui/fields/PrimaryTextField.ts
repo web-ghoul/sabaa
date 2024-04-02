@@ -2,13 +2,22 @@ import { TextField, styled } from "@mui/material";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
   "& input , & select": {
-    padding: "15px",
+    padding: "10px !important",
+    fontSize: "16px",
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows["2"],
     borderRadius: "4px",
   },
+  "& label": {
+    fontSize: "14px",
+    lineHeight: "1 !important",
+  },
+  "& label[data-shrink=true]": {
+    lineHeight: "1.4375em !important",
+    backgroundColor: "#fff",
+  },
   "& svg": {
-    fontSize: "30px",
+    fontSize: "20px",
   },
   [theme.breakpoints.down("lg")]: {
     "& input , & select": {
@@ -26,7 +35,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
       lineHeight: "1rem",
     },
     "& svg": {
-      fontSize: "26px",
+      fontSize: "24px",
     },
   },
   [theme.breakpoints.down("sm")]: {
@@ -34,18 +43,15 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
       padding: "10px",
     },
     "& svg": {
-      fontSize: "24px",
+      fontSize: "22px",
     },
   },
   [theme.breakpoints.down("xs")]: {
     "& svg": {
-      fontSize: "22px",
+      fontSize: "20px",
     },
   },
-<<<<<<< HEAD
   "& select": {
     title: "Select an option",
   },
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 }));

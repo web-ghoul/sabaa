@@ -1,14 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { NationalitiesValuesTypes } from "../types/store.types.ts";
+import {
+  NationalitiesArgsTypes,
+  NationalitiesValuesTypes,
+} from "../types/store.types.ts";
 
 export const getNationalities = createAsyncThunk(
   "/nationalities/getNationalities",
-  async () => {
+  async (args: NationalitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/nationality`,
+      `${import.meta.env.VITE_SERVER_URL}/nationality?search=${
+        (args && args.search) || ""
+      }&sort=${args?.sort || ""}&limit=${
+        import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

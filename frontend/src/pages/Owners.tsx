@@ -1,90 +1,32 @@
-import { Box, Typography } from "@mui/material";
-<<<<<<< HEAD
+import { Typography } from "@mui/material";
 import { useEffect } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-=======
-import { RiFileExcel2Fill } from "react-icons/ri";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
-import { useNavigate } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import Forms from "../forms/Forms";
-import { handleAlert } from "../functions/handleAlert";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { PrimaryButton } from "../mui/buttons/PrimaryButton";
-<<<<<<< HEAD
 import { getOwners } from "../store/ownersSlice";
 import { AppDispatch, RootState } from "../store/store";
 import OwnersTable from "../tables/OwnersTable/OwnersTable";
 const Owners = () => {
-  const navigate = useNavigate();
   const { owners, isLoading } = useSelector((state: RootState) => state.owners);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getOwners());
+    dispatch(getOwners({}));
   }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer
         className={`grid justify-stretch items-start content-start gap-6`}
       >
-=======
-import OwnersTable from "../tables/OwnersTable/OwnersTable";
-const Owners = () => {
-  const navigate = useNavigate();
-  return (
-    <PrimaryBox>
-      <PrimaryContainer className={`grid justify-stretch items-center gap-2`}>
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
-        <Box className={`flex justify-between items-center gap-4`}>
-          <BreadCrumbs>
-            <Typography key="2">Owners</Typography>
-          </BreadCrumbs>
-          <Box className={`flex justify-end items-center gap-4`}>
-            <PrimaryButton
-              className={`!bg-excel`}
-              onClick={() =>
-                navigate(`${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`)
-              }
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Upload Excel</Typography>
-            </PrimaryButton>
-            <PrimaryButton
-              onClick={() =>
-                navigate(`${import.meta.env.VITE_ADD_OWNER_ROUTE}`)
-              }
-            >
-              Add Owner
-            </PrimaryButton>
-          </Box>
-        </Box>
-        <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-          <Forms type={"ownersOptions"} />
-          <Box className={`flex justify-end items-center gap-4`}>
-            <PrimaryButton
-              className={`!bg-excel`}
-              onClick={() => handleAlert({ msg: "Under Development" })}
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Excel</Typography>
-            </PrimaryButton>
-            <PrimaryButton
-              className={`!bg-excel`}
-              onClick={() => handleAlert({ msg: "Under Development" })}
-            >
-              <RiFileExcel2Fill />
-              <Typography variant="button">Excel All</Typography>
-            </PrimaryButton>
-          </Box>
-        </Box>
-<<<<<<< HEAD
+        <BreadCrumbs>
+          <Typography variant="h6" key="2">
+            Owners
+          </Typography>
+        </BreadCrumbs>
+        <Forms type={"ownersOptions"} />
         <OwnersTable data={owners} isLoading={isLoading} />
-=======
-        <OwnersTable />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

@@ -1,9 +1,6 @@
 import { TableRow, styled } from "@mui/material";
 
-export const JobsTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
+export const JobsTableRow = styled(TableRow)(() => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },

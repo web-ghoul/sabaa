@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -25,9 +24,11 @@ const UploadJobs = () => {
               className={`text-black !font-[600] hover:text-primary`}
               key={1}
             >
-              Jobs
+              <Typography variant="h6">Jobs</Typography>
             </Link>
-            <Typography key="2">Upload Jobs</Typography>
+            <Typography variant="h6" key="2">
+              Upload Jobs
+            </Typography>
           </BreadCrumbs>
         </Box>
         <Box className={`grid justify-stretch items-start gap-8`}>
@@ -46,10 +47,6 @@ const UploadJobs = () => {
       </PrimaryContainer>
     </PrimaryBox>
   );
-=======
-const UploadJobs = () => {
-  return <div>UploadJobs</div>;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 };
 
 export default UploadJobs;

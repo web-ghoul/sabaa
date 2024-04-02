@@ -1,6 +1,5 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-<<<<<<< HEAD
 import { MouseEvent, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
@@ -8,17 +7,11 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { JobsTableTypes } from "../../types/tables.types";
-=======
-import { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
-import { AppContext } from "../../contexts/AppContext";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import SortBox from "../SortBox";
 import JobsTableMenu from "./JobsTableMenu";
 import { JobsTableRow } from "./JobsTableRow";
-<<<<<<< HEAD
 import LoadingJobsRow from "./LoadingJobsRow";
 
 const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
@@ -26,43 +19,6 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
-=======
-
-function createData(name: string, calories: number, protein: number) {
-  return { name, calories, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Eclair", 262, 16.0),
-  createData("Cupcake", 305, 3.7),
-];
-
-const JobsTable = () => {
-  const { handleOpenTableMenu } = useContext(AppContext);
-  const [searchParams, setSearchParams] = useSearchParams();
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
@@ -80,7 +36,6 @@ const JobsTable = () => {
     }
   };
 
-<<<<<<< HEAD
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
     index: number
@@ -92,8 +47,6 @@ const JobsTable = () => {
     handleOpenTableMenu(event);
   };
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   return (
     <PrimaryTable>
       <TableHead>
@@ -120,7 +73,6 @@ const JobsTable = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-<<<<<<< HEAD
         {!isLoading
           ? data &&
             data.map((row, i) => (
@@ -142,22 +94,6 @@ const JobsTable = () => {
           : new Array(handleRandomNumber())
               .fill(0)
               .map((_, i) => <LoadingJobsRow key={i} />)}
-=======
-        {rows.map((row, i) => (
-          <JobsTableRow key={i}>
-            <PrimaryTableCell component="th" scope="row">
-              {row.name}
-            </PrimaryTableCell>
-            <PrimaryTableCell align="center">{row.calories}</PrimaryTableCell>
-            <PrimaryTableCell align="center">{row.protein}</PrimaryTableCell>
-            <PrimaryTableCell align="right">
-              <IconButton onClick={handleOpenTableMenu}>
-                <MoreVertRounded />
-              </IconButton>
-            </PrimaryTableCell>
-          </JobsTableRow>
-        ))}
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <JobsTableMenu />
       </TableBody>
     </PrimaryTable>

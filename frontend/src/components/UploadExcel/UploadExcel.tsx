@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {
   AutoModeRounded,
   CheckCircleRounded,
@@ -133,7 +132,6 @@ const UploadExcel = ({
         tenancyContractValue: "",
         tenancyContractExp: "",
         _id: "",
-        user: "",
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;
@@ -280,10 +278,6 @@ const UploadExcel = ({
       </label>
     </Paper>
   );
-=======
-const UploadExcel = () => {
-  return <div>UploadExcel</div>;
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 };
 
 export default UploadExcel;

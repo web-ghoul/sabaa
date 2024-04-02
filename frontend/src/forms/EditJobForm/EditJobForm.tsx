@@ -9,10 +9,7 @@ import { FormiksTypes } from "../../types/forms.types";
 
 const EditJobForm = ({ formik }: FormiksTypes) => {
   const { formsLoading, handleCloseEditJobModal } = useContext(FormsContext);
-<<<<<<< HEAD
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   return (
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4`}

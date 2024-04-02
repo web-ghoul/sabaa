@@ -1,17 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { CompaniesValuesTypes } from "../types/store.types.ts";
+import {
+  CompaniesArgsTypes,
+  CompaniesValuesTypes,
+} from "../types/store.types.ts";
 
 export const getCompanies = createAsyncThunk(
   "/companies/getCompanies",
-  async () => {
+  async (args: CompaniesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-    const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/company`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/company?search=${
+        (args && args.search) || ""
+      }&sort=${args?.sort || ""}&limit=${
+        import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data;
   }
 );

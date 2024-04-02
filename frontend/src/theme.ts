@@ -27,21 +27,6 @@ export const theme = createTheme({
   typography: {
     fontFamily: "Cairo",
     h1: {
-      fontSize: "28px",
-      "@media (max-width: 1200px)": {
-        fontSize: "27px",
-      },
-      "@media (max-width: 992px)": {
-        fontSize: "26px",
-      },
-      "@media (max-width: 768px)": {
-        fontSize: "25px",
-      },
-      "@media (max-width: 540px)": {
-        fontSize: "24px",
-      },
-    },
-    h2: {
       fontSize: "26px",
       "@media (max-width: 1200px)": {
         fontSize: "25px",
@@ -56,7 +41,7 @@ export const theme = createTheme({
         fontSize: "22px",
       },
     },
-    h3: {
+    h2: {
       fontSize: "24px",
       "@media (max-width: 1200px)": {
         fontSize: "23px",
@@ -71,7 +56,7 @@ export const theme = createTheme({
         fontSize: "20px",
       },
     },
-    h4: {
+    h3: {
       fontSize: "22px",
       "@media (max-width: 1200px)": {
         fontSize: "21px",
@@ -86,7 +71,7 @@ export const theme = createTheme({
         fontSize: "18px",
       },
     },
-    h5: {
+    h4: {
       fontSize: "20px",
       "@media (max-width: 1200px)": {
         fontSize: "19px",
@@ -101,9 +86,8 @@ export const theme = createTheme({
         fontSize: "16px",
       },
     },
-    h6: {
+    h5: {
       fontSize: "18px",
-      lineHeight: "1",
       "@media (max-width: 1200px)": {
         fontSize: "17px",
       },
@@ -115,61 +99,77 @@ export const theme = createTheme({
       },
       "@media (max-width: 540px)": {
         fontSize: "14px",
+      },
+    },
+    h6: {
+      fontSize: "16px",
+      lineHeight: "1",
+      "@media (max-width: 1200px)": {
+        fontSize: "15px",
+      },
+      "@media (max-width: 992px)": {
+        fontSize: "14px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "13px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "12px",
       },
     },
     button: {
-      fontSize: "18px",
+      fontSize: "14px",
       lineHeight: "1",
       textTransform: "capitalize",
       "@media (max-width: 1200px)": {
-        fontSize: "17px",
+        fontSize: "13px",
       },
       "@media (max-width: 992px)": {
-        fontSize: "16px",
+        fontSize: "12px",
       },
       "@media (max-width: 768px)": {
-        fontSize: "15px",
+        fontSize: "11px",
       },
       "@media (max-width: 540px)": {
-        fontSize: "14px",
+        fontSize: "10px",
       },
     },
     subtitle1: {
-      fontSize: "16px",
+      fontSize: "14px",
       lineHeight: "1",
       "@media (max-width: 1200px)": {
-        fontSize: "15px",
-      },
-      "@media (max-width: 992px)": {
-        fontSize: "14px",
-      },
-      "@media (max-width: 768px)": {
         fontSize: "13px",
       },
-      "@media (max-width: 540px)": {
+      "@media (max-width: 992px)": {
         fontSize: "12px",
+      },
+      "@media (max-width: 768px)": {
+        fontSize: "11px",
+      },
+      "@media (max-width: 540px)": {
+        fontSize: "10px",
       },
     },
     subtitle2: {
-      fontSize: "15px",
+      fontSize: "12px",
       "@media (max-width: 1200px)": {
-        fontSize: "14px",
+        fontSize: "11px",
       },
       "@media (max-width: 992px)": {
-        fontSize: "13px",
+        fontSize: "10px",
       },
       "@media (max-width: 768px)": {
-        fontSize: "12px",
+        fontSize: "9px",
       },
       "@media (max-width: 540px)": {
-        fontSize: "11px",
+        fontSize: "8px",
       },
     },
     body1: {
-      fontSize: "16px",
+      fontSize: "11px",
     },
     body2: {
-      fontSize: "14px",
+      fontSize: "10px",
     },
   },
   shadows: [

@@ -14,9 +14,11 @@ const AddOwner = () => {
             to={`${import.meta.env.VITE_OWNERS_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            Owners
+            <Typography variant="h6">Owners</Typography>
           </Link>
-          <Typography key="2">Add Owner</Typography>
+          <Typography variant="h6" key="2">
+            Add Owner
+          </Typography>
         </BreadCrumbs>
         <Forms type={"addOwner"} />
       </PrimaryContainer>

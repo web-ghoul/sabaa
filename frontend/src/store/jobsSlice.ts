@@ -1,17 +1,27 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { JobsValuesTypes } from "../types/store.types.ts";
+import { JobsArgsTypes, JobsValuesTypes } from "../types/store.types.ts";
 
-export const getJobs = createAsyncThunk("/jobs/getJobs", async () => {
-  const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-  const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/job-title`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res.data;
-});
+export const getJobs = createAsyncThunk(
+  "/jobs/getJobs",
+  async (args: JobsArgsTypes) => {
+    const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/job-title?search=${
+        (args && args.search) || ""
+      }&sort=${args?.sort || ""}&limit=${
+        import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  }
+);
 
 const initialState: JobsValuesTypes = {
   isLoading: true,

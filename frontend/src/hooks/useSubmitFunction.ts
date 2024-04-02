@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useContext } from "react";
-<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExcelsContext } from "../contexts/ExcelsContext";
@@ -26,12 +25,6 @@ import {
   EditNationalityFormTypes,
   EditOwnerFormTypes,
   EditUserFormTypes,
-=======
-import { FormsContext } from "../contexts/FormsContext";
-import { handleCatchError } from "../functions/handleCatchError";
-import {
-  AllFormsTypes,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   ForgotPasswordFormTypes,
   LoginFormTypes,
   ResetPasswordFormTypes,
@@ -42,7 +35,6 @@ const server = axios.create({
 });
 
 const useSubmitFunction = (type: string) => {
-<<<<<<< HEAD
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
@@ -90,25 +82,17 @@ const useSubmitFunction = (type: string) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
-=======
-  const { handleOpenFormsLoading, handleCloseFormsLoading } =
-    useContext(FormsContext);
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   const login = async (values: LoginFormTypes) => {
     handleOpenFormsLoading();
     await server
       .post(`/login`, values)
       .then((res) => {
-<<<<<<< HEAD
         handleAlert({ msg: "Login Successfully", status: "success" });
         navigate(`${import.meta.env.VITE_DASHBOARD_ROUTE}`);
         dispatch(
           loginAction({ token: res.data.token, userId: res.data.userId })
         );
-=======
-        console.log(res);
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       })
       .catch((err) => {
         handleCatchError(err);
@@ -119,17 +103,13 @@ const useSubmitFunction = (type: string) => {
   const resetPassword = (values: ResetPasswordFormTypes) => {
     handleOpenFormsLoading();
     console.log(values);
-<<<<<<< HEAD
     handleAlert({ msg: "Under Development...", status: "error" });
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     handleCloseFormsLoading();
   };
 
   const forgotPassword = (values: ForgotPasswordFormTypes) => {
     handleOpenFormsLoading();
     console.log(values);
-<<<<<<< HEAD
     handleAlert({ msg: "Under Development...", status: "error" });
     handleCloseFormsLoading();
   };
@@ -145,7 +125,7 @@ const useSubmitFunction = (type: string) => {
       .then(() => {
         handleAlert({ msg: "Job is Created Successfully", status: "success" });
         handleCloseAddJobModal();
-        dispatch(getJobs());
+        dispatch(getJobs({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -175,7 +155,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           handleCloseEditJobModal();
-          dispatch(getJobs());
+          dispatch(getJobs({}));
         })
         .catch((err) => {
           handleCatchError(err);
@@ -200,7 +180,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_JOBS_ROUTE}`);
-        dispatch(getJobs());
+        dispatch(getJobs({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -222,7 +202,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         handleCloseAddNationalityModal();
-        dispatch(getNationalities());
+        dispatch(getNationalities({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -258,7 +238,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           handleCloseEditNationalityModal();
-          dispatch(getNationalities());
+          dispatch(getNationalities({}));
         })
         .catch((err) => {
           handleCatchError(err);
@@ -283,7 +263,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_NATIONALITIES_ROUTE}`);
-        dispatch(getNationalities());
+        dispatch(getNationalities({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -309,7 +289,7 @@ const useSubmitFunction = (type: string) => {
       })
       .then(() => {
         handleAlert({ msg: "User is Created Successfully", status: "success" });
-        dispatch(getUsers());
+        dispatch(getUsers({}));
         navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
         setAddUserImage("");
       })
@@ -339,7 +319,7 @@ const useSubmitFunction = (type: string) => {
           msg: "User is Updated Successfully",
           status: "success",
         });
-        dispatch(getUsers());
+        dispatch(getUsers({}));
         navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
         setEditUserImage("");
       })
@@ -351,11 +331,6 @@ const useSubmitFunction = (type: string) => {
 
   const addOwner = async (values: AddOwnerFormTypes) => {
     handleOpenFormsLoading();
-    values.idNationality = values.nationality
-      .split("(")[1]
-      .replace(")", "")
-      .trim();
-    values.nationality = values.nationality.split("(")[0].trim();
     const formData = new FormData();
     formData.append("_id", values._id);
     formData.append("personCode", values.personCode);
@@ -383,7 +358,7 @@ const useSubmitFunction = (type: string) => {
           msg: "Owner is Created Successfully",
           status: "success",
         });
-        dispatch(getOwners());
+        dispatch(getOwners({}));
         navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
         setAddOwnerImage("");
       })
@@ -403,11 +378,6 @@ const useSubmitFunction = (type: string) => {
         status: "success",
       });
     } else {
-      values.idNationality = values.nationality
-        .split("(")[1]
-        .replace(")", "")
-        .trim();
-      values.nationality = values.nationality.split("(")[0].trim();
       const formData = new FormData();
       formData.append("avatar", editOwnerImage);
       formData.append("name", values.name);
@@ -436,7 +406,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Owner is Updated Successfully",
             status: "success",
           });
-          dispatch(getOwners());
+          dispatch(getOwners({}));
           navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
           setEditOwnerImage("");
         })
@@ -462,7 +432,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
-        dispatch(getOwners());
+        dispatch(getOwners({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -507,7 +477,7 @@ const useSubmitFunction = (type: string) => {
           msg: "Company is Created Successfully",
           status: "success",
         });
-        dispatch(getCompanies());
+        dispatch(getCompanies({}));
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
         setAddCompanyImage("");
       })
@@ -566,7 +536,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Company is Updated Successfully",
             status: "success",
           });
-          dispatch(getCompanies());
+          dispatch(getCompanies({}));
           navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
           setEditCompanyImage("");
         })
@@ -592,7 +562,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
-        dispatch(getCompanies());
+        dispatch(getCompanies({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -614,7 +584,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Owner is Deleted Successfully",
             status: "success",
           });
-          dispatch(getOwners());
+          dispatch(getOwners({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -632,7 +602,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Job is Deleted Successfully",
             status: "success",
           });
-          dispatch(getJobs());
+          dispatch(getJobs({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -655,7 +625,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Nationality is Deleted Successfully",
             status: "success",
           });
-          dispatch(getNationalities());
+          dispatch(getNationalities({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -673,7 +643,7 @@ const useSubmitFunction = (type: string) => {
             msg: "User is Deleted Successfully",
             status: "success",
           });
-          dispatch(getUsers());
+          dispatch(getUsers({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -691,7 +661,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Company is Deleted Successfully",
             status: "success",
           });
-          dispatch(getCompanies());
+          dispatch(getCompanies({}));
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -702,12 +672,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   const handleSubmit = (values: AllFormsTypes | unknown) => {
-=======
-    handleCloseFormsLoading();
-  };
-
-  const handleSubmit = (values: AllFormsTypes) => {
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
     switch (type) {
       case "forgotPassword":
         forgotPassword(values as ForgotPasswordFormTypes);
@@ -718,7 +682,6 @@ const useSubmitFunction = (type: string) => {
       case "login":
         login(values as LoginFormTypes);
         break;
-<<<<<<< HEAD
       case "addJob":
         addJob(values as AddJobFormTypes);
         break;
@@ -764,8 +727,6 @@ const useSubmitFunction = (type: string) => {
       case "delete":
         handleDelete();
         break;
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       default:
         return () => {};
     }

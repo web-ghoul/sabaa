@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -23,15 +22,6 @@ const initialState: AuthValuesTypes = {
   userId: null,
   user: null,
   isLoading: true,
-=======
-import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
-import { AuthValuesTypes } from "../types/store.types.ts";
-
-const initialState: AuthValuesTypes = {
-  token: null,
-  userId: null,
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 };
 
 export const authSlice = createSlice({
@@ -60,7 +50,6 @@ export const authSlice = createSlice({
       }
     },
   },
-<<<<<<< HEAD
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state) => {
       state.isLoading = true;
@@ -77,8 +66,6 @@ export const authSlice = createSlice({
       }
     });
   },
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 });
 
 export const { login, setAuth, logout } = authSlice.actions;

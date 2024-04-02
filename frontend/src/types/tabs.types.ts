@@ -22,9 +22,16 @@ interface TabPanelProps {
   value: number;
 }
 
+interface PrimaryTabTypes {
+  variant: string;
+  tabsTitles: string[];
+  children: ReactNode;
+}
+
 export type {
   CompanyProfileProps,
   OwnerProfileProps,
+  PrimaryTabTypes,
   TabPanelProps,
   UserProfileProps,
 };

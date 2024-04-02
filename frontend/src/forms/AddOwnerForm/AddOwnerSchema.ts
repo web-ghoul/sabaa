@@ -1,7 +1,6 @@
 import * as yup from "yup";
 
 export const AddOwnerSchema = yup.object({
-<<<<<<< HEAD
   avatar: yup.string(),
   _id: yup.string().required("UID Number is required"),
   personCode: yup.string().required("Person Code is required"),
@@ -17,22 +16,12 @@ export const AddOwnerSchema = yup.object({
   address: yup.string(),
   remarks: yup.string(),
   proCode: yup.boolean(),
-=======
-  _id: yup.string().required("Username is required"),
-  name: yup.string().required("Password is required"),
-  nameAr: yup.string().required("Password is required"),
-  dob: yup.string().required("Password is required"),
-  idNationality: yup.string().required("Password is required"),
-  phone: yup.string().required("Password is required"),
-  emiratesId: yup.string().required("Password is required"),
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 });
 
 export const AddOwnerInitailValues = {
   _id: "",
   name: "",
   nameAr: "",
-<<<<<<< HEAD
   avatar: "",
   dob: "",
   idNationality: "",
@@ -45,10 +34,4 @@ export const AddOwnerInitailValues = {
   proCode: false,
   emiratesId: "",
   personCode: "",
-=======
-  dob: "",
-  idNationality: "",
-  phone: "",
-  emiratesId: "",
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 };

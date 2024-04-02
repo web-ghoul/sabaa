@@ -1,6 +1,5 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-<<<<<<< HEAD
 import { MouseEvent, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
@@ -24,51 +23,6 @@ const NationalitiesTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableNationalityData } = useContext(FormsContext);
   const { setNationalityIndex } = useContext(ExcelsContext);
-=======
-import { useContext } from "react";
-import { useSearchParams } from "react-router-dom";
-import { AppContext } from "../../contexts/AppContext";
-import PrimaryTable from "../PrimaryTable";
-import { PrimaryTableCell } from "../PrimaryTableCell";
-import SortBox from "../SortBox";
-import NationalitiesTableMenu from "./NationalitiesTableMenu";
-import { NationaltiesTableRow } from "./NationalitiesTableRow";
-
-function createData(name: string, protein: number) {
-  return { name, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-  createData("Frozen yoghurt", 159),
-  createData("Ice cream sandwich", 237),
-  createData("Eclair", 262),
-  createData("Cupcake", 305),
-];
-
-const NationalitiesTable = () => {
-  const { handleOpenTableMenu } = useContext(AppContext);
-  const [searchParams, setSearchParams] = useSearchParams();
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   const handleSortByNationality = () => {
     if (searchParams.get("sort") === "nationality_asc") {
@@ -85,7 +39,6 @@ const NationalitiesTable = () => {
       setSearchParams({ sort: "nationality_id_asc" });
     }
   };
-<<<<<<< HEAD
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
@@ -98,8 +51,6 @@ const NationalitiesTable = () => {
     handleOpenTableMenu(event);
   };
 
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
   return (
     <PrimaryTable>
       <TableHead>
@@ -125,7 +76,6 @@ const NationalitiesTable = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-<<<<<<< HEAD
         {!isLoading
           ? data &&
             data.map((row, i) => (
@@ -144,21 +94,6 @@ const NationalitiesTable = () => {
           : new Array(handleRandomNumber())
               .fill(0)
               .map((_, i) => <LoadingNationalitiesRow key={i} />)}
-=======
-        {rows.map((row, i) => (
-          <NationaltiesTableRow key={i}>
-            <PrimaryTableCell component="th" scope="row">
-              {row.name}
-            </PrimaryTableCell>
-            <PrimaryTableCell align="center">{row.protein}</PrimaryTableCell>
-            <PrimaryTableCell align="right">
-              <IconButton onClick={handleOpenTableMenu}>
-                <MoreVertRounded />
-              </IconButton>
-            </PrimaryTableCell>
-          </NationaltiesTableRow>
-        ))}
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <NationalitiesTableMenu />
       </TableBody>
     </PrimaryTable>

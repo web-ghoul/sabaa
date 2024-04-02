@@ -1,38 +1,27 @@
 import { Box, Paper, Typography } from "@mui/material";
-<<<<<<< HEAD
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
-=======
-import { useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
-<<<<<<< HEAD
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 import { FormiksTypes } from "../../types/forms.types";
 
 const AddCompanyForm = ({ formik }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   const navigate = useNavigate();
-<<<<<<< HEAD
   const { owners, isLoading } = useSelector((state: RootState) => state.owners);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getOwners());
+    dispatch(getOwners({}));
   }, [dispatch]);
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
 
   return (
     <Paper
@@ -42,20 +31,12 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
 
       {useMemo(
         () => (
-<<<<<<< HEAD
           <UploadImage title={"Company Logo"} variant="addCompany" />
-=======
-          <UploadImage title={"Company Image"} variant="addCompany" />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         ),
         []
       )}
 
       <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
-<<<<<<< HEAD
-=======
-        <Input formik={formik} label={"Code"} name={"_id"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Input formik={formik} label={"English Name"} name={"name"} />
         <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
         <Input formik={formik} label={"Phone"} type={"tel"} name={"phone"} />
@@ -76,7 +57,6 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
         <Input
           formik={formik}
           select={true}
-<<<<<<< HEAD
           name={"molCategory"}
           label={"MOL Category"}
           options={["cat1", "cat2"]}
@@ -101,16 +81,6 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
         <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Phone"} name={"phone"} type={"tel"} />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
-=======
-          name={"category"}
-          label={"MOL Company Category"}
-          options={["cat1", "cat2"]}
-        />
-        <Input formik={formik} label={"MOL Code"} name={"molCode"} />
-        <Input formik={formik} label={"MOL Category"} name={"molCategory"} />
-        <Input formik={formik} label={"Address"} name={"address"} />
-        <Input formik={formik} label={"Address"} name={"phone"} type={"tel"} />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Input
           formik={formik}
           label={"Mobile Number"}
@@ -124,14 +94,11 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           type={"tel"}
         />
         <Input formik={formik} label={"Website"} name={"website"} />
-<<<<<<< HEAD
         <Input
           formik={formik}
           label={"Establishment Type"}
           name={"establishmentType"}
         />
-=======
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
         <Input formik={formik} label={"License Number"} name={"licenseNo"} />
         <Input formik={formik} label={"Immg Card Number"} name={"immgCardNo"} />
         <Box className={`grid justify-stretch items-center gap-2`}>

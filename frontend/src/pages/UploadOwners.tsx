@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Box, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -25,9 +24,11 @@ const UploadOwners = () => {
               className={`text-black !font-[600] hover:text-primary`}
               key={1}
             >
-              Owners
+              <Typography variant="h6">Owners</Typography>
             </Link>
-            <Typography key="2">Upload Owners</Typography>
+            <Typography variant="h6" key="2">
+              Upload Owners
+            </Typography>
           </BreadCrumbs>
         </Box>
         <Box className={`grid justify-stretch items-start gap-8`}>
@@ -43,17 +44,6 @@ const UploadOwners = () => {
             <NoSheetsFound />
           )}
         </Box>
-=======
-import UnderDevelopment from "../components/UnderDevelopment/UnderDevelopment";
-import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
-import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-
-const UploadOwners = () => {
-  return (
-    <PrimaryBox>
-      <PrimaryContainer>
-        <UnderDevelopment />
->>>>>>> 768a4ccac306df0ce52eeea2f158f4aece41e949
       </PrimaryContainer>
     </PrimaryBox>
   );

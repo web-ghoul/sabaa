@@ -1,5 +1,5 @@
 import { NavigateNextRounded } from "@mui/icons-material";
-import { Breadcrumbs } from "@mui/material";
+import { Breadcrumbs, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const BreadCrumbs = ({ children }: { children: ReactNode }) => {
         className={`text-black !font-[600] hover:text-primary`}
         key={1}
       >
-        Dashboard
+        <Typography variant="h6">Dashboard</Typography>
       </Link>
       {children}
     </Breadcrumbs>
