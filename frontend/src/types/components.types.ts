@@ -80,7 +80,7 @@ interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
   loading?: boolean;
-  options: NationalityTypes[] | null;
+  options: NationalityTypes[] | OwnerTypes[] | null;
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }

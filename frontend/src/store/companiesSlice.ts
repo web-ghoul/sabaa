@@ -14,8 +14,12 @@ export const getCompanies = createAsyncThunk(
       `${import.meta.env.VITE_SERVER_URL}/company?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
-        import.meta.env.VITE_LIMIT_PAGES
-      }&page=${args?.page || 0}`,
+        args?.limit || import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}&state=${args?.state || ""}&status=${
+        args?.status || ""
+      }&molCategory=${args?.molCategory || ""}&establishmentType=${
+        args?.establishmentType || ""
+      }`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

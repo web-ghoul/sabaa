@@ -53,7 +53,13 @@ const AddOwnerForm = ({ formik }: FormiksTypes) => {
         <Input formik={formik} label={"UID Number"} name={"_id"} />
         <Input formik={formik} label={"Person Code"} name={"personCode"} />
         <Input formik={formik} label={"Email"} name={"email"} />
-        <Input formik={formik} label={"State"} name={"state"} />
+        <Input
+          formik={formik}
+          label={"State"}
+          name={"state"}
+          select
+          options={["dubai"]}
+        />
         <Input formik={formik} label={"Address"} name={"address"} />
         <Box className={`grid justify-stretch items-center gap-2`}>
           <Typography variant="h6">Date of Birth</Typography>

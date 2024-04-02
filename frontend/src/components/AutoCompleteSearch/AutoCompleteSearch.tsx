@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useEffect } from "react";
 import { PrimaryAutoComplete } from "../../mui/autoCompletes/PrimaryAutoComplete";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { AutoCompleteSearchTypes } from "../../types/components.types";
@@ -38,11 +38,33 @@ export default function AutoCompleteSearch({
     }
   };
 
+  useEffect(() => {
+    if (options) {
+      for (let i = 0; i < options.length; i++) {
+        if (name === "nationality") {
+          if (
+            options[i]._id ===
+            (formik as unknown as AddOwnerFormikTypes).values.idNationality
+          ) {
+            break;
+          }
+        } else if (name === "ownerId") {
+          if (
+            (
+              formik as unknown as AddCompanyFormikTypes
+            ).values.ownerId.includes(options[i]._id)
+          ) {
+            break;
+          }
+        }
+      }
+    }
+  }, [options]);
+
   return (
     <PrimaryAutoComplete
       multiple={multiple}
       options={options || []}
-      isOptionEqualToValue={(option, value) => option === value}
       filterSelectedOptions
       getOptionLabel={(option) => {
         if (name === "nationality") {
@@ -51,9 +73,15 @@ export default function AutoCompleteSearch({
             ? `${typedOption.nationality} ( ${typedOption._id} )`
             : "";
         }
-        const typedOption = option as OwnerTypes;
-        return typedOption ? `${typedOption.name} ( ${typedOption._id} )` : "";
+        if (name === "ownerId") {
+          const typedOption = option as OwnerTypes;
+          return typedOption
+            ? `${typedOption.name} ( ${typedOption._id} )`
+            : "";
+        }
+        return "";
       }}
+      isOptionEqualToValue={(option, value) => option === value}
       onChange={handleChange}
       renderInput={(params: AutocompleteRenderInputParams) => (
         <PrimaryTextField

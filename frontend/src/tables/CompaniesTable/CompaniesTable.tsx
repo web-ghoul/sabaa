@@ -1,6 +1,13 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
@@ -9,6 +16,8 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getCompaniesCounter } from "../../store/companiesCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { CompaniesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -27,6 +36,13 @@ const CompaniesTable = ({
   const navigate = useNavigate();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const smScreen = useMediaQuery("(max-width:768px)");
+  const lgScreen = useMediaQuery("(max-width:1200px)");
+  const { companiesCounter } = useSelector(
+    (state: RootState) => state.companiesCounter
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -59,8 +75,11 @@ const CompaniesTable = ({
     handleOpenTableMenu(event);
   };
 
+  useEffect(() => {
+    dispatch(getCompaniesCounter());
+  }, [dispatch]);
   return (
-    <PrimaryTable>
+    <PrimaryTable count={companiesCounter} variant={"companies"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -71,7 +90,9 @@ const CompaniesTable = ({
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"MOL Code"}
@@ -81,8 +102,12 @@ const CompaniesTable = ({
               jc="center"
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Status</PrimaryTableCell>
-          <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+          )}
+          {!smScreen && (
+            <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
       </TableHead>
@@ -108,16 +133,24 @@ const CompaniesTable = ({
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
+                {!lgScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   {row.molCode}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  <StatusBox status={row.status} />
-                </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {handleDate(row.immgCardExpiry)}
-                </PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
+                  </PrimaryTableCell>
+                )}
+                {!smScreen && (
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.immgCardExpiry)}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                     <MoreVertRounded />

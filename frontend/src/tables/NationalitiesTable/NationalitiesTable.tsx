@@ -1,11 +1,14 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getNationalitiesCounter } from "../../store/nationalitiesCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { NationalitiesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -23,6 +26,10 @@ const NationalitiesTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableNationalityData } = useContext(FormsContext);
   const { setNationalityIndex } = useContext(ExcelsContext);
+  const dispatch = useDispatch<AppDispatch>();
+  const { nationalitiesCounter } = useSelector(
+    (state: RootState) => state.nationalitiesCounter
+  );
 
   const handleSortByNationality = () => {
     if (searchParams.get("sort") === "nationality_asc") {
@@ -51,8 +58,12 @@ const NationalitiesTable = ({
     handleOpenTableMenu(event);
   };
 
+  useEffect(() => {
+    dispatch(getNationalitiesCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={nationalitiesCounter} variant={"nationalities"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

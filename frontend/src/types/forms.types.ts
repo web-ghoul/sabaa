@@ -214,8 +214,9 @@ interface DeleteFormikTypes {
 
 interface OwnersOptionsFormTypes {
   search: string;
-  filteryDate: string;
-  sort: string;
+  filterByDateOfBirth: string;
+  filterByNationality: string;
+  limit: string;
 }
 
 interface OwnersOptionsFormikTypes {
@@ -229,10 +230,43 @@ interface OwnersOptionsFormikTypes {
   values: OwnersOptionsFormTypes;
 }
 
+interface JobsOptionsFormTypes {
+  search: string;
+  limit: string;
+}
+
+interface JobsOptionsFormikTypes {
+  touched: JobsOptionsFormTypes;
+  errors: JobsOptionsFormTypes;
+  initialValues: JobsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: JobsOptionsFormTypes;
+}
+
+interface NationalitiesOptionsFormTypes {
+  search: string;
+  limit: string;
+}
+
+interface NationalitiesOptionsFormikTypes {
+  touched: NationalitiesOptionsFormTypes;
+  errors: NationalitiesOptionsFormTypes;
+  initialValues: NationalitiesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NationalitiesOptionsFormTypes;
+}
+
 interface UsersOptionsFormTypes {
   search: string;
-  filteryDate: string;
-  sort: string;
+  role: string;
+  status: string;
+  limit: string;
 }
 
 interface UsersOptionsFormikTypes {
@@ -248,8 +282,13 @@ interface UsersOptionsFormikTypes {
 
 interface CompaniesOptionsFormTypes {
   search: string;
-  filteryDate: string;
-  sort: string;
+  limit: string;
+  filterByState: string;
+  filterByStatus: string;
+  filterByMOLCategory: string;
+  filterByEstablishmentType: string;
+  filterByIMMGExpireDate: string;
+  filterByLicenseExpireDate: string;
 }
 
 interface CompaniesOptionsFormikTypes {
@@ -272,6 +311,7 @@ type AllFormsTypes =
   | CompaniesOptionsFormTypes
   | AddJobFormTypes
   | EditJobFormTypes
+  | NationalitiesOptionsFormTypes
   | EditNationalityFormTypes
   | AddNationalityFormTypes
   | AddUserFormTypes
@@ -280,7 +320,8 @@ type AllFormsTypes =
   | EditCompanyFormTypes
   | AddOwnerFormTypes
   | EditOwnerFormTypes
-  | DeleteFormTypes;
+  | DeleteFormTypes
+  | JobsOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -290,6 +331,7 @@ type AllFormiksTypes =
   | UsersOptionsFormikTypes
   | CompaniesOptionsFormikTypes
   | AddJobFormikTypes
+  | JobsOptionsFormikTypes
   | EditJobFormikTypes
   | EditNationalityFormikTypes
   | AddNationalityFormikTypes
@@ -297,6 +339,7 @@ type AllFormiksTypes =
   | EditUserFormikTypes
   | AddCompanyFormikTypes
   | EditCompanyFormikTypes
+  | NationalitiesOptionsFormikTypes
   | AddOwnerFormikTypes
   | EditOwnerFormikTypes
   | DeleteFormikTypes;
@@ -327,6 +370,7 @@ export type {
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,
+  CompaniesOptionsFormikTypes,
   CompaniesOptionsFormTypes,
   DeleteFormikTypes,
   DeleteFormTypes,
@@ -344,12 +388,15 @@ export type {
   ForgotPasswordFormTypes,
   FormiksTypes,
   FormsTypes,
+  JobsOptionsFormikTypes,
+  JobsOptionsFormTypes,
   LoginFormikTypes,
   LoginFormTypes,
+  NationalitiesOptionsFormikTypes,
+  NationalitiesOptionsFormTypes,
   OwnersOptionsFormikTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
   UsersOptionsFormikTypes,
-  UsersOptionsFormTypes
+  UsersOptionsFormTypes,
 };
-

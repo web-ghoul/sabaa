@@ -2,6 +2,7 @@ import { MouseEvent, createContext, useState } from "react";
 import { AppContextProps } from "../types/contexts.types";
 
 export const AppContext = createContext<AppContextProps>({
+  pageContainerClasses: "",
   openUserMenu: null,
   handleCloseUserMenu: () => {},
   handleOpenUserMenu: () => {},
@@ -10,12 +11,31 @@ export const AppContext = createContext<AppContextProps>({
   handleOpenTableMenu: () => {},
   defaultAvatar: "",
   defaultCompany: "",
+  ownersPage: 1,
+  setOwnersPage: () => {},
+  jobsPage: 1,
+  setJobsPage: () => {},
+  companiesPage: 1,
+  setCompaniesPage: () => {},
+  nationalitiesPage: 1,
+  setNationalitiesPage: () => {},
+  usersPage: 1,
+  setUsersPage: () => {},
 });
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const defaultAvatar = "/images/default_avatar.png";
 
   const defaultCompany = "/images/default_company.png";
+
+  const pageContainerClasses = `grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3`;
+
+  //Pagination
+  const [ownersPage, setOwnersPage] = useState<number>(1);
+  const [companiesPage, setCompaniesPage] = useState<number>(1);
+  const [jobsPage, setJobsPage] = useState<number>(1);
+  const [nationalitiesPage, setNationalitiesPage] = useState<number>(1);
+  const [usersPage, setUsersPage] = useState<number>(1);
 
   //User Menu
   const [openUserMenu, setOpenUserMenu] = useState<null | HTMLElement>(null);
@@ -48,6 +68,17 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     openTableMenu,
     handleCloseTableMenu,
     handleOpenTableMenu,
+    pageContainerClasses,
+    ownersPage,
+    setOwnersPage,
+    companiesPage,
+    setCompaniesPage,
+    usersPage,
+    setUsersPage,
+    nationalitiesPage,
+    setNationalitiesPage,
+    jobsPage,
+    setJobsPage,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };

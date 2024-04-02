@@ -1,7 +1,8 @@
 import { Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
+import { AppContext } from "../contexts/AppContext";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getProfile } from "../store/auth";
@@ -11,6 +12,7 @@ import UserProfile from "../tabs/UserProfile/UserProfile";
 const Profile = () => {
   const { user, isLoading } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
+  const { pageContainerClasses } = useContext(AppContext);
 
   useEffect(() => {
     dispatch(getProfile());
@@ -18,7 +20,7 @@ const Profile = () => {
 
   return (
     <PrimaryBox>
-      <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
+      <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
             Profile

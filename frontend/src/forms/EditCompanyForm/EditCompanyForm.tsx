@@ -20,7 +20,7 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getOwners());
+    dispatch(getOwners({}));
   }, [dispatch]);
 
   return (
@@ -39,7 +39,6 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
       <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
         <Input formik={formik} label={"English Name"} name={"name"} />
         <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
-        <Input formik={formik} label={"Phone"} type={"tel"} name={"phone"} />
         <Input
           formik={formik}
           select={true}
@@ -47,20 +46,15 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           label={"Status"}
           options={["Active", "Inactive"]}
         />
+        <Input formik={formik} label={"Country"} name={"country"} />
         <Input
           formik={formik}
           select={true}
           name={"state"}
           label={"State"}
-          options={["Dubai"]}
+          options={["dubai"]}
         />
-        <Input
-          formik={formik}
-          select={true}
-          name={"molCategory"}
-          label={"MOL Category"}
-          options={["cat1", "cat2"]}
-        />
+
         <AutoCompleteSearch
           label={"PROs"}
           options={[]}
@@ -76,6 +70,13 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           formik={formik}
           name={"ownerId"}
           multiple
+        />
+        <Input
+          formik={formik}
+          select={true}
+          name={"molCategory"}
+          label={"MOL Category"}
+          options={["cat1", "cat2", "cat3"]}
         />
         <Input formik={formik} label={"MOL Code"} name={"molCode"} />
         <Input formik={formik} label={"Address"} name={"address"} />
@@ -94,10 +95,14 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           type={"tel"}
         />
         <Input formik={formik} label={"Website"} name={"website"} />
+        <Input formik={formik} label={"Zip Code"} name={"zipCode"} />
+        <Input formik={formik} label={"TRN"} name={"trn"} />
         <Input
           formik={formik}
           label={"Establishment Type"}
           name={"establishmentType"}
+          select
+          options={["type 1", "type 2", "type 3"]}
         />
         <Input formik={formik} label={"License Number"} name={"licenseNo"} />
         <Input formik={formik} label={"Immg Card Number"} name={"immgCardNo"} />
@@ -115,6 +120,26 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           <Typography variant="h6">License Expire Date</Typography>
           <Input formik={formik} type={"date"} name={"licenseExpiryDate"} />
         </Box>
+
+        <Input
+          formik={formik}
+          label={"License Issue Place"}
+          name={"licenseIssuePlace"}
+          select
+          options={["place 1", "place 2", "place 3"]}
+        />
+
+        <Input
+          formik={formik}
+          label={"Tenancy Contract Value"}
+          name={"tenancyContractValue"}
+        />
+
+        <Box className={`grid justify-stretch items-center gap-2`}>
+          <Typography variant="h6">Tenancy Contract Expire Date</Typography>
+          <Input formik={formik} type={"date"} name={"tenancyContractExp"} />
+        </Box>
+        <Input formik={formik} label={"Remarks"} name={"remarks"} />
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

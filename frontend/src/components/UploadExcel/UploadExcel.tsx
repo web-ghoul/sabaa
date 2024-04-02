@@ -210,7 +210,7 @@ const UploadExcel = ({
   };
 
   const handleDrop = (event: DragEvent<HTMLLabelElement>) => {
-    event.preventDefault(); // Prevent default drop behavior
+    event.preventDefault();
     const files = event.dataTransfer.files;
     setDragging(false);
     handleChange({ target: { files } });
@@ -220,7 +220,7 @@ const UploadExcel = ({
     <Paper className={`flex justify-stretch items-center`}>
       <label
         htmlFor={"file"}
-        className={`relative p-8 grid justify-stretch items-center rounded-md h-[300px] content-center gap-4 w-full cursor-pointer overflow-hidden lg:!h-[250px] md:!h-[200px] transition-all border-2 text-center
+        className={`relative p-8 grid justify-stretch items-center rounded-md h-[300px] content-center gap-4 w-full cursor-pointer overflow-hidden lg:h-[250px] md:h-[200px] sm:!h-[180px] transition-all border-2 text-center
           &>img:m-auto border-transparent ${
             dragging && "!border-green !bg-[#ddd]"
           }`}

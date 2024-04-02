@@ -1,11 +1,20 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getJobsCounter } from "../../store/jobsCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { JobsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -19,6 +28,9 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
@@ -47,8 +59,12 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
     handleOpenTableMenu(event);
   };
 
+  useEffect(() => {
+    dispatch(getJobsCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={jobsCounter} variant={"jobs"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -59,7 +75,9 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
               desc={searchParams.get("sort") === "job_title_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">ENSCO Code</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">ENSCO Code</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"MOHRE Code"}
@@ -80,9 +98,11 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
                 <PrimaryTableCell component="th" scope="row">
                   {row.jobTitle}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.ENSCOCode}
-                </PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.ENSCOCode}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>

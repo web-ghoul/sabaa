@@ -9,8 +9,9 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     borderRadius: "4px",
   },
   "& label": {
-    fontSize: "14px",
+    fontSize: "16px",
     lineHeight: "1 !important",
+    backgroundColor: "transparent !important",
   },
   "& label[data-shrink=true]": {
     lineHeight: "1.4375em !important",
@@ -21,34 +22,59 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
   },
   [theme.breakpoints.down("lg")]: {
     "& input , & select": {
-      padding: "14px",
+      padding: "9px !important",
+      fontSize: "14px",
+      borderRadius: "3px",
+    },
+    "& label": {
+      lineHeight: "0.7 !important",
+      fontSize: "14px",
     },
     "& svg": {
-      fontSize: "28px",
+      fontSize: "18px",
     },
   },
   [theme.breakpoints.down("md")]: {
     "& input , & select": {
-      padding: "12px",
+      padding: "8px !important",
+      fontSize: "13px",
+      borderRadius: "2px",
     },
     "& label": {
-      lineHeight: "1rem",
+      top: "-3px",
+      lineHeight: "0.7 !important",
+      fontSize: "13px",
     },
     "& svg": {
-      fontSize: "24px",
+      fontSize: "17px",
     },
   },
   [theme.breakpoints.down("sm")]: {
     "& input , & select": {
-      padding: "10px",
+      padding: "7px !important",
+      fontSize: "12px",
+    },
+    "& label": {
+      top: "-3px",
+      lineHeight: "0.7 !important",
+      fontSize: "12px",
     },
     "& svg": {
-      fontSize: "22px",
+      fontSize: "16px",
     },
   },
   [theme.breakpoints.down("xs")]: {
+    "& input , & select": {
+      padding: "7px !important",
+      fontSize: "10px",
+    },
+    "& label": {
+      top: "-4px",
+      lineHeight: "0.8 !important",
+      fontSize: "10px",
+    },
     "& svg": {
-      fontSize: "20px",
+      fontSize: "14px",
     },
   },
   "& select": {

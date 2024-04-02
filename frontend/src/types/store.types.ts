@@ -25,11 +25,36 @@ interface OwnersArgsTypes {
   page?: number;
   search?: string;
   sort?: string;
+  limit?: number;
+  date?: string;
+  state?: string;
+  nationality?: string;
 }
 
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
+}
+
+interface OwnersCounterValuesTypes {
+  isLoading: boolean;
+  ownersCounter: number;
+}
+interface CompaniesCounterValuesTypes {
+  isLoading: boolean;
+  companiesCounter: number;
+}
+interface JobsCounterValuesTypes {
+  isLoading: boolean;
+  jobsCounter: number;
+}
+interface UsersCounterValuesTypes {
+  isLoading: boolean;
+  usersCounter: number;
+}
+interface NationalitiesCounterValuesTypes {
+  isLoading: boolean;
+  nationalitiesCounter: number;
 }
 
 interface CompaniesValuesTypes {
@@ -41,24 +66,34 @@ interface CompaniesArgsTypes {
   page?: number;
   search?: string;
   sort?: string;
+  limit?: number;
+  state?: string;
+  status?: string;
+  molCategory?: string;
+  establishmentType?: string;
 }
 
 interface JobsArgsTypes {
   page?: number;
   search?: string;
   sort?: string;
+  limit?: number;
 }
 
 interface NationalitiesArgsTypes {
   page?: number;
   search?: string;
   sort?: string;
+  limit?: number;
 }
 
 interface UsersArgsTypes {
   page?: number;
   search?: string;
   sort?: string;
+  limit?: number;
+  role?: string;
+  status?: string;
 }
 
 interface NationalitiesValuesTypes {
@@ -101,6 +136,7 @@ interface CompanyTypes {
   nameAr: string;
   logo: string;
   status: string;
+  country: string;
   state: string;
   address: string;
   phone: string;
@@ -112,6 +148,8 @@ interface CompanyTypes {
   licenseIssueDate: Date;
   licenseExpiryDate: Date;
   establishmentType: string;
+  licenseIssuePlace: string;
+  zipCode: string;
   molCode: string;
   molCategory: string;
   whatsAppNo: string;
@@ -120,7 +158,7 @@ interface CompanyTypes {
   trn: string;
   email: string;
   tenancyContractValue: string;
-  tenancyContractExp: string;
+  tenancyContractExp: Date;
   remarks: string;
   user?: string;
 }
@@ -174,23 +212,28 @@ interface UserTypes {
 export type {
   AuthValuesTypes,
   CompaniesArgsTypes,
+  CompaniesCounterValuesTypes,
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
   EmployeeTypes,
   JobTypes,
   JobsArgsTypes,
+  JobsCounterValuesTypes,
   JobsValuesTypes,
   NationalitiesArgsTypes,
+  NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
   OwnerTypes,
   OwnerValuesTypes,
   OwnersArgsTypes,
+  OwnersCounterValuesTypes,
   OwnersValuesTypes,
   PROTypes,
   UserTypes,
   UserValuesTypes,
   UsersArgsTypes,
+  UsersCounterValuesTypes,
   UsersValuesTypes,
 };

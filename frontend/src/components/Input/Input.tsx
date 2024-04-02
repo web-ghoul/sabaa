@@ -30,7 +30,12 @@ const Input = ({
         "aria-label": label,
       }}
       value={formik.values[name as keyof AllFormiksTypes]}
-      onChange={formik.handleChange}
+      onChange={(e) => {
+        if (change) {
+          change(e.target.value);
+        }
+        formik.handleChange(e);
+      }}
       onBlur={formik.handleBlur}
       error={error}
       helperText={helperText}

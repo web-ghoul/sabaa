@@ -1,12 +1,21 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getOwnersCounter } from "../../store/ownersCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { OwnersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -21,6 +30,12 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const navigate = useNavigate();
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const lgScreen = useMediaQuery("(max-width:1200px)");
+  const dispatch = useDispatch<AppDispatch>();
+  const { ownersCounter } = useSelector(
+    (state: RootState) => state.ownersCounter
+  );
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -52,8 +67,13 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
     setOwnerIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
+
+  useEffect(() => {
+    dispatch(getOwnersCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={ownersCounter} variant={"owners"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
@@ -64,7 +84,9 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"Code"}
@@ -74,7 +96,9 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
               jc="center"
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
@@ -98,11 +122,17 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.nationality}
-                </PrimaryTableCell>
+                {!lgScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.nationality}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   {row.emiratesId}
                 </PrimaryTableCell>

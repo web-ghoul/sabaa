@@ -1,6 +1,13 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -8,6 +15,8 @@ import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { AppDispatch } from "../../store/store";
+import { getUsersCounter } from "../../store/usersCounterSlice";
 import { UsersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -21,6 +30,12 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const smScreen = useMediaQuery("(max-width:768px)");
+  const { usersCounter } = useSelector(
+    (state: RootState) => state.usersCounter
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -44,8 +59,12 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}/${id}`);
   };
 
+  useEffect(() => {
+    dispatch(getUsersCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={usersCounter} variant={"users"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -56,8 +75,12 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
-          <PrimaryTableCell align="center">Email</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
+          {!smScreen && (
+            <PrimaryTableCell align="center">Email</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">Status</PrimaryTableCell>
           <PrimaryTableCell align="center">Role</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
@@ -78,8 +101,16 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.email}</PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
+                {!smScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.email}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   <StatusBox status={row.status} />
                 </PrimaryTableCell>
