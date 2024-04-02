@@ -60,4 +60,10 @@ export class ImmgcardService {
       throw new HttpException("Error while deleting immgcard" , HttpStatus.FORBIDDEN);
     }
   }
+
+  async getCounters(cardType:string) {
+    const count = await this.immgcardModel.estimatedDocumentCount({cardType:cardType});
+    return {
+      count}
+  }
 }

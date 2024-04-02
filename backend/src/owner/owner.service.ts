@@ -43,6 +43,8 @@ export class OwnerService {
     {
       sort["createdAt"] = -1; 
     }
+    let query = {}
+
     
     
 
@@ -97,5 +99,11 @@ export class OwnerService {
       });
     }
     
+  }
+
+  async getCounters() {
+    const count = await this.ownerModel.estimatedDocumentCount();
+    return {
+      count}
   }
 }

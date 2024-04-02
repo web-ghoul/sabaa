@@ -89,6 +89,18 @@ export class CreateCompanyDto {
     immgCardNo: string; // ref this
 
     @ApiProperty()
+    @IsString()
+    country: string;
+
+    @ApiProperty()
+    @IsString()
+    zipCode: string;
+
+    @ApiProperty()
+    @IsString()
+    licenseIssuePlace: string;
+
+    @ApiProperty()
     @IsDate()
     immgCardExpiry: Date;
 

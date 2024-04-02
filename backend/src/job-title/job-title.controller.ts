@@ -4,11 +4,13 @@ import { CreateJobTitleDto } from './dto/create-job-title.dto';
 import { UpdateJobTitleDto } from './dto/update-job-title.dto';
 import { JobTitle } from 'schemas/jobTitle.schema';
 import { ApiTags } from '@nestjs/swagger';
+
 @ApiTags('Job-Title')
 @Controller('job-title')
 export class JobTitleController {
   constructor(private readonly jobTitleService: JobTitleService) {}
 
+  
   @Post()
   create(@Body() createJobTitleDto: CreateJobTitleDto) {
     return this.jobTitleService.create(createJobTitleDto);
@@ -18,6 +20,12 @@ export class JobTitleController {
   findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('select') selectFields: string[], @Query('sort') sort: string):Promise<JobTitle[]>{
     return this.jobTitleService.findAll(limit,page,search,selectFields,sort);
   }
+
+  @Get("counters")
+  getCounters(){
+    return this.jobTitleService.getCounters();
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

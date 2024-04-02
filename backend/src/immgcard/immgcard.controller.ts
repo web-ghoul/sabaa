@@ -18,6 +18,11 @@ export class ImmgcardController {
   findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('cardType') cardType: string,@Query('select') selectFields: string[]): Promise <IMMGCard[]> {
     return this.immgcardService.findAll(limit,page,search,selectFields,cardType);
   }
+  @Get("counters")
+  getCounters(@Query('cardType') cardType: string){
+    return this.immgcardService.getCounters(cardType);
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
