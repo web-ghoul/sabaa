@@ -6,13 +6,16 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getOwnersCounter } from "../../store/ownersCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { OwnersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -29,6 +32,10 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const { setEditableOwnerData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
+  const dispatch = useDispatch<AppDispatch>();
+  const { ownersCounter } = useSelector(
+    (state: RootState) => state.ownersCounter
+  );
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -60,8 +67,13 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
     setOwnerIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
+
+  useEffect(() => {
+    dispatch(getOwnersCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={ownersCounter} variant={"owners"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>

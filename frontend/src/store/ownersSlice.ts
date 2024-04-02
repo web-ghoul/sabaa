@@ -7,11 +7,15 @@ export const getOwners = createAsyncThunk(
   "/owners/getOwners",
   async (args: OwnersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
+    console.log(args);
+
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/owner?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
-        import.meta.env.VITE_LIMIT_PAGES
+        args?.limit || import.meta.env.VITE_LIMIT_PAGES
+      }&date=${args?.date || ""}&state=${args?.state || ""}&nationality=${
+        args?.nationality || ""
       }&page=${args?.page || 0}`,
       {
         headers: {

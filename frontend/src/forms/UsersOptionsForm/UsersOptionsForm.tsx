@@ -3,42 +3,84 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { AppDispatch } from "../../store/store";
 import { getUsers } from "../../store/usersSlice";
-import { FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
 
 const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForOwners, searchForOwners } = useContext(FormsContext);
   const [showFilters, setShowFilters] = useState(false);
+  const { setSearchForUsers, searchForUsers } = useContext(FormsContext);
+  const [params, setParams] = useState<{ [key: string]: string }>({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { setUsersPage } = useContext(AppContext);
+
+  const getAllParams = () => {
+    setUsersPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    setParams(allParams);
+    return allParams;
+  };
+
+  const setAllParams = () => {
+    const allParams = getAllParams();
+    (formik as unknown as UsersOptionsFormikTypes).values.role = allParams.role;
+    (formik as unknown as UsersOptionsFormikTypes).values.status =
+      allParams.status;
+    (formik as unknown as UsersOptionsFormikTypes).values.limit =
+      allParams.limit;
+    dispatch(getUsers(allParams));
+  };
 
   const handleSearch = (value: string) => {
-    dispatch(getUsers({ page: 0, search: value }));
-    setSearchForOwners(value);
+    if (value) {
+      dispatch(getUsers({ ...params, search: value }));
+      setSearchForUsers(value);
+    }
   };
 
   const handleLimitPage = (value: string) => {
-    dispatch(getUsers({ page: +value, search: searchForOwners }));
+    if (value) {
+      dispatch(getUsers({ ...params, limit: +value, search: searchForUsers }));
+      setSearchParams({ ...getAllParams(), limit: value });
+    }
   };
 
   const handleFilterByRole = (value: string) => {
-    dispatch(getUsers({ page: +value, search: searchForOwners }));
+    if (value) {
+      dispatch(getUsers({ ...params, role: value, search: searchForUsers }));
+      setSearchParams({ ...getAllParams(), role: value });
+    }
   };
 
   const handleFilterByStatus = (value: string) => {
-    dispatch(getUsers({ page: +value, search: searchForOwners }));
+    if (value) {
+      dispatch(getUsers({ ...params, status: value, search: searchForUsers }));
+      setSearchParams({ ...getAllParams(), status: value });
+    }
   };
 
-  const handleResetAll = () => {};
+  const handleResetAll = () => {
+    setSearchForUsers("");
+    setSearchParams({});
+    dispatch(getUsers({}));
+    setParams({});
+  };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setAllParams();
+  }, []);
 
   return (
     <Paper
@@ -117,13 +159,13 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             name={"filterByStatus"}
             formik={formik}
             change={handleFilterByStatus}
-            options={[]}
+            options={["Active", "Pending", "Blocked"]}
             select
           />
           <Input
             label={"Filter By Role"}
             name={"filterByRole"}
-            options={[]}
+            options={["Admin", "User"]}
             select
             formik={formik}
             change={handleFilterByRole}

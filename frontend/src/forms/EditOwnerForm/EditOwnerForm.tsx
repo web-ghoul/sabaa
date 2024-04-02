@@ -20,7 +20,7 @@ const EditOwnerForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getNationalities());
+    dispatch(getNationalities({}));
   }, [dispatch]);
 
   return (
@@ -53,7 +53,13 @@ const EditOwnerForm = ({ formik }: FormiksTypes) => {
           <Input formik={formik} type={"date"} name={"dob"} />
         </Box>
         <Input formik={formik} label={"Email"} name={"email"} />
-        <Input formik={formik} label={"State"} name={"state"} />
+        <Input
+          formik={formik}
+          label={"State"}
+          name={"state"}
+          select
+          options={["dubai"]}
+        />
         <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} />
       </Box>

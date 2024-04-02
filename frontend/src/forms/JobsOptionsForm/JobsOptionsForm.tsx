@@ -1,33 +1,67 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { getJobs } from "../../store/jobsSlice";
-import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes, JobsOptionsFormikTypes } from "../../types/forms.types";
 
 const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { setSearchForJobs, handleOpenAddJobModal, searchForJobs } =
     useContext(FormsContext);
+  const [params, setParams] = useState<{ [key: string]: string }>({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { setJobsPage } = useContext(AppContext);
+
+  const getAllParams = () => {
+    setJobsPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    setParams(allParams);
+    return allParams;
+  };
+
+  const setAllParams = () => {
+    const allParams = getAllParams();
+    (formik as unknown as JobsOptionsFormikTypes).values.limit =
+      allParams.limit;
+    dispatch(getJobs(allParams));
+  };
 
   const handleSearch = (value: string) => {
-    dispatch(getJobs({ page: 0, search: value }));
-    setSearchForJobs(value);
+    if (value) {
+      dispatch(getJobs({ ...params, search: value }));
+      setSearchForJobs(value);
+    }
   };
 
   const handleLimitPage = (value: string) => {
-    dispatch(getNationalities({ page: +value, search: searchForJobs }));
+    if (value) {
+      dispatch(getJobs({ ...params, limit: +value, search: searchForJobs }));
+      setSearchParams({ ...getAllParams(), limit: value });
+    }
   };
 
-  const handleResetAll = () => {};
+  const handleResetAll = () => {
+    setSearchForJobs("");
+    setSearchParams({});
+    dispatch(getJobs({}));
+    setParams({});
+  };
+
+  useEffect(() => {
+    setAllParams();
+  }, []);
 
   return (
     <Paper

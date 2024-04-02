@@ -6,12 +6,15 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getJobsCounter } from "../../store/jobsCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { JobsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -26,6 +29,8 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
+  const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
@@ -54,8 +59,12 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
     handleOpenTableMenu(event);
   };
 
+  useEffect(() => {
+    dispatch(getJobsCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={jobsCounter} variant={"jobs"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

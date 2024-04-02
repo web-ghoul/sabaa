@@ -3,8 +3,9 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
@@ -12,39 +13,90 @@ import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import {
+  FormiksTypes,
+  OwnersOptionsFormikTypes,
+} from "../../types/forms.types";
 import { NationalityTypes } from "../../types/store.types";
 
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { setSearchForOwners, searchForOwners } = useContext(FormsContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { setOwnersPage } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
+  const [params, setParams] = useState<{ [key: string]: string }>({});
   const [handledNationalities, sethandledNationalities] = useState<string[]>(
     []
   );
 
+  const getAllParams = () => {
+    setOwnersPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    setParams(allParams);
+    return allParams;
+  };
+
+  const setAllParams = () => {
+    const allParams = getAllParams();
+    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
+      allParams.date;
+    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
+      allParams.nationality;
+    (formik as unknown as OwnersOptionsFormikTypes).values.limit =
+      allParams.limit;
+    dispatch(getOwners(allParams));
+  };
+
   const handleSearch = (value: string) => {
-    dispatch(getOwners({ page: 0, search: value }));
-    setSearchForOwners(value);
+    if (value) {
+      dispatch(getOwners({ ...params, search: value }));
+      setSearchForOwners(value);
+    }
   };
 
   const handleLimitPage = (value: string) => {
-    dispatch(getOwners({ page: +value, search: searchForOwners }));
-    setSearchForOwners(value);
+    if (value) {
+      dispatch(
+        getOwners({ ...params, limit: +value, search: searchForOwners })
+      );
+      setSearchParams({ ...getAllParams(), limit: value });
+    }
   };
 
   const handleFilterByNationality = (value: string) => {
-    dispatch(getOwners({ page: +value, search: searchForOwners }));
-    setSearchForOwners(value);
+    if (value) {
+      dispatch(
+        getOwners({ ...params, nationality: value, search: searchForOwners })
+      );
+      setSearchParams({ ...getAllParams(), nationality: value });
+    }
+  };
+
+  const handleFilterByState = (value: string) => {
+    if (value) {
+      dispatch(getOwners({ ...params, state: value, search: searchForOwners }));
+      setSearchParams({ ...getAllParams(), state: value });
+    }
   };
 
   const handleFilterByDateOfBirth = (value: string) => {
-    dispatch(getOwners({ page: +value, search: searchForOwners }));
-    setSearchForOwners(value);
+    if (value) {
+      dispatch(getOwners({ ...params, date: value, search: searchForOwners }));
+      setSearchParams({ ...getAllParams(), date: value });
+    }
   };
 
-  const handleResetAll = () => {};
+  const handleResetAll = () => {
+    setSearchForOwners("");
+    setSearchParams({});
+    dispatch(getOwners({}));
+    setParams({});
+  };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
@@ -60,6 +112,10 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       dispatch(getNationalities({}));
     }
   }, [dispatch, nationalities]);
+
+  useEffect(() => {
+    setAllParams();
+  }, []);
 
   return (
     <Paper
@@ -138,7 +194,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           </PrimaryButton>
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 ${
+          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
@@ -148,6 +204,14 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             formik={formik}
             change={handleFilterByNationality}
             options={handledNationalities}
+            select
+          />
+          <Input
+            label={"Filter By State"}
+            name={"filterByState"}
+            formik={formik}
+            change={handleFilterByState}
+            options={["dubai"]}
             select
           />
           <Box className={`grid justify-stretch items-center gap-2 w-full`}>

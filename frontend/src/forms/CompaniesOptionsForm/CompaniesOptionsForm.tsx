@@ -1,17 +1,21 @@
 import { FilterAltRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import {
+  CompaniesOptionsFormikTypes,
+  FormiksTypes,
+} from "../../types/forms.types";
 
 const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
@@ -19,42 +23,125 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const { setSearchForCompanies, searchForCompanies } =
     useContext(FormsContext);
   const [showFilters, setShowFilters] = useState(false);
+  const [params, setParams] = useState<{ [key: string]: string }>({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { setCompaniesPage } = useContext(AppContext);
+
+  const getAllParams = () => {
+    setCompaniesPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    setParams(allParams);
+    return allParams;
+  };
+
+  const setAllParams = () => {
+    const allParams = getAllParams();
+    (formik as unknown as CompaniesOptionsFormikTypes).values.limit =
+      allParams.limit;
+    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByState =
+      allParams.state;
+    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByStatus =
+      allParams.status;
+    (
+      formik as unknown as CompaniesOptionsFormikTypes
+    ).values.filterByMOLCategory = allParams.molCategory;
+    (
+      formik as unknown as CompaniesOptionsFormikTypes
+    ).values.filterByEstablishmentType = allParams.establishmentType;
+
+    dispatch(getCompanies(allParams));
+  };
 
   const handleSearch = (value: string) => {
-    dispatch(getCompanies({ page: 0, search: value }));
-    setSearchForCompanies(value);
+    if (value) {
+      dispatch(getCompanies({ ...params, page: 0, search: value }));
+      setSearchForCompanies(value);
+    }
   };
 
   const handleLimitPage = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
-    setSearchForCompanies(value);
+    if (value) {
+      dispatch(
+        getCompanies({ ...params, limit: +value, search: searchForCompanies })
+      );
+      setSearchParams({ ...getAllParams(), limit: value });
+    }
   };
 
   const handleFilterByState = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    if (value) {
+      dispatch(
+        getCompanies({ ...params, state: value, search: searchForCompanies })
+      );
+      setSearchParams({ ...getAllParams(), state: value });
+    }
   };
 
   const handleFilterByStatus = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    if (value) {
+      dispatch(
+        getCompanies({ ...params, status: value, search: searchForCompanies })
+      );
+      setSearchParams({ ...getAllParams(), status: value });
+    }
   };
 
   const handleFilterByMOLCategory = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    if (value) {
+      dispatch(
+        getCompanies({
+          ...params,
+          molCategory: value,
+          search: searchForCompanies,
+        })
+      );
+      setSearchParams({ ...getAllParams(), molCategory: value });
+    }
   };
 
   const handleFilterByEstablishmentType = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    if (value) {
+      dispatch(
+        getCompanies({
+          ...params,
+          establishmentType: value,
+          search: searchForCompanies,
+        })
+      );
+      setSearchParams({ ...getAllParams(), establishmentType: value });
+    }
   };
 
   const handleFilterByIMMGExpireDate = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    // dispatch(
+    //   getCompanies({ ...params, page: +value, search: searchForCompanies })
+    // );
+    console.log(value);
+
+    handleAlert({ msg: "Under Development" });
   };
 
   const handleFilterByLicenseExpireDate = (value: string) => {
-    dispatch(getCompanies({ page: +value, search: searchForCompanies }));
+    // dispatch(
+    //   getCompanies({ ...params, page: +value, search: searchForCompanies })
+    // );
+    console.log(value);
+    handleAlert({ msg: "Under Development" });
   };
 
-  const handleResetAll = () => {};
+  const handleResetAll = () => {
+    setSearchForCompanies("");
+    setSearchParams({});
+    dispatch(getCompanies({}));
+    setParams({});
+  };
+
+  useEffect(() => {
+    setAllParams();
+  }, []);
 
   return (
     <Paper

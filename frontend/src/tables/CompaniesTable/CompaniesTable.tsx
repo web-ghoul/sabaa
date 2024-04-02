@@ -6,7 +6,8 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
@@ -15,6 +16,8 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { getCompaniesCounter } from "../../store/companiesCounterSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { CompaniesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -36,6 +39,10 @@ const CompaniesTable = ({
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
+  const { companiesCounter } = useSelector(
+    (state: RootState) => state.companiesCounter
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -68,8 +75,11 @@ const CompaniesTable = ({
     handleOpenTableMenu(event);
   };
 
+  useEffect(() => {
+    dispatch(getCompaniesCounter());
+  }, [dispatch]);
   return (
-    <PrimaryTable>
+    <PrimaryTable count={companiesCounter} variant={"companies"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

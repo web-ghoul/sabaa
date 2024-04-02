@@ -1,15 +1,19 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import {
+  FormiksTypes,
+  NationalitiesOptionsFormikTypes,
+} from "../../types/forms.types";
 
 const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
@@ -19,19 +23,56 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenAddNationalityModal,
     searchForNationalities,
   } = useContext(FormsContext);
+  const [params, setParams] = useState<{ [key: string]: string }>({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { setNationalitiesPage } = useContext(AppContext);
+
+  const getAllParams = () => {
+    setNationalitiesPage(1);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    setParams(allParams);
+    return allParams;
+  };
+
+  const setAllParams = () => {
+    const allParams = getAllParams();
+    (formik as unknown as NationalitiesOptionsFormikTypes).values.limit =
+      allParams.limit;
+    dispatch(getNationalities(allParams));
+  };
 
   const handleSearch = (value: string) => {
-    dispatch(getNationalities({ page: 0, search: value }));
-    setSearchForNationalities(value);
+    if (value) {
+      dispatch(getNationalities({ ...params, page: 0, search: value }));
+      setSearchForNationalities(value);
+    }
   };
-
   const handleLimitPage = (value: string) => {
-    dispatch(
-      getNationalities({ page: +value, search: searchForNationalities })
-    );
+    if (value) {
+      dispatch(
+        getNationalities({
+          ...params,
+          limit: +value,
+          search: searchForNationalities,
+        })
+      );
+      setSearchParams({ ...getAllParams(), limit: value });
+    }
   };
 
-  const handleResetAll = () => {};
+  const handleResetAll = () => {
+    setSearchForNationalities("");
+    setSearchParams({});
+    dispatch(getNationalities({}));
+    setParams({});
+  };
+
+  useEffect(() => {
+    setAllParams();
+  }, []);
 
   return (
     <Paper

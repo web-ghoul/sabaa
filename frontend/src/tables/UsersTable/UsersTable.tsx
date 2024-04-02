@@ -6,7 +6,8 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -14,6 +15,8 @@ import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { AppDispatch } from "../../store/store";
+import { getUsersCounter } from "../../store/usersCounterSlice";
 import { UsersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -29,6 +32,10 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   const navigate = useNavigate();
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
+  const { usersCounter } = useSelector(
+    (state: RootState) => state.usersCounter
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -52,8 +59,12 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}/${id}`);
   };
 
+  useEffect(() => {
+    dispatch(getUsersCounter());
+  }, [dispatch]);
+
   return (
-    <PrimaryTable>
+    <PrimaryTable count={usersCounter} variant={"users"}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

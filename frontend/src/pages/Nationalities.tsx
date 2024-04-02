@@ -1,25 +1,19 @@
 import { Typography } from "@mui/material";
-import { useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { getNationalities } from "../store/nationalitiesSlice";
-import { AppDispatch, RootState } from "../store/store";
+import { RootState } from "../store/store";
 import NationalitiesTable from "../tables/NationalitiesTable/NationalitiesTable";
 
 const Nationalities = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { nationalities, isLoading } = useSelector(
     (state: RootState) => state.nationalities
   );
   const { pageContainerClasses } = useContext(AppContext);
-
-  useEffect(() => {
-    dispatch(getNationalities({}));
-  }, [dispatch]);
 
   return (
     <PrimaryBox>

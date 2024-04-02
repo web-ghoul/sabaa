@@ -30,7 +30,7 @@ const useEditOwnerSchema = () => {
       editableOwnerData?.dob &&
       new Date(editableOwnerData?.dob).toISOString().split("T")[0],
     idNationality: editableOwnerData?.idNationality,
-    nationality: `${editableOwnerData?.nationality} ( ${editableOwnerData?.idNationality} )`,
+    nationality: editableOwnerData?.nationality,
     phone: editableOwnerData?.phone,
     email: editableOwnerData?.email,
     remarks: editableOwnerData?.remarks,
@@ -42,9 +42,7 @@ const useEditOwnerSchema = () => {
 
   useEffect(() => {
     if (editableOwnerData && editableOwnerData.avatar) {
-      setEditOwnerImage(
-        `${import.meta.env.VITE_BACKEND_URL}/${editableOwnerData.avatar}`
-      );
+      setEditOwnerImage(editableOwnerData.avatar);
     }
   }, [editableOwnerData, setEditOwnerImage]);
 

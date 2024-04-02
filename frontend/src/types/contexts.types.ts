@@ -12,6 +12,16 @@ interface AppContextProps {
   defaultAvatar: string;
   defaultCompany: string;
   openUserMenu: null | HTMLElement;
+  ownersPage: number;
+  setOwnersPage: (page: number) => void;
+  jobsPage: number;
+  setJobsPage: (page: number) => void;
+  companiesPage: number;
+  setCompaniesPage: (page: number) => void;
+  usersPage: number;
+  setUsersPage: (page: number) => void;
+  nationalitiesPage: number;
+  setNationalitiesPage: (page: number) => void;
   handleCloseUserMenu: () => void;
   handleOpenUserMenu: (event: MouseEvent<HTMLButtonElement>) => void;
   openTableMenu: null | HTMLElement;
