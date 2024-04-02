@@ -1,5 +1,11 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
 import { MouseEvent, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
@@ -19,6 +25,7 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
 
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
@@ -59,7 +66,9 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
               desc={searchParams.get("sort") === "job_title_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">ENSCO Code</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">ENSCO Code</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"MOHRE Code"}
@@ -80,9 +89,11 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
                 <PrimaryTableCell component="th" scope="row">
                   {row.jobTitle}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.ENSCOCode}
-                </PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.ENSCOCode}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>

@@ -42,10 +42,14 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg`}
+      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
     >
-      <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-        <Box className={`flex justify-start items-center gap-4`}>
+      <Box
+        className={`grid justify-stretch items-center gap-8 grid-cols-2 md:grid-cols-1 md:gap-4 sm:!gap-2`}
+      >
+        <Box
+          className={`flex justify-start items-center gap-4 md:order-1 md:gap-3 sm:!gap-2 xs:grid xs:justify-stretch`}
+        >
           <Input
             label={"Search For Owners..."}
             name={"search"}
@@ -62,7 +66,9 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             select
           />
         </Box>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2`}
+        >
           <PrimaryButton
             onClick={() => navigate(`${import.meta.env.VITE_ADD_USER_ROUTE}`)}
           >
@@ -85,7 +91,9 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 md:order-1`}
+        >
           <PrimaryIconButton
             className={`!bg-green-500 hover:!bg-green-600`}
             onClick={() => setShowFilters(!showFilters)}
@@ -100,9 +108,9 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
           </PrimaryButton>
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all ${
+          className={`flex justify-start items-end gap-4 transition-all  md:gap-3 sm:!gap-2 ${
             showFilters ? "h-full" : "h-[0px]"
-          } overflow-hidden`}
+          } overflow-hidden xs:grid xs:justify-stretch`}
         >
           <Input
             label={"Filter By Status"}

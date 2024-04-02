@@ -8,19 +8,19 @@ export const PrimaryContainer = styled(Container)(({ theme }) => ({
   maxWidth: "100% !important",
   height: "100% !important",
   [theme.breakpoints.down("lg")]: {
-    paddingLeft: "75px !important",
-    paddingRight: "75px !important",
+    paddingLeft: "35px !important",
+    paddingRight: "35px !important",
   },
   [theme.breakpoints.down("md")]: {
-    paddingLeft: "60px  !important",
-    paddingRight: "60px !important",
-  },
-  [theme.breakpoints.down("sm")]: {
-    paddingLeft: "30px !important",
+    paddingLeft: "30px  !important",
     paddingRight: "30px !important",
   },
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: "25px !important",
+    paddingRight: "25px !important",
+  },
   [theme.breakpoints.down("xs")]: {
-    paddingLeft: "15px !important",
-    paddingRight: "15px !important",
+    paddingLeft: "20px !important",
+    paddingRight: "20px !important",
   },
 }));

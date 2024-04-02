@@ -1,5 +1,11 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
 import { MouseEvent, useContext } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -27,6 +33,9 @@ const CompaniesTable = ({
   const navigate = useNavigate();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const smScreen = useMediaQuery("(max-width:768px)");
+  const lgScreen = useMediaQuery("(max-width:1200px)");
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -71,7 +80,9 @@ const CompaniesTable = ({
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"MOL Code"}
@@ -81,8 +92,12 @@ const CompaniesTable = ({
               jc="center"
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Status</PrimaryTableCell>
-          <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+          )}
+          {!smScreen && (
+            <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
       </TableHead>
@@ -108,16 +123,24 @@ const CompaniesTable = ({
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
+                {!lgScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   {row.molCode}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  <StatusBox status={row.status} />
-                </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {handleDate(row.immgCardExpiry)}
-                </PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
+                  </PrimaryTableCell>
+                )}
+                {!smScreen && (
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.immgCardExpiry)}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                     <MoreVertRounded />

@@ -1,5 +1,11 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
 import { MouseEvent, useContext } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
@@ -21,6 +27,8 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const smScreen = useMediaQuery("(max-width:768px)");
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -56,8 +64,12 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
-          <PrimaryTableCell align="center">Email</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
+          {!smScreen && (
+            <PrimaryTableCell align="center">Email</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">Status</PrimaryTableCell>
           <PrimaryTableCell align="center">Role</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
@@ -78,8 +90,16 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.email}</PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
+                {!smScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.email}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   <StatusBox status={row.status} />
                 </PrimaryTableCell>

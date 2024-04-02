@@ -31,10 +31,14 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg`}
+      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:p-3 sm:!p-2 md:gap-3 sm:!gap-2`}
     >
-      <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-        <Box className={`flex justify-start items-center gap-4`}>
+      <Box
+        className={`grid justify-stretch items-center gap-8 grid-cols-2 lg:grid-cols-1 md:gap-4 sm:!gap-2`}
+      >
+        <Box
+          className={`flex justify-start items-center gap-4 lg:order-1 xs:grid xs:justify-stretch md:gap-3 sm:!gap-2`}
+        >
           <Input
             label={"Search For Jobs..."}
             name={"search"}
@@ -51,7 +55,9 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
             select
           />
         </Box>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
+        >
           <PrimaryButton onClick={handleOpenAddJobModal}>Add Job</PrimaryButton>
           <PrimaryButton
             className={`!bg-excel hover:!bg-green-950`}

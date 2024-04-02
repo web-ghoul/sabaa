@@ -1,5 +1,11 @@
 import { MoreVertRounded } from "@mui/icons-material";
-import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
+import {
+  IconButton,
+  TableBody,
+  TableHead,
+  TableRow,
+  useMediaQuery,
+} from "@mui/material";
 import { MouseEvent, useContext } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
@@ -21,6 +27,8 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const navigate = useNavigate();
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const lgScreen = useMediaQuery("(max-width:1200px)");
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
@@ -64,7 +72,9 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
               desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             <SortBox
               title={"Code"}
@@ -74,7 +84,9 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
               jc="center"
             />
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
@@ -98,11 +110,17 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
                     />
                   </Link>
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row.phone}</PrimaryTableCell>
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.phone}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.nationality}
-                </PrimaryTableCell>
+                {!lgScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.nationality}
+                  </PrimaryTableCell>
+                )}
                 <PrimaryTableCell align="center">
                   {row.emiratesId}
                 </PrimaryTableCell>

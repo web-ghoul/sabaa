@@ -1,4 +1,4 @@
-import { Box, CssBaseline } from "@mui/material";
+import { Box, CssBaseline, useMediaQuery } from "@mui/material";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header/Header.tsx";
+import MdSidebar from "./components/Sidebar/MdSidebar.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import AddJobModal from "./modals/AddJobModal.tsx";
 import AddNationalityModal from "./modals/AddNationalityModal.tsx";
@@ -29,6 +30,7 @@ export default function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [signed, setSigned] = useState(true);
+  const mdScreen = useMediaQuery("(max-width:992px)");
 
   useEffect(() => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
@@ -57,10 +59,10 @@ export default function App() {
       <DeleteModal />
       <Toaster />
       <Header />
-      <Sidebar />
+      {mdScreen ? <MdSidebar /> : <Sidebar />}
       <Box
         component="main"
-        className={`min-h-[100vh] grid justify-stretch items-center content-between w-full pt-[70px]`}
+        className={`min-h-[100vh] grid justify-stretch items-center content-between w-full pt-[70px] md:pt-[60px] sm:!pt-[50px]`}
       >
         <Outlet />
         <Footer />

@@ -5,6 +5,7 @@ import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import NoSheetsFound from "../components/NoSheetsFound/NoSheetsFound";
 import SheetAccordion from "../components/SheetAccordion/SheetAccordion";
 import UploadExcel from "../components/UploadExcel/UploadExcel";
+import { AppContext } from "../contexts/AppContext";
 import { ExcelsContext } from "../contexts/ExcelsContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
@@ -14,9 +15,10 @@ import { NationalitiesSheetTypes } from "../types/contexts.types";
 
 const UploadNationalities = () => {
   const { nationalitiesSheets } = useContext(ExcelsContext);
+  const { pageContainerClasses } = useContext(AppContext);
   return (
     <PrimaryBox>
-      <PrimaryContainer className={`grid justify-stretch items-start gap-6`}>
+      <PrimaryContainer className={pageContainerClasses}>
         <Box className={`flex justify-between items-start gap-4`}>
           <BreadCrumbs>
             <Link

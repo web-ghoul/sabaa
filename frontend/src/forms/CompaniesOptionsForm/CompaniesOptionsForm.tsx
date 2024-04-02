@@ -58,10 +58,14 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg`}
+      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md-p-3 sm:!p-2 md:gap-3`}
     >
-      <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-        <Box className={`flex justify-start items-center gap-4`}>
+      <Box
+        className={`grid justify-stretch items-center gap-8 grid-cols-2 lg:grid-cols-1 lg:gap-6 md:gap-4 sm:!gap-2`}
+      >
+        <Box
+          className={`flex lg:order-1 justify-start items-center gap-4 md:gap-3 sm:!gap-2 xs:grid xs:justify-stretch`}
+        >
           <Input
             label={"Search For Companies..."}
             name={"search"}
@@ -78,7 +82,9 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             select
           />
         </Box>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
+        >
           <PrimaryButton
             onClick={() =>
               navigate(`${import.meta.env.VITE_ADD_COMPANY_ROUTE}`)
@@ -112,7 +118,9 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 lg:order-1`}
+        >
           <PrimaryIconButton
             className={`!bg-green-500 hover:!bg-green-600`}
             onClick={() => setShowFilters(!showFilters)}
@@ -127,11 +135,13 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           </PrimaryButton>
         </Box>
         <Box
-          className={`grid justify-stretch items-center gap-4 transition-all ${
+          className={`grid justify-stretch items-center gap-4 transition-all  md:gap-3 sm:!gap-2 ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
-          <Box className={`flex justify-stretch items-center gap-4`}>
+          <Box
+            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 md:grid-cols-2 md:grid xs:grid-cols-1`}
+          >
             <Input
               label={"Filter By Status"}
               name={"filterByStatus"}
@@ -165,7 +175,9 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               select
             />
           </Box>
-          <Box className={`flex justify-stretch items-center gap-4`}>
+          <Box
+            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 xs:grid`}
+          >
             <Box className={`grid justify-stretch items-center gap-2 w-full`}>
               <Typography variant="h6">Filter By IMMG Expire Date</Typography>
               <Input

@@ -1,11 +1,11 @@
-import { Box, styled } from "@mui/material";
+import { ViewListRounded } from "@mui/icons-material";
+import { Box, IconButton, styled, useMediaQuery } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { SidebarContext } from "../../contexts/SidebarsContext.tsx";
 import { PrimaryContainer } from "../../mui/boxes&containers/PrimaryContainer.ts";
 import { RootState } from "../../store/store.ts";
-import BadgeNotification from "../BadgeNotification/BadgeNotification.tsx";
 import SpecialsButtons from "../SpecialsButtons/SpecialsButtons.tsx";
 import UserBox from "../UserBox/UserBox.tsx";
 import UserMenu from "../UserMenu/UserMenu.tsx";
@@ -14,9 +14,10 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 const Header = () => {
-  const { openSidebar, sidebarWidth, handleCloseSidebar } =
+  const { openSidebar, sidebarWidth, handleOpenSidebar } =
     useContext(SidebarContext);
   const { user, isLoading } = useSelector((state: RootState) => state.auth);
+  const mdScreen = useMediaQuery("(max-width:992px)");
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -40,17 +41,25 @@ const Header = () => {
     <AppBar
       position="fixed"
       open={openSidebar}
-      className={`!bg-white h-[70px]`}
-      onClick={handleCloseSidebar}
+      className={`!bg-white h-[70px] md:h-[60px] sm:!h-[50px]`}
     >
       <PrimaryContainer>
         <Box
-          className={`!flex justify-between items-center gap-4 relative`}
+          className={`!flex justify-between items-center gap-4 relative md:!pl-[0px]`}
           sx={{ paddingLeft: `${sidebarWidth}` }}
         >
-          <SpecialsButtons />
+          <Box className={`flex justify-start items-center gap-2`}>
+            {mdScreen && (
+              <IconButton onClick={handleOpenSidebar}>
+                <ViewListRounded
+                  className={`!text-[25px] sm:!text-[20px] text-primary`}
+                />
+              </IconButton>
+            )}
+            <SpecialsButtons />
+          </Box>
           <Box className={`flex justify-end items-center gap-6`}>
-            <BadgeNotification not={4} />
+            {/* <BadgeNotification not={4} /> */}
             {!isLoading && user && (
               <UserBox
                 size={"medium"}

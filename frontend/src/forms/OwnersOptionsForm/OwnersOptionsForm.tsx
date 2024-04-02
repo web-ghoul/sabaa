@@ -63,10 +63,14 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg`}
+      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
     >
-      <Box className={`grid justify-stretch items-center gap-8 grid-cols-2`}>
-        <Box className={`flex justify-start items-center gap-4`}>
+      <Box
+        className={`grid justify-stretch items-center gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
+      >
+        <Box
+          className={`flex justify-start items-center gap-4 lg:order-1 xs:grid xs:justify-stretch md:gap-3 sm:!gap-2`}
+        >
           <Input
             label={"Search For Owners..."}
             name={"search"}
@@ -83,7 +87,9 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             select
           />
         </Box>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
+        >
           <PrimaryButton
             onClick={() => navigate(`${import.meta.env.VITE_ADD_OWNER_ROUTE}`)}
           >
@@ -115,7 +121,9 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
-        <Box className={`flex justify-end items-center gap-4`}>
+        <Box
+          className={`flex justify-end items-center gap-4 md:gap-3 sm:!gap-2 md:order-1`}
+        >
           <PrimaryIconButton
             className={`!bg-green-500 hover:!bg-green-600`}
             onClick={() => setShowFilters(!showFilters)}
@@ -130,7 +138,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           </PrimaryButton>
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all ${
+          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >

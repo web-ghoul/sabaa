@@ -8,6 +8,7 @@ import {
 } from "./store.types";
 
 interface AppContextProps {
+  pageContainerClasses: string;
   defaultAvatar: string;
   defaultCompany: string;
   openUserMenu: null | HTMLElement;
