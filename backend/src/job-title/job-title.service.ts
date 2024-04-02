@@ -76,4 +76,10 @@ export class JobTitleService {
       throw new HttpException("Error while deleting jobTitle" , HttpStatus.FORBIDDEN);
     }
   }
+
+  async getCounters() {
+    const count = await this.jobTitleModel.estimatedDocumentCount();
+    return {
+      count}
+  }
 }

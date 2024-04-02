@@ -19,6 +19,12 @@ export class NationalityController {
     return this.nationalityService.findAll(limit,page,search,selectFields,sort);
   }
 
+  @Get("counters")
+  getCounters(){
+    return this.nationalityService.getCounters();
+  }
+
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.nationalityService.findOne(id);

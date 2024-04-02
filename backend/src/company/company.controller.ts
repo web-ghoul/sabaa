@@ -29,6 +29,10 @@ export class CompanyController {
 
     return this.companyService.ManageCompanyOwnersAndPro(companyId,identity,operation,typeOfPerson);
   }
+  @Get("counters")
+  getCounters(){
+    return this.companyService.getCounters();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -46,6 +50,8 @@ export class CompanyController {
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }
+
+  
 
 
 }

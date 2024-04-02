@@ -84,6 +84,17 @@ export class Company {
   @Prop()
   remarks: string;
 
+  @Prop()
+  country: string;
+
+  @Prop()
+  zipCode: string;
+
+  @Prop()
+  licenseIssuePlace: string;
+
+  
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 }

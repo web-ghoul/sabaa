@@ -23,6 +23,11 @@ export class OwnerController {
   findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],sort:string): Promise<Owner[]> {
     return this.ownerService.findAll(limit,page,search,selectFields,sort);
   }
+  @Get("counters")
+  getCounters(){
+    return this.ownerService.getCounters();
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

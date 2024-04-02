@@ -122,5 +122,13 @@ export class CompanyService {
     }
   }
 
+  async getCounters() {
+    const count = await this.companyModel.estimatedDocumentCount();
+    return {
+      count}
+  }
+
+
+
   
 }

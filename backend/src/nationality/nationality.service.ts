@@ -82,4 +82,9 @@ export class NationalityService {
     }
     
   }
+  async getCounters() {
+    const count = await this.nationalityModel.estimatedDocumentCount();
+    return {
+      count}
+  }
 }

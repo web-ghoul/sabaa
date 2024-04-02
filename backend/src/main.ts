@@ -16,6 +16,7 @@ async function bootstrap() {
   app.enableCors();
   // app.use(csurf());
   const config = new DocumentBuilder()
+  .addServer(`http://localhost:3000`)
   .build();
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('ApiDoc', app, document);
