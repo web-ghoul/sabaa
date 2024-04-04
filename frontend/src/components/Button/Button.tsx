@@ -8,7 +8,11 @@ import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { ButtonTypes } from "../../types/components.types";
 
 const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
-  const classes = `${bg && `${bg} hover:${bg.replace("5", "6")}`}`;
+  const classes = `${
+    bg === "excel"
+      ? `!bg-excel hover:!bg-green-950`
+      : bg && `${bg} hover:${bg.replace("5", "6")}`
+  }`;
   const {
     handleOpenUserModal,
     handleOpenOwnerModal,

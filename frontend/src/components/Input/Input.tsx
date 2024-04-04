@@ -27,8 +27,10 @@ const Input = ({
 
   return useMemo(
     () => (
-      <Box className={`grid justify-stretch items-center gap-2`}>
-        <Typography variant="h6">{label}</Typography>
+      <Box className={`grid justify-stretch items-center gap-2 w-full`}>
+        <Typography variant="h6" className={`!font-[400]`}>
+          {type === "search" ? "Search" : label}
+        </Typography>
         {select ? (
           <PrimaryTextField
             fullWidth

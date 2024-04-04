@@ -139,11 +139,7 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
             data.map((row, i) => {
               return (
                 <OwnersTableRow key={i}>
-                  <PrimaryTableCell
-                    onClick={() => handleView()}
-                    component="th"
-                    scope="row"
-                  >
+                  <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
                         username={row.name}

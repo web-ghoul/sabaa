@@ -5,8 +5,8 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { FormiksTypes } from "../../types/forms.types";
+import Button from "../../components/Button/Button";
 
 const UserForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseUserModal } = useContext(FormsContext);
@@ -64,9 +64,11 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <PrimaryButton onClick={handleCloseUserModal} className={`!bg-error`}>
-          Cancel
-        </PrimaryButton>
+        <Button
+          title={"Cancel"}
+          handling={handleCloseUserModal}
+          bg={"!bg-red-500"}
+        />
       </Box>
     </Paper>
   );

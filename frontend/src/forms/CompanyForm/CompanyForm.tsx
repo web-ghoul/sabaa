@@ -3,12 +3,12 @@ import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -143,12 +143,11 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <PrimaryButton
-          onClick={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
-          className={`!bg-error`}
-        >
-          Cancel
-        </PrimaryButton>
+        <Button
+          title={"Cancel"}
+          handling={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
+          bg={"!bg-red-500"}
+        />
       </Box>
     </Paper>
   );

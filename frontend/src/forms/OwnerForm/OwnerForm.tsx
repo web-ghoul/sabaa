@@ -2,12 +2,12 @@ import { Box, Paper } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -91,9 +91,11 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <PrimaryButton onClick={handleCloseOwnerModal} className={`!bg-error`}>
-          Cancel
-        </PrimaryButton>
+        <Button
+          title={"Cancel"}
+          handling={handleCloseOwnerModal}
+          bg={"!bg-red-500"}
+        />
       </Box>
     </Paper>
   );

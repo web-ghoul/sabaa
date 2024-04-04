@@ -10,6 +10,7 @@ import { getNationalities } from "../store/nationalitiesSlice";
 import { getOwners } from "../store/ownersSlice";
 import { AppDispatch } from "../store/store";
 import { getUsers } from "../store/usersSlice";
+import NoDataFound from "./NoDataFound";
 
 const PrimaryTableFooter = ({
   count,
@@ -89,7 +90,8 @@ const PrimaryTableFooter = ({
     }
     setLimit(+allParams?.limit || 10);
   }, [searchParams]);
-  return (
+
+  return Math.ceil(count / limit) > 1 ? (
     <Box className={`!grid justify-stretch items-center w-full p-4`}>
       <Pagination
         count={Math.ceil(count / limit)}
@@ -111,6 +113,8 @@ const PrimaryTableFooter = ({
         onChange={handleChange}
       />
     </Box>
+  ) : (
+    count === 0 && <NoDataFound />
   );
 };
 

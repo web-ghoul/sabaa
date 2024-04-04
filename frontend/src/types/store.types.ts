@@ -13,7 +13,7 @@ interface JobsValuesTypes {
 interface OwnerValuesTypes {
   isLoading: boolean;
   owner: OwnerTypes | null;
-  companies: CompanyTypes | null;
+  companies: CompanyTypes[] | null;
 }
 
 interface OwnersValuesTypes {

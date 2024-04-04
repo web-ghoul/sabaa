@@ -54,8 +54,8 @@ const Item = ({ icon, title, url }: SidebarItemTypes) => {
         <IconButton
           className={`${
             (mdScreen || openSidebar) && "!flex !justify-start !px-4"
-          } items-center gap-2 !text-white ${
-            currentPath && "!text-primary"
+          } items-center gap-2  ${
+            currentPath ? "!text-primary" : "!text-white"
           } hover:!text-primary w-full`}
           sx={{ "& > svg": { fontSize: "20px" } }}
         >

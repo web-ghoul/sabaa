@@ -10,9 +10,9 @@ export const getOwners = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/owner?search=${
         (args && args.search) || ""
-      }&sort=${args?.sort || ""}&limit=${
-        args?.limit || import.meta.env.VITE_LIMIT_PAGES
-      }&date=${args?.date || ""}&state=${args?.state || ""}&nationality=${
+      }&sort=${args?.sort || ""}&limit=${args?.limit || ""}&date=${
+        args?.date || ""
+      }&state=${args?.state || ""}&nationality=${
         args?.nationality || ""
       }&page=${args?.page || 0}`,
       {

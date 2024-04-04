@@ -12,8 +12,6 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { handleAlert } from "../../functions/handleAlert";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -60,15 +58,6 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const handleSearch = (value: string) => {
     dispatch(getOwners({ ...params, search: value }));
     setSearchForOwners(value);
-  };
-
-  const handleLimitPage = (value: string) => {
-    if (value) {
-      dispatch(
-        getOwners({ ...params, limit: +value, search: searchForOwners })
-      );
-      setSearchParams({ ...getAllParams(), limit: value });
-    }
   };
 
   const handleFilterByNationality = (value: string) => {
@@ -138,57 +127,43 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
     >
       <Box
-        className={`grid justify-stretch items-center gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
+        className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
       >
-        <Box
-          className={`flex justify-start items-center gap-4 lg:order-1 xs:grid xs:justify-stretch md:gap-3 sm:!gap-2`}
-        >
-          <Input
-            label={"Search For Owners..."}
-            name={"search"}
-            type={"search"}
-            formik={formik}
-            change={handleSearch}
-          />
-          <Input
-            label={"Entries per page"}
-            name={"limit"}
-            formik={formik}
-            change={handleLimitPage}
-            options={["5", "10", "20", "30"]}
-            select
-          />
-        </Box>
+        <Input
+          label={"Search Name, Person Code..."}
+          name={"search"}
+          type={"search"}
+          formik={formik}
+          change={handleSearch}
+        />
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
         >
-          <PrimaryButton onClick={() => handleOpenOwnerModal("addOwner")}>
-            <AddRounded />
-            <Typography variant="button">Add Owner</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() =>
+          <Button
+            title={"Add Owner"}
+            icon={<AddRounded />}
+            handling={() => handleOpenOwnerModal("addOwner")}
+          />
+          <Button
+            title={"Upload Excel"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            handling={() =>
               navigate(`${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`)
             }
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Upload Excel</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel All</Typography>
-          </PrimaryButton>
+          />
+          <Button
+            title={"Excel"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            variant={"under development"}
+          />
+          <Button
+            title={"Excel All"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            variant={"under development"}
+          />
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>

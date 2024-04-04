@@ -112,7 +112,7 @@ Notes :
   1- Limit ALL 
   2- Edit Date For day-month-year (Done)
   3- Make Remark Textarea (Done)
-  4- Reduce Spaces between textField 
+  4- Reduce Spaces between textField (Done)
   6- Don't Delete From Database Even Deleted it (Working By Amr)
   7- Value of tab will be reset every view (Done)
   8- Email Validate Input (Done)
@@ -128,15 +128,15 @@ Notes :
   18- Refuse Any sheet different when upload
   19- Filter By And Concept not Or (Mistake By Me and it will fix when finish filter all button)
   20- Filter button For all Filter to work
-  21- when click on item of sidebar don't reset filters
+  21- when click on item of sidebar don't reset filters (Done)
   22- No Filters For Companies Of Owners or owners of Companies 
-  23- Activities Tab For Owner, Company , PRO , Employee
+  23- Activities Tab For Owner, Company , PRO , Employee (Done)
   24- When Edit Go to the editable item (Company , Owner) (Done)
   25- Add Employees Tab For Company (Done)
-  26- Add - For non Value For any field has no value ()
-  27- Edit Profile Strtucture Like ()
+  26- Add - For non Value For any field has no value 
+  27- Edit Profile Strtucture Like 
   28- Change Code To Person Code (Done)
-  29- Placeholder For search Like (Search by Name , Code)
+  29- Placeholder For search Like (Search by Name , Code) (Done)
   30- Pagination of table change to default table's pagination in MUI
   31- Filter By Date From to To (Working By Amr) [Owner => (dobFrom ,dobTo) , Company => [(IMMGFrom , IMMGTo) , (licenseFrom , licenseTo)]]
   32- Use Mongo Id for All Tables (Talking at Meeting)

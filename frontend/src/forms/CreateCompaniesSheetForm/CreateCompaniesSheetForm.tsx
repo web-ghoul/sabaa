@@ -4,7 +4,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
+import Button from "../../components/Button/Button";
 
 const CreateCompaniesSheetForm = ({ index }: { index: number }) => {
   const { formsLoading } = useContext(FormsContext);
@@ -26,12 +26,12 @@ const CreateCompaniesSheetForm = ({ index }: { index: number }) => {
       className={`flex justify-center items-center gap-8`}
     >
       <SubmitButton loading={formsLoading}>Create</SubmitButton>
-      <PrimaryButton
-        className={`!bg-red-500 hover:!bg-red-600`}
-        onClick={handleRemoveSheet}
-      >
-        Remove
-      </PrimaryButton>
+
+      <Button
+        title={"Remove"}
+        handling={handleRemoveSheet}
+        bg={"!bg-red-500"}
+      />
     </Box>
   );
 };

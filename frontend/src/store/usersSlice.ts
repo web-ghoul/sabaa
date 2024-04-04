@@ -10,11 +10,9 @@ export const getUsers = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/user?search=${
         (args && args.search) || ""
-      }&sort=${args?.sort || ""}&limit=${
-        args?.limit || import.meta.env.VITE_LIMIT_PAGES
-      }&role=${args?.role || ""}&status=${args?.status || ""}&page=${
-        args?.page || 0
-      }`,
+      }&sort=${args?.sort || ""}&limit=${args?.limit || ""}&role=${
+        args?.role || ""
+      }&status=${args?.status || ""}&page=${args?.page || 0}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

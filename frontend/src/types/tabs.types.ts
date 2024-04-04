@@ -9,6 +9,7 @@ interface UserProfileProps {
 interface OwnerProfileProps {
   owner: OwnerTypes | null;
   isLoading: boolean;
+  companies: CompanyTypes[] | null;
 }
 
 interface CompanyProfileProps {

@@ -1,19 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
-import { Box, Paper, Typography } from "@mui/material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
+import { Box, Paper } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { handleAlert } from "../../functions/handleAlert";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
-import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { AppDispatch } from "../../store/store";
 import { getUsers } from "../../store/usersSlice";
 import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
@@ -51,13 +45,6 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const handleSearch = (value: string) => {
     dispatch(getUsers({ ...params, search: value }));
     setSearchForUsers(value);
-  };
-
-  const handleLimitPage = (value: string) => {
-    if (value) {
-      dispatch(getUsers({ ...params, limit: +value, search: searchForUsers }));
-      setSearchParams({ ...getAllParams(), limit: value });
-    }
   };
 
   const handleFilterByRole = (value: string) => {
@@ -101,70 +88,56 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
     >
       <Box
-        className={`grid justify-stretch items-center gap-8 grid-cols-2 md:grid-cols-1 md:gap-4 sm:!gap-2`}
+        className={`grid justify-stretch items-end gap-8 grid-cols-2 md:grid-cols-1 md:gap-4 sm:!gap-2`}
       >
-        <Box
-          className={`flex justify-start items-center gap-4 md:order-1 md:gap-3 sm:!gap-2 xs:grid xs:justify-stretch`}
-        >
-          <Input
-            label={"Search For Owners..."}
-            name={"search"}
-            type={"search"}
-            formik={formik}
-            change={handleSearch}
-          />
-          <Input
-            label={"Entries per page"}
-            name={"limit"}
-            formik={formik}
-            change={handleLimitPage}
-            options={["5", "10", "20", "30"]}
-            select
-          />
-        </Box>
+        <Input
+          label={"Search Name, Person Code..."}
+          name={"search"}
+          type={"search"}
+          formik={formik}
+          change={handleSearch}
+        />
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2`}
         >
-          <PrimaryButton onClick={() => handleOpenUserModal("addUser")}>
-            <AddRounded />
-            <Typography variant="button">Add User</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel All</Typography>
-          </PrimaryButton>
+          <Button
+            handling={() => handleOpenUserModal("addUser")}
+            icon={<RiFileExcel2Fill />}
+            title={"Add User"}
+          />
+          <Button
+            variant={"under development"}
+            icon={<RiFileExcel2Fill />}
+            title={"Excel"}
+            bg={"excel"}
+          />
+          <Button
+            variant={"under development"}
+            icon={<RiFileExcel2Fill />}
+            title={"Excel All"}
+            bg={"excel"}
+          />
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 md:order-1`}
         >
-          <PrimaryIconButton
-            className={`!bg-green-500 hover:!bg-green-600`}
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <FilterAltRounded />
-          </PrimaryIconButton>
-          <PrimaryButton onClick={handleFilter}>
-            <FilterListRounded />
-            <Typography variant="button">Filter</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            onClick={handleResetAll}
-            className="!bg-red-500 hover:!bg-red-600"
-          >
-            Reset All
-          </PrimaryButton>
+          <Button
+            icon={<FilterAltRounded />}
+            bg={"!bg-green-500"}
+            handling={() => setShowFilters(!showFilters)}
+          />
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
+          />
+          <Button
+            title={"Reset All"}
+            handling={handleResetAll}
+            bg={"!bg-red-500"}
+          />
         </Box>
         <Box
           className={`flex justify-start items-end gap-4 transition-all  md:gap-3 sm:!gap-2 ${

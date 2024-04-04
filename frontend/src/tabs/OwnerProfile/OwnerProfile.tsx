@@ -1,14 +1,14 @@
 import { useContext } from "react";
-import ProfileActivities from "../../components/ProfileActivities/ProfileActivities";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { TabsContext } from "../../contexts/TabsContext";
+import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
 import { OwnerTypes } from "../../types/store.types";
 import { OwnerProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const OwnerProfile = ({ owner, isLoading }: OwnerProfileProps) => {
+const OwnerProfile = ({ owner, isLoading, companies }: OwnerProfileProps) => {
   const { ownerTabsValue } = useContext(TabsContext);
 
   return (
@@ -17,6 +17,7 @@ const OwnerProfile = ({ owner, isLoading }: OwnerProfileProps) => {
         "Personal Info",
         "Companies",
         "Transactions",
+        "Activities",
         "Documents",
         "Sponsored Persons",
       ]}
@@ -31,7 +32,7 @@ const OwnerProfile = ({ owner, isLoading }: OwnerProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={1}>
-        <ProfileActivities />
+        <CompaniesTable data={companies} isLoading={isLoading} />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={2}>
         <ProfileSetting />
@@ -40,6 +41,9 @@ const OwnerProfile = ({ owner, isLoading }: OwnerProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={4}>
+        <ProfileSetting />
+      </CustomTabPanel>
+      <CustomTabPanel value={ownerTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>

@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { useContext } from "react";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { FormiksTypes } from "../../types/forms.types";
 
 const JobForm = ({ formik, type }: FormiksTypes) => {
@@ -23,9 +23,11 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <PrimaryButton className={`!bg-error`} onClick={handleCloseJobModal}>
-          Cancel
-        </PrimaryButton>
+        <Button
+          title={"Cancel"}
+          handling={handleCloseJobModal}
+          bg={"!bg-red-500"}
+        />
       </Box>
     </Box>
   );

@@ -50,7 +50,7 @@ export default function App() {
   }, [dispatch, navigate, pathname]);
 
   return signed && !AuthRoutes.includes(pathname) ? (
-    <Box sx={{ display: "flex" }} className={`bg-bg`}>
+    <Box sx={{ display: "flex" }} className={`bg-bg relative`}>
       <CssBaseline />
       <JobModal />
       <OwnerModal />

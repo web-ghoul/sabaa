@@ -13,9 +13,7 @@ const PrimaryTable = ({
 }) => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        {children}
-      </Table>
+      <Table aria-label="customized table">{children}</Table>
       <PrimaryTableFooter count={count} variant={variant} />
     </TableContainer>
   );

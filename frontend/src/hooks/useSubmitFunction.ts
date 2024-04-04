@@ -116,6 +116,9 @@ const useSubmitFunction = (type: string) => {
     values.ownerId.map((owner) => {
       formData.append("ownerId", owner);
     });
+    values.proCode.map((pro) => {
+      formData.append("proId", pro);
+    });
     formData.append("state", values.state);
     formData.append("licenseNo", values.licenseNo);
     formData.append("immgCardNo", values.immgCardNo);

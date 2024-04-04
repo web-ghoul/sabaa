@@ -4,8 +4,8 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { FormiksTypes } from "../../types/forms.types";
+import Button from "../../components/Button/Button";
 
 const NationalityForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseNationalityModal } =
@@ -26,12 +26,11 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <PrimaryButton
-          onClick={handleCloseNationalityModal}
-          className={`!bg-error`}
-        >
-          Cancel
-        </PrimaryButton>
+        <Button
+          title={"Cancel"}
+          handling={handleCloseNationalityModal}
+          bg={"!bg-red-500"}
+        />
       </Box>
     </Paper>
   );
