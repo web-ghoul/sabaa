@@ -25,7 +25,6 @@ interface ImportMetaEnv {
   VITE_ACTIVITIES_ROUTE: string;
   VITE_ADD_OWNER_ROUTE: string;
   VITE_ADD_COMPANY_ROUTE: string;
-  VITE_EDIT_OWNER_ROUTE: string;
   VITE_EDIT_COMPANY_ROUTE: string;
   VITE_ADD_USER_ROUTE: string;
   VITE_UPLOAD_OWNERS_ROUTE: string;
@@ -34,7 +33,6 @@ interface ImportMetaEnv {
   VITE_UPLOAD_JOBS_ROUTE: string;
   VITE_UPLOAD_NATIONALITIES_ROUTE: string;
   VITE_ADD_PUBLIC_RELATION_OFFICER_ROUTE: string;
-  VITE_EDIT_USER_ROUTE: string;
   VITE_PROFILE_ROUTE: string;
 }
 

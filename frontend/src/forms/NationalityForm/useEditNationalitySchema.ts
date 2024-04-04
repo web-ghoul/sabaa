@@ -2,20 +2,20 @@ import { useContext } from "react";
 import * as yup from "yup";
 import { FormsContext } from "../../contexts/FormsContext";
 
-const useEditNationalitySchema = () => {
+const useNationalitySchema = () => {
   const { editableNationalityData } = useContext(FormsContext);
 
-  const EditNationalitySchema = yup.object({
+  const NationalitySchema = yup.object({
     _id: yup.string().required("Nationality Id is required"),
     nationality: yup.string().required("Nationality is required"),
   });
 
-  const EditNationalityInitailValues = {
+  const NationalityInitailValues = {
     _id: editableNationalityData?._id,
     nationality: editableNationalityData?.nationality,
   };
 
-  return { EditNationalitySchema, EditNationalityInitailValues };
+  return { NationalitySchema, NationalityInitailValues };
 };
 
-export default useEditNationalitySchema;
+export default useNationalitySchema;

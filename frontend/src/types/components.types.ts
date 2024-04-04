@@ -41,7 +41,16 @@ interface InputTypes {
   select?: boolean;
   options?: Array<string>;
   ac?: string;
+  textarea?: boolean;
   change?: (value: string) => void;
+}
+
+interface ButtonTypes {
+  icon?: ReactNode;
+  title?: string;
+  bg?: string;
+  variant?: string;
+  handling?: () => void;
 }
 
 interface SubmitButtonTypes {
@@ -79,8 +88,7 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  loading?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | null;
+  options: NationalityTypes[] | OwnerTypes[];
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }
@@ -106,6 +114,7 @@ interface UploadStatusTypes {
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
+  ButtonTypes,
   DataBoxTypes,
   InputTypes,
   LogoTypes,

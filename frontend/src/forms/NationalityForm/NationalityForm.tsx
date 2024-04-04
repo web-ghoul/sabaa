@@ -7,8 +7,8 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { FormiksTypes } from "../../types/forms.types";
 
-const AddNationalityForm = ({ formik }: FormiksTypes) => {
-  const { formsLoading, handleCloseAddNationalityModal } =
+const NationalityForm = ({ formik, type }: FormiksTypes) => {
+  const { formsLoading, handleCloseNationalityModal } =
     useContext(FormsContext);
 
   return (
@@ -23,9 +23,11 @@ const AddNationalityForm = ({ formik }: FormiksTypes) => {
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
-        <SubmitButton loading={formsLoading}>Add</SubmitButton>
+        <SubmitButton loading={formsLoading}>
+          {type?.startsWith("add") ? "Add" : "Edit"}
+        </SubmitButton>
         <PrimaryButton
-          onClick={handleCloseAddNationalityModal}
+          onClick={handleCloseNationalityModal}
           className={`!bg-error`}
         >
           Cancel
@@ -35,4 +37,4 @@ const AddNationalityForm = ({ formik }: FormiksTypes) => {
   );
 };
 
-export default AddNationalityForm;
+export default NationalityForm;

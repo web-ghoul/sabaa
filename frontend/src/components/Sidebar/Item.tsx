@@ -42,7 +42,14 @@ const Item = ({ icon, title, url }: SidebarItemTypes) => {
   }, [currentPath, url, pathname]);
 
   return (
-    <Link to={url} onClick={handleCloseSidebar}>
+    <Link
+      to={url}
+      onClick={() => {
+        if (mdScreen) {
+          handleCloseSidebar();
+        }
+      }}
+    >
       <BootstrapTooltip title={title} placement="right">
         <IconButton
           className={`${

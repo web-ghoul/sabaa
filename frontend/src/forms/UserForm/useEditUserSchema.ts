@@ -3,34 +3,38 @@ import * as yup from "yup";
 import { useContext, useEffect } from "react";
 import { FormsContext } from "../../contexts/FormsContext";
 
-const useEditUserSchema = () => {
-  const { editableUserData, setEditUserImage } = useContext(FormsContext);
+const useUserSchema = () => {
+  const { editableUserData, setUserImage } = useContext(FormsContext);
 
-  const EditUserSchema = yup.object({
+  const UserSchema = yup.object({
     name: yup.string().required("Username is required"),
-    email: yup.string().required("Email is required"),
+    email: yup.string().required("Email is required").email("Email is inValid"),
     role: yup.string().required("Role is required"),
     phone: yup.string().required("Phone is required"),
     avatar: yup.string(),
     status: yup.string().required("Status is required"),
+    password: editableUserData
+      ? yup.string()
+      : yup.string().required("Password is required"),
   });
 
-  const EditUserInitailValues = {
+  const UserInitailValues = {
     name: editableUserData?.name,
     email: editableUserData?.email,
     role: editableUserData?.role,
     phone: editableUserData?.phone,
     avatar: editableUserData?.avatar,
     status: editableUserData?.status,
+    password: editableUserData?.password,
   };
 
   useEffect(() => {
     if (editableUserData) {
-      setEditUserImage(editableUserData.avatar);
+      setUserImage(editableUserData.avatar);
     }
-  }, [editableUserData, setEditUserImage]);
+  }, [editableUserData, setUserImage]);
 
-  return { EditUserSchema, EditUserInitailValues };
+  return { UserSchema, UserInitailValues };
 };
 
-export default useEditUserSchema;
+export default useUserSchema;

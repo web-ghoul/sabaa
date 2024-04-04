@@ -3,10 +3,11 @@ import * as yup from "yup";
 import { useContext, useEffect } from "react";
 import { FormsContext } from "../../contexts/FormsContext";
 
-const useEditOwnerSchema = () => {
-  const { editableOwnerData, setEditOwnerImage } = useContext(FormsContext);
+const useOwnerSchema = () => {
+  const { editableOwnerData, setOwnerImage } = useContext(FormsContext);
 
-  const EditOwnerSchema = yup.object({
+  const OwnerSchema = yup.object({
+    personCode: yup.string().required("Person Code is required"),
     avatar: yup.string(),
     name: yup.string().required("English Name is required"),
     nameAr: yup.string().required("Arabic Name is required"),
@@ -15,15 +16,17 @@ const useEditOwnerSchema = () => {
     nationality: yup.string(),
     phone: yup.string().required("Phone is required"),
     emiratesId: yup.string().required("Emirates Id is required"),
-    email: yup.string(),
+    email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),
     remarks: yup.string(),
     proCode: yup.boolean(),
+    _id: yup.string().required("UID Number is required"),
   });
 
-  const EditOwnerInitailValues = {
+  const OwnerInitailValues = {
     name: editableOwnerData?.name,
+    personCode: editableOwnerData?.personCode,
     nameAr: editableOwnerData?.nameAr,
     avatar: editableOwnerData?.avatar,
     dob:
@@ -38,15 +41,16 @@ const useEditOwnerSchema = () => {
     address: editableOwnerData?.address,
     proCode: editableOwnerData?.proCode,
     emiratesId: editableOwnerData?.emiratesId,
+    _id: editableOwnerData?._id,
   };
 
   useEffect(() => {
     if (editableOwnerData && editableOwnerData.avatar) {
-      setEditOwnerImage(editableOwnerData.avatar);
+      setOwnerImage(editableOwnerData.avatar);
     }
-  }, [editableOwnerData, setEditOwnerImage]);
+  }, [editableOwnerData, setOwnerImage]);
 
-  return { EditOwnerSchema, EditOwnerInitailValues };
+  return { OwnerSchema, OwnerInitailValues };
 };
 
-export default useEditOwnerSchema;
+export default useOwnerSchema;

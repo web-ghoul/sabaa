@@ -27,6 +27,7 @@ import SortBox from "../SortBox";
 import CompaniesTableMenu from "./CompaniesTableMenu";
 import { CompaniesTableRow } from "./CompaniesTableRow";
 import LoadingCompaniesRow from "./LoadingCompaniesRow";
+import { TabsContext } from "../../contexts/TabsContext";
 
 const CompaniesTable = ({
   data,
@@ -34,6 +35,7 @@ const CompaniesTable = ({
   fileIndex,
 }: CompaniesTableTypes) => {
   const { handleOpenTableMenu, setCompaniesPage } = useContext(AppContext);
+  const { setCompanyTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
@@ -79,6 +81,8 @@ const CompaniesTable = ({
   const handleView = () => {
     if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
       handleAlert({ msg: "Under Development" });
+    } else {
+      setCompanyTabsValue(0);
     }
   };
 

@@ -1,3 +1,4 @@
+import { AddRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -15,7 +16,7 @@ import { FormiksTypes, JobsOptionsFormikTypes } from "../../types/forms.types";
 const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForJobs, handleOpenAddJobModal, searchForJobs } =
+  const { setSearchForJobs, handleOpenJobModal, searchForJobs } =
     useContext(FormsContext);
   const [params, setParams] = useState<{ [key: string]: string }>({});
   const [searchParams, setSearchParams] = useSearchParams();
@@ -62,6 +63,11 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
     setAllParams();
   }, []);
 
+  useEffect(() => {
+    if (searchParams.size === 0) {
+      dispatch(getJobs({}));
+    }
+  }, [dispatch, searchParams]);
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:p-3 sm:!p-2 md:gap-3 sm:!gap-2`}
@@ -91,7 +97,10 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
         >
-          <PrimaryButton onClick={handleOpenAddJobModal}>Add Job</PrimaryButton>
+          <PrimaryButton onClick={() => handleOpenJobModal("addJob")}>
+            <AddRounded />
+            <Typography variant="button">Add Job</Typography>
+          </PrimaryButton>
           <PrimaryButton
             className={`!bg-excel hover:!bg-green-950`}
             onClick={() =>

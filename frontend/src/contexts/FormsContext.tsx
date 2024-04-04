@@ -19,26 +19,23 @@ export const FormsContext = createContext<FormsContextTypes>({
   openForgotPasswordModal: false,
   handleOpenForgotPasswordModal: () => {},
   handleCloseForgotPasswordModal: () => {},
-  openAddJobModal: false,
-  handleOpenAddJobModal: () => {},
-  handleCloseAddJobModal: () => {},
-  openEditJobModal: false,
-  handleOpenEditJobModal: () => {},
-  handleCloseEditJobModal: () => {},
-  openEditOwnerModal: false,
-  handleOpenEditOwnerModal: () => {},
-  handleCloseEditOwnerModal: () => {},
-  openEditCompanyModal: false,
-  handleOpenEditCompanyModal: () => {},
-  handleCloseEditCompanyModal: () => {},
-  openAddNationalityModal: false,
-  handleOpenAddNationalityModal: () => {},
-  handleCloseAddNationalityModal: () => {},
-  openEditNationalityModal: false,
-  handleOpenEditNationalityModal: () => {},
-  handleCloseEditNationalityModal: () => {},
-  deleteType: "",
-  setDeleteType: () => {},
+  openJobModal: false,
+  handleOpenJobModal: () => {},
+  handleCloseJobModal: () => {},
+  openOwnerModal: false,
+  handleOpenOwnerModal: () => {},
+  handleCloseOwnerModal: () => {},
+  openUserModal: false,
+  handleOpenUserModal: () => {},
+  handleCloseUserModal: () => {},
+  openCompanyModal: false,
+  handleOpenCompanyModal: () => {},
+  handleCloseCompanyModal: () => {},
+  openNationalityModal: false,
+  handleOpenNationalityModal: () => {},
+  handleCloseNationalityModal: () => {},
+  formType: "",
+  setFormType: () => {},
   searchForOwners: "",
   setSearchForOwners: () => {},
   searchForJobs: "",
@@ -49,18 +46,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForCompanies: () => {},
   searchForNationalities: "",
   setSearchForNationalities: () => {},
-  addCompanyImage: "",
-  setAddCompanyImage: () => {},
-  editCompanyImage: "",
-  setEditCompanyImage: () => {},
-  addOwnerImage: "",
-  setAddOwnerImage: () => {},
-  editOwnerImage: "",
-  setEditOwnerImage: () => {},
-  addUserImage: "",
-  setAddUserImage: () => {},
-  editUserImage: "",
-  setEditUserImage: () => {},
+  companyImage: "",
+  setCompanyImage: () => {},
+  ownerImage: "",
+  setOwnerImage: () => {},
+  userImage: "",
+  setUserImage: () => {},
   editableJobData: null,
   setEditableJobData: () => {},
   editableOwnerData: null,
@@ -79,15 +70,15 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Loading Form
   const [formsLoading, setFormsLoading] = useState(false);
 
+  //Form Type
+  const [formType, setFormType] = useState("");
+
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
-
-  //Delete Type
-  const [deleteType, setDeleteType] = useState("");
 
   const handleCloseFormsLoading = () => {
     setFormsLoading(false);
@@ -104,7 +95,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenDeleteModal(false);
   };
 
-  const handleOpenDeleteModal = () => {
+  const handleOpenDeleteModal = (type: string) => {
+    setFormType(type);
     setOpenDeleteModal(true);
   };
 
@@ -119,103 +111,91 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenForgotPasswordModal(true);
   };
 
-  //Add Job
-  const [openAddJobModal, setOpenAddJobModal] = useState(false);
+  //Job Modal
+  const [openJobModal, setOpenJobModal] = useState(false);
 
-  const handleCloseAddJobModal = () => {
-    setOpenAddJobModal(false);
+  const handleCloseJobModal = () => {
+    setOpenJobModal(false);
   };
 
-  const handleOpenAddJobModal = () => {
-    setOpenAddJobModal(true);
+  const handleOpenJobModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableJobData(null);
+    }
+    setFormType(type);
+    setOpenJobModal(true);
   };
 
-  //Edit Job
-  const [openEditJobModal, setOpenEditJobModal] = useState(false);
+  //Owner Modal
+  const [openOwnerModal, setOpenOwnerModal] = useState(false);
 
-  const handleCloseEditJobModal = () => {
-    setOpenEditJobModal(false);
+  const handleCloseOwnerModal = () => {
+    setOpenOwnerModal(false);
   };
 
-  const handleOpenEditJobModal = () => {
-    setOpenEditJobModal(true);
+  const handleOpenOwnerModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableOwnerData(null);
+    }
+    setFormType(type);
+    setOpenOwnerModal(true);
   };
 
-  //Edit Owner
-  const [openEditOwnerModal, setOpenEditOwnerModal] = useState(false);
+  //User Modal
+  const [openUserModal, setOpenUserModal] = useState(false);
 
-  const handleCloseEditOwnerModal = () => {
-    setOpenEditOwnerModal(false);
+  const handleCloseUserModal = () => {
+    setOpenUserModal(false);
   };
 
-  const handleOpenEditOwnerModal = () => {
-    setOpenEditOwnerModal(true);
+  const handleOpenUserModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableUserData(null);
+    }
+    setFormType(type);
+    setOpenUserModal(true);
   };
 
-  //Edit Company
-  const [openEditCompanyModal, setOpenEditCompanyModal] = useState(false);
+  //Company Modal
+  const [openCompanyModal, setOpenCompanyModal] = useState(false);
 
-  const handleCloseEditCompanyModal = () => {
-    setOpenEditCompanyModal(false);
+  const handleCloseCompanyModal = () => {
+    setOpenCompanyModal(false);
   };
 
-  const handleOpenEditCompanyModal = () => {
-    setOpenEditCompanyModal(true);
+  const handleOpenCompanyModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableCompanyData(null);
+    }
+    setFormType(type);
+    setOpenCompanyModal(true);
   };
 
-  //Add Nationality
-  const [openAddNationalityModal, setOpenAddNationalityModal] = useState(false);
+  //Nationality Modal
+  const [openNationalityModal, setOpenNationalityModal] = useState(false);
 
-  const handleCloseAddNationalityModal = () => {
-    setOpenAddNationalityModal(false);
+  const handleCloseNationalityModal = () => {
+    setOpenNationalityModal(false);
   };
 
-  const handleOpenAddNationalityModal = () => {
-    setOpenAddNationalityModal(true);
+  const handleOpenNationalityModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableNationalityData(null);
+    }
+    setFormType(type);
+    setOpenNationalityModal(true);
   };
 
-  //Edit Nationality
-
-  const [openEditNationalityModal, setOpenEditNationalityModal] =
-    useState(false);
-
-  const handleCloseEditNationalityModal = () => {
-    setOpenEditNationalityModal(false);
-  };
-
-  const handleOpenEditNationalityModal = () => {
-    setOpenEditNationalityModal(true);
-  };
-
-  //Add Company Image
-  const [addCompanyImage, setAddCompanyImage] = useState<File | string>(
+  //Company Image
+  const [companyImage, setCompanyImage] = useState<File | string>(
     defaultCompany
   );
 
-  //Edit Company Image
-  const [editCompanyImage, setEditCompanyImage] = useState<File | string>(
-    defaultCompany
-  );
+  //Owner Image
+  const [ownerImage, setOwnerImage] = useState<File | string>(defaultAvatar);
 
-  //Add Owner Image
-  const [addOwnerImage, setAddOwnerImage] = useState<File | string>(
-    defaultAvatar
-  );
-
-  //Edit Owner Image
-  const [editOwnerImage, setEditOwnerImage] = useState<File | string>(
-    defaultAvatar
-  );
-
-  //Add User Image
-  const [addUserImage, setAddUserImage] = useState<File | string>(
-    defaultAvatar
-  );
-
-  //Edit User Image
-  const [editUserImage, setEditUserImage] = useState<File | string>(
-    defaultAvatar
-  );
+  //User Image
+  const [userImage, setUserImage] = useState<File | string>(defaultAvatar);
 
   //Editable Job Data
   const [editableJobData, setEditableJobData] = useState<JobTypes | null>(null);
@@ -240,13 +220,13 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (editableOwnerData) {
-      setEditOwnerImage(editableOwnerData.avatar);
+      setOwnerImage(editableOwnerData.avatar);
     }
     if (editableUserData) {
-      setEditUserImage(editableUserData.avatar);
+      setUserImage(editableUserData.avatar);
     }
     if (editableCompanyData) {
-      setEditCompanyImage(editableCompanyData.logo);
+      setCompanyImage(editableCompanyData.logo);
     }
   }, [editableOwnerData, editableUserData, editableCompanyData]);
 
@@ -254,44 +234,37 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     formsLoading,
     handleCloseFormsLoading,
     handleOpenFormsLoading,
+    formType,
+    setFormType,
     openForgotPasswordModal,
     handleOpenForgotPasswordModal,
     handleCloseForgotPasswordModal,
-    openAddJobModal,
-    editCompanyImage,
-    setEditCompanyImage,
+    openJobModal,
+    openUserModal,
+    handleCloseUserModal,
+    handleOpenUserModal,
+    companyImage,
+    setCompanyImage,
     openDeleteModal,
     handleCloseDeleteModal,
     handleOpenDeleteModal,
-    handleCloseAddJobModal,
-    editUserImage,
-    setEditUserImage,
-    editOwnerImage,
-    openEditCompanyModal,
-    handleCloseEditCompanyModal,
-    handleOpenEditCompanyModal,
-    setEditOwnerImage,
-    deleteType,
-    setDeleteType,
-    handleOpenAddJobModal,
-    openEditOwnerModal,
-    handleCloseEditOwnerModal,
-    handleOpenEditOwnerModal,
-    openAddNationalityModal,
-    handleCloseAddNationalityModal,
-    handleOpenAddNationalityModal,
-    openEditNationalityModal,
-    handleCloseEditNationalityModal,
-    handleOpenEditNationalityModal,
-    openEditJobModal,
-    handleCloseEditJobModal,
-    handleOpenEditJobModal,
+    handleCloseJobModal,
+    userImage,
+    setUserImage,
+    ownerImage,
+    openCompanyModal,
+    handleCloseCompanyModal,
+    handleOpenCompanyModal,
+    setOwnerImage,
+    handleOpenJobModal,
+    openOwnerModal,
+    handleCloseOwnerModal,
+    handleOpenOwnerModal,
+    openNationalityModal,
+    handleCloseNationalityModal,
+    handleOpenNationalityModal,
     editableOwnerData,
     setEditableOwnerData,
-    addCompanyImage,
-    setAddCompanyImage,
-    addOwnerImage,
-    setAddOwnerImage,
     editableJobData,
     setEditableJobData,
     editableNationalityData,
@@ -308,8 +281,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     searchForNationalities,
     setSearchForNationalities,
     setEditableUserData,
-    addUserImage,
-    setAddUserImage,
     editableCompanyData,
     setEditableCompanyData,
   };

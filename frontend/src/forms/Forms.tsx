@@ -2,28 +2,23 @@ import { Box } from "@mui/material";
 import { FormikProps } from "formik";
 import useSubmitForm from "../hooks/useSubmitForm";
 import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
-import AddCompanyForm from "./AddCompanyForm/AddCompanyForm";
-import AddJobForm from "./AddJobForm/AddJobForm";
-import AddNationalityForm from "./AddNationalityForm/AddNationalityForm";
-import AddOwnerForm from "./AddOwnerForm/AddOwnerForm";
-import AddUserForm from "./AddUserForm/AddUserForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
+import CompanyForm from "./CompanyForm/CompanyForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
 import CreateJobsSheetForm from "./CreateJobsSheetForm/CreateJobsSheetForm";
 import CreateNationalitiesSheetForm from "./CreateNationalitiesSheetForm/CreateNationalitiesSheetForm";
 import CreateOwnersSheetForm from "./CreateOwnersSheetForm/CreateOwnersSheetForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
-import EditCompanyForm from "./EditCompanyForm/EditCompanyForm";
-import EditJobForm from "./EditJobForm/EditJobForm";
-import EditNationalityForm from "./EditNationalityForm/EditNationalityForm";
-import EditOwnerForm from "./EditOwnerForm/EditOwnerForm";
-import EditUserForm from "./EditUserForm/EditUserForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
+import JobForm from "./JobForm/JobForm";
 import JobsOptionsForm from "./JobsOptionsForm/JobsOptionsForm";
 import LoginForm from "./LoginForm/LoginForm";
 import NationalitiesOptionsForm from "./NationalitiesOptionsForm/NationalitiesOptionsForm";
+import NationalityForm from "./NationalityForm/NationalityForm";
+import OwnerForm from "./OwnerForm/OwnerForm";
 import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
 const Forms = ({ type, index }: FormsTypes) => {
@@ -41,54 +36,34 @@ const Forms = ({ type, index }: FormsTypes) => {
       {type === "createOwnersSheet" && (
         <CreateOwnersSheetForm index={index || 0} />
       )}
-      {type === "editNationality" && (
-        <EditNationalityForm
+      {(type === "editNationality" || type === "addNationality") && (
+        <NationalityForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
         />
       )}
-      {type === "editJob" && (
-        <EditJobForm
+      {(type === "editJob" || type === "addJob") && (
+        <JobForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
         />
       )}
-      {type === "addNationality" && (
-        <AddNationalityForm
+      {(type === "addUser" || type === "editUser") && (
+        <UserForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
         />
       )}
-      {type === "addJob" && (
-        <AddJobForm
+      {(type === "addOwner" || type === "editOwner") && (
+        <OwnerForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
         />
       )}
-      {type === "addUser" && (
-        <AddUserForm
+      {(type === "addCompany" || type === "editCompany") && (
+        <CompanyForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "editUser" && (
-        <EditUserForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "addOwner" && (
-        <AddOwnerForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "editOwner" && (
-        <EditOwnerForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "addCompany" && (
-        <AddCompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "editCompany" && (
-        <EditCompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
         />
       )}
       {type === "jobsOptions" && (

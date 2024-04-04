@@ -2,10 +2,10 @@ import { useContext, useEffect } from "react";
 import * as yup from "yup";
 import { FormsContext } from "../../contexts/FormsContext";
 
-const useEditCompanySchema = () => {
-  const { editableCompanyData, setEditCompanyImage } = useContext(FormsContext);
+const useCompanySchema = () => {
+  const { editableCompanyData, setCompanyImage } = useContext(FormsContext);
 
-  const EditCompanySchema = yup.object({
+  const CompanySchema = yup.object({
     name: yup.string().required("Company English Name is required"),
     nameAr: yup.string().required("Company Arabic Name is required"),
     status: yup.string().required("Company Status is required"),
@@ -20,7 +20,7 @@ const useEditCompanySchema = () => {
     licenseIssueDate: yup.string().required("License Issue Date is required"),
     licenseExpiryDate: yup.string().required("License Expire Date is required"),
     establishmentType: yup.string().required("Establishment Type is required"),
-    email: yup.string(),
+    email: yup.string().email("Email is inValid"),
     molCode: yup.string(),
     molCategory: yup.string(),
     whatsAppNo: yup.string(),
@@ -30,7 +30,7 @@ const useEditCompanySchema = () => {
     remarks: yup.string(),
   });
 
-  const EditCompanyInitailValues = {
+  const CompanyInitailValues = {
     name: editableCompanyData?.name,
     nameAr: editableCompanyData?.nameAr,
     status: editableCompanyData?.status,
@@ -39,8 +39,8 @@ const useEditCompanySchema = () => {
     address: editableCompanyData?.address,
     email: editableCompanyData?.email,
     phone: editableCompanyData?.phone,
-    proCode: editableCompanyData?.proCode,
-    ownerId: editableCompanyData?.ownerId,
+    proCode: editableCompanyData?.proCode || [],
+    ownerId: editableCompanyData?.ownerId || [],
     licenseNo: editableCompanyData?.licenseNo,
     immgCardNo: editableCompanyData?.immgCardNo,
     immgCardExpiry:
@@ -68,11 +68,11 @@ const useEditCompanySchema = () => {
 
   useEffect(() => {
     if (editableCompanyData && editableCompanyData.logo) {
-      setEditCompanyImage(editableCompanyData.logo);
+      setCompanyImage(editableCompanyData.logo);
     }
-  }, [editableCompanyData, setEditCompanyImage]);
+  }, [editableCompanyData, setCompanyImage]);
 
-  return { EditCompanyInitailValues, EditCompanySchema };
+  return { CompanyInitailValues, CompanySchema };
 };
 
-export default useEditCompanySchema;
+export default useCompanySchema;

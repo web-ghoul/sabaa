@@ -8,15 +8,12 @@ import {
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  useLocation,
-  useSearchParams
-} from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { TabsContext } from "../../contexts/TabsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
@@ -32,6 +29,7 @@ import { OwnersTableRow } from "./OwnersTableRow";
 
 const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const { handleOpenTableMenu, setOwnersPage } = useContext(AppContext);
+  const { setOwnerTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
@@ -76,6 +74,8 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   const handleView = () => {
     if (sheet) {
       handleAlert({ msg: "Under Development" });
+    } else {
+      setOwnerTabsValue(0);
     }
   };
 
@@ -119,7 +119,7 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
           )}
           <PrimaryTableCell align="center">
             <SortBox
-              title={"Code"}
+              title={"Person Code"}
               handling={handleSortByCode}
               asc={searchParams.get("sort") === "code_asc"}
               desc={searchParams.get("sort") === "code_desc"}

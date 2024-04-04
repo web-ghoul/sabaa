@@ -23,11 +23,12 @@ const ProfileDetails = ({
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    setDeleteType,
     handleOpenDeleteModal,
     setEditableOwnerData,
     setEditableUserData,
     setEditableCompanyData,
+    handleOpenUserModal,
+    handleOpenOwnerModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { user } = useSelector((state: RootState) => state.user);
@@ -35,21 +36,19 @@ const ProfileDetails = ({
 
   const handleEditUser = () => {
     setEditableUserData(user);
-    navigate(`${import.meta.env.VITE_USERS_ROUTE}/${id}/edit`);
+    handleOpenUserModal("editUser");
   };
   const handleDeleteUser = () => {
-    handleOpenDeleteModal();
-    setDeleteType("user");
+    handleOpenDeleteModal("user");
     setEditableUserData(user);
   };
 
   const handleEditOwner = () => {
     setEditableOwnerData(owner);
-    navigate(`${import.meta.env.VITE_OWNERS_ROUTE}/${id}/edit`);
+    handleOpenOwnerModal("editOwner");
   };
   const handleDeleteOwner = () => {
-    handleOpenDeleteModal();
-    setDeleteType("owner");
+    handleOpenDeleteModal("owner");
     setEditableOwnerData(owner);
   };
 
@@ -58,8 +57,7 @@ const ProfileDetails = ({
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}/edit`);
   };
   const handleDeleteCompany = () => {
-    handleOpenDeleteModal();
-    setDeleteType("company");
+    handleOpenDeleteModal("company");
     setEditableCompanyData(company);
   };
 
@@ -198,7 +196,7 @@ const ProfileDetails = ({
       ) : (
         variant === "company" && (
           <Paper
-            className={`grid justify-stretch items-center gap-10 p-6 !rounded-xl`}
+            className={`grid justify-stretch items-center gap-8 p-6 !rounded-xl`}
             elevation={11}
           >
             <Title align={"left"} head={"h5"} title={title} />
@@ -225,7 +223,7 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Box
-              className={`grid justify-start items-center gap-8 grid-cols-2 `}
+              className={`grid justify-start items-center gap-4 grid-cols-2`}
             >
               {(data as CompanyTypes).nameAr && (
                 <DataBox

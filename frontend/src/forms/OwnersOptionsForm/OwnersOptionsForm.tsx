@@ -1,15 +1,19 @@
-import { FilterAltRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  FilterAltRounded,
+  FilterListRounded,
+} from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
-import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -22,7 +26,8 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForOwners, searchForOwners } = useContext(FormsContext);
+  const { setSearchForOwners, searchForOwners, handleOpenOwnerModal } =
+    useContext(FormsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setOwnersPage } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -89,6 +94,8 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
     }
   };
 
+  const handleFilter = () => {};
+
   const handleResetAll = () => {
     setSearchForOwners("");
     setSearchParams({});
@@ -120,6 +127,12 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
     setAllParams();
   }, []);
 
+  useEffect(() => {
+    if (searchParams.size === 0) {
+      dispatch(getOwners({}));
+    }
+  }, [dispatch, searchParams]);
+
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
@@ -149,10 +162,9 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
         >
-          <PrimaryButton
-            onClick={() => navigate(`${import.meta.env.VITE_ADD_OWNER_ROUTE}`)}
-          >
-            Add Owner
+          <PrimaryButton onClick={() => handleOpenOwnerModal("addOwner")}>
+            <AddRounded />
+            <Typography variant="button">Add Owner</Typography>
           </PrimaryButton>
           <PrimaryButton
             className={`!bg-excel hover:!bg-green-950`}
@@ -183,18 +195,21 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 md:gap-3 sm:!gap-2 md:order-1`}
         >
-          <PrimaryIconButton
-            className={`!bg-green-500 hover:!bg-green-600`}
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <FilterAltRounded />
-          </PrimaryIconButton>
-          <PrimaryButton
-            onClick={handleResetAll}
-            className="!bg-red-500 hover:!bg-red-600"
-          >
-            Reset All
-          </PrimaryButton>
+          <Button
+            bg={"!bg-green-500"}
+            icon={<FilterAltRounded />}
+            handling={() => setShowFilters(!showFilters)}
+          />
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
+          />
+          <Button
+            bg={"!bg-red-500"}
+            title={"Reset All"}
+            handling={handleResetAll}
+          />
         </Box>
         <Box
           className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex-wrap  ${

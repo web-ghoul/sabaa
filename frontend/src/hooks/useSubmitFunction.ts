@@ -6,7 +6,6 @@ import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
-import { handleDate } from "../functions/handleDate";
 import { login as loginAction } from "../store/auth";
 import { getCompanies } from "../store/companiesSlice";
 import { getJobs } from "../store/jobsSlice";
@@ -15,21 +14,17 @@ import { getOwners } from "../store/ownersSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsers } from "../store/usersSlice";
 import {
-  AddCompanyFormTypes,
-  AddJobFormTypes,
-  AddNationalityFormTypes,
-  AddOwnerFormTypes,
-  AddUserFormTypes,
   AllFormsTypes,
-  EditCompanyFormTypes,
-  EditJobFormTypes,
-  EditNationalityFormTypes,
-  EditOwnerFormTypes,
-  EditUserFormTypes,
+  CompanyFormTypes,
   ForgotPasswordFormTypes,
+  JobFormTypes,
   LoginFormTypes,
+  NationalityFormTypes,
+  OwnerFormTypes,
   ResetPasswordFormTypes,
+  UserFormTypes,
 } from "../types/forms.types";
+import { handleDate } from "./../functions/handleDate";
 
 const server = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
@@ -39,31 +34,24 @@ const useSubmitFunction = (type: string) => {
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
-    handleCloseAddJobModal,
-    handleCloseEditJobModal,
-    handleCloseAddNationalityModal,
-    handleCloseEditNationalityModal,
+    handleCloseJobModal,
+    handleCloseNationalityModal,
     handleCloseDeleteModal,
     editableNationalityData,
     editableJobData,
-    addUserImage,
+    ownerImage,
+    userImage,
     editableUserData,
-    addOwnerImage,
-    editUserImage,
     editableOwnerData,
-    editOwnerImage,
-    deleteType,
+    formType,
     editableCompanyData,
-    editCompanyImage,
-    addCompanyImage,
-    setAddOwnerImage,
-    setEditOwnerImage,
-    setAddCompanyImage,
-    setEditCompanyImage,
-    setAddUserImage,
-    setEditUserImage,
-    handleCloseEditOwnerModal,
-    handleCloseEditCompanyModal,
+    companyImage,
+    setOwnerImage,
+    setCompanyImage,
+    setUserImage,
+    handleCloseOwnerModal,
+    handleCloseCompanyModal,
+    handleCloseUserModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -83,6 +71,72 @@ const useSubmitFunction = (type: string) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
+
+  const handleUserFormData = (values: UserFormTypes) => {
+    const formData = new FormData();
+    formData.append("avatar", userImage);
+    formData.append("name", values.name);
+    formData.append("phone", values.phone);
+    formData.append("status", values.status);
+    formData.append("role", values.role);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    return formData;
+  };
+
+  const handleOwnerFormData = (values: OwnerFormTypes) => {
+    const formData = new FormData();
+    formData.append("_id", values._id);
+    formData.append("personCode", values.personCode);
+    formData.append("avatar", ownerImage);
+    formData.append("name", values.name);
+    formData.append("nameAr", values.nameAr);
+    formData.append("phone", values.phone);
+    formData.append("address", values.address);
+    formData.append("nationality", values.nationality);
+    formData.append("idNationality", values.idNationality);
+    formData.append("email", values.email);
+    formData.append("remarks", values.remarks);
+    formData.append("emiratesId", values.emiratesId);
+    formData.append("state", values.state);
+    formData.append("dob", values?.dob.toString());
+    formData.append("proCode", values.proCode ? "true" : "false");
+    return formData;
+  };
+
+  const handleCompanyFormData = (values: CompanyFormTypes) => {
+    const formData = new FormData();
+    formData.append("logo", companyImage);
+    formData.append("name", values.name);
+    formData.append("nameAr", values.nameAr);
+    formData.append("phone", values.phone);
+    formData.append("address", values.address);
+    formData.append("email", values.email);
+    formData.append("status", values.status);
+    values.ownerId.map((owner) => {
+      formData.append("ownerId", owner);
+    });
+    formData.append("state", values.state);
+    formData.append("licenseNo", values.licenseNo);
+    formData.append("immgCardNo", values.immgCardNo);
+    formData.append("immgCardExpiry", values.immgCardExpiry.toString());
+    formData.append("licenseIssueDate", values.licenseIssueDate.toString());
+    formData.append("licenseExpiryDate", values.licenseExpiryDate.toString());
+    formData.append("establishmentType", values.establishmentType);
+    formData.append("molCode", values.molCode);
+    formData.append("molCategory", values.molCategory);
+    formData.append("whatsAppNo", values.whatsAppNo);
+    formData.append("mobileNo", values.mobileNo);
+    formData.append("website", values.website);
+    formData.append("trn", values.trn);
+    formData.append("tenancyContractValue", values.tenancyContractValue);
+    formData.append(
+      "tenancyContractExp",
+      handleDate(values.tenancyContractExp)
+    );
+    formData.append("remarks", values.remarks);
+    return formData;
+  };
 
   const login = async (values: LoginFormTypes) => {
     handleOpenFormsLoading();
@@ -115,7 +169,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const addJob = async (values: AddJobFormTypes) => {
+  const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     await server
       .post(`/job-title`, values, {
@@ -125,7 +179,7 @@ const useSubmitFunction = (type: string) => {
       })
       .then(() => {
         handleAlert({ msg: "Job is Created Successfully", status: "success" });
-        handleCloseAddJobModal();
+        handleCloseJobModal();
         dispatch(getJobs({}));
       })
       .catch((err) => {
@@ -134,11 +188,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editJob = async (values: EditJobFormTypes) => {
+  const editJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     if (pathname === `${import.meta.env.VITE_UPLOAD_JOBS_ROUTE}`) {
       handleEditJobInSheet(values);
-      handleCloseEditJobModal();
+      handleCloseJobModal();
       handleAlert({
         msg: "Job is Updated Successfully",
         status: "success",
@@ -155,7 +209,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Job is Updated Successfully",
             status: "success",
           });
-          handleCloseEditJobModal();
+          handleCloseJobModal();
           dispatch(getJobs({}));
         })
         .catch((err) => {
@@ -189,7 +243,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const addNationality = async (values: AddNationalityFormTypes) => {
+  const addNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
     await server
       .post(`/nationality`, values, {
@@ -202,7 +256,7 @@ const useSubmitFunction = (type: string) => {
           msg: "Nationality is Created Successfully",
           status: "success",
         });
-        handleCloseAddNationalityModal();
+        handleCloseNationalityModal();
         dispatch(getNationalities({}));
       })
       .catch((err) => {
@@ -211,11 +265,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editNationality = async (values: EditNationalityFormTypes) => {
+  const editNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
     if (pathname === `${import.meta.env.VITE_UPLOAD_NATIONALITIES_ROUTE}`) {
       handleEditNationalityInSheet(values);
-      handleCloseEditNationalityModal();
+      handleCloseNationalityModal();
       handleAlert({
         msg: "Nationality is Updated Successfully",
         status: "success",
@@ -238,7 +292,7 @@ const useSubmitFunction = (type: string) => {
             msg: "Nationality is Updated Successfully",
             status: "success",
           });
-          handleCloseEditNationalityModal();
+          handleCloseNationalityModal();
           dispatch(getNationalities({}));
         })
         .catch((err) => {
@@ -272,18 +326,10 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const addUser = async (values: AddUserFormTypes) => {
+  const addUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
-    const formData = new FormData();
-    formData.append("avatar", addUserImage);
-    formData.append("name", values.name);
-    formData.append("phone", values.phone);
-    formData.append("status", values.status);
-    formData.append("role", values.role);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
     await server
-      .post(`/user`, formData, {
+      .post(`/user`, handleUserFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -291,8 +337,8 @@ const useSubmitFunction = (type: string) => {
       .then(() => {
         handleAlert({ msg: "User is Created Successfully", status: "success" });
         dispatch(getUsers({}));
-        navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
-        setAddUserImage("");
+        handleCloseUserModal();
+        setUserImage("");
       })
       .catch((err) => {
         handleCatchError(err);
@@ -300,29 +346,26 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editUser = async (values: EditUserFormTypes) => {
+  const editUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
-    const formData = new FormData();
-    formData.append("avatar", editUserImage);
-    formData.append("name", values.name);
-    formData.append("phone", values.phone);
-    formData.append("status", values.status);
-    formData.append("role", values.role);
-    formData.append("email", values.email);
     await server
-      .put(`/user/${editableUserData && editableUserData._id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `/user/${editableUserData && editableUserData._id}`,
+        handleUserFormData(values),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(() => {
         handleAlert({
           msg: "User is Updated Successfully",
           status: "success",
         });
         dispatch(getUsers({}));
-        navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
-        setEditUserImage("");
+        handleCloseUserModal();
+        setUserImage("");
       })
       .catch((err) => {
         handleCatchError(err);
@@ -330,26 +373,10 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const addOwner = async (values: AddOwnerFormTypes) => {
+  const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
-    const formData = new FormData();
-    formData.append("_id", values._id);
-    formData.append("personCode", values.personCode);
-    formData.append("avatar", addOwnerImage);
-    formData.append("name", values.name);
-    formData.append("nameAr", values.nameAr);
-    formData.append("phone", values.phone);
-    formData.append("address", values.address);
-    formData.append("nationality", values.nationality);
-    formData.append("idNationality", values.idNationality);
-    formData.append("email", values.email);
-    formData.append("remarks", values.remarks);
-    formData.append("emiratesId", values.emiratesId);
-    formData.append("state", values.state);
-    formData.append("dob", values.dob.toString());
-    formData.append("proCode", values.proCode.toString());
     await server
-      .post(`/owner`, formData, {
+      .post(`/owner`, handleOwnerFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -360,8 +387,8 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         dispatch(getOwners({}));
-        navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
-        setAddOwnerImage("");
+        handleCloseOwnerModal();
+        setOwnerImage("");
       })
       .catch((err) => {
         handleCatchError(err);
@@ -369,33 +396,20 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editOwner = async (values: EditOwnerFormTypes) => {
+  const editOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     if (pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`) {
       handleEditOwnerInSheet(values);
-      handleCloseEditOwnerModal();
+      handleCloseOwnerModal();
       handleAlert({
         msg: "Owner is Updated Successfully",
         status: "success",
       });
     } else {
-      const formData = new FormData();
-      formData.append("avatar", editOwnerImage);
-      formData.append("name", values.name);
-      formData.append("nameAr", values.nameAr);
-      formData.append("phone", values.phone);
-      formData.append("address", values.address);
-      formData.append("nationality", values.nationality);
-      formData.append("idNationality", values.idNationality);
-      formData.append("email", values.email);
-      formData.append("remarks", values.remarks);
-      formData.append("emiratesId", values.emiratesId);
-      formData.append("state", values.state);
-      formData.append("dob", values.dob.toString());
       await server
         .patch(
           `/owner/${editableOwnerData && editableOwnerData._id}`,
-          formData,
+          handleOwnerFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -408,8 +422,8 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getOwners({}));
-          navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
-          setEditOwnerImage("");
+          handleCloseOwnerModal();
+          setOwnerImage("");
         })
         .catch((err) => {
           handleCatchError(err);
@@ -441,37 +455,10 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const addCompany = async (values: AddCompanyFormTypes) => {
+  const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
-    const formData = new FormData();
-    formData.append("logo", addCompanyImage);
-    formData.append("name", values.name);
-    formData.append("nameAr", values.nameAr);
-    formData.append("phone", values.phone);
-    formData.append("address", values.address);
-    formData.append("email", values.email);
-    formData.append("status", values.status);
-    formData.append("state", values.state);
-    formData.append("licenseNo", values.licenseNo);
-    formData.append("immgCardNo", values.immgCardNo);
-    formData.append("immgCardExpiry", values.immgCardExpiry.toString());
-    formData.append("licenseIssueDate", values.licenseIssueDate.toString());
-    formData.append("licenseExpiryDate", values.licenseExpiryDate.toString());
-    formData.append("establishmentType", values.establishmentType);
-    formData.append("molCode", values.molCode);
-    formData.append("molCategory", values.molCategory);
-    formData.append("whatsAppNo", values.whatsAppNo);
-    formData.append("mobileNo", values.mobileNo);
-    formData.append("website", values.website);
-    formData.append("trn", values.trn);
-    formData.append("tenancyContractValue", values.tenancyContractValue);
-    formData.append(
-      "tenancyContractExp",
-      handleDate(values.tenancyContractExp)
-    );
-    formData.append("remarks", values.remarks);
     await server
-      .post(`/company`, formData, {
+      .post(`/company`, handleCompanyFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -483,7 +470,7 @@ const useSubmitFunction = (type: string) => {
         });
         dispatch(getCompanies({}));
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
-        setAddCompanyImage("");
+        setCompanyImage("");
       })
       .catch((err) => {
         handleCatchError(err);
@@ -491,47 +478,20 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editCompany = async (values: EditCompanyFormTypes) => {
+  const editCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
     if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
       handleEditCompanyInSheet(values);
-      handleCloseEditCompanyModal();
+      handleCloseCompanyModal();
       handleAlert({
         msg: "Company is Updated Successfully",
         status: "success",
       });
     } else {
-      const formData = new FormData();
-      formData.append("logo", editCompanyImage);
-      formData.append("name", values.name);
-      formData.append("nameAr", values.nameAr);
-      formData.append("phone", values.phone);
-      formData.append("address", values.address);
-      formData.append("status", values.status);
-      formData.append("state", values.state);
-      formData.append("licenseNo", values.licenseNo);
-      formData.append("immgCardNo", values.immgCardNo);
-      formData.append("immgCardExpiry", values.immgCardExpiry.toString());
-      formData.append("licenseIssueDate", values.licenseIssueDate.toString());
-      formData.append("licenseExpiryDate", values.licenseExpiryDate.toString());
-      formData.append("establishmentType", values.establishmentType);
-      formData.append("molCode", values.molCode);
-      formData.append("molCategory", values.molCategory);
-      formData.append("whatsAppNo", values.whatsAppNo);
-      formData.append("mobileNo", values.mobileNo);
-      formData.append("website", values.website);
-      formData.append("trn", values.trn);
-      formData.append("email", values.email);
-      formData.append("tenancyContractValue", values.tenancyContractValue);
-      formData.append(
-        "tenancyContractExp",
-        handleDate(values.tenancyContractExp)
-      );
-      formData.append("remarks", values.remarks);
       await server
         .patch(
           `/company/${editableCompanyData && editableCompanyData._id}`,
-          formData,
+          handleCompanyFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -544,8 +504,12 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getCompanies({}));
-          navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
-          setEditCompanyImage("");
+          navigate(
+            `${import.meta.env.VITE_COMPANIES_ROUTE}/${
+              editableCompanyData && editableCompanyData._id
+            }`
+          );
+          setCompanyImage("");
         })
         .catch((err) => {
           handleCatchError(err);
@@ -579,7 +543,7 @@ const useSubmitFunction = (type: string) => {
 
   const handleDelete = async () => {
     handleOpenFormsLoading();
-    if (deleteType === "owner") {
+    if (formType === "owner") {
       await server
         .delete(`/owner/${editableOwnerData && editableOwnerData._id}`, {
           headers: {
@@ -598,7 +562,7 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
-    } else if (deleteType === "job") {
+    } else if (formType === "job") {
       await server
         .delete(`/job-title/${editableJobData && editableJobData._id}`, {
           headers: {
@@ -617,7 +581,7 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
-    } else if (deleteType === "nationality") {
+    } else if (formType === "nationality") {
       await server
         .delete(
           `/nationality/${
@@ -641,7 +605,7 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
-    } else if (deleteType === "user") {
+    } else if (formType === "user") {
       await server
         .delete(`/user/${editableUserData && editableUserData._id}`, {
           headers: {
@@ -660,7 +624,7 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
-    } else if (deleteType === "company") {
+    } else if (formType === "company") {
       await server
         .delete(`/company/${editableCompanyData && editableCompanyData._id}`, {
           headers: {
@@ -695,43 +659,43 @@ const useSubmitFunction = (type: string) => {
         login(values as LoginFormTypes);
         break;
       case "addJob":
-        addJob(values as AddJobFormTypes);
+        addJob(values as JobFormTypes);
         break;
       case "editJob":
-        editJob(values as EditJobFormTypes);
+        editJob(values as JobFormTypes);
         break;
       case "createJobsSheet":
         createJobsSheet(values as unknown);
         break;
       case "addNationality":
-        addNationality(values as AddNationalityFormTypes);
+        addNationality(values as NationalityFormTypes);
         break;
       case "editNationality":
-        editNationality(values as EditNationalityFormTypes);
+        editNationality(values as NationalityFormTypes);
         break;
       case "createNationalitiesSheet":
         createNationalitiesSheet(values as unknown);
         break;
       case "addUser":
-        addUser(values as AddUserFormTypes);
+        addUser(values as UserFormTypes);
         break;
       case "editUser":
-        editUser(values as EditUserFormTypes);
+        editUser(values as UserFormTypes);
         break;
       case "addOwner":
-        addOwner(values as AddOwnerFormTypes);
+        addOwner(values as OwnerFormTypes);
         break;
       case "editOwner":
-        editOwner(values as EditOwnerFormTypes);
+        editOwner(values as OwnerFormTypes);
         break;
       case "createOwnersSheet":
         createOwnersSheet(values as unknown);
         break;
       case "addCompany":
-        addCompany(values as AddCompanyFormTypes);
+        addCompany(values as CompanyFormTypes);
         break;
       case "editCompany":
-        editCompany(values as EditCompanyFormTypes);
+        editCompany(values as CompanyFormTypes);
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);

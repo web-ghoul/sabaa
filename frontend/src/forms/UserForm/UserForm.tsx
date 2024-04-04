@@ -1,6 +1,5 @@
 import { Box, Paper } from "@mui/material";
 import { useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
@@ -9,21 +8,22 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { FormiksTypes } from "../../types/forms.types";
 
-const AddUserForm = ({ formik }: FormiksTypes) => {
-  const { formsLoading } = useContext(FormsContext);
-  const navigate = useNavigate();
+const UserForm = ({ formik, type }: FormiksTypes) => {
+  const { formsLoading, handleCloseUserModal } = useContext(FormsContext);
 
   return (
     <Paper
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      <Title head={"h4"} align={"left"} title={"Add New Owner"} />
+      {type?.startsWith("add") ? (
+        <Title head={"h4"} align={"left"} title={"Add New User"} />
+      ) : (
+        <Title head={"h4"} align={"left"} title={"Edit User"} />
+      )}
 
       {useMemo(
-        () => (
-          <UploadImage title={"User Avatar"} variant="addUser" />
-        ),
-        []
+        () => type && <UploadImage title={"User Avatar"} variant={type} />,
+        [type]
       )}
 
       <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
@@ -49,21 +49,22 @@ const AddUserForm = ({ formik }: FormiksTypes) => {
           select={true}
           options={["Active", "Pending", "Blocked"]}
         />
-        <Input
-          formik={formik}
-          label={"Password"}
-          type={"password"}
-          name={"password"}
-          ac={"current-password"}
-        />
+        {type?.startsWith("add") && (
+          <Input
+            formik={formik}
+            label={"Password"}
+            type={"password"}
+            name={"password"}
+            ac={"current-password"}
+          />
+        )}
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
-        <SubmitButton loading={formsLoading}>Add</SubmitButton>
-        <PrimaryButton
-          onClick={() => navigate(`${import.meta.env.VITE_USERS_ROUTE}`)}
-          className={`!bg-error`}
-        >
+        <SubmitButton loading={formsLoading}>
+          {type?.startsWith("add") ? "Add" : "Edit"}
+        </SubmitButton>
+        <PrimaryButton onClick={handleCloseUserModal} className={`!bg-error`}>
           Cancel
         </PrimaryButton>
       </Box>
@@ -71,4 +72,4 @@ const AddUserForm = ({ formik }: FormiksTypes) => {
   );
 };
 
-export default AddUserForm;
+export default UserForm;

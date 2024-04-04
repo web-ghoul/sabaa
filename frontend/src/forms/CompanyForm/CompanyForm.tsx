@@ -13,28 +13,29 @@ import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const AddCompanyForm = ({ formik }: FormiksTypes) => {
+const CompanyForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   const navigate = useNavigate();
-  const { owners, isLoading } = useSelector((state: RootState) => state.owners);
+  const { owners } = useSelector((state: RootState) => state.owners);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getOwners({}));
   }, [dispatch]);
-  console.log(1);
 
   return (
     <Paper
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      <Title head={"h4"} align={"left"} title={"Add New Company"} />
+      {type?.startsWith("add") ? (
+        <Title head={"h4"} align={"left"} title={"Add New Company"} />
+      ) : (
+        <Title head={"h4"} align={"left"} title={"Edit Company"} />
+      )}
 
       {useMemo(
-        () => (
-          <UploadImage title={"Company Logo"} variant="addCompany" />
-        ),
-        []
+        () => type && <UploadImage title={"Company Logo"} variant={type} />,
+        [type]
       )}
 
       <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
@@ -56,22 +57,16 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           options={["dubai"]}
         />
 
-        <AutoCompleteSearch
-          label={"PROs"}
-          options={[]}
-          loading={isLoading}
-          formik={formik}
-          name={"proCode"}
-          multiple
-        />
-        <AutoCompleteSearch
-          label={"Owners"}
-          options={owners}
-          loading={isLoading}
-          formik={formik}
-          name={"ownerId"}
-          multiple
-        />
+        {owners && owners.length > 0 && (
+          <AutoCompleteSearch
+            label={"Owners"}
+            options={owners}
+            formik={formik}
+            name={"ownerId"}
+            multiple={true}
+          />
+        )}
+
         <Input
           formik={formik}
           select={true}
@@ -81,19 +76,19 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
         />
         <Input formik={formik} label={"MOL Code"} name={"molCode"} />
         <Input formik={formik} label={"Address"} name={"address"} />
-        <Input formik={formik} label={"Phone"} name={"phone"} type={"tel"} />
+        <Input formik={formik} label={"Phone"} name={"phone"} type={"number"} />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
           formik={formik}
           label={"Mobile Number"}
           name={"mobileNo"}
-          type={"tel"}
+          type={"number"}
         />
         <Input
           formik={formik}
           label={"WhatsApp Number"}
           name={"whatsAppNo"}
-          type={"tel"}
+          type={"number"}
         />
         <Input formik={formik} label={"Website"} name={"website"} />
         <Input formik={formik} label={"Zip Code"} name={"zipCode"} />
@@ -105,22 +100,23 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
           select
           options={["type 1", "type 2", "type 3"]}
         />
-        <Input formik={formik} label={"License Number"} name={"licenseNo"} />
-        <Input formik={formik} label={"Immg Card Number"} name={"immgCardNo"} />
-        <Box className={`grid justify-stretch items-center gap-2`}>
-          <Typography variant="h6">Immg Card Expire Date</Typography>
-          <Input formik={formik} type={"date"} name={"immgCardExpiry"} />
-        </Box>
+        <Input
+          formik={formik}
+          label={"License Number"}
+          name={"licenseNo"}
+          type={"number"}
+        />
+        <Input
+          formik={formik}
+          label={"Immg Card Number"}
+          name={"immgCardNo"}
+          type={"number"}
+        />
+        <Input formik={formik} type={"date"} name={"immgCardExpiry"} />
 
-        <Box className={`grid justify-stretch items-center gap-2`}>
-          <Typography variant="h6">License Issue Date</Typography>
-          <Input formik={formik} type={"date"} name={"licenseIssueDate"} />
-        </Box>
+        <Input formik={formik} type={"date"} name={"licenseIssueDate"} />
 
-        <Box className={`grid justify-stretch items-center gap-2`}>
-          <Typography variant="h6">License Expire Date</Typography>
-          <Input formik={formik} type={"date"} name={"licenseExpiryDate"} />
-        </Box>
+        <Input formik={formik} type={"date"} name={"licenseExpiryDate"} />
 
         <Input
           formik={formik}
@@ -144,7 +140,9 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
-        <SubmitButton loading={formsLoading}>Add</SubmitButton>
+        <SubmitButton loading={formsLoading}>
+          {type?.startsWith("add") ? "Add" : "Edit"}
+        </SubmitButton>
         <PrimaryButton
           onClick={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
           className={`!bg-error`}
@@ -156,4 +154,4 @@ const AddCompanyForm = ({ formik }: FormiksTypes) => {
   );
 };
 
-export default AddCompanyForm;
+export default CompanyForm;

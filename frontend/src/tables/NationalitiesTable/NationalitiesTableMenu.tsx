@@ -9,11 +9,8 @@ import TableMenuItem from "../TableMenuItem";
 
 const NationalitiesTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const {
-    handleOpenEditNationalityModal,
-    setDeleteType,
-    handleOpenDeleteModal,
-  } = useContext(FormsContext);
+  const { handleOpenNationalityModal, handleOpenDeleteModal } =
+    useContext(FormsContext);
   const { handleDeleteNationalityFromSheet } = useContext(ExcelsContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -22,8 +19,7 @@ const NationalitiesTableMenu = () => {
     if (sheet) {
       handleDeleteNationalityFromSheet();
     } else {
-      handleOpenDeleteModal();
-      setDeleteType("nationality");
+      handleOpenDeleteModal("nationality");
     }
   };
 
@@ -49,7 +45,7 @@ const NationalitiesTableMenu = () => {
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}
-        handling={handleOpenEditNationalityModal}
+        handling={() => handleOpenNationalityModal("editNationality")}
       />
       <TableMenuItem
         icon={<DeleteRounded />}

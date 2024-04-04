@@ -1,4 +1,8 @@
-import { FilterAltRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  FilterAltRounded,
+  FilterListRounded,
+} from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -129,6 +133,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     handleAlert({ msg: "Under Development" });
   };
 
+  const handleFilter = () => {};
+
   const handleResetAll = () => {
     setSearchForCompanies("");
     setSearchParams({});
@@ -150,6 +156,12 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   useEffect(() => {
     setAllParams();
   }, []);
+
+  useEffect(() => {
+    if (searchParams.size === 0) {
+      dispatch(getCompanies({}));
+    }
+  }, [dispatch, searchParams]);
 
   return (
     <Paper
@@ -185,7 +197,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               navigate(`${import.meta.env.VITE_ADD_COMPANY_ROUTE}`)
             }
           >
-            Add Company
+            <AddRounded />
+            <Typography variant="button">Add Company</Typography>
           </PrimaryButton>
           <PrimaryButton
             className={`!bg-excel hover:!bg-green-950`}
@@ -222,6 +235,10 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           >
             <FilterAltRounded />
           </PrimaryIconButton>
+          <PrimaryButton onClick={handleFilter}>
+            <FilterListRounded />
+            <Typography variant="button">Filter</Typography>
+          </PrimaryButton>
           <PrimaryButton
             onClick={handleResetAll}
             className="!bg-red-500 hover:!bg-red-600"

@@ -15,7 +15,7 @@ const LoginForm = ({ formik }: FormiksTypes) => {
     >
       <Title title={"Login to Dasboard"} />
       <Box className={`grid justify-stretch items-center gap-6`}>
-        <Input formik={formik} label={"Email"} name={"email"} />
+        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
           formik={formik}
           label={"Password"}

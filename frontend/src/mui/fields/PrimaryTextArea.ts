@@ -1,16 +1,20 @@
-import { TextField, styled } from "@mui/material";
+import { TextareaAutosize } from "@mui/base";
+import { styled } from "@mui/material";
 
-export const PrimaryTextField = styled(TextField)(({ theme }) => ({
-  "& input , & select": {
-    padding: "8px !important",
-    fontSize: "14px",
-    backgroundColor: theme.palette.common.white,
-    boxShadow: theme.shadows["2"],
-    borderRadius: "4px",
+export const PrimaryTextArea = styled(TextareaAutosize)(({ theme }) => ({
+  padding: "10px !important",
+  fontSize: "16px",
+  backgroundColor: theme.palette.common.white,
+  boxShadow: theme.shadows["2"],
+  borderRadius: "4px",
+  border: "1px solid #ddd",
+  "&:focus": {
+    border: `1px solid ${theme.palette.primary} !important`,
   },
   "& label": {
-    fontSize: "14px",
+    fontSize: "16px",
     lineHeight: "1 !important",
+    backgroundColor: "transparent !important",
   },
   "& label[data-shrink=true]": {
     lineHeight: "1.4375em !important",

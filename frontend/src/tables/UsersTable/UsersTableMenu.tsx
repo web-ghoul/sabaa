@@ -12,7 +12,7 @@ import TableMenuItem from "../TableMenuItem";
 
 const UsersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const { editableUserData, handleOpenDeleteModal, setDeleteType } =
+  const { editableUserData, handleOpenDeleteModal, handleOpenUserModal } =
     useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -25,16 +25,11 @@ const UsersTableMenu = () => {
   };
 
   const handleEdit = () => {
-    navigate(
-      `${import.meta.env.VITE_USERS_ROUTE}/${
-        editableUserData && editableUserData._id
-      }/edit`
-    );
+    handleOpenUserModal("editUser");
   };
 
   const handleDelete = () => {
-    handleOpenDeleteModal();
-    setDeleteType("user");
+    handleOpenDeleteModal("user");
   };
 
   return (

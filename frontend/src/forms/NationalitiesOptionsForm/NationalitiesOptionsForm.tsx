@@ -1,3 +1,4 @@
+import { AddRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -20,7 +21,7 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     setSearchForNationalities,
-    handleOpenAddNationalityModal,
+    handleOpenNationalityModal,
     searchForNationalities,
   } = useContext(FormsContext);
   const [params, setParams] = useState<{ [key: string]: string }>({});
@@ -73,6 +74,12 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
     setAllParams();
   }, []);
 
+  useEffect(() => {
+    if (searchParams.size === 0) {
+      dispatch(getNationalities({}));
+    }
+  }, [dispatch, searchParams]);
+
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg  md:gap-3 sm:!gap-2  md:p-3 sm:!p-2`}
@@ -102,8 +109,11 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
         >
-          <PrimaryButton onClick={handleOpenAddNationalityModal}>
-            Add Nationality
+          <PrimaryButton
+            onClick={() => handleOpenNationalityModal("addNationality")}
+          >
+            <AddRounded />
+            <Typography variant="button">Add Nationality</Typography>
           </PrimaryButton>
           <PrimaryButton
             className={`!bg-excel hover:!bg-green-950`}

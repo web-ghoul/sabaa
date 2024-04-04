@@ -17,6 +17,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         "Personal Info",
         "Owners",
         "PROs",
+        "Employees",
         "Transactions",
         "Activities",
       ]}
@@ -40,6 +41,9 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={4}>
+        <ProfileSetting />
+      </CustomTabPanel>
+      <CustomTabPanel value={companyTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>
