@@ -118,7 +118,7 @@ interface UserValuesTypes {
 }
 
 interface OwnerTypes {
-  _id: string;
+  _id?: string;
   name: string;
   nameAr: string;
   avatar: string;
@@ -172,7 +172,7 @@ interface CompanyTypes {
 }
 
 interface EmployeeTypes {
-  _id: string;
+  _id?: string;
   employeeName: string;
   companyCode: string;
   dateOfBirth: Date;
@@ -194,20 +194,20 @@ interface PROTypes {
 }
 
 interface JobTypes {
-  _id: string;
+  _id?: string;
   ENSCOCode: string;
   jobTitle: string;
   user?: string;
 }
 
 interface NationalityTypes {
-  _id: string;
+  _id?: string;
   nationality: string;
   user?: string;
 }
 
 interface UserTypes {
-  _id: string;
+  _id?: string;
   name: string;
   password: string;
   email: string;

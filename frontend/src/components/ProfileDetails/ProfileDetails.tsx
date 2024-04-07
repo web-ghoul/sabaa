@@ -37,10 +37,15 @@ const ProfileDetails = ({
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { user } = useSelector((state: RootState) => state.user);
+  const auth = useSelector((state: RootState) => state.auth);
   const { company } = useSelector((state: RootState) => state.company);
 
   const handleEditUser = () => {
-    setEditableUserData(user);
+    if (id) {
+      setEditableUserData(user);
+    } else {
+      setEditableUserData(auth.user);
+    }
     handleOpenUserModal("editUser");
   };
   const handleDeleteUser = () => {

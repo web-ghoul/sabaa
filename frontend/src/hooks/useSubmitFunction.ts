@@ -6,7 +6,7 @@ import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
-import { login as loginAction } from "../store/auth";
+import { getProfile, login as loginAction } from "../store/auth";
 import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
@@ -385,6 +385,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         dispatch(getUsers({}));
+        dispatch(getProfile());
         handleCloseUserModal();
         setUserImage("");
       })

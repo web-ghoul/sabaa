@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { AppDispatch } from "../../store/store";
@@ -15,9 +16,10 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { handleOpenJobModal } = useContext(FormsContext);
+  const { queries } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
-    dispatch(getJobs({ search: value }));
+    dispatch(getJobs({ ...queries, search: value }));
   };
 
   return (

@@ -73,7 +73,13 @@ const Input = ({
             id={name}
             type={type || "text"}
             name={name}
-            placeholder={type !== "date" ? `Enter ${label}` : ""}
+            placeholder={
+              type !== "date"
+                ? type === "search"
+                  ? label
+                  : `Enter ${label}`
+                : ""
+            }
             value={formik.values[name as keyof AllFormiksTypes]}
             onChange={(e) => {
               const val = e.target.value;

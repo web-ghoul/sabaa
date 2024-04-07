@@ -36,6 +36,17 @@ const UploadExcel = ({
 
   const handleJobsSheet = (data: Array<Row>, file: File) => {
     const jobs: JobTypes[] = [];
+    if (
+      !(
+        data[0][2] === "Job Title" &&
+        data[0][1] === "ENSCO Code" &&
+        data[0][0] === "MOHRE Code" &&
+        data[0].length === 3
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
     for (let i = 1; i < data.length; i++) {
       const job: JobTypes = {
         _id: "",
@@ -52,6 +63,16 @@ const UploadExcel = ({
 
   const handleNationalitiesSheet = (data: Array<Row>, file: File) => {
     const nationalities: NationalityTypes[] = [];
+    if (
+      !(
+        data[0][0] === "ID Nationality" &&
+        data[0][1] === "Nationality" &&
+        data[0].length === 2
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "errror" });
+      return;
+    }
     for (let i = 1; i < data.length; i++) {
       const nationality: NationalityTypes = {
         _id: "",
@@ -66,6 +87,29 @@ const UploadExcel = ({
 
   const handleOwnersSheet = (data: Array<Row>, file: File) => {
     const owners: OwnerTypes[] = [];
+    if (
+      !(
+        data[0][0] === "Person Code" &&
+        data[0][1] === "Owner Name" &&
+        data[0][2] === "Owner Name Ar" &&
+        data[0][3] === "Nationality Code" &&
+        data[0][4] === "Nationality" &&
+        data[0][5] === "Emirates ID No" &&
+        data[0][6] === "Date Of Birh" &&
+        data[0][7] === "Mobile Number" &&
+        data[0][8] === "UID NO" &&
+        data[0][9] === "Email" &&
+        data[0][10] === "Remarks" &&
+        data[0][11] === "State" &&
+        data[0][12] === "Address" &&
+        data[0][13] === "PRO Code" &&
+        data[0][14] === "PRO Name" &&
+        data[0].length === 15
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
     for (let i = 1; i < data.length; i++) {
       const owner: OwnerTypes = {
         _id: "",
@@ -105,6 +149,29 @@ const UploadExcel = ({
 
   const handleCompaniesSheet = (data: Array<Row>, file: File) => {
     const companies: CompanyTypes[] = [];
+    if (
+      !(
+        data[0][0] === "Status" &&
+        data[0][1] === "Trade License No" &&
+        data[0][2] === "License Start Date" &&
+        data[0][3] === "License Expiry Date" &&
+        data[0][4] === "IMMG Card No." &&
+        data[0][5] === "IMMG Card Exp" &&
+        data[0][6] === "MOL Code" &&
+        data[0][7] === "MOL Category" &&
+        data[0][8] === "Company Name" &&
+        data[0][9] === "Company Name Ar" &&
+        data[0][10] === "State" &&
+        data[0][11] === "Mobile Number" &&
+        data[0][12] === "Owner Code" &&
+        data[0][13] === "Owner Name" &&
+        data[0].length === 14
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
+
     for (let i = 1; i < data.length; i++) {
       const company: CompanyTypes = {
         name: "",
