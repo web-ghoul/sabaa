@@ -105,6 +105,7 @@ const CompaniesTable = ({
   useEffect(() => {
     dispatch(getCompaniesCounter());
   }, [dispatch]);
+
   return (
     <PrimaryTable
       count={count}

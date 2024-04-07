@@ -138,7 +138,7 @@ interface OwnerTypes {
 }
 
 interface CompanyTypes {
-  _id: string;
+  _id?: string;
   name: string;
   nameAr: string;
   logo: string;

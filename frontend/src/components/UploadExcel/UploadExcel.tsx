@@ -132,7 +132,6 @@ const UploadExcel = ({
         email: "",
         tenancyContractValue: "",
         tenancyContractExp: new Date(),
-        _id: "",
         country: "",
         licenseIssuePlace: "",
         zipCode: "",
