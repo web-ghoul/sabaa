@@ -118,7 +118,7 @@ interface UserValuesTypes {
 }
 
 interface OwnerTypes {
-  _id?: string;
+  _id: string;
   name: string;
   nameAr: string;
   avatar: string;
@@ -207,7 +207,7 @@ interface NationalityTypes {
 }
 
 interface UserTypes {
-  _id?: string;
+  _id: string;
   name: string;
   password: string;
   email: string;

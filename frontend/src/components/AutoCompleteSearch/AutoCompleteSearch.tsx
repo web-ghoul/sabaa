@@ -59,7 +59,7 @@ export default function AutoCompleteSearch({
       : (name === "ownerId" &&
           values.filter((option) =>
             (formik as unknown as CompanyFormikTypes).values.ownerId.includes(
-              option._id
+              option._id || ""
             )
           )) ||
         [];

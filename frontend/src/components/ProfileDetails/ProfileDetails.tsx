@@ -65,7 +65,9 @@ const ProfileDetails = ({
   const handleEditCompany = () => {
     if (company) {
       const c: CompanyTypes = { ...company };
-      c.ownerId = company?.ownerId?.map((owner) => (owner as OwnerTypes)._id);
+      c.ownerId = company.ownerId.map(
+        (owner) => (owner as OwnerTypes)._id
+      ) as string[];
       setEditableCompanyData(c);
     }
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}/edit`);

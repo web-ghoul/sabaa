@@ -84,10 +84,12 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
         (nat: NationalityTypes) => nat.nationality
       );
       sethandledNationalities(nats);
-    } else {
-      dispatch(getNationalities({ limit: -1 }));
     }
-  }, [dispatch, nationalities]);
+  }, [nationalities]);
+
+  useEffect(() => {
+    dispatch(getNationalities({ limit: -1 }));
+  }, [dispatch]);
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}

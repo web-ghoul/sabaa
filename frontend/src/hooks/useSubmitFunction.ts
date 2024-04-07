@@ -93,7 +93,7 @@ const useSubmitFunction = (type: string) => {
 
   const handleOwnerFormData = (values: OwnerFormTypes) => {
     const formData = new FormData();
-    formData.append("_id", values._id);
+    formData.append("_id", values?._id);
     formData.append("personCode", values.personCode);
     formData.append("avatar", ownerImage);
     formData.append("name", values.name);
