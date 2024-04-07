@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import * as yup from "yup";
 import { FormsContext } from "../../contexts/FormsContext";
 
 const useCompanySchema = () => {
-  const { editableCompanyData, setCompanyImage } = useContext(FormsContext);
+  const { editableCompanyData } = useContext(FormsContext);
 
   const CompanySchema = yup.object({
     name: yup.string().required("Company English Name is required"),
@@ -31,46 +31,45 @@ const useCompanySchema = () => {
   });
 
   const CompanyInitailValues = {
-    name: editableCompanyData?.name,
-    nameAr: editableCompanyData?.nameAr,
-    status: editableCompanyData?.status,
-    logo: editableCompanyData?.logo,
-    state: editableCompanyData?.state,
-    address: editableCompanyData?.address,
-    email: editableCompanyData?.email,
-    phone: editableCompanyData?.phone,
+    name: editableCompanyData?.name || "",
+    nameAr: editableCompanyData?.nameAr || "",
+    status: editableCompanyData?.status || "",
+    logo: editableCompanyData?.logo || "",
+    state: editableCompanyData?.state || "",
+    address: editableCompanyData?.address || "",
+    email: editableCompanyData?.email || "",
+    phone: editableCompanyData?.phone || "",
     proCode: editableCompanyData?.proCode || [],
     ownerId: editableCompanyData?.ownerId || [],
-    licenseNo: editableCompanyData?.licenseNo,
-    immgCardNo: editableCompanyData?.immgCardNo,
+    licenseNo: editableCompanyData?.licenseNo || "",
+    immgCardNo: editableCompanyData?.immgCardNo || "",
     immgCardExpiry:
-      editableCompanyData?.immgCardExpiry &&
-      new Date(editableCompanyData?.immgCardExpiry).toISOString().split("T")[0],
+      (editableCompanyData?.immgCardExpiry &&
+        new Date(editableCompanyData?.immgCardExpiry)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
     licenseIssueDate:
-      editableCompanyData?.licenseIssueDate &&
-      new Date(editableCompanyData?.licenseIssueDate)
-        .toISOString()
-        .split("T")[0],
+      (editableCompanyData?.licenseIssueDate &&
+        new Date(editableCompanyData?.licenseIssueDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
     licenseExpiryDate:
-      editableCompanyData?.licenseExpiryDate &&
-      new Date(editableCompanyData?.licenseExpiryDate)
-        .toISOString()
-        .split("T")[0],
-    establishmentType: editableCompanyData?.establishmentType,
-    molCode: editableCompanyData?.molCode,
-    molCategory: editableCompanyData?.molCategory,
-    whatsAppNo: editableCompanyData?.whatsAppNo,
-    mobileNo: editableCompanyData?.mobileNo,
-    remarks: editableCompanyData?.remarks,
-    trn: editableCompanyData?.trn,
-    website: editableCompanyData?.website,
+      (editableCompanyData?.licenseExpiryDate &&
+        new Date(editableCompanyData?.licenseExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    establishmentType: editableCompanyData?.establishmentType || "",
+    molCode: editableCompanyData?.molCode || "",
+    molCategory: editableCompanyData?.molCategory || "",
+    whatsAppNo: editableCompanyData?.whatsAppNo || "",
+    mobileNo: editableCompanyData?.mobileNo || "",
+    remarks: editableCompanyData?.remarks || "",
+    trn: editableCompanyData?.trn || "",
+    website: editableCompanyData?.website || "",
   };
-
-  useEffect(() => {
-    if (editableCompanyData && editableCompanyData.logo) {
-      setCompanyImage(editableCompanyData.logo);
-    }
-  }, [editableCompanyData, setCompanyImage]);
 
   return { CompanyInitailValues, CompanySchema };
 };

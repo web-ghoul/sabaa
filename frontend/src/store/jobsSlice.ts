@@ -6,13 +6,15 @@ import { JobsArgsTypes, JobsValuesTypes } from "../types/store.types.ts";
 export const getJobs = createAsyncThunk(
   "/jobs/getJobs",
   async (args: JobsArgsTypes) => {
+    console.log(args);
+
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/job-title?search=${
         (args && args.search) || ""
-      }&sort=${args?.sort || ""}&limit=${args?.limit || ""}&page=${
-        args?.page || 0
-      }`,
+      }&sort=${args?.sort || ""}&limit=${
+        args?.limit || import.meta.env.VITE_LIMIT_PAGES
+      }&page=${args?.page || 0}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,68 +1,24 @@
 import { AddRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
-import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
-import {
-  FormiksTypes,
-  NationalitiesOptionsFormikTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
 const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForNationalities, handleOpenNationalityModal } =
-    useContext(FormsContext);
-  const [params, setParams] = useState<{ [key: string]: string }>({});
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setNationalitiesPage } = useContext(AppContext);
-
-  const getAllParams = () => {
-    setNationalitiesPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setParams(allParams);
-    return allParams;
-  };
-
-  const setAllParams = () => {
-    const allParams = getAllParams();
-    (formik as unknown as NationalitiesOptionsFormikTypes).values.limit =
-      allParams.limit;
-    dispatch(getNationalities(allParams));
-  };
+  const { handleOpenNationalityModal } = useContext(FormsContext);
 
   const handleSearch = (value: string) => {
-    dispatch(getNationalities({ ...params, page: 0, search: value }));
-    setSearchForNationalities(value);
+    dispatch(getNationalities({ search: value }));
   };
-
-  const handleResetAll = () => {
-    setSearchForNationalities("");
-    setSearchParams({});
-    dispatch(getNationalities({}));
-    setParams({});
-    (formik as unknown as NationalitiesOptionsFormikTypes).values.limit = "";
-  };
-
-  useEffect(() => {
-    setAllParams();
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getNationalities({}));
-    }
-  }, [dispatch, searchParams]);
 
   return (
     <Paper
@@ -105,15 +61,6 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-          />
-        </Box>
-      </Box>
-      <Box className={`grid justify-stretch items-center gap-2`}>
-        <Box className={`flex justify-end items-center`}>
-          <Button
-            handling={handleResetAll}
-            title={"Reset All"}
-            bg={"!bg-red-500"}
           />
         </Box>
       </Box>

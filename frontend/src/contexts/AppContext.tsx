@@ -21,6 +21,10 @@ export const AppContext = createContext<AppContextProps>({
   setNationalitiesPage: () => {},
   usersPage: 1,
   setUsersPage: () => {},
+  queries: {},
+  setQueries: () => {},
+  handleAddQuery: () => {},
+  handleRemoveQuery: () => {},
 });
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
@@ -59,6 +63,19 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenTableMenu(event.currentTarget);
   };
 
+  //Queries
+  const [queries, setQueries] = useState<{ [key: string]: string }>({});
+
+  const handleAddQuery = (query: { [key: string]: string }) => {
+    setQueries({ ...queries, ...query });
+  };
+
+  const handleRemoveQuery = (queryName: string) => {
+    const q: { [key: string]: string } = { ...queries };
+    delete q[queryName];
+    setQueries(q);
+  };
+
   const values = {
     defaultAvatar,
     defaultCompany,
@@ -79,6 +96,10 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setNationalitiesPage,
     jobsPage,
     setJobsPage,
+    queries,
+    setQueries,
+    handleAddQuery,
+    handleRemoveQuery,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };

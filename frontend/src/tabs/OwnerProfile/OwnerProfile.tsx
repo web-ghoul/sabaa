@@ -32,7 +32,12 @@ const OwnerProfile = ({ owner, isLoading, companies }: OwnerProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={1}>
-        <CompaniesTable data={companies} isLoading={isLoading} />
+        <CompaniesTable
+          count={companies ? companies.length : 0}
+          data={companies}
+          isLoading={isLoading}
+          noPagination={true}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={2}>
         <ProfileSetting />

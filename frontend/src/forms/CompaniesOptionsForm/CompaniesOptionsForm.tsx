@@ -4,15 +4,13 @@ import {
   FilterListRounded,
 } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
-import { FormsContext } from "../../contexts/FormsContext";
-import { handleAlert } from "../../functions/handleAlert";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
 import {
@@ -22,136 +20,66 @@ import {
 
 const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForCompanies, searchForCompanies } =
-    useContext(FormsContext);
   const [showFilters, setShowFilters] = useState(false);
-  const [params, setParams] = useState<{ [key: string]: string }>({});
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setCompaniesPage } = useContext(AppContext);
-
-  const getAllParams = () => {
-    setCompaniesPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setParams(allParams);
-    return allParams;
-  };
-
-  const setAllParams = () => {
-    const allParams = getAllParams();
-    (formik as unknown as CompaniesOptionsFormikTypes).values.limit =
-      allParams.limit;
-    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByState =
-      allParams.state;
-    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByStatus =
-      allParams.status;
-    (
-      formik as unknown as CompaniesOptionsFormikTypes
-    ).values.filterByMOLCategory = allParams.molCategory;
-    (
-      formik as unknown as CompaniesOptionsFormikTypes
-    ).values.filterByEstablishmentType = allParams.establishmentType;
-
-    dispatch(getCompanies(allParams));
-  };
+  const [, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const { queries, handleAddQuery } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
-    dispatch(getCompanies({ ...params, page: 0, search: value }));
-    setSearchForCompanies(value);
+    handleAddQuery({ search: value });
   };
 
   const handleFilterByState = (value: string) => {
-    if (value) {
-      dispatch(
-        getCompanies({ ...params, state: value, search: searchForCompanies })
-      );
-      setSearchParams({ ...getAllParams(), state: value });
-    }
+    handleAddQuery({ state: value });
   };
 
   const handleFilterByStatus = (value: string) => {
-    if (value) {
-      dispatch(
-        getCompanies({ ...params, status: value, search: searchForCompanies })
-      );
-      setSearchParams({ ...getAllParams(), status: value });
-    }
+    handleAddQuery({ status: value });
   };
 
   const handleFilterByMOLCategory = (value: string) => {
-    if (value) {
-      dispatch(
-        getCompanies({
-          ...params,
-          molCategory: value,
-          search: searchForCompanies,
-        })
-      );
-      setSearchParams({ ...getAllParams(), molCategory: value });
-    }
+    handleAddQuery({ molCategory: value });
   };
 
   const handleFilterByEstablishmentType = (value: string) => {
-    if (value) {
-      dispatch(
-        getCompanies({
-          ...params,
-          establishmentType: value,
-          search: searchForCompanies,
-        })
-      );
-      setSearchParams({ ...getAllParams(), establishmentType: value });
-    }
+    handleAddQuery({ establishmentType: value });
   };
 
-  const handleFilterByIMMGExpireDate = (value: string) => {
-    // dispatch(
-    //   getCompanies({ ...params, page: +value, search: searchForCompanies })
-    // );
-    console.log(value);
-    handleAlert({ msg: "Under Development" });
+  const handleFilterByIMMGExpireDateFrom = (value: string) => {
+    handleAddQuery({ IMMGFrom: value });
   };
 
-  const handleFilterByLicenseExpireDate = (value: string) => {
-    // dispatch(
-    //   getCompanies({ ...params, page: +value, search: searchForCompanies })
-    // );
-    console.log(value);
-    handleAlert({ msg: "Under Development" });
+  const handleFilterByIMMGExpireDateTo = (value: string) => {
+    handleAddQuery({ IMMGTo: value });
   };
 
-  const handleFilter = () => {};
+  const handleFilterByLicenseExpireDateFrom = (value: string) => {
+    handleAddQuery({ licenseFrom: value });
+  };
+
+  const handleFilterByLicenseExpireDateTo = (value: string) => {
+    handleAddQuery({ licenseTo: value });
+  };
+
+  const handleFilter = () => {
+    setSearchParams(queries);
+    dispatch(getCompanies(queries));
+  };
 
   const handleResetAll = () => {
-    setSearchForCompanies("");
-    setSearchParams({});
-    dispatch(getCompanies({}));
-    setParams({});
-    (formik as unknown as CompaniesOptionsFormikTypes).values.limit = "";
-    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByState =
-      "";
-    (formik as unknown as CompaniesOptionsFormikTypes).values.filterByStatus =
-      "";
-    (
-      formik as unknown as CompaniesOptionsFormikTypes
-    ).values.filterByMOLCategory = "";
-    (
-      formik as unknown as CompaniesOptionsFormikTypes
-    ).values.filterByEstablishmentType = "";
+    navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
   };
 
-  useEffect(() => {
-    setAllParams();
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getCompanies({}));
-    }
-  }, [dispatch, searchParams]);
+  (formik as unknown as CompaniesOptionsFormikTypes).values.search =
+    queries.search;
+  (formik as unknown as CompaniesOptionsFormikTypes).values.state =
+    queries.state;
+  (formik as unknown as CompaniesOptionsFormikTypes).values.status =
+    queries.status;
+  (formik as unknown as CompaniesOptionsFormikTypes).values.molCategory =
+    queries.molCategory;
+  (formik as unknown as CompaniesOptionsFormikTypes).values.establishmentType =
+    queries.establishmentType;
 
   return (
     <Paper
@@ -170,13 +98,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
         >
-          <Button
-            icon={<AddRounded />}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_ADD_COMPANY_ROUTE}`)
-            }
-            title={"Add Company"}
-          />
+          <Button icon={<AddRounded />} title={"Add Company"} />
           <Button
             handling={() =>
               navigate(`${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`)
@@ -229,7 +151,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           >
             <Input
               label={"Filter By Status"}
-              name={"filterByStatus"}
+              name={"status"}
               formik={formik}
               change={handleFilterByStatus}
               options={["Active", "Inactive"]}
@@ -237,7 +159,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             />
             <Input
               label={"Filter By State"}
-              name={"filterByState"}
+              name={"state"}
               formik={formik}
               change={handleFilterByState}
               options={["dubai"]}
@@ -245,7 +167,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             />
             <Input
               label={"Filter By MOL Category"}
-              name={"filterByMOLCategory"}
+              name={"molCategory"}
               formik={formik}
               change={handleFilterByMOLCategory}
               options={[]}
@@ -253,7 +175,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             />
             <Input
               label={"Filter By Establishment Type"}
-              name={"filterByEstablishmentType"}
+              name={"establishmentType"}
               formik={formik}
               change={handleFilterByEstablishmentType}
               options={[]}
@@ -263,25 +185,46 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           <Box
             className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 xs:grid`}
           >
-            <Box className={`grid justify-stretch items-center gap-2 w-full`}>
+            <Box className={`grid gap-3`}>
               <Typography variant="h6">Filter By IMMG Expire Date</Typography>
-              <Input
-                name={"filterByIMMGExpireDate"}
-                type={"date"}
-                formik={formik}
-                change={handleFilterByIMMGExpireDate}
-              />
+              <Box className={`flex gap-2`}>
+                <Input
+                  name={"IMMGFrom"}
+                  type={"date"}
+                  label={"From"}
+                  formik={formik}
+                  change={handleFilterByIMMGExpireDateFrom}
+                />
+                <Input
+                  name={"IMMGTo"}
+                  type={"date"}
+                  label={"to"}
+                  formik={formik}
+                  change={handleFilterByIMMGExpireDateTo}
+                />
+              </Box>
             </Box>
-            <Box className={`grid justify-stretch items-center gap-2 w-full`}>
+
+            <Box className={`grid gap-3`}>
               <Typography variant="h6">
                 Filter By License Expire Date
               </Typography>
-              <Input
-                name={"filterByLicenseExpireDate"}
-                type={"date"}
-                formik={formik}
-                change={handleFilterByLicenseExpireDate}
-              />
+              <Box className={`flex gap-2`}>
+                <Input
+                  name={"licenseFrom"}
+                  label={"From"}
+                  type={"date"}
+                  formik={formik}
+                  change={handleFilterByLicenseExpireDateFrom}
+                />
+                <Input
+                  name={"licenseTo"}
+                  label={"To"}
+                  type={"date"}
+                  formik={formik}
+                  change={handleFilterByLicenseExpireDateTo}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>

@@ -1,9 +1,9 @@
 import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
@@ -15,74 +15,38 @@ import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
 const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const { setSearchForUsers, searchForUsers, handleOpenUserModal } =
-    useContext(FormsContext);
-  const [params, setParams] = useState<{ [key: string]: string }>({});
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setUsersPage } = useContext(AppContext);
-
-  const getAllParams = () => {
-    setUsersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setParams(allParams);
-    return allParams;
-  };
-
-  const setAllParams = () => {
-    const allParams = getAllParams();
-    (formik as unknown as UsersOptionsFormikTypes).values.filterByRole =
-      allParams.role;
-    (formik as unknown as UsersOptionsFormikTypes).values.filterByStatus =
-      allParams.status;
-    (formik as unknown as UsersOptionsFormikTypes).values.limit =
-      allParams.limit;
-    dispatch(getUsers(allParams));
-  };
+  const { handleOpenUserModal } = useContext(FormsContext);
+  const { queries, handleAddQuery } = useContext(AppContext);
+  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const handleSearch = (value: string) => {
-    dispatch(getUsers({ ...params, search: value }));
-    setSearchForUsers(value);
+    handleAddQuery({ search: value });
   };
 
   const handleFilterByRole = (value: string) => {
-    if (value) {
-      dispatch(getUsers({ ...params, role: value, search: searchForUsers }));
-      setSearchParams({ ...getAllParams(), role: value });
-    }
+    handleAddQuery({ role: value });
   };
 
   const handleFilterByStatus = (value: string) => {
-    if (value) {
-      dispatch(getUsers({ ...params, status: value, search: searchForUsers }));
-      setSearchParams({ ...getAllParams(), status: value });
-    }
+    handleAddQuery({ status: value });
   };
 
-  const handleFilter = () => {};
+  const handleFilter = () => {
+    setSearchParams(queries);
+    dispatch(getUsers(queries));
+  };
 
   const handleResetAll = () => {
-    setSearchForUsers("");
-    setSearchParams({});
-    dispatch(getUsers({}));
-    setParams({});
-    (formik as unknown as UsersOptionsFormikTypes).values.filterByRole = "";
-    (formik as unknown as UsersOptionsFormikTypes).values.filterByStatus = "";
-    (formik as unknown as UsersOptionsFormikTypes).values.limit = "";
+    navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
   };
 
-  useEffect(() => {
-    setAllParams();
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getUsers({}));
-    }
-  }, [dispatch, searchParams]);
-
+  (formik as unknown as UsersOptionsFormikTypes).values.role =
+    queries.role || "";
+  (formik as unknown as UsersOptionsFormikTypes).values.status =
+    queries.status || "";
+  (formik as unknown as UsersOptionsFormikTypes).values.search =
+    queries.search || "";
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
@@ -146,7 +110,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
         >
           <Input
             label={"Filter By Status"}
-            name={"filterByStatus"}
+            name={"status"}
             formik={formik}
             change={handleFilterByStatus}
             options={["Active", "Pending", "Blocked"]}
@@ -154,7 +118,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Input
             label={"Filter By Role"}
-            name={"filterByRole"}
+            name={"role"}
             options={["Admin", "User"]}
             select
             formik={formik}

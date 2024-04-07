@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -16,7 +16,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import { getUsersCounter } from "../../store/usersCounterSlice";
 import { getUsers, reverseUsers } from "../../store/usersSlice";
 import { UsersTableTypes } from "../../types/tables.types";
@@ -27,35 +27,33 @@ import LoadingUsersRow from "./LoadingUsersRow";
 import UsersTableMenu from "./UsersTableMenu";
 import { UsersTableRow } from "./UsersTableRow";
 
-const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
-  const { handleOpenTableMenu, setUsersPage } = useContext(AppContext);
+const UsersTable = ({
+  noPagination,
+  count,
+  data,
+  isLoading,
+}: UsersTableTypes) => {
+  const { handleOpenTableMenu, handleAddQuery, queries } =
+    useContext(AppContext);
   const { setUserTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
-  const { usersCounter } = useSelector(
-    (state: RootState) => state.usersCounter
-  );
-  const dispatch = useDispatch<AppDispatch>();
 
-  const getAllParams = () => {
-    setUsersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      handleAddQuery({ sort: "name_desc" });
       dispatch(reverseUsers());
+      setSearchParams({ ...queries, sort: "name_desc" });
     } else {
-      dispatch(getUsers({ ...getAllParams(), sort: "name_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "name_asc" });
+      handleAddQuery({ sort: "name_asc" });
+      const all = { ...queries, sort: "name_asc" };
+      dispatch(getUsers(all));
+      setSearchParams(all);
     }
   };
 
@@ -79,7 +77,7 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={usersCounter} variant={"users"}>
+    <PrimaryTable count={count} variant={"users"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

@@ -1,26 +1,27 @@
 import { SwapVertRounded } from "@mui/icons-material";
-import { Box, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { FaSortAmountDown, FaSortAmountUp } from "react-icons/fa";
 import { SortBoxTypes } from "../types/components.types";
 
 const SortBox = ({ title, handling, asc, desc, jc }: SortBoxTypes) => {
-  const iconClasses = `!text-[16px] md:!text-[14px] sm:!text-[12px]`;
+  const iconSwapClasses = `!text-[16px] md:!text-[14px] sm:!text-[12px]`;
+
+  const iconSortClasses = `!text-[13px] md:!text-[11px] sm:!text-[9px]`;
 
   return (
-    <Box
-      className={`flex justify-${jc} items-center gap-2 md:gap-1 cursor-pointer`}
+    <Button
+      onClick={handling}
+      className={`flex justify-${jc} items-center gap-2 md:gap-1 cursor-pointer !text-dark !font-[700]`}
     >
       {title}
-      <IconButton onClick={handling} className={`!p-0 `}>
-        {asc ? (
-          <FaSortAmountDown className={iconClasses} />
-        ) : desc ? (
-          <FaSortAmountUp className={iconClasses} />
-        ) : (
-          <SwapVertRounded className={iconClasses} />
-        )}
-      </IconButton>
-    </Box>
+      {asc ? (
+        <FaSortAmountDown className={iconSortClasses} />
+      ) : desc ? (
+        <FaSortAmountUp className={iconSortClasses} />
+      ) : (
+        <SwapVertRounded className={iconSwapClasses} />
+      )}
+    </Button>
   );
 };
 

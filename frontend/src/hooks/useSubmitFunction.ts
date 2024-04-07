@@ -114,10 +114,10 @@ const useSubmitFunction = (type: string) => {
     formData.append("email", values.email);
     formData.append("status", values.status);
     values.ownerId.map((owner) => {
-      formData.append("ownerId", owner);
+      formData.append("ownerId[]", owner);
     });
     values.proCode.map((pro) => {
-      formData.append("proId", pro);
+      formData.append("proCode[]", pro);
     });
     formData.append("state", values.state);
     formData.append("licenseNo", values.licenseNo);

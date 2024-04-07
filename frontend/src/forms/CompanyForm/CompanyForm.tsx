@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         [type]
       )}
 
-      <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
+      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input formik={formik} label={"English Name"} name={"name"} />
         <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
         <Input
@@ -74,7 +74,12 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           label={"MOL Category"}
           options={["cat1", "cat2", "cat3"]}
         />
-        <Input formik={formik} label={"MOL Code"} name={"molCode"} />
+        <Input
+          formik={formik}
+          label={"MOL Code"}
+          name={"molCode"}
+          type={"number"}
+        />
         <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Phone"} name={"phone"} type={"number"} />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
@@ -91,7 +96,12 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           type={"number"}
         />
         <Input formik={formik} label={"Website"} name={"website"} />
-        <Input formik={formik} label={"Zip Code"} name={"zipCode"} />
+        <Input
+          formik={formik}
+          label={"Zip Code"}
+          name={"zipCode"}
+          type={"number"}
+        />
         <Input formik={formik} label={"TRN"} name={"trn"} />
         <Input
           formik={formik}
@@ -112,11 +122,26 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           name={"immgCardNo"}
           type={"number"}
         />
-        <Input formik={formik} type={"date"} name={"immgCardExpiry"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"immgCardExpiry"}
+          label={"IMMG Card Expire Date"}
+        />
 
-        <Input formik={formik} type={"date"} name={"licenseIssueDate"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"licenseIssueDate"}
+          label={"License Issue Date"}
+        />
 
-        <Input formik={formik} type={"date"} name={"licenseExpiryDate"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"licenseExpiryDate"}
+          label={"License Expire Date"}
+        />
 
         <Input
           formik={formik}
@@ -132,11 +157,18 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           name={"tenancyContractValue"}
         />
 
-        <Box className={`grid justify-stretch items-center gap-2`}>
-          <Typography variant="h6">Tenancy Contract Expire Date</Typography>
-          <Input formik={formik} type={"date"} name={"tenancyContractExp"} />
-        </Box>
-        <Input formik={formik} label={"Remarks"} name={"remarks"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"tenancyContractExp"}
+          label={"Tenancy Contract Expire Date"}
+        />
+        <Input
+          formik={formik}
+          label={"Remarks"}
+          name={"remarks"}
+          textarea={true}
+        />
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

@@ -2,22 +2,25 @@ import * as yup from "yup";
 
 export const CompaniesOptionsSchema = yup.object({
   search: yup.string(),
-  limit: yup.string(),
-  filterByState: yup.string(),
-  filterByStatus: yup.string(),
-  filterByMOLCategory: yup.string(),
-  filterByEstablishmentType: yup.string(),
-  filterByIMMGExpireDate: yup.string(),
-  filterByLicenseExpireDate: yup.string(),
+  state: yup.string(),
+  status: yup.string(),
+  molCategory: yup.string(),
+  establishmentType: yup.string(),
+  IMMGFrom: yup.string(),
+  IMMGTo: yup.string(),
+  licenseFrom: yup.string(),
+  licenseTo: yup.string(),
 });
 
 export const CompaniesOptionsInitailValues = {
   search: "",
   limit: "",
-  filterByState: "",
-  filterByStatus: "",
-  filterByMOLCategory: "",
-  filterByEstablishmentType: "",
-  filterByIMMGExpireDate: "",
-  filterByLicenseExpireDate: "",
+  state: "",
+  status: "",
+  molCategory: "",
+  establishmentType: "",
+  IMMGFrom: "",
+  IMMGTo: "",
+  licenseFrom: "",
+  licenseTo: "",
 };

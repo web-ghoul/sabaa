@@ -125,20 +125,20 @@ Notes :
   15- Add Person code at edit owner (Done)
   16- Error Message for wrong create sheet (Working By Amr)
   17- Download Sample for upload Sheet (Pending)
-  18- Refuse Any sheet different when upload
-  19- Filter By And Concept not Or (Mistake By Me and it will fix when finish filter all button)
-  20- Filter button For all Filter to work
+  18- Refuse Any sheet different when upload (Pending)
+  19- Filter By And Concept not Or (Mistake By Me and it will fix when finish filter all button) (Done)
+  20- Filter button For all Filter to work (Done)
   21- when click on item of sidebar don't reset filters (Done)
-  22- No Filters For Companies Of Owners or owners of Companies 
+  22- No Filters For Companies Of Owners or owners of Companies  (Done)
   23- Activities Tab For Owner, Company , PRO , Employee (Done)
   24- When Edit Go to the editable item (Company , Owner) (Done)
   25- Add Employees Tab For Company (Done)
-  26- Add - For non Value For any field has no value 
-  27- Edit Profile Strtucture Like 
+  26- Add - For non Value For any field has no value (Done)
+  27- Edit Profile Strtucture (Done)
   28- Change Code To Person Code (Done)
   29- Placeholder For search Like (Search by Name , Code) (Done)
-  30- Pagination of table change to default table's pagination in MUI
-  31- Filter By Date From to To (Working By Amr) [Owner => (dobFrom ,dobTo) , Company => [(IMMGFrom , IMMGTo) , (licenseFrom , licenseTo)]]
+  30- Pagination of table change to default table's pagination in MUI (Done)
+  31- Filter By Date From to To (Working By Amr) [Owner => (dobFrom ,dobTo) , Company => [(IMMGFrom , IMMGTo) , (licenseFrom , licenseTo)]] (Done)
   32- Use Mongo Id for All Tables (Talking at Meeting)
   33- Gap between Tabs And Components (Done)
   34- Interal Server Error For Edit Company When Choose New State (Working By Amr)

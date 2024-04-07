@@ -19,13 +19,13 @@ const useUserSchema = () => {
   });
 
   const UserInitailValues = {
-    name: editableUserData?.name,
-    email: editableUserData?.email,
-    role: editableUserData?.role,
-    phone: editableUserData?.phone,
-    avatar: editableUserData?.avatar,
-    status: editableUserData?.status,
-    password: editableUserData?.password,
+    name: editableUserData?.name || "",
+    email: editableUserData?.email || "",
+    role: editableUserData?.role || "",
+    phone: editableUserData?.phone || "",
+    avatar: editableUserData?.avatar || "",
+    status: editableUserData?.status || "",
+    password: editableUserData?.password || "",
   };
 
   useEffect(() => {

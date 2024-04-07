@@ -24,82 +24,57 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForOwners, searchForOwners, handleOpenOwnerModal } =
-    useContext(FormsContext);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setOwnersPage } = useContext(AppContext);
+  const { handleOpenOwnerModal } = useContext(FormsContext);
+  const [, setSearchParams] = useSearchParams();
+  const { queries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
-  const [params, setParams] = useState<{ [key: string]: string }>({});
   const [handledNationalities, sethandledNationalities] = useState<string[]>(
     []
   );
 
-  const getAllParams = () => {
-    setOwnersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setParams(allParams);
-    return allParams;
-  };
-
-  const setAllParams = () => {
-    const allParams = getAllParams();
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
-      allParams.date;
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
-      allParams.nationality;
-    (formik as unknown as OwnersOptionsFormikTypes).values.limit =
-      allParams.limit;
-    dispatch(getOwners(allParams));
-  };
-
   const handleSearch = (value: string) => {
-    dispatch(getOwners({ ...params, search: value }));
-    setSearchForOwners(value);
+    handleAddQuery({ search: value });
   };
 
   const handleFilterByNationality = (value: string) => {
-    if (value) {
-      dispatch(
-        getOwners({ ...params, nationality: value, search: searchForOwners })
-      );
-      setSearchParams({ ...getAllParams(), nationality: value });
-    }
+    handleAddQuery({ nationality: value });
   };
 
   const handleFilterByState = (value: string) => {
-    if (value) {
-      dispatch(getOwners({ ...params, state: value, search: searchForOwners }));
-      setSearchParams({ ...getAllParams(), state: value });
-    }
+    handleAddQuery({ state: value });
   };
 
-  const handleFilterByDateOfBirth = (value: string) => {
-    if (value) {
-      dispatch(getOwners({ ...params, date: value, search: searchForOwners }));
-      setSearchParams({ ...getAllParams(), date: value });
-    }
+  const handleFilterByDateOfBirthFrom = (value: string) => {
+    handleAddQuery({ dobFrom: value });
   };
 
-  const handleFilter = () => {};
+  const handleFilterByDateOfBirthTo = (value: string) => {
+    handleAddQuery({ dobTo: value });
+  };
+
+  const handleFilter = () => {
+    setSearchParams(queries);
+    dispatch(getOwners(queries));
+  };
 
   const handleResetAll = () => {
-    setSearchForOwners("");
-    setSearchParams({});
-    dispatch(getOwners({}));
-    setParams({});
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
-      "";
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
-      "";
-    (formik as unknown as OwnersOptionsFormikTypes).values.limit = "";
+    navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+
+  (formik as unknown as OwnersOptionsFormikTypes).values.dobFrom =
+    queries.dobFrom || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.dobTo =
+    queries.dobTo || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.state =
+    queries.state || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.nationality =
+    queries.nationality || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.search =
+    queries.search || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -111,17 +86,6 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       dispatch(getNationalities({}));
     }
   }, [dispatch, nationalities]);
-
-  useEffect(() => {
-    setAllParams();
-  }, []);
-
-  useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getOwners({}));
-    }
-  }, [dispatch, searchParams]);
-
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
@@ -137,7 +101,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           change={handleSearch}
         />
         <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
+          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
           <Button
             title={"Add Owner"}
@@ -187,13 +151,13 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex-wrap  ${
+          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
           <Input
             label={"Filter By Nationality"}
-            name={"filterByNationality"}
+            name={"nationality"}
             formik={formik}
             change={handleFilterByNationality}
             options={handledNationalities}
@@ -201,20 +165,30 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Input
             label={"Filter By State"}
-            name={"filterByState"}
+            name={"state"}
             formik={formik}
             change={handleFilterByState}
             options={["dubai"]}
             select
           />
-          <Box className={`grid justify-stretch items-center gap-2 w-full`}>
-            <Typography variant="h6">Filter By Date of Birth</Typography>
-            <Input
-              name={"filterByDateOfBirth"}
-              type={"date"}
-              formik={formik}
-              change={handleFilterByDateOfBirth}
-            />
+          <Box className={`grid gap-4 md:gap-3 sm:!gap-2`}>
+            <Typography variant="h6">Filter By Date Of Birth</Typography>
+            <Box className={`flex gap-4 md:gap-3 sm:!gap-2 flex-wrap`}>
+              <Input
+                name={"dobFrom"}
+                label={"From"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthFrom}
+              />
+              <Input
+                name={"dobTo"}
+                label={"To"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthTo}
+              />
+            </Box>
           </Box>
         </Box>
       </Box>

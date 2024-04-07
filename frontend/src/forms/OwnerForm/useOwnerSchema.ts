@@ -25,23 +25,24 @@ const useOwnerSchema = () => {
   });
 
   const OwnerInitailValues = {
-    name: editableOwnerData?.name,
-    personCode: editableOwnerData?.personCode,
-    nameAr: editableOwnerData?.nameAr,
-    avatar: editableOwnerData?.avatar,
+    name: editableOwnerData?.name || "",
+    personCode: editableOwnerData?.personCode || "",
+    nameAr: editableOwnerData?.nameAr || "",
+    avatar: editableOwnerData?.avatar || "",
     dob:
-      editableOwnerData?.dob &&
-      new Date(editableOwnerData?.dob).toISOString().split("T")[0],
-    idNationality: editableOwnerData?.idNationality,
-    nationality: editableOwnerData?.nationality,
-    phone: editableOwnerData?.phone,
-    email: editableOwnerData?.email,
-    remarks: editableOwnerData?.remarks,
-    state: editableOwnerData?.state,
-    address: editableOwnerData?.address,
-    proCode: editableOwnerData?.proCode,
-    emiratesId: editableOwnerData?.emiratesId,
-    _id: editableOwnerData?._id,
+      (editableOwnerData?.dob &&
+        new Date(editableOwnerData?.dob).toISOString().split("T")[0]) ||
+      "",
+    idNationality: editableOwnerData?.idNationality || "",
+    nationality: editableOwnerData?.nationality || "",
+    phone: editableOwnerData?.phone || "",
+    email: editableOwnerData?.email || "",
+    remarks: editableOwnerData?.remarks || "",
+    state: editableOwnerData?.state || "",
+    address: editableOwnerData?.address || "",
+    proCode: editableOwnerData?.proCode || "",
+    emiratesId: editableOwnerData?.emiratesId || "",
+    _id: editableOwnerData?._id || "",
   };
 
   useEffect(() => {

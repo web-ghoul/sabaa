@@ -11,8 +11,8 @@ const useNationalitySchema = () => {
   });
 
   const NationalityInitailValues = {
-    _id: editableNationalityData?._id,
-    nationality: editableNationalityData?.nationality,
+    _id: editableNationalityData?._id || "",
+    nationality: editableNationalityData?.nationality || "",
   };
 
   return { NationalitySchema, NationalityInitailValues };

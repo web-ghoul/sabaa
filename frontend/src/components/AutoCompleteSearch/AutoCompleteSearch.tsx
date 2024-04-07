@@ -63,6 +63,19 @@ export default function AutoCompleteSearch({
             )
           )) ||
         [];
+  const style = {
+    width: "fit-content",
+    "& > div > div": {
+      padding: "0px !important",
+    },
+    "& span.MuiCircularProgress-root": {
+      position: "absolute",
+      right: "9px",
+    },
+    "& svg": {
+      fontSize: "20px",
+    },
+  };
 
   useEffect(() => {
     setValues(options);
@@ -72,18 +85,7 @@ export default function AutoCompleteSearch({
     <Box className={`grid justify-stretch items-center gap-2`}>
       <Typography variant="h6">{label}</Typography>
       <Autocomplete
-        sx={{
-          "& > div > div": {
-            padding: "0px !important",
-          },
-          "& span.MuiCircularProgress-root": {
-            position: "absolute",
-            right: "9px",
-          },
-          "& svg": {
-            fontSize: "20px",
-          },
-        }}
+        sx={style}
         disablePortal
         id="combo-box-demo"
         multiple={multiple}

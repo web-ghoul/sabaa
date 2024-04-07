@@ -16,12 +16,8 @@ const CompaniesTableMenu = () => {
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-  const {
-    handleOpenEditCompanyModal,
-    handleOpenDeleteModal,
-    editableCompanyData,
-    setDeleteType,
-  } = useContext(FormsContext);
+  const { handleOpenCompanyModal, handleOpenDeleteModal, editableCompanyData } =
+    useContext(FormsContext);
   const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
@@ -34,13 +30,15 @@ const CompaniesTableMenu = () => {
 
   const handleEdit = () => {
     if (sheet) {
-      handleOpenEditCompanyModal();
+      handleOpenCompanyModal("editCompany");
     } else {
-      navigate(
-        `${import.meta.env.VITE_COMPANIES_ROUTE}/${
-          editableCompanyData && editableCompanyData._id
-        }/edit`
-      );
+      if (editableCompanyData) {
+        navigate(
+          `${import.meta.env.VITE_COMPANIES_ROUTE}/${
+            editableCompanyData._id
+          }/edit`
+        );
+      }
     }
   };
 
@@ -48,8 +46,7 @@ const CompaniesTableMenu = () => {
     if (sheet) {
       handleDeleteCompanyFromSheet();
     } else {
-      handleOpenDeleteModal();
-      setDeleteType("company");
+      handleOpenDeleteModal("company");
     }
   };
 

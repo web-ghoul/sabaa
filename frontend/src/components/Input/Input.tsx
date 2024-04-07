@@ -17,6 +17,7 @@ const Input = ({
   change,
   ac,
   textarea,
+  variant,
 }: InputTypes & FormiksTypes) => {
   const error =
     formik.touched[name as keyof AllFormiksTypes] &&
@@ -27,7 +28,7 @@ const Input = ({
 
   return useMemo(
     () => (
-      <Box className={`grid justify-stretch items-center gap-2 w-full`}>
+      <Box className={`grid justify-start items-center gap-2 md:gap-1`}>
         <Typography variant="h6" className={`!font-[400]`}>
           {type === "search" ? "Search" : label}
         </Typography>
@@ -83,10 +84,13 @@ const Input = ({
                 e.target.value = val.toUpperCase();
               }
               if (label?.split(" ")[0].toLowerCase() === "arabic") {
-                e.target.value = handleAcceptArabic(val);
+                e.target.value = handleAcceptArabic(val).toUpperCase();
               }
-              if (label?.split(" ")[0].toLowerCase() === "english") {
-                e.target.value = handleAcceptEnglish(val);
+              if (
+                label?.split(" ")[0].toLowerCase() === "english" ||
+                variant === "english"
+              ) {
+                e.target.value = handleAcceptEnglish(val).toUpperCase();
               }
               formik.handleChange(e);
             }}
@@ -110,6 +114,7 @@ const Input = ({
       select,
       textarea,
       type,
+      variant,
     ]
   );
 };

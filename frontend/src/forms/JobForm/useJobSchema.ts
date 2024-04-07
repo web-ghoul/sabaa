@@ -13,9 +13,9 @@ const useJobSchema = () => {
   });
 
   const JobInitailValues = {
-    jobTitle: editableJobData?.jobTitle,
-    ENSCOCode: editableJobData?.ENSCOCode,
-    _id: editableJobData?._id,
+    jobTitle: editableJobData?.jobTitle || "",
+    ENSCOCode: editableJobData?.ENSCOCode || "",
+    _id: editableJobData?._id || "",
   };
   return { JobSchema, JobInitailValues };
 };

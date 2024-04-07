@@ -15,9 +15,24 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
     >
       <Title align={"center"} head={"h3"} title={"Add New Job"} />
       <Box className={`grid justify-stretch items-center gap-6 grid-cols-3`}>
-        <Input formik={formik} label={"Job Title"} name={"jobTitle"} />
-        <Input formik={formik} label={"ENSCO Code"} name={"ENSCOCode"} />
-        <Input formik={formik} label={"MOHRE Code"} name={"_id"} />
+        <Input
+          formik={formik}
+          label={"Job Title"}
+          name={"jobTitle"}
+          variant={"english"}
+        />
+        <Input
+          formik={formik}
+          label={"ENSCO Code"}
+          name={"ENSCOCode"}
+          type={"number"}
+        />
+        <Input
+          formik={formik}
+          type={"number"}
+          label={"MOHRE Code"}
+          name={"_id"}
+        />
       </Box>
       <Box className={`flex justify-center items-center gap-4`}>
         <SubmitButton loading={formsLoading}>

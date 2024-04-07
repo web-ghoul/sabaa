@@ -1,5 +1,9 @@
 import { FormikProps, useFormik } from "formik";
 import { useMemo } from "react";
+import {
+  CompaniesOptionsInitailValues,
+  CompaniesOptionsSchema,
+} from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
 import useCompanySchema from "../forms/CompanyForm/useEditCompanySchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
 import {
@@ -8,19 +12,37 @@ import {
 } from "../forms/ForgotPasswordForm/ForgotPasswordSchema";
 import useJobSchema from "../forms/JobForm/useJobSchema";
 import {
+  JobsOptionsInitailValues,
+  JobsOptionsSchema,
+} from "../forms/JobsOptionsForm/JobsOptionsSchema";
+import {
   LoginInitailValues,
   LoginSchema,
 } from "../forms/LoginForm/LoginSchema";
+import {
+  NationalitiesOptionsInitailValues,
+  NationalitiesOptionsSchema,
+} from "../forms/NationalitiesOptionsForm/NationalitiesOptionsSchema";
 import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
 import useOwnerSchema from "../forms/OwnerForm/useOwnerSchema";
+import {
+  OwnersOptionsInitailValues,
+  OwnersOptionsSchema,
+} from "../forms/OwnersOptionsForm/OwnersOptionsSchema";
 import {
   ResetPasswordInitailValues,
   ResetPasswordSchema,
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
-import useUserSchema from "../forms/UserForm/useEditUserSchema";
+import useUserSchema from "../forms/UserForm/useUserSchema";
+import {
+  UsersOptionsInitailValues,
+  UsersOptionsSchema,
+} from "../forms/UsersOptionsForm/UsersOptionsSchema";
 import {
   AllFormiksTypes,
   AllFormsTypes,
+  CompaniesOptionsFormTypes,
+  CompaniesOptionsFormikTypes,
   CompanyFormTypes,
   CompanyFormikTypes,
   DeleteFormTypes,
@@ -29,16 +51,24 @@ import {
   ForgotPasswordFormikTypes,
   JobFormTypes,
   JobFormikTypes,
+  JobsOptionsFormTypes,
+  JobsOptionsFormikTypes,
   LoginFormTypes,
   LoginFormikTypes,
+  NationalitiesOptionsFormTypes,
+  NationalitiesOptionsFormikTypes,
   NationalityFormTypes,
   NationalityFormikTypes,
   OwnerFormTypes,
   OwnerFormikTypes,
+  OwnersOptionsFormTypes,
+  OwnersOptionsFormikTypes,
   ResetPasswordFormTypes,
   ResetPasswordFormikTypes,
   UserFormTypes,
   UserFormikTypes,
+  UsersOptionsFormTypes,
+  UsersOptionsFormikTypes,
 } from "../types/forms.types";
 import useSubmitFunction from "./useSubmitFunction";
 
@@ -88,6 +118,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as JobFormikTypes;
+        case "jobsOptions":
+          return {
+            initialValues: JobsOptionsInitailValues,
+            validationSchema: JobsOptionsSchema,
+            onSubmit: (values: JobsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as JobsOptionsFormikTypes;
         case "editNationality":
         case "addNationality":
           return {
@@ -97,6 +135,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as NationalityFormikTypes;
+        case "nationalitiesOptions":
+          return {
+            initialValues: NationalitiesOptionsInitailValues,
+            validationSchema: NationalitiesOptionsSchema,
+            onSubmit: (values: NationalitiesOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as NationalitiesOptionsFormikTypes;
         case "editUser":
         case "addUser":
           return {
@@ -106,6 +152,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as UserFormikTypes;
+        case "usersOptions":
+          return {
+            initialValues: UsersOptionsInitailValues,
+            validationSchema: UsersOptionsSchema,
+            onSubmit: (values: UsersOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as UsersOptionsFormikTypes;
         case "editOwner":
         case "addOwner":
           return {
@@ -115,6 +169,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as OwnerFormikTypes;
+        case "ownersOptions":
+          return {
+            initialValues: OwnersOptionsInitailValues,
+            validationSchema: OwnersOptionsSchema,
+            onSubmit: (values: OwnersOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as OwnersOptionsFormikTypes;
         case "addCompany":
         case "editCompany":
           return {
@@ -124,6 +186,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as CompanyFormikTypes;
+        case "companiesOptions":
+          return {
+            initialValues: CompaniesOptionsInitailValues,
+            validationSchema: CompaniesOptionsSchema,
+            onSubmit: (values: CompaniesOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as CompaniesOptionsFormikTypes;
         default:
           return {
             initialValues: DeleteInitailValues,

@@ -18,6 +18,7 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
     handleOpenOwnerModal,
     handleOpenJobModal,
     handleOpenNationalityModal,
+    setEditableCompanyData,
   } = useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -37,6 +38,7 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
     } else if (newTitle === "edit company") {
       navigate(`${import.meta.env.VITE_EDIT_COMPANY_ROUTE}`);
     } else if (newTitle === "add company") {
+      setEditableCompanyData(null);
       navigate(`${import.meta.env.VITE_ADD_COMPANY_ROUTE}`);
     } else if (newTitle === "edit") {
       if (newVar === "owner") {

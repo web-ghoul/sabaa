@@ -4,6 +4,7 @@ import { styled } from "@mui/material";
 export const PrimaryTextArea = styled(TextareaAutosize)(({ theme }) => ({
   padding: "10px !important",
   fontSize: "16px",
+  minWidth: "300px !important",
   backgroundColor: theme.palette.common.white,
   boxShadow: theme.shadows["2"],
   borderRadius: "4px",

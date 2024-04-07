@@ -20,6 +20,10 @@ interface AppContextProps {
   setCompaniesPage: (page: number) => void;
   usersPage: number;
   setUsersPage: (page: number) => void;
+  queries: { [key: string]: string };
+  setQueries: (queries: { [key: string]: string }) => void;
+  handleAddQuery: (query: { [key: string]: string }) => void;
+  handleRemoveQuery: (queryName: string) => void;
   nationalitiesPage: number;
   setNationalitiesPage: (page: number) => void;
   handleCloseUserMenu: () => void;

@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
@@ -18,7 +18,7 @@ import { handleAlert } from "../../functions/handleAlert";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
 import { getOwners, reverseOwners } from "../../store/ownersSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import { OwnersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -27,47 +27,48 @@ import LoadingOwnersRow from "./LoadingOwnersRow";
 import OwnersTableMenu from "./OwnersTableMenu";
 import { OwnersTableRow } from "./OwnersTableRow";
 
-const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
-  const { handleOpenTableMenu, setOwnersPage } = useContext(AppContext);
+const OwnersTable = ({
+  data,
+  count,
+  noPagination,
+  isLoading,
+  fileIndex,
+}: OwnersTableTypes) => {
+  const { handleOpenTableMenu, handleAddQuery, queries } =
+    useContext(AppContext);
   const { setOwnerTabsValue } = useContext(TabsContext);
-  const [searchParams, setSearchParams] = useSearchParams();
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
   const dispatch = useDispatch<AppDispatch>();
-  const { ownersCounter } = useSelector(
-    (state: RootState) => state.ownersCounter
-  );
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-
-  const getAllParams = () => {
-    setOwnersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      handleAddQuery({ sort: "name_desc" });
       dispatch(reverseOwners());
+      setSearchParams({ ...queries, sort: "name_desc" });
     } else {
-      dispatch(getOwners({ ...getAllParams(), sort: "name_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "name_asc" });
+      handleAddQuery({ sort: "name_asc" });
+      const all = { ...queries, sort: "name_asc" };
+      dispatch(getOwners(all));
+      setSearchParams(all);
     }
   };
 
   const handleSortByCode = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      handleAddQuery({ sort: "code_desc" });
       dispatch(reverseOwners());
+      setSearchParams({ ...queries, sort: "code_desc" });
     } else {
-      dispatch(getOwners({ ...getAllParams(), sort: "code_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "code_asc" });
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getOwners(all));
+      setSearchParams(all);
     }
   };
 
@@ -103,7 +104,7 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={ownersCounter} variant={"owners"}>
+    <PrimaryTable count={count} variant={"owners"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
@@ -119,7 +120,7 @@ const OwnersTable = ({ data, isLoading, fileIndex }: OwnersTableTypes) => {
           )}
           <PrimaryTableCell align="center">
             <SortBox
-              title={"Person Code"}
+              title={mdScreen ? "Code" : "Person Code"}
               handling={handleSortByCode}
               asc={searchParams.get("sort") === "code_asc"}
               desc={searchParams.get("sort") === "code_desc"}

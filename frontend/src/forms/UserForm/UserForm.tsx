@@ -1,12 +1,12 @@
 import { Box, Paper } from "@mui/material";
 import { useContext, useMemo } from "react";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
-import Button from "../../components/Button/Button";
 
 const UserForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseUserModal } = useContext(FormsContext);
@@ -34,7 +34,7 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
           ac={"username"}
         />
         <Input formik={formik} label={"Email"} name={"email"} />
-        <Input formik={formik} label={"Phone"} type={"tel"} name={"phone"} />
+        <Input formik={formik} label={"Phone"} type={"number"} name={"phone"} />
         <Input
           formik={formik}
           label={"Role"}

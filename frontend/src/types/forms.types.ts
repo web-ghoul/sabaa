@@ -59,7 +59,10 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
-interface CompanyFormTypes extends CompanyTypes {}
+interface CompanyFormTypes extends CompanyTypes {
+  ownerId: string[];
+  proCode: string[];
+}
 
 interface CompanyFormikTypes {
   touched: CompanyFormTypes;
@@ -139,9 +142,10 @@ interface DeleteFormikTypes {
 
 interface OwnersOptionsFormTypes {
   search: string;
-  filterByDateOfBirth: string;
-  filterByNationality: string;
-  limit: string;
+  dobFrom: string;
+  dobTo: string;
+  nationality: string;
+  state: string;
 }
 
 interface OwnersOptionsFormikTypes {
@@ -189,9 +193,8 @@ interface NationalitiesOptionsFormikTypes {
 
 interface UsersOptionsFormTypes {
   search: string;
-  filterByRole: string;
-  filterByStatus: string;
-  limit: string;
+  role: string;
+  status: string;
 }
 
 interface UsersOptionsFormikTypes {
@@ -207,13 +210,14 @@ interface UsersOptionsFormikTypes {
 
 interface CompaniesOptionsFormTypes {
   search: string;
-  limit: string;
-  filterByState: string;
-  filterByStatus: string;
-  filterByMOLCategory: string;
-  filterByEstablishmentType: string;
-  filterByIMMGExpireDate: string;
-  filterByLicenseExpireDate: string;
+  state: string;
+  status: string;
+  molCategory: string;
+  establishmentType: string;
+  IMMGFrom: string;
+  IMMGTo: string;
+  licenseFrom: string;
+  licenseTo: string;
 }
 
 interface CompaniesOptionsFormikTypes {
@@ -299,6 +303,7 @@ export type {
   OwnerFormikTypes,
   OwnerFormTypes,
   OwnersOptionsFormikTypes,
+  OwnersOptionsFormTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
   UserFormikTypes,

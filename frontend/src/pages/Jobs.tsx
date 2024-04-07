@@ -1,17 +1,25 @@
 import { Typography } from "@mui/material";
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { RootState } from "../store/store";
+import { getJobs } from "../store/jobsSlice";
+import { AppDispatch, RootState } from "../store/store";
 import JobsTable from "../tables/JobsTable/JobsTable";
 
 const Jobs = () => {
   const { isLoading, jobs } = useSelector((state: RootState) => state.jobs);
   const { pageContainerClasses } = useContext(AppContext);
+  const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
+  const { queries } = useContext(AppContext);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getJobs(queries));
+  }, [queries, dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
@@ -21,7 +29,7 @@ const Jobs = () => {
           </Typography>
         </BreadCrumbs>
         <Forms type={"jobsOptions"} />
-        <JobsTable data={jobs} isLoading={isLoading} />
+        <JobsTable data={jobs} isLoading={isLoading} count={jobsCounter} />
       </PrimaryContainer>
     </PrimaryBox>
   );

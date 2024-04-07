@@ -26,7 +26,8 @@ interface OwnersArgsTypes {
   search?: string;
   sort?: string;
   limit?: number;
-  date?: string;
+  dobTo?: string;
+  dobFrom?: string;
   state?: string;
   nationality?: string;
 }
@@ -71,6 +72,10 @@ interface CompaniesArgsTypes {
   status?: string;
   molCategory?: string;
   establishmentType?: string;
+  IMMGFrom?: string;
+  IMMGTo?: string;
+  licenseFrom?: string;
+  licenseTo?: string;
 }
 
 interface JobsArgsTypes {
@@ -141,8 +146,8 @@ interface CompanyTypes {
   state: string;
   address: string;
   phone: string;
-  proCode: string[];
-  ownerId: string[];
+  proCode: OwnerTypes[] | string[];
+  ownerId: OwnerTypes[] | string[];
   licenseNo: string;
   immgCardNo: string;
   immgCardExpiry: Date;
