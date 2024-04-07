@@ -30,49 +30,66 @@ export class CompanyService {
   }
 
   findAll(limit: number, page: number, search:string,fields:string[],sortType:string,id:string,filterQuery:any): Promise<Company[]> {  
-    const projection: any = {};
-    if (fields && fields.length > 0) {
-        fields.forEach(field => {
-            projection[field] = 1; // Include the field
-        });
-    }
-    if(id)
+    try{
+      const projection: any = {};
+      if (fields && fields.length > 0) {
+          fields.forEach(field => {
+              projection[field] = 1; // Include the field
+          });
+      }
+      if(id)
+      {
+        return this.companyModel.find({
+          $nor: [
+              { ownerId: id },
+              { proCode: id }
+          ]
+      }).select(projection).limit(limit).skip(page * limit);
+      }
+      const sort:any = {}
+      if(sortType == "name_asc")
+      {
+        sort["name"] = 1; 
+      }else if(sortType == "code_asc")
+      {
+        sort["molCode"] = 1; 
+      }else
+      {
+        sort["createdAt"] = -1; 
+      }
+      
+      const query = {$or: [
+        { name: { $regex: new RegExp(search, "i") } },
+        { molCode: { $regex: new RegExp(search, "i") } },
+        { immgCardNo: { $regex: new RegExp(search, "i") } },
+        { licenseNo: { $regex: new RegExp(search, "i") } }
+      ]}
+  
+      if(filterQuery?.licenseFrom != '' && filterQuery?.licenseTo == '')
+      {
+        filterQuery.licenseTo = new Date();
+      }
+      if(filterQuery?.IMMGFrom != '' && filterQuery?.IMMGTo == '')
+      {
+        filterQuery.IMMGTo = new Date();
+      }
+  
+      filterQuery?.state != '' ? query["state"] = filterQuery?.state : undefined;
+      filterQuery?.status != '' ? query["status"] = filterQuery?.status : undefined;
+      filterQuery?.establishmentType != '' ? query["establishmentType"] = filterQuery?.establishmentType : undefined;
+      filterQuery?.molCategory != '' ? query["molCategory"] = filterQuery?.molCategory : undefined;
+      filterQuery?.licenseFrom != '' ? query["licenseExpiryDate"] = { "$gte":filterQuery?.licenseFrom , "$lte":filterQuery?.licenseTo }  : undefined;
+      filterQuery?.IMMGFrom != '' ? query["immgCardExpiry"] = { "$gte":filterQuery?.IMMGFrom , "$lte":filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date()} : undefined;
+      
+      console.log(query);
+      
+      
+      return this.companyModel.find(query).select(projection).limit(limit).skip(page * limit).sort(sort);
+    }catch(err)
     {
-      return this.companyModel.find({
-        $nor: [
-            { ownerId: id },
-            { proCode: id }
-        ]
-    }).select(projection).limit(limit).skip(page * limit);
-    }
-    const sort:any = {}
-    if(sortType == "name_asc")
-    {
-      sort["name"] = 1; 
-    }else if(sortType == "code_asc")
-    {
-      sort["molCode"] = 1; 
-    }else
-    {
-      sort["createdAt"] = -1; 
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
     
-    const query = {$or: [
-      { name: { $regex: new RegExp(search, "i") } },
-      { molCode: { $regex: new RegExp(search, "i") } },
-      { immgCardNo: { $regex: new RegExp(search, "i") } },
-      { licenseNo: { $regex: new RegExp(search, "i") } }
-    ]}
-
-    filterQuery?.state != '' ? query["state"] = filterQuery?.state : undefined;
-    filterQuery?.status != '' ? query["status"] = filterQuery?.status : undefined;
-    filterQuery?.establishmentType != '' ? query["establishmentType"] = filterQuery?.establishmentType : undefined;
-    filterQuery?.molCategory != '' ? query["molCategory"] = filterQuery?.molCategory : undefined;
-    filterQuery?.licenseFrom != '' ? query["licenseExpiryDate"] = { "$gte":filterQuery?.licenseFrom , "$lte":filterQuery?.licenseTo }  : undefined;
-    filterQuery?.IMMGFrom != '' ? query["immgCardExpiry"] = { "$gte":filterQuery?.IMMGFrom , "$lte":filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date()} : undefined;
-    
-    
-    return this.companyModel.find(query).select(projection).limit(limit).skip(page * limit).sort(sort);
   }
 
   findOne(id: string) {
