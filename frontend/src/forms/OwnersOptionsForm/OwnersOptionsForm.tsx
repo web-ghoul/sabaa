@@ -1,15 +1,17 @@
-import { FilterAltRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  FilterAltRounded,
+  FilterListRounded,
+} from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { handleAlert } from "../../functions/handleAlert";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
-import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -22,88 +24,59 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { setSearchForOwners, searchForOwners } = useContext(FormsContext);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { setOwnersPage } = useContext(AppContext);
+  const { handleOpenOwnerModal } = useContext(FormsContext);
+  const [, setSearchParams] = useSearchParams();
+  const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
-  const [params, setParams] = useState<{ [key: string]: string }>({});
   const [handledNationalities, sethandledNationalities] = useState<string[]>(
     []
   );
 
-  const getAllParams = () => {
-    setOwnersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setParams(allParams);
-    return allParams;
-  };
-
-  const setAllParams = () => {
-    const allParams = getAllParams();
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
-      allParams.date;
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
-      allParams.nationality;
-    (formik as unknown as OwnersOptionsFormikTypes).values.limit =
-      allParams.limit;
-    dispatch(getOwners(allParams));
-  };
-
   const handleSearch = (value: string) => {
-    dispatch(getOwners({ ...params, search: value }));
-    setSearchForOwners(value);
-  };
-
-  const handleLimitPage = (value: string) => {
-    if (value) {
-      dispatch(
-        getOwners({ ...params, limit: +value, search: searchForOwners })
-      );
-      setSearchParams({ ...getAllParams(), limit: value });
-    }
+    handleAddQuery({ search: value });
   };
 
   const handleFilterByNationality = (value: string) => {
-    if (value) {
-      dispatch(
-        getOwners({ ...params, nationality: value, search: searchForOwners })
-      );
-      setSearchParams({ ...getAllParams(), nationality: value });
-    }
+    handleAddQuery({ nationality: value });
   };
 
   const handleFilterByState = (value: string) => {
-    if (value) {
-      dispatch(getOwners({ ...params, state: value, search: searchForOwners }));
-      setSearchParams({ ...getAllParams(), state: value });
-    }
+    handleAddQuery({ state: value });
   };
 
-  const handleFilterByDateOfBirth = (value: string) => {
-    if (value) {
-      dispatch(getOwners({ ...params, date: value, search: searchForOwners }));
-      setSearchParams({ ...getAllParams(), date: value });
-    }
+  const handleFilterByDateOfBirthFrom = (value: string) => {
+    handleAddQuery({ dobFrom: value });
+  };
+
+  const handleFilterByDateOfBirthTo = (value: string) => {
+    handleAddQuery({ dobTo: value });
+  };
+
+  const handleFilter = () => {
+    setSearchParams(queries);
+    dispatch(getOwners(queries));
   };
 
   const handleResetAll = () => {
-    setSearchForOwners("");
-    setSearchParams({});
+    navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
     dispatch(getOwners({}));
-    setParams({});
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByDateOfBirth =
-      "";
-    (formik as unknown as OwnersOptionsFormikTypes).values.filterByNationality =
-      "";
-    (formik as unknown as OwnersOptionsFormikTypes).values.limit = "";
+    setQueries({});
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+
+  (formik as unknown as OwnersOptionsFormikTypes).values.dobFrom =
+    queries.dobFrom || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.dobTo =
+    queries.dobTo || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.state =
+    queries.state || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.nationality =
+    queries.nationality || "";
+  (formik as unknown as OwnersOptionsFormikTypes).values.search =
+    queries.search || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -112,98 +85,81 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       );
       sethandledNationalities(nats);
     } else {
-      dispatch(getNationalities({}));
+      dispatch(getNationalities({ limit: -1 }));
     }
   }, [dispatch, nationalities]);
-
-  useEffect(() => {
-    setAllParams();
-  }, []);
-
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
     >
       <Box
-        className={`grid justify-stretch items-center gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
+        className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
       >
+        <Input
+          label={"Search Name, Person Code..."}
+          name={"search"}
+          type={"search"}
+          formik={formik}
+          change={handleSearch}
+        />
         <Box
-          className={`flex justify-start items-center gap-4 lg:order-1 xs:grid xs:justify-stretch md:gap-3 sm:!gap-2`}
+          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
-          <Input
-            label={"Search For Owners..."}
-            name={"search"}
-            type={"search"}
-            formik={formik}
-            change={handleSearch}
+          <Button
+            title={"Add Owner"}
+            icon={<AddRounded />}
+            handling={() => handleOpenOwnerModal("addOwner")}
           />
-          <Input
-            label={"Entries per page"}
-            name={"limit"}
-            formik={formik}
-            change={handleLimitPage}
-            options={["5", "10", "20", "30"]}
-            select
-          />
-        </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
-        >
-          <PrimaryButton
-            onClick={() => navigate(`${import.meta.env.VITE_ADD_OWNER_ROUTE}`)}
-          >
-            Add Owner
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() =>
+          <Button
+            title={"Upload Excel"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            handling={() =>
               navigate(`${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`)
             }
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Upload Excel</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel</Typography>
-          </PrimaryButton>
-          <PrimaryButton
-            className={`!bg-excel hover:!bg-green-950`}
-            onClick={() => handleAlert({ msg: "Under Development" })}
-          >
-            <RiFileExcel2Fill />
-            <Typography variant="button">Excel All</Typography>
-          </PrimaryButton>
+          />
+          <Button
+            title={"Excel"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            variant={"under development"}
+          />
+          <Button
+            title={"Excel All"}
+            icon={<RiFileExcel2Fill />}
+            bg={"excel"}
+            variant={"under development"}
+          />
         </Box>
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
           className={`flex justify-end items-center gap-4 md:gap-3 sm:!gap-2 md:order-1`}
         >
-          <PrimaryIconButton
-            className={`!bg-green-500 hover:!bg-green-600`}
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <FilterAltRounded />
-          </PrimaryIconButton>
-          <PrimaryButton
-            onClick={handleResetAll}
-            className="!bg-red-500 hover:!bg-red-600"
-          >
-            Reset All
-          </PrimaryButton>
+          <Button
+            bg={"!bg-green-500"}
+            icon={<FilterAltRounded />}
+            handling={() => setShowFilters(!showFilters)}
+          />
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
+          />
+          <Button
+            bg={"!bg-red-500"}
+            title={"Reset All"}
+            handling={handleResetAll}
+          />
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex-wrap  ${
+          className={`flex justify-start items-end gap-4 transition-all md:gap-3 sm:!gap-2 flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
           <Input
             label={"Filter By Nationality"}
-            name={"filterByNationality"}
+            name={"nationality"}
             formik={formik}
             change={handleFilterByNationality}
             options={handledNationalities}
@@ -211,20 +167,30 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Input
             label={"Filter By State"}
-            name={"filterByState"}
+            name={"state"}
             formik={formik}
             change={handleFilterByState}
             options={["dubai"]}
             select
           />
-          <Box className={`grid justify-stretch items-center gap-2 w-full`}>
-            <Typography variant="h6">Filter By Date of Birth</Typography>
-            <Input
-              name={"filterByDateOfBirth"}
-              type={"date"}
-              formik={formik}
-              change={handleFilterByDateOfBirth}
-            />
+          <Box className={`grid gap-4 md:gap-3 sm:!gap-2`}>
+            <Typography variant="h6">Filter By Date Of Birth</Typography>
+            <Box className={`flex gap-4 md:gap-3 sm:!gap-2 flex-wrap`}>
+              <Input
+                name={"dobFrom"}
+                label={"From"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthFrom}
+              />
+              <Input
+                name={"dobTo"}
+                label={"To"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthTo}
+              />
+            </Box>
           </Box>
         </Box>
       </Box>

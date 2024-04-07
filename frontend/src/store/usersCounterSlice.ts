@@ -15,7 +15,7 @@ export const getUsersCounter = createAsyncThunk(
         },
       }
     );
-    return res.data.count;
+    return res.data;
   }
 );
 
@@ -34,7 +34,11 @@ export const usersCounterSlice = createSlice({
     });
     builder.addCase(getUsersCounter.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.usersCounter = payload;
+      let total = 0;
+      payload.map((role: { count: number }) => {
+        total += role.count;
+      });
+      state.usersCounter = total;
     });
     builder.addCase(getUsersCounter.rejected, (_, action) => {
       if (action.payload) {

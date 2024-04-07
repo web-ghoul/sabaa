@@ -1,203 +1,226 @@
 import { FormikProps, useFormik } from "formik";
+import { useMemo } from "react";
 import {
-  AddCompanyInitailValues,
-  AddCompanySchema,
-} from "../forms/AddCompanyForm/AddCompanySchema";
-import {
-  AddJobInitailValues,
-  AddJobSchema,
-} from "../forms/AddJobForm/AddJobSchema";
-import {
-  AddNationalityInitailValues,
-  AddNationalitySchema,
-} from "../forms/AddNationalityForm/AddNationalitySchema";
-import {
-  AddOwnerInitailValues,
-  AddOwnerSchema,
-} from "../forms/AddOwnerForm/AddOwnerSchema";
-import {
-  AddUserInitailValues,
-  AddUserSchema,
-} from "../forms/AddUserForm/AddUserSchema";
+  CompaniesOptionsInitailValues,
+  CompaniesOptionsSchema,
+} from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
+import useCompanySchema from "../forms/CompanyForm/useEditCompanySchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
-import useEditCompanySchema from "../forms/EditCompanyForm/useEditCompanySchema";
-import useEditJobSchema from "../forms/EditJobForm/useEditJobSchema";
-import useEditNationalitySchema from "../forms/EditNationalityForm/useEditNationalitySchema";
-import useEditOwnerSchema from "../forms/EditOwnerForm/useEditOwnerSchema";
-import useEditUserSchema from "../forms/EditUserForm/useEditUserSchema";
 import {
   ForgotPasswordInitailValues,
   ForgotPasswordSchema,
 } from "../forms/ForgotPasswordForm/ForgotPasswordSchema";
+import useJobSchema from "../forms/JobForm/useJobSchema";
+import {
+  JobsOptionsInitailValues,
+  JobsOptionsSchema,
+} from "../forms/JobsOptionsForm/JobsOptionsSchema";
 import {
   LoginInitailValues,
   LoginSchema,
 } from "../forms/LoginForm/LoginSchema";
 import {
+  NationalitiesOptionsInitailValues,
+  NationalitiesOptionsSchema,
+} from "../forms/NationalitiesOptionsForm/NationalitiesOptionsSchema";
+import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
+import useOwnerSchema from "../forms/OwnerForm/useOwnerSchema";
+import {
+  OwnersOptionsInitailValues,
+  OwnersOptionsSchema,
+} from "../forms/OwnersOptionsForm/OwnersOptionsSchema";
+import {
   ResetPasswordInitailValues,
   ResetPasswordSchema,
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
+import useUserSchema from "../forms/UserForm/useUserSchema";
 import {
-  AddCompanyFormTypes,
-  AddCompanyFormikTypes,
-  AddJobFormTypes,
-  AddJobFormikTypes,
-  AddNationalityFormTypes,
-  AddNationalityFormikTypes,
-  AddOwnerFormTypes,
-  AddOwnerFormikTypes,
-  AddUserFormTypes,
-  AddUserFormikTypes,
+  UsersOptionsInitailValues,
+  UsersOptionsSchema,
+} from "../forms/UsersOptionsForm/UsersOptionsSchema";
+import {
   AllFormiksTypes,
   AllFormsTypes,
+  CompaniesOptionsFormTypes,
+  CompaniesOptionsFormikTypes,
+  CompanyFormTypes,
+  CompanyFormikTypes,
   DeleteFormTypes,
   DeleteFormikTypes,
-  EditCompanyFormTypes,
-  EditCompanyFormikTypes,
-  EditJobFormTypes,
-  EditJobFormikTypes,
-  EditNationalityFormTypes,
-  EditNationalityFormikTypes,
-  EditOwnerFormTypes,
-  EditOwnerFormikTypes,
-  EditUserFormTypes,
-  EditUserFormikTypes,
   ForgotPasswordFormTypes,
   ForgotPasswordFormikTypes,
+  JobFormTypes,
+  JobFormikTypes,
+  JobsOptionsFormTypes,
+  JobsOptionsFormikTypes,
   LoginFormTypes,
   LoginFormikTypes,
+  NationalitiesOptionsFormTypes,
+  NationalitiesOptionsFormikTypes,
+  NationalityFormTypes,
+  NationalityFormikTypes,
+  OwnerFormTypes,
+  OwnerFormikTypes,
+  OwnersOptionsFormTypes,
+  OwnersOptionsFormikTypes,
   ResetPasswordFormTypes,
   ResetPasswordFormikTypes,
+  UserFormTypes,
+  UserFormikTypes,
+  UsersOptionsFormTypes,
+  UsersOptionsFormikTypes,
 } from "../types/forms.types";
 import useSubmitFunction from "./useSubmitFunction";
 
 const useSubmitForm = (type: string) => {
   const { handleSubmit } = useSubmitFunction(type);
-  const { EditJobInitailValues, EditJobSchema } = useEditJobSchema();
-  const { EditNationalityInitailValues, EditNationalitySchema } =
-    useEditNationalitySchema();
-  const { EditUserInitailValues, EditUserSchema } = useEditUserSchema();
-  const { EditOwnerInitailValues, EditOwnerSchema } = useEditOwnerSchema();
+  const { JobInitailValues, JobSchema } = useJobSchema();
+  const { NationalityInitailValues, NationalitySchema } =
+    useNationalitySchema();
+  const { UserInitailValues, UserSchema } = useUserSchema();
+  const { OwnerInitailValues, OwnerSchema } = useOwnerSchema();
   const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
-  const { EditCompanyInitailValues, EditCompanySchema } =
-    useEditCompanySchema();
+  const { CompanyInitailValues, CompanySchema } = useCompanySchema();
 
-  const chosenFormik = (): AllFormiksTypes => {
-    switch (type) {
-      case "forgotPassword":
-        return {
-          initialValues: ForgotPasswordInitailValues,
-          validationSchema: ForgotPasswordSchema,
-          onSubmit: (values: ForgotPasswordFormTypes) => {
-            handleSubmit(values);
-          },
-        } as ForgotPasswordFormikTypes;
-      case "resetPassword":
-        return {
-          initialValues: ResetPasswordInitailValues,
-          validationSchema: ResetPasswordSchema,
-          onSubmit: (values: ResetPasswordFormTypes) => {
-            handleSubmit(values);
-          },
-        } as ResetPasswordFormikTypes;
-      case "login":
-        return {
-          initialValues: LoginInitailValues,
-          validationSchema: LoginSchema,
-          onSubmit: (values: LoginFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as LoginFormikTypes;
-      case "addJob":
-        return {
-          initialValues: AddJobInitailValues,
-          validationSchema: AddJobSchema,
-          onSubmit: (values: AddJobFormTypes) => {
-            handleSubmit(values);
-          },
-        } as AddJobFormikTypes;
-      case "editJob":
-        return {
-          initialValues: EditJobInitailValues,
-          validationSchema: EditJobSchema,
-          onSubmit: (values: EditJobFormTypes) => {
-            handleSubmit(values);
-          },
-        } as EditJobFormikTypes;
-      case "addNationality":
-        return {
-          initialValues: AddNationalityInitailValues,
-          validationSchema: AddNationalitySchema,
-          onSubmit: (values: AddNationalityFormTypes) => {
-            handleSubmit(values);
-          },
-        } as AddNationalityFormikTypes;
-      case "editNationality":
-        return {
-          initialValues: EditNationalityInitailValues,
-          validationSchema: EditNationalitySchema,
-          onSubmit: (values: EditNationalityFormTypes) => {
-            handleSubmit(values);
-          },
-        } as EditNationalityFormikTypes;
-      case "addUser":
-        return {
-          initialValues: AddUserInitailValues,
-          validationSchema: AddUserSchema,
-          onSubmit: (values: AddUserFormTypes) => {
-            handleSubmit(values);
-          },
-        } as AddUserFormikTypes;
-      case "editUser":
-        return {
-          initialValues: EditUserInitailValues,
-          validationSchema: EditUserSchema,
-          onSubmit: (values: EditUserFormTypes) => {
-            handleSubmit(values);
-          },
-        } as EditUserFormikTypes;
-      case "addOwner":
-        return {
-          initialValues: AddOwnerInitailValues,
-          validationSchema: AddOwnerSchema,
-          onSubmit: (values: AddOwnerFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as AddOwnerFormikTypes;
-      case "editOwner":
-        return {
-          initialValues: EditOwnerInitailValues,
-          validationSchema: EditOwnerSchema,
-          onSubmit: (values: EditOwnerFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as EditOwnerFormikTypes;
-      case "addCompany":
-        return {
-          initialValues: AddCompanyInitailValues,
-          validationSchema: AddCompanySchema,
-          onSubmit: (values: AddCompanyFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as AddCompanyFormikTypes;
-      case "editCompany":
-        return {
-          initialValues: EditCompanyInitailValues,
-          validationSchema: EditCompanySchema,
-          onSubmit: (values: EditCompanyFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as EditCompanyFormikTypes;
-      default:
-        return {
-          initialValues: DeleteInitailValues,
-          validationSchema: DeleteSchema,
-          onSubmit: (values: DeleteFormTypes) => {
-            handleSubmit(values);
-          },
-        } as unknown as DeleteFormikTypes;
-    }
-  };
+  const chosenFormik = useMemo(
+    () => (): AllFormiksTypes => {
+      switch (type) {
+        case "forgotPassword":
+          return {
+            initialValues: ForgotPasswordInitailValues,
+            validationSchema: ForgotPasswordSchema,
+            onSubmit: (values: ForgotPasswordFormTypes) => {
+              handleSubmit(values);
+            },
+          } as ForgotPasswordFormikTypes;
+        case "resetPassword":
+          return {
+            initialValues: ResetPasswordInitailValues,
+            validationSchema: ResetPasswordSchema,
+            onSubmit: (values: ResetPasswordFormTypes) => {
+              handleSubmit(values);
+            },
+          } as ResetPasswordFormikTypes;
+        case "login":
+          return {
+            initialValues: LoginInitailValues,
+            validationSchema: LoginSchema,
+            onSubmit: (values: LoginFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as LoginFormikTypes;
+        case "editJob":
+        case "addJob":
+          return {
+            initialValues: JobInitailValues,
+            validationSchema: JobSchema,
+            onSubmit: (values: JobFormTypes) => {
+              handleSubmit(values);
+            },
+          } as JobFormikTypes;
+        case "jobsOptions":
+          return {
+            initialValues: JobsOptionsInitailValues,
+            validationSchema: JobsOptionsSchema,
+            onSubmit: (values: JobsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as JobsOptionsFormikTypes;
+        case "editNationality":
+        case "addNationality":
+          return {
+            initialValues: NationalityInitailValues,
+            validationSchema: NationalitySchema,
+            onSubmit: (values: NationalityFormTypes) => {
+              handleSubmit(values);
+            },
+          } as NationalityFormikTypes;
+        case "nationalitiesOptions":
+          return {
+            initialValues: NationalitiesOptionsInitailValues,
+            validationSchema: NationalitiesOptionsSchema,
+            onSubmit: (values: NationalitiesOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as NationalitiesOptionsFormikTypes;
+        case "editUser":
+        case "addUser":
+          return {
+            initialValues: UserInitailValues,
+            validationSchema: UserSchema,
+            onSubmit: (values: UserFormTypes) => {
+              handleSubmit(values);
+            },
+          } as UserFormikTypes;
+        case "usersOptions":
+          return {
+            initialValues: UsersOptionsInitailValues,
+            validationSchema: UsersOptionsSchema,
+            onSubmit: (values: UsersOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as UsersOptionsFormikTypes;
+        case "editOwner":
+        case "addOwner":
+          return {
+            initialValues: OwnerInitailValues,
+            validationSchema: OwnerSchema,
+            onSubmit: (values: OwnerFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as OwnerFormikTypes;
+        case "ownersOptions":
+          return {
+            initialValues: OwnersOptionsInitailValues,
+            validationSchema: OwnersOptionsSchema,
+            onSubmit: (values: OwnersOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as OwnersOptionsFormikTypes;
+        case "addCompany":
+        case "editCompany":
+          return {
+            initialValues: CompanyInitailValues,
+            validationSchema: CompanySchema,
+            onSubmit: (values: CompanyFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as CompanyFormikTypes;
+        case "companiesOptions":
+          return {
+            initialValues: CompaniesOptionsInitailValues,
+            validationSchema: CompaniesOptionsSchema,
+            onSubmit: (values: CompaniesOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as CompaniesOptionsFormikTypes;
+        default:
+          return {
+            initialValues: DeleteInitailValues,
+            validationSchema: DeleteSchema,
+            onSubmit: (values: DeleteFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as DeleteFormikTypes;
+      }
+    },
+    [
+      CompanyInitailValues,
+      CompanySchema,
+      DeleteInitailValues,
+      DeleteSchema,
+      JobInitailValues,
+      JobSchema,
+      NationalityInitailValues,
+      NationalitySchema,
+      OwnerInitailValues,
+      OwnerSchema,
+      UserInitailValues,
+      UserSchema,
+      handleSubmit,
+      type,
+    ]
+  );
 
   return {
     formik: useFormik<AllFormsTypes>(

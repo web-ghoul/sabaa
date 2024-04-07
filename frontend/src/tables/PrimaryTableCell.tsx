@@ -11,4 +11,16 @@ export const PrimaryTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     padding: "6px 16px",
   },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 13,
+  },
+  [theme.breakpoints.down("md")]: {
+    fontSize: 12,
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 11,
+  },
+  [theme.breakpoints.down("xs")]: {
+    fontSize: 10,
+  },
 }));

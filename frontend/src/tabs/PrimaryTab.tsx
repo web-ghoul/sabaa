@@ -44,7 +44,7 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
 
   return (
     <Box
-      className={`grid justify-stretch items-start grid-cols-[20%,1fr] gap-8 md:gap-6 sm:!gap-3 md:grid-cols-1`}
+      className={`grid justify-stretch items-start grid-cols-[20%,1fr] gap-4 md:gap-3 sm:!gap-2 md:grid-cols-1`}
     >
       <Paper
         className={`w-full !rounded-lg !sticky md:!relative top-[90px] md:top-0`}

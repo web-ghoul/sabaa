@@ -2,14 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
-import AddOwner from "./pages/AddOwner.tsx";
-import AddUser from "./pages/AddUser.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
-import EditOwner from "./pages/EditOwner.tsx";
-import EditUser from "./pages/EditUser.tsx";
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
@@ -65,28 +61,12 @@ export const router = createBrowserRouter([
         element: <User />,
       },
       {
-        path: "/users/add",
-        element: <AddUser />,
-      },
-      {
-        path: "/users/:id/edit",
-        element: <EditUser />,
-      },
-      {
         path: "/owners",
         element: <Owners />,
       },
       {
         path: "/owners/:id",
         element: <Owner />,
-      },
-      {
-        path: "/owners/add",
-        element: <AddOwner />,
-      },
-      {
-        path: "/owners/:id/edit",
-        element: <EditOwner />,
       },
       {
         path: "/owners/upload",

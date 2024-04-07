@@ -2,8 +2,8 @@ import {
   AdminPanelSettingsRounded,
   KeyboardArrowDownRounded,
 } from "@mui/icons-material";
-import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
+import { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { AppContext } from "../../contexts/AppContext";
 import { UserBoxTypes } from "../../types/components.types";
@@ -15,29 +15,20 @@ const UserBox = ({
   menu,
   head,
   size,
+  res,
 }: UserBoxTypes) => {
   const { handleOpenUserMenu, defaultAvatar } = useContext(AppContext);
-  const [handledUsername, setHandledUsername] = useState(username);
-  const mdScreen = useMediaQuery("(max-width:992px)");
-  const smScreen = useMediaQuery("(max-width:768px)");
-
-  useEffect(() => {
-    if (mdScreen) {
-      if (username.length > 30) {
-        setHandledUsername(username.slice(0, 20) + "...");
-      }
-    }
-    if (smScreen) {
-      if (username.length > 20) {
-        setHandledUsername(username.slice(0, 15) + "...");
-      }
-    }
-  }, [mdScreen, smScreen, handledUsername, username]);
 
   return (
-    <Box className={`flex justify-start items-center gap-2 sm:!gap-1`}>
+    <Box
+      className={`flex justify-start items-center gap-2 sm:!gap-1 ${
+        res && "sm:grid sm:justify-center"
+      }`}
+    >
       <Box
         className={`flex justify-center items-center overflow-hidden rounded-full ${
+          res && "sm:m-auto"
+        } ${
           size === "3xlarge"
             ? "w-[110px] h-[110px] md:w-[90px] md:h-[90px] sm:!w-[75px] sm:!h-[75px]"
             : size === "2xlarge"
@@ -61,9 +52,7 @@ const UserBox = ({
         />
       </Box>
       <Box className={`grid justify-start items-center gap-1`}>
-        <Typography variant={head || "h6"}>
-          {handledUsername.toUpperCase()}
-        </Typography>
+        <Typography variant={head || "h6"}>{username}</Typography>
         {role && (
           <Box className={`flex justify-start items-center gap-1`}>
             <AdminPanelSettingsRounded

@@ -7,19 +7,20 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { TabsContext } from "../../contexts/TabsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getCompaniesCounter } from "../../store/companiesCounterSlice";
 import { getCompanies, reverseCompanies } from "../../store/companiesSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import { CompaniesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -30,55 +31,55 @@ import LoadingCompaniesRow from "./LoadingCompaniesRow";
 
 const CompaniesTable = ({
   data,
+  count,
   isLoading,
   fileIndex,
+  noPagination,
 }: CompaniesTableTypes) => {
-  const { handleOpenTableMenu, setCompaniesPage } = useContext(AppContext);
+  const { handleOpenTableMenu, queries, handleAddQuery } =
+    useContext(AppContext);
+  const { setCompanyTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
-  const { companiesCounter } = useSelector(
-    (state: RootState) => state.companiesCounter
-  );
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const [sheet, setSheet] = useState(false);
 
-  const getAllParams = () => {
-    setCompaniesPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
-
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      handleAddQuery({ sort: "name_desc" });
       dispatch(reverseCompanies());
+      setSearchParams({ ...queries, sort: "name_desc" });
     } else {
-      dispatch(getCompanies({ ...getAllParams(), sort: "name_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "name_asc" });
+      handleAddQuery({ sort: "name_asc" });
+      const all = { ...queries, sort: "name_asc" };
+      dispatch(getCompanies(all));
+      setSearchParams(all);
     }
   };
 
   const handleSortByCode = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      handleAddQuery({ sort: "code_desc" });
       dispatch(reverseCompanies());
+      setSearchParams({ ...queries, sort: "code_desc" });
     } else {
-      dispatch(getCompanies({ ...getAllParams(), sort: "code_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "code_asc" });
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getCompanies(all));
+      setSearchParams(all);
     }
   };
 
   const handleView = () => {
     if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
       handleAlert({ msg: "Under Development" });
+    } else {
+      setCompanyTabsValue(0);
     }
   };
 
@@ -105,7 +106,11 @@ const CompaniesTable = ({
     dispatch(getCompaniesCounter());
   }, [dispatch]);
   return (
-    <PrimaryTable count={companiesCounter} variant={"companies"}>
+    <PrimaryTable
+      count={count}
+      variant={"companies"}
+      noPagination={noPagination}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -121,7 +126,7 @@ const CompaniesTable = ({
           )}
           <PrimaryTableCell align="center">
             <SortBox
-              title={"MOL Code"}
+              title={mdScreen ? "MOL" : "MOL Code"}
               handling={handleSortByCode}
               asc={searchParams.get("sort") === "code_asc"}
               desc={searchParams.get("sort") === "code_desc"}

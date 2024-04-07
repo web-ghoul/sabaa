@@ -11,7 +11,11 @@ export const getJobs = createAsyncThunk(
       `${import.meta.env.VITE_SERVER_URL}/job-title?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
-        args?.limit || import.meta.env.VITE_LIMIT_PAGES
+        args?.limit
+          ? args.limit === -1
+            ? ""
+            : args.limit
+          : import.meta.env.VITE_LIMIT_PAGES
       }&page=${args?.page || 0}`,
       {
         headers: {

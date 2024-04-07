@@ -1,106 +1,109 @@
-import { CircularProgress } from "@mui/material";
-import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
-import { SyntheticEvent, useEffect } from "react";
-import { PrimaryAutoComplete } from "../../mui/autoCompletes/PrimaryAutoComplete";
+import { Autocomplete, Box, Typography } from "@mui/material";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { AutoCompleteSearchTypes } from "../../types/components.types";
 import {
-  AddCompanyFormikTypes,
-  AddOwnerFormikTypes,
+  AllFormiksTypes,
+  CompanyFormikTypes,
+  OwnerFormikTypes,
 } from "../../types/forms.types";
 import { NationalityTypes, OwnerTypes } from "../../types/store.types";
 
 export default function AutoCompleteSearch({
   label,
-  loading,
   multiple,
   options,
   name,
   formik,
 }: AutoCompleteSearchTypes) {
+  const error =
+    formik.touched[name as keyof AllFormiksTypes] &&
+    Boolean(formik.errors[name as keyof AllFormiksTypes]);
+  const helperText = error
+    ? (formik.errors[name as keyof AllFormiksTypes] as string)
+    : undefined;
+  const [values, setValues] = useState(options);
+
   const handleChange = (_: SyntheticEvent, newValue: unknown) => {
     if (name === "nationality") {
       const nationality = newValue as NationalityTypes;
-      (formik as unknown as AddOwnerFormikTypes).values.nationality =
-        nationality.nationality;
-      (formik as unknown as AddOwnerFormikTypes).values.idNationality =
-        nationality._id;
-    } else if (name === "ownerId") {
+      formik.setFieldValue(name, nationality.nationality);
+      formik.setFieldValue("idNationality", nationality._id);
+    } else {
       const owners = newValue as OwnerTypes[];
-      (formik as unknown as AddCompanyFormikTypes).values.ownerId = owners.map(
-        (owner) => owner._id
-      );
-    } else if (name === "proCode") {
-      const owners = newValue as OwnerTypes[];
-      (formik as unknown as AddCompanyFormikTypes).values.ownerId = owners.map(
-        (owner) => owner._id
-      );
+      const IDs = owners.map((owner: OwnerTypes) => owner._id);
+      formik.setFieldValue(name, IDs);
     }
   };
 
-  useEffect(() => {
-    if (options) {
-      for (let i = 0; i < options.length; i++) {
-        if (name === "nationality") {
-          if (
-            options[i]._id ===
-            (formik as unknown as AddOwnerFormikTypes).values.idNationality
-          ) {
-            break;
-          }
-        } else if (name === "ownerId") {
-          if (
-            (
-              formik as unknown as AddCompanyFormikTypes
-            ).values.ownerId.includes(options[i]._id)
-          ) {
-            break;
-          }
-        }
-      }
+  const handleOptionLabel = (option: NationalityTypes) => {
+    if (name === "nationality") {
+      return `${(option as NationalityTypes).nationality} ( ${
+        (option as NationalityTypes)._id
+      } )`;
+    } else if (name === "ownerId") {
+      return `${(option as OwnerTypes).name} ( ${
+        (option as OwnerTypes).personCode
+      } )`;
     }
+    return "";
+  };
+
+  const value =
+    name === "nationality"
+      ? values.find(
+          (option) =>
+            option._id ===
+            (formik as unknown as OwnerFormikTypes).values.idNationality
+        ) || null
+      : (name === "ownerId" &&
+          values.filter((option) =>
+            (formik as unknown as CompanyFormikTypes).values.ownerId.includes(
+              option._id
+            )
+          )) ||
+        [];
+  const style = {
+    width: "fit-content",
+    "& > div > div": {
+      padding: "0px !important",
+    },
+    "& span.MuiCircularProgress-root": {
+      position: "absolute",
+      right: "9px",
+    },
+    "& svg": {
+      fontSize: "20px",
+    },
+  };
+
+  useEffect(() => {
+    setValues(options);
   }, [options]);
 
   return (
-    <PrimaryAutoComplete
-      multiple={multiple}
-      options={options || []}
-      filterSelectedOptions
-      getOptionLabel={(option) => {
-        if (name === "nationality") {
-          const typedOption = option as NationalityTypes;
-          return typedOption
-            ? `${typedOption.nationality} ( ${typedOption._id} )`
-            : "";
-        }
-        if (name === "ownerId") {
-          const typedOption = option as OwnerTypes;
-          return typedOption
-            ? `${typedOption.name} ( ${typedOption._id} )`
-            : "";
-        }
-        return "";
-      }}
-      isOptionEqualToValue={(option, value) => option === value}
-      onChange={handleChange}
-      renderInput={(params: AutocompleteRenderInputParams) => (
-        <PrimaryTextField
-          {...params}
-          type={"text"}
-          label={label}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-          }}
-        />
-      )}
-    />
+    <Box className={`grid justify-stretch items-center gap-2`}>
+      <Typography variant="h6">{label}</Typography>
+      <Autocomplete
+        sx={style}
+        disablePortal
+        id="combo-box-demo"
+        multiple={multiple}
+        value={value}
+        isOptionEqualToValue={(option, value) => option?._id === value?._id}
+        options={values}
+        onChange={handleChange}
+        getOptionLabel={handleOptionLabel}
+        renderInput={(params) => (
+          <PrimaryTextField
+            onBlur={formik.handleBlur}
+            error={error}
+            helperText={helperText}
+            {...params}
+            placeholder={label}
+          />
+        )}
+      />
+    </Box>
   );
 }

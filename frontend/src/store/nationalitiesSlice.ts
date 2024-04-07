@@ -10,11 +10,16 @@ export const getNationalities = createAsyncThunk(
   "/nationalities/getNationalities",
   async (args: NationalitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
+    console.log(args);
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/nationality?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
-        args?.limit || import.meta.env.VITE_LIMIT_PAGES
+        args?.limit
+          ? args.limit === -1
+            ? ""
+            : args.limit
+          : import.meta.env.VITE_LIMIT_PAGES
       }&page=${args?.page || 0}`,
       {
         headers: {

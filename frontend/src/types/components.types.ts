@@ -22,6 +22,7 @@ interface UserBoxTypes {
   menu?: boolean;
   head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2";
   size: "small" | "medium" | "large" | "xlarge" | "2xlarge" | "3xlarge";
+  res?: boolean;
 }
 
 interface BadgeNotificationTypes {
@@ -41,7 +42,17 @@ interface InputTypes {
   select?: boolean;
   options?: Array<string>;
   ac?: string;
+  textarea?: boolean;
+  variant?:string;
   change?: (value: string) => void;
+}
+
+interface ButtonTypes {
+  icon?: ReactNode;
+  title?: string;
+  bg?: string;
+  variant?: string;
+  handling?: () => void;
 }
 
 interface SubmitButtonTypes {
@@ -79,8 +90,7 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  loading?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | null;
+  options: NationalityTypes[] | OwnerTypes[];
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }
@@ -106,6 +116,7 @@ interface UploadStatusTypes {
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
+  ButtonTypes,
   DataBoxTypes,
   InputTypes,
   LogoTypes,
@@ -117,5 +128,6 @@ export type {
   TitleTypes,
   UploadImageTypes,
   UploadStatusTypes,
-  UserBoxTypes,
+  UserBoxTypes
 };
+

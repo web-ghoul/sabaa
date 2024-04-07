@@ -1,7 +1,7 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
 import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -12,7 +12,7 @@ import {
   getNationalities,
   reverseNationalities,
 } from "../../store/nationalitiesSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import { NationalitiesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -23,46 +23,41 @@ import { NationaltiesTableRow } from "./NationalitiesTableRow";
 
 const NationalitiesTable = ({
   data,
+  count,
   isLoading,
+  noPagination,
   fileIndex,
 }: NationalitiesTableTypes) => {
-  const { handleOpenTableMenu, setNationalitiesPage } = useContext(AppContext);
+  const { handleOpenTableMenu, handleAddQuery, queries } =
+    useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableNationalityData } = useContext(FormsContext);
   const { setNationalityIndex } = useContext(ExcelsContext);
   const dispatch = useDispatch<AppDispatch>();
-  const { nationalitiesCounter } = useSelector(
-    (state: RootState) => state.nationalitiesCounter
-  );
-
-  const getAllParams = () => {
-    setNationalitiesPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
 
   const handleSortByNationality = () => {
     if (searchParams.get("sort") === "nationality_asc") {
-      setSearchParams({ ...getAllParams(), sort: "nationality_desc" });
+      handleAddQuery({ sort: "nationality_desc" });
       dispatch(reverseNationalities());
+      setSearchParams({ ...queries, sort: "nationality_desc" });
     } else {
-      dispatch(
-        getNationalities({ ...getAllParams(), sort: "nationality_asc" })
-      );
-      setSearchParams({ ...getAllParams(), sort: "nationality_asc" });
+      handleAddQuery({ sort: "nationality_asc" });
+      const all = { ...queries, sort: "nationality_asc" };
+      dispatch(getNationalities(all));
+      setSearchParams(all);
     }
   };
 
   const handleSortByNationalityId = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      handleAddQuery({ sort: "code_desc" });
       dispatch(reverseNationalities());
+      setSearchParams({ ...queries, sort: "code_desc" });
     } else {
-      dispatch(getNationalities({ ...getAllParams(), sort: "code_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "code_asc" });
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getNationalities(all));
+      setSearchParams(all);
     }
   };
 
@@ -82,7 +77,11 @@ const NationalitiesTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={nationalitiesCounter} variant={"nationalities"}>
+    <PrimaryTable
+      count={count}
+      variant={"nationalities"}
+      noPagination={noPagination}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

@@ -10,7 +10,9 @@ import { getOwner } from "../store/ownerSlice";
 import { AppDispatch, RootState } from "../store/store";
 import OwnerProfile from "../tabs/OwnerProfile/OwnerProfile";
 const Owner = () => {
-  const { owner, isLoading } = useSelector((state: RootState) => state.owner);
+  const { owner, isLoading, companies } = useSelector(
+    (state: RootState) => state.owner
+  );
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
@@ -37,7 +39,11 @@ const Owner = () => {
             </Typography>
           </BreadCrumbs>
         </Box>
-        <OwnerProfile owner={owner} isLoading={isLoading} />
+        <OwnerProfile
+          companies={companies}
+          owner={owner}
+          isLoading={isLoading}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

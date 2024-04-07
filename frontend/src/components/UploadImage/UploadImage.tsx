@@ -8,32 +8,20 @@ import { UploadImageTypes } from "../../types/components.types";
 const UploadImage = ({ variant, title }: UploadImageTypes) => {
   const { defaultAvatar, defaultCompany } = useContext(AppContext);
   const {
-    addCompanyImage,
-    setAddCompanyImage,
-    addOwnerImage,
-    setAddOwnerImage,
-    editOwnerImage,
-    setEditOwnerImage,
-    addUserImage,
-    setAddUserImage,
-    setEditCompanyImage,
-    editCompanyImage,
-    editUserImage,
-    setEditUserImage,
+    companyImage,
+    setCompanyImage,
+    ownerImage,
+    setOwnerImage,
+    userImage,
+    setUserImage,
   } = useContext(FormsContext);
   const [chosenImage, setChosenImage] = useState(
-    variant === "addCompany"
-      ? addCompanyImage || defaultCompany
-      : variant === "editCompany"
-      ? editCompanyImage || defaultCompany
-      : variant === "addOwner"
-      ? addOwnerImage || defaultAvatar
-      : variant === "editOwner"
-      ? editOwnerImage || defaultAvatar
-      : variant === "addUser"
-      ? addUserImage || defaultAvatar
-      : variant === "editUser"
-      ? editUserImage || defaultAvatar
+    variant === "addCompany" || variant === "editCompany"
+      ? companyImage || defaultCompany
+      : variant === "addOwner" || variant === "editOwner"
+      ? ownerImage || defaultAvatar
+      : variant === "addUser" || variant === "editUser"
+      ? userImage || defaultAvatar
       : defaultAvatar
   );
 
@@ -41,18 +29,12 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       const image = files[0];
-      if (variant === "addCompany") {
-        setAddCompanyImage(image);
-      } else if (variant === "editCompany") {
-        setEditCompanyImage(image);
-      } else if (variant === "addOwner") {
-        setAddOwnerImage(image);
-      } else if (variant === "editOwner") {
-        setEditOwnerImage(image);
-      } else if (variant === "addUser") {
-        setAddUserImage(image);
-      } else if (variant === "editUser") {
-        setEditUserImage(image);
+      if (variant === "addCompany" || variant === "editCompany") {
+        setCompanyImage(image);
+      } else if (variant === "addOwner" || variant === "editOwner") {
+        setOwnerImage(image);
+      } else if (variant === "addUser" || variant === "editUser") {
+        setUserImage(image);
       }
       setChosenImage(image);
     }
@@ -64,7 +46,7 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       component={"label"}
       htmlFor="upload"
     >
-      <Typography variant="h6" className="text-center !font-[700]">
+      <Typography variant="h5" className="text-center !font-[700]">
         {title}
       </Typography>
       <Box

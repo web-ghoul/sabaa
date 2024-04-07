@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -15,7 +15,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getJobsCounter } from "../../store/jobsCounterSlice";
 import { getJobs, reverseJobs } from "../../store/jobsSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch } from "../../store/store";
 import { JobsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -24,41 +24,45 @@ import JobsTableMenu from "./JobsTableMenu";
 import { JobsTableRow } from "./JobsTableRow";
 import LoadingJobsRow from "./LoadingJobsRow";
 
-const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
-  const { handleOpenTableMenu, setJobsPage } = useContext(AppContext);
+const JobsTable = ({
+  data,
+  noPagination,
+  count,
+  isLoading,
+  fileIndex,
+}: JobsTableTypes) => {
+  const { handleOpenTableMenu, handleAddQuery, queries } =
+    useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
-  const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
-  const dispatch = useDispatch<AppDispatch>();
 
-  const getAllParams = () => {
-    setJobsPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByJobTitle = () => {
     if (searchParams.get("sort") === "job_title_asc") {
-      setSearchParams({ ...getAllParams(), sort: "job_title_desc" });
+      handleAddQuery({ sort: "job_title_desc" });
       dispatch(reverseJobs());
+      setSearchParams({ ...queries, sort: "job_title_desc" });
     } else {
-      dispatch(getJobs({ ...getAllParams(), sort: "job_title_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "job_title_asc" });
+      handleAddQuery({ sort: "job_title_asc" });
+      const all = { ...queries, sort: "job_title_asc" };
+      dispatch(getJobs(all));
+      setSearchParams(all);
     }
   };
 
   const handleSortByMOHRECode = () => {
     if (searchParams.get("sort") === "code_asc") {
-      setSearchParams({ ...getAllParams(), sort: "code_desc" });
+      handleAddQuery({ sort: "code_desc" });
       dispatch(reverseJobs());
+      setSearchParams({ ...queries, sort: "code_desc" });
     } else {
-      dispatch(getJobs({ ...getAllParams(), sort: "code_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "code_asc" });
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getJobs(all));
+      setSearchParams(all);
     }
   };
 
@@ -78,7 +82,7 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={jobsCounter} variant={"jobs"}>
+    <PrimaryTable count={count} variant={"jobs"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -94,7 +98,7 @@ const JobsTable = ({ data, isLoading, fileIndex }: JobsTableTypes) => {
           )}
           <PrimaryTableCell align="center">
             <SortBox
-              title={"MOHRE Code"}
+              title={mdScreen ? "MOHRE" : "MOHRE Code"}
               handling={handleSortByMOHRECode}
               asc={searchParams.get("sort") === "code_asc"}
               desc={searchParams.get("sort") === "code_desc"}

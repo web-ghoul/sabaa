@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import ProfileActivities from "../../components/ProfileActivities/ProfileActivities";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { TabsContext } from "../../contexts/TabsContext";
-import { CompanyTypes } from "../../types/store.types";
+import OwnersTable from "../../tables/OwnersTable/OwnersTable";
+import { CompanyTypes, OwnerTypes } from "../../types/store.types";
 import { CompanyProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -17,6 +17,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         "Personal Info",
         "Owners",
         "PROs",
+        "Employees",
         "Transactions",
         "Activities",
       ]}
@@ -31,7 +32,12 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={1}>
-        <ProfileActivities />
+        <OwnersTable
+          count={company ? company?.ownerId?.length : 0}
+          data={company && (company.ownerId as OwnerTypes[])}
+          isLoading={isLoading}
+          noPagination={true}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={2}>
         <ProfileSetting />
@@ -40,6 +46,9 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={4}>
+        <ProfileSetting />
+      </CustomTabPanel>
+      <CustomTabPanel value={companyTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>

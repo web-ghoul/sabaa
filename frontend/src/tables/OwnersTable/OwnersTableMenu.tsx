@@ -16,12 +16,8 @@ const OwnersTableMenu = () => {
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const {
-    handleOpenEditOwnerModal,
-    handleOpenDeleteModal,
-    editableOwnerData,
-    setDeleteType,
-  } = useContext(FormsContext);
+  const { handleOpenOwnerModal, handleOpenDeleteModal, editableOwnerData } =
+    useContext(FormsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
@@ -33,23 +29,14 @@ const OwnersTableMenu = () => {
   };
 
   const handleEdit = () => {
-    if (sheet) {
-      handleOpenEditOwnerModal();
-    } else {
-      navigate(
-        `${import.meta.env.VITE_OWNERS_ROUTE}/${
-          editableOwnerData && editableOwnerData._id
-        }/edit`
-      );
-    }
+    handleOpenOwnerModal("editOwner");
   };
 
   const handleDelete = () => {
     if (sheet) {
       handleDeleteOwnerFromSheet();
     } else {
-      handleOpenDeleteModal();
-      setDeleteType("owner");
+      handleOpenDeleteModal("owner");
     }
   };
 

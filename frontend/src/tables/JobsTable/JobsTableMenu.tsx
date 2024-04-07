@@ -9,7 +9,7 @@ import TableMenuItem from "../TableMenuItem";
 
 const JobsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const { handleOpenEditJobModal, handleOpenDeleteModal, setDeleteType } =
+  const { handleOpenJobModal, handleOpenDeleteModal } =
     useContext(FormsContext);
   const { handleDeleteJobFromSheet } = useContext(ExcelsContext);
   const [sheet, setSheet] = useState(false);
@@ -19,8 +19,7 @@ const JobsTableMenu = () => {
     if (sheet) {
       handleDeleteJobFromSheet();
     } else {
-      handleOpenDeleteModal();
-      setDeleteType("job");
+      handleOpenDeleteModal("job");
     }
   };
 
@@ -47,7 +46,7 @@ const JobsTableMenu = () => {
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}
-        handling={handleOpenEditJobModal}
+        handling={() => handleOpenJobModal("editJob")}
       />
       <TableMenuItem
         icon={<DeleteRounded />}

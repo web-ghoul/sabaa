@@ -1,5 +1,11 @@
 import { FormikProps } from "formik";
-import { CompanyTypes, OwnerTypes } from "./store.types";
+import {
+  CompanyTypes,
+  JobTypes,
+  NationalityTypes,
+  OwnerTypes,
+  UserTypes,
+} from "./store.types";
 
 interface FormsTypes {
   type: string;
@@ -53,150 +59,72 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
-interface AddCompanyFormTypes extends CompanyTypes {}
+interface CompanyFormTypes extends CompanyTypes {
+  ownerId: string[];
+  proCode: string[];
+}
 
-interface AddCompanyFormikTypes {
-  touched: AddCompanyFormTypes;
-  errors: AddCompanyFormTypes;
-  initialValues: AddCompanyFormTypes;
+interface CompanyFormikTypes {
+  touched: CompanyFormTypes;
+  errors: CompanyFormTypes;
+  initialValues: CompanyFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: AddCompanyFormTypes;
+  values: CompanyFormTypes;
 }
 
-interface EditCompanyFormTypes extends CompanyTypes {}
+interface OwnerFormTypes extends OwnerTypes {}
 
-interface EditCompanyFormikTypes {
-  touched: EditCompanyFormTypes;
-  errors: EditCompanyFormTypes;
-  initialValues: EditCompanyFormTypes;
+interface OwnerFormikTypes {
+  touched: OwnerFormTypes;
+  errors: OwnerFormTypes;
+  initialValues: OwnerFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: EditCompanyFormTypes;
+  values: OwnerFormTypes;
 }
 
-interface AddOwnerFormTypes extends OwnerTypes {}
+interface JobFormTypes extends JobTypes {}
 
-interface AddOwnerFormikTypes {
-  touched: AddOwnerFormTypes;
-  errors: AddOwnerFormTypes;
-  initialValues: AddOwnerFormTypes;
+interface JobFormikTypes {
+  touched: JobFormTypes;
+  errors: JobFormTypes;
+  initialValues: JobFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: AddOwnerFormTypes;
+  values: JobFormTypes;
 }
 
-interface EditOwnerFormTypes extends OwnerTypes {}
+interface NationalityFormTypes extends NationalityTypes {}
 
-interface EditOwnerFormikTypes {
-  touched: EditOwnerFormTypes;
-  errors: EditOwnerFormTypes;
-  initialValues: EditOwnerFormTypes;
+interface NationalityFormikTypes {
+  touched: NationalityFormTypes;
+  errors: NationalityFormTypes;
+  initialValues: NationalityFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: EditOwnerFormTypes;
+  values: NationalityFormTypes;
 }
 
-interface AddJobFormTypes {
-  jobTitle: string;
-  ENSCOCode: string;
-  _id: string;
-}
+interface UserFormTypes extends UserTypes {}
 
-interface AddJobFormikTypes {
-  touched: AddJobFormTypes;
-  errors: AddJobFormTypes;
-  initialValues: AddJobFormTypes;
+interface UserFormikTypes {
+  touched: UserFormTypes;
+  errors: UserFormTypes;
+  initialValues: UserFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: AddJobFormTypes;
-}
-
-interface EditJobFormTypes extends AddJobFormTypes {}
-
-interface EditJobFormikTypes {
-  touched: EditJobFormTypes;
-  errors: EditJobFormTypes;
-  initialValues: EditJobFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: EditJobFormTypes;
-}
-
-interface AddNationalityFormTypes {
-  nationality: string;
-  _id: string;
-}
-
-interface AddNationalityFormikTypes {
-  touched: AddNationalityFormTypes;
-  errors: AddNationalityFormTypes;
-  initialValues: AddNationalityFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: AddNationalityFormTypes;
-}
-
-interface EditNationalityFormTypes extends AddNationalityFormTypes {}
-
-interface EditNationalityFormikTypes {
-  touched: EditNationalityFormTypes;
-  errors: EditNationalityFormTypes;
-  initialValues: EditNationalityFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: EditNationalityFormTypes;
-}
-
-interface AddUserFormTypes {
-  _id: string;
-  name: string;
-  password: string;
-  email: string;
-  role: string;
-  phone: string;
-  avatar: string;
-  status: string;
-}
-
-interface AddUserFormikTypes {
-  touched: AddUserFormTypes;
-  errors: AddUserFormTypes;
-  initialValues: AddUserFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: AddUserFormTypes;
-}
-
-interface EditUserFormTypes extends AddUserFormTypes {}
-
-interface EditUserFormikTypes {
-  touched: EditUserFormTypes;
-  errors: EditUserFormTypes;
-  initialValues: EditUserFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: EditUserFormTypes;
+  values: UserFormTypes;
 }
 
 interface DeleteFormTypes {}
@@ -214,9 +142,10 @@ interface DeleteFormikTypes {
 
 interface OwnersOptionsFormTypes {
   search: string;
-  filterByDateOfBirth: string;
-  filterByNationality: string;
-  limit: string;
+  dobFrom: string;
+  dobTo: string;
+  nationality: string;
+  state: string;
 }
 
 interface OwnersOptionsFormikTypes {
@@ -266,7 +195,6 @@ interface UsersOptionsFormTypes {
   search: string;
   role: string;
   status: string;
-  limit: string;
 }
 
 interface UsersOptionsFormikTypes {
@@ -282,13 +210,14 @@ interface UsersOptionsFormikTypes {
 
 interface CompaniesOptionsFormTypes {
   search: string;
-  limit: string;
-  filterByState: string;
-  filterByStatus: string;
-  filterByMOLCategory: string;
-  filterByEstablishmentType: string;
-  filterByIMMGExpireDate: string;
-  filterByLicenseExpireDate: string;
+  state: string;
+  status: string;
+  molCategory: string;
+  establishmentType: string;
+  IMMGFrom: string;
+  IMMGTo: string;
+  licenseFrom: string;
+  licenseTo: string;
 }
 
 interface CompaniesOptionsFormikTypes {
@@ -309,17 +238,12 @@ type AllFormsTypes =
   | OwnersOptionsFormTypes
   | UsersOptionsFormTypes
   | CompaniesOptionsFormTypes
-  | AddJobFormTypes
-  | EditJobFormTypes
+  | JobFormTypes
   | NationalitiesOptionsFormTypes
-  | EditNationalityFormTypes
-  | AddNationalityFormTypes
-  | AddUserFormTypes
-  | EditUserFormTypes
-  | AddCompanyFormTypes
-  | EditCompanyFormTypes
-  | AddOwnerFormTypes
-  | EditOwnerFormTypes
+  | NationalityFormTypes
+  | UserFormTypes
+  | CompanyFormTypes
+  | OwnerFormTypes
   | DeleteFormTypes
   | JobsOptionsFormTypes;
 
@@ -330,22 +254,18 @@ type AllFormiksTypes =
   | OwnersOptionsFormikTypes
   | UsersOptionsFormikTypes
   | CompaniesOptionsFormikTypes
-  | AddJobFormikTypes
+  | JobFormikTypes
   | JobsOptionsFormikTypes
-  | EditJobFormikTypes
-  | EditNationalityFormikTypes
-  | AddNationalityFormikTypes
-  | AddUserFormikTypes
-  | EditUserFormikTypes
-  | AddCompanyFormikTypes
-  | EditCompanyFormikTypes
+  | NationalityFormikTypes
+  | UserFormikTypes
+  | CompanyFormikTypes
   | NationalitiesOptionsFormikTypes
-  | AddOwnerFormikTypes
-  | EditOwnerFormikTypes
+  | OwnerFormikTypes
   | DeleteFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
+  type?: string;
 }
 
 interface CatchErrorTypes {
@@ -357,46 +277,37 @@ interface CatchErrorTypes {
 }
 
 export type {
-  AddCompanyFormikTypes,
-  AddCompanyFormTypes,
-  AddJobFormikTypes,
-  AddJobFormTypes,
-  AddNationalityFormikTypes,
-  AddNationalityFormTypes,
-  AddOwnerFormikTypes,
-  AddOwnerFormTypes,
-  AddUserFormikTypes,
-  AddUserFormTypes,
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,
   CompaniesOptionsFormikTypes,
   CompaniesOptionsFormTypes,
+  CompanyFormikTypes,
+  CompanyFormTypes,
   DeleteFormikTypes,
   DeleteFormTypes,
-  EditCompanyFormikTypes,
-  EditCompanyFormTypes,
-  EditJobFormikTypes,
-  EditJobFormTypes,
-  EditNationalityFormikTypes,
-  EditNationalityFormTypes,
-  EditOwnerFormikTypes,
-  EditOwnerFormTypes,
-  EditUserFormikTypes,
-  EditUserFormTypes,
   ForgotPasswordFormikTypes,
   ForgotPasswordFormTypes,
   FormiksTypes,
   FormsTypes,
+  JobFormikTypes,
+  JobFormTypes,
   JobsOptionsFormikTypes,
   JobsOptionsFormTypes,
   LoginFormikTypes,
   LoginFormTypes,
   NationalitiesOptionsFormikTypes,
   NationalitiesOptionsFormTypes,
+  NationalityFormikTypes,
+  NationalityFormTypes,
+  OwnerFormikTypes,
+  OwnerFormTypes,
   OwnersOptionsFormikTypes,
+  OwnersOptionsFormTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
+  UserFormikTypes,
+  UserFormTypes,
   UsersOptionsFormikTypes,
   UsersOptionsFormTypes,
 };

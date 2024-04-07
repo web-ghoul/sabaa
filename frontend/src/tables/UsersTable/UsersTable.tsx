@@ -14,6 +14,7 @@ import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { TabsContext } from "../../contexts/TabsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { AppDispatch, RootState } from "../../store/store";
 import { getUsersCounter } from "../../store/usersCounterSlice";
@@ -26,34 +27,35 @@ import LoadingUsersRow from "./LoadingUsersRow";
 import UsersTableMenu from "./UsersTableMenu";
 import { UsersTableRow } from "./UsersTableRow";
 
-const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
-  const { handleOpenTableMenu, setUsersPage } = useContext(AppContext);
+const UsersTable = ({
+  noPagination,
+  count,
+  data,
+  isLoading,
+}: UsersTableTypes) => {
+  const { handleOpenTableMenu, handleAddQuery, queries } =
+    useContext(AppContext);
+  const { userId } = useSelector((state: RootState) => state.auth);
+  const { setUserTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
-  const { usersCounter } = useSelector(
-    (state: RootState) => state.usersCounter
-  );
-  const dispatch = useDispatch<AppDispatch>();
+  const newData = data?.filter((d) => d._id !== userId);
 
-  const getAllParams = () => {
-    setUsersPage(1);
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    return allParams;
-  };
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
-      setSearchParams({ ...getAllParams(), sort: "name_desc" });
+      handleAddQuery({ sort: "name_desc" });
       dispatch(reverseUsers());
+      setSearchParams({ ...queries, sort: "name_desc" });
     } else {
-      dispatch(getUsers({ ...getAllParams(), sort: "name_asc" }));
-      setSearchParams({ ...getAllParams(), sort: "name_asc" });
+      handleAddQuery({ sort: "name_asc" });
+      const all = { ...queries, sort: "name_asc" };
+      dispatch(getUsers(all));
+      setSearchParams(all);
     }
   };
 
@@ -69,6 +71,7 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
 
   const handleView = (id: string) => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}/${id}`);
+    setUserTabsValue(0);
   };
 
   useEffect(() => {
@@ -76,7 +79,7 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={usersCounter} variant={"users"}>
+    <PrimaryTable count={count} variant={"users"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
@@ -100,8 +103,8 @@ const UsersTable = ({ data, isLoading }: UsersTableTypes) => {
       </TableHead>
       <TableBody>
         {!isLoading
-          ? data &&
-            data.map((row, i) => (
+          ? newData &&
+            newData.map((row, i) => (
               <UsersTableRow key={i}>
                 <PrimaryTableCell onClick={() => handleView(row._id)}>
                   <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${row._id}`}>

@@ -31,10 +31,15 @@ export const authSlice = createSlice({
     login: (state, action) => {
       state.token = action.payload.token;
       state.userId = action.payload.userId;
-      Cookies.set(`${import.meta.env.VITE_TOKEN_TITLE}`, action.payload.token);
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + 2 * 60 * 60 * 1000);
+      Cookies.set(`${import.meta.env.VITE_TOKEN_TITLE}`, action.payload.token, {
+        expires: expirationDate,
+      });
       Cookies.set(
         `${import.meta.env.VITE_USER_ID_TITLE}`,
-        action.payload.userId
+        action.payload.userId,
+        { expires: expirationDate }
       );
     },
     logout: (state) => {

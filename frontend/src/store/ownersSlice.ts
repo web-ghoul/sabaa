@@ -11,10 +11,14 @@ export const getOwners = createAsyncThunk(
       `${import.meta.env.VITE_SERVER_URL}/owner?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
-        args?.limit || import.meta.env.VITE_LIMIT_PAGES
-      }&date=${args?.date || ""}&state=${args?.state || ""}&nationality=${
-        args?.nationality || ""
-      }&page=${args?.page || 0}`,
+        args?.limit
+          ? args.limit === -1
+            ? ""
+            : args.limit
+          : import.meta.env.VITE_LIMIT_PAGES
+      }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&state=${
+        args?.state || ""
+      }&nationality=${args?.nationality || ""}&page=${args?.page || 0}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -36,9 +40,7 @@ export const ownersSlice = createSlice({
   reducers: {
     reverseOwners: (state) => {
       if (state.owners) {
-        state.isLoading = true;
         state.owners = state.owners.reverse();
-        state.isLoading = false;
       }
     },
   },

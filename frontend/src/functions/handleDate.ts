@@ -1,12 +1,25 @@
-export const handleDate = (isoDateString: Date): string => {
-  if (isoDateString && new Date(isoDateString)) {
-    const date = new Date(isoDateString);
-    const options: object = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("ar", options);
+export const handleDate = (date: Date | string): string => {
+  let parsedDate: Date;
+  if (!date) {
+    return "";
   }
-  return "";
+  if (typeof date === "string") {
+    parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+      return "";
+    }
+  } else {
+    parsedDate = date;
+  }
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  const formattedDate = parsedDate.toLocaleString("en-US", options);
+  const [month, day, year] = formattedDate.split("/");
+  return `${day}/${month}/${year}`;
 };

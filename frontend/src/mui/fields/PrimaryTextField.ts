@@ -1,17 +1,19 @@
 import { TextField, styled } from "@mui/material";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
+  minWidth: "auto !important",
+  width: "300px !important",
   "& input , & select": {
-    padding: "10px !important",
-    fontSize: "16px",
+    padding: "8px !important",
+    fontSize: "14px",
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows["2"],
     borderRadius: "4px",
+    width: "100% !important",
   },
   "& label": {
-    fontSize: "16px",
+    fontSize: "14px",
     lineHeight: "1 !important",
-    backgroundColor: "transparent !important",
   },
   "& label[data-shrink=true]": {
     lineHeight: "1.4375em !important",
@@ -21,6 +23,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     fontSize: "20px",
   },
   [theme.breakpoints.down("lg")]: {
+    width: "275px !important",
     "& input , & select": {
       padding: "9px !important",
       fontSize: "14px",
@@ -35,6 +38,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("md")]: {
+    width: "250px !important",
     "& input , & select": {
       padding: "8px !important",
       fontSize: "13px",
@@ -50,6 +54,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("sm")]: {
+    width: "225px !important",
     "& input , & select": {
       padding: "7px !important",
       fontSize: "12px",
@@ -64,6 +69,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("xs")]: {
+    width: "200px !important",
     "& input , & select": {
       padding: "7px !important",
       fontSize: "10px",
