@@ -9,11 +9,11 @@ import { JobTitle } from 'schemas/jobTitle.schema';
 export class JobTitleService {
 
   constructor(@InjectModel (JobTitle.name) private jobTitleModel: Model<JobTitle>) {}
-  create(createJobTitleDto: CreateJobTitleDto) {
+  async create(createJobTitleDto: CreateJobTitleDto) {
     
     try{
 
-      return this.jobTitleModel.create(createJobTitleDto);
+      return await this.jobTitleModel.create(createJobTitleDto);
     }catch(err)
     {
       throw new HttpException("Error while creating jobTitle" , HttpStatus.FORBIDDEN);
@@ -57,10 +57,10 @@ export class JobTitleService {
     return this.jobTitleModel.findById(id);
   }
 
-  update(id: string, updateJobTitleDto: UpdateJobTitleDto) {
+  async update(id: string, updateJobTitleDto: UpdateJobTitleDto) {
     try{
 
-      return this.jobTitleModel.findByIdAndUpdate(id, updateJobTitleDto);
+      return await this.jobTitleModel.findByIdAndUpdate(id, updateJobTitleDto);
     }catch(err)
     {
       throw new HttpException("Error while updating jobTitle" , HttpStatus.FORBIDDEN);
@@ -70,7 +70,7 @@ export class JobTitleService {
   remove(id: string) {
     try{
 
-      return this.jobTitleModel.deleteOne({ _id: id });
+      return this.jobTitleModel.updateOne({ _id: id } ,{deleted : true});
     }catch(err)
     {
       throw new HttpException("Error while deleting jobTitle" , HttpStatus.FORBIDDEN);

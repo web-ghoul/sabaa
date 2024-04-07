@@ -57,6 +57,9 @@ export class WorkPermit extends Document {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
+
+  @Prop()
+  deleted: boolean;
 }
 
 export const WorkPermitSchema = SchemaFactory.createForClass(WorkPermit);

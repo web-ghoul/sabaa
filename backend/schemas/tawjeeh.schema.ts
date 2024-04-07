@@ -36,6 +36,8 @@ export class Tawjeeh extends Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 
+  @Prop()
+  deleted: boolean;
 
 }
 

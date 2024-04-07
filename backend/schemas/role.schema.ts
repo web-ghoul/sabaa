@@ -25,6 +25,8 @@ export class Role {
   @Prop({default : false})
   addEmployee: string;
 
+  @Prop()
+  deleted: boolean;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

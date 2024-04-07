@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { User } from 'schemas/user.schema';
 import { LoginUserDto } from './dtos/login.dto';
 import * as bcrypt from 'bcryptjs';
+import { CreateOtpDto } from './dtos/createOtp.dto';
 
 
 @Injectable()
@@ -30,4 +31,14 @@ export class AuthService {
         }
         throw new HttpException("invalid email or password" , HttpStatus.CONFLICT );
       }
+
+    async createOtp(createOtpDto: CreateOtpDto): Promise<any> {
+
+        const user: User = await this.userModel.findOne({email:createOtpDto.email});
+
+        if(user)
+        {
+          
+        }
+    }
 }

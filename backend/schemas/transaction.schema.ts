@@ -77,6 +77,9 @@ export class Transaction extends Document {
 
   @Prop({ type: Date })
   residenceExpiryDate: Date;
+
+  @Prop()
+  deleted: boolean;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);

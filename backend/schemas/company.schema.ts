@@ -6,8 +6,7 @@ export type CompanyDocument = HydratedDocument<Company>;
 @Schema({ timestamps: true })
 export class Company {
 
-  @Prop({ required: true })
-  _id: string;
+ 
 
   @Prop()
   name: string;
@@ -21,7 +20,7 @@ export class Company {
   @Prop()
   status: string;
 
-  @Prop()
+  @Prop({required :true})
   state: string;
 
   @Prop()
@@ -97,6 +96,9 @@ export class Company {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
+
+  @Prop()
+  deleted: boolean;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

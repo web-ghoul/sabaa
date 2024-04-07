@@ -25,7 +25,7 @@ export class OwnerService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,date:string = '',nationality:string = '',state:string = ''): Promise<Owner[]> {
+  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = ''): Promise<Owner[]> {
     const projection: any = {};
     if (fields && fields.length > 0) {
         fields.forEach(field => {
@@ -44,7 +44,7 @@ export class OwnerService {
       sort["createdAt"] = -1; 
     } 
     const query = {$or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]}
-    date != '' ? query["dob"] = { $gte: new Date(date) } : null; 
+    dobFrom != '' ? query["dob"] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) } : null; 
     nationality != '' ? query["nationality"] = nationality : null;
     state != '' ? query["state"] = state : null;
    
@@ -60,10 +60,10 @@ export class OwnerService {
     return {owner,companies}
   }
 
-  update(id: string, updateOwnerDto: UpdateOwnerDto,file: Express.Multer.File) {
+  async update(id: string, updateOwnerDto: UpdateOwnerDto,file: Express.Multer.File) {
     try{
       updateOwnerDto.avatar = file ? file.path : undefined;
-      return this.ownerModel.findByIdAndUpdate(id, updateOwnerDto);
+      return await this.ownerModel.findByIdAndUpdate(id, updateOwnerDto);
 
     }catch(err)
     {
@@ -74,7 +74,7 @@ export class OwnerService {
   remove(id: string) {
     try{  
        
-      return Promise.all([this.ownerModel.deleteOne({ _id: id }),
+      return Promise.all([this.ownerModel.updateOne({ _id: id },{deleted : true}),
       this.companyModel.updateMany({ownerId: id},{$pull : {ownerId: id}})
       ]);
 

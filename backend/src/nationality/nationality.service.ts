@@ -9,9 +9,9 @@ import { Nationality } from 'schemas/nationality.schema';
 export class NationalityService {
   constructor(@InjectModel(Nationality.name) private nationalityModel: Model<Nationality>) {}
 
-  create(createNationalityDto: CreateNationalityDto): Promise<Nationality> {
+  async create(createNationalityDto: CreateNationalityDto): Promise<Nationality> {
     try{
-      return this.nationalityModel.create(createNationalityDto);
+      return await this.nationalityModel.create(createNationalityDto);
     }catch(err)
     {
       throw new HttpException("Error while creating nationality" , HttpStatus.FORBIDDEN);
@@ -52,9 +52,9 @@ export class NationalityService {
     return this.nationalityModel.findById(id);
   }
 
-  update(id: string, updateNationalityDto: UpdateNationalityDto) {
+  async update(id: string, updateNationalityDto: UpdateNationalityDto) {
     try{
-      return this.nationalityModel.findByIdAndUpdate(id, updateNationalityDto);
+      return await this.nationalityModel.findByIdAndUpdate(id, updateNationalityDto);
     }catch(err)
     {
       throw new HttpException("Error while updating nationality" , HttpStatus.FORBIDDEN);
@@ -63,7 +63,7 @@ export class NationalityService {
 
   remove(id: string) {
     try{
-      return this.nationalityModel.deleteOne({ _id: id });
+      return this.nationalityModel.updateOne({ _id: id },{deleted : true});
 
     }catch(err)
     {
