@@ -9,23 +9,23 @@ import { Model } from 'mongoose';
 export class CompanyService {
   constructor(@InjectModel(Company.name) private companyModel: Model<Company>) {}
 
-  create(createCompanyDto: CreateCompanyDto,file: Express.Multer.File) {
+  async create(createCompanyDto: CreateCompanyDto,file: Express.Multer.File) {
     
     try{
       if(Array.isArray(createCompanyDto))
       {
-        createCompanyDto.map((x) => {x._id = x.licenseNo + x.state ;
+        createCompanyDto.map((x) => {//x._id = x.licenseNo + x.state ;
           x.logo = file ? file.path : undefined});
       }else
       {
-        createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
-      createCompanyDto.logo = file ? file.path : undefined;
+        //createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
+        createCompanyDto.logo = file ? file.path : undefined;
       }
       
-      return this.companyModel.create(createCompanyDto);
+      return await this.companyModel.create(createCompanyDto);
     }catch(err)
     {
-      throw new HttpException("Error while creating company" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
@@ -68,7 +68,9 @@ export class CompanyService {
     filterQuery?.status != '' ? query["status"] = filterQuery?.status : undefined;
     filterQuery?.establishmentType != '' ? query["establishmentType"] = filterQuery?.establishmentType : undefined;
     filterQuery?.molCategory != '' ? query["molCategory"] = filterQuery?.molCategory : undefined;
-
+    filterQuery?.licenseFrom != '' ? query["licenseExpiryDate"] = { "$gte":filterQuery?.licenseFrom , "$lte":filterQuery?.licenseTo }  : undefined;
+    filterQuery?.IMMGFrom != '' ? query["immgCardExpiry"] = { "$gte":filterQuery?.IMMGFrom , "$lte":filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date()} : undefined;
+    
     
     return this.companyModel.find(query).select(projection).limit(limit).skip(page * limit).sort(sort);
   }
@@ -78,11 +80,11 @@ export class CompanyService {
   }
 
 
-  update(id: string, updateCompanyDto: UpdateCompanyDto,file: Express.Multer.File) {
+  async update(id: string, updateCompanyDto: UpdateCompanyDto,file: Express.Multer.File) {
     try{
       updateCompanyDto._id = updateCompanyDto.licenseNo + updateCompanyDto.state;
       updateCompanyDto.logo = file ? file.path : undefined;
-      return this.companyModel.findByIdAndUpdate(id, updateCompanyDto);
+      return await this.companyModel.findByIdAndUpdate(id, updateCompanyDto);
     }catch(err)
     {
       throw new HttpException("Error while updating company" , HttpStatus.FORBIDDEN);
@@ -91,7 +93,7 @@ export class CompanyService {
 
   remove(id: string) {
     try{
-      return this.companyModel.deleteOne({ _id: id });
+      return this.companyModel.updateOne({ _id: id },{deleted : true});
 
     }catch(err)
     {

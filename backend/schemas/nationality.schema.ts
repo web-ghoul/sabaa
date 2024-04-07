@@ -14,6 +14,9 @@ export class Nationality {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
+
+  @Prop()
+  deleted: boolean;
 }
 
 export const NationalitySchema = SchemaFactory.createForClass(Nationality);

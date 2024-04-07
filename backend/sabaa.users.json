@@ -7,6 +7,7 @@
   "email": "amr@gmail.com",
   "role": "Admin",
   "phone": "01013714763",
+  "status": "active",
   "createdAt": {
     "$date": "2024-03-22T12:03:18.645Z"
   },
@@ -24,6 +25,7 @@
   "email": "admin@gmail.com",
   "role": "Admin",
   "phone": "01013714763",
+  "status": "active",
   "createdAt": {
     "$date": "2024-03-22T12:03:45.079Z"
   },
@@ -41,6 +43,7 @@
   "email": "admin006@gmail.com",
   "role": "Admin",
   "phone": "01013714763",
+  "status": "active",
   "createdAt": {
     "$date": "2024-03-22T12:03:51.453Z"
   },
