@@ -7,11 +7,16 @@ import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
 import { login as loginAction } from "../store/auth";
+import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
+import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
+import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
+import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwners } from "../store/ownersSlice";
 import { AppDispatch, RootState } from "../store/store";
+import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
@@ -80,7 +85,9 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status);
     formData.append("role", values.role);
     formData.append("email", values.email);
-    formData.append("password", values.password);
+    if (type === "addUser") {
+      formData.append("password", values.password);
+    }
     return formData;
   };
 
@@ -113,12 +120,20 @@ const useSubmitFunction = (type: string) => {
     formData.append("address", values.address);
     formData.append("email", values.email);
     formData.append("status", values.status);
-    values.ownerId.map((owner) => {
-      formData.append("ownerId[]", owner);
-    });
-    values.proCode.map((pro) => {
-      formData.append("proCode[]", pro);
-    });
+    if (values.ownerId.length > 0) {
+      values.ownerId.map((owner) => {
+        formData.append("ownerId[]", owner);
+      });
+    } else {
+      formData.append("ownerId[]", "");
+    }
+    if (values.proCode.length > 0) {
+      values.proCode.map((pro) => {
+        formData.append("proCode[]", pro);
+      });
+    } else {
+      formData.append("proCode[]", "");
+    }
     formData.append("state", values.state);
     formData.append("licenseNo", values.licenseNo);
     formData.append("immgCardNo", values.immgCardNo);
@@ -184,6 +199,7 @@ const useSubmitFunction = (type: string) => {
         handleAlert({ msg: "Job is Created Successfully", status: "success" });
         handleCloseJobModal();
         dispatch(getJobs({}));
+        dispatch(getJobsCounter());
       })
       .catch((err) => {
         handleCatchError(err);
@@ -261,6 +277,7 @@ const useSubmitFunction = (type: string) => {
         });
         handleCloseNationalityModal();
         dispatch(getNationalities({}));
+        dispatch(getNationalitiesCounter());
       })
       .catch((err) => {
         handleCatchError(err);
@@ -340,6 +357,7 @@ const useSubmitFunction = (type: string) => {
       .then(() => {
         handleAlert({ msg: "User is Created Successfully", status: "success" });
         dispatch(getUsers({}));
+        dispatch(getUsersCounter());
         handleCloseUserModal();
         setUserImage("");
       })
@@ -390,6 +408,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         dispatch(getOwners({}));
+        dispatch(getOwnersCounter());
         handleCloseOwnerModal();
         setOwnerImage("");
       })
@@ -472,6 +491,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         dispatch(getCompanies({}));
+        dispatch(getCompaniesCounter());
         navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
         setCompanyImage("");
       })

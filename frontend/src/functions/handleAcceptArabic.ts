@@ -1,12 +1,8 @@
 export const handleAcceptArabic = (value: string): string => {
-  const Regex = /[\u0600-\u06FF\s]/;
-  const len = value.length;
-  if (len > 0) {
-    if (Regex.test(value)) {
-      return value;
-    } else {
-      return value.slice(0, len - 1);
-    }
+  const regex = /^[\u0600-\u06FF\s]*$/;
+  if (regex.test(value)) {
+    return value;
+  } else {
+    return value.replace(/[^\u0600-\u06FF\s]/g, "");
   }
-  return "";
 };

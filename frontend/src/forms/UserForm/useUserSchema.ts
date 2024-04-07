@@ -15,7 +15,10 @@ const useUserSchema = () => {
     status: yup.string().required("Status is required"),
     password: editableUserData
       ? yup.string()
-      : yup.string().required("Password is required"),
+      : yup
+          .string()
+          .min(8, "Password must be 8 characters or more")
+          .required("Password is required"),
   });
 
   const UserInitailValues = {

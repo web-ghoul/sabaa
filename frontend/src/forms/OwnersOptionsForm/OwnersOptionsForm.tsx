@@ -26,7 +26,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const { handleOpenOwnerModal } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
-  const { queries, handleAddQuery } = useContext(AppContext);
+  const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
   const [handledNationalities, sethandledNationalities] = useState<string[]>(
     []
@@ -59,6 +59,8 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+    dispatch(getOwners({}));
+    setQueries({});
   };
 
   const { nationalities } = useSelector(
@@ -83,7 +85,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       );
       sethandledNationalities(nats);
     } else {
-      dispatch(getNationalities({}));
+      dispatch(getNationalities({ limit: -1 }));
     }
   }, [dispatch, nationalities]);
   return (

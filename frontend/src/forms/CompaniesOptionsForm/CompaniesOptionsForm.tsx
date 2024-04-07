@@ -23,7 +23,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const [showFilters, setShowFilters] = useState(false);
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
-  const { queries, handleAddQuery } = useContext(AppContext);
+  const { queries, setQueries, handleAddQuery } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
     handleAddQuery({ search: value });
@@ -68,18 +68,28 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
+    dispatch(getCompanies({}));
+    setQueries({});
   };
 
   (formik as unknown as CompaniesOptionsFormikTypes).values.search =
-    queries.search;
+    queries?.search || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.state =
-    queries.state;
+    queries?.state || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.status =
-    queries.status;
+    queries?.status || "";
+  (formik as unknown as CompaniesOptionsFormikTypes).values.IMMGFrom =
+    queries?.IMMGFrom || "";
+  (formik as unknown as CompaniesOptionsFormikTypes).values.IMMGTo =
+    queries?.IMMGTo || "";
+  (formik as unknown as CompaniesOptionsFormikTypes).values.licenseFrom =
+    queries?.licenseFrom || "";
+  (formik as unknown as CompaniesOptionsFormikTypes).values.licenseTo =
+    queries?.licenseTo || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.molCategory =
-    queries.molCategory;
+    queries?.molCategory || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.establishmentType =
-    queries.establishmentType;
+    queries?.establishmentType || "";
 
   return (
     <Paper

@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import RoleBox from "../../components/RoleBox/RoleBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
@@ -16,7 +16,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { getUsersCounter } from "../../store/usersCounterSlice";
 import { getUsers, reverseUsers } from "../../store/usersSlice";
 import { UsersTableTypes } from "../../types/tables.types";
@@ -35,12 +35,14 @@ const UsersTable = ({
 }: UsersTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
+  const { userId } = useSelector((state: RootState) => state.auth);
   const { setUserTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
+  const newData = data?.filter((d) => d._id !== userId);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -101,8 +103,8 @@ const UsersTable = ({
       </TableHead>
       <TableBody>
         {!isLoading
-          ? data &&
-            data.map((row, i) => (
+          ? newData &&
+            newData.map((row, i) => (
               <UsersTableRow key={i}>
                 <PrimaryTableCell onClick={() => handleView(row._id)}>
                   <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${row._id}`}>

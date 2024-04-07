@@ -27,7 +27,7 @@ const Owners = () => {
     }
     setQueries(allParams);
     dispatch(getOwners(allParams));
-  }, [dispatch, searchParams, setQueries]);
+  }, []);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

@@ -1,6 +1,7 @@
 import { TablePagination } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
+import { AppContext } from "../contexts/AppContext";
 import { getCompanies } from "../store/companiesSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
@@ -18,34 +19,37 @@ const PrimaryTablePagination = ({
   const dispatch = useDispatch<AppDispatch>();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const { queries } = useContext(AppContext);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
     if (variant === "owners") {
-      dispatch(getOwners({ limit: rowsPerPage, page: newPage }));
+      dispatch(getOwners({ ...queries, limit: rowsPerPage, page: newPage }));
     } else if (variant === "companies") {
-      dispatch(getCompanies({ limit: rowsPerPage, page: newPage }));
+      dispatch(getCompanies({ ...queries, limit: rowsPerPage, page: newPage }));
     } else if (variant === "nationalities") {
-      dispatch(getNationalities({ limit: rowsPerPage, page: newPage }));
+      dispatch(
+        getNationalities({ ...queries, limit: rowsPerPage, page: newPage })
+      );
     } else if (variant === "users") {
-      dispatch(getUsers({ limit: rowsPerPage, page: newPage }));
+      dispatch(getUsers({ ...queries, limit: rowsPerPage, page: newPage }));
     } else if (variant === "jobs") {
-      dispatch(getJobs({ limit: rowsPerPage, page: newPage }));
+      dispatch(getJobs({ ...queries, limit: rowsPerPage, page: newPage }));
     }
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const val = parseInt(event.target.value, 10);
     if (variant === "owners") {
-      dispatch(getOwners({ limit: val }));
+      dispatch(getOwners({ ...queries, limit: val }));
     } else if (variant === "companies") {
-      dispatch(getCompanies({ limit: val }));
+      dispatch(getCompanies({ ...queries, limit: val }));
     } else if (variant === "nationalities") {
-      dispatch(getNationalities({ limit: val }));
+      dispatch(getNationalities({ ...queries, limit: val }));
     } else if (variant === "users") {
-      dispatch(getUsers({ limit: val }));
+      dispatch(getUsers({ ...queries, limit: val }));
     } else if (variant === "jobs") {
-      dispatch(getJobs({ limit: val }));
+      dispatch(getJobs({ ...queries, limit: val }));
     }
     setRowsPerPage(val);
     setPage(0);

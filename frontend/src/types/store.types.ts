@@ -83,6 +83,7 @@ interface JobsArgsTypes {
   search?: string;
   sort?: string;
   limit?: number;
+  reverse?: boolean;
 }
 
 interface NationalitiesArgsTypes {

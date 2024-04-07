@@ -13,12 +13,11 @@ import UsersTable from "../tables/UsersTable/UsersTable";
 
 const Users = () => {
   const { users, isLoading } = useSelector((state: RootState) => state.users);
-  const { pageContainerClasses } = useContext(AppContext);
+  const { pageContainerClasses, setQueries } = useContext(AppContext);
   const dispatch = useDispatch<AppDispatch>();
   const { usersCounter } = useSelector(
     (state: RootState) => state.usersCounter
   );
-  const { setQueries } = useContext(AppContext);
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Users = () => {
     }
     setQueries(allParams);
     dispatch(getUsers(allParams));
-  }, [dispatch, searchParams, setQueries]);
+  }, []);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

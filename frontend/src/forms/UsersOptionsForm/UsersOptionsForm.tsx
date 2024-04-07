@@ -16,7 +16,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
   const { handleOpenUserModal } = useContext(FormsContext);
-  const { queries, handleAddQuery } = useContext(AppContext);
+  const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -39,6 +39,8 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
+    dispatch(getUsers({}));
+    setQueries({});
   };
 
   (formik as unknown as UsersOptionsFormikTypes).values.role =

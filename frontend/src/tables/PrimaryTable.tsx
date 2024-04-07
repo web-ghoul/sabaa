@@ -1,6 +1,5 @@
 import { Paper, Table, TableContainer } from "@mui/material";
 import { ReactNode } from "react";
-import { useSearchParams } from "react-router-dom";
 import NoDataFound from "./NoDataFound";
 import PrimaryTablePagination from "./PrimaryTablePagination";
 
@@ -15,17 +14,17 @@ const PrimaryTable = ({
   variant: string;
   noPagination?: boolean;
 }) => {
-  const [searchParams] = useSearchParams();
   return (
     <TableContainer component={Paper}>
       <Table aria-label="customized table">{children}</Table>
-      {searchParams.size === 0 &&
+      {count === 0 ? (
+        <NoDataFound />
+      ) : (
         !noPagination &&
-        (count === 0 ? (
-          <NoDataFound />
-        ) : (
+        count >= 10 && (
           <PrimaryTablePagination count={count} variant={variant} />
-        ))}
+        )
+      )}
     </TableContainer>
   );
 };

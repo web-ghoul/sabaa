@@ -90,6 +90,8 @@ const Input = ({
                 label?.split(" ")[0].toLowerCase() === "english" ||
                 variant === "english"
               ) {
+                console.log(val);
+
                 e.target.value = handleAcceptEnglish(val).toUpperCase();
               }
               formik.handleChange(e);

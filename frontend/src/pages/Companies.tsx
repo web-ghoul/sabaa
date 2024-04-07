@@ -30,7 +30,7 @@ const Companies = () => {
     }
     setQueries(allParams);
     dispatch(getCompanies(allParams));
-  }, [dispatch, searchParams, setQueries]);
+  }, []);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
