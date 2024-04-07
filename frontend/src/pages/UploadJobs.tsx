@@ -38,7 +38,12 @@ const UploadJobs = () => {
           {jobsSheets.length > 0 ? (
             jobsSheets.map((sheet: JobsSheetTypes, i) => (
               <SheetAccordion title={sheet.fileName} key={i}>
-                <JobsTable data={sheet.data} fileIndex={i} />
+                <JobsTable
+                  count={sheet.data.length}
+                  noPagination={true}
+                  data={sheet.data}
+                  fileIndex={i}
+                />
                 <Forms type={"createJobsSheet"} index={i} />
               </SheetAccordion>
             ))

@@ -38,7 +38,12 @@ const UploadCompanies = () => {
           {companiesSheets.length > 0 ? (
             companiesSheets.map((sheet: CompaniesSheetTypes, i) => (
               <SheetAccordion title={sheet.fileName} key={i}>
-                <CompaniesTable data={sheet.data} fileIndex={i} />
+                <CompaniesTable
+                  count={sheet.data.length}
+                  noPagination={true}
+                  data={sheet.data}
+                  fileIndex={i}
+                />
                 <Forms type={"createCompaniesSheet"} index={i} />
               </SheetAccordion>
             ))

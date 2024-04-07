@@ -38,7 +38,12 @@ const UploadNationalities = () => {
           {nationalitiesSheets.length > 0 ? (
             nationalitiesSheets.map((sheet: NationalitiesSheetTypes, i) => (
               <SheetAccordion title={sheet.fileName} key={i}>
-                <NationalitiesTable data={sheet.data} fileIndex={i} />
+                <NationalitiesTable
+                  count={sheet.data.length}
+                  noPagination={true}
+                  data={sheet.data}
+                  fileIndex={i}
+                />
                 <Forms type={"createNationalitiesSheet"} index={i} />
               </SheetAccordion>
             ))

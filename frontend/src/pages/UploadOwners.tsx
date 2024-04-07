@@ -38,7 +38,12 @@ const UploadOwners = () => {
           {ownersSheets.length > 0 ? (
             ownersSheets.map((sheet: OwnersSheetTypes, i) => (
               <SheetAccordion title={sheet.fileName} key={i}>
-                <OwnersTable data={sheet.data} fileIndex={i} />
+                <OwnersTable
+                  count={sheet.data.length}
+                  noPagination={true}
+                  data={sheet.data}
+                  fileIndex={i}
+                />
                 <Forms type={"createOwnersSheet"} index={i} />
               </SheetAccordion>
             ))
