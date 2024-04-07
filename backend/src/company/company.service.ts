@@ -82,12 +82,12 @@ export class CompanyService {
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto,file: Express.Multer.File) {
     try{
-      updateCompanyDto._id = updateCompanyDto.licenseNo + updateCompanyDto.state;
+      //updateCompanyDto._id = updateCompanyDto.licenseNo + updateCompanyDto.state;
       updateCompanyDto.logo = file ? file.path : undefined;
       return await this.companyModel.findByIdAndUpdate(id, updateCompanyDto);
     }catch(err)
     {
-      throw new HttpException("Error while updating company" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
