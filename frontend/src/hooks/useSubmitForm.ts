@@ -4,7 +4,7 @@ import {
   CompaniesOptionsInitailValues,
   CompaniesOptionsSchema,
 } from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
-import useCompanySchema from "../forms/CompanyForm/useEditCompanySchema";
+import useCompanySchema from "../forms/CompanyForm/useCompanySchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
 import {
   ForgotPasswordInitailValues,

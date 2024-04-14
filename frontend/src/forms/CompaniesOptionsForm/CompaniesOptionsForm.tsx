@@ -26,7 +26,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
-    handleAddQuery({ search: value });
+    dispatch(getCompanies({ ...queries, search: value }));
   };
 
   const handleFilterByState = (value: string) => {
@@ -72,8 +72,6 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     setQueries({});
   };
 
-  (formik as unknown as CompaniesOptionsFormikTypes).values.search =
-    queries?.search || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.state =
     queries?.state || "";
   (formik as unknown as CompaniesOptionsFormikTypes).values.status =
@@ -139,11 +137,6 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             handling={() => setShowFilters(!showFilters)}
             icon={<FilterAltRounded />}
             bg={"!bg-green-500"}
-          />
-          <Button
-            handling={handleFilter}
-            title={"Filter"}
-            icon={<FilterListRounded />}
           />
           <Button
             handling={handleResetAll}
@@ -236,6 +229,13 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
                 />
               </Box>
             </Box>
+          </Box>
+          <Box className={`flex justify-end items-center`}>
+            <Button
+              handling={handleFilter}
+              title={"Filter"}
+              icon={<FilterListRounded />}
+            />
           </Box>
         </Box>
       </Box>

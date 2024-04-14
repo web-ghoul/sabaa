@@ -16,9 +16,21 @@ const useCompanySchema = () => {
     ownerId: yup.array(),
     licenseNo: yup.string().required("License Number is required"),
     immgCardNo: yup.string().required("Immg Card Number is required"),
-    immgCardExpiry: yup.string().required("Immg Card Expire Date is required"),
-    licenseIssueDate: yup.string().required("License Issue Date is required"),
-    licenseExpiryDate: yup.string().required("License Expire Date is required"),
+    licenseIssueDate: yup.date().required("License Issue Date is required"),
+    immgCardExpiry: yup
+      .date()
+      .required("Immg Card Expire Date is required")
+      .min(
+        yup.ref("licenseIssueDate"),
+        "IMMG Card Expire Date must be after License Issue Date"
+      ),
+    licenseExpiryDate: yup
+      .date()
+      .required("License Expire Date is required")
+      .min(
+        yup.ref("licenseIssueDate"),
+        "License Expiry Date must be after License Issue Date"
+      ),
     establishmentType: yup.string().required("Establishment Type is required"),
     email: yup.string().email("Email is inValid"),
     molCode: yup.string(),

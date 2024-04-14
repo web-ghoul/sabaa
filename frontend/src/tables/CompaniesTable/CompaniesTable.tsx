@@ -14,7 +14,6 @@ import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { TabsContext } from "../../contexts/TabsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
@@ -38,7 +37,6 @@ const CompaniesTable = ({
 }: CompaniesTableTypes) => {
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
-  const { setCompanyTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setCompanyIndex } = useContext(ExcelsContext);
   const { setEditableCompanyData } = useContext(FormsContext);
@@ -78,8 +76,6 @@ const CompaniesTable = ({
   const handleView = () => {
     if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
       handleAlert({ msg: "Under Development" });
-    } else {
-      setCompanyTabsValue(0);
     }
   };
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
+import { TabsContext } from "../contexts/TabsContext";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { AppDispatch, RootState } from "../store/store";
@@ -14,12 +15,14 @@ const User = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
+  const { setUserTabsValue } = useContext(TabsContext);
 
   useEffect(() => {
     if (id) {
       dispatch(getUser({ id }));
     }
-  }, [dispatch, id]);
+    setUserTabsValue(0);
+  }, [dispatch, id, setUserTabsValue]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

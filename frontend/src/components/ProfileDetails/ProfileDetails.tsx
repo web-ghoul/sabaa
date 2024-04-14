@@ -218,6 +218,10 @@ const ProfileDetails = ({
               </Typography>
               <Box className={profileInfoClasses}>
                 <DataBox
+                  title={"Arabic Name"}
+                  value={(data as CompanyTypes).nameAr}
+                />
+                <DataBox
                   title={"MOL Code"}
                   value={(data as CompanyTypes).molCode}
                 />
@@ -269,10 +273,6 @@ const ProfileDetails = ({
                 Company Information
               </Typography>
               <Box className={profileInfoClasses}>
-                <DataBox
-                  title={"Arabic Name"}
-                  value={(data as CompanyTypes).nameAr}
-                />
                 <DataBox title={"Email"} value={(data as CompanyTypes).email} />
                 <DataBox title={"Phone"} value={(data as CompanyTypes).phone} />
                 <DataBox

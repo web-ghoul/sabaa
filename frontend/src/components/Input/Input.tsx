@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { handleAcceptArabic } from "../../functions/handleAcceptArabic";
 import { handleAcceptEnglish } from "../../functions/handleAcceptEnglish";
-import { PrimaryTextArea } from "../../mui/fields/PrimaryTextArea";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { InputTypes } from "../../types/components.types";
 import { AllFormiksTypes, FormiksTypes } from "../../types/forms.types";
@@ -62,10 +61,26 @@ const Input = ({
               ))}
           </PrimaryTextField>
         ) : textarea ? (
-          <PrimaryTextArea
+          <Box
+            component={"textarea"}
+            sx={{
+              padding: "8px !important",
+              fontSize: "15px",
+              minWidth: "300px !important",
+              minHeight: "40px !important",
+              transition: "ease-in-out all 0.3",
+              backgroundColor: (theme) => theme.palette.common.white,
+              boxShadow: (theme) => theme.shadows["2"],
+              borderRadius: "4px",
+              border: "1px solid #ddd",
+              "&:placeholder": {
+                fontSize: "16px",
+                lineHeight: "1 !important",
+                backgroundColor: "transparent !important",
+              },
+            }}
             placeholder={`Enter ${label}`}
             onBlur={formik.handleBlur}
-            autoComplete={ac}
           />
         ) : (
           <PrimaryTextField
@@ -86,17 +101,17 @@ const Input = ({
               if (change) {
                 change(val);
               }
-              if (type !== "email") {
+              if (!(type === "email" || label?.toLowerCase() === "username")) {
                 e.target.value = val.toUpperCase();
               }
               if (label?.split(" ")[0].toLowerCase() === "arabic") {
-                e.target.value = handleAcceptArabic(val).toUpperCase();
+                e.target.value = handleAcceptArabic(e.target.value);
               }
               if (
                 label?.split(" ")[0].toLowerCase() === "english" ||
                 variant === "english"
               ) {
-                e.target.value = handleAcceptEnglish(val).toUpperCase();
+                e.target.value = handleAcceptEnglish(e.target.value);
               }
               formik.handleChange(e);
             }}

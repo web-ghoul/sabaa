@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { useContext } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -12,10 +12,16 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
     useContext(FormsContext);
 
   return (
-    <Paper
+    <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      <Title head={"h4"} align={"center"} title={"Add New Nationality"} />
+      {type === "addNationality" ? (
+        <Title head={"h4"} align={"left"} title={"Add New Nationality"} />
+      ) : (
+        type === "editNationality" && (
+          <Title head={"h4"} align={"left"} title={"Edit Nationality"} />
+        )
+      )}
 
       <Box className={`grid grid-cols-2 justify-stretch items-center gap-6`}>
         <Input
@@ -42,7 +48,7 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
           bg={"!bg-red-500"}
         />
       </Box>
-    </Paper>
+    </Box>
   );
 };
 

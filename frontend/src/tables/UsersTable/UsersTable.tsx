@@ -14,7 +14,6 @@ import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { TabsContext } from "../../contexts/TabsContext";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { AppDispatch, RootState } from "../../store/store";
 import { getUsersCounter } from "../../store/usersCounterSlice";
@@ -36,7 +35,6 @@ const UsersTable = ({
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
   const { userId } = useSelector((state: RootState) => state.auth);
-  const { setUserTabsValue } = useContext(TabsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { setEditableUserData } = useContext(FormsContext);
   const navigate = useNavigate();
@@ -71,7 +69,6 @@ const UsersTable = ({
 
   const handleView = (id: string) => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}/${id}`);
-    setUserTabsValue(0);
   };
 
   useEffect(() => {

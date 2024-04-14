@@ -13,7 +13,13 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4`}
     >
-      <Title align={"center"} head={"h3"} title={"Add New Job"} />
+      {type === "addJob" ? (
+        <Title head={"h4"} align={"left"} title={"Add New Job"} />
+      ) : (
+        type === "editJob" && (
+          <Title head={"h4"} align={"left"} title={"Edit Job"} />
+        )
+      )}
       <Box className={`grid justify-stretch items-center gap-6 grid-cols-3`}>
         <Input
           formik={formik}
