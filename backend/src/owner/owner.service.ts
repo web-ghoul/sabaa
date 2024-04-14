@@ -26,30 +26,40 @@ export class OwnerService {
   }
 
   findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = ''): Promise<Owner[]> {
-    const projection: any = {};
-    if (fields && fields.length > 0) {
-        fields.forEach(field => {
-            projection[field] = 1; // Include the field
-        });
+    try{
+      const projection: any = {};
+      if (fields && fields.length > 0) {
+          fields.forEach(field => {
+              projection[field] = 1; // Include the field
+          });
+      }
+      const sort:any = {}
+      if(sortType == "name_asc")
+      {
+        sort["name"] = 1; 
+      }else if(sortType == "code_asc")
+      {
+        sort["personCode"] = 1; 
+      }else
+      {
+        sort["createdAt"] = -1; 
+      } 
+      if(dobFrom != '' || dobTo == '')
+      {
+        dobTo = '9999-12-31';
+      }
+      const query = {$or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]}
+      dobFrom != '' ? query["dob"] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) } : null; 
+      nationality != '' ? query["nationality"] = nationality : null;
+      state != '' ? query["state"] = state : null;
+     
+  
+      return this.ownerModel.find(query).select(projection).limit(limit).skip(page*limit).sort(sort);
+    }catch(err)
+    {
+      throw new HttpException("Error while getting owners" , HttpStatus.FORBIDDEN);
     }
-    const sort:any = {}
-    if(sortType == "name_asc")
-    {
-      sort["name"] = 1; 
-    }else if(sortType == "code_asc")
-    {
-      sort["personCode"] = 1; 
-    }else
-    {
-      sort["createdAt"] = -1; 
-    } 
-    const query = {$or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]}
-    dobFrom != '' ? query["dob"] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) } : null; 
-    nationality != '' ? query["nationality"] = nationality : null;
-    state != '' ? query["state"] = state : null;
-   
-
-    return this.ownerModel.find(query).select(projection).limit(limit).skip(page*limit).sort(sort);
+    
   }
 
   async findOne(id: string) {
