@@ -6,8 +6,6 @@ export type EmployeeDocument = HydratedDocument<Employee>;
 @Schema({ timestamps: true })
 export class Employee {
   
-    @Prop({ required: true })
-    _id: string;
   
     @Prop({ required: true })
     employeeName: string;

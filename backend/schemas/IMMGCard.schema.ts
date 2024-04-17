@@ -5,8 +5,9 @@ export type IMMGCardDocument = HydratedDocument<IMMGCard>;
 
 @Schema({ timestamps: true })
 export class IMMGCard {
-  @Prop({ required: true })
-  _id: string;
+
+  @Prop({ required: true , unique: true })
+  id: string;
 
   @Prop({ enum: ["GDRFA", "ECHANEL", "ECHANELPersonal"], required: true })
   cardType : string

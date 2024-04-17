@@ -34,7 +34,7 @@ export class JobTitleService {
       sort["jobTitle"] = 1; 
     }else if(sortType == "code_asc")
     {
-      sort["_id"] = 1; 
+      sort["MOHRE"] = 1; 
     }else
     {
       sort["createdAt"] = -1; 
@@ -43,7 +43,7 @@ export class JobTitleService {
     return this.jobTitleModel.find({
       $or: [
         { jobTitle: { $regex: new RegExp(search, "i") } },
-        { _id: { $regex: new RegExp(search, "i") } } // Exact match for the _id field
+        { MOHRE: { $regex: new RegExp(search, "i") } } // Exact match for the _id field
     ]  
     })
     .select(projection) // Applying the projection

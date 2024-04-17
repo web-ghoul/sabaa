@@ -6,12 +6,10 @@ export type CompanyDocument = HydratedDocument<Company>;
 @Schema({ timestamps: true })
 export class Company {
 
- 
-
-  @Prop()
+  @Prop({unique: true})
   name: string;
 
-  @Prop()
+  @Prop({unique: true})
   nameAr: string;
 
   @Prop()
@@ -35,7 +33,7 @@ export class Company {
   @Prop({ type: Array, ref: 'Owner' })
   ownerId: string[];
 
-  @Prop()
+  @Prop({unique: true})
   licenseNo: string; //can be repeated but in different state
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'IMMGCard' })
@@ -53,7 +51,7 @@ export class Company {
   @Prop()
   establishmentType: string;
 
-  @Prop()
+  @Prop({unique: true})
   molCode: string;
 
   @Prop()

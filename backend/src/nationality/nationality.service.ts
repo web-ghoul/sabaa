@@ -11,7 +11,8 @@ export class NationalityService {
 
   async create(createNationalityDto: CreateNationalityDto): Promise<Nationality> {
     try{
-      return await this.nationalityModel.create(createNationalityDto);
+      const nationality = new this.nationalityModel(createNationalityDto);
+      return await nationality.save();
     }catch(err)
     {
       throw new HttpException("Error while creating nationality" , HttpStatus.FORBIDDEN);
@@ -32,7 +33,7 @@ export class NationalityService {
       sort["nationality"] = 1; 
     }else if(sortType == "code_asc")
     {
-      sort["_id"] = 1; 
+      sort["id"] = 1; 
     }else
     {
       sort["createdAt"] = -1; 
@@ -42,7 +43,7 @@ export class NationalityService {
     return this.nationalityModel.find({
   $or: [
     { nationality: { $regex: new RegExp(search, "i") } },
-    { _id: { $regex: new RegExp(search, "i") } }
+    { id: { $regex: new RegExp(search, "i") } }
   ]
 }).select(projection).limit(limit).skip(page * limit).sort(sort);
 

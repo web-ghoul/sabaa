@@ -5,9 +5,9 @@ export type JobTitleDocument = HydratedDocument<JobTitle>;
 
 @Schema({ timestamps: true })
 export class JobTitle {
-  
-    @Prop({ required: true })
-    _id: string;
+
+    @Prop({ required: true ,unique:true})
+    MOHRE: string;
     @Prop()
     ENSCOCode: string;
     

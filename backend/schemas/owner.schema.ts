@@ -7,7 +7,7 @@ export type OwnerDocument = HydratedDocument<Owner>;
 export class Owner {
   
     @Prop({required:true})
-    _id: string; //not unique 
+    uid: string; //not unique 
 
     @Prop()
     name: string;

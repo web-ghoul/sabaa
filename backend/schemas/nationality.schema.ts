@@ -7,8 +7,8 @@ export type NationalityDocument = HydratedDocument<Nationality>;
 @Schema({ timestamps: true })
 export class Nationality {
   
-  @Prop({ required: true })
-  _id: string;
+  @Prop({ required: true ,unique: true})
+  id: string;
   @Prop()
   nationality: string;
 

@@ -81,7 +81,7 @@ export class CompanyService {
       filterQuery?.licenseFrom != '' ? query["licenseExpiryDate"] = { "$gte":filterQuery?.licenseFrom , "$lte":filterQuery?.licenseTo }  : undefined;
       filterQuery?.IMMGFrom != '' ? query["immgCardExpiry"] = { "$gte":filterQuery?.IMMGFrom , "$lte":filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date()} : undefined;
       
-      console.log(query);
+      
       
       
       return this.companyModel.find(query).select(projection).limit(limit).skip(page * limit).sort(sort);
@@ -101,7 +101,7 @@ export class CompanyService {
     try{
       //updateCompanyDto._id = updateCompanyDto.licenseNo + updateCompanyDto.state;
       updateCompanyDto.logo = file ? file.path : undefined;
-      return await this.companyModel.findByIdAndUpdate(id, updateCompanyDto);
+      return await this.companyModel.findByIdAndUpdate(id, updateCompanyDto, {new: true});
     }catch(err)
     {
       throw new HttpException(err , HttpStatus.FORBIDDEN);
