@@ -1,4 +1,7 @@
-export const handleDate = (date: Date | string): string => {
+export const handleDate = (
+  date: Date | string,
+  time: boolean = false
+): string => {
   let parsedDate: Date;
   if (!date) {
     return "";
@@ -21,5 +24,7 @@ export const handleDate = (date: Date | string): string => {
   };
   const formattedDate = parsedDate.toLocaleString("en-US", options);
   const [month, day, year] = formattedDate.split("/");
-  return `${day}/${month}/${year}`;
+  return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${
+    time ? year : year.split(",")[0]
+  }`;
 };

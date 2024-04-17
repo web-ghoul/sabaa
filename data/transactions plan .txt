@@ -1,0 +1,47 @@
+* Card Type :
+==========
+1- تصاريح العمل
+	PRE APPROVAL FOR WORK PERMIT
+	NEW ELECTRONIC WORK PERMIT
+	RENEW ELECTRONIC WORK PERMIT
+=====================
+2- تصاريح العمل على كفالة ذويهم
+	RELATIVE PRE APPROVAL FOR WORK PERMIT
+	NEW ON HUSBAND/FATHER SPONSORSHIP
+===================
+3- تصريح عمل الكتروني للمواطنين و دول الخليج
+	NATIONAL AND GCC ELECTRONIC WORK PERMIT
+	RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT	
+====================
+4-  تصريح عمل الكتروني لبعض الوقت والمؤقت
+	PART TIME PRE APPROVAL FOR WORK PERMIT
+	ELECTRONIC WORK PERMIT FOR PART TIME
+===============
+
+$$/////////////////////////////////////////////////////////$$
+
+* Transactions Form :
+#==================
+1- PRE APPROVAL FOR WORK PERMIT   <<=====  Only the following Card types are accepted
+	1- PRE APPROVAL FOR WORK PERMIT
+	2- RELATIVE PRE APPROVAL FOR WORK PERMIT
+	3- PART TIME PRE APPROVAL FOR WORK PERMIT
+#===================
+2- NEW ELECTRONIC WORK PERMIT <<=====  Only the following Card types are accepted
+	1- NEW ELECTRONIC WORK PERMIT
+	2- NATIONAL AND GCC ELECTRONIC WORK PERMIT
+	3- ELECTRONIC WORK PERMIT FOR PART TIME
+	4- NEW ON HUSBAND/FATHER SPONSORSHIP
+#====================
+3- RENEW ELECTRONIC WORK PERMIT  <<=====  Only the following Card types are accepted
+	1- RENEW ELECTRONIC WORK PERMIT
+	2- RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT
+
+$$/////////////////////////////////////////////////////////$$
+
+* Employee Status :
+#==================
+	1- Active
+	2- Cancel
+	3- Complaint
+	5- Abscond

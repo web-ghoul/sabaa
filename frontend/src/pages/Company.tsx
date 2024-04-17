@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
+import { TabsContext } from "../contexts/TabsContext";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getCompany } from "../store/companySlice";
@@ -16,12 +17,14 @@ const Company = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
+  const { setCompanyTabsValue } = useContext(TabsContext);
 
   useEffect(() => {
     if (id) {
       dispatch(getCompany({ id }));
     }
-  }, [dispatch, id]);
+    setCompanyTabsValue(0);
+  }, [dispatch, id, setCompanyTabsValue]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

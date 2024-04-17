@@ -32,6 +32,7 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
           label={"Username"}
           name={"name"}
           ac={"username"}
+          variant="english"
         />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input formik={formik} label={"Phone"} type={"number"} name={"phone"} />

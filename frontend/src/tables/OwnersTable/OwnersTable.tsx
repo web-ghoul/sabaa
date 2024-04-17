@@ -13,7 +13,6 @@ import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { TabsContext } from "../../contexts/TabsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
@@ -36,7 +35,6 @@ const OwnersTable = ({
 }: OwnersTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
-  const { setOwnerTabsValue } = useContext(TabsContext);
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
@@ -75,8 +73,6 @@ const OwnersTable = ({
   const handleView = () => {
     if (sheet) {
       handleAlert({ msg: "Under Development" });
-    } else {
-      setOwnerTabsValue(0);
     }
   };
 

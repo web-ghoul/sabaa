@@ -21,7 +21,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
 
   const handleSearch = (value: string) => {
-    handleAddQuery({ search: value });
+    dispatch(getUsers({ ...queries, search: value }));
   };
 
   const handleFilterByRole = (value: string) => {
@@ -47,8 +47,6 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
     queries.role || "";
   (formik as unknown as UsersOptionsFormikTypes).values.status =
     queries.status || "";
-  (formik as unknown as UsersOptionsFormikTypes).values.search =
-    queries.search || "";
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
@@ -94,11 +92,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             bg={"!bg-green-500"}
             handling={() => setShowFilters(!showFilters)}
           />
-          <Button
-            icon={<FilterListRounded />}
-            title={"Filter"}
-            handling={handleFilter}
-          />
+
           <Button
             title={"Reset All"}
             handling={handleResetAll}
@@ -125,6 +119,11 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             select
             formik={formik}
             change={handleFilterByRole}
+          />
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
           />
         </Box>
       </Box>

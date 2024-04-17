@@ -5,6 +5,8 @@ export const PrimaryTextArea = styled(TextareaAutosize)(({ theme }) => ({
   padding: "10px !important",
   fontSize: "16px",
   minWidth: "300px !important",
+  minHeight: "40px !important",
+  transition: "ease-in-out all 0.3",
   backgroundColor: theme.palette.common.white,
   boxShadow: theme.shadows["2"],
   borderRadius: "4px",

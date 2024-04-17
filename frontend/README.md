@@ -109,11 +109,11 @@ Notes
 
 
 Notes :
-  1- Limit ALL 
+  1- Limit ALL  (Done)
   2- Edit Date For day-month-year (Done)
-  3- Make Remark Textarea (Done)
+  3- Make Remark Textarea (Done) 
   4- Reduce Spaces between textField (Done)
-  6- Don't Delete From Database Even Deleted it (Working By Amr)
+  6- Don't Delete From Database Even Deleted it (Working By Amr) (Done)
   7- Value of tab will be reset every view (Done)
   8- Email Validate Input (Done)
   9- Every Input will be do specific (Done)
@@ -123,9 +123,9 @@ Notes :
   13- Handle Input Label (Done)
   14- Handle Form Shape with error message (Done)
   15- Add Person code at edit owner (Done)
-  16- Error Message for wrong create sheet (Working By Amr)
+  16- Error Message for wrong create sheet (Working By Amr) (Done)
   17- Download Sample for upload Sheet (Pending)
-  18- Refuse Any sheet different when upload (Pending)
+  18- Refuse Any sheet different when upload (Done)
   19- Filter By And Concept not Or (Mistake By Me and it will fix when finish filter all button) (Done)
   20- Filter button For all Filter to work (Done)
   21- when click on item of sidebar don't reset filters (Done)
@@ -139,6 +139,79 @@ Notes :
   29- Placeholder For search Like (Search by Name , Code) (Done)
   30- Pagination of table change to default table's pagination in MUI (Done)
   31- Filter By Date From to To (Working By Amr) [Owner => (dobFrom ,dobTo) , Company => [(IMMGFrom , IMMGTo) , (licenseFrom , licenseTo)]] (Done)
-  32- Use Mongo Id for All Tables (Talking at Meeting)
+  32- Use Mongo Id for All Tables (Done) 
   33- Gap between Tabs And Components (Done)
-  34- Interal Server Error For Edit Company When Choose New State (Working By Amr)
+  34- Interal Server Error For Edit Company When Choose New State (Working By Amr) (Done)
+
+
+
+
+
+  Notes for Sprint 3 :
+  1- Transaction:
+
+    Forms
+      Work Permit: (Employee name (10) , Gender , Nationaliy , Date of birth) (Sort)
+        1- Serial Number  
+        2- Person Code
+        3- Transaction Number 
+        4- Gender
+        5- Company 
+        6- Employee 
+        7- Date of Birth 
+        8- Nationality
+        9- Passport Number
+        10- Passport Expire Date
+        11- Job
+        12- UID Number
+        13- Emirats ID Number
+
+      New Labour Card:
+        1- LC Number
+        2- LC Expire Date
+        3- Emirates ID Number
+
+  2- Employees
+    Form
+      Make by owner
+
+    Renew Labour Card
+
+  4- Reports
+    1- Employees List
+      1- Downloads (Active , Cancel, Expire)
+
+    2- Companies List
+      1- Dowmload (Companies List , Company Details)
+
+    3- Transactions List
+     1- Download one file just
+
+    4- Employees List will be ()
+
+  5- Settings
+    1- Permitions
+      1- Show Forms
+      2- Controls (Add , Edit , Delete)
+      3- Upload (Upload Owners , Upload Companies, Upload Employees , Upload Jobs, Upload Nationalities)
+
+    2- Options (All Forms)
+      1- Manage States
+      2- Manage Establishment Types
+      3- MOL Category
+      4- License Issue Place
+
+
+
+notes
+1- Search alone not with filter and filter button with filters (Done)
+2- Keep in date 2 decila like 01/2 and remove time from all except creatd (Done)
+3- transition for remark (Done)
+4- From view Bug still of tabs (Done)
+5- Get all nationalities (Done)
+6- Remarks , Tenancy Contract Expire Date (Amr)
+7- Mongo Id for company (Amr)
+8- when click on item of sidebar don't reset filters (Done)
+9- Arabic name incluse to business details (Done)
+10- Username will be english and lower and upper (Done)
+11- Username is unique (Amr)

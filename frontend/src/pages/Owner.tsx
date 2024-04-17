@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
+import { TabsContext } from "../contexts/TabsContext";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getOwner } from "../store/ownerSlice";
@@ -16,12 +17,14 @@ const Owner = () => {
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
+  const { setOwnerTabsValue } = useContext(TabsContext);
 
   useEffect(() => {
     if (id) {
       dispatch(getOwner({ id }));
     }
-  }, [dispatch, id]);
+    setOwnerTabsValue(0);
+  }, [dispatch, id, setOwnerTabsValue]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

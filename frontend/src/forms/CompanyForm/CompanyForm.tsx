@@ -25,7 +25,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
+      className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl transition-all h-full`}
     >
       {type?.startsWith("add") ? (
         <Title head={"h4"} align={"left"} title={"Add New Company"} />
