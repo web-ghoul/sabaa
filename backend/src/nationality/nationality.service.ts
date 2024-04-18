@@ -19,7 +19,7 @@ export class NationalityService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields:string[],sortType:string): Promise<Nationality[]> {  
+  findAll(limit: number, page: number, search:string,fields:string[],sortType:string, deleted:boolean = false): Promise<Nationality[]> {  
     const projection: any = {};
     if (fields && fields.length > 0) {
         fields.forEach(field => {
@@ -44,7 +44,8 @@ export class NationalityService {
   $or: [
     { nationality: { $regex: new RegExp(search, "i") } },
     { id: { $regex: new RegExp(search, "i") } }
-  ]
+  ],
+  deleted : deleted
 }).select(projection).limit(limit).skip(page * limit).sort(sort);
 
   }

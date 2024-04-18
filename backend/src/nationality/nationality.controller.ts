@@ -15,8 +15,8 @@ export class NationalityController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[], @Query('sort') sort: string): Promise <Nationality[]> {
-    return this.nationalityService.findAll(limit,page,search,selectFields,sort);
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[], @Query('sort') sort: string, @Query('deleted') deleted: boolean): Promise <Nationality[]> {
+    return this.nationalityService.findAll(limit,page,search,selectFields,sort,deleted);
   }
 
   @Get("counters")

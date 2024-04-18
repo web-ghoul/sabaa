@@ -25,7 +25,7 @@ export class OwnerService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = ''): Promise<Owner[]> {
+  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = '', deleted : boolean = false): Promise<Owner[]> {
     try{
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -52,8 +52,10 @@ export class OwnerService {
       dobFrom != '' ? query["dob"] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) } : null; 
       nationality != '' ? query["nationality"] = nationality : null;
       state != '' ? query["state"] = state : null;
-     
-  
+      deleted != false ? query["deleted"] = deleted :  query["deleted"] = false;
+      
+      console.log(query);
+      
       return this.ownerModel.find(query).select(projection).limit(limit).skip(page*limit).sort(sort);
     }catch(err)
     {

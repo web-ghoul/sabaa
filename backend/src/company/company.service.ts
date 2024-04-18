@@ -121,7 +121,6 @@ export class CompanyService {
       .populate([
         { path: 'ownerId', model: 'Owner' },
         { path: 'proCode', model: 'Owner' },
-        { path: 'immgCardNo', model: 'IMMGCard' },
       ])
       .exec();
   }
