@@ -12,10 +12,10 @@ export const getUsers = createAsyncThunk(
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit
-        ? args.limit === -1
-          ? ""
-          : args.limit
-        : import.meta.env.VITE_LIMIT_PAGES
+          ? args.limit == -1
+            ? ""
+            : args.limit
+          : import.meta.env.VITE_LIMIT_PAGES
       }&role=${args?.role || ""}&status=${args?.status || ""}&page=${
         args?.page || 0
       }`,

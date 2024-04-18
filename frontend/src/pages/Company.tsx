@@ -25,6 +25,7 @@ const Company = () => {
     }
     setCompanyTabsValue(0);
   }, [dispatch, id, setCompanyTabsValue]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

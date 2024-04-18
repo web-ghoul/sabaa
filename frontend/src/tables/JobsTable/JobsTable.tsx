@@ -121,7 +121,7 @@ const JobsTable = ({
                     {row.ENSCOCode}
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
+                <PrimaryTableCell align="center">{row.MOHRE}</PrimaryTableCell>
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                     <MoreVertRounded />

@@ -10,6 +10,7 @@ import { RootState } from "../../store/store";
 import { ProfileDetailsTypes } from "../../types/components.types";
 import { CompanyTypes, OwnerTypes, UserTypes } from "../../types/store.types";
 import Button from "../Button/Button";
+import StatusBox from "../StatusBox/StatusBox";
 import Title from "../Title/Title";
 import UserBox from "../UserBox/UserBox";
 import DataBox from "./DataBox";
@@ -65,9 +66,11 @@ const ProfileDetails = ({
   const handleEditCompany = () => {
     if (company) {
       const c: CompanyTypes = { ...company };
-      c.ownerId = company.ownerId.map(
-        (owner) => (owner as OwnerTypes)._id
-      ) as string[];
+      if (company.ownerId) {
+        c.ownerId = company.ownerId.map(
+          (owner) => (owner as OwnerTypes)._id
+        ) as string[];
+      }
       setEditableCompanyData(c);
     }
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}/edit`);
@@ -109,7 +112,10 @@ const ProfileDetails = ({
             <DataBox title={"Email"} value={(data as UserTypes).email} />
             <DataBox title={"Phone"} value={(data as UserTypes).phone} />
             <DataBox title={"Role"} value={(data as UserTypes).role} />
-            <DataBox title={"Status"} value={(data as UserTypes).status} />
+            <DataBox
+              title={"Status"}
+              value={<StatusBox status={(data as UserTypes).status} />}
+            />
             {(data as UserTypes).createdAt && (
               <DataBox
                 title={"Created At"}

@@ -27,7 +27,7 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
         <Input
           formik={formik}
           label={"Nationality Id"}
-          name={"_id"}
+          name={"id"}
           type={"number"}
         />
         <Input

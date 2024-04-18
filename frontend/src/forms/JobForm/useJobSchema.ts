@@ -9,13 +9,13 @@ const useJobSchema = () => {
   const JobSchema = yup.object({
     jobTitle: yup.string().required("Job Title is required"),
     ENSCOCode: yup.string().required("ENSCO Code is required"),
-    _id: yup.string().required("MOHRE Code is required"),
+    MOHRE: yup.string().required("MOHRE Code is required"),
   });
 
   const JobInitailValues = {
     jobTitle: editableJobData?.jobTitle || "",
     ENSCOCode: editableJobData?.ENSCOCode || "",
-    _id: editableJobData?._id || "",
+    MOHRE: editableJobData?.MOHRE || "",
   };
   return { JobSchema, JobInitailValues };
 };

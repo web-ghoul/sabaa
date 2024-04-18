@@ -112,7 +112,7 @@ const NationalitiesTable = ({
                 <PrimaryTableCell component="th" scope="row">
                   {row.nationality}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">{row._id}</PrimaryTableCell>
+                <PrimaryTableCell align="center">{row.id}</PrimaryTableCell>
                 <PrimaryTableCell align="right">
                   <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                     <MoreVertRounded />

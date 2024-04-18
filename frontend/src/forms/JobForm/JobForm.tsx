@@ -37,7 +37,7 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
           formik={formik}
           type={"number"}
           label={"MOHRE Code"}
-          name={"_id"}
+          name={"MOHRE"}
         />
       </Box>
       <Box className={`flex justify-center items-center gap-4`}>

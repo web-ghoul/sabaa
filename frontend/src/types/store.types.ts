@@ -118,7 +118,8 @@ interface UserValuesTypes {
 }
 
 interface OwnerTypes {
-  _id: string;
+  _id?: string;
+  uid: string;
   name: string;
   nameAr: string;
   avatar: string;
@@ -195,6 +196,7 @@ interface PROTypes {
 
 interface JobTypes {
   _id?: string;
+  MOHRE: string;
   ENSCOCode: string;
   jobTitle: string;
   user?: string;
@@ -202,6 +204,7 @@ interface JobTypes {
 
 interface NationalityTypes {
   _id?: string;
+  id: string;
   nationality: string;
   user?: string;
 }

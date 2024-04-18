@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -13,21 +12,15 @@ import UsersTable from "../tables/UsersTable/UsersTable";
 
 const Users = () => {
   const { users, isLoading } = useSelector((state: RootState) => state.users);
-  const { pageContainerClasses, setQueries } = useContext(AppContext);
+  const { pageContainerClasses, queries } = useContext(AppContext);
   const dispatch = useDispatch<AppDispatch>();
   const { usersCounter } = useSelector(
     (state: RootState) => state.usersCounter
   );
-  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setQueries(allParams);
-    dispatch(getUsers(allParams));
-  }, []);
+    dispatch(getUsers(queries));
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

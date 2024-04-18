@@ -33,7 +33,7 @@ const useCompanySchema = () => {
       ),
     establishmentType: yup.string().required("Establishment Type is required"),
     email: yup.string().email("Email is inValid"),
-    molCode: yup.string(),
+    molCode: yup.string().required("MOL Code is required"),
     molCategory: yup.string(),
     whatsAppNo: yup.string(),
     mobileNo: yup.string(),

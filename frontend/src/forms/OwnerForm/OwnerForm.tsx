@@ -46,6 +46,12 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           name={"personCode"}
           type={"number"}
         />
+        <Input
+          formik={formik}
+          label={"UID Number"}
+          name={"uid"}
+          type={"number"}
+        />
         <Input formik={formik} label={"English Name"} name={"name"} />
         <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
         {nationalities && nationalities.length > 0 && (

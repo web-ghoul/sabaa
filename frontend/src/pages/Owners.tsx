@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -16,18 +15,12 @@ const Owners = () => {
   const { ownersCounter } = useSelector(
     (state: RootState) => state.ownersCounter
   );
-  const { setQueries } = useContext(AppContext);
+  const { queries } = useContext(AppContext);
   const dispatch = useDispatch<AppDispatch>();
-  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    setQueries(allParams);
-    dispatch(getOwners(allParams));
-  }, []);
+    dispatch(getOwners(queries));
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

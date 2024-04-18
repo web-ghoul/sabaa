@@ -6,12 +6,12 @@ const useNationalitySchema = () => {
   const { editableNationalityData } = useContext(FormsContext);
 
   const NationalitySchema = yup.object({
-    _id: yup.string().required("Nationality Id is required"),
+    id: yup.string().required("Nationality Id is required"),
     nationality: yup.string().required("Nationality is required"),
   });
 
   const NationalityInitailValues = {
-    _id: editableNationalityData?._id || "",
+    id: editableNationalityData?.id || "",
     nationality: editableNationalityData?.nationality || "",
   };
 

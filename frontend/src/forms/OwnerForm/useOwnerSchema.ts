@@ -8,6 +8,7 @@ const useOwnerSchema = () => {
 
   const OwnerSchema = yup.object({
     personCode: yup.string().required("Person Code is required"),
+    uid: yup.string(),
     avatar: yup.string(),
     name: yup.string().required("English Name is required"),
     nameAr: yup.string().required("Arabic Name is required"),
@@ -21,7 +22,6 @@ const useOwnerSchema = () => {
     address: yup.string(),
     remarks: yup.string(),
     proCode: yup.boolean(),
-    _id: yup.string().required("UID Number is required"),
   });
 
   const OwnerInitailValues = {
@@ -42,7 +42,7 @@ const useOwnerSchema = () => {
     address: editableOwnerData?.address || "",
     proCode: editableOwnerData?.proCode || "",
     emiratesId: editableOwnerData?.emiratesId || "",
-    _id: editableOwnerData?._id || "",
+    uid: editableOwnerData?.uid || "",
   };
 
   useEffect(() => {

@@ -49,11 +49,11 @@ const UploadExcel = ({
     }
     for (let i = 1; i < data.length; i++) {
       const job: JobTypes = {
-        _id: "",
+        MOHRE: "",
         ENSCOCode: "",
         jobTitle: "",
       };
-      job["_id"] = `${data[i][0]}`;
+      job["MOHRE"] = `${data[i][0]}`;
       job["ENSCOCode"] = `${data[i][1]}`;
       job["jobTitle"] = `${data[i][2]}`;
       jobs.push(job);
@@ -75,10 +75,10 @@ const UploadExcel = ({
     }
     for (let i = 1; i < data.length; i++) {
       const nationality: NationalityTypes = {
-        _id: "",
+        id: "",
         nationality: "",
       };
-      nationality["_id"] = `${data[i][0]}`;
+      nationality["id"] = `${data[i][0]}`;
       nationality["nationality"] = `${data[i][1]}`;
       nationalities.push(nationality);
     }
@@ -112,7 +112,7 @@ const UploadExcel = ({
     }
     for (let i = 1; i < data.length; i++) {
       const owner: OwnerTypes = {
-        _id: "",
+        uid: "",
         nationality: "",
         avatar: "",
         name: "",
@@ -137,7 +137,7 @@ const UploadExcel = ({
       owner["emiratesId"] = `${data[i][5]}`;
       owner["dob"] = new Date(`${data[i][6]}`);
       owner["phone"] = `${data[i][7]}`;
-      owner["_id"] = `${data[i][8]}`;
+      owner["uid"] = `${data[i][8]}`;
       owner["email"] = `${data[i][9]}`;
       owner["remarks"] = `${data[i][10]}`;
       owner["state"] = `${data[i][11]}`;
@@ -148,6 +148,8 @@ const UploadExcel = ({
   };
 
   const handleCompaniesSheet = (data: Array<Row>, file: File) => {
+    console.log(data);
+
     const companies: CompanyTypes[] = [];
     if (
       !(

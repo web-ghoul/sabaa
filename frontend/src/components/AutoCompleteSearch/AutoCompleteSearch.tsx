@@ -28,7 +28,7 @@ export default function AutoCompleteSearch({
     if (name === "nationality") {
       const nationality = newValue as NationalityTypes;
       formik.setFieldValue(name, nationality.nationality);
-      formik.setFieldValue("idNationality", nationality._id);
+      formik.setFieldValue("idNationality", nationality.id);
     } else {
       const owners = newValue as OwnerTypes[];
       const IDs = owners.map((owner: OwnerTypes) => owner._id);
@@ -36,10 +36,10 @@ export default function AutoCompleteSearch({
     }
   };
 
-  const handleOptionLabel = (option: NationalityTypes) => {
+  const handleOptionLabel = (option: NationalityTypes | OwnerTypes) => {
     if (name === "nationality") {
       return `${(option as NationalityTypes).nationality} ( ${
-        (option as NationalityTypes)._id
+        (option as NationalityTypes).id
       } )`;
     } else if (name === "ownerId") {
       return `${(option as OwnerTypes).name} ( ${
@@ -51,9 +51,9 @@ export default function AutoCompleteSearch({
 
   const value =
     name === "nationality"
-      ? values.find(
+      ? (values as NationalityTypes[]).find(
           (option) =>
-            option._id ===
+            option.id ===
             (formik as unknown as OwnerFormikTypes).values.idNationality
         ) || null
       : (name === "ownerId" &&

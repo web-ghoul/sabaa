@@ -15,7 +15,7 @@ export const getCompanies = createAsyncThunk(
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit
-          ? args.limit === -1
+          ? args.limit == -1
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES

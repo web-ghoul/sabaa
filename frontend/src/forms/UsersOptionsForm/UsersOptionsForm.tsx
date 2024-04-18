@@ -47,6 +47,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
     queries.role || "";
   (formik as unknown as UsersOptionsFormikTypes).values.status =
     queries.status || "";
+
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}

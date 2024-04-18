@@ -20,7 +20,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getOwners({}));
+    dispatch(getOwners({ limit: -1 }));
   }, [dispatch]);
 
   return (

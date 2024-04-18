@@ -93,7 +93,7 @@ const useSubmitFunction = (type: string) => {
 
   const handleOwnerFormData = (values: OwnerFormTypes) => {
     const formData = new FormData();
-    formData.append("_id", values?._id);
+    formData.append("uid", values?.uid);
     formData.append("personCode", values.personCode);
     formData.append("avatar", ownerImage);
     formData.append("name", values.name);
@@ -122,17 +122,13 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status);
     if (values.ownerId.length > 0) {
       values.ownerId.map((owner) => {
-        formData.append("ownerId[]", owner);
+        formData.append("ownerId", owner);
       });
-    } else {
-      formData.append("ownerId[]", "");
     }
     if (values.proCode.length > 0) {
       values.proCode.map((pro) => {
-        formData.append("proCode[]", pro);
+        formData.append("proCode", pro);
       });
-    } else {
-      formData.append("proCode[]", "");
     }
     formData.append("state", values.state);
     formData.append("licenseNo", values.licenseNo);
