@@ -28,7 +28,7 @@ export class User {
   @Prop()
   status: string;
 
-  @Prop()
+  @Prop({default : false})
   deleted: boolean;
 
 }

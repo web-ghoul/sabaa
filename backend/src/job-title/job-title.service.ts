@@ -20,7 +20,7 @@ export class JobTitleService {
     }
   }
 
-  findAll(limit: number, page: number, search:string, fields: string[],sortType:string): Promise<JobTitle[]> {  
+  findAll(limit: number, page: number, search:string, fields: string[],sortType:string, deleted: boolean = false): Promise<JobTitle[]> {  
     const projection: any = {};
     if (fields && fields.length > 0) {
         fields.forEach(field => {
@@ -40,11 +40,14 @@ export class JobTitleService {
       sort["createdAt"] = -1; 
     }
 
+
+
     return this.jobTitleModel.find({
       $or: [
         { jobTitle: { $regex: new RegExp(search, "i") } },
-        { MOHRE: { $regex: new RegExp(search, "i") } } // Exact match for the _id field
-    ]  
+        { MOHRE: { $regex: new RegExp(search, "i") } }, // Exact match for the _id field
+    ]  ,
+      deleted: deleted
     })
     .select(projection) // Applying the projection
     .limit(limit)

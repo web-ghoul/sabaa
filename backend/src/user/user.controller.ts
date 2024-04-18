@@ -23,8 +23,8 @@ export class UserController {
 
   
   @Get()
-  listUsers(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('sort') sort: string, @Query('status') status: string, @Query('role') role: string): Promise<User[]> {
-    return this.userService.listUsers(limit, page, search,sort,status,role);
+  listUsers(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('sort') sort: string, @Query('status') status: string, @Query('role') role: string, @Query('deleted') deleted: boolean): Promise<User[]> {
+    return this.userService.listUsers(limit, page, search,sort,status,role,deleted);
   }
 
   @UseGuards(AuthGuard)

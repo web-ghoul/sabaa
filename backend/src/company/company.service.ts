@@ -25,6 +25,7 @@ export class CompanyService {
       return await this.companyModel.create(createCompanyDto);
     }catch(err)
     {
+      console.log(err)
       throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
@@ -80,6 +81,7 @@ export class CompanyService {
       filterQuery?.molCategory != '' ? query["molCategory"] = filterQuery?.molCategory : undefined;
       filterQuery?.licenseFrom != '' ? query["licenseExpiryDate"] = { "$gte":filterQuery?.licenseFrom , "$lte":filterQuery?.licenseTo }  : undefined;
       filterQuery?.IMMGFrom != '' ? query["immgCardExpiry"] = { "$gte":filterQuery?.IMMGFrom , "$lte":filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date()} : undefined;
+      filterQuery?.deleted != '' ? query["deleted"] = filterQuery.deleted : false;
       
       
       
@@ -93,7 +95,7 @@ export class CompanyService {
   }
 
   findOne(id: string) {
-    return this.companyModel.findById(id).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }, { path: 'immgCardNo', model: 'IMMGCard' }]).exec();
+    return this.companyModel.findById(id).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }]).exec();
   }
 
 

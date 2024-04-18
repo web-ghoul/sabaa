@@ -66,7 +66,7 @@ export class UserService {
     return {message : "account updated successfully"}
   }
 
-  listUsers(limit: number, page: number, search:string,sortType:string,status:string = '',role:string = ''): Promise<User[]> {
+  listUsers(limit: number, page: number, search:string,sortType:string,status:string = '',role:string = '', deleted: boolean = false): Promise<User[]> {
 
     const sort:any = {}
     if(sortType == "name_asc")
@@ -81,6 +81,10 @@ export class UserService {
 
     status != '' ? query['status'] = status : null;
     role != '' ? query['role'] = role : null;
+    deleted != false ? query['deleted'] = deleted : false;
+
+    console.log(query)
+
     return this.userModel.find(query, "-password").limit(limit).skip(page*limit).sort(sort);
 }
   displayUser(id: Schema.Types.ObjectId): Promise<User> {
@@ -102,7 +106,7 @@ export class UserService {
 
   async deleteUser(id: ObjectId){
     try{
-      await this.userModel.findByIdAndDelete(id);      
+      await this.userModel.findByIdAndUpdate(id, {deleted: true});      
     }catch(err)
     {
       throw new HttpException("Error while deleting user" , HttpStatus.FORBIDDEN);

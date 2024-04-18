@@ -20,8 +20,8 @@ export class OwnerController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('dobFrom')dobFrom:string,@Query('nationality')nationality:string,@Query('state')state:string,@Query('dobTo')dobTo:string): Promise<Owner[]> {
-    return this.ownerService.findAll(limit,page,search,selectFields,sort,nationality,state,dobFrom,dobTo);
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('dobFrom')dobFrom:string,@Query('nationality')nationality:string,@Query('state')state:string,@Query('dobTo')dobTo:string,@Query('deleted')deleted:boolean): Promise<Owner[]> {
+    return this.ownerService.findAll(limit,page,search,selectFields,sort,nationality,state,dobFrom,dobTo,deleted);
   }
   @Get("counters")
   getCounters(){

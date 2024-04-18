@@ -25,7 +25,7 @@ export class Role {
   @Prop({default : false})
   addEmployee: string;
 
-  @Prop()
+  @Prop({default : false})
   deleted: boolean;
 }
 

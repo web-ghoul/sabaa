@@ -95,7 +95,7 @@ export class Company {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 
-  @Prop()
+  @Prop({default : false})
   deleted: boolean;
 }
 

@@ -17,8 +17,8 @@ export class JobTitleController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('select') selectFields: string[], @Query('sort') sort: string):Promise<JobTitle[]>{
-    return this.jobTitleService.findAll(limit,page,search,selectFields,sort);
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('select') selectFields: string[], @Query('sort') sort: string,@Query('deleted') deleted: boolean):Promise<JobTitle[]>{
+    return this.jobTitleService.findAll(limit,page,search,selectFields,sort,deleted);
   }
 
   @Get("counters")
