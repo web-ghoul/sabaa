@@ -26,7 +26,7 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
         [type]
       )}
 
-      <Box className={`grid grid-cols-3 justify-stretch items-end gap-6`}>
+      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input
           formik={formik}
           label={"Username"}

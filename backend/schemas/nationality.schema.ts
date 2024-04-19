@@ -9,6 +9,7 @@ export class Nationality {
   
   @Prop({ required: true ,unique: true})
   id: string;
+  
   @Prop()
   nationality: string;
 

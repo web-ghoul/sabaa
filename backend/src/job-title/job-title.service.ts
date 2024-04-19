@@ -81,8 +81,13 @@ export class JobTitleService {
   }
 
   async getCounters() {
-    const count = await this.jobTitleModel.estimatedDocumentCount();
+    const [count,deleted] = await Promise.all([
+      this.jobTitleModel.countDocuments({ deleted: false }),
+    this.jobTitleModel.countDocuments({ deleted: true })
+    ]) ;
     return {
-      count}
+      count,
+      deleted
+    };
   }
 }

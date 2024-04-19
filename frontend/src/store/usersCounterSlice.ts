@@ -34,11 +34,7 @@ export const usersCounterSlice = createSlice({
     });
     builder.addCase(getUsersCounter.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      let total = 0;
-      payload.map((role: { count: number }) => {
-        total += role.count;
-      });
-      state.usersCounter = total;
+      state.usersCounter = payload.count;
     });
     builder.addCase(getUsersCounter.rejected, (_, action) => {
       if (action.payload) {

@@ -15,8 +15,7 @@ export class NationalityService {
     createNationalityDto: CreateNationalityDto,
   ): Promise<Nationality> {
     try {
-      const nationality = new this.nationalityModel(createNationalityDto);
-      return await nationality.save();
+      return await this.nationalityModel.create(createNationalityDto);
     } catch (err) {
       console.log(err);
 
@@ -111,9 +110,13 @@ export class NationalityService {
     }
   }
   async getCounters() {
-    const count = await this.nationalityModel.estimatedDocumentCount();
+    const [count, deleted] = await Promise.all([
+      this.nationalityModel.countDocuments({ deleted: false }),
+      this.nationalityModel.countDocuments({ deleted: true }),
+    ]);
     return {
       count,
+      deleted,
     };
   }
 }

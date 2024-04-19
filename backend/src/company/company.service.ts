@@ -103,6 +103,9 @@ export class CompanyService {
             $lte: filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date(),
           })
         : undefined;
+      
+        filterQuery?.deleted != '' ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false
+
 
       return this.companyModel
         .find(query)
@@ -183,9 +186,13 @@ export class CompanyService {
   }
 
   async getCounters() {
-    const count = await this.companyModel.estimatedDocumentCount();
+    const [count,deleted] = await Promise.all([
+      this.companyModel.countDocuments({ deleted: false }),
+    this.companyModel.countDocuments({ deleted: true })
+    ]) ;
     return {
       count,
+      deleted
     };
   }
 }
