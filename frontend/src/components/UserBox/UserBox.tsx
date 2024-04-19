@@ -1,12 +1,19 @@
 import {
+  AccountCircleRounded,
   AdminPanelSettingsRounded,
   KeyboardArrowDownRounded,
+  LogoutRounded,
 } from "@mui/icons-material";
-import { Box, IconButton, Typography } from "@mui/material";
-import { useContext } from "react";
+import { Box, IconButton, Menu, Typography } from "@mui/material";
+import { useContext, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
+import { handleAlert } from "../../functions/handleAlert";
+import { logout } from "../../store/auth";
 import { UserBoxTypes } from "../../types/components.types";
+import Item from "../UserMenu/Item";
 
 const UserBox = ({
   avatar,
@@ -16,10 +23,29 @@ const UserBox = ({
   head,
   size,
   res,
-  variant
+  variant,
 }: UserBoxTypes) => {
-  const { handleOpenUserMenu, defaultAvatar ,defaultCompany} = useContext(AppContext);
+  const { defaultAvatar, defaultCompany } = useContext(AppContext);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const handleProfile = () => {
+    navigate(`${import.meta.env.VITE_PROFILE_ROUTE}`);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleAlert({ msg: "Logout Successfully", status: "success" });
+    navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
+  };
   return (
     <Box
       className={`flex justify-start items-center gap-2 sm:!gap-1 ${
@@ -48,7 +74,9 @@ const UserBox = ({
           src={
             avatar
               ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
-              : variant === "company" ? defaultCompany : defaultAvatar
+              : variant === "company"
+              ? defaultCompany
+              : defaultAvatar
           }
         />
       </Box>
@@ -67,12 +95,45 @@ const UserBox = ({
         )}
       </Box>
       {menu && (
-        <IconButton
-          onClick={handleOpenUserMenu}
-          className={`hover:text-primary`}
-        >
-          <KeyboardArrowDownRounded />
-        </IconButton>
+        <div>
+          <IconButton
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            className={`hover:text-primary`}
+          >
+            <KeyboardArrowDownRounded />
+          </IconButton>
+          <Menu
+            className={`grid justify-stretch items-center gap-0`}
+            open={Boolean(open)}
+            onClose={handleClose}
+            anchorEl={anchorEl}
+            elevation={3}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <Item
+              icon={<AccountCircleRounded />}
+              title={"Profile"}
+              handling={handleProfile}
+            />
+            <Item
+              icon={<LogoutRounded />}
+              title={"Logout"}
+              color={`!text-error`}
+              handling={handleLogout}
+            />
+          </Menu>
+        </div>
       )}
     </Box>
   );

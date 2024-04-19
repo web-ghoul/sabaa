@@ -8,7 +8,6 @@ import { PrimaryContainer } from "../../mui/boxes&containers/PrimaryContainer.ts
 import { RootState } from "../../store/store.ts";
 import SpecialsButtons from "../SpecialsButtons/SpecialsButtons.tsx";
 import UserBox from "../UserBox/UserBox.tsx";
-import UserMenu from "../UserMenu/UserMenu.tsx";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -69,7 +68,6 @@ const Header = () => {
               />
             )}
           </Box>
-          <UserMenu />
         </Box>
       </PrimaryContainer>
     </AppBar>
