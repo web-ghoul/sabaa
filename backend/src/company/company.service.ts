@@ -62,7 +62,7 @@ export class CompanyService {
       } else {
         sort['createdAt'] = -1;
       }
-
+      //query variable 
       const query = {
         $or: [
           { name: { $regex: new RegExp(search, 'i') } },
