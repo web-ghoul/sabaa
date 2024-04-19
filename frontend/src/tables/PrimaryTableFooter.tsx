@@ -47,8 +47,11 @@ const PrimaryTableFooter = ({
     for (const [key, value] of searchParams.entries()) {
       allParams[key] = value;
     }
+    console.log(variant);
+
     if (variant === "owners") {
       setOwnersPage(value);
+      console.log(searchForOwners);
       dispatch(
         getOwners({ page: value - 1, ...allParams, search: searchForOwners })
       );

@@ -10,7 +10,6 @@ import PrimaryTab from "../PrimaryTab";
 
 const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
   const { companyTabsValue } = useContext(TabsContext);
-
   return (
     <PrimaryTab
       tabsTitles={[
@@ -33,7 +32,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={1}>
         <OwnersTable
-          count={company ? company?.ownerId?.length : 0}
+          count={company?.ownerId?.length || 0}
           data={company && (company.ownerId as OwnerTypes[])}
           isLoading={isLoading}
           noPagination={true}

@@ -3,6 +3,7 @@ import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import { FormsContext } from "../contexts/FormsContext";
 import { getCompanies } from "../store/companiesSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
@@ -22,21 +23,38 @@ const PrimaryTablePagination = ({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { queries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
+  const {
+    searchForJobs,
+    searchForUsers,
+    searchForCompanies,
+    searchForNationalities,
+    searchForOwners,
+  } = useContext(FormsContext);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     handleAddQuery({ page: `${newPage}` });
     setSearchParams({ ...queries, page: `${newPage}` });
     setPage(newPage);
     if (variant === "owners") {
-      dispatch(getOwners({ ...queries, page: newPage }));
+      dispatch(
+        getOwners({ ...queries, page: newPage, search: searchForOwners })
+      );
     } else if (variant === "companies") {
-      dispatch(getCompanies({ ...queries, page: newPage }));
+      dispatch(
+        getCompanies({ ...queries, page: newPage, search: searchForCompanies })
+      );
     } else if (variant === "nationalities") {
-      dispatch(getNationalities({ ...queries, page: newPage }));
+      dispatch(
+        getNationalities({
+          ...queries,
+          page: newPage,
+          search: searchForNationalities,
+        })
+      );
     } else if (variant === "users") {
-      dispatch(getUsers({ ...queries, page: newPage }));
+      dispatch(getUsers({ ...queries, page: newPage, search: searchForUsers }));
     } else if (variant === "jobs") {
-      dispatch(getJobs({ ...queries, page: newPage }));
+      dispatch(getJobs({ ...queries, page: newPage, search: searchForJobs }));
     }
   };
 
@@ -45,15 +63,23 @@ const PrimaryTablePagination = ({
     handleAddQuery({ limit: `${val}` });
     setSearchParams({ ...queries, limit: `${val}` });
     if (variant === "owners") {
-      dispatch(getOwners({ ...queries, limit: val }));
+      dispatch(getOwners({ ...queries, limit: val, search: searchForOwners }));
     } else if (variant === "companies") {
-      dispatch(getCompanies({ ...queries, limit: val }));
+      dispatch(
+        getCompanies({ ...queries, limit: val, search: searchForCompanies })
+      );
     } else if (variant === "nationalities") {
-      dispatch(getNationalities({ ...queries, limit: val }));
+      dispatch(
+        getNationalities({
+          ...queries,
+          limit: val,
+          search: searchForNationalities,
+        })
+      );
     } else if (variant === "users") {
-      dispatch(getUsers({ ...queries, limit: val }));
+      dispatch(getUsers({ ...queries, limit: val, search: searchForUsers }));
     } else if (variant === "jobs") {
-      dispatch(getJobs({ ...queries, limit: val }));
+      dispatch(getJobs({ ...queries, limit: val, search: searchForJobs }));
     }
     setRowsPerPage(val);
     setPage(0);

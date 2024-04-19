@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -18,11 +19,15 @@ const Nationalities = () => {
     (state: RootState) => state.nationalitiesCounter
   );
   const { pageContainerClasses } = useContext(AppContext);
-  const { queries } = useContext(AppContext);
   const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getNationalities(queries));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    dispatch(getNationalities(allParams));
   }, [dispatch]);
   return (
     <PrimaryBox>

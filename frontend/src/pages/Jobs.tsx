@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -12,13 +13,18 @@ import JobsTable from "../tables/JobsTable/JobsTable";
 
 const Jobs = () => {
   const { isLoading, jobs } = useSelector((state: RootState) => state.jobs);
-  const { pageContainerClasses, queries } = useContext(AppContext);
+  const { pageContainerClasses } = useContext(AppContext);
   const { jobsCounter } = useSelector((state: RootState) => state.jobsCounter);
   const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getJobs(queries));
-  }, [dispatch]);
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    dispatch(getJobs(allParams));
+  }, []);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
