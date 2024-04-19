@@ -67,7 +67,9 @@ export class OwnerService {
   async findOne(id: string) {
     const [owner, companies] = await Promise.all([
       this.ownerModel.findById(id),
-      this.companyModel.find({ownerId: id}).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }, { path: 'immgCardNo', model: 'IMMGCard' }]).exec()
+      this.companyModel.find({ownerId: id}).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }]).exec()
+      //this.companyModel.find({ownerId: id}).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }, { path: 'immgCardNo', model: 'IMMGCard' }]).exec()
+
     ])
     return {owner,companies}
   }
