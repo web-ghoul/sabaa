@@ -104,8 +104,10 @@ export class CompanyService {
           })
         : undefined;
       
-        filterQuery?.deleted != '' ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false
-
+      filterQuery?.deleted != undefined ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false
+        
+      
+      
 
       return this.companyModel
         .find(query)
