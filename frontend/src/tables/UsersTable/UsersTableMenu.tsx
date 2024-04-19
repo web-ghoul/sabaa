@@ -61,7 +61,6 @@ const UsersTableMenu = () => {
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}
-        color={`text-error`}
         handling={handleDelete}
       />
     </Menu>

@@ -9,6 +9,7 @@ const useCompanySchema = () => {
     name: yup.string().required("Company English Name is required"),
     nameAr: yup.string().required("Company Arabic Name is required"),
     status: yup.string().required("Company Status is required"),
+    country: yup.string().required("Company Country is required"),
     state: yup.string().required("Company State is required"),
     address: yup.string().required("Company Address is required"),
     phone: yup.string().required("Company Phone is required"),
@@ -38,6 +39,8 @@ const useCompanySchema = () => {
     whatsAppNo: yup.string(),
     mobileNo: yup.string(),
     website: yup.string(),
+    licenseIssuePlace: yup.string(),
+    zipCode: yup.string(),
     trn: yup.string(),
     remarks: yup.string(),
   });
@@ -47,6 +50,7 @@ const useCompanySchema = () => {
     nameAr: editableCompanyData?.nameAr || "",
     status: editableCompanyData?.status || "",
     logo: editableCompanyData?.logo || "",
+    country: editableCompanyData?.country || "",
     state: editableCompanyData?.state || "",
     address: editableCompanyData?.address || "",
     email: editableCompanyData?.email || "",
@@ -78,9 +82,18 @@ const useCompanySchema = () => {
     molCategory: editableCompanyData?.molCategory || "",
     whatsAppNo: editableCompanyData?.whatsAppNo || "",
     mobileNo: editableCompanyData?.mobileNo || "",
+    zipCode: editableCompanyData?.zipCode || "",
     remarks: editableCompanyData?.remarks || "",
     trn: editableCompanyData?.trn || "",
     website: editableCompanyData?.website || "",
+    tenancyContractExp:
+      (editableCompanyData?.tenancyContractExp &&
+        new Date(editableCompanyData?.tenancyContractExp)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    tenancyContractValue: editableCompanyData?.tenancyContractValue || "",
+    licenseIssuePlace: editableCompanyData?.licenseIssuePlace || "",
   };
 
   return { CompanyInitailValues, CompanySchema };

@@ -20,7 +20,7 @@ const Owners = () => {
 
   useEffect(() => {
     dispatch(getOwners(queries));
-  }, [dispatch]);
+  }, []);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

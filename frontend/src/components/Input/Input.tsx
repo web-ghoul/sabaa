@@ -79,8 +79,19 @@ const Input = ({
                 backgroundColor: "transparent !important",
               },
             }}
+            id={name}
+            name={name}
+            defaultValue={
+              formik.values[name as keyof AllFormiksTypes] as string
+            }
+            onChange={(e) => {
+              const val = (e.target as HTMLTextAreaElement).value;
+              if (change) {
+                change(val);
+              }
+              formik.handleChange(e);
+            }}
             placeholder={`Enter ${label}`}
-            onBlur={formik.handleBlur}
           />
         ) : (
           <PrimaryTextField
@@ -101,7 +112,13 @@ const Input = ({
               if (change) {
                 change(val);
               }
-              if (!(type === "email" || label?.toLowerCase() === "username")) {
+              if (
+                !(
+                  type === "email" ||
+                  label?.toLowerCase() === "username" ||
+                  label?.toLowerCase() === "website"
+                )
+              ) {
                 e.target.value = val.toUpperCase();
               }
               if (label?.split(" ")[0].toLowerCase() === "arabic") {

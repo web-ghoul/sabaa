@@ -11,39 +11,48 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const OwnersTableMenu = () => {
+const EmployeesTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
+  const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const { handleOpenOwnerModal, handleOpenDeleteModal, editableOwnerData } =
+  const { handleOpenCompanyModal, handleOpenDeleteModal, editableCompanyData } =
     useContext(FormsContext);
-  const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
+  const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
     navigate(
-      `${import.meta.env.VITE_OWNERS_ROUTE}/${
-        editableOwnerData && editableOwnerData._id
+      `${import.meta.env.VITE_COMPANIES_ROUTE}/${
+        editableCompanyData && editableCompanyData._id
       }`
     );
   };
 
   const handleEdit = () => {
-    handleOpenOwnerModal("editOwner");
+    if (sheet) {
+      handleOpenCompanyModal("editCompany");
+    } else {
+      if (editableCompanyData) {
+        navigate(
+          `${import.meta.env.VITE_COMPANIES_ROUTE}/${
+            editableCompanyData._id
+          }/edit`
+        );
+      }
+    }
   };
 
   const handleDelete = () => {
     if (sheet) {
-      handleDeleteOwnerFromSheet();
+      handleDeleteCompanyFromSheet();
     } else {
-      handleOpenDeleteModal("owner");
+      handleOpenDeleteModal("company");
     }
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`);
   }, [pathname, sheet]);
-
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -81,4 +90,4 @@ const OwnersTableMenu = () => {
   );
 };
 
-export default OwnersTableMenu;
+export default EmployeesTableMenu;

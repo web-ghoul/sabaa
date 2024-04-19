@@ -59,7 +59,6 @@ const Header = () => {
             <SpecialsButtons />
           </Box>
           <Box className={`flex justify-end items-center gap-6`}>
-            {/* <BadgeNotification not={4} /> */}
             {!isLoading && user && (
               <UserBox
                 size={"medium"}

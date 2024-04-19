@@ -16,8 +16,9 @@ const UserBox = ({
   head,
   size,
   res,
+  variant
 }: UserBoxTypes) => {
-  const { handleOpenUserMenu, defaultAvatar } = useContext(AppContext);
+  const { handleOpenUserMenu, defaultAvatar ,defaultCompany} = useContext(AppContext);
 
   return (
     <Box
@@ -47,7 +48,7 @@ const UserBox = ({
           src={
             avatar
               ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
-              : defaultAvatar
+              : variant === "company" ? defaultCompany : defaultAvatar
           }
         />
       </Box>

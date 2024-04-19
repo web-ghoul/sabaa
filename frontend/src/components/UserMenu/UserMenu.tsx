@@ -31,7 +31,7 @@ const UserMenu = () => {
       anchorEl={openUserMenu}
       elevation={3}
       anchorOrigin={{
-        vertical: "bottom",
+        vertical: "top",
         horizontal: "right",
       }}
       transformOrigin={{

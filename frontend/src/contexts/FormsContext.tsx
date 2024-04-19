@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -65,6 +67,7 @@ export const FormsContext = createContext<FormsContextTypes>({
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
+  const { company } = useSelector((state: RootState) => state.company);
   const { defaultAvatar, defaultCompany } = useContext(AppContext);
 
   //Loading Form
@@ -229,6 +232,14 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
       setCompanyImage(editableCompanyData.logo);
     }
   }, [editableOwnerData, editableUserData, editableCompanyData]);
+
+  useEffect(() => {
+    if (company) {
+      console.log(company);
+
+      setEditableCompanyData(company);
+    }
+  }, [company]);
 
   const values = {
     formsLoading,

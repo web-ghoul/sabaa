@@ -3,6 +3,8 @@ import authReducers from "./auth.ts";
 import companiesCounterReducers from "./companiesCounterSlice.ts";
 import companiesReducers from "./companiesSlice.ts";
 import companyReducers from "./companySlice.ts";
+import employeesCounterReducers from "./employeesCounterSlice.ts";
+import employeesReducers from "./employeesSlice.ts";
 import jobsCounterReducers from "./jobsCounterSlice.ts";
 import jobsReducers from "./jobsSlice.ts";
 import nationalitiesCounterReducers from "./nationalitiesCounterSlice.ts";
@@ -24,10 +26,12 @@ export const store = configureStore({
     companies: companiesReducers,
     company: companyReducers,
     owners: ownersReducers,
+    employees: employeesReducers,
     owner: ownerReducers,
     ownersCounter: ownersCounterReducers,
     jobsCounter: jobsCounterReducers,
     companiesCounter: companiesCounterReducers,
+    employeesCounter: employeesCounterReducers,
     usersCounter: usersCounterReducers,
     nationalitiesCounter: nationalitiesCounterReducers,
   },

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
@@ -14,9 +14,11 @@ import { getJobs } from "../store/jobsSlice";
 import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
+import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsersCounter } from "../store/usersCounterSlice";
+import { getUser } from "../store/userSlice";
 import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
@@ -29,7 +31,6 @@ import {
   ResetPasswordFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
-import { handleDate } from "./../functions/handleDate";
 
 const server = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
@@ -76,6 +77,7 @@ const useSubmitFunction = (type: string) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
+  const { id } = useParams();
 
   const handleUserFormData = (values: UserFormTypes) => {
     const formData = new FormData();
@@ -122,19 +124,21 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status);
     if (values.ownerId.length > 0) {
       values.ownerId.map((owner) => {
-        formData.append("ownerId", owner);
+        formData.append("ownerId[]", owner);
       });
     }
     if (values.proCode.length > 0) {
       values.proCode.map((pro) => {
-        formData.append("proCode", pro);
+        formData.append("proCode[]", pro);
       });
     }
+    formData.append("country", values.country);
     formData.append("state", values.state);
     formData.append("licenseNo", values.licenseNo);
     formData.append("immgCardNo", values.immgCardNo);
     formData.append("immgCardExpiry", values.immgCardExpiry.toString());
     formData.append("licenseIssueDate", values.licenseIssueDate.toString());
+    formData.append("licenseIssuePlace", values.licenseIssuePlace);
     formData.append("licenseExpiryDate", values.licenseExpiryDate.toString());
     formData.append("establishmentType", values.establishmentType);
     formData.append("molCode", values.molCode);
@@ -142,12 +146,10 @@ const useSubmitFunction = (type: string) => {
     formData.append("whatsAppNo", values.whatsAppNo);
     formData.append("mobileNo", values.mobileNo);
     formData.append("website", values.website);
+    formData.append("zipCode", values.zipCode);
     formData.append("trn", values.trn);
     formData.append("tenancyContractValue", values.tenancyContractValue);
-    formData.append(
-      "tenancyContractExp",
-      handleDate(values.tenancyContractExp)
-    );
+    formData.append("tenancyContractExp", values.tenancyContractExp.toString());
     formData.append("remarks", values.remarks);
     return formData;
   };
@@ -380,7 +382,11 @@ const useSubmitFunction = (type: string) => {
           msg: "User is Updated Successfully",
           status: "success",
         });
-        dispatch(getUsers({}));
+        if (id && pathname === `${import.meta.env.VITE_USERS_ROUTE}/${id}`) {
+          dispatch(getUser({ id }));
+        } else {
+          dispatch(getUsers({}));
+        }
         dispatch(getProfile());
         handleCloseUserModal();
         setUserImage("");
@@ -440,7 +446,11 @@ const useSubmitFunction = (type: string) => {
             msg: "Owner is Updated Successfully",
             status: "success",
           });
-          dispatch(getOwners({}));
+          if (id && pathname === `${import.meta.env.VITE_OWNERS_ROUTE}/${id}`) {
+            dispatch(getOwner({ id }));
+          } else {
+            dispatch(getOwners({}));
+          }
           handleCloseOwnerModal();
           setOwnerImage("");
         })

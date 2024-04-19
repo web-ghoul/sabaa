@@ -32,6 +32,18 @@ interface OwnersArgsTypes {
   nationality?: string;
 }
 
+interface EmployeesValuesTypes {
+  isLoading: boolean;
+  employees: EmployeeTypes[] | null;
+}
+
+interface EmployeesArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+  limit?: number;
+}
+
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
@@ -41,18 +53,27 @@ interface OwnersCounterValuesTypes {
   isLoading: boolean;
   ownersCounter: number;
 }
+
+interface EmployeesCounterValuesTypes {
+  isLoading: boolean;
+  employeesCounter: number;
+}
+
 interface CompaniesCounterValuesTypes {
   isLoading: boolean;
   companiesCounter: number;
 }
+
 interface JobsCounterValuesTypes {
   isLoading: boolean;
   jobsCounter: number;
 }
+
 interface UsersCounterValuesTypes {
   isLoading: boolean;
   usersCounter: number;
 }
+
 interface NationalitiesCounterValuesTypes {
   isLoading: boolean;
   nationalitiesCounter: number;
@@ -229,6 +250,9 @@ export type {
   CompanyTypes,
   CompanyValuesTypes,
   EmployeeTypes,
+  EmployeesArgsTypes,
+  EmployeesCounterValuesTypes,
+  EmployeesValuesTypes,
   JobTypes,
   JobsArgsTypes,
   JobsCounterValuesTypes,

@@ -10,6 +10,7 @@ import { RootState } from "../../store/store";
 import { ProfileDetailsTypes } from "../../types/components.types";
 import { CompanyTypes, OwnerTypes, UserTypes } from "../../types/store.types";
 import Button from "../Button/Button";
+import LinkBox from "../LinkBox/LinkBox";
 import StatusBox from "../StatusBox/StatusBox";
 import Title from "../Title/Title";
 import UserBox from "../UserBox/UserBox";
@@ -201,6 +202,7 @@ const ProfileDetails = ({
                 size={"3xlarge"}
                 head={"h4"}
                 res={true}
+                variant={"company"}
               />
               <Box className={profileButtonsClasses}>
                 <PrimaryButton
@@ -283,15 +285,29 @@ const ProfileDetails = ({
                 <DataBox title={"Phone"} value={(data as CompanyTypes).phone} />
                 <DataBox
                   title={"Status"}
-                  value={(data as CompanyTypes).status}
+                  value={<StatusBox status={(data as CompanyTypes).status} />}
                 />
                 <DataBox
+                  title={"Country"}
+                  value={(data as CompanyTypes).country}
+                />
+                <DataBox title={"State"} value={(data as CompanyTypes).state} />
+                <DataBox
                   title={"Website"}
-                  value={(data as CompanyTypes).website}
+                  value={<LinkBox link={(data as CompanyTypes).website} />}
                 />
                 <DataBox
                   title={"Whatsapp Number"}
                   value={(data as CompanyTypes).whatsAppNo}
+                />
+                <DataBox
+                  title={"Mobile Number"}
+                  value={(data as CompanyTypes).mobileNo}
+                />
+                <DataBox title={"TRN"} value={(data as CompanyTypes).trn} />
+                <DataBox
+                  title={"Zip Code"}
+                  value={(data as CompanyTypes).zipCode}
                 />
                 <DataBox
                   title={"Remarks"}

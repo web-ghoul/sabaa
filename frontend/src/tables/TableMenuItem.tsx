@@ -14,7 +14,13 @@ const TableMenuItem = ({ icon, title, color, handling }: MenuItemTypes) => {
   return (
     <MenuItem
       onClick={handleClick}
-      className={`flex justify-start items-start gap-2 !text-black !${color} hover:!text-primary `}
+      className={`flex justify-start items-start gap-2 ${
+        title.toLowerCase() === "view"
+          ? "!text-green-500"
+          : title.toLowerCase() === "edit"
+          ? "!text-blue-500"
+          : title.toLowerCase() === "delete" && "!text-red-500"
+      } !${color}`}
       sx={{ "& >svg": { fontSize: "18px" } }}
     >
       {icon}

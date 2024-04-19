@@ -23,6 +23,7 @@ interface UserBoxTypes {
   head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2";
   size: "small" | "medium" | "large" | "xlarge" | "2xlarge" | "3xlarge";
   res?: boolean;
+  variant?: string;
 }
 
 interface BadgeNotificationTypes {
@@ -43,7 +44,7 @@ interface InputTypes {
   options?: Array<string>;
   ac?: string;
   textarea?: boolean;
-  variant?:string;
+  variant?: string;
   change?: (value: string) => void;
 }
 
@@ -128,6 +129,5 @@ export type {
   TitleTypes,
   UploadImageTypes,
   UploadStatusTypes,
-  UserBoxTypes
+  UserBoxTypes,
 };
-

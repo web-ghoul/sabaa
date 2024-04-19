@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { NationalityService } from './nationality.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Nationality } from 'schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
-import { Nationality } from 'schemas/nationality.schema';
-import { ApiTags } from '@nestjs/swagger';
+import { NationalityService } from './nationality.service';
 @ApiTags('Nationality')
 @Controller('nationality')
 export class NationalityController {
@@ -15,15 +24,28 @@ export class NationalityController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[], @Query('sort') sort: string, @Query('deleted') deleted: boolean): Promise <Nationality[]> {
-    return this.nationalityService.findAll(limit,page,search,selectFields,sort,deleted);
+  findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+    @Query('search') search: string,
+    @Query('select') selectFields: string[],
+    @Query('sort') sort: string,
+    @Query('deleted') deleted: boolean,
+  ): Promise<Nationality[]> {
+    return this.nationalityService.findAll(
+      limit,
+      page,
+      search,
+      selectFields,
+      sort,
+      deleted,
+    );
   }
 
-  @Get("counters")
-  getCounters(){
+  @Get('counters')
+  getCounters() {
     return this.nationalityService.getCounters();
   }
-
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -31,7 +53,10 @@ export class NationalityController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNationalityDto: UpdateNationalityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateNationalityDto: UpdateNationalityDto,
+  ) {
     return this.nationalityService.update(id, updateNationalityDto);
   }
 
@@ -41,8 +66,7 @@ export class NationalityController {
   }
 
   @Post('import')
-  importNationalities(@Body() createNationalityDto: CreateNationalityDto[])
-  {
+  importNationalities(@Body() createNationalityDto: CreateNationalityDto[]) {
     return this.nationalityService.importNationalities(createNationalityDto);
   }
 }
