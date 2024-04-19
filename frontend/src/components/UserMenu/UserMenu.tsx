@@ -30,14 +30,6 @@ const UserMenu = () => {
       onClose={handleCloseUserMenu}
       anchorEl={openUserMenu}
       elevation={3}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
     >
       <Item
         icon={<AccountCircleRounded />}

@@ -59,7 +59,7 @@ const App = () => {
       allParams[key] = value;
     }
     setQueries(allParams);
-  }, []);
+  }, [searchParams, setQueries]);
 
   return signed && !AuthRoutes.includes(pathname) ? (
     <Box sx={{ display: "flex" }} className={`bg-bg relative`}>

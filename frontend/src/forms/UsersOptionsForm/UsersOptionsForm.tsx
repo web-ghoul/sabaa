@@ -15,12 +15,14 @@ import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
 const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const { handleOpenUserModal } = useContext(FormsContext);
+  const { handleOpenUserModal, searchForUsers, setSearchForUsers } =
+    useContext(FormsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleSearch = (value: string) => {
+    setSearchForUsers(value);
     dispatch(getUsers({ ...queries, search: value }));
   };
 
@@ -34,7 +36,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getUsers(queries));
+    dispatch(getUsers({ ...queries, search: searchForUsers }));
   };
 
   const handleResetAll = () => {

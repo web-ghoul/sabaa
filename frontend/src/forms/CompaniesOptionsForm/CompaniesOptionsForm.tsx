@@ -11,6 +11,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
+import { FormsContext } from "../../contexts/FormsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
 import {
@@ -24,8 +25,11 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
+  const { searchForCompanies, setSearchForCompanies } =
+    useContext(FormsContext);
 
   const handleSearch = (value: string) => {
+    setSearchForCompanies(value);
     dispatch(getCompanies({ ...queries, search: value }));
   };
 
@@ -63,7 +67,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getCompanies(queries));
+    dispatch(getCompanies({ ...queries, search: searchForCompanies }));
   };
 
   const handleResetAll = () => {
@@ -150,7 +154,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           } overflow-hidden`}
         >
           <Box
-            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 md:grid-cols-2 md:grid xs:grid-cols-1`}
+            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 md:grid-cols-2 md:grid xs:grid-cols-1 flex-wrap`}
           >
             <Input
               label={"Filter By Status"}
@@ -186,11 +190,11 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             />
           </Box>
           <Box
-            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 xs:grid`}
+            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 xs:grid flex-wrap`}
           >
             <Box className={`grid gap-3`}>
               <Typography variant="h6">Filter By IMMG Expire Date</Typography>
-              <Box className={`flex gap-2`}>
+              <Box className={`flex gap-2 flex-wrap`}>
                 <Input
                   name={"IMMGFrom"}
                   type={"date"}
@@ -212,7 +216,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               <Typography variant="h6">
                 Filter By License Expire Date
               </Typography>
-              <Box className={`flex gap-2`}>
+              <Box className={`flex gap-2 flex-wrap`}>
                 <Input
                   name={"licenseFrom"}
                   label={"From"}

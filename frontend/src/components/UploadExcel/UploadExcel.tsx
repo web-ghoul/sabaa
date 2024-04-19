@@ -148,8 +148,6 @@ const UploadExcel = ({
   };
 
   const handleCompaniesSheet = (data: Array<Row>, file: File) => {
-    console.log(data);
-
     const companies: CompanyTypes[] = [];
     if (
       !(

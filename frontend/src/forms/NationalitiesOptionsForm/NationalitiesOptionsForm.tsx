@@ -6,19 +6,21 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
-import { AppContext } from "../../contexts/AppContext";
 
 const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenNationalityModal } = useContext(FormsContext);
+  const { handleOpenNationalityModal, setSearchForNationalities } =
+    useContext(FormsContext);
   const { queries } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
+    setSearchForNationalities(value);
     dispatch(getNationalities({ ...queries, search: value }));
   };
 

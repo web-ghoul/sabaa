@@ -235,8 +235,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (company) {
-      console.log(company);
-
       setEditableCompanyData(company);
     }
   }, [company]);

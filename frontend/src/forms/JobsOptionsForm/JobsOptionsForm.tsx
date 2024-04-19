@@ -15,10 +15,11 @@ import { FormiksTypes } from "../../types/forms.types";
 const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenJobModal } = useContext(FormsContext);
+  const { handleOpenJobModal, setSearchForJobs } = useContext(FormsContext);
   const { queries } = useContext(AppContext);
 
   const handleSearch = (value: string) => {
+    setSearchForJobs(value);
     dispatch(getJobs({ ...queries, search: value }));
   };
 

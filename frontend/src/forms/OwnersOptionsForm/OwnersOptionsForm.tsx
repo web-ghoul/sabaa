@@ -24,7 +24,8 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenOwnerModal } = useContext(FormsContext);
+  const { handleOpenOwnerModal, searchForOwners, setSearchForOwners } =
+    useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -33,6 +34,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   );
 
   const handleSearch = (value: string) => {
+    setSearchForOwners(value);
     dispatch(getOwners({ ...queries, search: value }));
   };
 
@@ -54,7 +56,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getOwners(queries));
+    dispatch(getOwners({ ...queries, search: searchForOwners }));
   };
 
   const handleResetAll = () => {
