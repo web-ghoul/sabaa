@@ -11,10 +11,13 @@ export class NationalityService {
 
   async create(createNationalityDto: CreateNationalityDto): Promise<Nationality> {
     try{
-      const nationality = new this.nationalityModel(createNationalityDto);
-      return await nationality.save();
+      
+
+      return await this.nationalityModel.create(createNationalityDto);
     }catch(err)
     {
+      console.log(err)
+
       throw new HttpException("Error while creating nationality" , HttpStatus.FORBIDDEN);
     }
   }
@@ -89,8 +92,13 @@ export class NationalityService {
     
   }
   async getCounters() {
-    const count = await this.nationalityModel.estimatedDocumentCount();
+    const [count,deleted] = await Promise.all([
+      this.nationalityModel.countDocuments({ deleted: false }),
+    this.nationalityModel.countDocuments({ deleted: true })
+    ]) ;
     return {
-      count}
+      count,
+      deleted
+    };
   }
 }

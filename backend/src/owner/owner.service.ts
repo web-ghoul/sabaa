@@ -112,8 +112,13 @@ export class OwnerService {
   }
 
   async getCounters() {
-    const count = await this.ownerModel.estimatedDocumentCount();
+    const [count,deleted] = await Promise.all([
+      this.ownerModel.estimatedDocumentCount({deleted : false}),
+      this.ownerModel.estimatedDocumentCount({deleted : true})
+    ]) ;
     return {
-      count}
+      count,
+      deleted
+    };
   }
 }

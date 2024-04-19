@@ -81,7 +81,7 @@ export class UserService {
 
     status != '' ? query['status'] = status : null;
     role != '' ? query['role'] = role : null;
-    deleted != false ? query['deleted'] = deleted : false;
+    deleted != false ? query['deleted'] = deleted : query['deleted'] = false;
 
     console.log(query)
 
@@ -93,16 +93,46 @@ export class UserService {
   findOne(email: string): Promise<User>{
     return this.userModel.findOne({email: email})
   }
-  userCounters(): Promise<object> {
-    return this.userModel.aggregate([
+  async userCounters(): Promise<object> {
+    const [roles,count,deleted] = await Promise.all([
+      this.userModel.aggregate([
       {
         $group: {
           _id: "$role",
           count: { $sum: 1 },
         },
       },
-    ]);
+    ])
+  ,
+  this.userModel.countDocuments({ deleted: false }),
+  this.userModel.countDocuments({ deleted: true })
+]
+)
+    return {roles , count , deleted}
+
+
+
+    // return this.userModel.aggregate( [
+    //   {
+    //     $group: {
+    //       _id: { role: "$role", deleted: "$deleted" },
+    //       count: { $sum: 1 }
+    //     }
+    //   },
+    //   {
+    //     $group: {
+    //       _id: "$_id.role",
+    //       counts: {
+    //         $push: {
+    //           deleted: "$_id.deleted",
+    //           count: "$count"
+    //         }
+    //       }
+    //     }
+    //   }
+    // ]);
   }
+ 
 
   async deleteUser(id: ObjectId){
     try{
