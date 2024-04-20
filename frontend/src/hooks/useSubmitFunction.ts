@@ -96,7 +96,9 @@ const useSubmitFunction = (type: string) => {
   const handleOwnerFormData = (values: OwnerFormTypes) => {
     const formData = new FormData();
     formData.append("uid", values?.uid);
-    formData.append("personCode", values.personCode.trim());
+    if (values.personCode) {
+      formData.append("personCode", values.personCode.trim());
+    }
     formData.append("avatar", ownerImage);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
@@ -106,7 +108,9 @@ const useSubmitFunction = (type: string) => {
     formData.append("idNationality", values.idNationality);
     formData.append("email", values.email.trim());
     formData.append("remarks", values.remarks.trim());
-    formData.append("emiratesId", values.emiratesId.trim());
+    if (values.emiratesId) {
+      formData.append("emiratesId", values.emiratesId.trim());
+    }
     formData.append("state", values.state.trim());
     formData.append("dob", values?.dob.toString().trim());
     formData.append("proCode", values.proCode ? "true" : "false");
