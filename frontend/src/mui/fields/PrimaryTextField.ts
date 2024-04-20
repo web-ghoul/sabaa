@@ -2,7 +2,7 @@ import { TextField, styled } from "@mui/material";
 
 export const PrimaryTextField = styled(TextField)(({ theme }) => ({
   minWidth: "auto !important",
-  width: "300px !important",
+  width: "100% !important",
   "& input , & select": {
     padding: "8px !important",
     fontSize: "14px",
@@ -23,7 +23,6 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     fontSize: "20px",
   },
   [theme.breakpoints.down("lg")]: {
-    width: "275px !important",
     "& input , & select": {
       padding: "9px !important",
       fontSize: "14px",
@@ -38,7 +37,6 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("md")]: {
-    width: "250px !important",
     "& input , & select": {
       padding: "8px !important",
       fontSize: "13px",
@@ -54,7 +52,6 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("sm")]: {
-    width: "225px !important",
     "& input , & select": {
       padding: "7px !important",
       fontSize: "12px",
@@ -69,7 +66,6 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("xs")]: {
-    width: "200px !important",
     "& input , & select": {
       padding: "7px !important",
       fontSize: "10px",

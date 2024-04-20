@@ -30,13 +30,15 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:grid-cols-1 md:gap-4 sm:!gap-2`}
       >
-        <Input
-          label={"Search Name, MOHRE..."}
-          name={"search"}
-          type={"search"}
-          formik={formik}
-          change={handleSearch}
-        />
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Name, MOHRE..."}
+            name={"search"}
+            type={"search"}
+            formik={formik}
+            change={handleSearch}
+          />
+        </Box>
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
         >

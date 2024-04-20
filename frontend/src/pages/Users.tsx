@@ -21,12 +21,10 @@ const Users = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
+    if (searchParams.size === 0) {
+      dispatch(getUsers({}));
     }
-    dispatch(getUsers(allParams));
-  }, []);
+  }, [dispatch, searchParams]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

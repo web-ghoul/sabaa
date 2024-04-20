@@ -8,6 +8,7 @@ import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 const AddCompany = () => {
   const { pageContainerClasses } = useContext(AppContext);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

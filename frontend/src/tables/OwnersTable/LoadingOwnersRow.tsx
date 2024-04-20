@@ -3,6 +3,7 @@ import { PrimaryTableCell } from "../PrimaryTableCell";
 import { OwnersTableRow } from "./OwnersTableRow";
 
 const LoadingOwnersRow = () => {
+  const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
   return (
@@ -16,6 +17,11 @@ const LoadingOwnersRow = () => {
         </PrimaryTableCell>
       )}
       {!lgScreen && (
+        <PrimaryTableCell align="center">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
+      {!smScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>

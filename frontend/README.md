@@ -101,11 +101,9 @@ Open Sidebar For Owner , Company , Employee , PROs , Transactions
 
 
 
-
 Notes
 1- Reverse of company name
 3- Status in query
-
 
 
 Notes :
@@ -142,8 +140,6 @@ Notes :
   32- Use Mongo Id for All Tables (Done) 
   33- Gap between Tabs And Components (Done)
   34- Interal Server Error For Edit Company When Choose New State (Working By Amr) (Done)
-
-
 
 
 
@@ -201,8 +197,6 @@ Notes :
       3- MOL Category
       4- License Issue Place
 
-
-
 notes
 1- Search alone not with filter and filter button with filters (Done)
 2- Keep in date 2 decila like 01/2 and remove time from all except creatd (Done)
@@ -215,3 +209,21 @@ notes
 9- Arabic name incluse to business details (Done)
 10- Username will be english and lower and upper (Done)
 11- Username is unique (Amr)
+
+
+
+New Notes:
+1- username is accept numbers (Done)
+2- id and nationality is unique (Amr)
+3- Cancel in edit company in upload excel (Done)
+4- website is not arabic accept (Done)
+5- MOHRE is unique (Amr)
+6- Don't refresh Sidebar buttons (Done)
+7- Seperate in Company form like profile  (Done)
+8- Phone is unique (Amr)
+9- View Current User  (Done)
+10- Person Code and phone is not input with type number (Done)
+11- Edit owner reset owner avatar (Done)
+12- Add Uid Number to owner table (Done)
+13- Person code and uid and emirate is unique in owner and Person Code is not required and uid is required (Done) (Amr)
+14- TRN is number only (Done)

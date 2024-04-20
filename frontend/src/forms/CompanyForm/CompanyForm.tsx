@@ -1,7 +1,7 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -14,14 +14,30 @@ import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
 const CompanyForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading } = useContext(FormsContext);
+  const { formsLoading, handleCloseCompanyModal, setCompanyImage } =
+    useContext(FormsContext);
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
+  const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+
+  const handleCancel = () => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
+      handleCloseCompanyModal();
+    } else {
+      navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
+    }
+  };
 
   useEffect(() => {
     dispatch(getOwners({ limit: -1 }));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (type?.startsWith("add")) {
+      setCompanyImage("");
+    }
+  }, [setCompanyImage, type]);
 
   return (
     <Paper
@@ -38,148 +54,177 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         [type]
       )}
 
-      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-        <Input formik={formik} label={"English Name"} name={"name"} />
-        <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
-        <Input
-          formik={formik}
-          select={true}
-          name={"status"}
-          label={"Status"}
-          options={["Active", "Inactive"]}
-        />
-        <Input formik={formik} label={"Country"} name={"country"} />
-        <Input
-          formik={formik}
-          select={true}
-          name={"state"}
-          label={"State"}
-          options={["dubai"]}
-        />
-
-        {owners && owners.length > 0 && (
-          <AutoCompleteSearch
-            label={"Owners"}
-            options={owners}
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Business Details
+        </Typography>
+        <Box className={`grid grid-cols-4 justify-stretch items-start gap-6`}>
+          <Input formik={formik} label={"English Name"} name={"name"} />
+          <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
+          <Input
             formik={formik}
-            name={"ownerId"}
-            multiple={true}
+            label={"MOL Code"}
+            name={"molCode"}
+            type={"text"}
+            variant={"numeric"}
           />
-        )}
+          <Input
+            formik={formik}
+            select={true}
+            name={"molCategory"}
+            label={"MOL Category"}
+            options={["cat1", "cat2", "cat3"]}
+          />
+          <Input
+            formik={formik}
+            label={"Establishment Type"}
+            name={"establishmentType"}
+            select
+            options={["type 1", "type 2", "type 3"]}
+          />
+          <Input
+            formik={formik}
+            label={"License Number"}
+            name={"licenseNo"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            label={"License Issue Place"}
+            name={"licenseIssuePlace"}
+            select
+            options={["place 1", "place 2", "place 3"]}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"licenseExpiryDate"}
+            label={"License Expire Date"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"licenseIssueDate"}
+            label={"License Issue Date"}
+          />
+          <Input
+            formik={formik}
+            label={"Immg Card Number"}
+            name={"immgCardNo"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"immgCardExpiry"}
+            label={"IMMG Card Expire Date"}
+          />
+          <Input
+            formik={formik}
+            label={"Tenancy Contract Value"}
+            name={"tenancyContractValue"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"tenancyContractExp"}
+            label={"Tenancy Contract Expire Date"}
+          />
+        </Box>
+      </Box>
+      <Divider />
 
-        <Input
-          formik={formik}
-          select={true}
-          name={"molCategory"}
-          label={"MOL Category"}
-          options={["cat1", "cat2", "cat3"]}
-        />
-        <Input
-          formik={formik}
-          label={"MOL Code"}
-          name={"molCode"}
-          type={"number"}
-        />
-        <Input formik={formik} label={"Address"} name={"address"} />
-        <Input formik={formik} label={"Phone"} name={"phone"} type={"number"} />
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
-        <Input
-          formik={formik}
-          label={"Mobile Number"}
-          name={"mobileNo"}
-          type={"number"}
-        />
-        <Input
-          formik={formik}
-          label={"WhatsApp Number"}
-          name={"whatsAppNo"}
-          type={"number"}
-        />
-        <Input formik={formik} label={"Website"} name={"website"} />
-        <Input
-          formik={formik}
-          label={"Zip Code"}
-          name={"zipCode"}
-          type={"number"}
-        />
-        <Input formik={formik} label={"TRN"} name={"trn"} />
-        <Input
-          formik={formik}
-          label={"Establishment Type"}
-          name={"establishmentType"}
-          select
-          options={["type 1", "type 2", "type 3"]}
-        />
-        <Input
-          formik={formik}
-          label={"License Number"}
-          name={"licenseNo"}
-          type={"number"}
-        />
-        <Input
-          formik={formik}
-          label={"Immg Card Number"}
-          name={"immgCardNo"}
-          type={"number"}
-        />
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"immgCardExpiry"}
-          label={"IMMG Card Expire Date"}
-        />
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Company Information
+        </Typography>
+        <Box className={`grid grid-cols-4 justify-stretch items-start gap-6`}>
+          <Input
+            formik={formik}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
+          />
+          <Input
+            formik={formik}
+            label={"Phone"}
+            name={"phone"}
+            type={"text"}
+            variant={"numeric"}
+          />
 
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"licenseIssueDate"}
-          label={"License Issue Date"}
-        />
+          <Input
+            formik={formik}
+            select={true}
+            name={"status"}
+            label={"Status"}
+            options={["Active", "Inactive"]}
+          />
+          <Input formik={formik} label={"Country"} name={"country"} />
+          <Input
+            formik={formik}
+            select={true}
+            name={"state"}
+            label={"State"}
+            options={["dubai"]}
+          />
+          <Input formik={formik} label={"Address"} name={"address"} />
 
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"licenseExpiryDate"}
-          label={"License Expire Date"}
-        />
+          {owners && owners.length > 0 && (
+            <AutoCompleteSearch
+              label={"Owners"}
+              options={owners}
+              formik={formik}
+              name={"ownerId"}
+              multiple={true}
+            />
+          )}
 
-        <Input
-          formik={formik}
-          label={"License Issue Place"}
-          name={"licenseIssuePlace"}
-          select
-          options={["place 1", "place 2", "place 3"]}
-        />
+          <Input
+            formik={formik}
+            label={"Website"}
+            name={"website"}
+            variant={"url"}
+          />
+          <Input
+            formik={formik}
+            label={"WhatsApp Number"}
+            name={"whatsAppNo"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            label={"Mobile Number"}
+            name={"mobileNo"}
+            type={"text"}
+            variant={"numeric"}
+          />
 
-        <Input
-          formik={formik}
-          label={"Tenancy Contract Value"}
-          name={"tenancyContractValue"}
-        />
-
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"tenancyContractExp"}
-          label={"Tenancy Contract Expire Date"}
-        />
-        <Input
-          formik={formik}
-          label={"Remarks"}
-          name={"remarks"}
-          textarea={true}
-        />
+          <Input formik={formik} label={"TRN"} name={"trn"} variant="numeric" />
+          <Input
+            formik={formik}
+            label={"Zip Code"}
+            name={"zipCode"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            label={"Remarks"}
+            name={"remarks"}
+            textarea={true}
+          />
+        </Box>
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
-        <Button
-          title={"Cancel"}
-          handling={() => navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`)}
-          bg={"!bg-red-500"}
-        />
+        <Button title={"Cancel"} handling={handleCancel} bg={"!bg-red-500"} />
       </Box>
     </Paper>
   );

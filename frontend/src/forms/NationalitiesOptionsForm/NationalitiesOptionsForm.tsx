@@ -31,13 +31,15 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:grid-cols-1  md:gap-4 sm:!gap-2`}
       >
-        <Input
-          label={"Search Nationality, ID..."}
-          name={"search"}
-          type={"search"}
-          formik={formik}
-          change={handleSearch}
-        />
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Nationality, ID..."}
+            name={"search"}
+            type={"search"}
+            formik={formik}
+            change={handleSearch}
+          />
+        </Box>
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
         >

@@ -12,15 +12,22 @@ import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 const OwnerForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseOwnerModal } = useContext(FormsContext);
+  const { formsLoading, handleCloseOwnerModal, setOwnerImage } =
+    useContext(FormsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getNationalities({}));
+    dispatch(getNationalities({ limit: -1 }));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (type?.startsWith("add")) {
+      setOwnerImage("");
+    }
+  }, [setOwnerImage, type]);
 
   return (
     <Paper
@@ -44,13 +51,15 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           formik={formik}
           label={"Person Code"}
           name={"personCode"}
-          type={"number"}
+          type={"text"}
+          variant={"numeric"}
         />
         <Input
           formik={formik}
           label={"UID Number"}
           name={"uid"}
-          type={"number"}
+          type={"text"}
+          variant={"numeric"}
         />
         <Input formik={formik} label={"English Name"} name={"name"} />
         <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
@@ -66,7 +75,8 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           formik={formik}
           label={"Emirates ID"}
           name={"emiratesId"}
-          type={"number"}
+          type={"text"}
+          variant={"numeric"}
         />
         <Input
           formik={formik}
@@ -74,12 +84,12 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           name={"dob"}
           label={"Date of Birth"}
         />
-        <Input formik={formik} label={"Phone"} type={"number"} name={"phone"} />
         <Input
           formik={formik}
-          label={"UID Number"}
-          name={"_id"}
-          type={"number"}
+          label={"Phone"}
+          type={"text"}
+          variant={"numeric"}
+          name={"phone"}
         />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
