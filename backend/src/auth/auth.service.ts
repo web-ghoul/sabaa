@@ -15,7 +15,7 @@ export class AuthService {
     async signIn(loginData: LoginUserDto): Promise<any> {
         const user: User = await this.userModel.findOne({email:loginData.email});
     
-        if (user) {
+        if (user && user.deleted == false) {
           // Compare hashed passwords
           const isPasswordValid = await bcrypt.compare(loginData.password, user.password);
           if (isPasswordValid) {

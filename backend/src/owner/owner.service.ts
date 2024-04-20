@@ -16,12 +16,7 @@ export class OwnerService {
       return await this.ownerModel.create(createOwnerDto);
     }catch(err)
     {
-      throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        error: err,
-      }, HttpStatus.FORBIDDEN, {
-        cause: err
-      });
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
 
@@ -81,7 +76,7 @@ export class OwnerService {
 
     }catch(err)
     {
-      throw new HttpException("Error while updating owner" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
@@ -94,7 +89,7 @@ export class OwnerService {
 
     }catch(err)
     {
-      throw new HttpException("Error while deleting owner" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
@@ -103,12 +98,8 @@ export class OwnerService {
       return this.ownerModel.insertMany(createOwnerDto);
     }catch(err)
     {
-      throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        error: err,
-      }, HttpStatus.FORBIDDEN, {
-        cause: err
-      });
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
+
     }
     
   }

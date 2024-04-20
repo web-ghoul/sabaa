@@ -6,7 +6,7 @@ export type OwnerDocument = HydratedDocument<Owner>;
 @Schema({ timestamps: true })
 export class Owner {
   
-    @Prop({required:true})
+    @Prop({ required: true ,unique: true})
     uid: string; //not unique 
 
     @Prop()
@@ -48,7 +48,7 @@ export class Owner {
     @Prop({default: false})
     proCode: boolean;
 
-    @Prop()
+    @Prop({unique: true})
     emiratesId: string;
 
     @Prop({unique: true})

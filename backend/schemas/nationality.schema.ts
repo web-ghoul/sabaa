@@ -10,7 +10,7 @@ export class Nationality {
   @Prop({ required: true ,unique: true})
   id: string;
   
-  @Prop()
+  @Prop({ required: true ,unique: true})
   nationality: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
@@ -19,5 +19,6 @@ export class Nationality {
   @Prop({default : false})
   deleted: boolean;
 }
+
 
 export const NationalitySchema = SchemaFactory.createForClass(Nationality);

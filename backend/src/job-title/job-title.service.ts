@@ -16,7 +16,8 @@ export class JobTitleService {
       return await this.jobTitleModel.create(createJobTitleDto);
     }catch(err)
     {
-      throw new HttpException("Error while creating jobTitle" , HttpStatus.FORBIDDEN);
+    
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
@@ -66,7 +67,7 @@ export class JobTitleService {
       return await this.jobTitleModel.findByIdAndUpdate(id, updateJobTitleDto);
     }catch(err)
     {
-      throw new HttpException("Error while updating jobTitle" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 

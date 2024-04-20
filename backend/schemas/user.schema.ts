@@ -7,19 +7,19 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   
   _id: ObjectId;
-  @Prop({unique: true})
+  @Prop({unique: true, min : [5, 'name must be at least 5 characters long'] , max : [20, 'name must be at most 20 characters long']} )
   name: string;
 
   @Prop()
   password: string;
 
-  @Prop()
+  @Prop({unique: true})
   email: string;
 
   @Prop()
   role: string;
 
-  @Prop()
+  @Prop({unique: true})
   phone: string;
 
   @Prop()

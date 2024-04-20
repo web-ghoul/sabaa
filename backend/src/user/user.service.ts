@@ -37,7 +37,7 @@ export class UserService {
 
     }catch(err)
     {
-      throw new HttpException("Error while creating user" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
   }
 
@@ -59,7 +59,7 @@ export class UserService {
 
     }catch(err)
     {
-      throw new HttpException("Error while updating user" , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
     // Save the user to the database
 

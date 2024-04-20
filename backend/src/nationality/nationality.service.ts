@@ -19,10 +19,8 @@ export class NationalityService {
     } catch (err) {
       console.log(err);
 
-      throw new HttpException(
-        'Error while creating nationality',
-        HttpStatus.FORBIDDEN,
-      );
+      throw new HttpException(err , HttpStatus.FORBIDDEN);
+
     }
   }
 
@@ -76,7 +74,7 @@ export class NationalityService {
       );
     } catch (err) {
       throw new HttpException(
-        'Error while updating nationality',
+        err,
         HttpStatus.FORBIDDEN,
       );
     }

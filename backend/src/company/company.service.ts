@@ -25,6 +25,7 @@ export class CompanyService {
 
       return await this.companyModel.create(createCompanyDto);
     } catch (err) {
+      console.log(err)
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
