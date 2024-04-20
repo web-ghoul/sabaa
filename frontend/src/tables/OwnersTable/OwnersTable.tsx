@@ -37,6 +37,7 @@ const OwnersTable = ({
     useContext(AppContext);
   const { setOwnerIndex } = useContext(ExcelsContext);
   const { setEditableOwnerData } = useContext(FormsContext);
+  const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
   const dispatch = useDispatch<AppDispatch>();
@@ -123,6 +124,7 @@ const OwnersTable = ({
               jc="center"
             />
           </PrimaryTableCell>
+          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
@@ -165,6 +167,11 @@ const OwnersTable = ({
                   <PrimaryTableCell align="center">
                     {row.personCode}
                   </PrimaryTableCell>
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.uid}
+                    </PrimaryTableCell>
+                  )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
                       {row.nationality}

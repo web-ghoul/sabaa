@@ -25,7 +25,7 @@ const ProfileDetails = ({
 }: ProfileDetailsTypes) => {
   const profileClasses = `grid justify-stretch items-center gap-8 p-6 !rounded-xl md:gap-6 sm:!gap-4`;
   const profileDataClasses = `flex justify-between items-center gap-6 md:gap-4 sm:grid sm:justify-center`;
-  const profileInfoClasses = `grid justify-start items-center gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
+  const profileInfoClasses = `grid justify-start items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
   const profileButtonsClasses = `flex justify-end items-center gap-2 sm:justify-center`;
   const navigate = useNavigate();
   const { id } = useParams();
@@ -182,7 +182,7 @@ const ProfileDetails = ({
                 title={"Emirates Id"}
                 value={(data as OwnerTypes).emiratesId}
               />
-              <DataBox title={"UID Number"} value={(data as OwnerTypes)._id} />
+              <DataBox title={"UID Number"} value={(data as OwnerTypes).uid} />
               <DataBox title={"Remarks"} value={(data as OwnerTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -292,6 +292,10 @@ const ProfileDetails = ({
                   value={(data as CompanyTypes).country}
                 />
                 <DataBox title={"State"} value={(data as CompanyTypes).state} />
+                <DataBox
+                  title={"Address"}
+                  value={(data as CompanyTypes).address}
+                />
                 <DataBox
                   title={"Website"}
                   value={<LinkBox link={(data as CompanyTypes).website} />}

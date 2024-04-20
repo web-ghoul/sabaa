@@ -23,12 +23,13 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
         )
       )}
 
-      <Box className={`grid grid-cols-2 justify-stretch items-center gap-6`}>
+      <Box className={`grid grid-cols-2 justify-stretch items-start gap-6`}>
         <Input
           formik={formik}
           label={"Nationality Id"}
           name={"id"}
-          type={"number"}
+          type={"text"}
+          variant={"numeric"}
         />
         <Input
           formik={formik}

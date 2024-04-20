@@ -57,13 +57,15 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid justify-stretch items-end gap-8 grid-cols-2 md:grid-cols-1 md:gap-4 sm:!gap-2`}
       >
-        <Input
-          label={"Search Name, Person Code..."}
-          name={"search"}
-          type={"search"}
-          formik={formik}
-          change={handleSearch}
-        />
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Name, Person Code..."}
+            name={"search"}
+            type={"search"}
+            formik={formik}
+            change={handleSearch}
+          />
+        </Box>
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2`}
         >
@@ -103,7 +105,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`flex justify-start items-end gap-4 transition-all  md:gap-3 sm:!gap-2 ${
+          className={`grid grid-cols-[1fr,1fr,auto,1fr,1fr] justify-start items-end gap-4 transition-all md:!flex md:gap-3 sm:!gap-2 sm:flex-wrap ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden xs:grid xs:justify-stretch`}
         >

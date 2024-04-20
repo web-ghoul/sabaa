@@ -97,13 +97,15 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:gap-4 md:!gap-3 sm:gap-2 lg:!grid-cols-1`}
       >
-        <Input
-          label={"Search Name, Person Code..."}
-          name={"search"}
-          type={"search"}
-          formik={formik}
-          change={handleSearch}
-        />
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Name, Person Code..."}
+            name={"search"}
+            type={"search"}
+            formik={formik}
+            change={handleSearch}
+          />
+        </Box>
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
@@ -151,56 +153,52 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`grid justify-stretch items-center gap-4 transition-all md:gap-3 sm:!gap-2 flex-wrap  ${
+          className={`grid grid-cols-[1fr,1fr,2fr,auto] justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
-          <Box
-            className={`flex justify-stretch items-end gap-4 md:gap-3 sm:!gap-2 flex-wrap`}
-          >
-            <Input
-              label={"Filter By Nationality"}
-              name={"nationality"}
-              formik={formik}
-              change={handleFilterByNationality}
-              options={handledNationalities}
-              select
-            />
-            <Input
-              label={"Filter By State"}
-              name={"state"}
-              formik={formik}
-              change={handleFilterByState}
-              options={["dubai"]}
-              select
-            />
-            <Box className={`grid gap-4 md:gap-3 sm:!gap-2`}>
-              <Typography variant="h6">Filter By Date Of Birth</Typography>
-              <Box className={`flex gap-4 md:gap-3 sm:!gap-2 flex-wrap`}>
-                <Input
-                  name={"dobFrom"}
-                  label={"From"}
-                  type={"date"}
-                  formik={formik}
-                  change={handleFilterByDateOfBirthFrom}
-                />
-                <Input
-                  name={"dobTo"}
-                  label={"To"}
-                  type={"date"}
-                  formik={formik}
-                  change={handleFilterByDateOfBirthTo}
-                />
-              </Box>
+          <Input
+            label={"Filter By Nationality"}
+            name={"nationality"}
+            formik={formik}
+            change={handleFilterByNationality}
+            options={handledNationalities}
+            select
+          />
+          <Input
+            label={"Filter By State"}
+            name={"state"}
+            formik={formik}
+            change={handleFilterByState}
+            options={["dubai"]}
+            select
+          />
+          <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
+            <Typography variant="h6">Filter By Date Of Birth</Typography>
+            <Box
+              className={`flex justify-stretch gap-4 md:gap-3 sm:!gap-2 md:flex-wrap`}
+            >
+              <Input
+                name={"dobFrom"}
+                label={"From"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthFrom}
+              />
+              <Input
+                name={"dobTo"}
+                label={"To"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthTo}
+              />
             </Box>
           </Box>
-          <Box className={`flex justify-end items-center`}>
-            <Button
-              icon={<FilterListRounded />}
-              title={"Filter"}
-              handling={handleFilter}
-            />
-          </Box>
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
+          />
         </Box>
       </Box>
     </Paper>

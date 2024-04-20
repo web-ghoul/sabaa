@@ -7,16 +7,16 @@ const useOwnerSchema = () => {
   const { editableOwnerData, setOwnerImage } = useContext(FormsContext);
 
   const OwnerSchema = yup.object({
-    personCode: yup.string().required("Person Code is required"),
-    uid: yup.string(),
+    personCode: yup.string(),
+    uid: yup.string().required("UID Number is required"),
     avatar: yup.string(),
     name: yup.string().required("English Name is required"),
     nameAr: yup.string().required("Arabic Name is required"),
-    dob: yup.string().required("Date of Birth is required"),
+    dob: yup.string(),
     idNationality: yup.string(),
-    nationality: yup.string(),
-    phone: yup.string().required("Phone is required"),
-    emiratesId: yup.string().required("Emirates Id is required"),
+    nationality: yup.string().required("Nationality is required"),
+    phone: yup.string(),
+    emiratesId: yup.string(),
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),

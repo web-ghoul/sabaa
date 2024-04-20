@@ -23,12 +23,10 @@ const Companies = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
+    if (searchParams.size === 0) {
+      dispatch(getCompanies({}));
     }
-    dispatch(getCompanies(allParams));
-  }, [dispatch]);
+  }, [dispatch, searchParams]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

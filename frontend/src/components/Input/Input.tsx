@@ -2,6 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { handleAcceptArabic } from "../../functions/handleAcceptArabic";
 import { handleAcceptEnglish } from "../../functions/handleAcceptEnglish";
+import { handleAcceptNumeric } from "../../functions/handleAcceptNumeric";
+import { handleAcceptURL } from "../../functions/handleAcceptURL";
+import { handleAcceptUsername } from "../../functions/handleAcceptUsername";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { InputTypes } from "../../types/components.types";
 import { AllFormiksTypes, FormiksTypes } from "../../types/forms.types";
@@ -27,7 +30,9 @@ const Input = ({
 
   return useMemo(
     () => (
-      <Box className={`grid justify-start items-center gap-2 md:gap-1`}>
+      <Box
+        className={`grid justify-stretch w-full items-center gap-2 md:gap-1`}
+      >
         <Typography variant="h6" className={`!font-[400]`}>
           {type === "search" ? "Search" : label}
         </Typography>
@@ -129,6 +134,18 @@ const Input = ({
                 variant === "english"
               ) {
                 e.target.value = handleAcceptEnglish(e.target.value);
+              }
+              if (variant === "numeric") {
+                e.target.value = handleAcceptNumeric(e.target.value);
+              }
+              if (variant === "url") {
+                e.target.value = handleAcceptURL(e.target.value);
+              }
+              if (
+                label?.toLowerCase() === "username" ||
+                variant === "username"
+              ) {
+                e.target.value = handleAcceptUsername(e.target.value);
               }
               formik.handleChange(e);
             }}

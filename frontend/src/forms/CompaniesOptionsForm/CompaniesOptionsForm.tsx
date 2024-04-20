@@ -100,13 +100,15 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid justify-stretch items-end gap-8 grid-cols-2 lg:grid-cols-1 lg:gap-6 md:gap-4 sm:!gap-2`}
       >
-        <Input
-          label={"Search Name, MOL, Trade, IMMG ..."}
-          name={"search"}
-          type={"search"}
-          formik={formik}
-          change={handleSearch}
-        />
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Name, MOL, Trade, IMMG ..."}
+            name={"search"}
+            type={"search"}
+            formik={formik}
+            change={handleSearch}
+          />
+        </Box>
         <Box
           className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
         >
@@ -154,7 +156,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           } overflow-hidden`}
         >
           <Box
-            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 md:grid-cols-2 md:grid xs:grid-cols-1 flex-wrap`}
+            className={`flex justify-stretch items-center gap-3  md:gap-3 sm:!gap-2 md:grid-cols-2 md:grid xs:grid-cols-1 md:flex-wrap`}
           >
             <Input
               label={"Filter By Status"}
@@ -190,11 +192,11 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             />
           </Box>
           <Box
-            className={`flex justify-stretch items-center gap-4  md:gap-3 sm:!gap-2 xs:grid flex-wrap`}
+            className={`grid grid-cols-[1fr,1fr,auto] justify-stretch items-end gap-3 md:gap-3 sm:!gap-2 xs:grid flex-wrap`}
           >
-            <Box className={`grid gap-3`}>
+            <Box className={`grid  gap-3`}>
               <Typography variant="h6">Filter By IMMG Expire Date</Typography>
-              <Box className={`flex gap-2 flex-wrap`}>
+              <Box className={`flex gap-3   md:flex-wrap`}>
                 <Input
                   name={"IMMGFrom"}
                   type={"date"}
@@ -216,7 +218,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
               <Typography variant="h6">
                 Filter By License Expire Date
               </Typography>
-              <Box className={`flex gap-2 flex-wrap`}>
+              <Box className={`flex gap-3 md:flex-wrap`}>
                 <Input
                   name={"licenseFrom"}
                   label={"From"}
@@ -233,8 +235,6 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
                 />
               </Box>
             </Box>
-          </Box>
-          <Box className={`flex justify-end items-center`}>
             <Button
               handling={handleFilter}
               title={"Filter"}

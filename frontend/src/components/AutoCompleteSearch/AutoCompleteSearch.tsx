@@ -63,8 +63,8 @@ export default function AutoCompleteSearch({
             )
           )) ||
         [];
+
   const style = {
-    width: "fit-content",
     "& > div > div": {
       padding: "0px !important",
     },

@@ -1,6 +1,6 @@
 import { CloudUploadRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { UploadImageTypes } from "../../types/components.types";
@@ -15,6 +15,7 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     userImage,
     setUserImage,
   } = useContext(FormsContext);
+
   const [chosenImage, setChosenImage] = useState(
     variant === "addCompany" || variant === "editCompany"
       ? companyImage || defaultCompany
@@ -39,6 +40,25 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       setChosenImage(image);
     }
   };
+
+  useEffect(() => {
+    setChosenImage(
+      variant === "addCompany" || variant === "editCompany"
+        ? companyImage || defaultCompany
+        : variant === "addOwner" || variant === "editOwner"
+        ? ownerImage || defaultAvatar
+        : variant === "addUser" || variant === "editUser"
+        ? userImage || defaultAvatar
+        : defaultAvatar
+    );
+  }, [
+    companyImage,
+    defaultAvatar,
+    defaultCompany,
+    ownerImage,
+    userImage,
+    variant,
+  ]);
 
   return (
     <Box

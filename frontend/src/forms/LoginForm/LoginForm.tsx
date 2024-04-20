@@ -11,11 +11,11 @@ const LoginForm = ({ formik }: FormiksTypes) => {
     useContext(FormsContext);
   return (
     <Box
-      className={`grid justify-start items-center gap-8 md:gap-6 sm:gap-4 sm:justify-center`}
+      className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 sm:justify-center`}
     >
       <Title title={"Login to Dasboard"} />
       <Box
-        className={`justify-start items-start gap-6 xs:grid-cols-1 flex flex-wrap sm:justify-center`}
+        className={`grid flex-wrap justify-stretch items-start grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:justify-center`}
       >
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
@@ -27,7 +27,7 @@ const LoginForm = ({ formik }: FormiksTypes) => {
         />
       </Box>
       <Box
-        className={`grid justify-start items-center gap-2 sm:justify-center`}
+        className={`grid justify-stretch items-center gap-2 sm:justify-center`}
       >
         <Button
           className={`!underline !font-[600] hover:!cursor-pointer !p-0 !text-black !lowercase !w-fit`}
@@ -35,7 +35,7 @@ const LoginForm = ({ formik }: FormiksTypes) => {
         >
           Forgot Password ?
         </Button>
-        <Box className={`flex justify-start items-center sm:justify-center`}>
+        <Box className={`m-auto`}>
           <SubmitButton loading={formsLoading}>Login</SubmitButton>
         </Box>
       </Box>

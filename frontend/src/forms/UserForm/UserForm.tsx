@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -9,7 +9,14 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
 const UserForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseUserModal } = useContext(FormsContext);
+  const { formsLoading, handleCloseUserModal, setUserImage } =
+    useContext(FormsContext);
+
+  useEffect(() => {
+    if (type?.startsWith("add")) {
+      setUserImage("");
+    }
+  }, [setUserImage, type]);
 
   return (
     <Paper
@@ -32,10 +39,16 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
           label={"Username"}
           name={"name"}
           ac={"username"}
-          variant="english"
+          variant="username"
         />
         <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
-        <Input formik={formik} label={"Phone"} type={"number"} name={"phone"} />
+        <Input
+          formik={formik}
+          label={"Phone"}
+          type={"text"}
+          variant={"numeric"}
+          name={"phone"}
+        />
         <Input
           formik={formik}
           label={"Role"}
