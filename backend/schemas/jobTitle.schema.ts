@@ -8,10 +8,10 @@ export class JobTitle {
 
     @Prop({ required: true ,unique:true})
     MOHRE: string;
-    @Prop()
+    @Prop({ required: true ,unique:true})
     ENSCOCode: string;
     
-    @Prop()
+    @Prop({ required: true ,unique:true})
     jobTitle: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
