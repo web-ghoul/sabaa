@@ -95,7 +95,7 @@ const UploadExcel = ({
         data[0][3] === "Nationality Code" &&
         data[0][4] === "Nationality" &&
         data[0][5] === "Emirates ID No" &&
-        data[0][6] === "Date Of Birh" &&
+        data[0][6] === "Date Of Birth" &&
         data[0][7] === "Mobile Number" &&
         data[0][8] === "UID NO" &&
         data[0][9] === "Email" &&

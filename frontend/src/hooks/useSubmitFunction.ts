@@ -82,13 +82,13 @@ const useSubmitFunction = (type: string) => {
   const handleUserFormData = (values: UserFormTypes) => {
     const formData = new FormData();
     formData.append("avatar", userImage);
-    formData.append("name", values.name);
-    formData.append("phone", values.phone);
-    formData.append("status", values.status);
-    formData.append("role", values.role);
-    formData.append("email", values.email);
+    formData.append("name", values.name.trim());
+    formData.append("phone", values.phone.trim());
+    formData.append("status", values.status.trim());
+    formData.append("role", values.role.trim());
+    formData.append("email", values.email.trim());
     if (type === "addUser") {
-      formData.append("password", values.password);
+      formData.append("password", values.password.trim());
     }
     return formData;
   };
@@ -96,19 +96,19 @@ const useSubmitFunction = (type: string) => {
   const handleOwnerFormData = (values: OwnerFormTypes) => {
     const formData = new FormData();
     formData.append("uid", values?.uid);
-    formData.append("personCode", values.personCode);
+    formData.append("personCode", values.personCode.trim());
     formData.append("avatar", ownerImage);
-    formData.append("name", values.name);
-    formData.append("nameAr", values.nameAr);
-    formData.append("phone", values.phone);
-    formData.append("address", values.address);
+    formData.append("name", values.name.trim());
+    formData.append("nameAr", values.nameAr.trim());
+    formData.append("phone", values.phone.trim());
+    formData.append("address", values.address.trim());
     formData.append("nationality", values.nationality);
     formData.append("idNationality", values.idNationality);
-    formData.append("email", values.email);
-    formData.append("remarks", values.remarks);
-    formData.append("emiratesId", values.emiratesId);
-    formData.append("state", values.state);
-    formData.append("dob", values?.dob.toString());
+    formData.append("email", values.email.trim());
+    formData.append("remarks", values.remarks.trim());
+    formData.append("emiratesId", values.emiratesId.trim());
+    formData.append("state", values.state.trim());
+    formData.append("dob", values?.dob.toString().trim());
     formData.append("proCode", values.proCode ? "true" : "false");
     return formData;
   };
@@ -116,12 +116,12 @@ const useSubmitFunction = (type: string) => {
   const handleCompanyFormData = (values: CompanyFormTypes) => {
     const formData = new FormData();
     formData.append("logo", companyImage);
-    formData.append("name", values.name);
-    formData.append("nameAr", values.nameAr);
-    formData.append("phone", values.phone);
-    formData.append("address", values.address);
-    formData.append("email", values.email);
-    formData.append("status", values.status);
+    formData.append("name", values.name.trim());
+    formData.append("nameAr", values.nameAr.trim());
+    formData.append("phone", values.phone.trim());
+    formData.append("address", values.address.trim());
+    formData.append("email", values.email.trim());
+    formData.append("status", values.status.trim());
     if (values.ownerId.length > 0) {
       values.ownerId.map((owner) => {
         formData.append("ownerId[]", owner);
@@ -132,25 +132,34 @@ const useSubmitFunction = (type: string) => {
         formData.append("proCode[]", pro);
       });
     }
-    formData.append("country", values.country);
-    formData.append("state", values.state);
-    formData.append("licenseNo", values.licenseNo);
-    formData.append("immgCardNo", values.immgCardNo);
-    formData.append("immgCardExpiry", values.immgCardExpiry.toString());
-    formData.append("licenseIssueDate", values.licenseIssueDate.toString());
-    formData.append("licenseIssuePlace", values.licenseIssuePlace);
-    formData.append("licenseExpiryDate", values.licenseExpiryDate.toString());
-    formData.append("establishmentType", values.establishmentType);
-    formData.append("molCode", values.molCode);
-    formData.append("molCategory", values.molCategory);
-    formData.append("whatsAppNo", values.whatsAppNo);
-    formData.append("mobileNo", values.mobileNo);
-    formData.append("website", values.website);
-    formData.append("zipCode", values.zipCode);
-    formData.append("trn", values.trn);
-    formData.append("tenancyContractValue", values.tenancyContractValue);
-    formData.append("tenancyContractExp", values.tenancyContractExp.toString());
-    formData.append("remarks", values.remarks);
+    formData.append("country", values.country.trim());
+    formData.append("state", values.state.trim());
+    formData.append("licenseNo", values.licenseNo.trim());
+    formData.append("immgCardNo", values.immgCardNo.trim());
+    formData.append("immgCardExpiry", values.immgCardExpiry.toString().trim());
+    formData.append(
+      "licenseIssueDate",
+      values.licenseIssueDate.toString().trim()
+    );
+    formData.append("licenseIssuePlace", values.licenseIssuePlace.trim());
+    formData.append(
+      "licenseExpiryDate",
+      values.licenseExpiryDate.toString().trim()
+    );
+    formData.append("establishmentType", values.establishmentType.trim());
+    formData.append("molCode", values.molCode.trim());
+    formData.append("molCategory", values.molCategory.trim());
+    formData.append("whatsAppNo", values.whatsAppNo.trim());
+    formData.append("mobileNo", values.mobileNo.trim());
+    formData.append("website", values.website.trim());
+    formData.append("zipCode", values.zipCode.trim());
+    formData.append("trn", values.trn.trim());
+    formData.append("tenancyContractValue", values.tenancyContractValue.trim());
+    formData.append(
+      "tenancyContractExp",
+      values.tenancyContractExp.toString().trim()
+    );
+    formData.append("remarks", values.remarks.trim());
     return formData;
   };
 
