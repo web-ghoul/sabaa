@@ -12,7 +12,7 @@ export class AuthController {
     constructor(private authService :AuthService) {}
 
     @Public()
-    @Throttle({default : {limit : 3 , ttl: 60000}})
+    @Throttle({default : {limit : 10 , ttl: 60000}})
     @Post('login')
     login(@Body(ValidationPipe) loginData: LoginUserDto) {
         return this.authService.signIn(loginData);
