@@ -6,10 +6,10 @@ export type CompanyDocument = HydratedDocument<Company>;
 @Schema({ timestamps: true })
 export class Company {
 
-  @Prop({unique: true})
+  @Prop()
   name: string;
 
-  @Prop({unique: true})
+  @Prop()
   nameAr: string;
 
   @Prop()
@@ -33,10 +33,10 @@ export class Company {
   @Prop({ type: Array, ref: 'Owner' })
   ownerId: string[];
 
-  @Prop({unique: true})
+  @Prop()
   licenseNo: string; //can be repeated but in different state
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'IMMGCard' })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'IMMGCard' , sparse: true })
   immgCardNo: string;
 
   @Prop({ type: Date })
@@ -51,7 +51,7 @@ export class Company {
   @Prop()
   establishmentType: string;
 
-  @Prop({unique: true})
+  @Prop()
   molCode: string;
 
   @Prop()
@@ -99,4 +99,11 @@ export class Company {
   deleted: boolean;
 }
 
+
 export const CompanySchema = SchemaFactory.createForClass(Company);
+
+CompanySchema.index({ molCode: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index({ nameAr: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index({ name: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index({ immgCardNo: 1, state: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index({ licenseNo: 1, state: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });

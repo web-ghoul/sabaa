@@ -20,6 +20,8 @@ export class CustomErrorFilter implements ExceptionFilter {
 
         let customError = new CustomError(message, status);
 
+        console.log(Object.keys(exception));
+        
         
         
         if (process.env.NODE_ENV == "development") {
@@ -27,7 +29,11 @@ export class CustomErrorFilter implements ExceptionFilter {
         }else{
           if (exception?.response?.name === 'CastError') customError = castErrorHandler(exception?.response);
           if (exception?.response?.code === 11000) customError = duplicateKeyErrorHandler(exception?.response);
-          if (exception?.name === 'BadRequestException') customError = validationErrorHandler(exception?.response);
+          if (exception?.response?.name === 'BadRequestException') customError = validationErrorHandler(exception?.response);
+  
+          if (exception?.name === 'CastError') customError = castErrorHandler(exception);
+          if (exception?.code === 11000) customError = duplicateKeyErrorHandler(exception);
+          if (exception?.name === 'BadRequestException') customError = validationErrorHandler(exception);
   
           prodErrors(response, customError);
         }

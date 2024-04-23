@@ -19,8 +19,8 @@ export const castErrorHandler = (err: any) => {
 };
 
 export const duplicateKeyErrorHandler = (err: any) => {
-    // console.log("duplicateKeyErrorHandler");
-    // console.log(err);
+    console.log("duplicateKeyErrorHandler");
+    console.log(err);
     
     const field = Object.keys(err.keyPattern)[0];
     const value = err?.keyValue[field];
@@ -35,7 +35,7 @@ export const validationErrorHandler = (err: any) => {
 };
 
 export const prodErrors = (res: Response, error: CustomError) => {
-    // console.log("prodErrors");
+    console.log("prodErrors");
 
     if (error.isOperational) {
         res.status(error.statusCode).json({

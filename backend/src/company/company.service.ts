@@ -22,7 +22,7 @@ export class CompanyService {
         //createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
         createCompanyDto.logo = file ? file.path : undefined;
       }
-
+      
       return await this.companyModel.create(createCompanyDto);
     } catch (err) {
       console.log(err)

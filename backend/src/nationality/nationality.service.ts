@@ -14,14 +14,9 @@ export class NationalityService {
   async create(
     createNationalityDto: CreateNationalityDto,
   ): Promise<Nationality> {
-    try {
+    
       return await this.nationalityModel.create(createNationalityDto);
-    } catch (err) {
-      console.log(err);
-
-      throw new HttpException(err , HttpStatus.FORBIDDEN);
-
-    }
+    
   }
 
   findAll(
