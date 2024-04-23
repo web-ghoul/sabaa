@@ -6,6 +6,7 @@ const LoadingCompaniesRow = () => {
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
+
   return (
     <CompaniesTableRow>
       <PrimaryTableCell component="th" scope="row">
@@ -17,6 +18,11 @@ const LoadingCompaniesRow = () => {
         </PrimaryTableCell>
       )}
       {!lgScreen && (
+        <PrimaryTableCell align="center">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
+      {!mdScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>

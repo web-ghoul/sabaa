@@ -136,6 +136,9 @@ const CompaniesTable = ({
           {!smScreen && (
             <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
           )}
+          {!mdScreen && (
+            <PrimaryTableCell align="center">IMMG Card Number</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
       </TableHead>
@@ -156,6 +159,7 @@ const CompaniesTable = ({
                       head={"subtitle1"}
                       avatar={row.logo}
                       size={"small"}
+                      variant={"company"}
                     />
                   ) : (
                     <Link
@@ -166,6 +170,7 @@ const CompaniesTable = ({
                         head={"subtitle1"}
                         avatar={row.logo}
                         size={"small"}
+                        variant={"company"}
                       />
                     </Link>
                   )}
@@ -186,6 +191,11 @@ const CompaniesTable = ({
                 {!smScreen && (
                   <PrimaryTableCell align="center">
                     {handleDate(row.immgCardExpiry)}
+                  </PrimaryTableCell>
+                )}
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    {row.immgCardNo}
                   </PrimaryTableCell>
                 )}
                 <PrimaryTableCell align="right">

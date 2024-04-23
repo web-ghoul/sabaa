@@ -221,7 +221,7 @@ New Notes:
 6- Don't refresh Sidebar buttons (Done)
 7- Seperate in Company form like profile  (Done)
 8- Phone is unique (Amr)
-9- View Current User  (Done)
+9- View Current User (Done)
 10- Person Code and phone is not input with type number (Done)
 11- Edit owner reset owner avatar (Done)
 12- Add Uid Number to owner table (Done)
