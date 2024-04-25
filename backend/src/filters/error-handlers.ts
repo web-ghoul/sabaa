@@ -20,7 +20,7 @@ export const castErrorHandler = (err: any) => {
 
 export const duplicateKeyErrorHandler = (err: any) => {
     console.log("duplicateKeyErrorHandler");
-    console.log(err);
+    // console.log(err);
     
     const field = Object.keys(err.keyPattern)[0];
     const value = err?.keyValue[field];
@@ -29,7 +29,10 @@ export const duplicateKeyErrorHandler = (err: any) => {
 };
 
 export const validationErrorHandler = (err: any) => {
-
+    console.log("validationErrorHandler");
+    console.log(err);
+    
+    
     const msg = `Invalid input data: ${err?.message}`;
     return new CustomError(msg, 400);
 };

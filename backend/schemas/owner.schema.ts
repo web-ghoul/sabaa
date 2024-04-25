@@ -48,10 +48,10 @@ export class Owner {
     @Prop({default: false})
     proCode: boolean;
 
-    @Prop()
+    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
     emiratesId: string;
 
-    @Prop()
+    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
     personCode: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
@@ -64,15 +64,15 @@ export class Owner {
 
 export const OwnerSchema = SchemaFactory.createForClass(Owner);
 
-OwnerSchema.index(
-    { emiratesId: 1, deleted: 1 },
-    { unique: true, sparse: true, partialFilterExpression: { deleted: false } }
-  );
+// OwnerSchema.index(
+//     { emiratesId: 1, deleted: 1 },
+//     { unique: true, sparse: true, partialFilterExpression: { deleted: false } }
+//   );
 
-OwnerSchema.index(
-{ personCode: 1, deleted: 1 },
-{ unique: true, sparse: true, partialFilterExpression: { deleted: false } }
-);
+// OwnerSchema.index(
+// { personCode: 1, deleted: 1 },
+// { unique: true, sparse: true, partialFilterExpression: { deleted: false } }
+// );
 
 OwnerSchema.index(
     { uid : 1, deleted: 1 },
