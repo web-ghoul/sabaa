@@ -4,7 +4,7 @@ import { IsMongoId, IsOptional, IsString } from 'class-validator';
 export class CreateNationalityDto {
   @ApiProperty()
   @IsString()
-  _id: string;
+  id: string;
 
   @ApiProperty()
   @IsString()

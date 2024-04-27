@@ -23,7 +23,7 @@ export class AppService implements OnApplicationBootstrap {
 
   onApplicationBootstrap() {
     
-    // this.seedData();
+    this.seedData();
   }
 
   private async seedData() {
