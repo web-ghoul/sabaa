@@ -227,3 +227,171 @@ New Notes:
 12- Add Uid Number to owner table (Done)
 13- Person code and uid and emirate is unique in owner and Person Code is not required and uid is required (Done) (Amr)
 14- TRN is number only (Done)
+
+
+
+
+
+Notes (() form Required , <> For View on Table , [] For Options of Select , {} for Unique) : 
+
+1- Transaction (Four SubLink [All , Pre Approval Work Permit , New Electronic Work Permit , Renew Electronic Work Permit])
+
+  1- Forms : 
+
+    1- Work Permit :
+      1- Serial Number (*) <>
+      2- Person Code () <> for search
+      3- Transaction Number  (*) <.>
+      4- Gender (*) <>
+      5- Company  (*) <.>
+      6- Employee Name (*) <.>
+      7- Date of Birth  (*) <>
+      8- Nationality (*) <>
+      9- Passport Number (*) <>
+      10- Passport Expire Date (*) <>
+      11- Job (*) <>
+      12- UID Number () <>
+      13- Emirats ID Number () <>
+      14- Status [inProcess , Approved , Rejected , Nawakes] {Set Automatice When Add New Work Permit Waiting Labour Card} () <.>
+      15- Status Date  () <>
+      16- Remarks
+      17- Card Type (Types of Each Form From Trasaction Plan File)
+      18- Salary () <>
+
+      Approved Work Permit :
+        1- Person Code (*) 
+        2- Work Permit (*)
+        3- Work Permit Expire Date (*) <.>
+        4- Visit Visa Expire Date ()
+
+    2- New Labour Card (With Work Permit Fields) :
+      1- New LC Number (*)
+      2- LC Expire Date (*) <>
+      3- Tawjeeh Date ()
+      4- Change Status Date () <.>
+      5- Medical Date ()
+      6- Residence Expire Date () <.>
+      7- Medical Insurance of Employee ()
+      8- ILOE () 
+
+    3- Renew Labour Card :
+      1- New LC Number (*)
+      2- LC Expire Date (*) <>
+      3- Tawjeeh Date ()
+      4- Medical Date ()
+      5- Residence Expire Date () <.>
+      7- Medical Insurance of Employee ()
+      8- ILOE ()
+
+  2- Search 
+    1- (Work Permit) Search By ( Transaction Number , Employee Name , Company Name )
+    2- (New LC) Search By ( Transaction Number , Employee Name , Company Name )
+    3- (ReNew LC) Search By ( Transaction Number , Employee Name , Company Name )
+
+  3- Sort 
+    1- (Work Permit) Sort By ( Work Permit Expire Date , Status Date)
+    2- (New LC) Sort By ( LC Expire Date , Residence Expire Date , Change Status Date)
+    3- (ReNew LC) Sort By ( LC Expire Date , Residence Expire Date , Change Status Date)
+
+  4- Filter
+    1- (Work Permit) Filter By ( Transaction Status , Work Permit Expire Date )
+    2- (New LC) Filter By ( Transaction Status , Expire Date , Resdence Date )
+    3- (ReNew LC) Filter By ( Transaction Status , Expire Date , Resdence Date )
+
+2- PRO (Same Of Owner)
+
+3- Employee
+
+  1- Form :
+
+    1- Company (*) <>
+    2- Name (*) <.>
+    3- NameAr (*) <>
+    4- Gender (*) <>
+    5- Nationality (*) <.>
+    6- Person Code () <.>
+    7- Status [Active , Cancel] (*) <>
+    8- Passport Number () <>
+    9- Passport Expire () <>
+    10- Card Type  () <.>
+    11- Job () <>
+    12- UID Number () <>
+    13- Emirates Number () <>
+    14- Visa File Number () <>
+    15- Residence Expire Date () <.>
+    16- Work Permit Number () <.>
+    17- LC Expire Date () <.>
+    18- Mobile Number () <>
+    19- Email () <>
+    20- Salary () <>
+
+  2- Search By (Employee Name , Company Name , UID , Work Permit Number)
+
+  3- Sort By (LC Expie Date , Resdence Expire Date)
+
+  4- Filter By (nationality , Card Type , Status , Gender)
+
+
+4- E-Channel
+
+  1- Forms :
+
+    1- Company
+      1- Serial Number () <>
+      2- User Type [] () <>
+      3- Status [] () <>
+      4- IMMG Card Number () <>
+      5- Username (*) <>
+      6- Password (*) <>
+      7- Company Name () <>
+      8- Company NameAr () <>
+      9- License Expire Date () <>
+      10- IMMG Expire Date () <>
+      11- E-Channel Expire Date () <>
+
+    2- Person
+      1- Serial Number () <>
+      2- User Type [] () <>
+      3- Status [] () <>
+      4- IMMG Card Number () <>
+      5- Username (*) <>
+      6- Password (*) <>
+      7- Company Name () <>
+      8- Company NameAr () <>
+      9- License Expire Date () <>
+      10- IMMG Expire Date () <>
+      11- E-Channel Expire Date () <>
+
+  2- Search By ( , )
+
+  3- Sort By ( , )
+
+  4- Filter By ( , )
+
+
+
+5- Tasheel 
+  1- Form : 
+
+
+
+6- Natwasal
+
+
+
+
+Side Notes :
+  1- MOL Code is not require in Company Form
+  2- Field Typing is Slow (useMemo on Form)
+  3- License Issue Place be side License Issue Date in Company Form
+  4- website Box is Navigate not window Location Href
+  5- Profile Info Instead of Person Info In Company Profile
+  6- Handle Placeholder of Search of users (Search Username... insead of Search Name, Person Code...)
+  7- Handle Icon Of Add User in Button
+  8- View icon For Password Field To View Password 
+  9- Link Company With Owner or PRO (Popup include AutoComplete For Company)
+  10- Add New Field For Control on Notification 
+  11- Add E-Channel Expire Date to Company Form
+  12- Add Walk in Customers Like Owner
+  13- Download Sample for Upload Sheet
+  14- GDRFA and Echannel Form In Company Form and Add Actions 
