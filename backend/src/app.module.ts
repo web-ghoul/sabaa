@@ -17,10 +17,12 @@ import { NationalityModule } from './nationality/nationality.module';
 import { JobTitleModule } from './job-title/job-title.module';
 import { CompanyModule } from './company/company.module';
 import { ImmgcardModule } from './immgcard/immgcard.module';
+import { User } from 'schemas/user.schema';
+import { UserSchema } from 'schemas/resetOtp.schema';
 
 dotenv.config();
 @Module({
-  imports: [UserModule, EmployeeModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL), AuthModule,ThrottlerModule.forRoot([{
+  imports: [UserModule, EmployeeModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
   }]), JobTitleModule, ImmgcardModule],

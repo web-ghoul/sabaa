@@ -7,19 +7,19 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   
   _id: ObjectId;
-  @Prop({unique: true, min : [5, 'name must be at least 5 characters long'] , max : [20, 'name must be at most 20 characters long']} )
+  @Prop()
   name: string;
 
   @Prop()
   password: string;
 
-  @Prop({unique: true})
+  @Prop()
   email: string;
 
   @Prop()
   role: string;
 
-  @Prop({unique: true})
+  @Prop()
   phone: string;
 
   @Prop()
@@ -34,3 +34,7 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ email: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})

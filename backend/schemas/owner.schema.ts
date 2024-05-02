@@ -6,13 +6,13 @@ export type OwnerDocument = HydratedDocument<Owner>;
 @Schema({ timestamps: true })
 export class Owner {
   
-    @Prop({ required: true ,unique: true})
+    @Prop({ required: true })
     uid: string; //not unique 
 
-    @Prop()
+    @Prop({ required: true })
     name: string;
     
-    @Prop()
+    @Prop({ required: true })
     nameAr: string;
 
     @Prop()
@@ -48,18 +48,42 @@ export class Owner {
     @Prop({default: false})
     proCode: boolean;
 
-    @Prop({unique: true})
+    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
     emiratesId: string;
 
-    @Prop({unique: true})
+    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
     personCode: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 
     @Prop({default : false})
-  deleted: boolean;
+    deleted: boolean;
   
 }
 
 export const OwnerSchema = SchemaFactory.createForClass(Owner);
+
+// OwnerSchema.index(
+//     { emiratesId: 1, deleted: 1 },
+//     { unique: true, sparse: true, partialFilterExpression: { deleted: false } }
+//   );
+
+// OwnerSchema.index(
+// { personCode: 1, deleted: 1 },
+// { unique: true, sparse: true, partialFilterExpression: { deleted: false } }
+// );
+
+OwnerSchema.index(
+    { uid : 1, deleted: 1 },
+    { unique: true,  partialFilterExpression: { deleted: false } }
+  );
+
+OwnerSchema.index(
+{ name : 1, deleted: 1 },
+{ unique: true,  partialFilterExpression: { deleted: false } }
+);
+OwnerSchema.index(
+{ nameAr : 1, deleted: 1 },
+{ unique: true,  partialFilterExpression: { deleted: false } }
+);

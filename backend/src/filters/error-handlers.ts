@@ -19,7 +19,7 @@ export const castErrorHandler = (err: any) => {
 };
 
 export const duplicateKeyErrorHandler = (err: any) => {
-    // console.log("duplicateKeyErrorHandler");
+    console.log("duplicateKeyErrorHandler");
     // console.log(err);
     
     const field = Object.keys(err.keyPattern)[0];
@@ -29,13 +29,16 @@ export const duplicateKeyErrorHandler = (err: any) => {
 };
 
 export const validationErrorHandler = (err: any) => {
-
+    console.log("validationErrorHandler");
+    console.log(err);
+    
+    
     const msg = `Invalid input data: ${err?.message}`;
     return new CustomError(msg, 400);
 };
 
 export const prodErrors = (res: Response, error: CustomError) => {
-    // console.log("prodErrors");
+    console.log("prodErrors");
 
     if (error.isOperational) {
         res.status(error.statusCode).json({

@@ -39,10 +39,13 @@ export class OwnerService {
       {
         sort["createdAt"] = -1; 
       } 
-      if(dobFrom != '' || dobTo == '')
+      
+      if(dobFrom != '' && dobTo == '')
       {
         dobTo = '9999-12-31';
       }
+      
+      
       const query = {$or:[{name: { $regex: new RegExp(search, "i") }},{personCode: { $regex: new RegExp(search, "i") }}]}
       dobFrom != '' ? query["dob"] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) } : null; 
       nationality != '' ? query["nationality"] = nationality : null;
