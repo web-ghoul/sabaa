@@ -97,6 +97,10 @@ export class Company {
 
   @Prop({default : false})
   deleted: boolean;
+  @Prop()
+  userName: string;
+  @Prop()
+  password: string;
 }
 
 

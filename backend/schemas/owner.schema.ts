@@ -46,7 +46,7 @@ export class Owner {
     // proCode: string[]; //array of Pro
 
     @Prop({default: false})
-    proCode: boolean;
+    isPro: boolean;
 
     @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
     emiratesId: string;
