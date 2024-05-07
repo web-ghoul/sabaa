@@ -16,6 +16,7 @@ import { getNationalities } from "../store/nationalitiesSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
+import { getPro } from "../store/proSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUser } from "../store/userSlice";
@@ -25,6 +26,7 @@ import {
   CompanyFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
+  LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
   OwnerFormTypes,
@@ -58,6 +60,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseOwnerModal,
     handleCloseCompanyModal,
     handleCloseUserModal,
+    handleCloseLinkToCompanyModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -561,6 +564,53 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  const linkToCompany = async (values: LinkToCompanyFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .get(
+        `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
+          formType === "linkOwner"
+            ? editableOwnerData && editableOwnerData._id
+            : editableOwnerData && editableOwnerData._id
+        }&operation=adding&typeOfPerson=${
+          formType === "linkOwner" ? "owner" : "pro"
+        }`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        if (formType === "linkOwner") {
+          handleAlert({
+            msg: "Owner is Linked to Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getOwner({ id }));
+          } else {
+            dispatch(getOwners({}));
+          }
+        } else {
+          handleAlert({
+            msg: "PRO is Linked to Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getOwner({ id }));
+          } else {
+            dispatch(getOwners({}));
+          }
+        }
+        handleCloseLinkToCompanyModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   const createCompaniesSheet = async (values: unknown) => {
     handleOpenFormsLoading();
     values = companiesSheets[companyIndex.fileIndex].data;
@@ -686,6 +736,56 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "unLinkOwner") {
+      await server
+        .get(
+          `/company/ManageOwnersAndPro?companyId=${
+            editableCompanyData && editableCompanyData._id
+          }&id=${id}&operation=deleting&typeOfPerson=owner`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Owner is unLinked to Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getOwner({ id }));
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "unLinkPro") {
+      await server
+        .get(
+          `/company/ManageOwnersAndPro?companyId=${
+            editableCompanyData && editableCompanyData._id
+          }&id=${id}&operation=deleting&typeOfPerson=pro`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Officer is unLinked to Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getPro({ id }));
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     }
     handleCloseFormsLoading();
   };
@@ -739,6 +839,10 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editCompany":
         editCompany(values as CompanyFormTypes);
+        break;
+      case "linkPRO":
+      case "linkOwner":
+        linkToCompany(values as LinkToCompanyFormTypes);
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);

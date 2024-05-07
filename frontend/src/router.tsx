@@ -4,6 +4,7 @@ import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
+import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import Employee from "./pages/Employee.tsx";
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <User />,
+      },
+      {
+        path: "/customers",
+        element: <Customers />,
       },
       {
         path: "/owners",

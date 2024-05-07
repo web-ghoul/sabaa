@@ -3,6 +3,7 @@ import {
   AssessmentRounded,
   AssignmentIndRounded,
   BadgeRounded,
+  Diversity3Rounded,
   EmailRounded,
   FlagRounded,
   FolderRounded,
@@ -36,6 +37,11 @@ const Items = () => {
         icon={<GridViewRounded />}
         title="Dashboard"
         url={`${import.meta.env.VITE_DASHBOARD_ROUTE}`}
+      />
+      <Item
+        icon={<Diversity3Rounded />}
+        title="Walk in Customers"
+        url={`${import.meta.env.VITE_CUSTOMERS_ROUTE}`}
       />
       <Item
         icon={<AssignmentIndRounded />}

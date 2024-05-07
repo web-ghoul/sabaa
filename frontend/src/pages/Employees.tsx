@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -10,14 +11,20 @@ import { getEmployees } from "../store/employeesSlice";
 import { AppDispatch, RootState } from "../store/store";
 import OwnersTable from "../tables/OwnersTable/OwnersTable";
 const Employees = () => {
-  const { isLoading } = useSelector((state: RootState) => state.employees);
+  const { owners, isLoading } = useSelector((state: RootState) => state.owners);
   const { pageContainerClasses } = useContext(AppContext);
-  const { queries } = useContext(AppContext);
+  const { ownersCounter } = useSelector(
+    (state: RootState) => state.ownersCounter
+  );
   const dispatch = useDispatch<AppDispatch>();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getEmployees(queries));
-  }, []);
+    if (searchParams.size === 0) {
+      dispatch(getEmployees({}));
+    }
+  }, [dispatch, searchParams]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
@@ -26,8 +33,12 @@ const Employees = () => {
             Employees
           </Typography>
         </BreadCrumbs>
-        <Forms type={"employeesOptions"} />
-        <OwnersTable count={0} data={[]} isLoading={isLoading} />
+        <Forms type={"ownersOptions"} />
+        <OwnersTable
+          count={ownersCounter}
+          data={owners}
+          isLoading={isLoading}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

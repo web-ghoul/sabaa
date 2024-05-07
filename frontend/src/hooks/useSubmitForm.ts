@@ -15,6 +15,7 @@ import {
   JobsOptionsInitailValues,
   JobsOptionsSchema,
 } from "../forms/JobsOptionsForm/JobsOptionsSchema";
+import useLinkToCompanySchema from "../forms/LinkToCompanyForm/useCompanySchema";
 import {
   LoginInitailValues,
   LoginSchema,
@@ -53,6 +54,8 @@ import {
   JobFormikTypes,
   JobsOptionsFormTypes,
   JobsOptionsFormikTypes,
+  LinkToCompanyFormTypes,
+  LinkToCompanyFormikTypes,
   LoginFormTypes,
   LoginFormikTypes,
   NationalitiesOptionsFormTypes,
@@ -81,6 +84,8 @@ const useSubmitForm = (type: string) => {
   const { OwnerInitailValues, OwnerSchema } = useOwnerSchema();
   const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
   const { CompanyInitailValues, CompanySchema } = useCompanySchema();
+  const { LinkToCompanyInitailValues, LinkToCompanySchema } =
+    useLinkToCompanySchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -194,6 +199,15 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as CompaniesOptionsFormikTypes;
+        case "linkOwner":
+        case "linkPRO":
+          return {
+            initialValues: LinkToCompanyInitailValues,
+            validationSchema: LinkToCompanySchema,
+            onSubmit: (values: LinkToCompanyFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as LinkToCompanyFormikTypes;
         default:
           return {
             initialValues: DeleteInitailValues,
@@ -211,6 +225,8 @@ const useSubmitForm = (type: string) => {
       DeleteSchema,
       JobInitailValues,
       JobSchema,
+      LinkToCompanyInitailValues,
+      LinkToCompanySchema,
       NationalityInitailValues,
       NationalitySchema,
       OwnerInitailValues,

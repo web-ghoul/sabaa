@@ -4,6 +4,7 @@ import {
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  ProTypes,
   UserTypes,
 } from "./store.types";
 
@@ -75,6 +76,21 @@ interface CompanyFormikTypes {
   values: CompanyFormTypes;
 }
 
+interface LinkToCompanyFormTypes {
+  companyId: string;
+}
+
+interface LinkToCompanyFormikTypes {
+  touched: LinkToCompanyFormTypes;
+  errors: LinkToCompanyFormTypes;
+  initialValues: LinkToCompanyFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: LinkToCompanyFormTypes;
+}
+
 interface OwnerFormTypes extends OwnerTypes {}
 
 interface OwnerFormikTypes {
@@ -86,6 +102,19 @@ interface OwnerFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: OwnerFormTypes;
+}
+
+interface ProFormTypes extends ProTypes {}
+
+interface ProFormikTypes {
+  touched: ProFormTypes;
+  errors: ProFormTypes;
+  initialValues: ProFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ProFormTypes;
 }
 
 interface JobFormTypes extends JobTypes {}
@@ -157,6 +186,25 @@ interface OwnersOptionsFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: OwnersOptionsFormTypes;
+}
+
+interface ProsOptionsFormTypes {
+  search: string;
+  dobFrom: string;
+  dobTo: string;
+  nationality: string;
+  state: string;
+}
+
+interface ProsOptionsFormikTypes {
+  touched: ProsOptionsFormTypes;
+  errors: ProsOptionsFormTypes;
+  initialValues: ProsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ProsOptionsFormTypes;
 }
 
 interface JobsOptionsFormTypes {
@@ -245,7 +293,10 @@ type AllFormsTypes =
   | CompanyFormTypes
   | OwnerFormTypes
   | DeleteFormTypes
-  | JobsOptionsFormTypes;
+  | JobsOptionsFormTypes
+  | LinkToCompanyFormTypes
+  | ProFormTypes
+  | ProsOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -261,7 +312,10 @@ type AllFormiksTypes =
   | CompanyFormikTypes
   | NationalitiesOptionsFormikTypes
   | OwnerFormikTypes
-  | DeleteFormikTypes;
+  | DeleteFormikTypes
+  | LinkToCompanyFormikTypes
+  | ProFormikTypes
+  | ProsOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -294,6 +348,8 @@ export type {
   JobFormTypes,
   JobsOptionsFormikTypes,
   JobsOptionsFormTypes,
+  LinkToCompanyFormikTypes,
+  LinkToCompanyFormTypes,
   LoginFormikTypes,
   LoginFormTypes,
   NationalitiesOptionsFormikTypes,
@@ -304,6 +360,10 @@ export type {
   OwnerFormTypes,
   OwnersOptionsFormikTypes,
   OwnersOptionsFormTypes,
+  ProFormikTypes,
+  ProFormTypes,
+  ProsOptionsFormikTypes,
+  ProsOptionsFormTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
   UserFormikTypes,

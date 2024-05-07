@@ -36,6 +36,7 @@ const OwnerProfile = ({ owner, isLoading, companies }: OwnerProfileProps) => {
           count={companies ? companies.length : 0}
           data={companies}
           isLoading={isLoading}
+          unLink={true}
           noPagination={true}
         />
       </CustomTabPanel>

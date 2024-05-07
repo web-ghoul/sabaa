@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
-import { useMemo } from "react";
+import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
+import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
+import { MouseEvent, useMemo, useState } from "react";
 import { handleAcceptArabic } from "../../functions/handleAcceptArabic";
 import { handleAcceptEnglish } from "../../functions/handleAcceptEnglish";
 import { handleAcceptNumeric } from "../../functions/handleAcceptNumeric";
@@ -21,6 +22,14 @@ const Input = ({
   textarea,
   variant,
 }: InputTypes & FormiksTypes) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
   const error =
     formik.touched[name as keyof AllFormiksTypes] &&
     Boolean(formik.errors[name as keyof AllFormiksTypes]);
@@ -102,8 +111,38 @@ const Input = ({
           <PrimaryTextField
             fullWidth
             id={name}
-            type={type || "text"}
+            type={
+              type
+                ? type === "password"
+                  ? showPassword
+                    ? "text"
+                    : "password"
+                  : type
+                : "text"
+            }
             name={name}
+            InputProps={
+              type === "password"
+                ? {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <VisibilityOffRounded />
+                          ) : (
+                            <VisibilityRounded />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }
+                : {}
+            }
             placeholder={
               type !== "date"
                 ? type === "search"
@@ -167,6 +206,7 @@ const Input = ({
       name,
       options,
       select,
+      showPassword,
       textarea,
       type,
       variant,

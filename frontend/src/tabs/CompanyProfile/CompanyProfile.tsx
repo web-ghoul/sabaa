@@ -13,7 +13,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
   return (
     <PrimaryTab
       tabsTitles={[
-        "Personal Info",
+        "Profile Info",
         "Owners",
         "PROs",
         "Employees",
@@ -24,7 +24,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
     >
       <CustomTabPanel value={companyTabsValue} index={0}>
         <ProfileDetails
-          title={`Personal Info`}
+          title={`Profile Info`}
           variant={"company"}
           data={company as CompanyTypes}
           isLoading={isLoading}

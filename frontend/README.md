@@ -381,14 +381,14 @@ Notes (() form Required , <> For View on Table , [] For Options of Select , {} f
 
 
 Side Notes :
-  1- MOL Code is not require in Company Form
-  2- Field Typing is Slow (useMemo on Form)
-  3- License Issue Place be side License Issue Date in Company Form
-  4- website Box is Navigate not window Location Href
-  5- Profile Info Instead of Person Info In Company Profile
-  6- Handle Placeholder of Search of users (Search Username... insead of Search Name, Person Code...)
-  7- Handle Icon Of Add User in Button
-  8- View icon For Password Field To View Password 
+  1- MOL Code is not require in Company Form (Amr)
+  2- Field Typing is Slow (useMemo on Form) (Testing)
+  3- License Issue Place be side License Issue Date in Company Form (Done)
+  4- website Box is Navigate not window Location Href (Done Already) ??
+  5- Profile Info Instead of Person Info In Company Profile (Done)
+  6- Handle Placeholder of Search of users (Search Username... insead of Search Name, Person Code...) (Done)
+  7- Handle Icon Of Add User in Button (Done)
+  8- View icon For Password Field To View Password  (Done)
   9- Link Company With Owner or PRO (Popup include AutoComplete For Company)
   10- Add New Field For Control on Notification 
   11- Add E-Channel Expire Date to Company Form

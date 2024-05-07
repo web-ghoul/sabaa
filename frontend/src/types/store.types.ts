@@ -32,6 +32,38 @@ interface OwnersArgsTypes {
   nationality?: string;
 }
 
+interface OwnersCounterValuesTypes {
+  isLoading: boolean;
+  ownersCounter: number;
+}
+
+interface ProValuesTypes {
+  isLoading: boolean;
+  pro: ProTypes | null;
+  companies: CompanyTypes[] | null;
+}
+
+interface ProsValuesTypes {
+  isLoading: boolean;
+  pros: ProTypes[] | null;
+}
+
+interface ProsArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+  limit?: number;
+  dobTo?: string;
+  dobFrom?: string;
+  state?: string;
+  nationality?: string;
+}
+
+interface ProsCounterValuesTypes {
+  isLoading: boolean;
+  prosCounter: number;
+}
+
 interface EmployeesValuesTypes {
   isLoading: boolean;
   employees: EmployeeTypes[] | null;
@@ -47,11 +79,6 @@ interface EmployeesArgsTypes {
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
-}
-
-interface OwnersCounterValuesTypes {
-  isLoading: boolean;
-  ownersCounter: number;
 }
 
 interface EmployeesCounterValuesTypes {
@@ -159,6 +186,8 @@ interface OwnerTypes {
   user?: string;
 }
 
+interface ProTypes extends OwnerTypes {}
+
 interface CompanyTypes {
   _id?: string;
   name: string;
@@ -190,6 +219,9 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
+  username: string;
+  pasword: string;
+  echannelExpiryDate: Date;
   user?: string;
 }
 
@@ -206,13 +238,6 @@ interface EmployeeTypes {
   uidNo: string;
   emiratesIdNo: string;
   user?: string;
-}
-
-interface PROTypes {
-  avatar: string;
-  name: string;
-  nameAr: string;
-  username: string;
 }
 
 interface JobTypes {
@@ -266,7 +291,11 @@ export type {
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
-  PROTypes,
+  ProTypes,
+  ProValuesTypes,
+  ProsArgsTypes,
+  ProsCounterValuesTypes,
+  ProsValuesTypes,
   UserTypes,
   UserValuesTypes,
   UsersArgsTypes,

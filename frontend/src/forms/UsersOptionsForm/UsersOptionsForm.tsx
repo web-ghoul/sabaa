@@ -1,4 +1,8 @@
-import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  FilterAltRounded,
+  FilterListRounded,
+} from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -59,7 +63,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
       >
         <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
           <Input
-            label={"Search Name, Person Code..."}
+            label={"Search Username..."}
             name={"search"}
             type={"search"}
             formik={formik}
@@ -71,7 +75,7 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
         >
           <Button
             handling={() => handleOpenUserModal("addUser")}
-            icon={<RiFileExcel2Fill />}
+            icon={<AddRounded />}
             title={"Add User"}
           />
           <Button

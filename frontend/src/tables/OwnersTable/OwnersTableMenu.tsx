@@ -1,6 +1,7 @@
 import {
   DeleteRounded,
   EditRounded,
+  JoinFullRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -16,8 +17,12 @@ const OwnersTableMenu = () => {
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { handleOpenOwnerModal, handleOpenDeleteModal, editableOwnerData } =
-    useContext(FormsContext);
+  const {
+    handleOpenOwnerModal,
+    handleOpenDeleteModal,
+    handleOpenLinkToCompanyModal,
+    editableOwnerData,
+  } = useContext(FormsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
@@ -26,6 +31,10 @@ const OwnersTableMenu = () => {
         editableOwnerData && editableOwnerData._id
       }`
     );
+  };
+
+  const handleLink = () => {
+    handleOpenLinkToCompanyModal("linkOwner");
   };
 
   const handleEdit = () => {
@@ -67,6 +76,11 @@ const OwnersTableMenu = () => {
           handling={handleView}
         />
       )}
+      <TableMenuItem
+        icon={<JoinFullRounded />}
+        title={"Link"}
+        handling={handleLink}
+      />
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}

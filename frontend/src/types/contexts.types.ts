@@ -4,6 +4,7 @@ import {
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  ProTypes,
   UserTypes,
 } from "./store.types";
 
@@ -48,6 +49,13 @@ interface ExcelsContextProps {
   handleRemoveOwnersSheet: (fileIndex: number) => void;
   handleEditOwnerInSheet: (value: OwnerTypes) => void;
   handleDeleteOwnerFromSheet: () => void;
+  prosSheets: ProsSheetTypes[];
+  proIndex: { fileIndex: number; index: number };
+  setProIndex: (value: { fileIndex: number; index: number }) => void;
+  handleAddProsSheet: (prosSheet: ProsSheetTypes) => void;
+  handleRemoveProsSheet: (fileIndex: number) => void;
+  handleEditProInSheet: (value: ProTypes) => void;
+  handleDeleteProFromSheet: () => void;
   companiesSheets: CompaniesSheetTypes[];
   companyIndex: { fileIndex: number; index: number };
   setCompanyIndex: (value: { fileIndex: number; index: number }) => void;
@@ -77,12 +85,18 @@ interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
   handleOpenFormsLoading: () => void;
+  openLinkToCompanyModal: boolean;
+  handleOpenLinkToCompanyModal: (type: string) => void;
+  handleCloseLinkToCompanyModal: () => void;
   openDeleteModal: boolean;
   handleOpenDeleteModal: (type: string) => void;
   handleCloseDeleteModal: () => void;
   openOwnerModal: boolean;
   handleOpenOwnerModal: (string: string) => void;
   handleCloseOwnerModal: () => void;
+  openProModal: boolean;
+  handleOpenProModal: (string: string) => void;
+  handleCloseProModal: () => void;
   openUserModal: boolean;
   handleOpenUserModal: (string: string) => void;
   handleCloseUserModal: () => void;
@@ -93,6 +107,8 @@ interface FormsContextTypes {
   setFormType: (type: string) => void;
   searchForOwners: string;
   setSearchForOwners: (search: string) => void;
+  searchForPros: string;
+  setSearchForPros: (search: string) => void;
   searchForCompanies: string;
   setSearchForCompanies: (search: string) => void;
   searchForUsers: string;
@@ -114,12 +130,16 @@ interface FormsContextTypes {
   setCompanyImage: (image: File | string) => void;
   ownerImage: File | string;
   setOwnerImage: (image: File | string) => void;
+  proImage: File | string;
+  setProImage: (image: File | string) => void;
   userImage: File | string;
   setUserImage: (image: File | string) => void;
   editableJobData: JobTypes | null;
   setEditableJobData: (job: JobTypes | null) => void;
   editableOwnerData: OwnerTypes | null;
   setEditableOwnerData: (owner: OwnerTypes | null) => void;
+  editableProData: ProTypes | null;
+  setEditableProData: (pro: OwnerTypes | null) => void;
   editableCompanyData: CompanyTypes | null;
   setEditableCompanyData: (company: CompanyTypes | null) => void;
   editableNationalityData: NationalityTypes | null;
@@ -140,6 +160,11 @@ interface TabsContextProps {
 interface OwnersSheetTypes {
   fileName: string;
   data: Array<OwnerTypes>;
+}
+
+interface ProsSheetTypes {
+  fileName: string;
+  data: Array<ProTypes>;
 }
 
 interface CompaniesSheetTypes {
@@ -170,6 +195,7 @@ export type {
   JobsSheetTypes,
   NationalitiesSheetTypes,
   OwnersSheetTypes,
+  ProsSheetTypes,
   SidebarsContextProps,
   TabsContextProps,
   UsersSheetTypes,

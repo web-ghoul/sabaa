@@ -8,7 +8,6 @@ const BreadCrumbs = ({ children }: { children: ReactNode }) => {
     <Breadcrumbs
       separator={<NavigateNextRounded fontSize="small" />}
       aria-label="breadcrumb"
-      className={``}
     >
       <Link
         to="/"

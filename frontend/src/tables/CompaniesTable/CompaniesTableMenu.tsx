@@ -1,24 +1,34 @@
 import {
   DeleteRounded,
   EditRounded,
+  JoinRightRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const CompaniesTableMenu = () => {
+const CompaniesTableMenu = ({ unLink }: { unLink?: boolean }) => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
+  const { id } = useParams();
   const { pathname } = useLocation();
-  const { handleOpenCompanyModal, handleOpenDeleteModal, editableCompanyData } =
+  const { handleOpenCompanyModal, editableCompanyData, handleOpenDeleteModal } =
     useContext(FormsContext);
   const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
+
+  const handleUnLink = () => {
+    if (pathname === `${import.meta.env.VITE_OWNERS_ROUTE}/${id}`) {
+      handleOpenDeleteModal("unLinkOwner");
+    } else {
+      handleOpenDeleteModal("unLinkPro");
+    }
+  };
 
   const handleView = () => {
     navigate(
@@ -53,6 +63,7 @@ const CompaniesTableMenu = () => {
   useEffect(() => {
     setSheet(pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`);
   }, [pathname, sheet]);
+
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -74,6 +85,13 @@ const CompaniesTableMenu = () => {
           icon={<VisibilityRounded />}
           title={"View"}
           handling={handleView}
+        />
+      )}
+      {unLink && (
+        <TableMenuItem
+          icon={<JoinRightRounded />}
+          title={"UnLink"}
+          handling={handleUnLink}
         />
       )}
       <TableMenuItem

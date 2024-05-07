@@ -70,7 +70,7 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         {title}
       </Typography>
       <Box
-        className={`bg-no-repeat w-[150px] h-[150px] relative bg-cover bg-center rounded-full`}
+        className={`bg-no-repeat w-[150px] h-[150px] relative bg-cover bg-center rounded-full md:w-[125px] md:h-[125px] sm:!w-[100px] sm:!h-[100px]`}
         sx={{
           backgroundImage: `url(${
             chosenImage instanceof File

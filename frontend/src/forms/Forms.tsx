@@ -12,11 +12,14 @@ import DeleteForm from "./DeleteForm/DeleteForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 import JobForm from "./JobForm/JobForm";
 import JobsOptionsForm from "./JobsOptionsForm/JobsOptionsForm";
+import LinkToCompanyForm from "./LinkToCompanyForm/LinkToCompanyForm";
 import LoginForm from "./LoginForm/LoginForm";
 import NationalitiesOptionsForm from "./NationalitiesOptionsForm/NationalitiesOptionsForm";
 import NationalityForm from "./NationalityForm/NationalityForm";
 import OwnerForm from "./OwnerForm/OwnerForm";
 import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
+import ProForm from "./ProForm/ProForm";
+import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
@@ -60,6 +63,12 @@ const Forms = ({ type, index }: FormsTypes) => {
           type={type}
         />
       )}
+      {(type === "addPro" || type === "editPro") && (
+        <ProForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
       {(type === "addCompany" || type === "editCompany") && (
         <CompanyForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
@@ -81,6 +90,11 @@ const Forms = ({ type, index }: FormsTypes) => {
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
+      {(type === "linkOwner" || type === "linkPRO") && (
+        <LinkToCompanyForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
       {type === "usersOptions" && (
         <UsersOptionsForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
@@ -88,6 +102,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "ownersOptions" && (
         <OwnersOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "prosOptions" && (
+        <ProsOptionsForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
