@@ -20,7 +20,7 @@ export class OwnerService {
     }
   }
 
-  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = '', deleted : boolean = false): Promise<Owner[]> {
+  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',state:string = '',dobFrom:string = '',dobTo:string = '', deleted : boolean = false, isPro: boolean=false): Promise<Owner[]> {
     try{
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -29,16 +29,18 @@ export class OwnerService {
           });
       }
       const sort:any = {}
+      sort["createdAt"] = -1; 
       if(sortType == "name_asc")
       {
         sort["name"] = 1; 
       }else if(sortType == "code_asc")
       {
         sort["personCode"] = 1; 
-      }else
-      {
-        sort["createdAt"] = -1; 
-      } 
+      }
+      // else
+      // {
+      //   sort["createdAt"] = -1; 
+      // } 
       
       if(dobFrom != '' && dobTo == '')
       {
@@ -51,6 +53,7 @@ export class OwnerService {
       nationality != '' ? query["nationality"] = nationality : null;
       state != '' ? query["state"] = state : null;
       deleted != false ? query["deleted"] = deleted :  query["deleted"] = false;
+      isPro != false ? query["isPro"] = true : query["isPro"] = false;
       
       console.log(query);
       

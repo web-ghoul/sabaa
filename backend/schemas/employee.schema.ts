@@ -8,13 +8,22 @@ export class Employee {
   
   
     @Prop({ required: true })
-    employeeName: string;
+    name: string;
+    
+    @Prop({ required: true })
+    nameAr: string;
+
+    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
+    personCode: string;
   
-    @Prop({ type: String, ref: 'Company', required: true })
-    companyCode: string;
+    @Prop({ type: [String], ref: 'Company', required: true })
+    companyCode: [string];
   
     @Prop({ type: Date })
     dateOfBirth: Date;
+
+    @Prop({})
+    
   
     @Prop()
     gender: string;
