@@ -7,9 +7,11 @@ import { diskStorage } from 'multer';
 import { MulterModule } from '@nestjs/platform-express';
 import * as path from 'path';
 import { Company, CompanySchema } from 'schemas/company.schema';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema }]),MulterModule.register({
+  imports: [MongooseModule.forFeature([{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema}, { name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
       destination: './upload/owner&pro',
       filename: (req, file, cb) => {
@@ -19,8 +21,9 @@ import { Company, CompanySchema } from 'schemas/company.schema';
         cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
       },
     }),
-  })],
+  }),
+],
   controllers: [OwnerController],
-  providers: [OwnerService],
+  providers: [OwnerService,LogInterceptor],
 })
 export class OwnerModule {}

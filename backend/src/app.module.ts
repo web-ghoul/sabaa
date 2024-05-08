@@ -35,6 +35,10 @@ dotenv.config();
     {
       provide: APP_GUARD,
       useClass: AuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: MongooseModule
     }],
 })
 export class AppModule {}

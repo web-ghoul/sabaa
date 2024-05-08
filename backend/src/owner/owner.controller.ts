@@ -5,17 +5,25 @@ import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { User } from 'src/utils/decorators/User.decorator';
 
 ApiTags('owner')
+
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post()
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "creating owner", type: "owner"})
   @ApiBody({ type: CreateOwnerDto })
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@Body() createOwnerDto: CreateOwnerDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
+  create(@User("id") user, @Body() createOwnerDto: CreateOwnerDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
     new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
+
+    createOwnerDto.user = user;
     return this.ownerService.create(createOwnerDto,file);
   }
 

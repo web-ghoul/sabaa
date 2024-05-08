@@ -20,7 +20,7 @@ export class AuthService {
           const isPasswordValid = await bcrypt.compare(loginData.password, user.password);
           if (isPasswordValid) {
             // Passwords match, return user without password
-            const payload = { userId: user._id, userEmail: user.email, role: user.role };
+            const payload = { id: user._id, email: user.email, role: user.role };
             return {
                 message : "login successfully",
                 token: await this.jwtService.signAsync(payload),
