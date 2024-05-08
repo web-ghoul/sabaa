@@ -20,9 +20,18 @@ interface CompaniesTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  unLink?: boolean;
 }
 
 interface OwnersTableTypes {
+  data: OwnerTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+}
+
+interface ProsTableTypes {
   data: OwnerTypes[] | null;
   count: number;
   isLoading?: boolean;
@@ -50,5 +59,6 @@ export type {
   JobsTableTypes,
   NationalitiesTableTypes,
   OwnersTableTypes,
+  ProsTableTypes,
   UsersTableTypes,
 };

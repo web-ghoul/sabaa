@@ -13,7 +13,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { logout } from "../../store/auth";
 import { UserBoxTypes } from "../../types/components.types";
-import Item from "../UserMenu/Item";
+import Item from "./Item";
 
 const UserBox = ({
   avatar,

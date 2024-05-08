@@ -6,12 +6,14 @@ import {
   JobsSheetTypes,
   NationalitiesSheetTypes,
   OwnersSheetTypes,
+  ProsSheetTypes,
 } from "../types/contexts.types";
 import {
   CompanyTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  ProTypes,
 } from "../types/store.types";
 
 export const ExcelsContext = createContext<ExcelsContextProps>({
@@ -22,6 +24,13 @@ export const ExcelsContext = createContext<ExcelsContextProps>({
   handleRemoveOwnersSheet: () => {},
   handleEditOwnerInSheet: () => {},
   handleDeleteOwnerFromSheet: () => {},
+  prosSheets: [],
+  proIndex: { fileIndex: 0, index: 0 },
+  setProIndex: () => {},
+  handleAddProsSheet: () => {},
+  handleRemoveProsSheet: () => {},
+  handleEditProInSheet: () => {},
+  handleDeleteProFromSheet: () => {},
   companiesSheets: [],
   companyIndex: { fileIndex: 0, index: 0 },
   setCompanyIndex: () => {},
@@ -72,6 +81,37 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       const newOwnersSheets = [...ownersSheets];
       newOwnersSheets[ownerIndex.fileIndex].data[ownerIndex.index] = owner;
       setOwnersSheets(newOwnersSheets);
+    } else {
+      handleAlert({ msg: "Error Occurs", status: "error" });
+    }
+  };
+
+  //Pros Sheets
+  const [prosSheets, setProsSheets] = useState<ProsSheetTypes[]>([]);
+
+  const [proIndex, setProIndex] = useState({ fileIndex: 0, index: 0 });
+
+  const handleAddProsSheet = (prosSheet: ProsSheetTypes) => {
+    setProsSheets([...prosSheets, prosSheet]);
+  };
+
+  const handleRemoveProsSheet = (fileIndex: number) => {
+    setProsSheets(prosSheets.filter((_, i) => i !== fileIndex));
+  };
+
+  const handleDeleteProFromSheet = () => {
+    const updatedProsSheets = [...prosSheets];
+    updatedProsSheets[proIndex.fileIndex].data = prosSheets[
+      proIndex.fileIndex
+    ].data.filter((_, i) => i !== proIndex.index);
+    setProsSheets(updatedProsSheets);
+  };
+
+  const handleEditProInSheet = (pro: ProTypes) => {
+    if (proIndex) {
+      const newProsSheets = [...prosSheets];
+      newProsSheets[proIndex.fileIndex].data[proIndex.index] = pro;
+      setProsSheets(newProsSheets);
     } else {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
@@ -214,6 +254,13 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
     handleEditCompanyInSheet,
     handleRemoveNationalitiesSheet,
     handleEditNationalityInSheet,
+    prosSheets,
+    handleEditProInSheet,
+    handleDeleteProFromSheet,
+    setProIndex,
+    proIndex,
+    handleRemoveProsSheet,
+    handleAddProsSheet,
   };
 
   return (

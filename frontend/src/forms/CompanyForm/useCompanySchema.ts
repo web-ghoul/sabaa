@@ -37,6 +37,9 @@ const useCompanySchema = () => {
     molCode: yup.string().required("MOL Code is required"),
     molCategory: yup.string(),
     whatsAppNo: yup.string(),
+    echannelExpiryDate: yup.date(),
+    username: yup.string(),
+    password: yup.string(),
     mobileNo: yup.string(),
     website: yup.string(),
     licenseIssuePlace: yup.string(),
@@ -94,6 +97,9 @@ const useCompanySchema = () => {
       "",
     tenancyContractValue: editableCompanyData?.tenancyContractValue || "",
     licenseIssuePlace: editableCompanyData?.licenseIssuePlace || "",
+    echannelExpiryDate: editableCompanyData?.echannelExpiryDate || "",
+    username: editableCompanyData?.username || "",
+    password: "",
   };
 
   return { CompanyInitailValues, CompanySchema };

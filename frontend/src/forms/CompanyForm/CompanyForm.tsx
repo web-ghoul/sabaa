@@ -41,7 +41,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
 
   return (
     <Paper
-      className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl transition-all h-full`}
+      className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl transition-all h-full md:p-5 sm:!p-4 xs:!p-3`}
     >
       {type?.startsWith("add") ? (
         <Title head={"h4"} align={"left"} title={"Add New Company"} />
@@ -58,7 +58,9 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         <Typography variant="h4" className={`!font-[700]`}>
           Business Details
         </Typography>
-        <Box className={`grid grid-cols-4 justify-stretch items-start gap-6`}>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
           <Input formik={formik} label={"English Name"} name={"name"} />
           <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
           <Input
@@ -91,6 +93,12 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
+            type={"date"}
+            name={"licenseExpiryDate"}
+            label={"License Expire Date"}
+          />
+          <Input
+            formik={formik}
             label={"License Issue Place"}
             name={"licenseIssuePlace"}
             select
@@ -99,15 +107,10 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           <Input
             formik={formik}
             type={"date"}
-            name={"licenseExpiryDate"}
-            label={"License Expire Date"}
-          />
-          <Input
-            formik={formik}
-            type={"date"}
             name={"licenseIssueDate"}
             label={"License Issue Date"}
           />
+
           <Input
             formik={formik}
             label={"Immg Card Number"}
@@ -140,7 +143,9 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         <Typography variant="h4" className={`!font-[700]`}>
           Company Information
         </Typography>
-        <Box className={`grid grid-cols-4 justify-stretch items-start gap-6`}>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
           <Input
             formik={formik}
             label={"Email"}
@@ -172,16 +177,6 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input formik={formik} label={"Address"} name={"address"} />
 
-          {owners && owners.length > 0 && (
-            <AutoCompleteSearch
-              label={"Owners"}
-              options={owners}
-              formik={formik}
-              name={"ownerId"}
-              multiple={true}
-            />
-          )}
-
           <Input
             formik={formik}
             label={"Website"}
@@ -211,11 +206,48 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             type={"text"}
             variant={"numeric"}
           />
+        </Box>
+        <Box
+          className={`grid justify-stretch items-start grid-cols-2 gap-4 md:grid-cols-1 md:gap-3 sm:!gap-2`}
+        >
+          {owners && owners.length > 0 && (
+            <AutoCompleteSearch
+              label={"Owners"}
+              options={owners}
+              formik={formik}
+              name={"ownerId"}
+              multiple={true}
+            />
+          )}
           <Input
             formik={formik}
             label={"Remarks"}
             name={"remarks"}
             textarea={true}
+          />
+        </Box>
+      </Box>
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          E-Channel Details
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"echannelExpiryDate"}
+            label={"E-Channel Expire Date"}
+          />
+          <Input formik={formik} label={"Username"} name={"username"} />
+          <Input
+            formik={formik}
+            label={"Password"}
+            type={"password"}
+            name={"password"}
           />
         </Box>
       </Box>

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleGetFlag } from "../../functions/handleGetFlag";
-import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
 import { ProfileDetailsTypes } from "../../types/components.types";
 import { CompanyTypes, OwnerTypes, UserTypes } from "../../types/store.types";
@@ -36,6 +35,7 @@ const ProfileDetails = ({
     setEditableCompanyData,
     handleOpenUserModal,
     handleOpenOwnerModal,
+    handleOpenLinkToCompanyModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { user } = useSelector((state: RootState) => state.user);
@@ -55,6 +55,10 @@ const ProfileDetails = ({
     setEditableUserData(user);
   };
 
+  const handleLink = () => {
+    handleOpenLinkToCompanyModal("linkOwner");
+    setEditableOwnerData(owner);
+  };
   const handleEditOwner = () => {
     setEditableOwnerData(owner);
     handleOpenOwnerModal("editOwner");
@@ -137,18 +141,21 @@ const ProfileDetails = ({
               res={true}
             />
             <Box className={profileButtonsClasses}>
-              <PrimaryButton
-                onClick={handleEditOwner}
-                className={`!bg-green-500 hover:!bg-green-600`}
-              >
-                Edit
-              </PrimaryButton>
-              <PrimaryButton
-                className={`!bg-red-500 hover:!bg-red-600`}
-                onClick={handleDeleteOwner}
-              >
-                Delete
-              </PrimaryButton>
+              <Button
+                title={"Link"}
+                handling={handleLink}
+                bg={"!bg-zinc-500"}
+              />
+              <Button
+                title={"Edit"}
+                handling={handleEditOwner}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeleteOwner}
+              />
             </Box>
           </Box>
           <Divider />
@@ -205,18 +212,16 @@ const ProfileDetails = ({
                 variant={"company"}
               />
               <Box className={profileButtonsClasses}>
-                <PrimaryButton
-                  onClick={handleEditCompany}
-                  className={`!bg-green-500 hover:!bg-green-600`}
-                >
-                  Edit
-                </PrimaryButton>
-                <PrimaryButton
-                  onClick={handleDeleteCompany}
-                  className={`!bg-red-500 hover:!bg-red-600`}
-                >
-                  Delete
-                </PrimaryButton>
+                <Button
+                  title={"Edit"}
+                  handling={handleEditCompany}
+                  bg={`!bg-green-500`}
+                />
+                <Button
+                  title={"Delete"}
+                  handling={handleDeleteCompany}
+                  bg={`!bg-red-500`}
+                />
               </Box>
             </Box>
             <Divider />

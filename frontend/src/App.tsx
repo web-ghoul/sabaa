@@ -18,6 +18,7 @@ import CompanyModal from "./modals/CompanyModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
+import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
@@ -68,6 +69,7 @@ const App = () => {
       <OwnerModal />
       <UserModal />
       <CompanyModal />
+      <LinkToCompanyModal />
       <NationalityModal />
       <DeleteModal />
       <Toaster />

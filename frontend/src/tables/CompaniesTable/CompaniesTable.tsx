@@ -34,6 +34,7 @@ const CompaniesTable = ({
   isLoading,
   fileIndex,
   noPagination,
+  unLink,
 }: CompaniesTableTypes) => {
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
@@ -209,7 +210,7 @@ const CompaniesTable = ({
               .fill(0)
               .map((_, i) => <LoadingCompaniesRow key={i} />)}
       </TableBody>
-      <CompaniesTableMenu />
+      <CompaniesTableMenu unLink={unLink} />
     </PrimaryTable>
   );
 };

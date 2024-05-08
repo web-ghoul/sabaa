@@ -10,6 +10,8 @@ interface ImportMetaEnv {
   VITE_DASHBOARD_ROUTE: string;
   VITE_SETTINGS_ROUTE: string;
   VITE_OWNERS_ROUTE: string;
+  VITE_PROS_ROUTE: string;
+  VITE_CUSTOMERS_ROUTE: string;
   VITE_EMPLOYEES_ROUTE: string;
   VITE_COMPANIES_ROUTE: string;
   VITE_TRANSACTIONS_ROUTE: string;
@@ -27,6 +29,7 @@ interface ImportMetaEnv {
   VITE_ADD_COMPANY_ROUTE: string;
   VITE_EDIT_COMPANY_ROUTE: string;
   VITE_ADD_USER_ROUTE: string;
+  VITE_UPLOAD_PROS_ROUTE: string;
   VITE_UPLOAD_OWNERS_ROUTE: string;
   VITE_UPLOAD_USERS_ROUTE: string;
   VITE_UPLOAD_COMPANIES_ROUTE: string;
