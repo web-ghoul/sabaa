@@ -13,22 +13,47 @@ export class Employee {
     @Prop({ required: true })
     nameAr: string;
 
-    @Prop({type: String, trim: true,unique: true, sparse: true, partialFilterExpression: { deleted: false } })
+    @Prop()
+    avatar: string;
+
+    @Prop({ type: String, trim: true, sparse: true })
     personCode: string;
   
     @Prop({ type: [String], ref: 'Company', required: true })
     companyCode: [string];
+
+    @Prop()
+    companyName: [string]
   
     @Prop({ type: Date })
-    dateOfBirth: Date;
+    dob: Date;
 
-    @Prop({})
-    
+    @Prop({type: String, enum: ["Active", "Cancel", "Abscond", "Complaint"]})
+    status: string
+
+    @Prop()
+    cardType: string
+
+    @Prop()
+    job: string
+
+
+    @Prop()
+    visaFileNumber: string
+
+    @Prop()
+    salary: number
+
+    @Prop({type : Object})
+    medical : object
+
+    @Prop({type : Object})
+    iLOE: object
   
     @Prop()
     gender: string;
   
-    @Prop({ type: String, ref: 'Nationality', required: true })
+    @Prop({ type: String, ref: 'Nationality' })
     idNationality: string;
   
     @Prop()
@@ -41,19 +66,44 @@ export class Employee {
     passportExpiry: Date;
   
     @Prop()
-    uidNo: string;
-  
+    uid: string;
+
     @Prop()
-    emiratesIdNo: string;
+    residenceExpireDate: Date
+
+    @Prop()
+    workPermitNumber: string //ref it 
+
+    @Prop()
+    lcExpireDate: Date
+
+    @Prop()
+    mobileNumber: string
+
+    @Prop()
+    email: string
+
+    @Prop()
+    remarks: string
+
+    @Prop()
+    emiratesId: string;
   
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 
+    @Prop({default: false})
+    isCustomer: boolean
+
     @Prop({default : false})
-  deleted: boolean;
+    deleted: boolean;
 
 }
 
 
-
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
+
+EmployeeSchema.index(
+  { personCode: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
+);

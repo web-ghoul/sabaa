@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { EmployeeModule } from './employee/employee.module';
 import { TasheelModule } from './tasheel/tasheel.module';
 import { WorkPermitModule } from './work-permit/work-permit.module';
 import { TransactionModule } from './transaction/transaction.module';
@@ -19,13 +18,14 @@ import { CompanyModule } from './company/company.module';
 import { ImmgcardModule } from './immgcard/immgcard.module';
 import { User } from 'schemas/user.schema';
 import { UserSchema } from 'schemas/resetOtp.schema';
+import { EmployeesModule } from './employees/employees.module';
 
 dotenv.config();
 @Module({
-  imports: [UserModule, EmployeeModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
+  imports: [UserModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
-  }]), JobTitleModule, ImmgcardModule],
+  }]), JobTitleModule, ImmgcardModule, EmployeesModule],
   controllers: [AppController],
   providers: [AppService,
     {

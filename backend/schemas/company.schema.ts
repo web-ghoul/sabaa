@@ -90,6 +90,8 @@ export class Company {
   @Prop()
   licenseIssuePlace: string;
 
+  @Prop({ type: Array, ref: 'Employee' })
+  employees: string[];
   
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })

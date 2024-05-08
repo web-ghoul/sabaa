@@ -14,6 +14,8 @@ export class OwnerService {
       createOwnerDto.avatar = file ? file.path : undefined;
       
       return await this.ownerModel.create(createOwnerDto);
+
+      //inject in company if exits
     }catch(err)
     {
       throw new HttpException(err, HttpStatus.FORBIDDEN);
@@ -110,10 +112,10 @@ export class OwnerService {
     
   }
 
-  async getCounters() {
+  async getCounters(isPro:boolean = false) {
     const [count,deleted] = await Promise.all([
-      this.ownerModel.estimatedDocumentCount({deleted : false}),
-      this.ownerModel.estimatedDocumentCount({deleted : true})
+      this.ownerModel.countDocuments({deleted : false , isPro : isPro}),
+      this.ownerModel.countDocuments({deleted : true , isPro : isPro})
     ]) ;
     return {
       count,

@@ -11,7 +11,7 @@ import { Company, CompanySchema } from 'schemas/company.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema }]),MulterModule.register({
     storage: diskStorage({
-      destination: './upload/owner',
+      destination: './upload/owner&pro',
       filename: (req, file, cb) => {
         // Generate a unique suffix
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);

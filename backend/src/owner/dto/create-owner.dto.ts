@@ -65,6 +65,11 @@ export class CreateOwnerDto {
   emiratesId?: string;
 
   @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  isPro?: boolean;
+
+  @ApiProperty({ required: false })
   @IsMongoId()
   @IsOptional()
   user?: string;
