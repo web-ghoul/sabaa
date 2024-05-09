@@ -35,19 +35,19 @@ jobs:
       - name: Build backend
         run: cd backend && npm run build 
 
-      - name: Install dashboard dependencies
-        run: cd dashboard && npm install 
+      - name: Install frontend dependencies
+        run: cd frontend && npm install 
 
-      - name: Cache dashboard build
+      - name: Cache frontend build
         uses: actions/cache@v2
         with:
-          path: dashboard/build
-          key: ${{ runner.os }}-dashboard-${{ hashFiles('**/dashboard/package-lock.json') }}
+          path: frontend/build
+          key: ${{ runner.os }}-frontend-${{ hashFiles('**/frontend/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-dashboard-
+            ${{ runner.os }}-frontend-
             
-      - name: Build dashboard (if not cached)
-        run: cd dashboard && npm run build || echo "dashboard build not cached, building now."
+      - name: Build frontend (if not cached)
+        run: cd frontend && npm run build || echo "frontend build not cached, building now."
 
       - name: Copy repository contents via scp
         uses: appleboy/scp-action@master
