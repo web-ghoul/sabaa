@@ -19,13 +19,14 @@ import { ImmgcardModule } from './immgcard/immgcard.module';
 import { User } from 'schemas/user.schema';
 import { UserSchema } from 'schemas/resetOtp.schema';
 import { EmployeesModule } from './employees/employees.module';
+import { ActivitiesModule } from './activities/activities.module';
 
 dotenv.config();
 @Module({
   imports: [UserModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
-  }]), JobTitleModule, ImmgcardModule, EmployeesModule],
+  }]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule],
   controllers: [AppController],
   providers: [AppService,
     {
@@ -35,6 +36,10 @@ dotenv.config();
     {
       provide: APP_GUARD,
       useClass: AuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: MongooseModule
     }],
 })
 export class AppModule {}
