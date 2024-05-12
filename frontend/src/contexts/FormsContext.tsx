@@ -4,6 +4,8 @@ import { RootState } from "../store/store";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -31,6 +33,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   openOwnerModal: false,
   handleOpenOwnerModal: () => {},
   handleCloseOwnerModal: () => {},
+  openEmployeeModal: false,
+  handleOpenEmployeeModal: () => {},
+  handleCloseEmployeeModal: () => {},
+  openCustomerModal: false,
+  handleOpenCustomerModal: () => {},
+  handleCloseCustomerModal: () => {},
   openProModal: false,
   handleOpenProModal: () => {},
   handleCloseProModal: () => {},
@@ -47,6 +55,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setFormType: () => {},
   searchForOwners: "",
   setSearchForOwners: () => {},
+  searchForEmployees: "",
+  setSearchForEmployees: () => {},
+  searchForCustomers: "",
+  setSearchForCustomers: () => {},
   searchForPros: "",
   setSearchForPros: () => {},
   searchForJobs: "",
@@ -61,6 +73,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setCompanyImage: () => {},
   ownerImage: "",
   setOwnerImage: () => {},
+  employeeImage: "",
+  setEmployeeImage: () => {},
+  customerImage: "",
+  setCustomerImage: () => {},
   proImage: "",
   setProImage: () => {},
   userImage: "",
@@ -69,6 +85,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableJobData: () => {},
   editableOwnerData: null,
   setEditableOwnerData: () => {},
+  editableEmployeeData: null,
+  setEditableEmployeeData: () => {},
+  editableCustomerData: null,
+  setEditableCustomerData: () => {},
   editableProData: null,
   setEditableProData: () => {},
   editableNationalityData: null,
@@ -91,6 +111,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
+  const [searchForEmployees, setSearchForEmployees] = useState("");
+  const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
   const [searchForUsers, setSearchForUsers] = useState("");
@@ -170,6 +192,36 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenOwnerModal(true);
   };
 
+  //Employee Modal
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
+
+  const handleCloseEmployeeModal = () => {
+    setOpenEmployeeModal(false);
+  };
+
+  const handleOpenEmployeeModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableEmployeeData(null);
+    }
+    setFormType(type);
+    setOpenEmployeeModal(true);
+  };
+
+  //Customer Modal
+  const [openCustomerModal, setOpenCustomerModal] = useState(false);
+
+  const handleCloseCustomerModal = () => {
+    setOpenCustomerModal(false);
+  };
+
+  const handleOpenCustomerModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableCustomerData(null);
+    }
+    setFormType(type);
+    setOpenCustomerModal(true);
+  };
+
   //Pro Modal
   const [openProModal, setOpenProModal] = useState(false);
 
@@ -238,6 +290,16 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Owner Image
   const [ownerImage, setOwnerImage] = useState<File | string>(defaultAvatar);
 
+  //Employee Image
+  const [employeeImage, setEmployeeImage] = useState<File | string>(
+    defaultAvatar
+  );
+
+  //Customer Image
+  const [customerImage, setCustomerImage] = useState<File | string>(
+    defaultAvatar
+  );
+
   //Pro Image
   const [proImage, setProImage] = useState<File | string>(defaultAvatar);
 
@@ -252,7 +314,15 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
 
-  //Editable Owner Data
+  //Editable Employee Data
+  const [editableEmployeeData, setEditableEmployeeData] =
+    useState<EmployeeTypes | null>(null);
+
+  //Editable Customer Data
+  const [editableCustomerData, setEditableCustomerData] =
+    useState<CustomerTypes | null>(null);
+
+  //Editable Pro Data
   const [editableProData, setEditableProData] = useState<ProTypes | null>(null);
 
   //Editable Nationality Data
@@ -272,13 +342,25 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
     }
+    if (editableProData) {
+      setProImage(editableProData.avatar);
+    }
+    if (editableEmployeeData) {
+      setEmployeeImage(editableEmployeeData.avatar);
+    }
     if (editableUserData) {
       setUserImage(editableUserData.avatar);
     }
     if (editableCompanyData) {
       setCompanyImage(editableCompanyData.logo);
     }
-  }, [editableOwnerData, editableUserData, editableCompanyData]);
+  }, [
+    editableOwnerData,
+    editableUserData,
+    editableCompanyData,
+    editableProData,
+    editableEmployeeData,
+  ]);
 
   useEffect(() => {
     if (company) {
@@ -351,6 +433,24 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setProImage,
     searchForPros,
     setSearchForPros,
+    searchForEmployees,
+    setSearchForEmployees,
+    openEmployeeModal,
+    handleCloseEmployeeModal,
+    handleOpenEmployeeModal,
+    editableEmployeeData,
+    setEditableEmployeeData,
+    employeeImage,
+    setEmployeeImage,
+    customerImage,
+    setCustomerImage,
+    editableCustomerData,
+    setEditableCustomerData,
+    openCustomerModal,
+    handleCloseCustomerModal,
+    handleOpenCustomerModal,
+    searchForCustomers,
+    setSearchForCustomers,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

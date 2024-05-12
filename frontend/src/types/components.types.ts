@@ -3,10 +3,11 @@ import { ReactNode } from "react";
 import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
+  CustomerTypes,
   EmployeeTypes,
   NationalityTypes,
   OwnerTypes,
-  PROTypes,
+  ProTypes,
   UserTypes,
 } from "./store.types";
 
@@ -98,8 +99,14 @@ interface AutoCompleteSearchTypes {
 
 interface ProfileDetailsTypes {
   title: string;
-  variant: "user" | "owner" | "company" | "PRO" | "employee";
-  data: UserTypes | OwnerTypes | CompanyTypes | PROTypes | EmployeeTypes;
+  variant: "user" | "owner" | "company" | "pro" | "employee" | "customer";
+  data:
+    | UserTypes
+    | OwnerTypes
+    | CompanyTypes
+    | ProTypes
+    | EmployeeTypes
+    | CustomerTypes;
   isLoading?: boolean;
 }
 

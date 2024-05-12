@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { EmployeesArgsTypes, EmployeesValuesTypes } from "../types/store.types";
+import { CustomersArgsTypes, CustomersValuesTypes } from "../types/store.types";
 
-export const getEmployees = createAsyncThunk(
-  "/employees/getEmployees",
-  async (args: EmployeesArgsTypes) => {
+export const getCustomers = createAsyncThunk(
+  "/customers/getCustomers",
+  async (args: CustomersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/Employee?search=${
@@ -20,7 +20,7 @@ export const getEmployees = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }`,
+      }&isCustomer=true`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -31,30 +31,30 @@ export const getEmployees = createAsyncThunk(
   }
 );
 
-const initialState: EmployeesValuesTypes = {
+const initialState: CustomersValuesTypes = {
   isLoading: true,
-  employees: null,
+  customers: null,
 };
 
-export const employeesSlice = createSlice({
-  name: "employees",
+export const customersSlice = createSlice({
+  name: "customers",
   initialState,
   reducers: {
-    reverseEmployees: (state) => {
-      if (state.employees) {
-        state.employees = state.employees.reverse();
+    reverseCustomers: (state) => {
+      if (state.customers) {
+        state.customers = state.customers.reverse();
       }
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getEmployees.pending, (state) => {
+    builder.addCase(getCustomers.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getEmployees.fulfilled, (state, { payload }) => {
+    builder.addCase(getCustomers.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.employees = payload;
+      state.customers = payload;
     });
-    builder.addCase(getEmployees.rejected, (_, action) => {
+    builder.addCase(getCustomers.rejected, (_, action) => {
       if (action.payload) {
         console.log(action.payload);
       } else {
@@ -64,5 +64,5 @@ export const employeesSlice = createSlice({
   },
 });
 
-export const { reverseEmployees } = employeesSlice.actions;
-export default employeesSlice.reducer;
+export const { reverseCustomers } = customersSlice.actions;
+export default customersSlice.reducer;

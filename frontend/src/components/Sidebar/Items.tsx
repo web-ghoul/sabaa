@@ -6,7 +6,6 @@ import {
   Diversity3Rounded,
   EmailRounded,
   FlagRounded,
-  FolderRounded,
   GridViewRounded,
   GroupRounded,
   ListAltRounded,
@@ -61,7 +60,7 @@ const Items = () => {
       <Item
         icon={<FaHandshakeSimple />}
         title="Public Relation Officers"
-        url={`${import.meta.env.VITE_PUBLIC_RELATION_OFFICERS_ROUTE}`}
+        url={`${import.meta.env.VITE_PROS_ROUTE}`}
       />
       <Item
         icon={<WorkRounded />}
@@ -97,11 +96,6 @@ const Items = () => {
         icon={<ListAltRounded />}
         title="Todo List"
         url={`${import.meta.env.VITE_TODO_LIST_ROUTE}`}
-      />
-      <Item
-        icon={<FolderRounded />}
-        title="File Manager"
-        url={`${import.meta.env.VITE_FILE_MANAGER_ROUTE}`}
       />
       <Item
         icon={<GroupRounded />}

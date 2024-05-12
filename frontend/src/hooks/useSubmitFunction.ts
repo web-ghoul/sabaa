@@ -9,6 +9,12 @@ import { handleCatchError } from "../functions/handleCatchError";
 import { getProfile, login as loginAction } from "../store/auth";
 import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
+import { getCustomersCounter } from "../store/customersCounterSlice";
+import { getCustomer } from "../store/customerSlice";
+import { getCustomers } from "../store/customersSlice";
+import { getEmployeesCounter } from "../store/employeesCounterSlice";
+import { getEmployee } from "../store/employeeSlice";
+import { getEmployees } from "../store/employeesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
@@ -16,7 +22,9 @@ import { getNationalities } from "../store/nationalitiesSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
+import { getProsCounter } from "../store/prosCounterSlice";
 import { getPro } from "../store/proSlice";
+import { getPros } from "../store/prosSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUser } from "../store/userSlice";
@@ -24,12 +32,15 @@ import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
   CompanyFormTypes,
+  CustomerFormTypes,
+  EmployeeFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
   OwnerFormTypes,
+  ProFormTypes,
   ResetPasswordFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
@@ -42,39 +53,57 @@ const useSubmitFunction = (type: string) => {
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
+    handleCloseEmployeeModal,
+    handleCloseCustomerModal,
     handleCloseJobModal,
     handleCloseNationalityModal,
     handleCloseDeleteModal,
     editableNationalityData,
     editableJobData,
     ownerImage,
+    employeeImage,
+    customerImage,
     userImage,
     editableUserData,
     editableOwnerData,
     formType,
     editableCompanyData,
+    editableCustomerData,
+    editableProData,
+    editableEmployeeData,
     companyImage,
     setOwnerImage,
+    setEmployeeImage,
+    setCustomerImage,
     setCompanyImage,
     setUserImage,
     handleCloseOwnerModal,
     handleCloseCompanyModal,
     handleCloseUserModal,
     handleCloseLinkToCompanyModal,
+    handleCloseProModal,
+    setProImage,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
     handleEditJobInSheet,
     handleEditOwnerInSheet,
     handleEditCompanyInSheet,
+    handleEditProInSheet,
     jobsSheets,
     nationalitiesSheets,
+    prosSheets,
     ownersSheets,
     companiesSheets,
     jobIndex,
+    proIndex,
     ownerIndex,
     companyIndex,
     nationalityIndex,
+    handleEditEmployeeInSheet,
+    customersSheets,
+    customerIndex,
+    handleEditCustomerInSheet,
   } = useContext(ExcelsContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -96,7 +125,10 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
-  const handleOwnerFormData = (values: OwnerFormTypes) => {
+  const handleOwnerFormData = (
+    values: OwnerFormTypes | ProFormTypes,
+    pro: boolean = false
+  ) => {
     const formData = new FormData();
     formData.append("uid", values?.uid);
     if (values.personCode) {
@@ -117,6 +149,36 @@ const useSubmitFunction = (type: string) => {
     formData.append("state", values.state.trim());
     formData.append("dob", values?.dob.toString().trim());
     formData.append("proCode", values.proCode ? "true" : "false");
+    formData.append("isPro", pro ? "true" : "false");
+    return formData;
+  };
+
+  const handleEmployeeFormData = (
+    values: EmployeeFormTypes | CustomerFormTypes,
+    customer: boolean = false
+  ) => {
+    const formData = new FormData();
+    formData.append("avatar", ownerImage);
+    formData.append("name", values.name.trim());
+    formData.append("nameAr", values.nameAr.trim());
+    formData.append("uid", values.uid.trim());
+    formData.append("personCode", values.personCode.trim());
+    formData.append("companyCode", values.companyCode.trim());
+    formData.append("companyName", values.companyName.trim());
+    formData.append("nationality", values.nationality.trim());
+    formData.append("idNationality", values.idNationality.trim());
+    formData.append("emiratesId", values.emiratesId.trim());
+    formData.append("email", values.email.trim());
+    formData.append("status", values.status.trim());
+    formData.append("salary", values.salary.trim());
+    formData.append("cardType", values.cardType.trim());
+    formData.append("dob", values?.dob.toString().trim());
+    formData.append("passportNumber", values.passportNumber.trim());
+    formData.append("passportExpiry", values?.passportExpiry.toString().trim());
+    formData.append("job", values.job.trim());
+    formData.append("visaFileNumber", values.visaFileNumber.trim());
+    formData.append("remarks", values.remarks.trim());
+    formData.append("isCustomer", customer ? "true" : "false");
     return formData;
   };
 
@@ -201,6 +263,8 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Job
+
   const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -275,6 +339,8 @@ const useSubmitFunction = (type: string) => {
       });
     handleCloseFormsLoading();
   };
+
+  //Nationality
 
   const addNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
@@ -360,6 +426,8 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Users
+
   const addUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -412,6 +480,8 @@ const useSubmitFunction = (type: string) => {
       });
     handleCloseFormsLoading();
   };
+
+  //Owners
 
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
@@ -499,6 +569,281 @@ const useSubmitFunction = (type: string) => {
       });
     handleCloseFormsLoading();
   };
+
+  //Pros
+
+  const addPro = async (values: ProFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/owner`, handleOwnerFormData(values, true), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Officer is Created Successfully",
+          status: "success",
+        });
+        dispatch(getPros({}));
+        dispatch(getProsCounter());
+        handleCloseProModal();
+        setProImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editPro = async (values: OwnerFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`) {
+      handleEditProInSheet(values);
+      handleCloseProModal();
+      handleAlert({
+        msg: "Officer is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/owner/${editableProData && editableProData._id}`,
+          handleOwnerFormData(values, true),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Officer is Updated Successfully",
+            status: "success",
+          });
+          if (id && pathname === `${import.meta.env.VITE_PROS_ROUTE}/${id}`) {
+            dispatch(getPro({ id }));
+          } else {
+            dispatch(getPros({}));
+          }
+          handleCloseProModal();
+          setProImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createProsSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = prosSheets[proIndex.fileIndex].data;
+    await server
+      .post(`/owner`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Officers are Created Successfully",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+        dispatch(getPros({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Employees
+
+  const addEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/Employee`, handleEmployeeFormData(values), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employee is Created Successfully",
+          status: "success",
+        });
+        dispatch(getEmployees({}));
+        dispatch(getEmployeesCounter());
+        handleCloseEmployeeModal();
+        setEmployeeImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
+      handleEditEmployeeInSheet(values);
+      handleCloseEmployeeModal();
+      handleAlert({
+        msg: "Employee is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          handleEmployeeFormData(values),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Employee is Updated Successfully",
+            status: "success",
+          });
+          if (
+            id &&
+            pathname === `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${id}`
+          ) {
+            dispatch(getEmployee({ id }));
+          } else {
+            dispatch(getEmployees({}));
+          }
+          handleCloseEmployeeModal();
+          setEmployeeImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createEmployeesSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = employeesSheets[employeeIndex.fileIndex].data;
+    await server
+      .post(`/Employee`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employees are Created Successfully",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+        dispatch(getEmployees({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Customers
+
+  const addCustomer = async (values: CustomerFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/Employee`, handleEmployeeFormData(values, true), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Customer is Created Successfully",
+          status: "success",
+        });
+        dispatch(getCustomers({}));
+        dispatch(getCustomersCounter());
+        handleCloseCustomerModal();
+        setCustomerImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editCustomer = async (values: CustomerFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`) {
+      handleEditCustomerInSheet(values);
+      handleCloseCustomerModal();
+      handleAlert({
+        msg: "Customer is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/Employee/${editableCustomerData && editableCustomerData._id}`,
+          handleEmployeeFormData(values, true),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Customer is Updated Successfully",
+            status: "success",
+          });
+          if (
+            id &&
+            pathname === `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${id}`
+          ) {
+            dispatch(getCustomer({ id }));
+          } else {
+            dispatch(getCustomers({}));
+          }
+          handleCloseCustomerModal();
+          setCustomerImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createCustomersSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = customersSheets[customerIndex.fileIndex].data;
+    await server
+      .post(`/Employee`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Customers are Created Successfully",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
+        dispatch(getCustomers({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Company
 
   const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
@@ -634,6 +979,8 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Delete
+
   const handleDelete = async () => {
     handleOpenFormsLoading();
     if (formType === "owner") {
@@ -650,6 +997,69 @@ const useSubmitFunction = (type: string) => {
           });
           dispatch(getOwners({}));
           navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "pro") {
+      await server
+        .delete(`/owner/${editableProData && editableProData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Officer is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getPros({}));
+          navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "employee") {
+      await server
+        .delete(
+          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Employee is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getEmployees({}));
+          navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "customer") {
+      await server
+        .delete(
+          `/Employee/${editableCustomerData && editableCustomerData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Customer is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getCustomers({}));
+          navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -833,6 +1243,33 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createOwnersSheet":
         createOwnersSheet(values as unknown);
+        break;
+      case "addPro":
+        addPro(values as ProFormTypes);
+        break;
+      case "editPro":
+        editPro(values as ProFormTypes);
+        break;
+      case "createProsSheet":
+        createProsSheet(values as unknown);
+        break;
+      case "addEmployee":
+        addEmployee(values as EmployeeFormTypes);
+        break;
+      case "editEmployee":
+        editEmployee(values as EmployeeFormTypes);
+        break;
+      case "createEmployeesSheet":
+        createEmployeesSheet(values as unknown);
+        break;
+      case "addCustomer":
+        addCustomer(values as CustomerFormTypes);
+        break;
+      case "editCustomer":
+        editCustomer(values as CustomerFormTypes);
+        break;
+      case "createCustomersSheet":
+        createCustomersSheet(values as unknown);
         break;
       case "addCompany":
         addCompany(values as CompanyFormTypes);
