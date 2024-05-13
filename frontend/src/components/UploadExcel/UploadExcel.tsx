@@ -15,13 +15,22 @@ import {
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  ProTypes,
 } from "../../types/store.types";
 import UploadStatus from "./UploadStatus";
 
 const UploadExcel = ({
   variant,
 }: {
-  variant: "jobs" | "owners" | "companies" | "nationalities" | "users";
+  variant:
+    | "jobs"
+    | "owners"
+    | "companies"
+    | "nationalities"
+    | "users"
+    | "pros"
+    | "employees"
+    | "customers";
 }) => {
   const [dragging, setDragging] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -32,6 +41,7 @@ const UploadExcel = ({
     handleAddNationalitiesSheet,
     handleAddJobsSheet,
     handleAddCompaniesSheet,
+    handleAddProsSheet,
   } = useContext(ExcelsContext);
 
   const handleJobsSheet = (data: Array<Row>, file: File) => {
@@ -102,9 +112,7 @@ const UploadExcel = ({
         data[0][10] === "Remarks" &&
         data[0][11] === "State" &&
         data[0][12] === "Address" &&
-        data[0][13] === "PRO Code" &&
-        data[0][14] === "PRO Name" &&
-        data[0].length === 15
+        data[0].length === 13
       )
     ) {
       handleAlert({ msg: "File Formate isn't allow", status: "error" });
@@ -145,6 +153,68 @@ const UploadExcel = ({
       owners.push(owner);
     }
     handleAddOwnersSheet({ fileName: file.name, data: owners });
+  };
+
+  const handleProsSheet = (data: Array<Row>, file: File) => {
+    const pros: ProTypes[] = [];
+    if (
+      !(
+        data[0][0] === "Person Code" &&
+        data[0][1] === "PRO Name" &&
+        data[0][2] === "PRO Name Ar" &&
+        data[0][3] === "Nationality Code" &&
+        data[0][4] === "Nationality" &&
+        data[0][5] === "Emirates ID No" &&
+        data[0][6] === "Date Of Birth" &&
+        data[0][7] === "Mobile Number" &&
+        data[0][8] === "UID NO" &&
+        data[0][9] === "Email" &&
+        data[0][10] === "Remarks" &&
+        data[0][11] === "State" &&
+        data[0][12] === "Address" &&
+        data[0].length === 13
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
+    for (let i = 1; i < data.length; i++) {
+      const pro: ProTypes = {
+        uid: "",
+        nationality: "",
+        avatar: "",
+        name: "",
+        nameAr: "",
+        emiratesId: "",
+        phone: "",
+        dob: new Date(),
+        idNationality: "",
+        address: "",
+        personCode: "",
+        email: "",
+        remarks: "",
+        state: "",
+        proCode: true,
+        isPro: "true",
+        createdAt: new Date(),
+      };
+      pro["personCode"] = `${data[i][0]}`;
+      pro["name"] = `${data[i][1]}`;
+      pro["nameAr"] = `${data[i][2]}`;
+      pro["idNationality"] = `${data[i][3]}`;
+      pro["nationality"] = `${data[i][4]}`;
+      pro["emiratesId"] = `${data[i][5]}`;
+      pro["dob"] = new Date(`${data[i][6]}`);
+      pro["phone"] = `${data[i][7]}`;
+      pro["uid"] = `${data[i][8]}`;
+      pro["email"] = `${data[i][9]}`;
+      pro["remarks"] = `${data[i][10]}`;
+      pro["state"] = `${data[i][11]}`;
+      pro["address"] = `${data[i][12]}`;
+      pro["isPro"] = `true`;
+      pros.push(pro);
+    }
+    handleAddProsSheet({ fileName: file.name, data: pros });
   };
 
   const handleCompaniesSheet = (data: Array<Row>, file: File) => {
@@ -188,6 +258,7 @@ const UploadExcel = ({
         immgCardExpiry: new Date(),
         licenseIssueDate: new Date(),
         licenseExpiryDate: new Date(),
+        echannelExpiryDate: new Date(),
         establishmentType: "",
         molCode: "",
         molCategory: "",
@@ -202,6 +273,8 @@ const UploadExcel = ({
         country: "",
         licenseIssuePlace: "",
         zipCode: "",
+        username: "",
+        password: "",
         createdAt: new Date(),
       };
       company["status"] = `${data[i][0]}`;
@@ -242,6 +315,8 @@ const UploadExcel = ({
             handleNationalitiesSheet(rows, file);
           } else if (variant === "owners") {
             handleOwnersSheet(rows, file);
+          } else if (variant === "pros") {
+            handleProsSheet(rows, file);
           } else if (variant === "companies") {
             handleCompaniesSheet(rows, file);
           }

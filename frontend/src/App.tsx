@@ -15,12 +15,15 @@ import MdSidebar from "./components/Sidebar/MdSidebar.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import { AppContext } from "./contexts/AppContext.tsx";
 import CompanyModal from "./modals/CompanyModal.tsx";
+import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
+import EmployeeModal from "./modals/EmployeeModal.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
 import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
+import ProModal from "./modals/ProModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import { getProfile, setAuth } from "./store/auth.ts";
 import { AppDispatch } from "./store/store.ts";
@@ -69,6 +72,9 @@ const App = () => {
       <OwnerModal />
       <UserModal />
       <CompanyModal />
+      <ProModal />
+      <EmployeeModal />
+      <CustomerModal />
       <LinkToCompanyModal />
       <NationalityModal />
       <DeleteModal />

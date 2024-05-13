@@ -17,6 +17,12 @@ interface AppContextProps {
   openUserMenu: null | HTMLElement;
   ownersPage: number;
   setOwnersPage: (page: number) => void;
+  prosPage: number;
+  setProsPage: (page: number) => void;
+  employeesPage: number;
+  setEmployeesPage: (page: number) => void;
+  customersPage: number;
+  setCustomersPage: (page: number) => void;
   jobsPage: number;
   setJobsPage: (page: number) => void;
   companiesPage: number;

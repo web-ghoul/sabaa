@@ -1,5 +1,7 @@
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -39,6 +41,22 @@ interface ProsTableTypes {
   noPagination?: boolean;
 }
 
+interface EmployeesTableTypes {
+  data: EmployeeTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+}
+
+interface CustomersTableTypes {
+  data: CustomerTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+}
+
 interface NationalitiesTableTypes {
   data: NationalityTypes[] | null;
   count: number;
@@ -56,6 +74,8 @@ interface UsersTableTypes {
 
 export type {
   CompaniesTableTypes,
+  CustomersTableTypes,
+  EmployeesTableTypes,
   JobsTableTypes,
   NationalitiesTableTypes,
   OwnersTableTypes,

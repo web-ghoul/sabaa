@@ -1,14 +1,14 @@
 import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
-import { EmployeesTableRow } from "./EmployeesTableRow";
+import { CustomersTableRow } from "./CustomersTableRow";
 
-const LoadingEmployeesRow = () => {
+const LoadingCustomersRow = () => {
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
 
   return (
-    <EmployeesTableRow>
+    <CustomersTableRow>
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
@@ -39,8 +39,8 @@ const LoadingEmployeesRow = () => {
       <PrimaryTableCell align="right">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-    </EmployeesTableRow>
+    </CustomersTableRow>
   );
 };
 
-export default LoadingEmployeesRow;
+export default LoadingCustomersRow;

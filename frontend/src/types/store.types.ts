@@ -5,6 +5,18 @@ interface AuthValuesTypes {
   isLoading: boolean;
 }
 
+interface ActivityTypes {}
+
+interface ActivitiesValuesTypes {
+  activities: ActivityTypes | null;
+  isLoading: boolean;
+}
+
+interface ActivitiesArgsTypes {
+  page?: number;
+  limit?: number;
+}
+
 //User
 
 interface UserTypes {
@@ -126,7 +138,9 @@ interface CustomersCounterValuesTypes {
 
 //PRO
 
-interface ProTypes extends OwnerTypes {}
+interface ProTypes extends OwnerTypes {
+  isPro: string;
+}
 
 interface ProValuesTypes {
   isLoading: boolean;
@@ -174,6 +188,7 @@ interface EmployeeTypes {
   mobileNumber: string;
   salary: string;
   cardType: string;
+  cardNumber: string;
   status: string;
   visaFileNumber: string;
   passportNumber: string;
@@ -181,6 +196,12 @@ interface EmployeeTypes {
   residenceExpireDate: Date;
   lcExpireDate: Date;
   workPermitNumber: string;
+  medicalInsuranceCompany: string;
+  medicalPolicy: string;
+  medicalExpireDate: Date;
+  iLOEInsuranceCompany: string;
+  iLOEPolicy: string;
+  iLOEExpireDate: Date;
   uid: string;
   emiratesId: string;
   remarks: string;
@@ -248,7 +269,7 @@ interface CompanyTypes {
   remarks: string;
   createdAt: Date;
   username: string;
-  pasword: string;
+  password: string;
   echannelExpiryDate: Date;
   user?: string;
 }
@@ -338,6 +359,9 @@ interface NationalityTypes {
 }
 
 export type {
+  ActivitiesArgsTypes,
+  ActivitiesValuesTypes,
+  ActivityTypes,
   AuthValuesTypes,
   CompaniesArgsTypes,
   CompaniesCounterValuesTypes,

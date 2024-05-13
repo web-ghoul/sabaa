@@ -15,15 +15,15 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { getOwnersCounter } from "../../store/ownersCounterSlice";
-import { getOwners, reverseOwners } from "../../store/ownersSlice";
+import { getProsCounter } from "../../store/prosCounterSlice";
+import { getPros, reversePros } from "../../store/prosSlice";
 import { AppDispatch } from "../../store/store";
 import { ProsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import SortBox from "../SortBox";
-import LoadingOwnersRow from "./LoadingProsRow";
-import OwnersTableMenu from "./ProsTableMenu";
+import LoadingProsRow from "./LoadingProsRow";
+import ProsTableMenu from "./ProsTableMenu";
 import { ProsTableRow } from "./ProsTableRow";
 
 const ProsTable = ({
@@ -35,8 +35,8 @@ const ProsTable = ({
 }: ProsTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
-  const { setOwnerIndex } = useContext(ExcelsContext);
-  const { setEditableOwnerData } = useContext(FormsContext);
+  const { setProIndex } = useContext(ExcelsContext);
+  const { setEditableProData } = useContext(FormsContext);
   const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -48,12 +48,12 @@ const ProsTable = ({
   const handleSortByName = () => {
     if (searchParams.get("sort") === "name_asc") {
       handleAddQuery({ sort: "name_desc" });
-      dispatch(reverseOwners());
+      dispatch(reversePros());
       setSearchParams({ ...queries, sort: "name_desc" });
     } else {
       handleAddQuery({ sort: "name_asc" });
       const all = { ...queries, sort: "name_asc" };
-      dispatch(getOwners(all));
+      dispatch(getPros(all));
       setSearchParams(all);
     }
   };
@@ -61,12 +61,12 @@ const ProsTable = ({
   const handleSortByCode = () => {
     if (searchParams.get("sort") === "code_asc") {
       handleAddQuery({ sort: "code_desc" });
-      dispatch(reverseOwners());
+      dispatch(reversePros());
       setSearchParams({ ...queries, sort: "code_desc" });
     } else {
       handleAddQuery({ sort: "code_asc" });
       const all = { ...queries, sort: "code_asc" };
-      dispatch(getOwners(all));
+      dispatch(getPros(all));
       setSearchParams(all);
     }
   };
@@ -82,14 +82,14 @@ const ProsTable = ({
     index: number
   ) => {
     if (data) {
-      setEditableOwnerData(data[index]);
+      setEditableProData(data[index]);
     }
-    setOwnerIndex({ fileIndex: fileIndex || 0, index });
+    setProIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
 
   useEffect(() => {
-    if (pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`) {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`) {
       setSheet(true);
     } else {
       setSheet(false);
@@ -97,11 +97,11 @@ const ProsTable = ({
   }, [pathname, sheet]);
 
   useEffect(() => {
-    dispatch(getOwnersCounter());
+    dispatch(getProsCounter());
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"owners"} noPagination={noPagination}>
+    <PrimaryTable count={count} variant={"pros"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
@@ -148,7 +148,7 @@ const ProsTable = ({
                       />
                     ) : (
                       <Link
-                        to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}
+                        to={`${import.meta.env.VITE_PROS_ROUTE}/${row._id}`}
                       >
                         <UserBox
                           username={row.name}
@@ -190,8 +190,8 @@ const ProsTable = ({
             })
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingOwnersRow key={i} />)}
-        <OwnersTableMenu />
+              .map((_, i) => <LoadingProsRow key={i} />)}
+        <ProsTableMenu />
       </TableBody>
     </PrimaryTable>
   );

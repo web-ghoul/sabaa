@@ -5,6 +5,7 @@ import {
   CompanyTypes,
   CustomerTypes,
   EmployeeTypes,
+  JobTypes,
   NationalityTypes,
   OwnerTypes,
   ProTypes,
@@ -92,7 +93,7 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[];
+  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[] | JobTypes[];
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }

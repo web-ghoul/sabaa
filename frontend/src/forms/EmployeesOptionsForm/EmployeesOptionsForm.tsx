@@ -24,7 +24,7 @@ import { NationalityTypes } from "../../types/store.types";
 const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenEmployeeModal, searchForEmployees, setSearchForEmployees } =
+  const { searchForEmployees, setSearchForEmployees } =
     useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
@@ -109,11 +109,7 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
-          <Button
-            title={"Add Employee"}
-            icon={<AddRounded />}
-            handling={() => handleOpenEmployeeModal("addEmployee")}
-          />
+          <Button title={"Add Employee"} icon={<AddRounded />} />
           <Button
             title={"Upload Excel"}
             icon={<RiFileExcel2Fill />}
@@ -153,7 +149,7 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`grid grid-cols-[1fr,1fr,2fr,auto] justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
+          className={`grid grid-cols-[1fr,1fr,1fr,1fr,auto] justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >

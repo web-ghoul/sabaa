@@ -64,6 +64,7 @@ const useSubmitFunction = (type: string) => {
     employeeImage,
     customerImage,
     userImage,
+    proImage,
     editableUserData,
     editableOwnerData,
     formType,
@@ -103,6 +104,8 @@ const useSubmitFunction = (type: string) => {
     handleEditEmployeeInSheet,
     customersSheets,
     customerIndex,
+    employeesSheets,
+    employeeIndex,
     handleEditCustomerInSheet,
   } = useContext(ExcelsContext);
   const navigate = useNavigate();
@@ -134,7 +137,7 @@ const useSubmitFunction = (type: string) => {
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
     }
-    formData.append("avatar", ownerImage);
+    formData.append("avatar", !pro ? ownerImage : proImage);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("phone", values.phone.trim());
@@ -157,8 +160,9 @@ const useSubmitFunction = (type: string) => {
     values: EmployeeFormTypes | CustomerFormTypes,
     customer: boolean = false
   ) => {
+    console.log(values);
     const formData = new FormData();
-    formData.append("avatar", ownerImage);
+    formData.append("avatar", customer ? customerImage : employeeImage);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
@@ -172,12 +176,27 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status.trim());
     formData.append("salary", values.salary.trim());
     formData.append("cardType", values.cardType.trim());
+    formData.append("mobileNumber", values.mobileNumber.trim());
     formData.append("dob", values?.dob.toString().trim());
     formData.append("passportNumber", values.passportNumber.trim());
     formData.append("passportExpiry", values?.passportExpiry.toString().trim());
+    formData.append(
+      "residenceExpireDate",
+      values?.residenceExpireDate.toString().trim()
+    );
+    formData.append("lcExpireDate", values?.lcExpireDate.toString().trim());
     formData.append("job", values.job.trim());
     formData.append("visaFileNumber", values.visaFileNumber.trim());
-    formData.append("remarks", values.remarks.trim());
+    formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
+    formData.append("medical.policy", values.medicalPolicy.trim());
+    formData.append(
+      "medical.expireDate",
+      values.medicalExpireDate.toString().trim()
+    );
+    formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
+    formData.append("iLOE.policy", values.iLOEPolicy.trim());
+    formData.append("iLOE.expireDate", values.iLOEExpireDate.toString().trim());
+    formData.append("medical.", values.remarks.trim());
     formData.append("isCustomer", customer ? "true" : "false");
     return formData;
   };
@@ -916,7 +935,7 @@ const useSubmitFunction = (type: string) => {
         `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
-            : editableOwnerData && editableOwnerData._id
+            : editableProData && editableProData._id
         }&operation=adding&typeOfPerson=${
           formType === "linkOwner" ? "owner" : "pro"
         }`,
@@ -939,13 +958,13 @@ const useSubmitFunction = (type: string) => {
           }
         } else {
           handleAlert({
-            msg: "PRO is Linked to Company Successfully",
+            msg: "Officer is Linked to Company Successfully",
             status: "success",
           });
           if (id) {
-            dispatch(getOwner({ id }));
+            dispatch(getPro({ id }));
           } else {
-            dispatch(getOwners({}));
+            dispatch(getPros({}));
           }
         }
         handleCloseLinkToCompanyModal();
@@ -1277,7 +1296,7 @@ const useSubmitFunction = (type: string) => {
       case "editCompany":
         editCompany(values as CompanyFormTypes);
         break;
-      case "linkPRO":
+      case "linkPro":
       case "linkOwner":
         linkToCompany(values as LinkToCompanyFormTypes);
         break;

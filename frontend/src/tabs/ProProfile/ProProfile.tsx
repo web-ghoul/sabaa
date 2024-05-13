@@ -21,12 +21,12 @@ const ProProfile = ({ pro, isLoading, companies }: ProProfileProps) => {
         "Documents",
         "Sponsored Persons",
       ]}
-      variant={"owner"}
+      variant={"pro"}
     >
       <CustomTabPanel value={proTabsValue} index={0}>
         <ProfileDetails
           title={`Personal Info`}
-          variant={"owner"}
+          variant={"pro"}
           data={pro as ProTypes}
           isLoading={isLoading}
         />

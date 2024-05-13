@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import activitiesReducers from "./activitiesSlice.ts";
 import authReducers from "./auth.ts";
 import companiesCounterReducers from "./companiesCounterSlice.ts";
 import companiesReducers from "./companiesSlice.ts";
@@ -26,6 +27,7 @@ import usersReducers from "./usersSlice.ts";
 export const store = configureStore({
   reducer: {
     auth: authReducers,
+    activities: activitiesReducers,
     jobs: jobsReducers,
     nationalities: nationalitiesReducers,
     users: usersReducers,

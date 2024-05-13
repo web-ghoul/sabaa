@@ -25,7 +25,7 @@ import { NationalityTypes } from "../../types/store.types";
 const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenCustomerModal, searchForCustomers, setSearchForCustomers } =
+  const { searchForCustomers, setSearchForCustomers } =
     useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
@@ -111,11 +111,7 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
-          <Button
-            title={"Add Employee"}
-            icon={<AddRounded />}
-            handling={() => handleOpenCustomerModal("addCustomer")}
-          />
+          <Button title={"Add Customer"} icon={<AddRounded />} />
           <Button
             title={"Upload Excel"}
             icon={<RiFileExcel2Fill />}

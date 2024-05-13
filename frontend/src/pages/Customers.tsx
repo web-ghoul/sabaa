@@ -10,6 +10,7 @@ import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getCustomers } from "../store/customersSlice";
 import { AppDispatch, RootState } from "../store/store";
 import CustomersTable from "../tables/CustomersTable/CustomersTable";
+
 const Customers = () => {
   const { customers, isLoading } = useSelector(
     (state: RootState) => state.customers
@@ -34,7 +35,7 @@ const Customers = () => {
             Customers
           </Typography>
         </BreadCrumbs>
-        <Forms type={"ownersOptions"} />
+        <Forms type={"customersOptions"} />
         <CustomersTable
           count={customersCounter}
           data={customers}

@@ -17,29 +17,29 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { getEmployeesCounter } from "../../store/employeesCounterSlice";
-import { getEmployees, reverseEmployees } from "../../store/employeesSlice";
+import { getCustomersCounter } from "../../store/customersCounterSlice";
+import { getCustomers, reverseCustomers } from "../../store/customersSlice";
 import { AppDispatch } from "../../store/store";
-import { EmployeesTableTypes } from "../../types/tables.types";
+import { CustomersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import SortBox from "../SortBox";
-import EmployeesTableMenu from "./EmployeesTableMenu";
-import { EmployeesTableRow } from "./EmployeesTableRow";
-import LoadingEmployeesRow from "./LoadingEmployeesRow";
+import EmployeesTableMenu from "./CustomersTableMenu";
+import { CustomersTableRow } from "./CustomersTableRow";
+import LoadingCustomersRow from "./LoadingCustomersRow";
 
-const EmployeesTable = ({
+const CustomersTable = ({
   data,
   count,
   isLoading,
   fileIndex,
   noPagination,
-}: EmployeesTableTypes) => {
+}: CustomersTableTypes) => {
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { setEmployeeIndex } = useContext(ExcelsContext);
-  const { setEditableEmployeeData } = useContext(FormsContext);
+  const { setCustomerIndex } = useContext(ExcelsContext);
+  const { setEditableCustomerData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -50,12 +50,12 @@ const EmployeesTable = ({
   const handleSortByRes = () => {
     if (searchParams.get("sort") === "res_asc") {
       handleAddQuery({ sort: "res_desc" });
-      dispatch(reverseEmployees());
+      dispatch(reverseCustomers());
       setSearchParams({ ...queries, sort: "res_desc" });
     } else {
       handleAddQuery({ sort: "res_asc" });
       const all = { ...queries, sort: "res_asc" };
-      dispatch(getEmployees(all));
+      dispatch(getCustomers(all));
       setSearchParams(all);
     }
   };
@@ -63,18 +63,18 @@ const EmployeesTable = ({
   const handleSortByLC = () => {
     if (searchParams.get("sort") === "code_asc") {
       handleAddQuery({ sort: "res_desc" });
-      dispatch(reverseEmployees());
+      dispatch(reverseCustomers());
       setSearchParams({ ...queries, sort: "res_desc" });
     } else {
       handleAddQuery({ sort: "lc_asc" });
       const all = { ...queries, sort: "lc_asc" };
-      dispatch(getEmployees(all));
+      dispatch(getCustomers(all));
       setSearchParams(all);
     }
   };
 
   const handleView = () => {
-    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`) {
       handleAlert({ msg: "Under Development" });
     }
   };
@@ -84,14 +84,14 @@ const EmployeesTable = ({
     index: number
   ) => {
     if (data) {
-      setEditableEmployeeData(data[index]);
+      setEditableCustomerData(data[index]);
     }
-    setEmployeeIndex({ fileIndex: fileIndex || 0, index });
+    setCustomerIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
 
   useEffect(() => {
-    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`) {
       setSheet(true);
     } else {
       setSheet(false);
@@ -99,13 +99,13 @@ const EmployeesTable = ({
   }, [pathname, sheet]);
 
   useEffect(() => {
-    dispatch(getEmployeesCounter());
+    dispatch(getCustomersCounter());
   }, [dispatch]);
 
   return (
     <PrimaryTable
       count={count}
-      variant={"employees"}
+      variant={"customers"}
       noPagination={noPagination}
     >
       <TableHead>
@@ -154,7 +154,7 @@ const EmployeesTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => (
-              <EmployeesTableRow key={i}>
+              <CustomersTableRow key={i}>
                 <PrimaryTableCell
                   onClick={() => handleView()}
                   component="th"
@@ -169,7 +169,7 @@ const EmployeesTable = ({
                     />
                   ) : (
                     <Link
-                      to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${row._id}`}
+                      to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}/${row._id}`}
                     >
                       <UserBox
                         username={row.name}
@@ -209,15 +209,15 @@ const EmployeesTable = ({
                     <MoreVertRounded />
                   </IconButton>
                 </PrimaryTableCell>
-              </EmployeesTableRow>
+              </CustomersTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingEmployeesRow key={i} />)}
+              .map((_, i) => <LoadingCustomersRow key={i} />)}
       </TableBody>
       <EmployeesTableMenu />
     </PrimaryTable>
   );
 };
 
-export default EmployeesTable;
+export default CustomersTable;

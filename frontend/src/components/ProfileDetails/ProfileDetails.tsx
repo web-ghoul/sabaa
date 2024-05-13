@@ -7,7 +7,12 @@ import { handleDate } from "../../functions/handleDate";
 import { handleGetFlag } from "../../functions/handleGetFlag";
 import { RootState } from "../../store/store";
 import { ProfileDetailsTypes } from "../../types/components.types";
-import { CompanyTypes, OwnerTypes, UserTypes } from "../../types/store.types";
+import {
+  CompanyTypes,
+  OwnerTypes,
+  ProTypes,
+  UserTypes,
+} from "../../types/store.types";
 import Button from "../Button/Button";
 import LinkBox from "../LinkBox/LinkBox";
 import StatusBox from "../StatusBox/StatusBox";
@@ -31,17 +36,21 @@ const ProfileDetails = ({
   const {
     handleOpenDeleteModal,
     setEditableOwnerData,
-    setEditableUserData,
-    setEditableCompanyData,
-    handleOpenUserModal,
     handleOpenOwnerModal,
+    setEditableProData,
+    handleOpenProModal,
+    setEditableUserData,
+    handleOpenUserModal,
+    setEditableCompanyData,
     handleOpenLinkToCompanyModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
+  const { pro } = useSelector((state: RootState) => state.pro);
   const { user } = useSelector((state: RootState) => state.user);
   const auth = useSelector((state: RootState) => state.auth);
   const { company } = useSelector((state: RootState) => state.company);
 
+  //User
   const handleEditUser = () => {
     if (id) {
       setEditableUserData(user);
@@ -55,7 +64,8 @@ const ProfileDetails = ({
     setEditableUserData(user);
   };
 
-  const handleLink = () => {
+  //Owner
+  const handleOwnerLink = () => {
     handleOpenLinkToCompanyModal("linkOwner");
     setEditableOwnerData(owner);
   };
@@ -68,6 +78,21 @@ const ProfileDetails = ({
     setEditableOwnerData(owner);
   };
 
+  //Pro
+  const handleProLink = () => {
+    handleOpenLinkToCompanyModal("linkPro");
+    setEditableProData(pro);
+  };
+  const handleEditPro = () => {
+    setEditableProData(pro);
+    handleOpenProModal("editPro");
+  };
+  const handleDeletePro = () => {
+    handleOpenDeleteModal("pro");
+    setEditableProData(pro);
+  };
+
+  //Company
   const handleEditCompany = () => {
     if (company) {
       const c: CompanyTypes = { ...company };
@@ -143,7 +168,7 @@ const ProfileDetails = ({
             <Box className={profileButtonsClasses}>
               <Button
                 title={"Link"}
-                handling={handleLink}
+                handling={handleOwnerLink}
                 bg={"!bg-zinc-500"}
               />
               <Button
@@ -194,6 +219,75 @@ const ProfileDetails = ({
               <DataBox
                 title={"Created At"}
                 value={handleDate((data as OwnerTypes).createdAt)}
+              />
+            </Box>
+          </Box>
+        </Paper>
+      ) : variant === "pro" ? (
+        <Paper className={profileClasses} elevation={11}>
+          <Title align={"left"} head={"h4"} title={title} />
+          <Box className={profileDataClasses}>
+            <UserBox
+              avatar={(data as UserTypes).avatar}
+              username={(data as UserTypes).name}
+              size={"3xlarge"}
+              head={"h5"}
+              res={true}
+            />
+            <Box className={profileButtonsClasses}>
+              <Button
+                title={"Link"}
+                handling={handleProLink}
+                bg={"!bg-zinc-500"}
+              />
+              <Button
+                title={"Edit"}
+                handling={handleEditPro}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeletePro}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={`grid gap-4 sm:gap-3`}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Officer Information
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Arabic Name"}
+                value={(data as ProTypes).nameAr}
+              />
+              <DataBox
+                title={"Person Code"}
+                value={(data as ProTypes).personCode}
+              />
+              <DataBox title={"Email"} value={(data as ProTypes).email} />
+              <DataBox title={"Phone"} value={(data as ProTypes).phone} />
+              <DataBox title={"Address"} value={(data as ProTypes).address} />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as ProTypes).dob)}
+              />
+              <DataBox title={"State"} value={(data as ProTypes).state} />
+              <DataBox
+                title={"Nationality"}
+                flag={handleGetFlag((data as ProTypes).nationality)}
+                value={(data as ProTypes).nationality}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as ProTypes).emiratesId}
+              />
+              <DataBox title={"UID Number"} value={(data as ProTypes).uid} />
+              <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
+              <DataBox
+                title={"Created At"}
+                value={handleDate((data as ProTypes).createdAt)}
               />
             </Box>
           </Box>
@@ -325,6 +419,26 @@ const ProfileDetails = ({
                 <DataBox
                   title={"Created At"}
                   value={handleDate((data as CompanyTypes).createdAt)}
+                />
+              </Box>
+            </Box>
+            <Divider />
+            <Box className={`grid gap-4 sm:gap-3`}>
+              <Typography variant="h4" className={`!font-[700]`}>
+                E-Channel Information
+              </Typography>
+              <Box className={profileInfoClasses}>
+                <DataBox
+                  title={"echannelExpiryDate"}
+                  value={handleDate((data as CompanyTypes).echannelExpiryDate)}
+                />
+                <DataBox
+                  title={"Username"}
+                  value={(data as CompanyTypes).username}
+                />
+                <DataBox
+                  title={"Password"}
+                  value={<StatusBox status={(data as CompanyTypes).password} />}
                 />
               </Box>
             </Box>

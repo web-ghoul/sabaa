@@ -11,7 +11,7 @@ import { getPros } from "../store/prosSlice";
 import { AppDispatch, RootState } from "../store/store";
 import ProsTable from "../tables/ProsTable/ProsTable";
 
-const PublicRelationOfficers = () => {
+const Pros = () => {
   const { pros, isLoading } = useSelector((state: RootState) => state.pros);
   const { pageContainerClasses } = useContext(AppContext);
   const { prosCounter } = useSelector((state: RootState) => state.prosCounter);
@@ -38,4 +38,4 @@ const PublicRelationOfficers = () => {
   );
 };
 
-export default PublicRelationOfficers;
+export default Pros;

@@ -11,34 +11,34 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const EmployeesTableMenu = () => {
+const CustomersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const {
     handleOpenDeleteModal,
-    editableEmployeeData,
-    handleOpenEmployeeModal,
+    editableCustomerData,
+    handleOpenCustomerModal,
   } = useContext(FormsContext);
-  const { handleDeleteEmployeeFromSheet } = useContext(ExcelsContext);
+  const { handleDeleteCustomerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
     navigate(
-      `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-        editableEmployeeData && editableEmployeeData._id
+      `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+        editableCustomerData && editableCustomerData._id
       }`
     );
   };
 
   const handleEdit = () => {
     if (sheet) {
-      handleOpenEmployeeModal("editEmployee");
+      handleOpenCustomerModal("editEmployee");
     } else {
-      if (editableEmployeeData) {
+      if (editableCustomerData) {
         navigate(
-          `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-            editableEmployeeData._id
+          `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+            editableCustomerData._id
           }/edit`
         );
       }
@@ -47,14 +47,14 @@ const EmployeesTableMenu = () => {
 
   const handleDelete = () => {
     if (sheet) {
-      handleDeleteEmployeeFromSheet();
+      handleDeleteCustomerFromSheet();
     } else {
-      handleOpenDeleteModal("employee");
+      handleOpenDeleteModal("customer");
     }
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`);
   }, [pathname, sheet]);
   return (
     <Menu
@@ -93,4 +93,4 @@ const EmployeesTableMenu = () => {
   );
 };
 
-export default EmployeesTableMenu;
+export default CustomersTableMenu;
