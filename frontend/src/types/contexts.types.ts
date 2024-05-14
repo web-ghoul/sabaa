@@ -110,6 +110,9 @@ interface FormsContextTypes {
   openLinkToCompanyModal: boolean;
   handleOpenLinkToCompanyModal: (type: string) => void;
   handleCloseLinkToCompanyModal: () => void;
+  openUploadEmployeesModal: boolean;
+  handleOpenUploadEmployeesModal: () => void;
+  handleCloseUploadEmployeesModal: () => void;
   openDeleteModal: boolean;
   handleOpenDeleteModal: (type: string) => void;
   handleCloseDeleteModal: () => void;

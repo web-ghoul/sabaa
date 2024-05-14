@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 import { SidebarContext } from "../../contexts/SidebarsContext.tsx";
 import { PrimaryContainer } from "../../mui/boxes&containers/PrimaryContainer.ts";
 import { RootState } from "../../store/store.ts";
+import NatificationsBox from "../NotificationsBox/NatificationsBox.tsx";
 import SpecialsButtons from "../SpecialsButtons/SpecialsButtons.tsx";
+import LoadingUserBox from "../UserBox/LoadingUserBox.tsx";
 import UserBox from "../UserBox/UserBox.tsx";
 
 interface AppBarProps extends MuiAppBarProps {
@@ -17,7 +19,6 @@ const Header = () => {
     useContext(SidebarContext);
   const { user, isLoading } = useSelector((state: RootState) => state.auth);
   const mdScreen = useMediaQuery("(max-width:992px)");
-
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })<AppBarProps>(({ theme, open }) => ({
@@ -58,7 +59,8 @@ const Header = () => {
             <SpecialsButtons />
           </Box>
           <Box className={`flex justify-end items-center gap-6`}>
-            {!isLoading && user && (
+            <NatificationsBox />
+            {!isLoading && user ? (
               <UserBox
                 size={"medium"}
                 username={user.name}
@@ -66,6 +68,8 @@ const Header = () => {
                 menu={true}
                 avatar={user.avatar}
               />
+            ) : (
+              <LoadingUserBox size={"medium"} />
             )}
           </Box>
         </Box>

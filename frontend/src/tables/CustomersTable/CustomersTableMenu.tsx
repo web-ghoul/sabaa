@@ -1,6 +1,7 @@
 import {
   DeleteRounded,
   EditRounded,
+  JoinFullRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -11,15 +12,16 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const CustomersTableMenu = () => {
+const ProsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const {
-    handleOpenDeleteModal,
-    editableCustomerData,
     handleOpenCustomerModal,
+    handleOpenDeleteModal,
+    handleOpenLinkToCompanyModal,
+    editableCustomerData,
   } = useContext(FormsContext);
   const { handleDeleteCustomerFromSheet } = useContext(ExcelsContext);
 
@@ -31,31 +33,26 @@ const CustomersTableMenu = () => {
     );
   };
 
+  const handleLink = () => {
+    handleOpenLinkToCompanyModal("linkCustomer");
+  };
+
   const handleEdit = () => {
-    if (sheet) {
-      handleOpenCustomerModal("editEmployee");
-    } else {
-      if (editableCustomerData) {
-        navigate(
-          `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
-            editableCustomerData._id
-          }/edit`
-        );
-      }
-    }
+    handleOpenCustomerModal("editCustomer");
   };
 
   const handleDelete = () => {
     if (sheet) {
       handleDeleteCustomerFromSheet();
     } else {
-      handleOpenDeleteModal("customer");
+      handleOpenDeleteModal("pro");
     }
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`);
   }, [pathname, sheet]);
+
   return (
     <Menu
       className={`grid justify-stretch items-center gap-0`}
@@ -73,12 +70,20 @@ const CustomersTableMenu = () => {
       }}
     >
       {!sheet && (
-        <TableMenuItem
-          icon={<VisibilityRounded />}
-          title={"View"}
-          handling={handleView}
-        />
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+        </>
       )}
+
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}
@@ -93,4 +98,4 @@ const CustomersTableMenu = () => {
   );
 };
 
-export default CustomersTableMenu;
+export default ProsTableMenu;

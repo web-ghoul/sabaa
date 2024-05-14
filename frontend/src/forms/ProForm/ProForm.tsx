@@ -51,7 +51,7 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
       )}
 
       {useMemo(
-        () => type && <UploadImage title={"Owner Avatar"} variant={type} />,
+        () => type && <UploadImage title={"Officer Avatar"} variant={type} />,
         [type]
       )}
 
@@ -107,6 +107,25 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
           name={"state"}
           select
           options={["dubai"]}
+        />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"residenceExpiryDate"}
+          label={"Residence Expire Date"}
+        />
+        <Input
+          formik={formik}
+          label={"Status"}
+          name={"status"}
+          select
+          options={["Active", "Pending", "Blocked"]}
+        />
+        <Input
+          formik={formik}
+          label={"File Immgiration Number"}
+          name={"fileImmgNo"}
+          type={"number"}
         />
         <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />

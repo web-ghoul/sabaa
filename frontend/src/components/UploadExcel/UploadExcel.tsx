@@ -2,21 +2,28 @@ import {
   AutoModeRounded,
   CheckCircleRounded,
   CloudUploadRounded,
+  DownloadRounded,
   HighlightOffRounded,
 } from "@mui/icons-material";
-import { LinearProgress, Paper, Stack } from "@mui/material";
-import { ChangeEvent, DragEvent, useContext, useState } from "react";
+import { Box, LinearProgress, Paper, Stack } from "@mui/material";
+import { ChangeEvent, DragEvent, useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import readXlsxFile, { Row } from "read-excel-file";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
+import { RootState } from "../../store/store";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
   ProTypes,
 } from "../../types/store.types";
+import Button from "../Button/Button";
 import UploadStatus from "./UploadStatus";
 
 const UploadExcel = ({
@@ -32,9 +39,13 @@ const UploadExcel = ({
     | "employees"
     | "customers";
 }) => {
+  const { company } = useSelector((state: RootState) => state.company);
+  const { id } = useParams();
   const [dragging, setDragging] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [samplePath, setSamplePath] = useState("./samples/companies.xlsx");
+  const [sampleName, setSampleName] = useState("company_sample.xlsx");
   const [draggingFailed, setDraggingFailed] = useState(false);
   const {
     handleAddOwnersSheet,
@@ -42,6 +53,8 @@ const UploadExcel = ({
     handleAddJobsSheet,
     handleAddCompaniesSheet,
     handleAddProsSheet,
+    handleAddEmployeesSheet,
+    handleAddCustomersSheet,
   } = useContext(ExcelsContext);
 
   const handleJobsSheet = (data: Array<Row>, file: File) => {
@@ -127,7 +140,6 @@ const UploadExcel = ({
         nameAr: "",
         emiratesId: "",
         phone: "",
-        dob: new Date(),
         idNationality: "",
         address: "",
         personCode: "",
@@ -135,7 +147,8 @@ const UploadExcel = ({
         remarks: "",
         state: "",
         proCode: false,
-        createdAt: new Date(),
+        fileImmgNo: "",
+        status: "",
       };
       owner["personCode"] = `${data[i][0]}`;
       owner["name"] = `${data[i][1]}`;
@@ -187,7 +200,6 @@ const UploadExcel = ({
         nameAr: "",
         emiratesId: "",
         phone: "",
-        dob: new Date(),
         idNationality: "",
         address: "",
         personCode: "",
@@ -196,7 +208,8 @@ const UploadExcel = ({
         state: "",
         proCode: true,
         isPro: "true",
-        createdAt: new Date(),
+        fileImmgNo: "",
+        status: "",
       };
       pro["personCode"] = `${data[i][0]}`;
       pro["name"] = `${data[i][1]}`;
@@ -215,6 +228,135 @@ const UploadExcel = ({
       pros.push(pro);
     }
     handleAddProsSheet({ fileName: file.name, data: pros });
+  };
+
+  const handleCustomersSheet = (data: Array<Row>, file: File) => {
+    const customers: CustomerTypes[] = [];
+    if (
+      !(
+        data[0][0] === "Person Code" &&
+        data[0][1] === "PRO Name" &&
+        data[0][2] === "PRO Name Ar" &&
+        data[0][3] === "Nationality Code" &&
+        data[0][4] === "Nationality" &&
+        data[0][5] === "Emirates ID No" &&
+        data[0][6] === "Date Of Birth" &&
+        data[0][7] === "Mobile Number" &&
+        data[0][8] === "UID NO" &&
+        data[0][9] === "Email" &&
+        data[0][10] === "Remarks" &&
+        data[0][11] === "State" &&
+        data[0][12] === "Address" &&
+        data[0].length === 13
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
+    for (let i = 1; i < data.length; i++) {
+      const customer: CustomerTypes = {
+        uid: "",
+        nationality: "",
+        avatar: "",
+        name: "",
+        nameAr: "",
+        emiratesId: "",
+        phone: "",
+        idNationality: "",
+        address: "",
+        personCode: "",
+        email: "",
+        remarks: "",
+        state: "",
+        isCustomer: "true",
+        sponsor: "",
+        proCode: false,
+        fileImmgNo: "",
+        status: "",
+      };
+      customer["personCode"] = `${data[i][0]}`;
+      customer["name"] = `${data[i][1]}`;
+      customer["nameAr"] = `${data[i][2]}`;
+      customer["idNationality"] = `${data[i][3]}`;
+      customer["nationality"] = `${data[i][4]}`;
+      customer["emiratesId"] = `${data[i][5]}`;
+      customer["dob"] = new Date(`${data[i][6]}`);
+      customer["phone"] = `${data[i][7]}`;
+      customer["uid"] = `${data[i][8]}`;
+      customer["email"] = `${data[i][9]}`;
+      customer["remarks"] = `${data[i][10]}`;
+      customer["state"] = `${data[i][11]}`;
+      customer["address"] = `${data[i][12]}`;
+      customer["isCustomer"] = `true`;
+      customers.push(customer);
+    }
+    handleAddCustomersSheet({ fileName: file.name, data: customers });
+  };
+
+  const handleEmployeesSheet = (data: Array<Row>, file: File) => {
+    const employees: EmployeeTypes[] = [];
+    if (
+      !(
+        data[0][0] === "Person Code" &&
+        data[0][1] === "Employee Name" &&
+        data[0][2] === "Job Title" &&
+        data[0][3] === "Passport Number" &&
+        data[0][4] === "Nationality" &&
+        data[0][5] === "Electronic Work Permit Number" &&
+        data[0][6] === "Card Type" &&
+        data[0][7] === "Expiry Date" &&
+        data[0][8] === "Gender" &&
+        data[0][9] === "UID"
+      )
+    ) {
+      handleAlert({ msg: "File Formate isn't allow", status: "error" });
+      return;
+    }
+    for (let i = 1; i < data.length; i++) {
+      const employee: EmployeeTypes = {
+        avatar: "",
+        name: "",
+        nameAr: "",
+        personCode: "",
+        companyCode: "",
+        companyName: "",
+        idNationality: "",
+        nationality: "",
+        gender: "",
+        email: "",
+        job: "",
+        mobileNumber: "",
+        salary: "",
+        cardType: "",
+        cardNumber: "",
+        status: "",
+        visaFileNumber: "",
+        passportNumber: "",
+        workPermitNumber: "",
+        medicalInsuranceCompany: "",
+        medicalPolicy: "",
+        iLOEInsuranceCompany: "",
+        iLOEPolicy: "",
+        uid: "",
+        emiratesId: "",
+        remarks: "",
+      };
+      employee["personCode"] = `${data[i][0]}`;
+      employee["name"] = `${data[i][1]}`;
+      employee["nameAr"] = `${data[i][1]}`;
+      employee["job"] = `${data[i][2]}`;
+      employee["passportNumber"] = `${data[i][3]}`;
+      employee["nationality"] = `${data[i][4]}`;
+      employee["workPermitNumber"] = `${data[i][5]}`;
+      employee["cardType"] = `${data[i][6]}`;
+      employee["lcExpireDate"] = new Date(`${data[i][7]}`);
+      employee["gender"] = `${data[i][8]}`;
+      employee["uid"] = `${data[i][9]}`;
+      employee["companyCode"] = `${id || ""}`;
+      employee["companyCode"] = `${(company && company.name) || ""}`;
+      employees.push(employee);
+    }
+    handleAddEmployeesSheet({ fileName: file.name, data: employees });
   };
 
   const handleCompaniesSheet = (data: Array<Row>, file: File) => {
@@ -317,6 +459,10 @@ const UploadExcel = ({
             handleOwnersSheet(rows, file);
           } else if (variant === "pros") {
             handleProsSheet(rows, file);
+          } else if (variant === "employees") {
+            handleEmployeesSheet(rows, file);
+          } else if (variant === "customers") {
+            handleCustomersSheet(rows, file);
           } else if (variant === "companies") {
             handleCompaniesSheet(rows, file);
           }
@@ -362,67 +508,101 @@ const UploadExcel = ({
     handleChange({ target: { files } });
   };
 
+  useEffect(() => {
+    if (variant === "employees") {
+      setSampleName("employees_sample.xlsx");
+      setSamplePath("./samples/employees.xlsx");
+    } else if (variant === "customers") {
+      setSampleName("customers_sample.xlsx");
+      setSamplePath("./samples/employees.xlsx");
+    } else if (variant === "owners") {
+      setSampleName("owners_sample.xlsx");
+      setSamplePath("./samples/owners.xlsx");
+    } else if (variant === "pros") {
+      setSampleName("public_relation_officers_sample.xlsx");
+      setSamplePath("./samples/pros.xlsx");
+    } else if (variant === "companies") {
+      setSampleName("companies_sample.xlsx");
+      setSamplePath("./samples/companies.xlsx");
+    } else if (variant === "jobs") {
+      setSampleName("jobs_sample.xlsx");
+      setSamplePath("./samples/jobs.xlsx");
+    } else if (variant === "nationalities") {
+      setSampleName("nationalities_sample.xlsx");
+      setSamplePath("./samples/nationalities.xlsx");
+    }
+  }, [variant]);
+
   return (
-    <Paper className={`flex justify-stretch items-center`}>
-      <label
-        htmlFor={"file"}
-        className={`relative p-8 grid justify-stretch items-center rounded-md h-[300px] content-center gap-4 w-full cursor-pointer overflow-hidden lg:h-[250px] md:h-[200px] sm:!h-[180px] transition-all border-2 text-center
+    <Box className={`grid justify-stretch items-center gap-2`}>
+      <Box component={"a"} href={samplePath} download={sampleName}>
+        <Button
+          icon={<DownloadRounded />}
+          title={"Sample Sheet"}
+          type={"submit"}
+        />
+      </Box>
+      <Paper className={`flex justify-stretch items-center`}>
+        <label
+          htmlFor={"file"}
+          className={`relative p-8 grid justify-stretch items-center rounded-md h-[300px] content-center gap-4 w-full cursor-pointer overflow-hidden lg:h-[250px] md:h-[200px] sm:!h-[180px] transition-all border-2 text-center
           &>img:m-auto border-transparent ${
             dragging && "!border-green !bg-[#ddd]"
           }`}
-        onDragOver={handleDragOver}
-        onDragLeave={() => setDragging(false)}
-        onDrop={handleDrop}
-      >
-        {dragging ? (
-          <UploadStatus
-            text={"Uploading Excel..."}
-            icon={<CloudUploadRounded className="!text-[60px] text-excel" />}
-          />
-        ) : draggingFailed ? (
-          <UploadStatus
-            text={"Uploading Failed!!"}
-            icon={
-              <HighlightOffRounded color="primary" className="!text-[60px]" />
-            }
-          />
-        ) : loading ? (
-          <UploadStatus
-            text={"Uploading..."}
-            icon={<AutoModeRounded className=" text-green !text-[60px]" />}
-          />
-        ) : success ? (
-          <UploadStatus
-            text={"Uploading Successfully!!"}
-            icon={<CheckCircleRounded className=" text-green !text-[60px]" />}
-          />
-        ) : (
-          <UploadStatus
-            text={"Browse or drag a excel file"}
-            icon={<CloudUploadRounded className="!text-[60px] text-excel" />}
-          />
-        )}
-        {!loading && (
-          <PrimaryTextField
-            fullWidth
-            type={"file"}
-            inputProps={{ accept: ".xls, .xlsx, .xlsm, .xlsb, .csv" }}
-            id={"file"}
-            name={"file"}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
-            sx={{ position: "absolute", opacity: "0", zIndex: "-1" }}
-          />
-        )}
-        {loading && (
-          <Stack sx={{ width: "100%", color: "grey.500" }} spacing={4}>
-            <LinearProgress
-              className="!h-[12px] !rounded-2xl md:!h-[8px] sm:!h-[6px]"
-              color="success"
+          onDragOver={handleDragOver}
+          onDragLeave={() => setDragging(false)}
+          onDrop={handleDrop}
+        >
+          {dragging ? (
+            <UploadStatus
+              text={"Uploading Excel..."}
+              icon={<CloudUploadRounded className="!text-[60px] text-excel" />}
             />
-          </Stack>
-        )}
-      </label>
-    </Paper>
+          ) : draggingFailed ? (
+            <UploadStatus
+              text={"Uploading Failed!!"}
+              icon={
+                <HighlightOffRounded color="primary" className="!text-[60px]" />
+              }
+            />
+          ) : loading ? (
+            <UploadStatus
+              text={"Uploading..."}
+              icon={<AutoModeRounded className=" text-green !text-[60px]" />}
+            />
+          ) : success ? (
+            <UploadStatus
+              text={"Uploading Successfully!!"}
+              icon={<CheckCircleRounded className=" text-green !text-[60px]" />}
+            />
+          ) : (
+            <UploadStatus
+              text={"Browse or drag a excel file"}
+              icon={<CloudUploadRounded className="!text-[60px] text-excel" />}
+            />
+          )}
+          {!loading && (
+            <PrimaryTextField
+              fullWidth
+              type={"file"}
+              inputProps={{ accept: ".xls, .xlsx, .xlsm, .xlsb, .csv" }}
+              id={"file"}
+              name={"file"}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
+              sx={{ position: "absolute", opacity: "0", zIndex: "-1" }}
+            />
+          )}
+          {loading && (
+            <Stack sx={{ width: "100%", color: "grey.500" }} spacing={4}>
+              <LinearProgress
+                className="!h-[12px] !rounded-2xl md:!h-[8px] sm:!h-[6px]"
+                color="success"
+              />
+            </Stack>
+          )}
+        </label>
+      </Paper>
+    </Box>
   );
 };
 

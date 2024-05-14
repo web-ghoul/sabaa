@@ -9,11 +9,11 @@ import { handleCatchError } from "../functions/handleCatchError";
 import { getProfile, login as loginAction } from "../store/auth";
 import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
+import { getCompany } from "../store/companySlice";
 import { getCustomersCounter } from "../store/customersCounterSlice";
 import { getCustomer } from "../store/customerSlice";
 import { getCustomers } from "../store/customersSlice";
 import { getEmployeesCounter } from "../store/employeesCounterSlice";
-import { getEmployee } from "../store/employeeSlice";
 import { getEmployees } from "../store/employeesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
@@ -84,6 +84,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseLinkToCompanyModal,
     handleCloseProModal,
     setProImage,
+    handleCloseUploadEmployeesModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -130,14 +131,21 @@ const useSubmitFunction = (type: string) => {
 
   const handleOwnerFormData = (
     values: OwnerFormTypes | ProFormTypes,
-    pro: boolean = false
+    type?: "pro" | "customer"
   ) => {
+    const avatar = type
+      ? type === "pro"
+        ? proImage
+        : type === "customer"
+        ? customerImage
+        : ownerImage
+      : ownerImage;
     const formData = new FormData();
     formData.append("uid", values?.uid);
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
     }
-    formData.append("avatar", !pro ? ownerImage : proImage);
+    formData.append("avatar", avatar);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("phone", values.phone.trim());
@@ -150,19 +158,18 @@ const useSubmitFunction = (type: string) => {
       formData.append("emiratesId", values.emiratesId.trim());
     }
     formData.append("state", values.state.trim());
-    formData.append("dob", values?.dob.toString().trim());
+    if (values.dob) {
+      formData.append("dob", values.dob.toString().trim());
+    }
     formData.append("proCode", values.proCode ? "true" : "false");
-    formData.append("isPro", pro ? "true" : "false");
+    formData.append("isPro", type === "pro" ? "true" : "false");
+    formData.append("isCustomer", type === "customer" ? "true" : "false");
     return formData;
   };
 
-  const handleEmployeeFormData = (
-    values: EmployeeFormTypes | CustomerFormTypes,
-    customer: boolean = false
-  ) => {
-    console.log(values);
+  const handleEmployeeFormData = (values: EmployeeFormTypes) => {
     const formData = new FormData();
-    formData.append("avatar", customer ? customerImage : employeeImage);
+    formData.append("avatar", employeeImage);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
@@ -175,29 +182,47 @@ const useSubmitFunction = (type: string) => {
     formData.append("email", values.email.trim());
     formData.append("status", values.status.trim());
     formData.append("salary", values.salary.trim());
+    formData.append("gender", values.gender.trim());
     formData.append("cardType", values.cardType.trim());
     formData.append("mobileNumber", values.mobileNumber.trim());
-    formData.append("dob", values?.dob.toString().trim());
+    if (values.dob) {
+      formData.append("dob", values.dob.toString().trim());
+    }
     formData.append("passportNumber", values.passportNumber.trim());
-    formData.append("passportExpiry", values?.passportExpiry.toString().trim());
-    formData.append(
-      "residenceExpireDate",
-      values?.residenceExpireDate.toString().trim()
-    );
-    formData.append("lcExpireDate", values?.lcExpireDate.toString().trim());
+    if (values.passportExpiry) {
+      formData.append(
+        "passportExpiry",
+        values.passportExpiry.toString().trim()
+      );
+    }
+    if (values.residenceExpireDate) {
+      formData.append(
+        "residenceExpireDate",
+        values.residenceExpireDate.toString().trim()
+      );
+    }
+    if (values.lcExpireDate) {
+      formData.append("lcExpireDate", values.lcExpireDate.toString().trim());
+    }
     formData.append("job", values.job.trim());
     formData.append("visaFileNumber", values.visaFileNumber.trim());
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
     formData.append("medical.policy", values.medicalPolicy.trim());
-    formData.append(
-      "medical.expireDate",
-      values.medicalExpireDate.toString().trim()
-    );
+    if (values.medicalExpireDate) {
+      formData.append(
+        "medical.expireDate",
+        values.medicalExpireDate.toString().trim()
+      );
+    }
     formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
     formData.append("iLOE.policy", values.iLOEPolicy.trim());
-    formData.append("iLOE.expireDate", values.iLOEExpireDate.toString().trim());
-    formData.append("medical.", values.remarks.trim());
-    formData.append("isCustomer", customer ? "true" : "false");
+    if (values.iLOEExpireDate) {
+      formData.append(
+        "iLOE.expireDate",
+        values.iLOEExpireDate.toString().trim()
+      );
+    }
+    formData.append("remarks", values.remarks.trim());
     return formData;
   };
 
@@ -360,7 +385,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   //Nationality
-
   const addNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -446,7 +470,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   //Users
-
   const addUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -501,7 +524,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   //Owners
-
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -590,11 +612,10 @@ const useSubmitFunction = (type: string) => {
   };
 
   //Pros
-
   const addPro = async (values: ProFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, true), {
+      .post(`/owner`, handleOwnerFormData(values, "pro"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -615,7 +636,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const editPro = async (values: OwnerFormTypes) => {
+  const editPro = async (values: ProFormTypes) => {
     handleOpenFormsLoading();
     if (pathname === `${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`) {
       handleEditProInSheet(values);
@@ -628,7 +649,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableProData && editableProData._id}`,
-          handleOwnerFormData(values, true),
+          handleOwnerFormData(values, "pro"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -678,104 +699,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  //Employees
-
-  const addEmployee = async (values: EmployeeFormTypes) => {
-    handleOpenFormsLoading();
-    await server
-      .post(`/Employee`, handleEmployeeFormData(values), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        handleAlert({
-          msg: "Employee is Created Successfully",
-          status: "success",
-        });
-        dispatch(getEmployees({}));
-        dispatch(getEmployeesCounter());
-        handleCloseEmployeeModal();
-        setEmployeeImage("");
-      })
-      .catch((err) => {
-        handleCatchError(err);
-      });
-    handleCloseFormsLoading();
-  };
-
-  const editEmployee = async (values: EmployeeFormTypes) => {
-    handleOpenFormsLoading();
-    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
-      handleEditEmployeeInSheet(values);
-      handleCloseEmployeeModal();
-      handleAlert({
-        msg: "Employee is Updated Successfully",
-        status: "success",
-      });
-    } else {
-      await server
-        .patch(
-          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
-          handleEmployeeFormData(values),
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          handleAlert({
-            msg: "Employee is Updated Successfully",
-            status: "success",
-          });
-          if (
-            id &&
-            pathname === `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${id}`
-          ) {
-            dispatch(getEmployee({ id }));
-          } else {
-            dispatch(getEmployees({}));
-          }
-          handleCloseEmployeeModal();
-          setEmployeeImage("");
-        })
-        .catch((err) => {
-          handleCatchError(err);
-        });
-    }
-    handleCloseFormsLoading();
-  };
-
-  const createEmployeesSheet = async (values: unknown) => {
-    handleOpenFormsLoading();
-    values = employeesSheets[employeeIndex.fileIndex].data;
-    await server
-      .post(`/Employee`, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        handleAlert({
-          msg: "Employees are Created Successfully",
-          status: "success",
-        });
-        navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
-        dispatch(getEmployees({}));
-      })
-      .catch((err) => {
-        handleCatchError(err);
-      });
-    handleCloseFormsLoading();
-  };
-
-  //Customers
-
+  //Customer
   const addCustomer = async (values: CustomerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/Employee`, handleEmployeeFormData(values, true), {
+      .post(`/owner`, handleOwnerFormData(values, "customer"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -808,8 +736,8 @@ const useSubmitFunction = (type: string) => {
     } else {
       await server
         .patch(
-          `/Employee/${editableCustomerData && editableCustomerData._id}`,
-          handleEmployeeFormData(values, true),
+          `/owner/${editableCustomerData && editableCustomerData._id}`,
+          handleOwnerFormData(values, "customer"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -843,7 +771,7 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     values = customersSheets[customerIndex.fileIndex].data;
     await server
-      .post(`/Employee`, values, {
+      .post(`/owner`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -862,8 +790,100 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  //Company
+  //Employees
+  const addEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/Employee`, handleEmployeeFormData(values), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employee is Created Successfully",
+          status: "success",
+        });
+        dispatch(getEmployees({}));
+        dispatch(getEmployeesCounter());
+        navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+        setEmployeeImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
 
+  const editEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
+      handleEditEmployeeInSheet(values);
+      handleCloseEmployeeModal();
+      handleAlert({
+        msg: "Employee is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          handleEmployeeFormData(values),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Employee is Updated Successfully",
+            status: "success",
+          });
+          dispatch(getEmployees({}));
+          navigate(
+            `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+              editableEmployeeData && editableEmployeeData._id
+            }`
+          );
+          setEmployeeImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createEmployeesSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = employeesSheets[employeeIndex.fileIndex].data;
+    await server
+      .post(`/Employee`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employees are Created Successfully",
+          status: "success",
+        });
+        if (id) {
+          dispatch(getCompany({ id }));
+        } else {
+          navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+          dispatch(getEmployees({}));
+        }
+        handleCloseUploadEmployeesModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Company
   const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -935,9 +955,15 @@ const useSubmitFunction = (type: string) => {
         `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
-            : editableProData && editableProData._id
+            : formType === "linkPro"
+            ? editableProData && editableProData._id
+            : editableCustomerData && editableCustomerData._id
         }&operation=adding&typeOfPerson=${
-          formType === "linkOwner" ? "owner" : "pro"
+          formType === "linkOwner"
+            ? "owner"
+            : formType === "linkPro"
+            ? "pro"
+            : "customer"
         }`,
         {
           headers: {
@@ -1040,6 +1066,25 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "customer") {
+      await server
+        .delete(`/owner/${editableCustomerData && editableCustomerData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Customer is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getCustomers({}));
+          navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "employee") {
       await server
         .delete(
@@ -1057,28 +1102,6 @@ const useSubmitFunction = (type: string) => {
           });
           dispatch(getEmployees({}));
           navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
-          handleCloseDeleteModal();
-        })
-        .catch((err) => {
-          handleCatchError(err);
-        });
-    } else if (formType === "customer") {
-      await server
-        .delete(
-          `/Employee/${editableCustomerData && editableCustomerData._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          handleAlert({
-            msg: "Customer is Deleted Successfully",
-            status: "success",
-          });
-          dispatch(getCustomers({}));
-          navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -1179,7 +1202,7 @@ const useSubmitFunction = (type: string) => {
         )
         .then(() => {
           handleAlert({
-            msg: "Owner is unLinked to Company Successfully",
+            msg: "Owner is unLinked with Company Successfully",
             status: "success",
           });
           if (id) {
@@ -1204,11 +1227,36 @@ const useSubmitFunction = (type: string) => {
         )
         .then(() => {
           handleAlert({
-            msg: "Officer is unLinked to Company Successfully",
+            msg: "Officer is unLinked with Company Successfully",
             status: "success",
           });
           if (id) {
             dispatch(getPro({ id }));
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "unLinkCustomer") {
+      await server
+        .get(
+          `/company/ManageOwnersAndPro?companyId=${
+            editableCompanyData && editableCompanyData._id
+          }&id=${id}&operation=deleting&typeOfPerson=customer`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Customer is unLinked with Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getCustomer({ id }));
           }
           handleCloseDeleteModal();
         })

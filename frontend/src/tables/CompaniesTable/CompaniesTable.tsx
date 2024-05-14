@@ -112,24 +112,32 @@ const CompaniesTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            <SortBox
-              title={"Name"}
-              handling={handleSortByName}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
-            />
+            {sheet ? (
+              "Name"
+            ) : (
+              <SortBox
+                title={"Name"}
+                handling={handleSortByName}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            )}
           </PrimaryTableCell>
           {!lgScreen && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "MOL" : "MOL Code"}
-              handling={handleSortByCode}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc="center"
-            />
+            {sheet ? (
+              "MOL Code"
+            ) : (
+              <SortBox
+                title={mdScreen ? "MOL" : "MOL Code"}
+                handling={handleSortByCode}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!mdScreen && (
             <PrimaryTableCell align="center">Status</PrimaryTableCell>

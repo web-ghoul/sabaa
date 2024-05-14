@@ -55,6 +55,7 @@ interface ButtonTypes {
   title?: string;
   bg?: string;
   variant?: string;
+  type?: "button" | "submit";
   handling?: () => void;
 }
 

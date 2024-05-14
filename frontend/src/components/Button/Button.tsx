@@ -7,7 +7,7 @@ import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { ButtonTypes } from "../../types/components.types";
 
-const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
+const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
   const classes = `${
     bg === "excel"
       ? `!bg-excel hover:!bg-green-950`
@@ -60,7 +60,11 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
   };
 
   return title ? (
-    <PrimaryButton onClick={handling || handleClick} className={classes}>
+    <PrimaryButton
+      type={type || "button"}
+      onClick={handling || handleClick}
+      className={classes}
+    >
       {icon}
       <Typography variant="button">{title}</Typography>
     </PrimaryButton>

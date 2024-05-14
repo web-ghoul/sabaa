@@ -111,37 +111,57 @@ const EmployeesTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            <SortBox
-              title={"Name"}
-              handling={handleSortByRes}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
-            />
+            {sheet ? (
+              "Name"
+            ) : (
+              <SortBox
+                title={"Name"}
+                handling={handleSortByRes}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            )}
           </PrimaryTableCell>
           <PrimaryTableCell align="center">Person Code</PrimaryTableCell>
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "LC Expire" : "LC Expire Date"}
-              handling={handleSortByLC}
-              asc={searchParams.get("sort") === "lc_asc"}
-              desc={searchParams.get("sort") === "lc_desc"}
-              jc="center"
-            />
+            {sheet ? (
+              mdScreen ? (
+                "Lc Expiry"
+              ) : (
+                "Lc Expire Date"
+              )
+            ) : (
+              <SortBox
+                title={mdScreen ? "LC Expiry" : "LC Expire Date"}
+                handling={handleSortByLC}
+                asc={searchParams.get("sort") === "lc_asc"}
+                desc={searchParams.get("sort") === "lc_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!smScreen && (
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "Resdence Expire" : "Resdence Expire Date"}
-              handling={handleSortByRes}
-              asc={searchParams.get("sort") === "res_asc"}
-              desc={searchParams.get("sort") === "res_desc"}
-              jc="center"
-            />
+            {sheet ? (
+              mdScreen ? (
+                "Residence Expiry"
+              ) : (
+                "Residence Expire Date"
+              )
+            ) : (
+              <SortBox
+                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
+                handling={handleSortByRes}
+                asc={searchParams.get("sort") === "res_asc"}
+                desc={searchParams.get("sort") === "res_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!mdScreen && (
             <PrimaryTableCell align="center">Card Type</PrimaryTableCell>

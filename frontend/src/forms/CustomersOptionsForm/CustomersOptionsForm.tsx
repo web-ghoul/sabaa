@@ -3,7 +3,7 @@ import {
   FilterAltRounded,
   FilterListRounded,
 } from "@mui/icons-material";
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,6 @@ import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getCustomers } from "../../store/customersSlice";
-import { getEmployees } from "../../store/employeesSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import {
@@ -25,7 +24,7 @@ import { NationalityTypes } from "../../types/store.types";
 const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { searchForCustomers, setSearchForCustomers } =
+  const { handleOpenCustomerModal, searchForCustomers, setSearchForCustomers } =
     useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
@@ -36,23 +35,23 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleSearch = (value: string) => {
     setSearchForCustomers(value);
-    dispatch(getEmployees({ ...queries, search: value }));
+    dispatch(getCustomers({ ...queries, search: value }));
   };
 
   const handleFilterByNationality = (value: string) => {
     handleAddQuery({ nationality: value });
   };
 
-  const handleFilterByStatus = (value: string) => {
-    handleAddQuery({ status: value });
+  const handleFilterByState = (value: string) => {
+    handleAddQuery({ state: value });
   };
 
-  const handleFilterByCardType = (value: string) => {
-    handleAddQuery({ cardType: value });
+  const handleFilterByDateOfBirthFrom = (value: string) => {
+    handleAddQuery({ dobFrom: value });
   };
 
-  const handleFilterByGender = (value: string) => {
-    handleAddQuery({ gender: value });
+  const handleFilterByDateOfBirthTo = (value: string) => {
+    handleAddQuery({ dobTo: value });
   };
 
   const handleFilter = () => {
@@ -61,7 +60,7 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleResetAll = () => {
-    navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+    navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
     dispatch(getCustomers({}));
     setQueries({});
   };
@@ -70,12 +69,12 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
     (state: RootState) => state.nationalities
   );
 
-  (formik as unknown as CustomersOptionsFormikTypes).values.cardType =
-    queries.cardType || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.gender =
-    queries.gender || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.status =
-    queries.status || "";
+  (formik as unknown as CustomersOptionsFormikTypes).values.dobFrom =
+    queries.dobFrom || "";
+  (formik as unknown as CustomersOptionsFormikTypes).values.dobTo =
+    queries.dobTo || "";
+  (formik as unknown as CustomersOptionsFormikTypes).values.state =
+    queries.state || "";
   (formik as unknown as CustomersOptionsFormikTypes).values.nationality =
     queries.nationality || "";
 
@@ -91,7 +90,6 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
   }, [dispatch]);
-
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
@@ -111,13 +109,17 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
-          <Button title={"Add Customer"} icon={<AddRounded />} />
+          <Button
+            title={"Add Customer"}
+            icon={<AddRounded />}
+            handling={() => handleOpenCustomerModal("addCustomer")}
+          />
           <Button
             title={"Upload Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
             handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`)
+              navigate(`${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`)
             }
           />
           <Button
@@ -164,39 +166,34 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
             select
           />
           <Input
-            label={"Filter By Status"}
-            name={"status"}
+            label={"Filter By State"}
+            name={"state"}
             formik={formik}
-            change={handleFilterByStatus}
-            options={["active", "cancel", "complaint", "abscond"]}
+            change={handleFilterByState}
+            options={["dubai"]}
             select
           />
-          <Input
-            label={"Filter By Gender"}
-            name={"gender"}
-            formik={formik}
-            change={handleFilterByGender}
-            options={["male", "female"]}
-            select
-          />
-          <Input
-            label={"Filter By Card Type"}
-            name={"cardType"}
-            formik={formik}
-            change={handleFilterByCardType}
-            options={[
-              "PRE APPROVAL FOR WORK PERMIT",
-              "NEW ELECTRONIC WORK PERMIT",
-              "RENEW ELECTRONIC WORK PERMIT",
-              "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-              "NEW ON HUSBAND/FATHER SPONSORSHIP",
-              "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-              "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-              "PART TIME PRE APPROVAL FOR WORK PERMIT",
-              "ELECTRONIC WORK PERMIT FOR PART TIME",
-            ]}
-            select
-          />
+          <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
+            <Typography variant="h6">Filter By Date Of Birth</Typography>
+            <Box
+              className={`flex justify-stretch gap-4 md:gap-3 sm:!gap-2 md:flex-wrap`}
+            >
+              <Input
+                name={"dobFrom"}
+                label={"From"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthFrom}
+              />
+              <Input
+                name={"dobTo"}
+                label={"To"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByDateOfBirthTo}
+              />
+            </Box>
+          </Box>
           <Button
             icon={<FilterListRounded />}
             title={"Filter"}

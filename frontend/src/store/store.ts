@@ -20,6 +20,14 @@ import ownersReducers from "./ownersSlice.ts";
 import prosCounterReducers from "./prosCounterSlice.ts";
 import proReducers from "./proSlice.ts";
 import prosReducers from "./prosSlice.ts";
+import recentActivitiesReducers from "./recentActivitiesSlice.ts";
+import recentCompaniesReducers from "./recentCompaniesSlice.ts";
+import recentCustomersReducers from "./recentCustomersSlice.ts";
+import recentJobsReducers from "./recentJobsSlice.ts";
+import recentNationalitiesReducers from "./recentNationalitiesSlice.ts";
+import recentOwnersReducers from "./recentOwnersSlice.ts";
+import recentProsReducers from "./recentProsSlice.ts";
+import recentUsersReducers from "./recentUsersSlice.ts";
 import usersCounterReducers from "./usersCounterSlice.ts";
 import userReducers from "./userSlice.ts";
 import usersReducers from "./usersSlice.ts";
@@ -28,18 +36,26 @@ export const store = configureStore({
   reducer: {
     auth: authReducers,
     activities: activitiesReducers,
+    recentActivities: recentActivitiesReducers,
     jobs: jobsReducers,
+    recentJobs: recentJobsReducers,
     nationalities: nationalitiesReducers,
+    recentNationalities: recentNationalitiesReducers,
     users: usersReducers,
+    recentUsers: recentUsersReducers,
     user: userReducers,
     companies: companiesReducers,
+    recentCompanies: recentCompaniesReducers,
     company: companyReducers,
     owners: ownersReducers,
+    recentOwners: recentOwnersReducers,
     pros: prosReducers,
+    recentPros: recentProsReducers,
     employees: employeesReducers,
     employee: employeeReducers,
     customer: customerReducers,
     customers: customersReducers,
+    recentCustomers: recentCustomersReducers,
     owner: ownerReducers,
     pro: proReducers,
     ownersCounter: ownersCounterReducers,

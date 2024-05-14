@@ -191,6 +191,40 @@ interface ProsOptionsFormikTypes {
   values: ProsOptionsFormTypes;
 }
 
+//Pro
+
+interface CustomerFormTypes extends CustomerTypes {}
+
+interface CustomerFormikTypes {
+  touched: CustomerFormTypes;
+  errors: CustomerFormTypes;
+  initialValues: CustomerFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: CustomerFormTypes;
+}
+
+interface CustomersOptionsFormTypes {
+  search: string;
+  dobFrom: string;
+  dobTo: string;
+  nationality: string;
+  state: string;
+}
+
+interface CustomersOptionsFormikTypes {
+  touched: CustomersOptionsFormTypes;
+  errors: CustomersOptionsFormTypes;
+  initialValues: CustomersOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: CustomersOptionsFormTypes;
+}
+
 //Employee
 
 interface EmployeeFormTypes extends EmployeeTypes {}
@@ -223,40 +257,6 @@ interface EmployeesOptionsFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: EmployeesOptionsFormTypes;
-}
-
-//Customer
-
-interface CustomerFormTypes extends CustomerTypes {}
-
-interface CustomerFormikTypes {
-  touched: CustomerFormTypes;
-  errors: CustomerFormTypes;
-  initialValues: CustomerFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: CustomerFormTypes;
-}
-
-interface CustomersOptionsFormTypes {
-  search: string;
-  gender: string;
-  cardType: string;
-  nationality: string;
-  status: string;
-}
-
-interface CustomersOptionsFormikTypes {
-  touched: CustomersOptionsFormTypes;
-  errors: CustomersOptionsFormTypes;
-  initialValues: CustomersOptionsFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: CustomersOptionsFormTypes;
 }
 
 //Job

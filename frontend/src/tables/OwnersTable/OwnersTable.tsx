@@ -105,24 +105,32 @@ const OwnersTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
-            <SortBox
-              title={"Name"}
-              handling={handleSortByName}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
-            />
+            {sheet ? (
+              "Name"
+            ) : (
+              <SortBox
+                title={"Name"}
+                handling={handleSortByName}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            )}
           </PrimaryTableCell>
           {!mdScreen && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "Code" : "Person Code"}
-              handling={handleSortByCode}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc="center"
-            />
+            {sheet ? (
+              "Person Code"
+            ) : (
+              <SortBox
+                title={mdScreen ? "Code" : "Person Code"}
+                handling={handleSortByCode}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (

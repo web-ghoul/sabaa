@@ -21,6 +21,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   openLinkToCompanyModal: false,
   handleOpenLinkToCompanyModal: () => {},
   handleCloseLinkToCompanyModal: () => {},
+  openUploadEmployeesModal: false,
+  handleOpenUploadEmployeesModal: () => {},
+  handleCloseUploadEmployeesModal: () => {},
   openDeleteModal: false,
   handleOpenDeleteModal: () => {},
   handleCloseDeleteModal: () => {},
@@ -127,7 +130,19 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setFormsLoading(true);
   };
 
-  //Delete
+  //Upload Employees
+  const [openUploadEmployeesModal, setOpenUploadEmployeesModal] =
+    useState(false);
+
+  const handleCloseUploadEmployeesModal = () => {
+    setOpenUploadEmployeesModal(false);
+  };
+
+  const handleOpenUploadEmployeesModal = () => {
+    setOpenUploadEmployeesModal(true);
+  };
+
+  //Link Company
   const [openLinkToCompanyModal, setOpenLinkToCompanyModal] = useState(false);
 
   const handleCloseLinkToCompanyModal = () => {
@@ -451,6 +466,9 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenCustomerModal,
     searchForCustomers,
     setSearchForCustomers,
+    openUploadEmployeesModal,
+    handleCloseUploadEmployeesModal,
+    handleOpenUploadEmployeesModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

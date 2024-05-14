@@ -20,6 +20,9 @@ const useOwnerSchema = () => {
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),
+    residenceExpiryDate: yup.date(),
+    fileImmgNo: yup.string(),
+    status: yup.string(),
     remarks: yup.string(),
     proCode: yup.boolean(),
   });
@@ -40,6 +43,14 @@ const useOwnerSchema = () => {
     remarks: editableOwnerData?.remarks || "",
     state: editableOwnerData?.state || "",
     address: editableOwnerData?.address || "",
+    residenceExpiryDate:
+      (editableOwnerData?.residenceExpiryDate &&
+        new Date(editableOwnerData?.residenceExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    fileImmgNo: editableOwnerData?.fileImmgNo || "",
+    status: editableOwnerData?.status || "",
     proCode: editableOwnerData?.proCode || "",
     emiratesId: editableOwnerData?.emiratesId || "",
     uid: editableOwnerData?.uid || "",

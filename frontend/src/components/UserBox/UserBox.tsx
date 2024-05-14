@@ -5,7 +5,7 @@ import {
   LogoutRounded,
 } from "@mui/icons-material";
 import { Box, IconButton, Menu, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { MouseEvent, useContext, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ const UserBox = ({
   const { defaultAvatar, defaultCompany } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -95,7 +95,7 @@ const UserBox = ({
         )}
       </Box>
       {menu && (
-        <div>
+        <Box>
           <IconButton
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
@@ -133,7 +133,7 @@ const UserBox = ({
               handling={handleLogout}
             />
           </Menu>
-        </div>
+        </Box>
       )}
     </Box>
   );

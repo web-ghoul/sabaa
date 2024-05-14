@@ -24,6 +24,7 @@ const useEmployeeSchema = () => {
     mobileNumber: yup.string(),
     cardType: yup.string(),
     job: yup.string(),
+    remarks: yup.string(),
     iLOEInsuranceCompany: yup.string(),
     iLOEPolicy: yup.string(),
     iLOEExpireDate: yup.date(),
@@ -49,7 +50,10 @@ const useEmployeeSchema = () => {
     personCode: editableEmployeeData?.personCode || "",
     companyCode: editableEmployeeData?.companyCode || "",
     companyName: editableEmployeeData?.companyName || "",
-    dob: yup.date(),
+    dob:
+      (editableEmployeeData?.dob &&
+        new Date(editableEmployeeData?.dob).toISOString().split("T")[0]) ||
+      "",
     idNationality: editableEmployeeData?.avatar || "",
     status: editableEmployeeData?.status || "",
     email: editableEmployeeData?.email || "",
@@ -58,6 +62,7 @@ const useEmployeeSchema = () => {
     cardType: editableEmployeeData?.cardType || "",
     cardNumber: editableEmployeeData?.cardNumber || "",
     job: editableEmployeeData?.job || "",
+    remarks: editableEmployeeData?.remarks || "",
     iLOEInsuranceCompany: editableEmployeeData?.iLOEInsuranceCompany || "",
     iLOEPolicy: editableEmployeeData?.iLOEPolicy || "",
     iLOEExpireDate:

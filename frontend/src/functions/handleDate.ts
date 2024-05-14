@@ -1,5 +1,5 @@
 export const handleDate = (
-  date: Date | string,
+  date?: Date | string,
   time: boolean = false
 ): string => {
   let parsedDate: Date;
@@ -24,7 +24,10 @@ export const handleDate = (
   };
   const formattedDate = parsedDate.toLocaleString("en-US", options);
   const [month, day, year] = formattedDate.split("/");
-  return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${
-    time ? year : year.split(",")[0]
-  }`;
+  if (month && day && year) {
+    return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${
+      time ? year : year.split(",")[0]
+    }`;
+  }
+  return "";
 };

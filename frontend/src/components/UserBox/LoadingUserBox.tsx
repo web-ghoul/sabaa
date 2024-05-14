@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 
-const LoadingUserBox = ({ size }: { size: string }) => {
+const LoadingUserBox = ({ size }: { size?: string }) => {
   return (
     <Box className={`flex justify-stretch items-center gap-2`}>
       <Box
@@ -20,7 +20,10 @@ const LoadingUserBox = ({ size }: { size: string }) => {
       >
         <Skeleton variant={"circular"} width={"100%"} height={"100%"} />
       </Box>
-      <Skeleton variant={"rectangular"} width={100} />
+      <Box className={`grid justify-start items-center gap-1`}>
+        <Skeleton variant={"rounded"} width={100} />
+        <Skeleton variant={"rounded"} width={75} />
+      </Box>
     </Box>
   );
 };
