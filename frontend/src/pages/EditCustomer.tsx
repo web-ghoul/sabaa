@@ -7,17 +7,17 @@ import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
+import { getCustomer } from "../store/customerSlice";
 import { AppDispatch } from "../store/store";
-import { getUser } from "../store/userSlice";
 
-const EditUser = () => {
+const EditCustomer = () => {
   const { pageContainerClasses } = useContext(AppContext);
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (id) {
-      dispatch(getUser({ id }));
+      dispatch(getCustomer({ id }));
     }
   }, [id, dispatch]);
   return (
@@ -25,19 +25,19 @@ const EditUser = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Link
-            to={`${import.meta.env.VITE_USERS_ROUTE}`}
+            to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            <Typography variant="h6">Users</Typography>
+            <Typography variant="h6">Customers</Typography>
           </Link>
           <Typography variant="h6" key="2">
-            Edit User
+            Edit Customer
           </Typography>
         </BreadCrumbs>
-        <Forms type={"editUser"} />
+        <Forms type={"editCustomer"} />
       </PrimaryContainer>
     </PrimaryBox>
   );
 };
 
-export default EditUser;
+export default EditCustomer;

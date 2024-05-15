@@ -12,7 +12,7 @@ const DeleteModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`modal`}>
+      <Box className={`modal !min-w-[25vw] md:!min-w-[20vw]`}>
         <Forms type={"delete"} />
       </Box>
     </Modal>

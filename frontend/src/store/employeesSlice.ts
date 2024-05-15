@@ -8,9 +8,13 @@ export const getEmployees = createAsyncThunk(
   async (args: EmployeesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner?search=${
+      `${import.meta.env.VITE_SERVER_URL}/Employee?search=${
         (args && args.search) || ""
-      }&sort=${args?.sort || ""}&limit=${
+      }&sort=${args?.sort || ""}&nationality=${
+        args?.nationality || ""
+      }&cardType=${args?.cardType || ""}&status=${args?.status || ""}&gender=${
+        args?.gender || ""
+      }&limit=${
         args?.limit
           ? args.limit == -1
             ? ""

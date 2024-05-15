@@ -3,16 +3,31 @@ import { ReactNode } from "react";
 import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
+  CustomerTypes,
   EmployeeTypes,
+  JobTypes,
   NationalityTypes,
   OwnerTypes,
-  PROTypes,
+  ProTypes,
   UserTypes,
 } from "./store.types";
 
 interface LogoTypes {
   color?: string;
   noTitle?: boolean;
+}
+
+interface TotalBoxTypes {
+  count: number;
+  variant:
+    | "users"
+    | "owners"
+    | "companies"
+    | "officers"
+    | "employees"
+    | "customers"
+    | "transactions";
+  isLoading?: boolean;
 }
 
 interface UserBoxTypes {
@@ -53,6 +68,7 @@ interface ButtonTypes {
   title?: string;
   bg?: string;
   variant?: string;
+  type?: "button" | "submit";
   handling?: () => void;
 }
 
@@ -91,15 +107,21 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[];
+  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[] | JobTypes[];
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }
 
 interface ProfileDetailsTypes {
   title: string;
-  variant: "user" | "owner" | "company" | "PRO" | "employee";
-  data: UserTypes | OwnerTypes | CompanyTypes | PROTypes | EmployeeTypes;
+  variant: "user" | "owner" | "company" | "pro" | "employee" | "customer";
+  data:
+    | UserTypes
+    | OwnerTypes
+    | CompanyTypes
+    | ProTypes
+    | EmployeeTypes
+    | CustomerTypes;
   isLoading?: boolean;
 }
 
@@ -127,6 +149,7 @@ export type {
   SortBoxTypes,
   SubmitButtonTypes,
   TitleTypes,
+  TotalBoxTypes,
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,

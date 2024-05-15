@@ -18,7 +18,9 @@ export const getPros = createAsyncThunk(
           : import.meta.env.VITE_LIMIT_PAGES
       }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&state=${
         args?.state || ""
-      }&nationality=${args?.nationality || ""}&page=${args?.page || 0}`,
+      }&nationality=${args?.nationality || ""}&page=${
+        args?.page || 0
+      }&isPro=true`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

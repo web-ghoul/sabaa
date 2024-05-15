@@ -5,11 +5,13 @@ import { AutoCompleteSearchTypes } from "../../types/components.types";
 import {
   AllFormiksTypes,
   CompanyFormikTypes,
+  EmployeeFormikTypes,
   LinkToCompanyFormikTypes,
   OwnerFormikTypes,
 } from "../../types/forms.types";
 import {
   CompanyTypes,
+  JobTypes,
   NationalityTypes,
   OwnerTypes,
 } from "../../types/store.types";
@@ -41,11 +43,14 @@ export default function AutoCompleteSearch({
     } else if (name === "companyId") {
       const company = newValue as CompanyTypes;
       formik.setFieldValue(name, company._id);
+    } else if (name === "job") {
+      const job = newValue as JobTypes;
+      formik.setFieldValue(name, job.jobTitle);
     }
   };
 
   const handleOptionLabel = (
-    option: NationalityTypes | OwnerTypes | CompanyTypes
+    option: NationalityTypes | OwnerTypes | CompanyTypes | JobTypes
   ) => {
     if (name === "nationality") {
       return `${(option as NationalityTypes).nationality} ( ${
@@ -58,6 +63,10 @@ export default function AutoCompleteSearch({
     } else if (name === "companyId") {
       return `${(option as CompanyTypes).name} ( ${
         (option as CompanyTypes).molCode
+      } )`;
+    } else if (name === "job") {
+      return `${(option as unknown as JobTypes).jobTitle} ( ${
+        (option as unknown as JobTypes).MOHRE
       } )`;
     }
     return "";
@@ -76,11 +85,17 @@ export default function AutoCompleteSearch({
             option._id || ""
           )
         )
-      : (name === "companyId" &&
-          (values as CompanyTypes[]).find(
+      : name === "companyId"
+      ? (values as CompanyTypes[]).find(
+          (option) =>
+            option._id ===
+            (formik as unknown as LinkToCompanyFormikTypes).values.companyId
+        )
+      : (name === "job" &&
+          (values as JobTypes[]).find(
             (option) =>
-              option._id ===
-              (formik as unknown as LinkToCompanyFormikTypes).values.companyId
+              option.jobTitle ===
+              (formik as unknown as EmployeeFormikTypes).values.job
           )) ||
         null;
 
@@ -98,8 +113,6 @@ export default function AutoCompleteSearch({
   };
 
   useEffect(() => {
-    console.log(options);
-
     setValues(options);
   }, [options]);
 
@@ -128,8 +141,7 @@ export default function AutoCompleteSearch({
                   }
                 />
               );
-            }
-            if (name === "companyId") {
+            } else if (name === "companyId") {
               return (
                 <Chip
                   label={(option as CompanyTypes).name}
@@ -137,6 +149,18 @@ export default function AutoCompleteSearch({
                   disabled={
                     (values as CompanyTypes[]).indexOf(
                       option as CompanyTypes
+                    ) !== -1
+                  }
+                />
+              );
+            } else if (name === "job") {
+              return (
+                <Chip
+                  label={(option as unknown as JobTypes).jobTitle}
+                  {...getTagProps({ index })}
+                  disabled={
+                    (values as JobTypes[]).indexOf(
+                      option as unknown as JobTypes
                     ) !== -1
                   }
                 />

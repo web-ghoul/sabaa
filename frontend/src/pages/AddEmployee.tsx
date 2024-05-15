@@ -6,27 +6,27 @@ import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-
-const AddUser = () => {
+const AddEmployee = () => {
   const { pageContainerClasses } = useContext(AppContext);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Link
-            to={`${import.meta.env.VITE_USERS_ROUTE}`}
+            to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            <Typography variant="h6">Users</Typography>
+            <Typography variant="h6">Employees</Typography>
           </Link>
           <Typography variant="h6" key="2">
-            Add User
+            Add Employee
           </Typography>
         </BreadCrumbs>
-        <Forms type={"addUser"} />
+        <Forms type={"addEmployee"} />
       </PrimaryContainer>
     </PrimaryBox>
   );
 };
 
-export default AddUser;
+export default AddEmployee;

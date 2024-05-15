@@ -70,17 +70,20 @@ const OwnersTableMenu = () => {
       }}
     >
       {!sheet && (
-        <TableMenuItem
-          icon={<VisibilityRounded />}
-          title={"View"}
-          handling={handleView}
-        />
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+        </>
       )}
-      <TableMenuItem
-        icon={<JoinFullRounded />}
-        title={"Link"}
-        handling={handleLink}
-      />
+
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}

@@ -15,15 +15,23 @@ import MdSidebar from "./components/Sidebar/MdSidebar.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import { AppContext } from "./contexts/AppContext.tsx";
 import CompanyModal from "./modals/CompanyModal.tsx";
+import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
+import EmployeeModal from "./modals/EmployeeModal.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
 import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
+import ProModal from "./modals/ProModal.tsx";
+import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import { getProfile, setAuth } from "./store/auth.ts";
+import { getCompaniesCounter } from "./store/companiesCounterSlice.ts";
+import { getEmployeesCounter } from "./store/employeesCounterSlice.ts";
+import { getOwnersCounter } from "./store/ownersCounterSlice.ts";
 import { AppDispatch } from "./store/store.ts";
+import { getUsersCounter } from "./store/usersCounterSlice.ts";
 
 const AuthRoutes = [
   `${import.meta.env.VITE_LOGIN_ROUTE}`,
@@ -45,6 +53,10 @@ const App = () => {
     if (token && userId) {
       dispatch(setAuth({ token, userId }));
       dispatch(getProfile());
+      dispatch(getOwnersCounter());
+      dispatch(getCompaniesCounter());
+      dispatch(getUsersCounter());
+      dispatch(getEmployeesCounter());
       setSigned(true);
     } else {
       if (!AuthRoutes.includes(pathname)) {
@@ -69,7 +81,11 @@ const App = () => {
       <OwnerModal />
       <UserModal />
       <CompanyModal />
+      <ProModal />
+      <EmployeeModal />
+      <CustomerModal />
       <LinkToCompanyModal />
+      <UploadEmployeesModal />
       <NationalityModal />
       <DeleteModal />
       <Toaster />

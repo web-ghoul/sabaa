@@ -16,6 +16,10 @@ body {
   .modal {
     @apply bg-white rounded-xl p-6 md:p-4 sm:p-2 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] absolute grid justify-stretch items-center max-w-[90vw] max-h-[90vh] w-max min-w-[60vw] overflow-auto gap-6
   }
+
+  .paper {
+    @apply p-4 !rounded-lg grid justify-stretch items-center gap-6 md:gap-5 sm:gap-4
+  }
 }
 
 ::-webkit-scrollbar-track {

@@ -20,6 +20,9 @@ const useProSchema = () => {
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),
+    residenceExpiryDate: yup.date(),
+    fileImmgNo: yup.string(),
+    status: yup.string(),
     remarks: yup.string(),
     proCode: yup.boolean(),
   });
@@ -41,6 +44,14 @@ const useProSchema = () => {
     state: editableProData?.state || "",
     address: editableProData?.address || "",
     proCode: editableProData?.proCode || "",
+    residenceExpiryDate:
+      (editableProData?.residenceExpiryDate &&
+        new Date(editableProData?.residenceExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    fileImmgNo: editableProData?.fileImmgNo || "",
+    status: editableProData?.status || "",
     emiratesId: editableProData?.emiratesId || "",
     uid: editableProData?.uid || "",
   };

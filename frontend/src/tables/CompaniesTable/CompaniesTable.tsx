@@ -35,6 +35,9 @@ const CompaniesTable = ({
   fileIndex,
   noPagination,
   unLink,
+  sort = true,
+  actions = true,
+  recent,
 }: CompaniesTableTypes) => {
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
@@ -112,35 +115,53 @@ const CompaniesTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            <SortBox
-              title={"Name"}
-              handling={handleSortByName}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
-            />
+            {sheet || !sort ? (
+              "Name"
+            ) : (
+              <SortBox
+                title={"Name"}
+                handling={handleSortByName}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            )}
           </PrimaryTableCell>
-          {!lgScreen && (
+          {!lgScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "MOL" : "MOL Code"}
-              handling={handleSortByCode}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc="center"
-            />
+            {sheet || !sort ? (
+              mdScreen ? (
+                "MOL"
+              ) : (
+                "MOL Code"
+              )
+            ) : (
+              <SortBox
+                title={mdScreen ? "MOL" : "MOL Code"}
+                handling={handleSortByCode}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!mdScreen && (
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           {!smScreen && (
-            <PrimaryTableCell align="center">IMMG Expire Date</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              {lgScreen ? "IMMG Expiry" : "IMMG Expire Date"}
+            </PrimaryTableCell>
           )}
-          {!mdScreen && (
-            <PrimaryTableCell align="center">IMMG Card Number</PrimaryTableCell>
+          {!mdScreen && !recent && (
+            <PrimaryTableCell align="center">
+              {lgScreen ? "IMMG Card" : "IMMG Card Number"}
+            </PrimaryTableCell>
           )}
-          <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          {actions && (
+            <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -176,7 +197,7 @@ const CompaniesTable = ({
                     </Link>
                   )}
                 </PrimaryTableCell>
-                {!lgScreen && (
+                {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
                     {row.phone}
                   </PrimaryTableCell>
@@ -194,21 +215,29 @@ const CompaniesTable = ({
                     {handleDate(row.immgCardExpiry)}
                   </PrimaryTableCell>
                 )}
-                {!mdScreen && (
+                {!mdScreen && !recent && (
                   <PrimaryTableCell align="center">
                     {row.immgCardNo}
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="right">
-                  <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                    <MoreVertRounded />
-                  </IconButton>
-                </PrimaryTableCell>
+                {actions && (
+                  <PrimaryTableCell align="right">
+                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                      <MoreVertRounded />
+                    </IconButton>
+                  </PrimaryTableCell>
+                )}
               </CompaniesTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingCompaniesRow key={i} />)}
+              .map((_, i) => (
+                <LoadingCompaniesRow
+                  recent={recent}
+                  actions={actions}
+                  key={i}
+                />
+              ))}
       </TableBody>
       <CompaniesTableMenu unLink={unLink} />
     </PrimaryTable>

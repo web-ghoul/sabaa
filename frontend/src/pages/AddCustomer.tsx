@@ -6,27 +6,27 @@ import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-
-const AddOwner = () => {
+const AddCustomer = () => {
   const { pageContainerClasses } = useContext(AppContext);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Link
-            to={`${import.meta.env.VITE_OWNERS_ROUTE}`}
+            to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
           >
-            <Typography variant="h6">Owners</Typography>
+            <Typography variant="h6">Customers</Typography>
           </Link>
           <Typography variant="h6" key="2">
-            Add Owner
+            Add Customer
           </Typography>
         </BreadCrumbs>
-        <Forms type={"addOwner"} />
+        <Forms type={"addCustomer"} />
       </PrimaryContainer>
     </PrimaryBox>
   );
 };
 
-export default AddOwner;
+export default AddCustomer;

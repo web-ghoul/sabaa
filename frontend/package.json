@@ -16,6 +16,7 @@
     "@mui/lab": "^5.0.0-alpha.168",
     "@mui/material": "^5.15.13",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
+    "@mui/x-charts": "^7.4.0",
     "@reduxjs/toolkit": "^2.2.1",
     "@types/dotenv": "^8.2.0",
     "@types/js-cookie": "^3.0.6",

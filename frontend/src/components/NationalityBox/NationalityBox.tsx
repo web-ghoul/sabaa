@@ -4,8 +4,10 @@ import { handleGetFlag } from "../../functions/handleGetFlag";
 
 const NationalityBox = ({ nationality }: { nationality: string }) => {
   return (
-    <Box className={`flex justify-center items-center gap-2`}>
-      <LazyLoadImage src={handleGetFlag(nationality)} alt={"country"} />
+    <Box className={`flex gap-2`}>
+      <Box className={`flex justify-center items-center w-[20px] h-auto`}>
+        <LazyLoadImage src={handleGetFlag(nationality)} alt={""} />
+      </Box>
       {nationality}
     </Box>
   );

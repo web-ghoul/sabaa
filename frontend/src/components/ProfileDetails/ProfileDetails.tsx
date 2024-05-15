@@ -7,7 +7,14 @@ import { handleDate } from "../../functions/handleDate";
 import { handleGetFlag } from "../../functions/handleGetFlag";
 import { RootState } from "../../store/store";
 import { ProfileDetailsTypes } from "../../types/components.types";
-import { CompanyTypes, OwnerTypes, UserTypes } from "../../types/store.types";
+import {
+  CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
+  OwnerTypes,
+  ProTypes,
+  UserTypes,
+} from "../../types/store.types";
 import Button from "../Button/Button";
 import LinkBox from "../LinkBox/LinkBox";
 import StatusBox from "../StatusBox/StatusBox";
@@ -26,22 +33,32 @@ const ProfileDetails = ({
   const profileDataClasses = `flex justify-between items-center gap-6 md:gap-4 sm:grid sm:justify-center`;
   const profileInfoClasses = `grid justify-start items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
   const profileButtonsClasses = `flex justify-end items-center gap-2 sm:justify-center`;
+  const sectionClasses = `grid gap-8 md:gap-6 sm:gap-3`;
   const navigate = useNavigate();
   const { id } = useParams();
   const {
     handleOpenDeleteModal,
     setEditableOwnerData,
-    setEditableUserData,
-    setEditableCompanyData,
-    handleOpenUserModal,
     handleOpenOwnerModal,
+    setEditableProData,
+    handleOpenProModal,
+    setEditableUserData,
+    handleOpenUserModal,
+    setEditableCompanyData,
     handleOpenLinkToCompanyModal,
+    setEditableCustomerData,
+    handleOpenCustomerModal,
+    setEditableEmployeeData,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
+  const { pro } = useSelector((state: RootState) => state.pro);
   const { user } = useSelector((state: RootState) => state.user);
   const auth = useSelector((state: RootState) => state.auth);
   const { company } = useSelector((state: RootState) => state.company);
+  const { employee } = useSelector((state: RootState) => state.employee);
+  const { customer } = useSelector((state: RootState) => state.customer);
 
+  //User
   const handleEditUser = () => {
     if (id) {
       setEditableUserData(user);
@@ -55,7 +72,8 @@ const ProfileDetails = ({
     setEditableUserData(user);
   };
 
-  const handleLink = () => {
+  //Owner
+  const handleOwnerLink = () => {
     handleOpenLinkToCompanyModal("linkOwner");
     setEditableOwnerData(owner);
   };
@@ -68,6 +86,45 @@ const ProfileDetails = ({
     setEditableOwnerData(owner);
   };
 
+  //Pro
+  const handleProLink = () => {
+    handleOpenLinkToCompanyModal("linkPro");
+    setEditableProData(pro);
+  };
+  const handleEditPro = () => {
+    setEditableProData(pro);
+    handleOpenProModal("editPro");
+  };
+  const handleDeletePro = () => {
+    handleOpenDeleteModal("pro");
+    setEditableProData(pro);
+  };
+
+  //Customer
+  const handleCustomerLink = () => {
+    handleOpenLinkToCompanyModal("linkCustomer");
+    setEditableCustomerData(customer);
+  };
+  const handleEditCustomer = () => {
+    setEditableCustomerData(customer);
+    handleOpenCustomerModal("editCustomer");
+  };
+  const handleDeleteCustomer = () => {
+    handleOpenDeleteModal("customer");
+    setEditableCustomerData(customer);
+  };
+
+  //Employee
+  const handleEditEmployee = () => {
+    setEditableEmployeeData(employee);
+    navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${id}/edit`);
+  };
+  const handleDeleteEmployee = () => {
+    handleOpenDeleteModal("employee");
+    setEditableEmployeeData(employee);
+  };
+
+  //Company
   const handleEditCompany = () => {
     if (company) {
       const c: CompanyTypes = { ...company };
@@ -124,7 +181,7 @@ const ProfileDetails = ({
             {(data as UserTypes).createdAt && (
               <DataBox
                 title={"Created At"}
-                value={handleDate((data as UserTypes).createdAt)}
+                value={handleDate((data as UserTypes).createdAt, true)}
               />
             )}
           </Box>
@@ -134,8 +191,8 @@ const ProfileDetails = ({
           <Title align={"left"} head={"h4"} title={title} />
           <Box className={profileDataClasses}>
             <UserBox
-              avatar={(data as UserTypes).avatar}
-              username={(data as UserTypes).name}
+              avatar={(data as OwnerTypes).avatar}
+              username={(data as OwnerTypes).name}
               size={"3xlarge"}
               head={"h5"}
               res={true}
@@ -143,7 +200,7 @@ const ProfileDetails = ({
             <Box className={profileButtonsClasses}>
               <Button
                 title={"Link"}
-                handling={handleLink}
+                handling={handleOwnerLink}
                 bg={"!bg-zinc-500"}
               />
               <Button
@@ -159,7 +216,7 @@ const ProfileDetails = ({
             </Box>
           </Box>
           <Divider />
-          <Box className={`grid gap-4 sm:gap-3`}>
+          <Box className={sectionClasses}>
             <Typography variant="h4" className={`!font-[700]`}>
               Owner Information
             </Typography>
@@ -193,7 +250,309 @@ const ProfileDetails = ({
               <DataBox title={"Remarks"} value={(data as OwnerTypes).remarks} />
               <DataBox
                 title={"Created At"}
-                value={handleDate((data as OwnerTypes).createdAt)}
+                value={handleDate((data as OwnerTypes).createdAt, true)}
+              />
+            </Box>
+          </Box>
+        </Paper>
+      ) : variant === "pro" ? (
+        <Paper className={profileClasses} elevation={11}>
+          <Title align={"left"} head={"h4"} title={title} />
+          <Box className={profileDataClasses}>
+            <UserBox
+              avatar={(data as ProTypes).avatar}
+              username={(data as ProTypes).name}
+              size={"3xlarge"}
+              head={"h5"}
+              res={true}
+            />
+            <Box className={profileButtonsClasses}>
+              <Button
+                title={"Link"}
+                handling={handleProLink}
+                bg={"!bg-zinc-500"}
+              />
+              <Button
+                title={"Edit"}
+                handling={handleEditPro}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeletePro}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Officer Information
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Arabic Name"}
+                value={(data as ProTypes).nameAr}
+              />
+              <DataBox
+                title={"Person Code"}
+                value={(data as ProTypes).personCode}
+              />
+              <DataBox title={"Email"} value={(data as ProTypes).email} />
+              <DataBox title={"Phone"} value={(data as ProTypes).phone} />
+              <DataBox title={"Address"} value={(data as ProTypes).address} />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as ProTypes).dob)}
+              />
+              <DataBox title={"State"} value={(data as ProTypes).state} />
+              <DataBox
+                title={"Nationality"}
+                flag={handleGetFlag((data as ProTypes).nationality)}
+                value={(data as ProTypes).nationality}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as ProTypes).emiratesId}
+              />
+              <DataBox title={"UID Number"} value={(data as ProTypes).uid} />
+              <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
+              <DataBox
+                title={"Created At"}
+                value={handleDate((data as ProTypes).createdAt)}
+              />
+            </Box>
+          </Box>
+        </Paper>
+      ) : variant === "customer" ? (
+        <Paper className={profileClasses} elevation={11}>
+          <Title align={"left"} head={"h4"} title={title} />
+          <Box className={profileDataClasses}>
+            <UserBox
+              avatar={(data as CustomerTypes).avatar}
+              username={(data as CustomerTypes).name}
+              size={"3xlarge"}
+              head={"h5"}
+              res={true}
+            />
+            <Box className={profileButtonsClasses}>
+              <Button
+                title={"Link"}
+                handling={handleCustomerLink}
+                bg={"!bg-zinc-500"}
+              />
+              <Button
+                title={"Edit"}
+                handling={handleEditCustomer}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeleteCustomer}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Customer Information
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Arabic Name"}
+                value={(data as CustomerTypes).nameAr}
+              />
+              <DataBox
+                title={"Person Code"}
+                value={(data as CustomerTypes).personCode}
+              />
+              <DataBox title={"Email"} value={(data as CustomerTypes).email} />
+              <DataBox title={"Phone"} value={(data as CustomerTypes).phone} />
+              <DataBox
+                title={"Address"}
+                value={(data as CustomerTypes).address}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as CustomerTypes).dob)}
+              />
+              <DataBox title={"State"} value={(data as CustomerTypes).state} />
+              <DataBox
+                title={"Nationality"}
+                flag={handleGetFlag((data as CustomerTypes).nationality)}
+                value={(data as CustomerTypes).nationality}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as CustomerTypes).emiratesId}
+              />
+              <DataBox
+                title={"UID Number"}
+                value={(data as CustomerTypes).uid}
+              />
+              <DataBox
+                title={"Remarks"}
+                value={(data as CustomerTypes).remarks}
+              />
+              <DataBox
+                title={"Created At"}
+                value={handleDate((data as CustomerTypes).createdAt, true)}
+              />
+            </Box>
+          </Box>
+        </Paper>
+      ) : variant === "employee" ? (
+        <Paper className={profileClasses} elevation={11}>
+          <Title align={"left"} head={"h4"} title={title} />
+          <Box className={profileDataClasses}>
+            <UserBox
+              avatar={(data as EmployeeTypes).avatar}
+              username={(data as EmployeeTypes).name}
+              size={"3xlarge"}
+              head={"h5"}
+              res={true}
+            />
+            <Box className={profileButtonsClasses}>
+              <Button
+                title={"Edit"}
+                handling={handleEditEmployee}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeleteEmployee}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Employee Information
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Arabic Name"}
+                value={(data as EmployeeTypes).nameAr}
+              />
+              <DataBox
+                title={"Person Code"}
+                value={(data as EmployeeTypes).personCode}
+              />
+              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
+              <DataBox
+                title={"Mobile Number"}
+                value={(data as EmployeeTypes).mobileNumber}
+              />
+              <DataBox
+                title={"Job Title"}
+                value={(data as EmployeeTypes).job}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as EmployeeTypes).dob)}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as EmployeeTypes).status} />}
+              />
+              <DataBox
+                title={"Nationality"}
+                flag={handleGetFlag((data as EmployeeTypes).nationality)}
+                value={(data as EmployeeTypes).nationality}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as EmployeeTypes).emiratesId}
+              />
+              <DataBox
+                title={"UID Number"}
+                value={(data as EmployeeTypes).uid}
+              />
+              <DataBox
+                title={"Remarks"}
+                value={(data as EmployeeTypes).remarks}
+              />
+              <DataBox
+                title={"Created At"}
+                value={handleDate((data as EmployeeTypes).createdAt, true)}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Business Details
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Passport Number"}
+                value={(data as EmployeeTypes).passportNumber}
+              />
+              <DataBox
+                title={"Passport Expire Date"}
+                value={handleDate((data as EmployeeTypes).passportExpiry)}
+              />
+              <DataBox
+                title={"Card Type"}
+                value={(data as EmployeeTypes).cardType}
+              />
+              <DataBox
+                title={"Card Number"}
+                value={(data as EmployeeTypes).cardNumber}
+              />
+              <DataBox
+                title={"Visa File Number"}
+                value={(data as EmployeeTypes).visaFileNumber}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate((data as EmployeeTypes).residenceExpireDate)}
+              />
+              <DataBox
+                title={"Labour Card Expire Date"}
+                value={handleDate((data as EmployeeTypes).lcExpireDate)}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Medical Insurance
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as EmployeeTypes).medicalInsuranceCompany}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as EmployeeTypes).medicalPolicy}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as EmployeeTypes).medicalExpireDate)}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Involuntary Loss Of Employment (ILOE)
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as EmployeeTypes).iLOEInsuranceCompany}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as EmployeeTypes).iLOEPolicy}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as EmployeeTypes).iLOEExpireDate)}
               />
             </Box>
           </Box>
@@ -281,7 +640,7 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Divider />
-            <Box className={`grid gap-4 sm:gap-3`}>
+            <Box className={sectionClasses}>
               <Typography variant="h4" className={`!font-[700]`}>
                 Company Information
               </Typography>
@@ -324,7 +683,27 @@ const ProfileDetails = ({
                 />
                 <DataBox
                   title={"Created At"}
-                  value={handleDate((data as CompanyTypes).createdAt)}
+                  value={handleDate((data as CompanyTypes).createdAt, true)}
+                />
+              </Box>
+            </Box>
+            <Divider />
+            <Box className={sectionClasses}>
+              <Typography variant="h4" className={`!font-[700]`}>
+                E-Channel Information
+              </Typography>
+              <Box className={profileInfoClasses}>
+                <DataBox
+                  title={"echannelExpiryDate"}
+                  value={handleDate((data as CompanyTypes).echannelExpiryDate)}
+                />
+                <DataBox
+                  title={"Username"}
+                  value={(data as CompanyTypes).username}
+                />
+                <DataBox
+                  title={"Password"}
+                  value={<StatusBox status={(data as CompanyTypes).password} />}
                 />
               </Box>
             </Box>

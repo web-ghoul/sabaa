@@ -107,7 +107,7 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
           <Button
-            title={"Add Public Relation Officer"}
+            title={"Add Officer"}
             icon={<AddRounded />}
             handling={() => handleOpenProModal("addPro")}
           />
