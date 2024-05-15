@@ -41,12 +41,33 @@ export class Owner {
 
     @Prop()
     address: string;
+    @Prop()
+    sponsor: string;
+
+    @Prop()
+    residenceExpiryDate: Date;
+
+    @Prop()
+    fileImmgNo: string;
+    
+    @Prop()
+    status: string;
+
+    // @Prop()
+    // cardNumber: string;
+
+    @Prop()
+    type: string;
 
     // @Prop()
     // proCode: string[]; //array of Pro
 
-    @Prop({default: false})
-    isPro: boolean;
+    // @Prop({default: false})
+    // isCustomer: boolean
+
+    // @Prop({default: false})
+    // isPro: boolean;
+
 
     @Prop({ type: String, trim: true, sparse: true })
     emiratesId: string;

@@ -1,6 +1,12 @@
-import { IsString, IsNotEmpty, IsOptional, IsDateString, IsNumber, IsObject } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsDateString, IsNumber, IsObject, IsMongoId } from 'class-validator';
 
 export class CreateEmployeeDto {
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsMongoId()
+  _id: string;
+
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -19,7 +25,7 @@ export class CreateEmployeeDto {
 
   @IsNotEmpty()
   @IsString({ each: true })
-  companyCode: string[];
+  companyId: string[];
 
   @IsOptional()
   @IsDateString()

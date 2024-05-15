@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Company } from 'schemas/company.schema';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class CompanyService {
@@ -11,6 +12,20 @@ export class CompanyService {
     @InjectModel(Company.name) private companyModel: Model<Company>,
   ) {}
 
+  encrypt(text: string): string {
+    const key = 'findwhatyouloveAndDontLeaveittillyoudie';
+    const cipher = crypto.createCipher('aes-256-cbc', key);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+  }
+  // decrypt(encryptedText: string): string {
+  //   const key = 'my-secret-key';
+  //   const decipher = crypto.createDecipher('aes-256-cbc', key);
+  //   let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  //   decrypted += decipher.final('utf8');
+  //   return decrypted;
+  // }
   async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File) {
     try {
       if (Array.isArray(createCompanyDto)) {
@@ -121,14 +136,20 @@ export class CompanyService {
     }
   }
 
-  findOne(id: string) {
-    return this.companyModel
+  async findOne(id: string) {
+    const data = await this.companyModel
       .findById(id)
       .populate([
         { path: 'ownerId', model: 'Owner' },
         { path: 'proCode', model: 'Owner' },
+        {path: 'employees', model: 'Employee'}
       ])
       .exec();
+
+      data.password = this.encrypt(data.password);
+
+      return data ;
+    
   }
 
   async update(

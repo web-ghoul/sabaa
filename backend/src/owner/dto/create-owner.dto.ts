@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsDate, IsOptional, IsMongoId } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateOwnerDto {
   @ApiProperty()
@@ -67,10 +68,10 @@ export class CreateOwnerDto {
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  isPro?: boolean;
+  type?: string;
 
   @ApiProperty({ required: false })
   @IsMongoId()
   @IsOptional()
-  user?: string;
+  user?: ObjectId;
 }
