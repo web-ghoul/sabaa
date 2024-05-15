@@ -23,6 +23,7 @@ import prosReducers from "./prosSlice.ts";
 import recentActivitiesReducers from "./recentActivitiesSlice.ts";
 import recentCompaniesReducers from "./recentCompaniesSlice.ts";
 import recentCustomersReducers from "./recentCustomersSlice.ts";
+import recentEmployeesReducers from "./recentEmployeesSlice.ts";
 import recentJobsReducers from "./recentJobsSlice.ts";
 import recentNationalitiesReducers from "./recentNationalitiesSlice.ts";
 import recentOwnersReducers from "./recentOwnersSlice.ts";
@@ -39,6 +40,7 @@ export const store = configureStore({
     recentActivities: recentActivitiesReducers,
     jobs: jobsReducers,
     recentJobs: recentJobsReducers,
+    recentEmployees: recentEmployeesReducers,
     nationalities: nationalitiesReducers,
     recentNationalities: recentNationalitiesReducers,
     users: usersReducers,

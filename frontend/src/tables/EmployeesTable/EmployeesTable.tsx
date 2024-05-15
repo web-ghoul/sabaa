@@ -9,6 +9,7 @@ import {
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
@@ -34,6 +35,9 @@ const EmployeesTable = ({
   isLoading,
   fileIndex,
   noPagination,
+  actions = true,
+  sort = true,
+  recent,
 }: EmployeesTableTypes) => {
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
@@ -111,7 +115,7 @@ const EmployeesTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            {sheet ? (
+            {sheet || !sort ? (
               "Name"
             ) : (
               <SortBox
@@ -123,11 +127,11 @@ const EmployeesTable = ({
             )}
           </PrimaryTableCell>
           <PrimaryTableCell align="center">Person Code</PrimaryTableCell>
-          {!lgScreen && (
+          {!lgScreen && !recent && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            {sheet ? (
+            {sheet || !sort ? (
               mdScreen ? (
                 "Lc Expiry"
               ) : (
@@ -147,7 +151,7 @@ const EmployeesTable = ({
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            {sheet ? (
+            {sheet || !sort ? (
               mdScreen ? (
                 "Residence Expiry"
               ) : (
@@ -166,7 +170,9 @@ const EmployeesTable = ({
           {!mdScreen && (
             <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          {actions && (
+            <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -203,9 +209,9 @@ const EmployeesTable = ({
                 <PrimaryTableCell align="center">
                   {row.personCode}
                 </PrimaryTableCell>
-                {!lgScreen && (
+                {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
-                    {row.nationality}
+                    <NationalityBox nationality={row.nationality} />
                   </PrimaryTableCell>
                 )}
                 <PrimaryTableCell align="center">
@@ -224,16 +230,24 @@ const EmployeesTable = ({
                     {row.cardType}
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="right">
-                  <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                    <MoreVertRounded />
-                  </IconButton>
-                </PrimaryTableCell>
+                {actions && (
+                  <PrimaryTableCell align="right">
+                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                      <MoreVertRounded />
+                    </IconButton>
+                  </PrimaryTableCell>
+                )}
               </EmployeesTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingEmployeesRow key={i} />)}
+              .map((_, i) => (
+                <LoadingEmployeesRow
+                  actions={actions}
+                  recent={recent}
+                  key={i}
+                />
+              ))}
       </TableBody>
       <EmployeesTableMenu />
     </PrimaryTable>

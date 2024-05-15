@@ -9,6 +9,7 @@ import {
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -32,6 +33,9 @@ const ProsTable = ({
   noPagination,
   isLoading,
   fileIndex,
+  sort = true,
+  actions = true,
+  recent,
 }: ProsTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
@@ -105,31 +109,47 @@ const ProsTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
-            <SortBox
-              title={"Name"}
-              handling={handleSortByName}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
-            />
+            {sheet || !sort ? (
+              "Name"
+            ) : (
+              <SortBox
+                title={"Name"}
+                handling={handleSortByName}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            )}
           </PrimaryTableCell>
-          {!mdScreen && (
+          {!mdScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "Code" : "Person Code"}
-              handling={handleSortByCode}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc="center"
-            />
+            {sheet || !sort ? (
+              mdScreen ? (
+                "Code"
+              ) : (
+                "Person Code"
+              )
+            ) : (
+              <SortBox
+                title={mdScreen ? "Code" : "Person Code"}
+                handling={handleSortByCode}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            )}
           </PrimaryTableCell>
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
-          <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          {!recent && (
+            <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
+          )}
+          {actions && (
+            <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -159,7 +179,7 @@ const ProsTable = ({
                       </Link>
                     )}
                   </PrimaryTableCell>
-                  {!mdScreen && (
+                  {!mdScreen && !recent && (
                     <PrimaryTableCell align="center">
                       {row.phone}
                     </PrimaryTableCell>
@@ -174,23 +194,29 @@ const ProsTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      {row.nationality}
+                      <NationalityBox nationality={row.nationality} />
                     </PrimaryTableCell>
                   )}
-                  <PrimaryTableCell align="center">
-                    {row.emiratesId}
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="right">
-                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                      <MoreVertRounded />
-                    </IconButton>
-                  </PrimaryTableCell>
+                  {!recent && (
+                    <PrimaryTableCell align="center">
+                      {row.emiratesId}
+                    </PrimaryTableCell>
+                  )}
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
                 </ProsTableRow>
               );
             })
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingProsRow key={i} />)}
+              .map((_, i) => (
+                <LoadingProsRow actions={actions} recent={recent} key={i} />
+              ))}
         <ProsTableMenu />
       </TableBody>
     </PrimaryTable>

@@ -17,6 +17,19 @@ interface LogoTypes {
   noTitle?: boolean;
 }
 
+interface TotalBoxTypes {
+  count: number;
+  variant:
+    | "users"
+    | "owners"
+    | "companies"
+    | "officers"
+    | "employees"
+    | "customers"
+    | "transactions";
+  isLoading?: boolean;
+}
+
 interface UserBoxTypes {
   avatar?: string;
   username: string;
@@ -136,6 +149,7 @@ export type {
   SortBoxTypes,
   SubmitButtonTypes,
   TitleTypes,
+  TotalBoxTypes,
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,

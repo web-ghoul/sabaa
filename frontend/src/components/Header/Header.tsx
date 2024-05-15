@@ -1,12 +1,11 @@
 import { ViewListRounded } from "@mui/icons-material";
 import { Box, IconButton, styled, useMediaQuery } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { SidebarContext } from "../../contexts/SidebarsContext.tsx";
 import { PrimaryContainer } from "../../mui/boxes&containers/PrimaryContainer.ts";
 import { RootState } from "../../store/store.ts";
-import NatificationsBox from "../NotificationsBox/NatificationsBox.tsx";
 import SpecialsButtons from "../SpecialsButtons/SpecialsButtons.tsx";
 import LoadingUserBox from "../UserBox/LoadingUserBox.tsx";
 import UserBox from "../UserBox/UserBox.tsx";
@@ -18,7 +17,14 @@ const Header = () => {
   const { openSidebar, sidebarWidth, handleOpenSidebar } =
     useContext(SidebarContext);
   const { user, isLoading } = useSelector((state: RootState) => state.auth);
+  const [top, setTop] = useState(true);
+
+  window.addEventListener("scroll", () => {
+    setTop(window.scrollY === 0);
+  });
+
   const mdScreen = useMediaQuery("(max-width:992px)");
+
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
   })<AppBarProps>(({ theme, open }) => ({
@@ -41,7 +47,9 @@ const Header = () => {
     <AppBar
       position="fixed"
       open={openSidebar}
-      className={`!bg-white h-[70px] md:h-[60px] sm:!h-[50px]`}
+      className={`!bg-white h-[70px] md:h-[60px] sm:!h-[50px] ${
+        top && "!shadow-none"
+      }`}
     >
       <PrimaryContainer>
         <Box
@@ -59,7 +67,6 @@ const Header = () => {
             <SpecialsButtons />
           </Box>
           <Box className={`flex justify-end items-center gap-6`}>
-            <NatificationsBox />
             {!isLoading && user ? (
               <UserBox
                 size={"medium"}

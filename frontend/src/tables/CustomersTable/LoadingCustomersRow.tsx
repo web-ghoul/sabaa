@@ -2,7 +2,13 @@ import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import { CustomersTableRow } from "./CustomersTableRow";
 
-const LoadingCustomersRow = () => {
+const LoadingCustomersRow = ({
+  actions = true,
+  recent,
+}: {
+  actions: boolean;
+  recent?: boolean;
+}) => {
   const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -11,7 +17,7 @@ const LoadingCustomersRow = () => {
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-      {!mdScreen && (
+      {!mdScreen && !recent && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
@@ -29,12 +35,16 @@ const LoadingCustomersRow = () => {
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-      <PrimaryTableCell align="right">
-        <Skeleton variant="rounded" />
-      </PrimaryTableCell>
-      <PrimaryTableCell align="right">
-        <Skeleton variant="rounded" />
-      </PrimaryTableCell>
+      {!recent && (
+        <PrimaryTableCell align="right">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
+      {actions && (
+        <PrimaryTableCell align="right">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
     </CustomersTableRow>
   );
 };

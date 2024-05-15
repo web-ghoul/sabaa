@@ -1,23 +1,23 @@
 import {
-  ApartmentRounded,
   AssessmentRounded,
-  AssignmentIndRounded,
-  BadgeRounded,
-  Diversity3Rounded,
   EmailRounded,
-  FlagRounded,
   GridViewRounded,
-  GroupRounded,
   ListAltRounded,
   PendingActionsRounded,
-  ReceiptLongRounded,
   SettingsRounded,
-  WorkRounded,
 } from "@mui/icons-material";
 import { Box, useMediaQuery } from "@mui/material";
 import { useContext } from "react";
-import { FaHandshakeSimple } from "react-icons/fa6";
 import { SidebarContext } from "../../contexts/SidebarsContext";
+import CompaniesIcon from "../Icons/CompaniesIcon";
+import CustomersIcon from "../Icons/CustomersIcon";
+import EmployeesIcon from "../Icons/EmployeesIcon";
+import JobsIcon from "../Icons/JobsIcon";
+import NationalitiesIcon from "../Icons/NationalitiesIcon";
+import OwnersIcon from "../Icons/OwnersIcon";
+import ProsIcon from "../Icons/ProsIcon";
+import TransactionsIcon from "../Icons/TransactionsIcon";
+import UsersIcon from "../Icons/UsersIcon";
 import Item from "./Item";
 
 const Items = () => {
@@ -38,42 +38,42 @@ const Items = () => {
         url={`${import.meta.env.VITE_DASHBOARD_ROUTE}`}
       />
       <Item
-        icon={<Diversity3Rounded />}
+        icon={<CustomersIcon />}
         title="Walk in Customers"
         url={`${import.meta.env.VITE_CUSTOMERS_ROUTE}`}
       />
       <Item
-        icon={<AssignmentIndRounded />}
+        icon={<OwnersIcon />}
         title="Owners"
         url={`${import.meta.env.VITE_OWNERS_ROUTE}`}
       />
       <Item
-        icon={<BadgeRounded />}
+        icon={<EmployeesIcon />}
         title="Employees"
         url={`${import.meta.env.VITE_EMPLOYEES_ROUTE}`}
       />
       <Item
-        icon={<ApartmentRounded />}
+        icon={<CompaniesIcon />}
         title="Companies"
         url={`${import.meta.env.VITE_COMPANIES_ROUTE}`}
       />
       <Item
-        icon={<FaHandshakeSimple />}
+        icon={<ProsIcon />}
         title="Public Relation Officers"
         url={`${import.meta.env.VITE_PROS_ROUTE}`}
       />
       <Item
-        icon={<WorkRounded />}
+        icon={<JobsIcon />}
         title="Jobs"
         url={`${import.meta.env.VITE_JOBS_ROUTE}`}
       />
       <Item
-        icon={<FlagRounded />}
+        icon={<NationalitiesIcon />}
         title="Nationalities"
         url={`${import.meta.env.VITE_NATIONALITIES_ROUTE}`}
       />
       <Item
-        icon={<ReceiptLongRounded />}
+        icon={<TransactionsIcon />}
         title="Transactions"
         url={`${import.meta.env.VITE_TRANSACTIONS_ROUTE}`}
       />
@@ -98,7 +98,7 @@ const Items = () => {
         url={`${import.meta.env.VITE_TODO_LIST_ROUTE}`}
       />
       <Item
-        icon={<GroupRounded />}
+        icon={<UsersIcon />}
         title="Users"
         url={`${import.meta.env.VITE_USERS_ROUTE}`}
       />

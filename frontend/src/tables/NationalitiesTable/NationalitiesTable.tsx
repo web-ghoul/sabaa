@@ -3,6 +3,7 @@ import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
+import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -127,8 +128,8 @@ const NationalitiesTable = ({
           ? data &&
             data.map((row, i) => (
               <NationaltiesTableRow key={i}>
-                <PrimaryTableCell component="th" scope="row">
-                  {row.nationality}
+                <PrimaryTableCell component="th" scope="row" align="left">
+                  <NationalityBox nationality={row.nationality} />
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.id}</PrimaryTableCell>
                 <PrimaryTableCell align="right">

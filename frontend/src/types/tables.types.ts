@@ -14,6 +14,9 @@ interface JobsTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface CompaniesTableTypes {
@@ -23,6 +26,9 @@ interface CompaniesTableTypes {
   fileIndex?: number;
   noPagination?: boolean;
   unLink?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface OwnersTableTypes {
@@ -31,6 +37,9 @@ interface OwnersTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface ProsTableTypes {
@@ -39,6 +48,9 @@ interface ProsTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface EmployeesTableTypes {
@@ -47,6 +59,9 @@ interface EmployeesTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface CustomersTableTypes {
@@ -55,6 +70,9 @@ interface CustomersTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface NationalitiesTableTypes {
@@ -63,6 +81,9 @@ interface NationalitiesTableTypes {
   isLoading?: boolean;
   fileIndex?: number;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 interface UsersTableTypes {
@@ -70,6 +91,9 @@ interface UsersTableTypes {
   count: number;
   isLoading?: boolean;
   noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
 }
 
 export type {

@@ -9,6 +9,7 @@ import {
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
+import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
@@ -32,6 +33,9 @@ const OwnersTable = ({
   noPagination,
   isLoading,
   fileIndex,
+  sort = true,
+  actions = true,
+  recent,
 }: OwnersTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
@@ -105,7 +109,7 @@ const OwnersTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>
-            {sheet ? (
+            {sheet || !sort ? (
               "Name"
             ) : (
               <SortBox
@@ -116,11 +120,11 @@ const OwnersTable = ({
               />
             )}
           </PrimaryTableCell>
-          {!mdScreen && (
+          {!mdScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            {sheet ? (
+            {sheet || !sort ? (
               "Person Code"
             ) : (
               <SortBox
@@ -136,8 +140,12 @@ const OwnersTable = ({
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
-          <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          {!recent && (
+            <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
+          )}
+          {actions && (
+            <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -167,7 +175,7 @@ const OwnersTable = ({
                       </Link>
                     )}
                   </PrimaryTableCell>
-                  {!mdScreen && (
+                  {!mdScreen && !recent && (
                     <PrimaryTableCell align="center">
                       {row.phone}
                     </PrimaryTableCell>
@@ -182,23 +190,29 @@ const OwnersTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      {row.nationality}
+                      <NationalityBox nationality={row.nationality} />
                     </PrimaryTableCell>
                   )}
-                  <PrimaryTableCell align="center">
-                    {row.emiratesId}
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="right">
-                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                      <MoreVertRounded />
-                    </IconButton>
-                  </PrimaryTableCell>
+                  {!recent && (
+                    <PrimaryTableCell align="center">
+                      {row.emiratesId}
+                    </PrimaryTableCell>
+                  )}
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
                 </OwnersTableRow>
               );
             })
           : new Array(handleRandomNumber())
               .fill(0)
-              .map((_, i) => <LoadingOwnersRow key={i} />)}
+              .map((_, i) => (
+                <LoadingOwnersRow actions={actions} recent={recent} key={i} />
+              ))}
         <OwnersTableMenu />
       </TableBody>
     </PrimaryTable>
