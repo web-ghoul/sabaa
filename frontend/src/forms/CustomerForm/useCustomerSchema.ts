@@ -22,7 +22,6 @@ const useProSchema = () => {
     address: yup.string(),
     sponsor: yup.string(),
     remarks: yup.string(),
-    proCode: yup.boolean(),
   });
 
   const CustomerInitailValues = {
@@ -42,7 +41,6 @@ const useProSchema = () => {
     state: editableCustomerData?.state || "",
     address: editableCustomerData?.address || "",
     sponsor: editableCustomerData?.sponsor || "",
-    proCode: editableCustomerData?.proCode || "",
     emiratesId: editableCustomerData?.emiratesId || "",
     uid: editableCustomerData?.uid || "",
   };

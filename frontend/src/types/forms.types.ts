@@ -67,6 +67,26 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
+//Activities
+interface ActivitiesOptionsFormTypes {
+  search: string;
+  type: string;
+  operation: string;
+  from: string;
+  to: string;
+}
+
+interface ActivitiesOptionsFormikTypes {
+  touched: ActivitiesOptionsFormTypes;
+  errors: ActivitiesOptionsFormTypes;
+  initialValues: ActivitiesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ActivitiesOptionsFormTypes;
+}
+
 //Company
 
 interface CompaniesOptionsFormTypes {
@@ -92,10 +112,7 @@ interface CompaniesOptionsFormikTypes {
   values: CompaniesOptionsFormTypes;
 }
 
-interface CompanyFormTypes extends CompanyTypes {
-  ownerId: string[];
-  proCode: string[];
-}
+interface CompanyFormTypes extends CompanyTypes {}
 
 interface CompanyFormikTypes {
   touched: CompanyFormTypes;
@@ -407,7 +424,8 @@ type AllFormsTypes =
   | EmployeesOptionsFormTypes
   | CustomersOptionsFormikTypes
   | CustomerFormTypes
-  | DownloadExcelFormTypes;
+  | DownloadExcelFormTypes
+  | ActivitiesOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -431,7 +449,8 @@ type AllFormiksTypes =
   | EmployeesOptionsFormikTypes
   | CustomersOptionsFormikTypes
   | CustomerFormikTypes
-  | DownloadExcelFormikTypes;
+  | DownloadExcelFormikTypes
+  | ActivitiesOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -447,6 +466,8 @@ interface CatchErrorTypes {
 }
 
 export type {
+  ActivitiesOptionsFormikTypes,
+  ActivitiesOptionsFormTypes,
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,

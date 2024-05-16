@@ -76,6 +76,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForUsers: () => {},
   searchForCompanies: "",
   setSearchForCompanies: () => {},
+  searchForActivities: "",
+  setSearchForActivities: () => {},
   searchForNationalities: "",
   setSearchForNationalities: () => {},
   companyImage: "",
@@ -130,6 +132,7 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
+  const [searchForActivities, setSearchForActivities] = useState("");
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
@@ -501,6 +504,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenDownloadExcelModal,
     excelType,
     setExcelType,
+    searchForActivities,
+    setSearchForActivities,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

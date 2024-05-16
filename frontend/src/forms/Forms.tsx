@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { FormikProps } from "formik";
 import useSubmitForm from "../hooks/useSubmitForm";
 import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
+import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
@@ -114,6 +115,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "companiesOptions" && (
         <CompaniesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "activitiesOptions" && (
+        <ActivitiesOptionsForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}

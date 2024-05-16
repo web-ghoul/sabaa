@@ -101,7 +101,13 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[] | JobTypes[];
+  options:
+    | NationalityTypes[]
+    | OwnerTypes[]
+    | CompanyTypes[]
+    | JobTypes[]
+    | ProTypes[]
+    | CustomerTypes[];
   name: string;
   formik: FormikProps<AllFormiksTypes>;
 }

@@ -133,6 +133,16 @@ const ProfileDetails = ({
           (owner) => (owner as OwnerTypes)._id
         ) as string[];
       }
+      if (company.proCode) {
+        c.proCode = company.proCode.map(
+          (pro) => (pro as ProTypes)._id
+        ) as string[];
+      }
+      if (company.customerId) {
+        c.customerId = company.customerId.map(
+          (customer) => (customer as CustomerTypes)._id
+        ) as string[];
+      }
       setEditableCompanyData(c);
     }
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}/edit`);

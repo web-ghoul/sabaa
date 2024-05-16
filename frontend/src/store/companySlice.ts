@@ -22,6 +22,7 @@ export const getCompany = createAsyncThunk(
 const initialState: CompanyValuesTypes = {
   isLoading: true,
   company: null,
+  activities: null,
 };
 
 export const companySlice = createSlice({
@@ -34,7 +35,8 @@ export const companySlice = createSlice({
     });
     builder.addCase(getCompany.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.company = payload;
+      state.company = payload.data;
+      state.activities = payload.activities;
     });
     builder.addCase(getCompany.rejected, (_, action) => {
       if (action.payload) {

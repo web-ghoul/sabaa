@@ -24,7 +24,6 @@ const useOwnerSchema = () => {
     fileImmgNo: yup.string(),
     status: yup.string(),
     remarks: yup.string(),
-    proCode: yup.boolean(),
   });
 
   const OwnerInitailValues = {
@@ -51,7 +50,6 @@ const useOwnerSchema = () => {
       "",
     fileImmgNo: editableOwnerData?.fileImmgNo || "",
     status: editableOwnerData?.status || "",
-    proCode: editableOwnerData?.proCode || "",
     emiratesId: editableOwnerData?.emiratesId || "",
     uid: editableOwnerData?.uid || "",
   };

@@ -23,6 +23,7 @@ const initialState: ProValuesTypes = {
   isLoading: true,
   pro: null,
   companies: null,
+  activities: null,
 };
 
 export const proSlice = createSlice({
@@ -37,6 +38,7 @@ export const proSlice = createSlice({
       state.isLoading = false;
       state.pro = payload.owner;
       state.companies = payload.companies;
+      state.activities = payload.activities;
     });
     builder.addCase(getPro.rejected, (_, action) => {
       if (action.payload) {

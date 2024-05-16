@@ -45,7 +45,7 @@ const PrimaryTablePagination = ({
       dispatch(
         getOwners({ ...queries, page: newPage, search: searchForOwners })
       );
-    } else if (variant === "pros") {
+    } else if (variant === "officers") {
       dispatch(getPros({ ...queries, page: newPage, search: searchForPros }));
     } else if (variant === "employees") {
       dispatch(
@@ -80,7 +80,7 @@ const PrimaryTablePagination = ({
     setSearchParams({ ...queries, limit: `${val}` });
     if (variant === "owners") {
       dispatch(getOwners({ ...queries, limit: val, search: searchForOwners }));
-    } else if (variant === "pros") {
+    } else if (variant === "officers") {
       dispatch(getPros({ ...queries, limit: val, search: searchForPros }));
     } else if (variant === "employees") {
       dispatch(

@@ -158,6 +158,8 @@ interface FormsContextTypes {
   setSearchForPros: (search: string) => void;
   searchForCompanies: string;
   setSearchForCompanies: (search: string) => void;
+  searchForActivities: string;
+  setSearchForActivities: (search: string) => void;
   searchForUsers: string;
   setSearchForUsers: (search: string) => void;
   searchForJobs: string;

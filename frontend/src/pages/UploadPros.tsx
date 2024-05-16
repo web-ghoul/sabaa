@@ -34,7 +34,7 @@ const UploadPros = () => {
           </BreadCrumbs>
         </Box>
         <Box className={`grid justify-stretch items-start gap-8`}>
-          <UploadExcel variant={"pros"} />
+          <UploadExcel variant={"officers"} />
           {prosSheets.length > 0 ? (
             prosSheets.map((sheet: ProsSheetTypes, i) => (
               <SheetAccordion title={sheet.fileName} key={i}>

@@ -14,6 +14,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { RootState } from "../../store/store";
+import { EntitiesType } from "../../types/app.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -26,19 +27,7 @@ import {
 import Button from "../Button/Button";
 import UploadStatus from "./UploadStatus";
 
-const UploadExcel = ({
-  variant,
-}: {
-  variant:
-    | "jobs"
-    | "owners"
-    | "companies"
-    | "nationalities"
-    | "users"
-    | "pros"
-    | "employees"
-    | "customers";
-}) => {
+const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
   const { company } = useSelector((state: RootState) => state.company);
   const { id } = useParams();
   const [dragging, setDragging] = useState(false);
@@ -342,7 +331,7 @@ const UploadExcel = ({
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;
-      employee["nameAr"] = `${data[i][1]}`;
+      employee["nameAr"] = ``;
       employee["job"] = `${data[i][2]}`;
       employee["passportNumber"] = `${data[i][3]}`;
       employee["nationality"] = `${data[i][4]}`;
@@ -414,9 +403,11 @@ const UploadExcel = ({
         country: "",
         licenseIssuePlace: "",
         zipCode: "",
-        username: "",
+        userName: "",
         password: "",
         createdAt: new Date(),
+        customerId: [],
+        employees: [],
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;
@@ -456,7 +447,7 @@ const UploadExcel = ({
             handleNationalitiesSheet(rows, file);
           } else if (variant === "owners") {
             handleOwnersSheet(rows, file);
-          } else if (variant === "pros") {
+          } else if (variant === "officers") {
             handleProsSheet(rows, file);
           } else if (variant === "employees") {
             handleEmployeesSheet(rows, file);
@@ -513,11 +504,11 @@ const UploadExcel = ({
       setSamplePath("./samples/employees.xlsx");
     } else if (variant === "customers") {
       setSampleName("customers_sample.xlsx");
-      setSamplePath("./samples/employees.xlsx");
+      setSamplePath("./samples/owners.xlsx");
     } else if (variant === "owners") {
       setSampleName("owners_sample.xlsx");
       setSamplePath("./samples/owners.xlsx");
-    } else if (variant === "pros") {
+    } else if (variant === "officers") {
       setSampleName("public_relation_officers_sample.xlsx");
       setSamplePath("./samples/pros.xlsx");
     } else if (variant === "companies") {

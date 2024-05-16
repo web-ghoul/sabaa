@@ -9,6 +9,10 @@ interface AuthValuesTypes {
 
 interface ActivityTypes {
   type: EntityType;
+  actions: string;
+  userId: UserTypes;
+  route: string;
+  createdAt?: Date;
 }
 
 interface ActivitiesValuesTypes {
@@ -19,6 +23,11 @@ interface ActivitiesValuesTypes {
 interface ActivitiesArgsTypes {
   page?: number;
   limit?: number;
+  search?: string;
+  type?: string;
+  operation?: string;
+  to?: string;
+  from?: string;
 }
 
 interface RecentActivitiesValuesTypes {
@@ -108,6 +117,7 @@ interface OwnerValuesTypes {
   isLoading: boolean;
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -148,6 +158,7 @@ interface ProValuesTypes {
   isLoading: boolean;
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -190,6 +201,7 @@ interface CustomerValuesTypes {
   isLoading: boolean;
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface CustomersValuesTypes {
@@ -266,6 +278,7 @@ interface EmployeeValuesTypes {
   isLoading: boolean;
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface EmployeesValuesTypes {
@@ -310,8 +323,10 @@ interface CompanyTypes {
   state: string;
   address: string;
   phone: string;
-  proCode: OwnerTypes[] | string[];
+  proCode: ProTypes[] | string[];
   ownerId: OwnerTypes[] | string[];
+  customerId: CustomerTypes[] | string[];
+  employees: EmployeeTypes[] | string[];
   licenseNo: string;
   immgCardNo: string;
   immgCardExpiry: Date;
@@ -340,6 +355,7 @@ interface CompanyTypes {
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface CompaniesCounterValuesTypes {

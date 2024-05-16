@@ -14,7 +14,6 @@ export const CompaniesOptionsSchema = yup.object({
 
 export const CompaniesOptionsInitailValues = {
   search: "",
-  limit: "",
   state: "",
   status: "",
   molCategory: "",
