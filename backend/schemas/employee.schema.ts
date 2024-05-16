@@ -28,7 +28,7 @@ export class Employee {
     @Prop({ type: Date })
     dob: Date;
 
-    @Prop({type: String, default: "Cancel", enum: ["Active", "Cancel", "Abscond", "Complaint"]})
+    @Prop({type: String, trim: true, default: "Cancel", enum: ["Active", "Cancel", "Abscond", "Complaint", ""]})
     status: string
 
     @Prop()
@@ -39,7 +39,6 @@ export class Employee {
 
     @Prop()
     job: string
-
 
     @Prop()
     visaFileNumber: string
