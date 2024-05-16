@@ -1092,6 +1092,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getOwners({}));
+          dispatch(getOwnersCounter());
           navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1111,6 +1112,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getPros({}));
+          dispatch(getProsCounter());
           navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1130,6 +1132,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getCustomers({}));
+          dispatch(getCustomersCounter());
           navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1152,6 +1155,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getEmployees({}));
+          dispatch(getEmployeesCounter());
           navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1171,6 +1175,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getJobs({}));
+          dispatch(getJobsCounter());
           navigate(`${import.meta.env.VITE_JOBS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1195,6 +1200,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getNationalities({}));
+          dispatch(getNationalitiesCounter());
           navigate(`${import.meta.env.VITE_NATIONALITIES_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1214,6 +1220,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getUsers({}));
+          dispatch(getUsersCounter());
           navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -1233,6 +1240,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getCompanies({}));
+          dispatch(getCompaniesCounter());
           navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
           handleCloseDeleteModal();
         })
