@@ -1,15 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Company } from 'schemas/company.schema';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import * as crypto from 'crypto';
+import { ActivityLog } from 'schemas/activityLog.schema';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company.name) private companyModel: Model<Company>,
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
   ) {}
 
   encrypt(text: string): string {
@@ -26,16 +28,19 @@ export class CompanyService {
   //   decrypted += decipher.final('utf8');
   //   return decrypted;
   // }
-  async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File) {
+  async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File, user: ObjectId) {
     try {
       if (Array.isArray(createCompanyDto)) {
-        createCompanyDto.map((x) => {
+        createCompanyDto.map((company) => {
           //x._id = x.licenseNo + x.state ;
-          x.logo = file ? file.path : undefined;
+          // company.logo = file ? file.path : undefined;
+          company.user = user
         });
       } else {
         //createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
         createCompanyDto.logo = file ? file.path : undefined;
+        createCompanyDto.user = user;
+
       }
       
       return await this.companyModel.create(createCompanyDto);
@@ -137,20 +142,24 @@ export class CompanyService {
   }
 
   async findOne(id: string) {
-    const data = await this.companyModel
+    const [data, activities] = await Promise.all([
+      this.companyModel
       .findById(id)
       .populate([
         { path: 'ownerId', model: 'Owner' },
         { path: 'proCode', model: 'Owner' },
-        {path: 'employees', model: 'Employee'}
+        {path: 'employees', model: 'Employee'},
+        {path: 'customerId', model: 'Owner'}
       ])
-      .exec();
+      .exec(),
+      this.activityModel.find({id: id, route: "company"}).exec()
+    ]) ;
       if(data?.password)
         {
           data.password = this.encrypt(data.password);
         }
 
-      return data ;
+      return {data,activities} ;
     
   }
 
@@ -170,13 +179,14 @@ export class CompanyService {
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      return this.companyModel.updateOne({ _id: id }, { deleted: true });
+      await this.companyModel.updateOne({ _id: id }, { deleted: true });
+      return {_id : id}
     } catch (err) {
       throw new HttpException(
         'Error while deleting company',
-        HttpStatus.FORBIDDEN,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
@@ -191,8 +201,10 @@ export class CompanyService {
       const fields: any = {};
       if (typeOfPerson == 'owner') {
         fields.ownerId = Id;
-      } else {
+      } else if(typeOfPerson == 'pro') {
         fields.proCode = Id;
+      }else{
+        fields.customerId = Id;
       }
       if (operation == 'adding') {
         query = { $push: fields };

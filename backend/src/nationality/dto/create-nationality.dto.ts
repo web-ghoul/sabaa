@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsOptional, IsString } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateNationalityDto {
   @ApiProperty()
@@ -13,5 +14,5 @@ export class CreateNationalityDto {
   @ApiProperty({ required: false })
   @IsMongoId()
   @IsOptional()
-  user?: string;
+  user?: ObjectId;
 }

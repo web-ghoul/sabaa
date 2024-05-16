@@ -7,20 +7,26 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Nationality } from 'schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
 import { NationalityService } from './nationality.service';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { User } from 'src/utils/decorators/User.decorator';
 @ApiTags('Nationality')
 @Controller('nationality')
 export class NationalityController {
   constructor(private readonly nationalityService: NationalityService) {}
 
   @Post()
-  create(@Body() createNationalityDto: CreateNationalityDto) {
-    return this.nationalityService.create(createNationalityDto);
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "create"})
+  create(@User("id") user,@Body() createNationalityDto: CreateNationalityDto) {
+    return this.nationalityService.create(createNationalityDto,user);
   }
 
   @Get()
@@ -53,6 +59,8 @@ export class NationalityController {
   }
 
   @Patch(':id')
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "update"})
   update(
     @Param('id') id: string,
     @Body() updateNationalityDto: UpdateNationalityDto,
@@ -61,6 +69,8 @@ export class NationalityController {
   }
 
   @Delete(':id')
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "delete"})
   remove(@Param('id') id: string) {
     return this.nationalityService.remove(id);
   }

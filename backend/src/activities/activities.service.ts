@@ -12,16 +12,29 @@ export class ActivitiesService {
     return 'This action adds a new activity';
   }
 
-  findAll(limit: number, page: number, search: string) {
+  findAll(limit: number, page: number, search: string = '', opertation: string = '', from: string = '', to: string= '', route: string= '') {
+
+    const query = {}  
+
+    if (search != '') {
+      query['name'] = { $regex: search, $options: 'i' };
+    }
+    if (from != '' && to == '') {
+      to = '9999-12-31';
+    }
+
+    from != ''
+        ? (query['createdAt'] = { $gte: new Date(from), $lte: new Date(to) })
+        : null;
+    opertation != '' ? (query['action'] = opertation) : undefined;
+    route != '' ? (query['route'] = route) : undefined;
+    console.log(query);
+    
     return this.ActivityModel
-      .find({
-        $or: [
-          { action: { $regex: new RegExp(search, 'i') } },
-        ],
-      })
+      .find(query)
       .limit(limit)
       .skip(page * limit)
-      .sort({createdAt: -1});
+      .sort({createdAt: -1}).populate({path: 'userId', model: 'User', select: 'avatar phone'});
   }
 
   findOne(id: number) {

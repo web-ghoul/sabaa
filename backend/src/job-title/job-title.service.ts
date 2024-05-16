@@ -2,17 +2,27 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateJobTitleDto } from './dto/create-job-title.dto';
 import { UpdateJobTitleDto } from './dto/update-job-title.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { JobTitle } from 'schemas/jobTitle.schema';
 
 @Injectable()
 export class JobTitleService {
 
   constructor(@InjectModel (JobTitle.name) private jobTitleModel: Model<JobTitle>) {}
-  async create(createJobTitleDto: CreateJobTitleDto) {
+  async create(createJobTitleDto: CreateJobTitleDto, user: ObjectId) {
     
     try{
 
+      if (Array.isArray(createJobTitleDto)) {
+        createJobTitleDto.map((job) => {
+          
+          job.user = user
+        });
+      } else {
+        createJobTitleDto.user = user
+
+      }
+      
       return await this.jobTitleModel.create(createJobTitleDto);
     }catch(err)
     {
@@ -67,14 +77,15 @@ export class JobTitleService {
       return await this.jobTitleModel.findByIdAndUpdate(id, updateJobTitleDto);
     }catch(err)
     {
-      throw new HttpException(err , HttpStatus.FORBIDDEN);
+      throw new HttpException(err , HttpStatus.BAD_REQUEST);
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try{
 
-      return this.jobTitleModel.updateOne({ _id: id } ,{deleted : true});
+      await this.jobTitleModel.updateOne({ _id: id } ,{deleted : true});
+      return {_id : id}
     }catch(err)
     {
       throw new HttpException("Error while deleting jobTitle" , HttpStatus.FORBIDDEN);
