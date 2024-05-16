@@ -17,6 +17,10 @@ export class CreateCompanyDto {
 
     @ApiProperty()
     @IsString()
+    echannelExpiryDate: string;
+
+    @ApiProperty()
+    @IsString()
     logo: string;
 
     @ApiProperty()
