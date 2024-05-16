@@ -7,8 +7,11 @@ import { Company, CompanySchema } from 'schemas/company.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { ActivityLogSchema } from 'schemas/activityLog.schema';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema },{ name: Company.name, schema: CompanySchema }]),MulterModule.register({
+  imports: [MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema },{ name: Company.name, schema: CompanySchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
       destination: './upload/employee&customer',
       filename: (req, file, cb) => {
@@ -20,6 +23,6 @@ import * as path from 'path';
     }),
   })],
   controllers: [EmployeesController],
-  providers: [EmployeesService],
+  providers: [EmployeesService,LogInterceptor],
 })
 export class EmployeesModule {}

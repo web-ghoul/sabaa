@@ -5,6 +5,9 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 
 
 ApiTags('employee')
@@ -16,10 +19,12 @@ export class EmployeesController {
   @Post()
   @ApiBody({ type: CreateEmployeeDto })
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@Body() createEmployeeDto: CreateEmployeeDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "create"})
+  create(@User("id") user,@Body() createEmployeeDto: CreateEmployeeDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
     new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
       
-    return this.employeesService.create(createEmployeeDto, file);
+    return this.employeesService.create(createEmployeeDto, file, user);
   }
 
   @Get()
@@ -39,12 +44,16 @@ export class EmployeesController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('avatar'))
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "update"})
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
     new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
     return this.employeesService.update(id, updateEmployeeDto,file);
   }
 
   @Delete(':id')
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "delete"})
   remove(@Param('id') id: string) {
     return this.employeesService.remove(id);
   }

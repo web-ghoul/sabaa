@@ -1,4 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsDateString, IsNumber, IsObject, IsMongoId } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateEmployeeDto {
 
@@ -113,5 +114,5 @@ export class CreateEmployeeDto {
   emiratesId: string;
 
   @IsOptional()
-  user: string;
+  user: ObjectId;
 }

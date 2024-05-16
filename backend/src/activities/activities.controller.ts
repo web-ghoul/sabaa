@@ -15,8 +15,13 @@ export class ActivitiesController {
   @Get()
   findAll(@Query('limit') limit: number,
   @Query('page') page: number,
-  @Query('search') search: string,) {
-    return this.activitiesService.findAll(limit,page,search);
+  @Query('search') search: string,
+  @Query('to') to: string,
+  @Query('from') from: string,
+  @Query('opertation') opertation: string,
+  @Query('type') route: string,
+) {
+    return this.activitiesService.findAll(limit,page,search,opertation,from,to,route);
   }
 
   @Get(':id')

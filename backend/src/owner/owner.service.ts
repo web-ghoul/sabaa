@@ -5,12 +5,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Owner } from 'schemas/owner.schema';
 import { Model, ObjectId } from 'mongoose';
 import { Company } from 'schemas/company.schema';
+import { ActivityLog } from 'schemas/activityLog.schema';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @InjectModel('Owner') private ownerModel: Model<Owner>,
     @InjectModel('Company') private companyModel: Model<Company>,
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
   ) {}
   async create(
     createOwnerDto: CreateOwnerDto,
@@ -23,7 +25,7 @@ export class OwnerService {
       if (Array.isArray(createOwnerDto)) {
         createOwnerDto.map((owner) => {
           owner.user = user;
-          createOwnerDto.avatar = file ? file.path : undefined;
+          // owner.avatar = file ? file.path : undefined;
         });
       } else {
         createOwnerDto.user = user;
@@ -119,8 +121,10 @@ export class OwnerService {
         .populate([
           { path: 'ownerId', model: 'Owner' },
           { path: 'proCode', model: 'Owner' },
+          { path: 'customerId', model: 'Owner' },
         ])
         .exec(),
+        this.activityModel.find({id: id, route: "owner"}).exec()
       //this.companyModel.find({ownerId: id}).populate([{ path: 'ownerId', model: 'Owner' },{ path: 'proCode', model: 'Owner' }, { path: 'immgCardNo', model: 'IMMGCard' }]).exec()
     ]);
     return { owner, companies };
@@ -149,7 +153,7 @@ export class OwnerService {
         ),
       ]);
 
-      return {id: id} ; 
+      return {_id: id} ; 
     } catch (err) {
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }

@@ -1,18 +1,31 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Employee } from 'schemas/employee.schema';
 import { Company } from 'schemas/company.schema';
+import { ActivityLog } from 'schemas/activityLog.schema';
 
 @Injectable()
 export class EmployeesService {
-  constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>) {}
-  async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File) {
+  constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>,
+  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>) {}
+  async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File, user: ObjectId) {
     try{
-      createEmployeeDto.avatar = file ? file.path : undefined;
-      console.log(createEmployeeDto);
+      
+      if (Array.isArray(createEmployeeDto)) {
+        createEmployeeDto.map((employee) => {
+          employee.user = user;
+          // employee.avatar = file ? file.path : undefined;
+        });
+      } else {
+        createEmployeeDto.user = user;
+        createEmployeeDto.avatar = file ? file.path : undefined;
+      }
+
+      // createEmployeeDto.avatar = file ? file.path : undefined;
+      // console.log(createEmployeeDto);
       
       return await Promise.all([
         this.employeeModel.create(createEmployeeDto),
@@ -70,11 +83,12 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [employee, companies=[]] = await Promise.all([
+    const [employee, companies, activities] = await Promise.all([
       this.employeeModel.findById(id),
-      // this.companyModel.find({employees: { $in: {id}}})
+      this.companyModel.find({employees: { $in: {id}}}),
+      this.activityModel.find({id: id, route: "employee"}).exec()
     ])
-    return {employee,companies}
+    return {employee,companies,activities}
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {
@@ -101,13 +115,13 @@ export class EmployeesService {
     };
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try{  
        
-      return Promise.all([this.employeeModel.updateOne({ _id: id },{deleted : true}),
+      await Promise.all([this.employeeModel.updateOne({ _id: id },{deleted : true}),
       this.companyModel.updateMany({ownerId: id},{$pull : {employees: id}})
       ]);
-
+      return {_id : id}
     }catch(err)
     {
       throw new HttpException(err , HttpStatus.BAD_REQUEST);
