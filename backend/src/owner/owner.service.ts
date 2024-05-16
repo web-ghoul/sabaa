@@ -163,10 +163,10 @@ export class OwnerService {
     }
   }
 
-  async getCounters(isPro: boolean = false) {
+  async getCounters(type: string = 'owner') {
     const [count, deleted] = await Promise.all([
-      this.ownerModel.countDocuments({ deleted: false, isPro: isPro }),
-      this.ownerModel.countDocuments({ deleted: true, isPro: isPro }),
+      this.ownerModel.countDocuments({ deleted: false, type: type }),
+      this.ownerModel.countDocuments({ deleted: true, type: type }),
     ]);
     return {
       count,

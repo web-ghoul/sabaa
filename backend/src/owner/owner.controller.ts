@@ -31,8 +31,8 @@ export class OwnerController {
     return this.ownerService.findAll(limit,page,search,selectFields,sort,nationality,state,dobFrom,dobTo,deleted,type);
   }
   @Get("counters")
-  getCounters(@Query('isPro') isPro:boolean) {
-    return this.ownerService.getCounters(isPro);
+  getCounters(@Query('type') type:string) {
+    return this.ownerService.getCounters(type);
   }
 
 
