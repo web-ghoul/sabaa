@@ -331,7 +331,7 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
-  username: string;
+  userName: string;
   password: string;
   echannelExpiryDate: Date;
   user?: string;

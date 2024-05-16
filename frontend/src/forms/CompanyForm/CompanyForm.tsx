@@ -242,7 +242,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             name={"echannelExpiryDate"}
             label={"E-Channel Expire Date"}
           />
-          <Input formik={formik} label={"Username"} name={"username"} />
+          <Input formik={formik} label={"Username"} name={"userName"} />
           <Input
             formik={formik}
             label={"Password"}

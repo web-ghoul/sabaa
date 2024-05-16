@@ -279,6 +279,12 @@ const useSubmitFunction = (type: string) => {
     formData.append("website", values.website.trim());
     formData.append("zipCode", values.zipCode.trim());
     formData.append("trn", values.trn.trim());
+    formData.append("userName", values.userName.trim());
+    formData.append("password", values.password.trim());
+    formData.append(
+      "echannelExpiryDate",
+      values.echannelExpiryDate.toString().trim()
+    );
     formData.append("tenancyContractValue", values.tenancyContractValue.trim());
     formData.append(
       "tenancyContractExp",

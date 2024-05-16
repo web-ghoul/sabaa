@@ -22,7 +22,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
       tabsTitles={[
         "Profile Info",
         "Owners",
-        "PROs",
+        "Officers",
         "Employees",
         "Transactions",
         "Activities",

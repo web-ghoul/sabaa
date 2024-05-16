@@ -694,16 +694,16 @@ const ProfileDetails = ({
               </Typography>
               <Box className={profileInfoClasses}>
                 <DataBox
-                  title={"echannelExpiryDate"}
+                  title={"E-channel Expire Date"}
                   value={handleDate((data as CompanyTypes).echannelExpiryDate)}
                 />
                 <DataBox
                   title={"Username"}
-                  value={(data as CompanyTypes).username}
+                  value={(data as CompanyTypes).userName}
                 />
                 <DataBox
                   title={"Password"}
-                  value={<StatusBox status={(data as CompanyTypes).password} />}
+                  value={(data as CompanyTypes).password}
                 />
               </Box>
             </Box>
