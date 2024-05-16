@@ -13,7 +13,7 @@ export const getRecentPros = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/owner?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
-      }&page=0&isPro=true`,
+      }&page=0&type=pro`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

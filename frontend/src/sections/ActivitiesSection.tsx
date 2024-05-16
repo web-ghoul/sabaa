@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Divider, Paper } from "@mui/material";
 import { Fragment } from "react/jsx-runtime";
 import ActivityBox from "../components/ActivityBox/ActivityBox";
 import LoadingActivityBox from "../components/ActivityBox/LoadingActivityBox";
@@ -13,25 +13,25 @@ const ActivitiesSection = ({
   isLoading: boolean;
 }) => {
   return (
-    <Box
-      className={`grid justify-stretch items-center gap-4 md:gap-3 sm:!gap-2`}
+    <Paper
+      className={`paper grid justify-stretch items-center gap-4 md:gap-3 sm:!gap-2`}
     >
       {!isLoading && data
-        ? data.map((activity, i) => (
+        ? data.map((data, i) => (
             <Fragment key={i}>
-              <Divider />
-              <ActivityBox activity={activity} />
+              {i > 0 && <Divider />}
+              <ActivityBox activity={data} />
             </Fragment>
           ))
         : Array(handleRandomNumber())
             .fill(0)
             .map((_, i) => (
               <Fragment key={i}>
-                <Divider />
+                {i > 0 && <Divider />}
                 <LoadingActivityBox />
               </Fragment>
             ))}
-    </Box>
+    </Paper>
   );
 };
 

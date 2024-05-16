@@ -260,12 +260,17 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status.trim());
     if (values.ownerId.length > 0) {
       values.ownerId.map((owner) => {
-        formData.append("ownerId[]", owner);
+        formData.append("ownerId[]", owner as string);
       });
     }
     if (values.proCode.length > 0) {
       values.proCode.map((pro) => {
-        formData.append("proCode[]", pro);
+        formData.append("proCode[]", pro as string);
+      });
+    }
+    if (values.customerId.length > 0) {
+      values.customerId.map((customer) => {
+        formData.append("customerId[]", customer as string);
       });
     }
     formData.append("country", values.country.trim());

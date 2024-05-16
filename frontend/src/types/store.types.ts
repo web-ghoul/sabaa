@@ -9,7 +9,10 @@ interface AuthValuesTypes {
 
 interface ActivityTypes {
   type: EntityType;
-  actions: string;
+  userName: string;
+  id:string;
+  avatar?: string;
+  action: string;
   userId: UserTypes;
   route: string;
   createdAt?: Date;
@@ -524,5 +527,6 @@ export type {
   UsersCounterValuesTypes,
   UsersValuesTypes,
   UserTypes,
-  UserValuesTypes,
+  UserValuesTypes
 };
+

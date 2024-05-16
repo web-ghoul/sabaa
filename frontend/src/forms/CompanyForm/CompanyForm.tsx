@@ -243,13 +243,13 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               multiple={true}
             />
           )}
+          <Input
+            formik={formik}
+            label={"Remarks"}
+            name={"remarks"}
+            textarea={true}
+          />
         </Box>
-        <Input
-          formik={formik}
-          label={"Remarks"}
-          name={"remarks"}
-          textarea={true}
-        />
       </Box>
       <Divider />
 

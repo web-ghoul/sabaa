@@ -130,43 +130,49 @@ const EmployeesTable = ({
           {!lgScreen && !recent && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">
-            {sheet || !sort ? (
-              mdScreen ? (
-                "Lc Expiry"
+          {!recent && (
+            <PrimaryTableCell align="center">
+              {sheet || !sort ? (
+                mdScreen ? (
+                  "Lc Expiry"
+                ) : (
+                  "Lc Expire Date"
+                )
               ) : (
-                "Lc Expire Date"
-              )
-            ) : (
-              <SortBox
-                title={mdScreen ? "LC Expiry" : "LC Expire Date"}
-                handling={handleSortByLC}
-                asc={searchParams.get("sort") === "lc_asc"}
-                desc={searchParams.get("sort") === "lc_desc"}
-                jc="center"
-              />
-            )}
-          </PrimaryTableCell>
+                <SortBox
+                  title={mdScreen ? "LC Expiry" : "LC Expire Date"}
+                  handling={handleSortByLC}
+                  asc={searchParams.get("sort") === "lc_asc"}
+                  desc={searchParams.get("sort") === "lc_desc"}
+                  jc="center"
+                />
+              )}
+            </PrimaryTableCell>
+          )}
           {!smScreen && (
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">
-            {sheet || !sort ? (
-              mdScreen ? (
-                "Residence Expiry"
+          {!recent && (
+            <PrimaryTableCell align="center">
+              {sheet || !sort ? (
+                mdScreen ? (
+                  "Residence Expiry"
+                ) : (
+                  "Residence Expire Date"
+                )
               ) : (
-                "Residence Expire Date"
-              )
-            ) : (
-              <SortBox
-                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
-                handling={handleSortByRes}
-                asc={searchParams.get("sort") === "res_asc"}
-                desc={searchParams.get("sort") === "res_desc"}
-                jc="center"
-              />
-            )}
-          </PrimaryTableCell>
+                <SortBox
+                  title={
+                    mdScreen ? "Residence Expiry" : "Residence Expire Date"
+                  }
+                  handling={handleSortByRes}
+                  asc={searchParams.get("sort") === "res_asc"}
+                  desc={searchParams.get("sort") === "res_desc"}
+                  jc="center"
+                />
+              )}
+            </PrimaryTableCell>
+          )}
           {!mdScreen && (
             <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
           )}
@@ -214,17 +220,21 @@ const EmployeesTable = ({
                     <NationalityBox nationality={row.nationality} />
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="center">
-                  {handleDate(row.lcExpireDate)}
-                </PrimaryTableCell>
+                {!recent && (
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.lcExpireDate)}
+                  </PrimaryTableCell>
+                )}
                 {!smScreen && (
                   <PrimaryTableCell align="center">
                     <StatusBox status={row.status} />
                   </PrimaryTableCell>
                 )}
-                <PrimaryTableCell align="center">
-                  {handleDate(row.residenceExpireDate)}
-                </PrimaryTableCell>
+                {!recent && (
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.residenceExpireDate)}
+                  </PrimaryTableCell>
+                )}
                 {!mdScreen && (
                   <PrimaryTableCell align="center">
                     {row.cardType}
