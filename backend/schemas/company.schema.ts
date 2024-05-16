@@ -62,6 +62,9 @@ export class Company {
 
   @Prop()
   mobileNo: string;
+  
+  @Prop()
+  echannelExpiryDate: Date;
 
   @Prop()
   website: string;
