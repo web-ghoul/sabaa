@@ -145,8 +145,10 @@ export class CompanyService {
         {path: 'employees', model: 'Employee'}
       ])
       .exec();
-
-      data.password = this.encrypt(data.password);
+      if(data?.password)
+        {
+          data.password = this.encrypt(data.password);
+        }
 
       return data ;
     
