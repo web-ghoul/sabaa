@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { EntitiesType } from "../../types/app.types";
 import CompaniesIcon from "../Icons/CompaniesIcon";
 import CustomersIcon from "../Icons/CustomersIcon";
 import EmployeesIcon from "../Icons/EmployeesIcon";
@@ -11,20 +12,7 @@ import ProsIcon from "../Icons/ProsIcon";
 import TransactionsIcon from "../Icons/TransactionsIcon";
 import UsersIcon from "../Icons/UsersIcon";
 
-const Counter = ({
-  variant,
-}: {
-  variant:
-    | "owners"
-    | "customers"
-    | "employees"
-    | "officers"
-    | "transactions"
-    | "companies"
-    | "users"
-    | "jobs"
-    | "nationalities";
-}) => {
+const Counter = ({ variant }: { variant: EntitiesType }) => {
   const iconsClasses = "!text-[25px] md:!text-[22px] sm:!text-[20px]";
   const ownersCounter = useSelector((state: RootState) => state.ownersCounter);
   const employeesCounter = useSelector(

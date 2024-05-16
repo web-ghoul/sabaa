@@ -133,6 +133,16 @@ const ProfileDetails = ({
           (owner) => (owner as OwnerTypes)._id
         ) as string[];
       }
+      if (company.proCode) {
+        c.proCode = company.proCode.map(
+          (pro) => (pro as ProTypes)._id
+        ) as string[];
+      }
+      if (company.customerId) {
+        c.customerId = company.customerId.map(
+          (customer) => (customer as CustomerTypes)._id
+        ) as string[];
+      }
       setEditableCompanyData(c);
     }
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}/${id}/edit`);
@@ -225,10 +235,6 @@ const ProfileDetails = ({
                 title={"Arabic Name"}
                 value={(data as OwnerTypes).nameAr}
               />
-              <DataBox
-                title={"Person Code"}
-                value={(data as OwnerTypes).personCode}
-              />
               <DataBox title={"Email"} value={(data as OwnerTypes).email} />
               <DataBox title={"Phone"} value={(data as OwnerTypes).phone} />
               <DataBox title={"Address"} value={(data as OwnerTypes).address} />
@@ -243,10 +249,30 @@ const ProfileDetails = ({
                 value={(data as OwnerTypes).nationality}
               />
               <DataBox
+                title={"Person Code"}
+                value={(data as OwnerTypes).personCode}
+              />
+              <DataBox
                 title={"Emirates Id"}
                 value={(data as OwnerTypes).emiratesId}
               />
               <DataBox title={"UID Number"} value={(data as OwnerTypes).uid} />
+              <DataBox
+                title={"File Immigration Number"}
+                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate(
+                  (data as OwnerTypes | ProTypes).residenceExpiryDate
+                )}
+              />
+              <DataBox
+                title={"Status"}
+                value={
+                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
+                }
+              />
               <DataBox title={"Remarks"} value={(data as OwnerTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -255,7 +281,7 @@ const ProfileDetails = ({
             </Box>
           </Box>
         </Paper>
-      ) : variant === "pro" ? (
+      ) : variant === "officer" ? (
         <Paper className={profileClasses} elevation={11}>
           <Title align={"left"} head={"h4"} title={title} />
           <Box className={profileDataClasses}>
@@ -294,10 +320,6 @@ const ProfileDetails = ({
                 title={"Arabic Name"}
                 value={(data as ProTypes).nameAr}
               />
-              <DataBox
-                title={"Person Code"}
-                value={(data as ProTypes).personCode}
-              />
               <DataBox title={"Email"} value={(data as ProTypes).email} />
               <DataBox title={"Phone"} value={(data as ProTypes).phone} />
               <DataBox title={"Address"} value={(data as ProTypes).address} />
@@ -312,10 +334,30 @@ const ProfileDetails = ({
                 value={(data as ProTypes).nationality}
               />
               <DataBox
+                title={"Person Code"}
+                value={(data as ProTypes).personCode}
+              />
+              <DataBox
                 title={"Emirates Id"}
                 value={(data as ProTypes).emiratesId}
               />
               <DataBox title={"UID Number"} value={(data as ProTypes).uid} />
+              <DataBox
+                title={"File Immigration Number"}
+                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate(
+                  (data as OwnerTypes | ProTypes).residenceExpiryDate
+                )}
+              />
+              <DataBox
+                title={"Status"}
+                value={
+                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
+                }
+              />
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -694,16 +736,16 @@ const ProfileDetails = ({
               </Typography>
               <Box className={profileInfoClasses}>
                 <DataBox
-                  title={"echannelExpiryDate"}
+                  title={"E-channel Expire Date"}
                   value={handleDate((data as CompanyTypes).echannelExpiryDate)}
                 />
                 <DataBox
                   title={"Username"}
-                  value={(data as CompanyTypes).username}
+                  value={(data as CompanyTypes).userName}
                 />
                 <DataBox
                   title={"Password"}
-                  value={<StatusBox status={(data as CompanyTypes).password} />}
+                  value={(data as CompanyTypes).password}
                 />
               </Box>
             </Box>

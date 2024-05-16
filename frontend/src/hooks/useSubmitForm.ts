@@ -11,6 +11,7 @@ import {
   CustomersOptionsSchema,
 } from "../forms/CustomersOptionsForm/CustomersOptionsSchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
+import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
 import useEmployeeSchema from "../forms/EmployeeForm/useEmployeeSchema";
 import {
   EmployeesOptionsInitailValues,
@@ -67,6 +68,8 @@ import {
   CustomersOptionsFormikTypes,
   DeleteFormTypes,
   DeleteFormikTypes,
+  DownloadExcelFormTypes,
+  DownloadExcelFormikTypes,
   EmployeeFormTypes,
   EmployeeFormikTypes,
   EmployeesOptionsFormTypes,
@@ -116,6 +119,8 @@ const useSubmitForm = (type: string) => {
   const { CompanyInitailValues, CompanySchema } = useCompanySchema();
   const { LinkToCompanyInitailValues, LinkToCompanySchema } =
     useLinkToCompanySchema();
+  const { DownloadExcelInitailValues, DownloadExcelSchema } =
+    useDownloadExcelSchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -289,6 +294,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as LinkToCompanyFormikTypes;
+        case "downloadExcel":
+          return {
+            initialValues: DownloadExcelInitailValues,
+            validationSchema: DownloadExcelSchema,
+            onSubmit: (values: DownloadExcelFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as DownloadExcelFormikTypes;
         default:
           return {
             initialValues: DeleteInitailValues,
@@ -306,6 +319,8 @@ const useSubmitForm = (type: string) => {
       CustomerSchema,
       DeleteInitailValues,
       DeleteSchema,
+      DownloadExcelInitailValues,
+      DownloadExcelSchema,
       EmployeeInitailValues,
       EmployeeSchema,
       JobInitailValues,

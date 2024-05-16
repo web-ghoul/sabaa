@@ -11,9 +11,11 @@ import {
 } from "../../types/forms.types";
 import {
   CompanyTypes,
+  CustomerTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  ProTypes,
 } from "../../types/store.types";
 
 export default function AutoCompleteSearch({
@@ -23,6 +25,18 @@ export default function AutoCompleteSearch({
   name,
   formik,
 }: AutoCompleteSearchTypes) {
+  const style = {
+    "& > div > div": {
+      padding: "0px !important",
+    },
+    "& span.MuiCircularProgress-root": {
+      position: "absolute",
+      right: "9px",
+    },
+    "& svg": {
+      fontSize: "20px",
+    },
+  };
   const error =
     formik.touched[name as keyof AllFormiksTypes] &&
     Boolean(formik.errors[name as keyof AllFormiksTypes]);
@@ -40,6 +54,14 @@ export default function AutoCompleteSearch({
       const owners = newValue as OwnerTypes[];
       const IDs = owners.map((owner: OwnerTypes) => owner._id);
       formik.setFieldValue(name, IDs);
+    } else if (name === "proCode") {
+      const pros = newValue as ProTypes[];
+      const IDs = pros.map((pro: ProTypes) => pro._id);
+      formik.setFieldValue(name, IDs);
+    } else if (name === "customerId") {
+      const customers = newValue as CustomerTypes[];
+      const IDs = customers.map((customer: CustomerTypes) => customer._id);
+      formik.setFieldValue(name, IDs);
     } else if (name === "companyId") {
       const company = newValue as CompanyTypes;
       formik.setFieldValue(name, company._id);
@@ -50,7 +72,13 @@ export default function AutoCompleteSearch({
   };
 
   const handleOptionLabel = (
-    option: NationalityTypes | OwnerTypes | CompanyTypes | JobTypes
+    option:
+      | NationalityTypes
+      | OwnerTypes
+      | CompanyTypes
+      | JobTypes
+      | ProTypes
+      | CustomerTypes
   ) => {
     if (name === "nationality") {
       return `${(option as NationalityTypes).nationality} ( ${
@@ -60,13 +88,21 @@ export default function AutoCompleteSearch({
       return `${(option as OwnerTypes).name} ( ${
         (option as OwnerTypes).personCode
       } )`;
+    } else if (name === "proCode") {
+      return `${(option as ProTypes).name} ( ${
+        (option as ProTypes).personCode
+      } )`;
+    } else if (name === "customerId") {
+      return `${(option as CustomerTypes).name} ( ${
+        (option as CustomerTypes).personCode
+      } )`;
     } else if (name === "companyId") {
       return `${(option as CompanyTypes).name} ( ${
         (option as CompanyTypes).molCode
       } )`;
     } else if (name === "job") {
       return `${(option as unknown as JobTypes).jobTitle} ( ${
-        (option as unknown as JobTypes).MOHRE
+        (option as JobTypes).MOHRE
       } )`;
     }
     return "";
@@ -81,9 +117,22 @@ export default function AutoCompleteSearch({
         ) || null
       : name === "ownerId"
       ? values.filter((option) =>
-          (formik as unknown as CompanyFormikTypes).values.ownerId.includes(
-            option._id || ""
-          )
+          (
+            (formik as unknown as CompanyFormikTypes).values.ownerId as string[]
+          ).includes(option._id || "")
+        )
+      : name === "proCode"
+      ? values.filter((option) =>
+          (
+            (formik as unknown as CompanyFormikTypes).values.proCode as string[]
+          ).includes(option._id || "")
+        )
+      : name === "customerId"
+      ? values.filter((option) =>
+          (
+            (formik as unknown as CompanyFormikTypes).values
+              .customerId as string[]
+          ).includes(option._id || "")
         )
       : name === "companyId"
       ? (values as CompanyTypes[]).find(
@@ -98,19 +147,6 @@ export default function AutoCompleteSearch({
               (formik as unknown as EmployeeFormikTypes).values.job
           )) ||
         null;
-
-  const style = {
-    "& > div > div": {
-      padding: "0px !important",
-    },
-    "& span.MuiCircularProgress-root": {
-      position: "absolute",
-      right: "9px",
-    },
-    "& svg": {
-      fontSize: "20px",
-    },
-  };
 
   useEffect(() => {
     setValues(options);
@@ -135,10 +171,20 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as OwnerTypes).name}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as OwnerTypes[]).indexOf(option as OwnerTypes) !==
-                    -1
-                  }
+                />
+              );
+            } else if (name === "proCode") {
+              return (
+                <Chip
+                  label={(option as ProTypes).name}
+                  {...getTagProps({ index })}
+                />
+              );
+            } else if (name === "customerId") {
+              return (
+                <Chip
+                  label={(option as CustomerTypes).name}
+                  {...getTagProps({ index })}
                 />
               );
             } else if (name === "companyId") {
@@ -146,11 +192,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as CompanyTypes).name}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as CompanyTypes[]).indexOf(
-                      option as CompanyTypes
-                    ) !== -1
-                  }
                 />
               );
             } else if (name === "job") {
@@ -158,11 +199,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as unknown as JobTypes).jobTitle}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as JobTypes[]).indexOf(
-                      option as unknown as JobTypes
-                    ) !== -1
-                  }
                 />
               );
             } else if (name === "nationality") {

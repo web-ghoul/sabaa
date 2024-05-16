@@ -14,6 +14,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { RootState } from "../../store/store";
+import { EntitiesType } from "../../types/app.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -26,19 +27,7 @@ import {
 import Button from "../Button/Button";
 import UploadStatus from "./UploadStatus";
 
-const UploadExcel = ({
-  variant,
-}: {
-  variant:
-    | "jobs"
-    | "owners"
-    | "companies"
-    | "nationalities"
-    | "users"
-    | "pros"
-    | "employees"
-    | "customers";
-}) => {
+const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
   const { company } = useSelector((state: RootState) => state.company);
   const { id } = useParams();
   const [dragging, setDragging] = useState(false);
@@ -163,6 +152,7 @@ const UploadExcel = ({
       owner["remarks"] = `${data[i][10]}`;
       owner["state"] = `${data[i][11]}`;
       owner["address"] = `${data[i][12]}`;
+      owner["type"] = `owner`;
       owners.push(owner);
     }
     handleAddOwnersSheet({ fileName: file.name, data: owners });
@@ -207,7 +197,6 @@ const UploadExcel = ({
         remarks: "",
         state: "",
         proCode: true,
-        isPro: "true",
         fileImmgNo: "",
         status: "",
       };
@@ -224,7 +213,7 @@ const UploadExcel = ({
       pro["remarks"] = `${data[i][10]}`;
       pro["state"] = `${data[i][11]}`;
       pro["address"] = `${data[i][12]}`;
-      pro["isPro"] = `true`;
+      pro["type"] = `pro`;
       pros.push(pro);
     }
     handleAddProsSheet({ fileName: file.name, data: pros });
@@ -268,7 +257,6 @@ const UploadExcel = ({
         email: "",
         remarks: "",
         state: "",
-        isCustomer: "true",
         sponsor: "",
         proCode: false,
         fileImmgNo: "",
@@ -287,7 +275,7 @@ const UploadExcel = ({
       customer["remarks"] = `${data[i][10]}`;
       customer["state"] = `${data[i][11]}`;
       customer["address"] = `${data[i][12]}`;
-      customer["isCustomer"] = `true`;
+      customer["type"] = `customer`;
       customers.push(customer);
     }
     handleAddCustomersSheet({ fileName: file.name, data: customers });
@@ -318,7 +306,7 @@ const UploadExcel = ({
         name: "",
         nameAr: "",
         personCode: "",
-        companyCode: "",
+        companyId: "",
         companyName: "",
         idNationality: "",
         nationality: "",
@@ -343,7 +331,7 @@ const UploadExcel = ({
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;
-      employee["nameAr"] = `${data[i][1]}`;
+      employee["nameAr"] = ``;
       employee["job"] = `${data[i][2]}`;
       employee["passportNumber"] = `${data[i][3]}`;
       employee["nationality"] = `${data[i][4]}`;
@@ -352,8 +340,8 @@ const UploadExcel = ({
       employee["lcExpireDate"] = new Date(`${data[i][7]}`);
       employee["gender"] = `${data[i][8]}`;
       employee["uid"] = `${data[i][9]}`;
-      employee["companyCode"] = `${id || ""}`;
-      employee["companyCode"] = `${(company && company.name) || ""}`;
+      employee["companyId"] = `${id || ""}`;
+      employee["companyName"] = `${(company && company.name) || ""}`;
       employees.push(employee);
     }
     handleAddEmployeesSheet({ fileName: file.name, data: employees });
@@ -415,9 +403,11 @@ const UploadExcel = ({
         country: "",
         licenseIssuePlace: "",
         zipCode: "",
-        username: "",
+        userName: "",
         password: "",
         createdAt: new Date(),
+        customerId: [],
+        employees: [],
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;
@@ -457,7 +447,7 @@ const UploadExcel = ({
             handleNationalitiesSheet(rows, file);
           } else if (variant === "owners") {
             handleOwnersSheet(rows, file);
-          } else if (variant === "pros") {
+          } else if (variant === "officers") {
             handleProsSheet(rows, file);
           } else if (variant === "employees") {
             handleEmployeesSheet(rows, file);
@@ -514,11 +504,11 @@ const UploadExcel = ({
       setSamplePath("./samples/employees.xlsx");
     } else if (variant === "customers") {
       setSampleName("customers_sample.xlsx");
-      setSamplePath("./samples/employees.xlsx");
+      setSamplePath("./samples/owners.xlsx");
     } else if (variant === "owners") {
       setSampleName("owners_sample.xlsx");
       setSamplePath("./samples/owners.xlsx");
-    } else if (variant === "pros") {
+    } else if (variant === "officers") {
       setSampleName("public_relation_officers_sample.xlsx");
       setSamplePath("./samples/pros.xlsx");
     } else if (variant === "companies") {

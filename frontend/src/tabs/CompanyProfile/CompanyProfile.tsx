@@ -6,10 +6,17 @@ import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
+import CustomersTable from "../../tables/CustomersTable/CustomersTable";
 import EmployeesTable from "../../tables/EmployeesTable/EmployeesTable";
 import OwnersTable from "../../tables/OwnersTable/OwnersTable";
 import ProsTable from "../../tables/ProsTable/ProsTable";
-import { CompanyTypes, OwnerTypes, ProTypes } from "../../types/store.types";
+import {
+  CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
+  OwnerTypes,
+  ProTypes,
+} from "../../types/store.types";
 import { CompanyProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -17,12 +24,14 @@ import PrimaryTab from "../PrimaryTab";
 const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
   const { companyTabsValue } = useContext(TabsContext);
   const { handleOpenUploadEmployeesModal } = useContext(FormsContext);
+
   return (
     <PrimaryTab
       tabsTitles={[
         "Profile Info",
         "Owners",
-        "PROs",
+        "Officers",
+        "Customers",
         "Employees",
         "Transactions",
         "Activities",
@@ -54,6 +63,14 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={3}>
+        <CustomersTable
+          count={company?.customerId?.length || 0}
+          data={company && (company.customerId as CustomerTypes[])}
+          isLoading={isLoading}
+          noPagination={true}
+        />
+      </CustomTabPanel>
+      <CustomTabPanel value={companyTabsValue} index={4}>
         <Box
           className={`grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3`}
         >
@@ -80,17 +97,17 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
             />
           </Box>
           <EmployeesTable
-            count={0}
-            data={[]}
+            count={company?.employees?.length || 0}
+            data={company && (company.employees as EmployeeTypes[])}
             isLoading={false}
             noPagination={true}
           />
         </Box>
       </CustomTabPanel>
-      <CustomTabPanel value={companyTabsValue} index={4}>
+      <CustomTabPanel value={companyTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
-      <CustomTabPanel value={companyTabsValue} index={5}>
+      <CustomTabPanel value={companyTabsValue} index={6}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>

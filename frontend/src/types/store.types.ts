@@ -1,3 +1,5 @@
+import { EntityType } from "./app.types";
+
 interface AuthValuesTypes {
   token: string | null;
   userId: string | null;
@@ -6,7 +8,11 @@ interface AuthValuesTypes {
 }
 
 interface ActivityTypes {
-  type: "owner" | "employee" | "company" | "pro" | "customer";
+  type: EntityType;
+  actions: string;
+  userId: UserTypes;
+  route: string;
+  createdAt?: Date;
 }
 
 interface ActivitiesValuesTypes {
@@ -17,6 +23,11 @@ interface ActivitiesValuesTypes {
 interface ActivitiesArgsTypes {
   page?: number;
   limit?: number;
+  search?: string;
+  type?: string;
+  operation?: string;
+  to?: string;
+  from?: string;
 }
 
 interface RecentActivitiesValuesTypes {
@@ -96,8 +107,7 @@ interface OwnerTypes {
   personCode: string;
   fileImmgNo: string;
   status: string;
-  isPro?: string;
-  isCustomer?: string;
+  type?: string;
   residenceExpiryDate?: Date;
   createdAt?: Date;
   user?: string;
@@ -107,6 +117,7 @@ interface OwnerValuesTypes {
   isLoading: boolean;
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -147,6 +158,7 @@ interface ProValuesTypes {
   isLoading: boolean;
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -189,6 +201,7 @@ interface CustomerValuesTypes {
   isLoading: boolean;
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface CustomersValuesTypes {
@@ -230,7 +243,7 @@ interface EmployeeTypes {
   nameAr: string;
   dob?: Date;
   personCode: string;
-  companyCode: string;
+  companyId: string;
   companyName: string;
   idNationality: string;
   nationality: string;
@@ -265,6 +278,7 @@ interface EmployeeValuesTypes {
   isLoading: boolean;
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface EmployeesValuesTypes {
@@ -309,8 +323,10 @@ interface CompanyTypes {
   state: string;
   address: string;
   phone: string;
-  proCode: OwnerTypes[] | string[];
+  proCode: ProTypes[] | string[];
   ownerId: OwnerTypes[] | string[];
+  customerId: CustomerTypes[] | string[];
+  employees: EmployeeTypes[] | string[];
   licenseNo: string;
   immgCardNo: string;
   immgCardExpiry: Date;
@@ -330,7 +346,7 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
-  username: string;
+  userName: string;
   password: string;
   echannelExpiryDate: Date;
   user?: string;
@@ -339,6 +355,7 @@ interface CompanyTypes {
 interface CompanyValuesTypes {
   isLoading: boolean;
   company: CompanyTypes | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface CompaniesCounterValuesTypes {
@@ -457,34 +474,34 @@ export type {
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
-  CustomerTypes,
-  CustomerValuesTypes,
   CustomersArgsTypes,
   CustomersCounterValuesTypes,
   CustomersValuesTypes,
-  EmployeeTypes,
-  EmployeeValuesTypes,
+  CustomerTypes,
+  CustomerValuesTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,
-  JobTypes,
+  EmployeeTypes,
+  EmployeeValuesTypes,
   JobsArgsTypes,
   JobsCounterValuesTypes,
   JobsValuesTypes,
+  JobTypes,
   NationalitiesArgsTypes,
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
-  OwnerTypes,
-  OwnerValuesTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
-  ProTypes,
-  ProValuesTypes,
+  OwnerTypes,
+  OwnerValuesTypes,
   ProsArgsTypes,
   ProsCounterValuesTypes,
   ProsValuesTypes,
+  ProTypes,
+  ProValuesTypes,
   RecentActivitiesArgsTypes,
   RecentActivitiesValuesTypes,
   RecentCompaniesArgsTypes,
@@ -503,9 +520,9 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
-  UserTypes,
-  UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,
+  UserTypes,
+  UserValuesTypes,
 };

@@ -19,14 +19,13 @@ const ProProfile = ({ pro, isLoading, companies }: ProProfileProps) => {
         "Transactions",
         "Activities",
         "Documents",
-        "Sponsored Persons",
       ]}
       variant={"pro"}
     >
       <CustomTabPanel value={proTabsValue} index={0}>
         <ProfileDetails
           title={`Personal Info`}
-          variant={"pro"}
+          variant={"officer"}
           data={pro as ProTypes}
           isLoading={isLoading}
         />
@@ -47,9 +46,6 @@ const ProProfile = ({ pro, isLoading, companies }: ProProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={proTabsValue} index={4}>
-        <ProfileSetting />
-      </CustomTabPanel>
-      <CustomTabPanel value={proTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>

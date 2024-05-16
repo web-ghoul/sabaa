@@ -21,6 +21,7 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     setEditableCompanyData,
     setEditableEmployeeData,
     setEditableCustomerData,
+    handleOpenCustomerModal,
   } = useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
       navigate(`${import.meta.env.VITE_ADD_EMPLOYEE_ROUTE}`);
     } else if (newTitle === "add customer") {
       setEditableCustomerData(null);
-      navigate(`${import.meta.env.VITE_ADD_CUSTOMER_ROUTE}`);
+      handleOpenCustomerModal("addCustomer");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");

@@ -14,7 +14,7 @@ const useEmployeeSchema = () => {
     uid: yup.string().required("UID Number is required"),
     gender: yup.string().required("Gender is required"),
     personCode: yup.string(),
-    companyCode: yup.string(),
+    companyId: yup.string(),
     companyName: yup.string(),
     dob: yup.date(),
     idNationality: yup.string(),
@@ -48,7 +48,7 @@ const useEmployeeSchema = () => {
     uid: editableEmployeeData?.uid || "",
     gender: editableEmployeeData?.gender || "",
     personCode: editableEmployeeData?.personCode || "",
-    companyCode: editableEmployeeData?.companyCode || "",
+    companyId: editableEmployeeData?.companyId || "",
     companyName: editableEmployeeData?.companyName || "",
     dob:
       (editableEmployeeData?.dob &&

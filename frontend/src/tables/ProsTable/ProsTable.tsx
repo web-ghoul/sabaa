@@ -105,7 +105,11 @@ const ProsTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"pros"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"officers"}
+      noPagination={noPagination}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>

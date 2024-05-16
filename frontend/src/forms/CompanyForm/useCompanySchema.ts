@@ -38,7 +38,7 @@ const useCompanySchema = () => {
     molCategory: yup.string(),
     whatsAppNo: yup.string(),
     echannelExpiryDate: yup.date(),
-    username: yup.string(),
+    userName: yup.string(),
     password: yup.string(),
     mobileNo: yup.string(),
     website: yup.string(),
@@ -97,8 +97,13 @@ const useCompanySchema = () => {
       "",
     tenancyContractValue: editableCompanyData?.tenancyContractValue || "",
     licenseIssuePlace: editableCompanyData?.licenseIssuePlace || "",
-    echannelExpiryDate: editableCompanyData?.echannelExpiryDate || "",
-    username: editableCompanyData?.username || "",
+    echannelExpiryDate:
+      (editableCompanyData?.echannelExpiryDate &&
+        new Date(editableCompanyData?.echannelExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    userName: editableCompanyData?.userName || "",
     password: "",
   };
 

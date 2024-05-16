@@ -19,7 +19,6 @@ const OwnerProfile = ({ owner, isLoading, companies }: OwnerProfileProps) => {
         "Transactions",
         "Activities",
         "Documents",
-        "Sponsored Persons",
       ]}
       variant={"owner"}
     >
@@ -47,9 +46,6 @@ const OwnerProfile = ({ owner, isLoading, companies }: OwnerProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={4}>
-        <ProfileSetting />
-      </CustomTabPanel>
-      <CustomTabPanel value={ownerTabsValue} index={5}>
         <ProfileSetting />
       </CustomTabPanel>
     </PrimaryTab>

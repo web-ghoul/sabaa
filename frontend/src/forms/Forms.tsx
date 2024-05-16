@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { FormikProps } from "formik";
 import useSubmitForm from "../hooks/useSubmitForm";
 import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
+import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
@@ -14,6 +15,7 @@ import CreateProsSheetForm from "./CreateProsSheetForm/CreateProsSheetForm";
 import CustomerForm from "./CustomerForm/CustomerForm";
 import CustomersOptionsForm from "./CustomersOptionsForm/CustomersOptionsForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
+import DownloadExcelForm from "./DownloadExcelForm/DownloadExcelForm";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import EmployeesOptionsForm from "./EmployeesOptionsForm/EmployeesOptionsForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
@@ -116,6 +118,11 @@ const Forms = ({ type, index }: FormsTypes) => {
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
+      {type === "activitiesOptions" && (
+        <ActivitiesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
       {(type === "linkOwner" || type === "linkPro") && (
         <LinkToCompanyForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
@@ -157,6 +164,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "forgotPassword" && (
         <ForgotPasswordForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "downloadExcel" && (
+        <DownloadExcelForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}

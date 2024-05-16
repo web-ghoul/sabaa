@@ -67,6 +67,26 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
+//Activities
+interface ActivitiesOptionsFormTypes {
+  search: string;
+  type: string;
+  operation: string;
+  from: string;
+  to: string;
+}
+
+interface ActivitiesOptionsFormikTypes {
+  touched: ActivitiesOptionsFormTypes;
+  errors: ActivitiesOptionsFormTypes;
+  initialValues: ActivitiesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ActivitiesOptionsFormTypes;
+}
+
 //Company
 
 interface CompaniesOptionsFormTypes {
@@ -92,10 +112,7 @@ interface CompaniesOptionsFormikTypes {
   values: CompaniesOptionsFormTypes;
 }
 
-interface CompanyFormTypes extends CompanyTypes {
-  ownerId: string[];
-  proCode: string[];
-}
+interface CompanyFormTypes extends CompanyTypes {}
 
 interface CompanyFormikTypes {
   touched: CompanyFormTypes;
@@ -353,6 +370,23 @@ interface UsersOptionsFormikTypes {
   values: UsersOptionsFormTypes;
 }
 
+//Download Excel
+
+interface DownloadExcelFormTypes {
+  fileName: string;
+}
+
+interface DownloadExcelFormikTypes {
+  touched: DownloadExcelFormTypes;
+  errors: DownloadExcelFormTypes;
+  initialValues: DownloadExcelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: DownloadExcelFormTypes;
+}
+
 //Delete
 
 interface DeleteFormTypes {}
@@ -389,7 +423,9 @@ type AllFormsTypes =
   | EmployeeFormTypes
   | EmployeesOptionsFormTypes
   | CustomersOptionsFormikTypes
-  | CustomerFormTypes;
+  | CustomerFormTypes
+  | DownloadExcelFormTypes
+  | ActivitiesOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -412,7 +448,9 @@ type AllFormiksTypes =
   | EmployeeFormikTypes
   | EmployeesOptionsFormikTypes
   | CustomersOptionsFormikTypes
-  | CustomerFormikTypes;
+  | CustomerFormikTypes
+  | DownloadExcelFormikTypes
+  | ActivitiesOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -428,6 +466,8 @@ interface CatchErrorTypes {
 }
 
 export type {
+  ActivitiesOptionsFormikTypes,
+  ActivitiesOptionsFormTypes,
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,
@@ -441,6 +481,8 @@ export type {
   CustomersOptionsFormTypes,
   DeleteFormikTypes,
   DeleteFormTypes,
+  DownloadExcelFormikTypes,
+  DownloadExcelFormTypes,
   EmployeeFormikTypes,
   EmployeeFormTypes,
   EmployeesOptionsFormikTypes,

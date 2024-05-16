@@ -24,7 +24,6 @@ const useProSchema = () => {
     fileImmgNo: yup.string(),
     status: yup.string(),
     remarks: yup.string(),
-    proCode: yup.boolean(),
   });
 
   const ProInitailValues = {
@@ -43,7 +42,6 @@ const useProSchema = () => {
     remarks: editableProData?.remarks || "",
     state: editableProData?.state || "",
     address: editableProData?.address || "",
-    proCode: editableProData?.proCode || "",
     residenceExpiryDate:
       (editableProData?.residenceExpiryDate &&
         new Date(editableProData?.residenceExpiryDate)
