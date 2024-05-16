@@ -12,6 +12,10 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     setCompanyImage,
     ownerImage,
     setOwnerImage,
+    customerImage,
+    setCustomerImage,
+    proImage,
+    setProImage,
     userImage,
     setUserImage,
   } = useContext(FormsContext);
@@ -21,6 +25,10 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       ? companyImage || defaultCompany
       : variant === "addOwner" || variant === "editOwner"
       ? ownerImage || defaultAvatar
+      : variant === "addPro" || variant === "editPro"
+      ? proImage || defaultAvatar
+      : variant === "addCustomer" || variant === "editCustomer"
+      ? customerImage || defaultAvatar
       : variant === "addUser" || variant === "editUser"
       ? userImage || defaultAvatar
       : defaultAvatar
@@ -34,6 +42,10 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         setCompanyImage(image);
       } else if (variant === "addOwner" || variant === "editOwner") {
         setOwnerImage(image);
+      } else if (variant === "addPro" || variant === "editPro") {
+        setProImage(image);
+      } else if (variant === "addCustomer" || variant === "editCustomer") {
+        setCustomerImage(image);
       } else if (variant === "addUser" || variant === "editUser") {
         setUserImage(image);
       }
@@ -47,15 +59,21 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         ? companyImage || defaultCompany
         : variant === "addOwner" || variant === "editOwner"
         ? ownerImage || defaultAvatar
+        : variant === "addPro" || variant === "editPro"
+        ? proImage || defaultAvatar
+        : variant === "addCustomer" || variant === "editCustomer"
+        ? customerImage || defaultAvatar
         : variant === "addUser" || variant === "editUser"
         ? userImage || defaultAvatar
         : defaultAvatar
     );
   }, [
     companyImage,
+    customerImage,
     defaultAvatar,
     defaultCompany,
     ownerImage,
+    proImage,
     userImage,
     variant,
   ]);

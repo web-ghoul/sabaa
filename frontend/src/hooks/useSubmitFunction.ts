@@ -46,6 +46,7 @@ import {
   ResetPasswordFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
+import { CustomerTypes } from "../types/store.types";
 
 const server = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
@@ -143,7 +144,7 @@ const useSubmitFunction = (type: string) => {
   };
 
   const handleOwnerFormData = (
-    values: OwnerFormTypes | ProFormTypes,
+    values: OwnerFormTypes | ProFormTypes | CustomerTypes,
     type: "pro" | "customer" | "owner"
   ) => {
     const avatar = type
@@ -171,6 +172,16 @@ const useSubmitFunction = (type: string) => {
       formData.append("emiratesId", values.emiratesId.trim());
     }
     formData.append("state", values.state.trim());
+    if (type !== "customer") {
+      formData.append("status", values.status.trim());
+      formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
+      if (values.residenceExpiryDate) {
+        formData.append(
+          "residenceExpiryDate",
+          values.residenceExpiryDate?.toString().trim()
+        );
+      }
+    }
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }

@@ -135,10 +135,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as OwnerTypes).name}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as OwnerTypes[]).indexOf(option as OwnerTypes) !==
-                    -1
-                  }
                 />
               );
             } else if (name === "companyId") {
@@ -146,11 +142,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as CompanyTypes).name}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as CompanyTypes[]).indexOf(
-                      option as CompanyTypes
-                    ) !== -1
-                  }
                 />
               );
             } else if (name === "job") {
@@ -158,11 +149,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as unknown as JobTypes).jobTitle}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as JobTypes[]).indexOf(
-                      option as unknown as JobTypes
-                    ) !== -1
-                  }
                 />
               );
             } else if (name === "nationality") {

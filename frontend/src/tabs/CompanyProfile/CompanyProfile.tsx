@@ -6,6 +6,7 @@ import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
+import CustomersTable from "../../tables/CustomersTable/CustomersTable";
 import EmployeesTable from "../../tables/EmployeesTable/EmployeesTable";
 import OwnersTable from "../../tables/OwnersTable/OwnersTable";
 import ProsTable from "../../tables/ProsTable/ProsTable";
@@ -23,6 +24,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         "Profile Info",
         "Owners",
         "Officers",
+        "Customers",
         "Employees",
         "Transactions",
         "Activities",
@@ -49,6 +51,14 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         <ProsTable
           count={company?.proCode?.length || 0}
           data={company && (company.proCode as ProTypes[])}
+          isLoading={isLoading}
+          noPagination={true}
+        />
+      </CustomTabPanel>
+      <CustomTabPanel value={companyTabsValue} index={2}>
+        <CustomersTable
+          count={company?.proCode?.length || 0}
+          data={[]}
           isLoading={isLoading}
           noPagination={true}
         />
