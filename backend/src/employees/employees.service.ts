@@ -12,9 +12,12 @@ export class EmployeesService {
   async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File) {
     try{
       createEmployeeDto.avatar = file ? file.path : undefined;
-      // console.log(createEmployeeDto);
+      console.log(createEmployeeDto);
       
-      return await this.employeeModel.create(createEmployeeDto);
+      return await Promise.all([
+        this.employeeModel.create(createEmployeeDto),
+        this.companyModel.findByIdAndUpdate(createEmployeeDto.companyId, {$push: {employees: createEmployeeDto._id}})
+      ]) 
 
       //inject in company if exits
     }catch(err)
@@ -24,7 +27,7 @@ export class EmployeesService {
 
   }
 
-  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',cardType:string = '',status:string = '',gender:string = '',isCustomer:boolean = false, deleted: boolean = false) {
+  findAll(limit: number, page: number, search:string,fields: string[],sortType:string,nationality:string = '',cardType:string = '',status:string = '',gender:string = '', deleted: boolean = false) {
     try{
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -55,7 +58,6 @@ export class EmployeesService {
       cardType != '' ? query["cardType"] = cardType : undefined;
       status != '' ? query["status"] = status : null;
       deleted != false ? query["deleted"] = deleted :  query["deleted"] = false;
-      isCustomer != false ? query["isCustomer"] = true : query["isCustomer"] = false;
       gender != '' ? query["gender"] = gender : undefined;
 
       // console.log(query);
@@ -68,11 +70,11 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [owner, companies=[]] = await Promise.all([
+    const [employee, companies=[]] = await Promise.all([
       this.employeeModel.findById(id),
       // this.companyModel.find({employees: { $in: {id}}})
     ])
-    return {owner,companies}
+    return {employee,companies}
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {

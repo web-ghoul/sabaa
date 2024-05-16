@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 
 export type ActivityLogDocument = HydratedDocument<ActivityLog>;
 
@@ -10,11 +10,21 @@ export class ActivityLog {
     action: string;
 
     @Prop()
-    type: string;
+    route: string;
 
-    @Prop({type : Object})
-    data : object
+    @Prop({type: mongoose.Types.ObjectId})
+    id : ObjectId
 
+    @Prop()
+    ownerType: string;
+
+    @Prop({ type: mongoose.Types.ObjectId, ref: 'User'})
+    userId: ObjectId
+
+    @Prop()
+    userName:string 
+
+   
 }
 
 export const ActivityLogSchema = SchemaFactory.createForClass(ActivityLog);

@@ -20,7 +20,7 @@ export class Employee {
     personCode: string;
   
     @Prop({ type: [String], ref: 'Company', required: true })
-    companyCode: [string];
+    companyId: [string];
 
     @Prop()
     companyName: [string]
@@ -28,11 +28,14 @@ export class Employee {
     @Prop({ type: Date })
     dob: Date;
 
-    @Prop({type: String, enum: ["Active", "Cancel", "Abscond", "Complaint"]})
+    @Prop({type: String, default: "Cancel", enum: ["Active", "Cancel", "Abscond", "Complaint"]})
     status: string
 
     @Prop()
     cardType: string
+
+    @Prop()
+    cardNumber: string;
 
     @Prop()
     job: string
@@ -92,8 +95,6 @@ export class Employee {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 
-    @Prop({default: false})
-    isCustomer: boolean
 
     @Prop({default : false})
     deleted: boolean;

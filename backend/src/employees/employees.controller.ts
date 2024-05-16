@@ -23,8 +23,8 @@ export class EmployeesController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('nationality')nationality:string,@Query('cardType')cardType:string,@Query('status')status:string,@Query('gender')gender:string,@Query('isCustomer')isCustomer:boolean,@Query('deleted')deleted:boolean ) {
-    return this.employeesService.findAll(limit,page,search,selectFields,sort,nationality,cardType,status,gender,isCustomer,deleted);
+  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('nationality')nationality:string,@Query('cardType')cardType:string,@Query('status')status:string,@Query('gender')gender:string,@Query('deleted')deleted:boolean ) {
+    return this.employeesService.findAll(limit,page,search,selectFields,sort,nationality,cardType,status,gender,deleted);
   }
 
   @Get("counters")
