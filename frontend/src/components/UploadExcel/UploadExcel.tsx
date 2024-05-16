@@ -163,6 +163,7 @@ const UploadExcel = ({
       owner["remarks"] = `${data[i][10]}`;
       owner["state"] = `${data[i][11]}`;
       owner["address"] = `${data[i][12]}`;
+      owner["type"] = `owner`;
       owners.push(owner);
     }
     handleAddOwnersSheet({ fileName: file.name, data: owners });
@@ -207,7 +208,6 @@ const UploadExcel = ({
         remarks: "",
         state: "",
         proCode: true,
-        isPro: "true",
         fileImmgNo: "",
         status: "",
       };
@@ -224,7 +224,7 @@ const UploadExcel = ({
       pro["remarks"] = `${data[i][10]}`;
       pro["state"] = `${data[i][11]}`;
       pro["address"] = `${data[i][12]}`;
-      pro["isPro"] = `true`;
+      pro["type"] = `pro`;
       pros.push(pro);
     }
     handleAddProsSheet({ fileName: file.name, data: pros });
@@ -268,7 +268,6 @@ const UploadExcel = ({
         email: "",
         remarks: "",
         state: "",
-        isCustomer: "true",
         sponsor: "",
         proCode: false,
         fileImmgNo: "",
@@ -287,7 +286,7 @@ const UploadExcel = ({
       customer["remarks"] = `${data[i][10]}`;
       customer["state"] = `${data[i][11]}`;
       customer["address"] = `${data[i][12]}`;
-      customer["isCustomer"] = `true`;
+      customer["type"] = `customer`;
       customers.push(customer);
     }
     handleAddCustomersSheet({ fileName: file.name, data: customers });
@@ -318,7 +317,7 @@ const UploadExcel = ({
         name: "",
         nameAr: "",
         personCode: "",
-        companyCode: "",
+        companyId: "",
         companyName: "",
         idNationality: "",
         nationality: "",
@@ -352,8 +351,8 @@ const UploadExcel = ({
       employee["lcExpireDate"] = new Date(`${data[i][7]}`);
       employee["gender"] = `${data[i][8]}`;
       employee["uid"] = `${data[i][9]}`;
-      employee["companyCode"] = `${id || ""}`;
-      employee["companyCode"] = `${(company && company.name) || ""}`;
+      employee["companyId"] = `${id || ""}`;
+      employee["companyName"] = `${(company && company.name) || ""}`;
       employees.push(employee);
     }
     handleAddEmployeesSheet({ fileName: file.name, data: employees });

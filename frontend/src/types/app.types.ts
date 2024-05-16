@@ -44,4 +44,44 @@ interface AlertFunTypes {
   dur?: number;
 }
 
-export type { AlertFunTypes, ImportMetaEnv };
+type EntitiesType =
+  | "companies"
+  | "users"
+  | "owners"
+  | "employees"
+  | "customers"
+  | "transactions"
+  | "officers"
+  | "nationalities"
+  | "jobs";
+
+type EntityType =
+  | "company"
+  | "user"
+  | "owner"
+  | "employee"
+  | "customer"
+  | "transaction"
+  | "officer"
+  | "job"
+  | "nationality";
+
+type HeadsType =
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "subtitle1"
+  | "subtitle2"
+  | "body1"
+  | "body2";
+
+export type {
+  AlertFunTypes,
+  EntitiesType,
+  EntityType,
+  HeadsType,
+  ImportMetaEnv,
+};

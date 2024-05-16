@@ -1,5 +1,6 @@
 import { FormikProps } from "formik";
 import { ReactNode } from "react";
+import { EntitiesType, EntityType, HeadsType } from "./app.types";
 import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
@@ -19,14 +20,7 @@ interface LogoTypes {
 
 interface TotalBoxTypes {
   count: number;
-  variant:
-    | "users"
-    | "owners"
-    | "companies"
-    | "officers"
-    | "employees"
-    | "customers"
-    | "transactions";
+  variant: EntitiesType;
   isLoading?: boolean;
 }
 
@@ -35,7 +29,7 @@ interface UserBoxTypes {
   username: string;
   role?: string;
   menu?: boolean;
-  head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2";
+  head?: HeadsType;
   size: "small" | "medium" | "large" | "xlarge" | "2xlarge" | "3xlarge";
   res?: boolean;
   variant?: string;
@@ -79,7 +73,7 @@ interface SubmitButtonTypes {
 }
 
 interface TitleTypes {
-  head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  head?: HeadsType;
   title: string;
   align?: "center" | "left" | "right";
 }
@@ -114,7 +108,7 @@ interface AutoCompleteSearchTypes {
 
 interface ProfileDetailsTypes {
   title: string;
-  variant: "user" | "owner" | "company" | "pro" | "employee" | "customer";
+  variant: EntityType;
   data:
     | UserTypes
     | OwnerTypes

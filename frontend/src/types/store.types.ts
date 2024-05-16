@@ -1,3 +1,5 @@
+import { EntityType } from "./app.types";
+
 interface AuthValuesTypes {
   token: string | null;
   userId: string | null;
@@ -6,7 +8,7 @@ interface AuthValuesTypes {
 }
 
 interface ActivityTypes {
-  type: "owner" | "employee" | "company" | "pro" | "customer";
+  type: EntityType;
 }
 
 interface ActivitiesValuesTypes {
@@ -96,8 +98,7 @@ interface OwnerTypes {
   personCode: string;
   fileImmgNo: string;
   status: string;
-  isPro?: string;
-  isCustomer?: string;
+  type?: string;
   residenceExpiryDate?: Date;
   createdAt?: Date;
   user?: string;
@@ -230,7 +231,7 @@ interface EmployeeTypes {
   nameAr: string;
   dob?: Date;
   personCode: string;
-  companyCode: string;
+  companyId: string;
   companyName: string;
   idNationality: string;
   nationality: string;
@@ -457,34 +458,34 @@ export type {
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
-  CustomerTypes,
-  CustomerValuesTypes,
   CustomersArgsTypes,
   CustomersCounterValuesTypes,
   CustomersValuesTypes,
-  EmployeeTypes,
-  EmployeeValuesTypes,
+  CustomerTypes,
+  CustomerValuesTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,
-  JobTypes,
+  EmployeeTypes,
+  EmployeeValuesTypes,
   JobsArgsTypes,
   JobsCounterValuesTypes,
   JobsValuesTypes,
+  JobTypes,
   NationalitiesArgsTypes,
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
-  OwnerTypes,
-  OwnerValuesTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
-  ProTypes,
-  ProValuesTypes,
+  OwnerTypes,
+  OwnerValuesTypes,
   ProsArgsTypes,
   ProsCounterValuesTypes,
   ProsValuesTypes,
+  ProTypes,
+  ProValuesTypes,
   RecentActivitiesArgsTypes,
   RecentActivitiesValuesTypes,
   RecentCompaniesArgsTypes,
@@ -503,9 +504,9 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
-  UserTypes,
-  UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,
+  UserTypes,
+  UserValuesTypes,
 };

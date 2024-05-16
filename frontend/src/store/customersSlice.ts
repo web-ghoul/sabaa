@@ -23,7 +23,7 @@ export const getCustomers = createAsyncThunk(
         args?.state || ""
       }&nationality=${args?.nationality || ""}&page=${
         args?.page || 0
-      }&isPro=true`,
+      }&type=customer`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

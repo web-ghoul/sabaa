@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
+import { Fragment } from "react/jsx-runtime";
 import ActivityBox from "../components/ActivityBox/ActivityBox";
 import LoadingActivityBox from "../components/ActivityBox/LoadingActivityBox";
 import { handleRandomNumber } from "../functions/handleRandomNumber";
@@ -16,10 +17,20 @@ const ActivitiesSection = ({
       className={`grid justify-stretch items-center gap-4 md:gap-3 sm:!gap-2`}
     >
       {!isLoading && data
-        ? data.map((activity, i) => <ActivityBox key={i} activity={activity} />)
+        ? data.map((activity, i) => (
+            <Fragment key={i}>
+              <Divider />
+              <ActivityBox activity={activity} />
+            </Fragment>
+          ))
         : Array(handleRandomNumber())
             .fill(0)
-            .map((_, i) => <LoadingActivityBox key={i} />)}
+            .map((_, i) => (
+              <Fragment key={i}>
+                <Divider />
+                <LoadingActivityBox />
+              </Fragment>
+            ))}
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { EntitiesType } from "../types/app.types";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -18,6 +19,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   formsLoading: false,
   handleCloseFormsLoading: () => {},
   handleOpenFormsLoading: () => {},
+  openDownloadExcelModal: false,
+  handleOpenDownloadExcelModal: () => {},
+  handleCloseDownloadExcelModal: () => {},
   openLinkToCompanyModal: false,
   handleOpenLinkToCompanyModal: () => {},
   handleCloseLinkToCompanyModal: () => {},
@@ -56,6 +60,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   handleCloseNationalityModal: () => {},
   formType: "",
   setFormType: () => {},
+  excelType: { type: "excel", entity: "companies" },
+  setExcelType: () => {},
   searchForOwners: "",
   setSearchForOwners: () => {},
   searchForEmployees: "",
@@ -112,6 +118,12 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Form Type
   const [formType, setFormType] = useState("");
 
+  //Excel Type
+  const [excelType, setExcelType] = useState<{
+    type: "excel" | "all";
+    entity: EntitiesType;
+  }>({ type: "excel", entity: "companies" });
+
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
@@ -140,6 +152,21 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const handleOpenUploadEmployeesModal = () => {
     setOpenUploadEmployeesModal(true);
+  };
+
+  //Downalod Excel
+  const [openDownloadExcelModal, setOpenDownloadExcelModal] = useState(false);
+
+  const handleCloseDownloadExcelModal = () => {
+    setOpenDownloadExcelModal(false);
+  };
+
+  const handleOpenDownloadExcelModal = (
+    type: "excel" | "all",
+    entity: EntitiesType
+  ) => {
+    setOpenDownloadExcelModal(true);
+    setExcelType({ type: type, entity: entity });
   };
 
   //Link Company
@@ -469,6 +496,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openUploadEmployeesModal,
     handleCloseUploadEmployeesModal,
     handleOpenUploadEmployeesModal,
+    openDownloadExcelModal,
+    handleCloseDownloadExcelModal,
+    handleOpenDownloadExcelModal,
+    excelType,
+    setExcelType,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

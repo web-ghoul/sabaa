@@ -14,6 +14,7 @@ import CreateProsSheetForm from "./CreateProsSheetForm/CreateProsSheetForm";
 import CustomerForm from "./CustomerForm/CustomerForm";
 import CustomersOptionsForm from "./CustomersOptionsForm/CustomersOptionsForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
+import DownloadExcelForm from "./DownloadExcelForm/DownloadExcelForm";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import EmployeesOptionsForm from "./EmployeesOptionsForm/EmployeesOptionsForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
@@ -157,6 +158,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "forgotPassword" && (
         <ForgotPasswordForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "downloadExcel" && (
+        <DownloadExcelForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}

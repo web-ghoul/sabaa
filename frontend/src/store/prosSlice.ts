@@ -20,7 +20,7 @@ export const getPros = createAsyncThunk(
         args?.state || ""
       }&nationality=${args?.nationality || ""}&page=${
         args?.page || 0
-      }&isPro=true`,
+      }&type=pro`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

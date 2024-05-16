@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
-import AddCustomer from "./pages/AddCustomer.tsx";
 import AddEmployee from "./pages/AddEmployee.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
@@ -10,7 +9,6 @@ import Customer from "./pages/Customer.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
-import EditCustomer from "./pages/EditCustomer.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
@@ -76,14 +74,6 @@ export const router = createBrowserRouter([
       {
         path: "/customers/:id",
         element: <Customer />,
-      },
-      {
-        path: "/customers/add",
-        element: <AddCustomer />,
-      },
-      {
-        path: "/customers/:id/edit",
-        element: <EditCustomer />,
       },
       {
         path: "/customers/upload",

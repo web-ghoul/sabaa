@@ -17,6 +17,7 @@ import { AppContext } from "./contexts/AppContext.tsx";
 import CompanyModal from "./modals/CompanyModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
+import DownloadExcelModal from "./modals/DownloadExcelModal.tsx";
 import EmployeeModal from "./modals/EmployeeModal.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
@@ -87,6 +88,7 @@ const App = () => {
       <LinkToCompanyModal />
       <UploadEmployeesModal />
       <NationalityModal />
+      <DownloadExcelModal />
       <DeleteModal />
       <Toaster />
       <Header />

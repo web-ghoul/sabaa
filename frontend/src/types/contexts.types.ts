@@ -1,4 +1,5 @@
 import { MouseEvent } from "react";
+import { EntitiesType } from "./app.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -107,6 +108,12 @@ interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
   handleOpenFormsLoading: () => void;
+  openDownloadExcelModal: boolean;
+  handleOpenDownloadExcelModal: (
+    type: "excel" | "all",
+    entity: EntitiesType
+  ) => void;
+  handleCloseDownloadExcelModal: () => void;
   openLinkToCompanyModal: boolean;
   handleOpenLinkToCompanyModal: (type: string) => void;
   handleCloseLinkToCompanyModal: () => void;
@@ -136,6 +143,11 @@ interface FormsContextTypes {
   handleCloseCompanyModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
+  excelType: { type: "excel" | "all"; entity: EntitiesType };
+  setExcelType: (value: {
+    type: "excel" | "all";
+    entity: EntitiesType;
+  }) => void;
   searchForOwners: string;
   setSearchForOwners: (search: string) => void;
   searchForEmployees: string;

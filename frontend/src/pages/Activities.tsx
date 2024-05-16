@@ -1,20 +1,22 @@
-import { Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
+import ActivitiesSection from "../sections/ActivitiesSection";
 import { getActivities } from "../store/activitiesSlice";
 import { AppDispatch, RootState } from "../store/store";
 
 const Activities = () => {
-  const { activities } = useSelector((state: RootState) => state.activities);
+  const { activities, isLoading } = useSelector(
+    (state: RootState) => state.activities
+  );
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
 
   useEffect(() => {
-    console.log(activities);
     dispatch(getActivities());
   }, [dispatch]);
 
@@ -26,6 +28,9 @@ const Activities = () => {
             Activities
           </Typography>
         </BreadCrumbs>
+        <Paper className={`paper`}>
+          <ActivitiesSection data={activities} isLoading={isLoading} />
+        </Paper>
       </PrimaryContainer>
     </PrimaryBox>
   );

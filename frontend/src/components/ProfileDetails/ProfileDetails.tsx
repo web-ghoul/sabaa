@@ -255,7 +255,7 @@ const ProfileDetails = ({
             </Box>
           </Box>
         </Paper>
-      ) : variant === "pro" ? (
+      ) : variant === "officer" ? (
         <Paper className={profileClasses} elevation={11}>
           <Title align={"left"} head={"h4"} title={title} />
           <Box className={profileDataClasses}>

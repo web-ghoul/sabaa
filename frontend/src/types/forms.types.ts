@@ -353,6 +353,23 @@ interface UsersOptionsFormikTypes {
   values: UsersOptionsFormTypes;
 }
 
+//Download Excel
+
+interface DownloadExcelFormTypes {
+  fileName: string;
+}
+
+interface DownloadExcelFormikTypes {
+  touched: DownloadExcelFormTypes;
+  errors: DownloadExcelFormTypes;
+  initialValues: DownloadExcelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: DownloadExcelFormTypes;
+}
+
 //Delete
 
 interface DeleteFormTypes {}
@@ -389,7 +406,8 @@ type AllFormsTypes =
   | EmployeeFormTypes
   | EmployeesOptionsFormTypes
   | CustomersOptionsFormikTypes
-  | CustomerFormTypes;
+  | CustomerFormTypes
+  | DownloadExcelFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -412,7 +430,8 @@ type AllFormiksTypes =
   | EmployeeFormikTypes
   | EmployeesOptionsFormikTypes
   | CustomersOptionsFormikTypes
-  | CustomerFormikTypes;
+  | CustomerFormikTypes
+  | DownloadExcelFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -441,6 +460,8 @@ export type {
   CustomersOptionsFormTypes,
   DeleteFormikTypes,
   DeleteFormTypes,
+  DownloadExcelFormikTypes,
+  DownloadExcelFormTypes,
   EmployeeFormikTypes,
   EmployeeFormTypes,
   EmployeesOptionsFormikTypes,

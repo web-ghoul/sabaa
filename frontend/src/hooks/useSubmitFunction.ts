@@ -6,6 +6,7 @@ import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
+import { handleDownloadExcel } from "../functions/handleDownloadExcel";
 import { getProfile, login as loginAction } from "../store/auth";
 import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
@@ -33,6 +34,7 @@ import {
   AllFormsTypes,
   CompanyFormTypes,
   CustomerFormTypes,
+  DownloadExcelFormTypes,
   EmployeeFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
@@ -68,6 +70,7 @@ const useSubmitFunction = (type: string) => {
     editableUserData,
     editableOwnerData,
     formType,
+    excelType,
     editableCompanyData,
     editableCustomerData,
     editableProData,
@@ -113,6 +116,16 @@ const useSubmitFunction = (type: string) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
+  const { owners } = useSelector((state: RootState) => state.owners);
+  const { companies } = useSelector((state: RootState) => state.companies);
+  const { employees } = useSelector((state: RootState) => state.employees);
+  const { jobs } = useSelector((state: RootState) => state.jobs);
+  const { nationalities } = useSelector(
+    (state: RootState) => state.nationalities
+  );
+  const { users } = useSelector((state: RootState) => state.users);
+  const { customers } = useSelector((state: RootState) => state.customers);
+  const { pros } = useSelector((state: RootState) => state.pros);
   const { id } = useParams();
 
   const handleUserFormData = (values: UserFormTypes) => {
@@ -131,7 +144,7 @@ const useSubmitFunction = (type: string) => {
 
   const handleOwnerFormData = (
     values: OwnerFormTypes | ProFormTypes,
-    type?: "pro" | "customer"
+    type: "pro" | "customer" | "owner"
   ) => {
     const avatar = type
       ? type === "pro"
@@ -162,8 +175,7 @@ const useSubmitFunction = (type: string) => {
       formData.append("dob", values.dob.toString().trim());
     }
     formData.append("proCode", values.proCode ? "true" : "false");
-    formData.append("isPro", type === "pro" ? "true" : "false");
-    formData.append("isCustomer", type === "customer" ? "true" : "false");
+    formData.append("type", type);
     return formData;
   };
 
@@ -174,7 +186,7 @@ const useSubmitFunction = (type: string) => {
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
     formData.append("personCode", values.personCode.trim());
-    formData.append("companyCode", values.companyCode.trim());
+    formData.append("companyId", values.companyId.trim());
     formData.append("companyName", values.companyName.trim());
     formData.append("nationality", values.nationality.trim());
     formData.append("idNationality", values.idNationality.trim());
@@ -527,7 +539,7 @@ const useSubmitFunction = (type: string) => {
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values), {
+      .post(`/owner`, handleOwnerFormData(values, "owner"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -561,7 +573,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableOwnerData && editableOwnerData._id}`,
-          handleOwnerFormData(values),
+          handleOwnerFormData(values, "owner"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -1024,8 +1036,47 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  //Delete
+  //Download Excel
+  const handleDownloadExcelSubmit = async (values: DownloadExcelFormTypes) => {
+    handleOpenFormsLoading();
+    const fileName = values.fileName;
+    if (excelType.entity === "owners") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(owners, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "officers") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(pros, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "customers") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(customers, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "employees") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(employees, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "jobs") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(jobs, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "nationalities") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(nationalities, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "users") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(users, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "companies") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(companies, excelType.entity, fileName);
+      }
+    }
+    handleCloseFormsLoading();
+  };
 
+  //Delete
   const handleDelete = async () => {
     handleOpenFormsLoading();
     if (formType === "owner") {
@@ -1350,6 +1401,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);
+        break;
+      case "downloadExcel":
+        handleDownloadExcelSubmit(values as DownloadExcelFormTypes);
         break;
       case "delete":
         handleDelete();

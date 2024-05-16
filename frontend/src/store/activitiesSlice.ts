@@ -20,7 +20,6 @@ export const getActivities = createAsyncThunk(
         },
       }
     );
-    console.log(res.data);
     return res.data;
   }
 );
