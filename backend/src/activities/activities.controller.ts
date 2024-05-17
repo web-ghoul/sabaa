@@ -18,10 +18,10 @@ export class ActivitiesController {
   @Query('search') search: string,
   @Query('to') to: string,
   @Query('from') from: string,
-  @Query('opertation') opertation: string,
+  @Query('operation') operation: string,
   @Query('type') route: string,
 ) {
-    return this.activitiesService.findAll(limit,page,search,opertation,from,to,route);
+    return this.activitiesService.findAll(limit,page,search,operation,from,to,route);
   }
 
   @Get(':id')

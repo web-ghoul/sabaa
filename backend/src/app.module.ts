@@ -16,17 +16,20 @@ import { NationalityModule } from './nationality/nationality.module';
 import { JobTitleModule } from './job-title/job-title.module';
 import { CompanyModule } from './company/company.module';
 import { ImmgcardModule } from './immgcard/immgcard.module';
-import { User } from 'schemas/user.schema';
-import { UserSchema } from 'schemas/resetOtp.schema';
+import { User, UserSchema } from 'schemas/user.schema';
 import { EmployeesModule } from './employees/employees.module';
 import { ActivitiesModule } from './activities/activities.module';
+import { MailsModule } from './mails/mails.module';
 
 dotenv.config();
 @Module({
   imports: [UserModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
-  }]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule],
+  },
+  
+]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
+MailsModule,],
   controllers: [AppController],
   providers: [AppService,
     {

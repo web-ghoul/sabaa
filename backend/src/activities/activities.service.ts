@@ -12,7 +12,7 @@ export class ActivitiesService {
     return 'This action adds a new activity';
   }
 
-  findAll(limit: number, page: number, search: string = '', opertation: string = '', from: string = '', to: string= '', route: string= '') {
+  findAll(limit: number, page: number, search: string = '', operation: string = '', from: string = '', to: string= '', route: string= '') {
 
     const query = {}  
 
@@ -26,7 +26,7 @@ export class ActivitiesService {
     from != ''
         ? (query['createdAt'] = { $gte: new Date(from), $lte: new Date(to) })
         : null;
-    opertation != '' ? (query['action'] = opertation) : undefined;
+    operation  != '' ? (query['action'] = operation ) : undefined;
     route != '' ? (query['route'] = route) : undefined;
     console.log(query);
     
