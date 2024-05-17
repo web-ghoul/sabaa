@@ -9,7 +9,10 @@ interface AuthValuesTypes {
 
 interface ActivityTypes {
   type: EntityType;
-  actions: string;
+  userName: string;
+  id: string;
+  avatar?: string;
+  action: string;
   userId: UserTypes;
   route: string;
   createdAt?: Date;
@@ -102,7 +105,6 @@ interface OwnerTypes {
   remarks: string;
   state: string;
   address: string;
-  proCode: boolean;
   emiratesId: string;
   personCode: string;
   fileImmgNo: string;

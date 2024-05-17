@@ -13,7 +13,7 @@ export const getRecentOwners = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/owner?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
-      }&page=0`,
+      }&page=0&type=owner`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

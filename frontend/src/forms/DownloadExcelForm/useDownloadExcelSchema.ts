@@ -11,7 +11,7 @@ const useDownloadExcelSchema = () => {
   });
 
   const DownloadExcelInitailValues = {
-    fileName: excelType.entity,
+    fileName: excelType.entity.toUpperCase(),
   };
 
   return { DownloadExcelSchema, DownloadExcelInitailValues };

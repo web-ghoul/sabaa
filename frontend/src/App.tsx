@@ -28,11 +28,7 @@ import ProModal from "./modals/ProModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import { getProfile, setAuth } from "./store/auth.ts";
-import { getCompaniesCounter } from "./store/companiesCounterSlice.ts";
-import { getEmployeesCounter } from "./store/employeesCounterSlice.ts";
-import { getOwnersCounter } from "./store/ownersCounterSlice.ts";
 import { AppDispatch } from "./store/store.ts";
-import { getUsersCounter } from "./store/usersCounterSlice.ts";
 
 const AuthRoutes = [
   `${import.meta.env.VITE_LOGIN_ROUTE}`,
@@ -54,10 +50,6 @@ const App = () => {
     if (token && userId) {
       dispatch(setAuth({ token, userId }));
       dispatch(getProfile());
-      dispatch(getOwnersCounter());
-      dispatch(getCompaniesCounter());
-      dispatch(getUsersCounter());
-      dispatch(getEmployeesCounter());
       setSigned(true);
     } else {
       if (!AuthRoutes.includes(pathname)) {

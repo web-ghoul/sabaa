@@ -24,8 +24,12 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenOwnerModal, searchForOwners, setSearchForOwners } =
-    useContext(FormsContext);
+  const {
+    handleOpenOwnerModal,
+    searchForOwners,
+    setSearchForOwners,
+    handleOpenDownloadExcelModal,
+  } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -57,6 +61,10 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getOwners({ ...queries, search: searchForOwners }));
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "owners");
   };
 
   const handleResetAll = () => {
@@ -126,7 +134,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcel}
           />
           <Button
             title={"Excel All"}

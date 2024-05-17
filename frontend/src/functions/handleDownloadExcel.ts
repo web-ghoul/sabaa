@@ -58,17 +58,27 @@ export const handleDownloadExcel = (
           email: company.email,
           tenancyContractValue: company.tenancyContractValue,
           tenancyContractExp: handleDate(company.tenancyContractExp),
-          username: company.username,
+          username: company.userName,
           password: company.password,
           echannelExpiryDate: handleDate(company.echannelExpiryDate),
           remarks: company.remarks,
           createdAt: handleDate(company.createdAt),
         };
         newData.push(newCompany);
+      } else if (variant === "users") {
+        const user = data[i] as UserTypes;
+        const newUser: { [key: string]: string } = {
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          phone: user.phone,
+          status: user.status,
+          createdAt: handleDate(user.createdAt),
+        };
+        newData.push(newUser);
       } else if (variant === "owners") {
         const owner = data[i] as OwnerTypes;
         const newOwner: { [key: string]: string } = {
-          avatar: owner.avatar,
           name: owner.name,
           nameAr: owner.nameAr,
           uid: owner.uid,
@@ -84,10 +94,46 @@ export const handleDownloadExcel = (
           remarks: owner.remarks,
         };
         newData.push(newOwner);
+      } else if (variant === "officers") {
+        const pro = data[i] as ProTypes;
+        const newPro: { [key: string]: string } = {
+          name: pro.name,
+          nameAr: pro.nameAr,
+          uid: pro.uid,
+          personCode: pro.personCode,
+          emiratesId: pro.emiratesId,
+          status: pro.status,
+          nationality: pro.nationality,
+          phone: pro.phone,
+          email: pro.email,
+          state: pro.state,
+          address: pro.address,
+          fileImmgNo: pro.fileImmgNo,
+          remarks: pro.remarks,
+        };
+        newData.push(newPro);
+      } else if (variant === "customers") {
+        const customer = data[i] as CustomerTypes;
+        const newCustomer: { [key: string]: string } = {
+          name: customer.name,
+          nameAr: customer.nameAr,
+          uid: customer.uid,
+          personCode: customer.personCode,
+          emiratesId: customer.emiratesId,
+          status: customer.status,
+          nationality: customer.nationality,
+          phone: customer.phone,
+          email: customer.email,
+          state: customer.state,
+          address: customer.address,
+          fileImmgNo: customer.fileImmgNo,
+          remarks: customer.remarks,
+          sponsor: customer.sponsor,
+        };
+        newData.push(newCustomer);
       } else if (variant === "employees") {
         const employee = data[i] as EmployeeTypes;
         const newEmployee: { [key: string]: string } = {
-          avatar: employee.avatar,
           name: employee.name,
           nameAr: employee.nameAr,
           personCode: employee.personCode,
@@ -113,6 +159,21 @@ export const handleDownloadExcel = (
           remarks: employee.remarks,
         };
         newData.push(newEmployee);
+      } else if (variant === "jobs") {
+        const job = data[i] as JobTypes;
+        const newJob: { [key: string]: string } = {
+          jobTitle: job.jobTitle,
+          ENSCOCode: job.ENSCOCode,
+          MOHRE: job.MOHRE,
+        };
+        newData.push(newJob);
+      } else if (variant === "nationalities") {
+        const nationality = data[i] as NationalityTypes;
+        const newNationality: { [key: string]: string } = {
+          nationality: nationality.nationality,
+          id: nationality.id,
+        };
+        newData.push(newNationality);
       }
     }
     const wb = XLSX.utils.book_new();

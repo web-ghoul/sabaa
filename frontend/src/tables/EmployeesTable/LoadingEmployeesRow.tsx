@@ -26,17 +26,21 @@ const LoadingEmployeesRow = ({
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-      <PrimaryTableCell align="right">
-        <Skeleton variant="rounded" />
-      </PrimaryTableCell>
+      {!recent && (
+        <PrimaryTableCell align="right">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
       {!smScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-      <PrimaryTableCell align="right">
-        <Skeleton variant="rounded" />
-      </PrimaryTableCell>
+      {!recent && (
+        <PrimaryTableCell align="right">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
       {!mdScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
