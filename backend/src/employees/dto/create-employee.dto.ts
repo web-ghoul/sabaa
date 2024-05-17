@@ -6,7 +6,7 @@ export class CreateEmployeeDto {
   @IsOptional()
   @IsNotEmpty()
   @IsMongoId()
-  _id: string;
+  _id?: ObjectId;
 
   @IsNotEmpty()
   @IsString()

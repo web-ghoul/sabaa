@@ -20,7 +20,7 @@ export class CustomErrorFilter implements ExceptionFilter {
 
         let customError : CustomError = new CustomError(message, status);
 
-        console.log(Object.keys(exception));
+        // console.log(Object.keys(exception));
         
         
         

@@ -6,6 +6,9 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import * as crypto from 'crypto';
 import { ActivityLog } from 'schemas/activityLog.schema';
+import { Response } from 'express';
+import * as exceljs from 'exceljs';
+
 
 @Injectable()
 export class CompanyService {
@@ -232,5 +235,95 @@ export class CompanyService {
       count,
       deleted
     };
+  }
+
+  async export(res: Response) {
+    const companies = await this.companyModel.find({deleted : false});
+
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet('Companies');
+    worksheet.columns = [
+      { header: 'Name', key: 'name', width: 20 },
+      { header: 'Name (Arabic)', key: 'nameAr', width: 20 },
+      { header: 'Logo', key: 'logo', width: 20 },
+      { header: 'Status', key: 'status', width: 20 },
+      { header: 'State', key: 'state', width: 20 },
+      { header: 'Address', key: 'address', width: 20 },
+      { header: 'Phone', key: 'phone', width: 20 },
+      { header: 'Pro Codes', key: 'proCode', width: 30 },
+      { header: 'Owner IDs', key: 'ownerId', width: 30 },
+      { header: 'Customer IDs', key: 'customerId', width: 30 },
+      { header: 'License No', key: 'licenseNo', width: 20 },
+      { header: 'IMMG Card No', key: 'immgCardNo', width: 20 },
+      { header: 'IMMG Card Expiry', key: 'immgCardExpiry', width: 20 },
+      { header: 'License Issue Date', key: 'licenseIssueDate', width: 20 },
+      { header: 'License Expiry Date', key: 'licenseExpiryDate', width: 20 },
+      { header: 'Establishment Type', key: 'establishmentType', width: 20 },
+      { header: 'MOL Code', key: 'molCode', width: 20 },
+      { header: 'MOL Category', key: 'molCategory', width: 20 },
+      { header: 'WhatsApp No', key: 'whatsAppNo', width: 20 },
+      { header: 'Mobile No', key: 'mobileNo', width: 20 },
+      { header: 'E-Channel Expiry Date', key: 'echannelExpiryDate', width: 20 },
+      { header: 'Website', key: 'website', width: 20 },
+      { header: 'TRN', key: 'trn', width: 20 },
+      { header: 'Email', key: 'email', width: 20 },
+      { header: 'Tenancy Contract Value', key: 'tenancyContractValue', width: 20 },
+      { header: 'Tenancy Contract Expiry', key: 'tenancyContractExp', width: 20 },
+      { header: 'Remarks', key: 'remarks', width: 20 },
+      { header: 'Country', key: 'country', width: 20 },
+      { header: 'Zip Code', key: 'zipCode', width: 20 },
+      { header: 'License Issue Place', key: 'licenseIssuePlace', width: 20 },
+      { header: 'Employees', key: 'employees', width: 30 },
+      { header: 'User', key: 'user', width: 20 },
+      { header: 'Deleted', key: 'deleted', width: 10 },
+      { header: 'Username', key: 'userName', width: 20 },
+      { header: 'Password', key: 'password', width: 20 },
+    ];
+
+    companies.forEach(company => {
+      worksheet.addRow({
+        name: company.name,
+        nameAr: company.nameAr,
+        logo: company.logo,
+        status: company.status,
+        state: company.state,
+        address: company.address,
+        phone: company.phone,
+        proCode: company.proCode.join(', '),
+        ownerId: company.ownerId.join(', '),
+        customerId: company.customerId.join(', '),
+        licenseNo: company.licenseNo,
+        immgCardNo: company.immgCardNo,
+        immgCardExpiry: company.immgCardExpiry,
+        licenseIssueDate: company.licenseIssueDate,
+        licenseExpiryDate: company.licenseExpiryDate,
+        establishmentType: company.establishmentType,
+        molCode: company.molCode,
+        molCategory: company.molCategory,
+        whatsAppNo: company.whatsAppNo,
+        mobileNo: company.mobileNo,
+        echannelExpiryDate: company.echannelExpiryDate,
+        website: company.website,
+        trn: company.trn,
+        email: company.email,
+        tenancyContractValue: company.tenancyContractValue,
+        tenancyContractExp: company.tenancyContractExp,
+        remarks: company.remarks,
+        country: company.country,
+        zipCode: company.zipCode,
+        licenseIssuePlace: company.licenseIssuePlace,
+        employees: company.employees.join(', '),
+        user: company.user,
+        deleted: company.deleted,
+        userName: company.userName,
+        password: company.password,
+      });
+    });
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename=companies.xlsx');
+    await workbook.xlsx.write(res);
+
+    res.end();
   }
 }

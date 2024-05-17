@@ -1,5 +1,5 @@
 import { Owner } from './entities/owner.entity';
-import { Controller, Get, Post, Body, Param, Delete, Query, Patch, ParseFilePipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Query, Patch, ParseFilePipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, UseGuards, Res } from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
@@ -9,6 +9,8 @@ import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { User } from 'src/utils/decorators/User.decorator';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Response } from 'express';
+
 
 ApiTags('owner')
 @UseGuards(AuthGuard)
@@ -34,6 +36,11 @@ export class OwnerController {
   @Get("counters")
   getCounters(@Query('type') type:string) {
     return this.ownerService.getCounters(type);
+  }
+
+  @Get("export")
+  export(@Res()  res: Response) {
+    return this.ownerService.export(res);  
   }
 
 

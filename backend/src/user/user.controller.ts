@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors, ValidationPipe} from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Res, UploadedFile, UseGuards, UseInterceptors, ValidationPipe} from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserService } from './user.service';
@@ -10,6 +10,7 @@ import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/enum/role.enum';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'schemas/user.schema';
+import { Response } from 'express';
 
 // import { Request } from 'express';
 @ApiTags('User')
@@ -50,6 +51,11 @@ export class UserController {
   @Get("counters")
   userCounters(){
     return this.userService.userCounters();
+  }
+
+  @Get("export")
+  export(@Res()  res: Response) {
+    return this.userService.export(res);  
   }
 
   @Roles(Role.Admin)

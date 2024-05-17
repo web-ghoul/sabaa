@@ -10,6 +10,7 @@ import {
   Patch,
   Post,
   Query,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { User } from 'src/utils/decorators/User.decorator';
+import { Response } from 'express';
+
 @ApiTags('Company')
 @Controller('company')
 export class CompanyController {
@@ -85,6 +88,11 @@ export class CompanyController {
   @Get('counters')
   getCounters() {
     return this.companyService.getCounters();
+  }
+
+  @Get("export")
+  export(@Res()  res: Response) {
+    return this.companyService.export(res);  
   }
 
   @Get(':id')

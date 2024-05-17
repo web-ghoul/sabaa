@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, Query, Res } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -8,7 +8,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/utils/decorators/User.decorator';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-
+import { Response } from 'express';
 
 ApiTags('employee')
 @UseGuards(AuthGuard)
@@ -33,8 +33,13 @@ export class EmployeesController {
   }
 
   @Get("counters")
-  getCounters(@Query('isCustomer') isCustomer:boolean) {
-    return this.employeesService.getCounters(isCustomer);
+  getCounters() {
+    return this.employeesService.getCounters();
+  }
+
+  @Get("export")
+  export(@Res()  res: Response) {
+    return this.employeesService.export(res);  
   }
 
   @Get(':id')
@@ -58,5 +63,8 @@ export class EmployeesController {
     return this.employeesService.remove(id);
   }
 
+  
+  
+  
 
 }

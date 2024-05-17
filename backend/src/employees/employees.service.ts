@@ -1,11 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { Model, ObjectId } from 'mongoose';
+import mongoose, { Model, ObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Employee } from 'schemas/employee.schema';
 import { Company } from 'schemas/company.schema';
 import { ActivityLog } from 'schemas/activityLog.schema';
+import * as exceljs from 'exceljs';
+import { Response } from 'express';
 
 @Injectable()
 export class EmployeesService {
@@ -85,8 +87,8 @@ export class EmployeesService {
   async findOne(id: string) {
     const [employee, companies, activities] = await Promise.all([
       this.employeeModel.findById(id),
-      this.companyModel.find({employees: { $in: {id}}}),
-      this.activityModel.find({id: id, route: "employee"}).exec()
+      this.companyModel.find({employees:id}),
+      this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
     ])
     return {employee,companies,activities}
   }
@@ -104,10 +106,10 @@ export class EmployeesService {
    
   }
 
-  async getCounters(isCustomer:boolean = false) {
+  async getCounters() {
     const [count,deleted] = await Promise.all([
-      this.employeeModel.countDocuments({deleted : false , isCustomer : isCustomer}),
-      this.employeeModel.countDocuments({deleted : true , isCustomer : isCustomer})
+      this.employeeModel.countDocuments({deleted : false }),
+      this.employeeModel.countDocuments({deleted : true })
     ]) ;
     return {
       count,
@@ -126,5 +128,87 @@ export class EmployeesService {
     {
       throw new HttpException(err , HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async export(res: Response){
+    const employees = await this.employeeModel.find({deleted : false});
+
+      const workbook = new exceljs.Workbook();
+      const worksheet = workbook.addWorksheet('Employees');
+      worksheet.columns = [
+        { header: 'Name', key: 'name', width: 20 },
+        { header: 'Name (Arabic)', key: 'nameAr', width: 20 },
+        { header: 'Avatar', key: 'avatar', width: 20 },
+        { header: 'Person Code', key: 'personCode', width: 20 },
+        { header: 'Company ID', key: 'companyId', width: 20 },
+        { header: 'Company Name', key: 'companyName', width: 20 },
+        { header: 'Date of Birth', key: 'dob', width: 20 },
+        { header: 'Status', key: 'status', width: 20 },
+        { header: 'Card Type', key: 'cardType', width: 20 },
+        { header: 'Card Number', key: 'cardNumber', width: 20 },
+        { header: 'Job', key: 'job', width: 20 },
+        { header: 'Visa File Number', key: 'visaFileNumber', width: 20 },
+        { header: 'Salary', key: 'salary', width: 20 },
+        { header: 'Medical', key: 'medical', width: 20 },
+        { header: 'ILOE', key: 'iLOE', width: 20 },
+        { header: 'Gender', key: 'gender', width: 20 },
+        { header: 'ID Nationality', key: 'idNationality', width: 20 },
+        { header: 'Nationality', key: 'nationality', width: 20 },
+        { header: 'Passport Number', key: 'passportNumber', width: 20 },
+        { header: 'Passport Expiry', key: 'passportExpiry', width: 20 },
+        { header: 'UID', key: 'uid', width: 20 },
+        { header: 'Residence Expire Date', key: 'residenceExpireDate', width: 20 },
+        { header: 'Work Permit Number', key: 'workPermitNumber', width: 20 },
+        { header: 'LC Expire Date', key: 'lcExpireDate', width: 20 },
+        { header: 'Mobile Number', key: 'mobileNumber', width: 20 },
+        { header: 'Email', key: 'email', width: 20 },
+        { header: 'Remarks', key: 'remarks', width: 20 },
+        { header: 'Emirates ID', key: 'emiratesId', width: 20 },
+        { header: 'User', key: 'user', width: 20 },
+        { header: 'Deleted', key: 'deleted', width: 20 },
+        // Add more columns as needed
+      ];
+
+      employees.forEach(employee => {
+        worksheet.addRow({
+          name: employee.name,
+          nameAr: employee.nameAr,
+          avatar: employee.avatar,
+          personCode: employee.personCode,
+          companyId: employee.companyId,
+          companyName: employee.companyName,
+          dob: employee.dob,
+          status: employee.status,
+          cardType: employee.cardType,
+          cardNumber: employee.cardNumber,
+          job: employee.job,
+          visaFileNumber: employee.visaFileNumber,
+          salary: employee.salary,
+          medical: JSON.stringify(employee.medical), // Convert to string for Excel
+          iLOE: JSON.stringify(employee.iLOE), // Convert to string for Excel
+          gender: employee.gender,
+          idNationality: employee.idNationality,
+          nationality: employee.nationality,
+          passportNumber: employee.passportNumber,
+          passportExpiry: employee.passportExpiry,
+          uid: employee.uid,
+          residenceExpireDate: employee.residenceExpireDate,
+          workPermitNumber: employee.workPermitNumber,
+          lcExpireDate: employee.lcExpireDate,
+          mobileNumber: employee.mobileNumber,
+          email: employee.email,
+          remarks: employee.remarks,
+          emiratesId: employee.emiratesId,
+          user: employee.user,
+          deleted: employee.deleted,
+          // Add more properties as needed
+        });
+      });
+
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', 'attachment; filename=employees.xlsx');
+      await workbook.xlsx.write(res);
+
+      res.end();
   }
 }

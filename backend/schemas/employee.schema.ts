@@ -49,8 +49,15 @@ export class Employee {
     @Prop({type : Object})
     medical : object
 
+    @Prop({type : String})
+    medicalPolicyNo : string
+
     @Prop({type : Object})
     iLOE: object
+
+    @Prop({type : String})
+    iLOEPolicyNo: string
+    
   
     @Prop()
     gender: string;
@@ -107,3 +114,44 @@ EmployeeSchema.index(
   { personCode: 1, deleted: 1 },
   { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
 );
+
+EmployeeSchema.index(
+  { name: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, name: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { nameAr: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, nameAr: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { uid: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { visaFileNumber: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, visaFileNumber: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { emiratesId: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { cardNumber: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, cardNumber: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { medicalPolicyNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, medicalPolicyNo: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { iLOEPolicyNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, iLOEPolicyNo: { $exists: true } } }
+);
+
