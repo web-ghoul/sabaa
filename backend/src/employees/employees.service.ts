@@ -29,11 +29,23 @@ export class EmployeesService {
       // createEmployeeDto.avatar = file ? file.path : undefined;
       // console.log(createEmployeeDto);
       
-      const [data,] =  await Promise.all([
-        this.employeeModel.create(createEmployeeDto),
-        this.companyModel.findByIdAndUpdate(createEmployeeDto.companyId, {$push: {employees: createEmployeeDto._id}})
-      ]) 
-      return data
+      if(!createEmployeeDto.companyId)
+        {
+          const [data,] =  await Promise.all([
+            this.employeeModel.create(createEmployeeDto)
+          ]) 
+          return data
+        }else
+        {
+          const [data,] =  await Promise.all([
+            this.employeeModel.create(createEmployeeDto),
+            this.companyModel.findByIdAndUpdate(createEmployeeDto.companyId, {$push: {employees: createEmployeeDto._id}})
+          ]) 
+          return data
+        }
+
+      
+      
       //inject in company if exits
     }catch(err)
     {

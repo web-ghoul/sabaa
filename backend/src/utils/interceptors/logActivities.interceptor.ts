@@ -31,7 +31,7 @@ export class LogInterceptor implements NestInterceptor {
         activity.userName = request.user.name
         activity.userId = request.user.id
 
-        console.log(activity);
+        // console.log(activity);
             await this.activityLogModel.create(activity)
         }
       }),
