@@ -1075,18 +1075,130 @@ const useSubmitFunction = (type: string) => {
     if (excelType.entity === "owners") {
       if (excelType.type === "excel") {
         handleDownloadExcel(owners, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/owner/export?type=owner&fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Owners Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     } else if (excelType.entity === "officers") {
       if (excelType.type === "excel") {
         handleDownloadExcel(pros, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/owner/export?type=pro&fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Officers Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     } else if (excelType.entity === "customers") {
       if (excelType.type === "excel") {
         handleDownloadExcel(customers, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/owner/export?type=customer&fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Customers Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     } else if (excelType.entity === "employees") {
       if (excelType.type === "excel") {
         handleDownloadExcel(employees, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/Employee/export?fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Employees Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     } else if (excelType.entity === "jobs") {
       if (excelType.type === "excel") {
@@ -1099,13 +1211,68 @@ const useSubmitFunction = (type: string) => {
     } else if (excelType.entity === "users") {
       if (excelType.type === "excel") {
         handleDownloadExcel(users, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/user/export?fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Users Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     } else if (excelType.entity === "companies") {
       if (excelType.type === "excel") {
         handleDownloadExcel(companies, excelType.entity, fileName);
+        handleCloseDownloadExcelModal();
+      } else {
+        await server
+          .get(`/company/export?fileName=${values.fileName}`, {
+            responseType: "blob",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${values.fileName}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode) {
+              link.parentNode.removeChild(link);
+            }
+            handleAlert({
+              msg: "Companies Excel is Created Successfully",
+              status: "success",
+            });
+            handleCloseDownloadExcelModal();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       }
     }
-    handleCloseDownloadExcelModal();
     handleCloseFormsLoading();
   };
 
