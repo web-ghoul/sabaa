@@ -1,4 +1,5 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
+
 
 export default class VerificationCodeGenerator {
   private readonly codeLength: number;

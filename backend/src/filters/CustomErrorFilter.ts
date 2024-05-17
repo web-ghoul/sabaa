@@ -17,7 +17,8 @@ export class CustomErrorFilter implements ExceptionFilter {
         const response = ctx.getResponse<Response>();
         const status = exception instanceof HttpException ? exception.getStatus() : 500;
         const message = exception.message || 'Internal server error';
-
+        console.log(exception);
+        
         let customError : CustomError = new CustomError(message, status);
 
         // console.log(Object.keys(exception));

@@ -1,10 +1,10 @@
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Patch, Post, ValidationPipe } from '@nestjs/common';
 import { LoginUserDto } from './dtos/login.dto';
 import { Public } from './roles.decorator';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateOtpDto } from './dtos/createOtp.dto';
+import { CreateOtpDto, resetOtpDto, resetPasswordDto } from './dtos/createOtp.dto';
 
 @ApiTags('Auth')
 @Controller()
@@ -20,8 +20,26 @@ export class AuthController {
 
     @Public()
     @Throttle({default : {limit : 3 , ttl: 60000}})
-    @Post('reset-password')
-    resetPassword(@Body(ValidationPipe) resetData: CreateOtpDto) {
+    @Post('forget-password')
+    forgetPassword(@Body(ValidationPipe) resetData: CreateOtpDto) {
         return this.authService.createOtp(resetData);
     }
+
+
+    @Public()
+    @Throttle({default : {limit : 3 , ttl: 60000}})
+    @Post('validate-otp')
+    validatOtp(@Body() resetData: resetOtpDto) {
+        return this.authService.verifyOtp(resetData)
+    }
+
+    @Public()
+    @Throttle({default : {limit : 3 , ttl: 60000}})
+    @Patch('reset-password')
+    resetPassword(@Body(ValidationPipe) resetData: resetPasswordDto) {
+        return this.authService.resetPasswort(resetData)
+    }
+
+    
+
 }

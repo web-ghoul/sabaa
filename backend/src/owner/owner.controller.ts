@@ -13,7 +13,7 @@ import { Response } from 'express';
 
 
 ApiTags('owner')
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
