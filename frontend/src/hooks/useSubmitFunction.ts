@@ -191,6 +191,8 @@ const useSubmitFunction = (type: string) => {
   };
 
   const handleEmployeeFormData = (values: EmployeeFormTypes) => {
+    console.log(values);
+
     const formData = new FormData();
     formData.append("avatar", employeeImage);
     formData.append("name", values.name.trim());

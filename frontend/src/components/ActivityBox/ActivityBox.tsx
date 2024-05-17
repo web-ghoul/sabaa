@@ -47,7 +47,7 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
                 ? import.meta.env.VITE_EMPLOYEES_ROUTE
                 : route === "nationality" &&
                   import.meta.env.VITE_NATIONALITIES_ROUTE
-            }/${userId._id}`}
+            }/${userId?._id}`}
           >
             <Typography variant={"h6"} className={`!font-[700]`}>
               {route === "job-title" ? "Job" : route}
