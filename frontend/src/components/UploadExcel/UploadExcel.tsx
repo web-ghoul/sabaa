@@ -7,13 +7,10 @@ import {
 } from "@mui/icons-material";
 import { Box, LinearProgress, Paper, Stack } from "@mui/material";
 import { ChangeEvent, DragEvent, useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import readXlsxFile, { Row } from "read-excel-file";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
-import { RootState } from "../../store/store";
 import { EntitiesType } from "../../types/app.types";
 import {
   CompanyTypes,
@@ -28,8 +25,6 @@ import Button from "../Button/Button";
 import UploadStatus from "./UploadStatus";
 
 const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
-  const { company } = useSelector((state: RootState) => state.company);
-  const { id } = useParams();
   const [dragging, setDragging] = useState(false);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -135,7 +130,6 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         email: "",
         remarks: "",
         state: "",
-        proCode: false,
         fileImmgNo: "",
         status: "",
       };
@@ -196,7 +190,6 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         email: "",
         remarks: "",
         state: "",
-        proCode: true,
         fileImmgNo: "",
         status: "",
       };
@@ -258,7 +251,6 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         remarks: "",
         state: "",
         sponsor: "",
-        proCode: false,
         fileImmgNo: "",
         status: "",
       };
@@ -306,8 +298,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         name: "",
         nameAr: "",
         personCode: "",
-        companyId: "",
-        companyName: "",
+        companyId: [],
         idNationality: "",
         nationality: "",
         gender: "",
@@ -322,9 +313,9 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         passportNumber: "",
         workPermitNumber: "",
         medicalInsuranceCompany: "",
-        medicalPolicy: "",
+        medicalPolicyNo: "",
         iLOEInsuranceCompany: "",
-        iLOEPolicy: "",
+        iLOEPolicyNo: "",
         uid: "",
         emiratesId: "",
         remarks: "",
@@ -340,8 +331,6 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
       employee["lcExpireDate"] = new Date(`${data[i][7]}`);
       employee["gender"] = `${data[i][8]}`;
       employee["uid"] = `${data[i][9]}`;
-      employee["companyId"] = `${id || ""}`;
-      employee["companyName"] = `${(company && company.name) || ""}`;
       employees.push(employee);
     }
     handleAddEmployeesSheet({ fileName: file.name, data: employees });

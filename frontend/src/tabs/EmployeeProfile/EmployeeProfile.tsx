@@ -3,16 +3,12 @@ import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { TabsContext } from "../../contexts/TabsContext";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { EmployeeTypes } from "../../types/store.types";
+import { CompanyTypes, EmployeeTypes } from "../../types/store.types";
 import { EmployeeProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const EmployeeProfile = ({
-  employee,
-  isLoading,
-  companies,
-}: EmployeeProfileProps) => {
+const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
   const { employeeTabsValue } = useContext(TabsContext);
 
   return (
@@ -36,8 +32,8 @@ const EmployeeProfile = ({
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={1}>
         <CompaniesTable
-          count={companies ? companies.length : 0}
-          data={companies}
+          count={employee?.companyId?.length || 0}
+          data={employee && (employee.companyId as CompanyTypes[])}
           isLoading={isLoading}
           unLink={true}
           noPagination={true}

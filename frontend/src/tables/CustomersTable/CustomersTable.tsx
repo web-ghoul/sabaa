@@ -105,7 +105,11 @@ const CustomersTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"pros"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"customers"}
+      noPagination={noPagination}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>

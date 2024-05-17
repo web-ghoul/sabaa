@@ -29,7 +29,7 @@ interface ProProfileProps {
 interface EmployeeProfileProps {
   employee: EmployeeTypes | null;
   isLoading: boolean;
-  companies: CompanyTypes[] | null;
+  companies?: CompanyTypes[] | null;
 }
 
 interface CustomerProfileProps {
