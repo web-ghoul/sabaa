@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { EntityType } from "./app.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -49,7 +50,7 @@ interface TabPanelProps {
 }
 
 interface PrimaryTabTypes {
-  variant: string;
+  variant: EntityType;
   tabsTitles: string[];
   children: ReactNode;
 }

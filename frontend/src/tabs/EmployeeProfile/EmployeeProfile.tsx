@@ -23,9 +23,8 @@ const EmployeeProfile = ({
         "Transactions",
         "Activities",
         "Documents",
-        "Sponsored Persons",
       ]}
-      variant={"owner"}
+      variant={"employee"}
     >
       <CustomTabPanel value={employeeTabsValue} index={0}>
         <ProfileDetails

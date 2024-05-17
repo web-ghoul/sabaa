@@ -45,7 +45,7 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
       setUserTabsValue(newValue);
     } else if (variant === "company") {
       setCompanyTabsValue(newValue);
-    } else if (variant === "pro") {
+    } else if (variant === "officer") {
       setProTabsValue(newValue);
     } else if (variant === "employee") {
       setEmployeeTabsValue(newValue);
@@ -70,7 +70,7 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
               ? userTabsValue
               : variant === "company"
               ? companyTabsValue
-              : variant === "pro"
+              : variant === "officer"
               ? proTabsValue
               : variant === "employee"
               ? employeeTabsValue

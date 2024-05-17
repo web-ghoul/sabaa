@@ -36,7 +36,7 @@ export const employeeSlice = createSlice({
     });
     builder.addCase(getEmployee.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.employee = payload.owner;
+      state.employee = payload.employee;
       state.companies = payload.companies;
       state.activities = payload.activities;
     });

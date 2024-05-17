@@ -20,7 +20,7 @@ const ProProfile = ({ pro, isLoading, companies }: ProProfileProps) => {
         "Activities",
         "Documents",
       ]}
-      variant={"pro"}
+      variant={"officer"}
     >
       <CustomTabPanel value={proTabsValue} index={0}>
         <ProfileDetails
