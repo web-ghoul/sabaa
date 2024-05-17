@@ -14,8 +14,7 @@ const useEmployeeSchema = () => {
     uid: yup.string().required("UID Number is required"),
     gender: yup.string().required("Gender is required"),
     personCode: yup.string(),
-    companyId: yup.string(),
-    companyName: yup.string(),
+    companyId: yup.array(),
     dob: yup.date(),
     idNationality: yup.string(),
     status: yup.string(),
@@ -48,13 +47,12 @@ const useEmployeeSchema = () => {
     uid: editableEmployeeData?.uid || "",
     gender: editableEmployeeData?.gender || "",
     personCode: editableEmployeeData?.personCode || "",
-    companyId: editableEmployeeData?.companyId || "",
-    companyName: editableEmployeeData?.companyName || "",
+    companyId: editableEmployeeData?.companyId || [],
     dob:
       (editableEmployeeData?.dob &&
         new Date(editableEmployeeData?.dob).toISOString().split("T")[0]) ||
       "",
-    idNationality: editableEmployeeData?.avatar || "",
+    idNationality: editableEmployeeData?.idNationality || "",
     status: editableEmployeeData?.status || "",
     email: editableEmployeeData?.email || "",
     salary: editableEmployeeData?.salary || "",

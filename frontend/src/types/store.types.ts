@@ -245,8 +245,7 @@ interface EmployeeTypes {
   nameAr: string;
   dob?: Date;
   personCode: string;
-  companyId: string;
-  companyName: string;
+  companyId: CompanyTypes[] | string[];
   idNationality: string;
   nationality: string;
   gender: string;

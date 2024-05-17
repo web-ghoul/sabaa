@@ -109,6 +109,7 @@ interface AutoCompleteSearchTypes {
     | ProTypes[]
     | CustomerTypes[];
   name: string;
+  variant?: EntityType;
   formik: FormikProps<AllFormiksTypes>;
 }
 

@@ -196,17 +196,24 @@ const useSubmitFunction = (type: string) => {
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
-    formData.append("personCode", values.personCode.trim());
-    formData.append("companyId", values.companyId.trim());
-    formData.append("companyName", values.companyName.trim());
-    formData.append("nationality", values.nationality.trim());
-    formData.append("idNationality", values.idNationality.trim());
-    formData.append("emiratesId", values.emiratesId.trim());
+    if (values.personCode) {
+      formData.append("personCode", values.personCode.trim());
+    }
+    if (values.companyId.length > 0) {
+      values.companyId.map((company) => {
+        formData.append("companyId[]", company as string);
+      });
+    }
+    if (values.emiratesId) {
+      formData.append("emiratesId", values.emiratesId.trim());
+    }
     formData.append("email", values.email.trim());
     formData.append("status", values.status.trim());
     formData.append("salary", values.salary.trim());
     formData.append("gender", values.gender.trim());
     formData.append("cardType", values.cardType.trim());
+    formData.append("idNationality", values.idNationality.trim());
+    formData.append("nationality", values.nationality.trim());
     formData.append("mobileNumber", values.mobileNumber.trim());
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());

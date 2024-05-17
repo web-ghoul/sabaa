@@ -216,6 +216,8 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
               options={companies}
               formik={formik}
               name={"companyId"}
+              variant={"employee"}
+              multiple={true}
             />
           )}
         </Box>

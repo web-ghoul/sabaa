@@ -11,6 +11,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
+
 const OwnerForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseOwnerModal, setOwnerImage } =
     useContext(FormsContext);

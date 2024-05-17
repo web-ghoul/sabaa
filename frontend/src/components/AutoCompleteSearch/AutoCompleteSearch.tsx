@@ -24,6 +24,7 @@ export default function AutoCompleteSearch({
   options,
   name,
   formik,
+  variant,
 }: AutoCompleteSearchTypes) {
   const style = {
     "& > div > div": {
@@ -63,8 +64,14 @@ export default function AutoCompleteSearch({
       const IDs = customers.map((customer: CustomerTypes) => customer._id);
       formik.setFieldValue(name, IDs);
     } else if (name === "companyId") {
-      const company = newValue as CompanyTypes;
-      formik.setFieldValue(name, company._id);
+      if (variant === "employee") {
+        const companies = newValue as CompanyTypes[];
+        const IDs = companies.map((company: CompanyTypes) => company._id);
+        formik.setFieldValue(name, IDs);
+      } else {
+        const company = newValue as CompanyTypes;
+        formik.setFieldValue(name, company._id);
+      }
     } else if (name === "job") {
       const job = newValue as JobTypes;
       formik.setFieldValue(name, job.jobTitle);
@@ -113,7 +120,8 @@ export default function AutoCompleteSearch({
       ? (values as NationalityTypes[]).find(
           (option) =>
             option.id ===
-            (formik as unknown as OwnerFormikTypes).values.idNationality
+            (formik as unknown as OwnerFormikTypes | EmployeeFormikTypes).values
+              .idNationality
         ) || null
       : name === "ownerId"
       ? values.filter((option) =>
@@ -135,11 +143,18 @@ export default function AutoCompleteSearch({
           ).includes(option._id || "")
         )
       : name === "companyId"
-      ? (values as CompanyTypes[]).find(
-          (option) =>
-            option._id ===
-            (formik as unknown as LinkToCompanyFormikTypes).values.companyId
-        )
+      ? variant === "employee"
+        ? values.filter((option) =>
+            (
+              (formik as unknown as EmployeeFormikTypes).values
+                .companyId as string[]
+            ).includes(option._id || "")
+          )
+        : (values as CompanyTypes[]).find(
+            (option) =>
+              option._id ===
+              (formik as unknown as LinkToCompanyFormikTypes).values.companyId
+          )
       : (name === "job" &&
           (values as JobTypes[]).find(
             (option) =>
@@ -206,11 +221,6 @@ export default function AutoCompleteSearch({
                 <Chip
                   label={(option as NationalityTypes).nationality}
                   {...getTagProps({ index })}
-                  disabled={
-                    (values as NationalityTypes[]).indexOf(
-                      option as NationalityTypes
-                    ) !== -1
-                  }
                 />
               );
             }
