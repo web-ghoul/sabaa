@@ -98,7 +98,7 @@ export class EmployeesService {
 
   async findOne(id: string) {
     const [employee, companies, activities] = await Promise.all([
-      this.employeeModel.findById(id),
+      (await this.employeeModel.findById(id)).populated('companyId').exec(),
       this.companyModel.find({employees:id}),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
     ])
