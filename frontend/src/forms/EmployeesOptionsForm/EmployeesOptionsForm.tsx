@@ -24,8 +24,11 @@ import { NationalityTypes } from "../../types/store.types";
 const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { searchForEmployees, setSearchForEmployees } =
-    useContext(FormsContext);
+  const {
+    searchForEmployees,
+    setSearchForEmployees,
+    handleOpenDownloadExcelModal,
+  } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -57,6 +60,10 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getEmployees({ ...queries, search: searchForEmployees }));
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "employees");
   };
 
   const handleResetAll = () => {
@@ -122,7 +129,7 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcel}
           />
           <Button
             title={"Excel All"}

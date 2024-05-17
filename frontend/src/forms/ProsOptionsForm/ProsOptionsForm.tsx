@@ -21,8 +21,12 @@ import { NationalityTypes } from "../../types/store.types";
 const ProsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenProModal, searchForPros, setSearchForPros } =
-    useContext(FormsContext);
+  const {
+    handleOpenProModal,
+    searchForPros,
+    handleOpenDownloadExcelModal,
+    setSearchForPros,
+  } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -54,6 +58,10 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getPros({ ...queries, search: searchForPros }));
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "officers");
   };
 
   const handleResetAll = () => {
@@ -123,7 +131,7 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcel}
           />
           <Button
             title={"Excel All"}

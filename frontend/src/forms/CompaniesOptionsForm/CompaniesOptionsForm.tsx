@@ -25,8 +25,11 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
-  const { searchForCompanies, setSearchForCompanies } =
-    useContext(FormsContext);
+  const {
+    searchForCompanies,
+    setSearchForCompanies,
+    handleOpenDownloadExcelModal,
+  } = useContext(FormsContext);
 
   const handleSearch = (value: string) => {
     setSearchForCompanies(value);
@@ -63,6 +66,10 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleFilterByLicenseExpireDateTo = (value: string) => {
     handleAddQuery({ licenseTo: value });
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "companies");
   };
 
   const handleFilter = () => {
@@ -123,7 +130,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Button
             icon={<RiFileExcel2Fill />}
-            variant={"under development"}
+            handling={handleDownloadExcel}
             bg={"excel"}
             title={"Excel"}
           />

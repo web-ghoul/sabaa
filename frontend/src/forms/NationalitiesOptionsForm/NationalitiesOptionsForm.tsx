@@ -15,9 +15,16 @@ import { FormiksTypes } from "../../types/forms.types";
 const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenNationalityModal, setSearchForNationalities } =
-    useContext(FormsContext);
+  const {
+    handleOpenNationalityModal,
+    setSearchForNationalities,
+    handleOpenDownloadExcelModal,
+  } = useContext(FormsContext);
   const { queries } = useContext(AppContext);
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "nationalities");
+  };
 
   const handleSearch = (value: string) => {
     setSearchForNationalities(value);
@@ -57,7 +64,7 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
             bg={"excel"}
           />
           <Button
-            variant={"under development"}
+            handling={handleDownloadExcel}
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}

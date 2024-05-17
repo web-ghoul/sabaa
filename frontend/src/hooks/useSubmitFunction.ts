@@ -89,6 +89,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseProModal,
     setProImage,
     handleCloseUploadEmployeesModal,
+    handleCloseDownloadExcelModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -1095,6 +1096,7 @@ const useSubmitFunction = (type: string) => {
         handleDownloadExcel(companies, excelType.entity, fileName);
       }
     }
+    handleCloseDownloadExcelModal();
     handleCloseFormsLoading();
   };
 
