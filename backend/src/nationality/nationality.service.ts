@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Nationality } from 'schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
@@ -12,10 +12,20 @@ export class NationalityService {
   ) {}
 
   async create(
-    createNationalityDto: CreateNationalityDto,
+    createNationalityDto: CreateNationalityDto,user: ObjectId
   ): Promise<Nationality> {
-    
-      return await this.nationalityModel.create(createNationalityDto);
+
+    if (Array.isArray(createNationalityDto)) {
+      createNationalityDto.map((nationality) => {
+        
+        nationality.user = user
+      });
+    } else {
+      createNationalityDto.user = user
+
+    }
+    // createNationalityDto.user = user ; 
+    return await this.nationalityModel.create(createNationalityDto);
     
   }
 
@@ -75,13 +85,14 @@ export class NationalityService {
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      return this.nationalityModel.updateOne({ _id: id }, { deleted: true });
+      await this.nationalityModel.updateOne({ _id: id }, { deleted: true });
+      return { _id: id };
     } catch (err) {
       throw new HttpException(
         'Error while deleting nationality',
-        HttpStatus.FORBIDDEN,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
@@ -92,10 +103,10 @@ export class NationalityService {
     } catch (err) {
       throw new HttpException(
         {
-          status: HttpStatus.FORBIDDEN,
+          status: HttpStatus.BAD_REQUEST,
           error: err,
         },
-        HttpStatus.FORBIDDEN,
+        HttpStatus.BAD_REQUEST,
         {
           cause: err,
         },

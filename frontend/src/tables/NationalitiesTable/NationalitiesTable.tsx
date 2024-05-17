@@ -1,8 +1,9 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import { IconButton, TableBody, TableHead, TableRow } from "@mui/material";
-import { MouseEvent, useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
+import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -34,6 +35,8 @@ const NationalitiesTable = ({
   const { setEditableNationalityData } = useContext(FormsContext);
   const { setNationalityIndex } = useContext(ExcelsContext);
   const dispatch = useDispatch<AppDispatch>();
+  const [sheet, setSheet] = useState(false);
+  const { pathname } = useLocation();
 
   const handleSortByNationality = () => {
     if (searchParams.get("sort") === "nationality_asc") {
@@ -76,6 +79,14 @@ const NationalitiesTable = ({
     dispatch(getNationalitiesCounter());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_NATIONALITIES_ROUTE}`) {
+      setSheet(true);
+    } else {
+      setSheet(false);
+    }
+  }, [pathname, sheet]);
+
   return (
     <PrimaryTable
       count={count}
@@ -85,21 +96,29 @@ const NationalitiesTable = ({
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            <SortBox
-              title={"Nationality"}
-              handling={handleSortByNationality}
-              asc={searchParams.get("sort") === "nationality_asc"}
-              desc={searchParams.get("sort") === "nationality_desc"}
-            />
+            {sheet ? (
+              "Nationality"
+            ) : (
+              <SortBox
+                title={"Nationality"}
+                handling={handleSortByNationality}
+                asc={searchParams.get("sort") === "nationality_asc"}
+                desc={searchParams.get("sort") === "nationality_desc"}
+              />
+            )}
           </PrimaryTableCell>
           <PrimaryTableCell align="center">
-            <SortBox
-              title={"ID"}
-              handling={handleSortByNationalityId}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc={"center"}
-            />
+            {sheet ? (
+              "ID"
+            ) : (
+              <SortBox
+                title={"ID"}
+                handling={handleSortByNationalityId}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc={"center"}
+              />
+            )}
           </PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
@@ -109,8 +128,8 @@ const NationalitiesTable = ({
           ? data &&
             data.map((row, i) => (
               <NationaltiesTableRow key={i}>
-                <PrimaryTableCell component="th" scope="row">
-                  {row.nationality}
+                <PrimaryTableCell component="th" scope="row" align="left">
+                  <NationalityBox nationality={row.nationality} />
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">{row.id}</PrimaryTableCell>
                 <PrimaryTableCell align="right">

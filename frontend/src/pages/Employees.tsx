@@ -9,12 +9,14 @@ import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getEmployees } from "../store/employeesSlice";
 import { AppDispatch, RootState } from "../store/store";
-import OwnersTable from "../tables/OwnersTable/OwnersTable";
+import EmployeesTable from "../tables/EmployeesTable/EmployeesTable";
 const Employees = () => {
-  const { owners, isLoading } = useSelector((state: RootState) => state.owners);
+  const { employees, isLoading } = useSelector(
+    (state: RootState) => state.employees
+  );
   const { pageContainerClasses } = useContext(AppContext);
-  const { ownersCounter } = useSelector(
-    (state: RootState) => state.ownersCounter
+  const { employeesCounter } = useSelector(
+    (state: RootState) => state.employeesCounter
   );
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
@@ -33,10 +35,10 @@ const Employees = () => {
             Employees
           </Typography>
         </BreadCrumbs>
-        <Forms type={"ownersOptions"} />
-        <OwnersTable
-          count={ownersCounter}
-          data={owners}
+        <Forms type={"employeesOptions"} />
+        <EmployeesTable
+          count={employeesCounter}
+          data={employees}
           isLoading={isLoading}
         />
       </PrimaryContainer>

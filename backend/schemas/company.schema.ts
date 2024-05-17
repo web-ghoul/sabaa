@@ -33,6 +33,9 @@ export class Company {
   @Prop({ type: Array, ref: 'Owner' })
   ownerId: string[];
 
+  @Prop({ type: Array, ref: 'Owner' })
+  customerId: string[];
+
   @Prop()
   licenseNo: string; //can be repeated but in different state
 
@@ -62,6 +65,9 @@ export class Company {
 
   @Prop()
   mobileNo: string;
+  
+  @Prop()
+  echannelExpiryDate: Date;
 
   @Prop()
   website: string;

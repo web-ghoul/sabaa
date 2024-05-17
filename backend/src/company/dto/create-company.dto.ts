@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsMongoId, IsOptional, IsString } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateCompanyDto {
     @ApiProperty()
@@ -14,6 +15,10 @@ export class CreateCompanyDto {
     @ApiProperty()
     @IsString()
     nameAr: string;
+
+    @ApiProperty()
+    @IsString()
+    echannelExpiryDate: string;
 
     @ApiProperty()
     @IsString()
@@ -115,5 +120,5 @@ export class CreateCompanyDto {
     @ApiProperty({ required: false })
     @IsMongoId()
     @IsOptional()
-    user?: string;
+    user?: ObjectId;
 }

@@ -1,5 +1,6 @@
 import { Paper, Table, TableContainer } from "@mui/material";
 import { ReactNode } from "react";
+import { EntitiesType } from "../types/app.types";
 import NoDataFound from "./NoDataFound";
 import PrimaryTablePagination from "./PrimaryTablePagination";
 
@@ -11,7 +12,7 @@ const PrimaryTable = ({
 }: {
   children: ReactNode;
   count: number;
-  variant: string;
+  variant: EntitiesType;
   noPagination?: boolean;
 }) => {
   return (

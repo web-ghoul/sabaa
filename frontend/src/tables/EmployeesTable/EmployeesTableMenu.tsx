@@ -16,26 +16,29 @@ const EmployeesTableMenu = () => {
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-  const { handleOpenCompanyModal, handleOpenDeleteModal, editableCompanyData } =
-    useContext(FormsContext);
-  const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
+  const {
+    handleOpenDeleteModal,
+    editableEmployeeData,
+    handleOpenEmployeeModal,
+  } = useContext(FormsContext);
+  const { handleDeleteEmployeeFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {
     navigate(
-      `${import.meta.env.VITE_COMPANIES_ROUTE}/${
-        editableCompanyData && editableCompanyData._id
+      `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+        editableEmployeeData && editableEmployeeData._id
       }`
     );
   };
 
   const handleEdit = () => {
     if (sheet) {
-      handleOpenCompanyModal("editCompany");
+      handleOpenEmployeeModal("editEmployee");
     } else {
-      if (editableCompanyData) {
+      if (editableEmployeeData) {
         navigate(
-          `${import.meta.env.VITE_COMPANIES_ROUTE}/${
-            editableCompanyData._id
+          `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+            editableEmployeeData._id
           }/edit`
         );
       }
@@ -44,14 +47,14 @@ const EmployeesTableMenu = () => {
 
   const handleDelete = () => {
     if (sheet) {
-      handleDeleteCompanyFromSheet();
+      handleDeleteEmployeeFromSheet();
     } else {
-      handleOpenDeleteModal("company");
+      handleOpenDeleteModal("employee");
     }
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`);
   }, [pathname, sheet]);
   return (
     <Menu

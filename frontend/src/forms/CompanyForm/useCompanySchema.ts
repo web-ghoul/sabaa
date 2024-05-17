@@ -15,6 +15,7 @@ const useCompanySchema = () => {
     phone: yup.string().required("Company Phone is required"),
     proCode: yup.array(),
     ownerId: yup.array(),
+    customerId: yup.array(),
     licenseNo: yup.string().required("License Number is required"),
     immgCardNo: yup.string().required("Immg Card Number is required"),
     licenseIssueDate: yup.date().required("License Issue Date is required"),
@@ -38,7 +39,7 @@ const useCompanySchema = () => {
     molCategory: yup.string(),
     whatsAppNo: yup.string(),
     echannelExpiryDate: yup.date(),
-    username: yup.string(),
+    userName: yup.string(),
     password: yup.string(),
     mobileNo: yup.string(),
     website: yup.string(),
@@ -60,6 +61,7 @@ const useCompanySchema = () => {
     phone: editableCompanyData?.phone || "",
     proCode: editableCompanyData?.proCode || [],
     ownerId: editableCompanyData?.ownerId || [],
+    customerId: editableCompanyData?.customerId || [],
     licenseNo: editableCompanyData?.licenseNo || "",
     immgCardNo: editableCompanyData?.immgCardNo || "",
     immgCardExpiry:
@@ -97,8 +99,13 @@ const useCompanySchema = () => {
       "",
     tenancyContractValue: editableCompanyData?.tenancyContractValue || "",
     licenseIssuePlace: editableCompanyData?.licenseIssuePlace || "",
-    echannelExpiryDate: editableCompanyData?.echannelExpiryDate || "",
-    username: editableCompanyData?.username || "",
+    echannelExpiryDate:
+      (editableCompanyData?.echannelExpiryDate &&
+        new Date(editableCompanyData?.echannelExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    userName: editableCompanyData?.userName || "",
     password: "",
   };
 

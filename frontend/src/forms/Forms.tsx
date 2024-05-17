@@ -2,13 +2,22 @@ import { Box } from "@mui/material";
 import { FormikProps } from "formik";
 import useSubmitForm from "../hooks/useSubmitForm";
 import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
+import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
+import CreateCustomersSheetForm from "./CreateCustomersSheetForm/CreateCustomersSheetForm";
+import CreateEmployeesSheetForm from "./CreateEmployeesSheetForm/CreateEmployeesSheetForm";
 import CreateJobsSheetForm from "./CreateJobsSheetForm/CreateJobsSheetForm";
 import CreateNationalitiesSheetForm from "./CreateNationalitiesSheetForm/CreateNationalitiesSheetForm";
 import CreateOwnersSheetForm from "./CreateOwnersSheetForm/CreateOwnersSheetForm";
+import CreateProsSheetForm from "./CreateProsSheetForm/CreateProsSheetForm";
+import CustomerForm from "./CustomerForm/CustomerForm";
+import CustomersOptionsForm from "./CustomersOptionsForm/CustomersOptionsForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
+import DownloadExcelForm from "./DownloadExcelForm/DownloadExcelForm";
+import EmployeeForm from "./EmployeeForm/EmployeeForm";
+import EmployeesOptionsForm from "./EmployeesOptionsForm/EmployeesOptionsForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 import JobForm from "./JobForm/JobForm";
 import JobsOptionsForm from "./JobsOptionsForm/JobsOptionsForm";
@@ -39,6 +48,13 @@ const Forms = ({ type, index }: FormsTypes) => {
       {type === "createOwnersSheet" && (
         <CreateOwnersSheetForm index={index || 0} />
       )}
+      {type === "createEmployeesSheet" && (
+        <CreateEmployeesSheetForm index={index || 0} />
+      )}
+      {type === "createCustomersSheet" && (
+        <CreateCustomersSheetForm index={index || 0} />
+      )}
+      {type === "createProsSheet" && <CreateProsSheetForm index={index || 0} />}
       {(type === "editNationality" || type === "addNationality") && (
         <NationalityForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
@@ -69,6 +85,18 @@ const Forms = ({ type, index }: FormsTypes) => {
           type={type}
         />
       )}
+      {(type === "addEmployee" || type === "editEmployee") && (
+        <EmployeeForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {(type === "addCustomer" || type === "editCustomer") && (
+        <CustomerForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
       {(type === "addCompany" || type === "editCompany") && (
         <CompanyForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
@@ -90,7 +118,12 @@ const Forms = ({ type, index }: FormsTypes) => {
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
-      {(type === "linkOwner" || type === "linkPRO") && (
+      {type === "activitiesOptions" && (
+        <ActivitiesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {(type === "linkOwner" || type === "linkPro") && (
         <LinkToCompanyForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
@@ -110,6 +143,16 @@ const Forms = ({ type, index }: FormsTypes) => {
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
+      {type === "employeesOptions" && (
+        <EmployeesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "customersOptions" && (
+        <CustomersOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
       {type === "delete" && <DeleteForm />}
       {type === "login" && (
         <LoginForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
@@ -121,6 +164,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "forgotPassword" && (
         <ForgotPasswordForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "downloadExcel" && (
+        <DownloadExcelForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}

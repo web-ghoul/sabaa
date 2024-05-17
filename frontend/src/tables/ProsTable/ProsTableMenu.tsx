@@ -76,11 +76,14 @@ const ProsTableMenu = () => {
           handling={handleView}
         />
       )}
-      <TableMenuItem
-        icon={<JoinFullRounded />}
-        title={"Link"}
-        handling={handleLink}
-      />
+      {!sheet && (
+        <TableMenuItem
+          icon={<JoinFullRounded />}
+          title={"Link"}
+          handling={handleLink}
+        />
+      )}
+
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}

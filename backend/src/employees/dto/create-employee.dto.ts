@@ -1,6 +1,13 @@
-import { IsString, IsNotEmpty, IsOptional, IsDateString, IsNumber, IsObject } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsDateString, IsNumber, IsObject, IsMongoId } from 'class-validator';
+import { ObjectId } from 'mongoose';
 
 export class CreateEmployeeDto {
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsMongoId()
+  _id?: ObjectId;
+
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -19,7 +26,7 @@ export class CreateEmployeeDto {
 
   @IsNotEmpty()
   @IsString({ each: true })
-  companyCode: string[];
+  companyId: string[];
 
   @IsOptional()
   @IsDateString()
@@ -107,5 +114,5 @@ export class CreateEmployeeDto {
   emiratesId: string;
 
   @IsOptional()
-  user: string;
+  user: ObjectId;
 }

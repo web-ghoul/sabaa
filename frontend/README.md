@@ -395,3 +395,20 @@ Side Notes :
   12- Add Walk in Customers Like Owner
   13- Download Sample for Upload Sheet
   14- GDRFA and Echannel Form In Company Form and Add Actions 
+
+
+
+
+
+
+Notes :
+1- Send Password of e-channel of company (Encrypted)
+2- Create Excel Sheet (Excel and Excel All)
+3- Handle Customer like Owner (isCustomer)
+4- Added to Customer (Sponsor)
+5- Added to Owner and Pro (Residence Expire Date , File Immg Number , Status , Card Number)
+6- Build Upload Employee For Specific Company API
+7- Added Creator For Activities and Send Id of Actor 
+8- Handle Spell of Owner to Employee in Employee API
+9- Set Default Value for status of Employee
+10- Finish Forgot And Reset Password

@@ -6,9 +6,9 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { MouseEvent, useContext, useEffect } from "react";
+import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -37,6 +37,8 @@ const JobsTable = ({
   const { setEditableJobData } = useContext(FormsContext);
   const { setJobIndex } = useContext(ExcelsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
+  const [sheet, setSheet] = useState(false);
+  const { pathname } = useLocation();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -81,29 +83,45 @@ const JobsTable = ({
     dispatch(getJobsCounter());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_JOBS_ROUTE}`) {
+      setSheet(true);
+    } else {
+      setSheet(false);
+    }
+  }, [pathname, sheet]);
+
   return (
     <PrimaryTable count={count} variant={"jobs"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
-            <SortBox
-              title={"Job Title"}
-              handling={handleSortByJobTitle}
-              asc={searchParams.get("sort") === "job_title_asc"}
-              desc={searchParams.get("sort") === "job_title_desc"}
-            />
+            {sheet ? (
+              "Job Title"
+            ) : (
+              <SortBox
+                title={"Job Title"}
+                handling={handleSortByJobTitle}
+                asc={searchParams.get("sort") === "job_title_asc"}
+                desc={searchParams.get("sort") === "job_title_desc"}
+              />
+            )}
           </PrimaryTableCell>
           {!mdScreen && (
             <PrimaryTableCell align="center">ENSCO Code</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            <SortBox
-              title={mdScreen ? "MOHRE" : "MOHRE Code"}
-              handling={handleSortByMOHRECode}
-              asc={searchParams.get("sort") === "code_asc"}
-              desc={searchParams.get("sort") === "code_desc"}
-              jc={"center"}
-            />
+            {sheet ? (
+              "MOHRE Code"
+            ) : (
+              <SortBox
+                title={mdScreen ? "MOHRE" : "MOHRE Code"}
+                handling={handleSortByMOHRECode}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc={"center"}
+              />
+            )}
           </PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>

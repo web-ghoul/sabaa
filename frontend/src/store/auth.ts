@@ -57,7 +57,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
     });
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false;

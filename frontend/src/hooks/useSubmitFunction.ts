@@ -6,9 +6,16 @@ import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
+import { handleDownloadExcel } from "../functions/handleDownloadExcel";
 import { getProfile, login as loginAction } from "../store/auth";
 import { getCompaniesCounter } from "../store/companiesCounterSlice";
 import { getCompanies } from "../store/companiesSlice";
+import { getCompany } from "../store/companySlice";
+import { getCustomersCounter } from "../store/customersCounterSlice";
+import { getCustomer } from "../store/customerSlice";
+import { getCustomers } from "../store/customersSlice";
+import { getEmployeesCounter } from "../store/employeesCounterSlice";
+import { getEmployees } from "../store/employeesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
@@ -16,7 +23,9 @@ import { getNationalities } from "../store/nationalitiesSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
+import { getProsCounter } from "../store/prosCounterSlice";
 import { getPro } from "../store/proSlice";
+import { getPros } from "../store/prosSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUser } from "../store/userSlice";
@@ -24,15 +33,20 @@ import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
   CompanyFormTypes,
+  CustomerFormTypes,
+  DownloadExcelFormTypes,
+  EmployeeFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
   OwnerFormTypes,
+  ProFormTypes,
   ResetPasswordFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
+import { CustomerTypes } from "../types/store.types";
 
 const server = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
@@ -42,44 +56,78 @@ const useSubmitFunction = (type: string) => {
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
+    handleCloseEmployeeModal,
+    handleCloseCustomerModal,
     handleCloseJobModal,
     handleCloseNationalityModal,
     handleCloseDeleteModal,
     editableNationalityData,
     editableJobData,
     ownerImage,
+    employeeImage,
+    customerImage,
     userImage,
+    proImage,
     editableUserData,
     editableOwnerData,
     formType,
+    excelType,
     editableCompanyData,
+    editableCustomerData,
+    editableProData,
+    editableEmployeeData,
     companyImage,
     setOwnerImage,
+    setEmployeeImage,
+    setCustomerImage,
     setCompanyImage,
     setUserImage,
     handleCloseOwnerModal,
     handleCloseCompanyModal,
     handleCloseUserModal,
     handleCloseLinkToCompanyModal,
+    handleCloseProModal,
+    setProImage,
+    handleCloseUploadEmployeesModal,
+    handleCloseDownloadExcelModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
     handleEditJobInSheet,
     handleEditOwnerInSheet,
     handleEditCompanyInSheet,
+    handleEditProInSheet,
     jobsSheets,
     nationalitiesSheets,
+    prosSheets,
     ownersSheets,
     companiesSheets,
     jobIndex,
+    proIndex,
     ownerIndex,
     companyIndex,
     nationalityIndex,
+    handleEditEmployeeInSheet,
+    customersSheets,
+    customerIndex,
+    employeesSheets,
+    employeeIndex,
+    handleEditCustomerInSheet,
   } = useContext(ExcelsContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
+  const { owners } = useSelector((state: RootState) => state.owners);
+  const { companies } = useSelector((state: RootState) => state.companies);
+  const { employees } = useSelector((state: RootState) => state.employees);
+  const { jobs } = useSelector((state: RootState) => state.jobs);
+  const { nationalities } = useSelector(
+    (state: RootState) => state.nationalities
+  );
+  const { users } = useSelector((state: RootState) => state.users);
+  const { customers } = useSelector((state: RootState) => state.customers);
+  const { pros } = useSelector((state: RootState) => state.pros);
   const { id } = useParams();
 
   const handleUserFormData = (values: UserFormTypes) => {
@@ -96,13 +144,23 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
-  const handleOwnerFormData = (values: OwnerFormTypes) => {
+  const handleOwnerFormData = (
+    values: OwnerFormTypes | ProFormTypes | CustomerTypes,
+    type: "pro" | "customer" | "owner"
+  ) => {
+    const avatar = type
+      ? type === "pro"
+        ? proImage
+        : type === "customer"
+        ? customerImage
+        : ownerImage
+      : ownerImage;
     const formData = new FormData();
     formData.append("uid", values?.uid);
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
     }
-    formData.append("avatar", ownerImage);
+    formData.append("avatar", avatar);
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("phone", values.phone.trim());
@@ -115,8 +173,89 @@ const useSubmitFunction = (type: string) => {
       formData.append("emiratesId", values.emiratesId.trim());
     }
     formData.append("state", values.state.trim());
-    formData.append("dob", values?.dob.toString().trim());
-    formData.append("proCode", values.proCode ? "true" : "false");
+    if (type !== "customer") {
+      formData.append("status", values.status.trim());
+      formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
+      if (values.residenceExpiryDate) {
+        formData.append(
+          "residenceExpiryDate",
+          values.residenceExpiryDate?.toString().trim()
+        );
+      }
+    }
+    if (values.dob) {
+      formData.append("dob", values.dob.toString().trim());
+    }
+    formData.append("type", type);
+    return formData;
+  };
+
+  const handleEmployeeFormData = (values: EmployeeFormTypes) => {
+    const formData = new FormData();
+    formData.append("avatar", employeeImage);
+    formData.append("name", values.name.trim());
+    formData.append("nameAr", values.nameAr.trim());
+    formData.append("uid", values.uid.trim());
+    if (values.personCode) {
+      formData.append("personCode", values.personCode.trim());
+    }
+    if (values.companyId.length > 0) {
+      values.companyId.map((company) => {
+        formData.append("companyId[]", company as string);
+      });
+    }
+    if (values.emiratesId) {
+      formData.append("emiratesId", values.emiratesId.trim());
+    }
+    formData.append("email", values.email.trim());
+    formData.append("status", values.status.trim());
+    formData.append("salary", values.salary.trim());
+    formData.append("gender", values.gender.trim());
+    formData.append("cardType", values.cardType.trim());
+    formData.append("idNationality", values.idNationality.trim());
+    formData.append("nationality", values.nationality.trim());
+    formData.append("mobileNumber", values.mobileNumber.trim());
+    if (values.dob) {
+      formData.append("dob", values.dob.toString().trim());
+    }
+    formData.append("passportNumber", values.passportNumber.trim());
+    if (values.passportExpiry) {
+      formData.append(
+        "passportExpiry",
+        values.passportExpiry.toString().trim()
+      );
+    }
+    if (values.residenceExpireDate) {
+      formData.append(
+        "residenceExpireDate",
+        values.residenceExpireDate.toString().trim()
+      );
+    }
+    if (values.lcExpireDate) {
+      formData.append("lcExpireDate", values.lcExpireDate.toString().trim());
+    }
+    formData.append("job", values.job.trim());
+    formData.append("visaFileNumber", values.visaFileNumber.trim());
+    formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
+    formData.append(
+      "medicalPolicyNo",
+      values.medicalPolicyNo.toString().trim()
+    );
+    if (values.medicalExpireDate) {
+      formData.append(
+        "medical.expireDate",
+        values.medicalExpireDate.toString().trim()
+      );
+    }
+    formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
+    formData.append("iLOEPolicyNo", values.iLOEPolicyNo.toString().trim());
+    if (values.iLOEExpireDate) {
+      formData.append(
+        "iLOE.expireDate",
+        values.iLOEExpireDate.toString().trim()
+      );
+    }
+    formData.append("remarks", values.remarks.trim());
     return formData;
   };
 
@@ -131,12 +270,17 @@ const useSubmitFunction = (type: string) => {
     formData.append("status", values.status.trim());
     if (values.ownerId.length > 0) {
       values.ownerId.map((owner) => {
-        formData.append("ownerId[]", owner);
+        formData.append("ownerId[]", owner as string);
       });
     }
     if (values.proCode.length > 0) {
       values.proCode.map((pro) => {
-        formData.append("proCode[]", pro);
+        formData.append("proCode[]", pro as string);
+      });
+    }
+    if (values.customerId.length > 0) {
+      values.customerId.map((customer) => {
+        formData.append("customerId[]", customer as string);
       });
     }
     formData.append("country", values.country.trim());
@@ -161,6 +305,12 @@ const useSubmitFunction = (type: string) => {
     formData.append("website", values.website.trim());
     formData.append("zipCode", values.zipCode.trim());
     formData.append("trn", values.trn.trim());
+    formData.append("userName", values.userName.trim());
+    formData.append("password", values.password.trim());
+    formData.append(
+      "echannelExpiryDate",
+      values.echannelExpiryDate.toString().trim()
+    );
     formData.append("tenancyContractValue", values.tenancyContractValue.trim());
     formData.append(
       "tenancyContractExp",
@@ -200,6 +350,8 @@ const useSubmitFunction = (type: string) => {
     handleAlert({ msg: "Under Development...", status: "error" });
     handleCloseFormsLoading();
   };
+
+  //Job
 
   const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
@@ -276,6 +428,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Nationality
   const addNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -360,6 +513,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Users
   const addUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -413,10 +567,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Owners
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values), {
+      .post(`/owner`, handleOwnerFormData(values, "owner"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -450,7 +605,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableOwnerData && editableOwnerData._id}`,
-          handleOwnerFormData(values),
+          handleOwnerFormData(values, "owner"),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -500,6 +655,279 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Pros
+  const addPro = async (values: ProFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/owner`, handleOwnerFormData(values, "pro"), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Officer is Created Successfully",
+          status: "success",
+        });
+        dispatch(getPros({}));
+        dispatch(getProsCounter());
+        handleCloseProModal();
+        setProImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editPro = async (values: ProFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`) {
+      handleEditProInSheet(values);
+      handleCloseProModal();
+      handleAlert({
+        msg: "Officer is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/owner/${editableProData && editableProData._id}`,
+          handleOwnerFormData(values, "pro"),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Officer is Updated Successfully",
+            status: "success",
+          });
+          if (id && pathname === `${import.meta.env.VITE_PROS_ROUTE}/${id}`) {
+            dispatch(getPro({ id }));
+          } else {
+            dispatch(getPros({}));
+          }
+          handleCloseProModal();
+          setProImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createProsSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = prosSheets[proIndex.fileIndex].data;
+    await server
+      .post(`/owner`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Officers are Created Successfully",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+        dispatch(getPros({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Customer
+  const addCustomer = async (values: CustomerFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/owner`, handleOwnerFormData(values, "customer"), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Customer is Created Successfully",
+          status: "success",
+        });
+        dispatch(getCustomers({}));
+        dispatch(getCustomersCounter());
+        handleCloseCustomerModal();
+        setCustomerImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editCustomer = async (values: CustomerFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`) {
+      handleEditCustomerInSheet(values);
+      handleCloseCustomerModal();
+      handleAlert({
+        msg: "Customer is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/owner/${editableCustomerData && editableCustomerData._id}`,
+          handleOwnerFormData(values, "customer"),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Customer is Updated Successfully",
+            status: "success",
+          });
+          if (
+            id &&
+            pathname === `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${id}`
+          ) {
+            dispatch(getCustomer({ id }));
+          } else {
+            dispatch(getCustomers({}));
+          }
+          handleCloseCustomerModal();
+          setCustomerImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createCustomersSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = customersSheets[customerIndex.fileIndex].data;
+    await server
+      .post(`/owner`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Customers are Created Successfully",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
+        dispatch(getCustomers({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Employees
+  const addEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/Employee`, handleEmployeeFormData(values), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employee is Created Successfully",
+          status: "success",
+        });
+        dispatch(getEmployees({}));
+        dispatch(getEmployeesCounter());
+        navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+        setEmployeeImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editEmployee = async (values: EmployeeFormTypes) => {
+    handleOpenFormsLoading();
+    if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
+      handleEditEmployeeInSheet(values);
+      handleCloseEmployeeModal();
+      handleAlert({
+        msg: "Employee is Updated Successfully",
+        status: "success",
+      });
+    } else {
+      await server
+        .patch(
+          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          handleEmployeeFormData(values),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Employee is Updated Successfully",
+            status: "success",
+          });
+          dispatch(getEmployees({}));
+          navigate(
+            `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+              editableEmployeeData && editableEmployeeData._id
+            }`
+          );
+          setEmployeeImage("");
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
+    handleCloseFormsLoading();
+  };
+
+  const createEmployeesSheet = async (values: unknown) => {
+    handleOpenFormsLoading();
+    values = employeesSheets[employeeIndex.fileIndex].data;
+    await server
+      .post(`/Employee`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Employees are Created Successfully",
+          status: "success",
+        });
+        if (id) {
+          dispatch(getCompany({ id }));
+        } else {
+          navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
+          dispatch(getEmployees({}));
+        }
+        handleCloseUploadEmployeesModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Company
   const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -571,9 +999,15 @@ const useSubmitFunction = (type: string) => {
         `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
-            : editableOwnerData && editableOwnerData._id
+            : formType === "linkPro"
+            ? editableProData && editableProData._id
+            : editableCustomerData && editableCustomerData._id
         }&operation=adding&typeOfPerson=${
-          formType === "linkOwner" ? "owner" : "pro"
+          formType === "linkOwner"
+            ? "owner"
+            : formType === "linkPro"
+            ? "pro"
+            : "customer"
         }`,
         {
           headers: {
@@ -594,13 +1028,13 @@ const useSubmitFunction = (type: string) => {
           }
         } else {
           handleAlert({
-            msg: "PRO is Linked to Company Successfully",
+            msg: "Officer is Linked to Company Successfully",
             status: "success",
           });
           if (id) {
-            dispatch(getOwner({ id }));
+            dispatch(getPro({ id }));
           } else {
-            dispatch(getOwners({}));
+            dispatch(getPros({}));
           }
         }
         handleCloseLinkToCompanyModal();
@@ -634,6 +1068,48 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Download Excel
+  const handleDownloadExcelSubmit = async (values: DownloadExcelFormTypes) => {
+    handleOpenFormsLoading();
+    const fileName = values.fileName;
+    if (excelType.entity === "owners") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(owners, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "officers") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(pros, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "customers") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(customers, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "employees") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(employees, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "jobs") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(jobs, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "nationalities") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(nationalities, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "users") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(users, excelType.entity, fileName);
+      }
+    } else if (excelType.entity === "companies") {
+      if (excelType.type === "excel") {
+        handleDownloadExcel(companies, excelType.entity, fileName);
+      }
+    }
+    handleCloseDownloadExcelModal();
+    handleCloseFormsLoading();
+  };
+
+  //Delete
   const handleDelete = async () => {
     handleOpenFormsLoading();
     if (formType === "owner") {
@@ -649,7 +1125,71 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getOwners({}));
+          dispatch(getOwnersCounter());
           navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "pro") {
+      await server
+        .delete(`/owner/${editableProData && editableProData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Officer is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getPros({}));
+          dispatch(getProsCounter());
+          navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "customer") {
+      await server
+        .delete(`/owner/${editableCustomerData && editableCustomerData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Customer is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getCustomers({}));
+          dispatch(getCustomersCounter());
+          navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "employee") {
+      await server
+        .delete(
+          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Employee is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getEmployees({}));
+          dispatch(getEmployeesCounter());
+          navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -668,6 +1208,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getJobs({}));
+          dispatch(getJobsCounter());
           navigate(`${import.meta.env.VITE_JOBS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -692,6 +1233,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getNationalities({}));
+          dispatch(getNationalitiesCounter());
           navigate(`${import.meta.env.VITE_NATIONALITIES_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -711,6 +1253,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getUsers({}));
+          dispatch(getUsersCounter());
           navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -730,6 +1273,7 @@ const useSubmitFunction = (type: string) => {
             status: "success",
           });
           dispatch(getCompanies({}));
+          dispatch(getCompaniesCounter());
           navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
           handleCloseDeleteModal();
         })
@@ -750,7 +1294,7 @@ const useSubmitFunction = (type: string) => {
         )
         .then(() => {
           handleAlert({
-            msg: "Owner is unLinked to Company Successfully",
+            msg: "Owner is unLinked with Company Successfully",
             status: "success",
           });
           if (id) {
@@ -775,11 +1319,36 @@ const useSubmitFunction = (type: string) => {
         )
         .then(() => {
           handleAlert({
-            msg: "Officer is unLinked to Company Successfully",
+            msg: "Officer is unLinked with Company Successfully",
             status: "success",
           });
           if (id) {
             dispatch(getPro({ id }));
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "unLinkCustomer") {
+      await server
+        .get(
+          `/company/ManageOwnersAndPro?companyId=${
+            editableCompanyData && editableCompanyData._id
+          }&id=${id}&operation=deleting&typeOfPerson=customer`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Customer is unLinked with Company Successfully",
+            status: "success",
+          });
+          if (id) {
+            dispatch(getCustomer({ id }));
           }
           handleCloseDeleteModal();
         })
@@ -834,18 +1403,48 @@ const useSubmitFunction = (type: string) => {
       case "createOwnersSheet":
         createOwnersSheet(values as unknown);
         break;
+      case "addPro":
+        addPro(values as ProFormTypes);
+        break;
+      case "editPro":
+        editPro(values as ProFormTypes);
+        break;
+      case "createProsSheet":
+        createProsSheet(values as unknown);
+        break;
+      case "addEmployee":
+        addEmployee(values as EmployeeFormTypes);
+        break;
+      case "editEmployee":
+        editEmployee(values as EmployeeFormTypes);
+        break;
+      case "createEmployeesSheet":
+        createEmployeesSheet(values as unknown);
+        break;
+      case "addCustomer":
+        addCustomer(values as CustomerFormTypes);
+        break;
+      case "editCustomer":
+        editCustomer(values as CustomerFormTypes);
+        break;
+      case "createCustomersSheet":
+        createCustomersSheet(values as unknown);
+        break;
       case "addCompany":
         addCompany(values as CompanyFormTypes);
         break;
       case "editCompany":
         editCompany(values as CompanyFormTypes);
         break;
-      case "linkPRO":
+      case "linkPro":
       case "linkOwner":
         linkToCompany(values as LinkToCompanyFormTypes);
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);
+        break;
+      case "downloadExcel":
+        handleDownloadExcelSubmit(values as DownloadExcelFormTypes);
         break;
       case "delete":
         handleDelete();

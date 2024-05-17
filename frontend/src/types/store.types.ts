@@ -1,3 +1,5 @@
+import { EntityType } from "./app.types";
+
 interface AuthValuesTypes {
   token: string | null;
   userId: string | null;
@@ -5,15 +7,119 @@ interface AuthValuesTypes {
   isLoading: boolean;
 }
 
-interface JobsValuesTypes {
+interface ActivityTypes {
+  type: EntityType;
+  userName: string;
+  id: string;
+  avatar?: string;
+  action: string;
+  userId: UserTypes;
+  route: string;
+  createdAt?: Date;
+}
+
+interface ActivitiesValuesTypes {
+  activities: ActivityTypes[] | null;
   isLoading: boolean;
-  jobs: JobTypes[] | null;
+}
+
+interface ActivitiesArgsTypes {
+  page?: number;
+  limit?: number;
+  search?: string;
+  type?: string;
+  operation?: string;
+  to?: string;
+  from?: string;
+}
+
+interface RecentActivitiesValuesTypes {
+  recentActivities: ActivityTypes[] | null;
+  isLoading: boolean;
+}
+
+interface RecentActivitiesArgsTypes {
+  limit?: number;
+}
+
+//User
+
+interface UserTypes {
+  _id: string;
+  name: string;
+  password: string;
+  email: string;
+  role: string;
+  phone: string;
+  avatar: string;
+  createdAt: Date;
+  status: string;
+}
+
+interface UsersCounterValuesTypes {
+  isLoading: boolean;
+  usersCounter: number;
+}
+
+interface UsersArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+  limit?: number;
+  role?: string;
+  status?: string;
+}
+
+interface UsersValuesTypes {
+  isLoading: boolean;
+  users: UserTypes[] | null;
+}
+
+interface RecentUsersArgsTypes {
+  limit?: number;
+}
+
+interface RecentUsersValuesTypes {
+  isLoading: boolean;
+  recentUsers: UserTypes[] | null;
+}
+
+interface UserValuesTypes {
+  isLoading: boolean;
+  user: UserTypes | null;
+}
+
+//Owner
+
+interface OwnerTypes {
+  _id?: string;
+  uid: string;
+  name: string;
+  nameAr: string;
+  avatar: string;
+  dob?: Date;
+  idNationality: string;
+  nationality: string;
+  phone: string;
+  email: string;
+  remarks: string;
+  state: string;
+  address: string;
+  emiratesId: string;
+  personCode: string;
+  fileImmgNo: string;
+  status: string;
+  type?: string;
+  residenceExpiryDate?: Date;
+  createdAt?: Date;
+  user?: string;
 }
 
 interface OwnerValuesTypes {
   isLoading: boolean;
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -32,15 +138,29 @@ interface OwnersArgsTypes {
   nationality?: string;
 }
 
+interface RecentOwnersValuesTypes {
+  isLoading: boolean;
+  recentOwners: OwnerTypes[] | null;
+}
+
+interface RecentOwnersArgsTypes {
+  limit?: number;
+}
+
 interface OwnersCounterValuesTypes {
   isLoading: boolean;
   ownersCounter: number;
 }
 
+//PRO
+
+interface ProTypes extends OwnerTypes {}
+
 interface ProValuesTypes {
   isLoading: boolean;
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -59,9 +179,107 @@ interface ProsArgsTypes {
   nationality?: string;
 }
 
+interface RecentProsValuesTypes {
+  isLoading: boolean;
+  recentPros: ProTypes[] | null;
+}
+
+interface RecentProsArgsTypes {
+  limit?: number;
+}
+
 interface ProsCounterValuesTypes {
   isLoading: boolean;
   prosCounter: number;
+}
+
+//PRO
+
+interface CustomerTypes extends OwnerTypes {
+  sponsor: string;
+}
+
+interface CustomerValuesTypes {
+  isLoading: boolean;
+  customer: CustomerTypes | null;
+  companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
+}
+
+interface CustomersValuesTypes {
+  isLoading: boolean;
+  customers: CustomerTypes[] | null;
+}
+
+interface CustomersArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+  limit?: number;
+  dobTo?: string;
+  dobFrom?: string;
+  state?: string;
+  nationality?: string;
+}
+
+interface RecentCustomersValuesTypes {
+  isLoading: boolean;
+  recentCustomers: CustomerTypes[] | null;
+}
+
+interface RecentCustomersArgsTypes {
+  limit?: number;
+}
+
+interface CustomersCounterValuesTypes {
+  isLoading: boolean;
+  customersCounter: number;
+}
+
+//Employee
+
+interface EmployeeTypes {
+  _id?: string;
+  avatar: string;
+  name: string;
+  nameAr: string;
+  dob?: Date;
+  personCode: string;
+  companyId: CompanyTypes[] | string[];
+  idNationality: string;
+  nationality: string;
+  gender: string;
+  email: string;
+  job: string;
+  mobileNumber: string;
+  salary: string;
+  cardType: string;
+  cardNumber: string;
+  status: string;
+  visaFileNumber: string;
+  passportNumber: string;
+  passportExpiry?: Date;
+  residenceExpireDate?: Date;
+  lcExpireDate?: Date;
+  workPermitNumber: string;
+  medicalInsuranceCompany: string;
+  medicalPolicyNo: string;
+  medicalExpireDate?: Date;
+  iLOEInsuranceCompany: string;
+  iLOEPolicyNo: string;
+  iLOEExpireDate?: Date;
+  uid: string;
+  emiratesId: string;
+  remarks: string;
+  user?: string;
+  createdAt?: Date;
+}
+
+interface EmployeeValuesTypes {
+  isLoading: boolean;
+  employee: EmployeeTypes | null;
+  companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
 }
 
 interface EmployeesValuesTypes {
@@ -70,15 +288,23 @@ interface EmployeesValuesTypes {
 }
 
 interface EmployeesArgsTypes {
-  page?: number;
   search?: string;
   sort?: string;
+  nationality?: string;
+  cardType?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
   limit?: number;
 }
 
-interface CompanyValuesTypes {
+interface RecentEmployeesValuesTypes {
   isLoading: boolean;
-  company: CompanyTypes | null;
+  recentEmployees: EmployeeTypes[] | null;
+}
+
+interface RecentEmployeesArgsTypes {
+  limit?: number;
 }
 
 interface EmployeesCounterValuesTypes {
@@ -86,24 +312,56 @@ interface EmployeesCounterValuesTypes {
   employeesCounter: number;
 }
 
+//Company
+
+interface CompanyTypes {
+  _id?: string;
+  name: string;
+  nameAr: string;
+  logo: string;
+  status: string;
+  country: string;
+  state: string;
+  address: string;
+  phone: string;
+  proCode: ProTypes[] | string[];
+  ownerId: OwnerTypes[] | string[];
+  customerId: CustomerTypes[] | string[];
+  employees: EmployeeTypes[] | string[];
+  licenseNo: string;
+  immgCardNo: string;
+  immgCardExpiry: Date;
+  licenseIssueDate: Date;
+  licenseExpiryDate: Date;
+  establishmentType: string;
+  licenseIssuePlace: string;
+  zipCode: string;
+  molCode: string;
+  molCategory: string;
+  whatsAppNo: string;
+  mobileNo: string;
+  website: string;
+  trn: string;
+  email: string;
+  tenancyContractValue: string;
+  tenancyContractExp: Date;
+  remarks: string;
+  createdAt: Date;
+  userName: string;
+  password: string;
+  echannelExpiryDate: Date;
+  user?: string;
+}
+
+interface CompanyValuesTypes {
+  isLoading: boolean;
+  company: CompanyTypes | null;
+  activities: ActivityTypes[] | null;
+}
+
 interface CompaniesCounterValuesTypes {
   isLoading: boolean;
   companiesCounter: number;
-}
-
-interface JobsCounterValuesTypes {
-  isLoading: boolean;
-  jobsCounter: number;
-}
-
-interface UsersCounterValuesTypes {
-  isLoading: boolean;
-  usersCounter: number;
-}
-
-interface NationalitiesCounterValuesTypes {
-  isLoading: boolean;
-  nationalitiesCounter: number;
 }
 
 interface CompaniesValuesTypes {
@@ -126,6 +384,22 @@ interface CompaniesArgsTypes {
   licenseTo?: string;
 }
 
+interface RecentCompaniesValuesTypes {
+  isLoading: boolean;
+  recentCompanies: CompanyTypes[] | null;
+}
+
+interface RecentCompaniesArgsTypes {
+  limit?: number;
+}
+
+//Job
+
+interface JobsValuesTypes {
+  isLoading: boolean;
+  jobs: JobTypes[] | null;
+}
+
 interface JobsArgsTypes {
   page?: number;
   search?: string;
@@ -134,110 +408,18 @@ interface JobsArgsTypes {
   reverse?: boolean;
 }
 
-interface NationalitiesArgsTypes {
-  page?: number;
-  search?: string;
-  sort?: string;
+interface RecentJobsValuesTypes {
+  isLoading: boolean;
+  recentJobs: JobTypes[] | null;
+}
+
+interface RecentJobsArgsTypes {
   limit?: number;
 }
 
-interface UsersArgsTypes {
-  page?: number;
-  search?: string;
-  sort?: string;
-  limit?: number;
-  role?: string;
-  status?: string;
-}
-
-interface NationalitiesValuesTypes {
+interface JobsCounterValuesTypes {
   isLoading: boolean;
-  nationalities: NationalityTypes[] | null;
-}
-
-interface UsersValuesTypes {
-  isLoading: boolean;
-  users: UserTypes[] | null;
-}
-
-interface UserValuesTypes {
-  isLoading: boolean;
-  user: UserTypes | null;
-}
-
-interface OwnerTypes {
-  _id?: string;
-  uid: string;
-  name: string;
-  nameAr: string;
-  avatar: string;
-  dob: Date;
-  idNationality: string;
-  nationality: string;
-  phone: string;
-  email: string;
-  remarks: string;
-  state: string;
-  address: string;
-  proCode: boolean;
-  emiratesId: string;
-  personCode: string;
-  createdAt: Date;
-  user?: string;
-}
-
-interface ProTypes extends OwnerTypes {}
-
-interface CompanyTypes {
-  _id?: string;
-  name: string;
-  nameAr: string;
-  logo: string;
-  status: string;
-  country: string;
-  state: string;
-  address: string;
-  phone: string;
-  proCode: OwnerTypes[] | string[];
-  ownerId: OwnerTypes[] | string[];
-  licenseNo: string;
-  immgCardNo: string;
-  immgCardExpiry: Date;
-  licenseIssueDate: Date;
-  licenseExpiryDate: Date;
-  establishmentType: string;
-  licenseIssuePlace: string;
-  zipCode: string;
-  molCode: string;
-  molCategory: string;
-  whatsAppNo: string;
-  mobileNo: string;
-  website: string;
-  trn: string;
-  email: string;
-  tenancyContractValue: string;
-  tenancyContractExp: Date;
-  remarks: string;
-  createdAt: Date;
-  username: string;
-  pasword: string;
-  echannelExpiryDate: Date;
-  user?: string;
-}
-
-interface EmployeeTypes {
-  _id?: string;
-  employeeName: string;
-  companyCode: string;
-  dateOfBirth: Date;
-  gender: string;
-  idNationality: string;
-  nationality: string;
-  passportNumber: string;
-  passportExpiry: Date;
-  uidNo: string;
-  emiratesIdNo: string;
-  user?: string;
+  jobsCounter: number;
 }
 
 interface JobTypes {
@@ -248,6 +430,34 @@ interface JobTypes {
   user?: string;
 }
 
+//Nationality
+
+interface NationalitiesCounterValuesTypes {
+  isLoading: boolean;
+  nationalitiesCounter: number;
+}
+
+interface NationalitiesArgsTypes {
+  page?: number;
+  search?: string;
+  sort?: string;
+  limit?: number;
+}
+
+interface NationalitiesValuesTypes {
+  isLoading: boolean;
+  nationalities: NationalityTypes[] | null;
+}
+
+interface RecentNationalitiesArgsTypes {
+  limit?: number;
+}
+
+interface RecentNationalitiesValuesTypes {
+  isLoading: boolean;
+  recentNationalities: NationalityTypes[] | null;
+}
+
 interface NationalityTypes {
   _id?: string;
   id: string;
@@ -255,50 +465,65 @@ interface NationalityTypes {
   user?: string;
 }
 
-interface UserTypes {
-  _id: string;
-  name: string;
-  password: string;
-  email: string;
-  role: string;
-  phone: string;
-  avatar: string;
-  createdAt: Date;
-  status: string;
-}
-
 export type {
+  ActivitiesArgsTypes,
+  ActivitiesValuesTypes,
+  ActivityTypes,
   AuthValuesTypes,
   CompaniesArgsTypes,
   CompaniesCounterValuesTypes,
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
-  EmployeeTypes,
+  CustomersArgsTypes,
+  CustomersCounterValuesTypes,
+  CustomersValuesTypes,
+  CustomerTypes,
+  CustomerValuesTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,
-  JobTypes,
+  EmployeeTypes,
+  EmployeeValuesTypes,
   JobsArgsTypes,
   JobsCounterValuesTypes,
   JobsValuesTypes,
+  JobTypes,
   NationalitiesArgsTypes,
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
-  OwnerTypes,
-  OwnerValuesTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
-  ProTypes,
-  ProValuesTypes,
+  OwnerTypes,
+  OwnerValuesTypes,
   ProsArgsTypes,
   ProsCounterValuesTypes,
   ProsValuesTypes,
-  UserTypes,
-  UserValuesTypes,
+  ProTypes,
+  ProValuesTypes,
+  RecentActivitiesArgsTypes,
+  RecentActivitiesValuesTypes,
+  RecentCompaniesArgsTypes,
+  RecentCompaniesValuesTypes,
+  RecentCustomersArgsTypes,
+  RecentCustomersValuesTypes,
+  RecentEmployeesArgsTypes,
+  RecentEmployeesValuesTypes,
+  RecentJobsArgsTypes,
+  RecentJobsValuesTypes,
+  RecentNationalitiesArgsTypes,
+  RecentNationalitiesValuesTypes,
+  RecentOwnersArgsTypes,
+  RecentOwnersValuesTypes,
+  RecentProsArgsTypes,
+  RecentProsValuesTypes,
+  RecentUsersArgsTypes,
+  RecentUsersValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,
+  UserTypes,
+  UserValuesTypes,
 };

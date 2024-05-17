@@ -2,11 +2,14 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
+import AddEmployee from "./pages/AddEmployee.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
+import Customer from "./pages/Customer.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
+import EditEmployee from "./pages/EditEmployee.tsx";
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
@@ -17,18 +20,21 @@ import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
+import Pro from "./pages/Pro.tsx";
 import Profile from "./pages/Profile.tsx";
-import PublicRelationOfficer from "./pages/PublicRelationOfficer.tsx";
-import PublicRelationOfficers from "./pages/PublicRelationOfficers.tsx";
+import Pros from "./pages/Pros.tsx";
 import Reports from "./pages/Reports.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Settings from "./pages/Settings.tsx";
 import TodoList from "./pages/TodoList.tsx";
 import Transactions from "./pages/Transactions.tsx";
 import UploadCompanies from "./pages/UploadCompanies.tsx";
+import UploadCustomers from "./pages/UploadCustomers.tsx";
+import UploadEmployees from "./pages/UploadEmployees.tsx";
 import UploadJobs from "./pages/UploadJobs.tsx";
 import UploadNationalities from "./pages/UploadNationalities.tsx";
 import UploadOwners from "./pages/UploadOwners.tsx";
+import UploadPros from "./pages/UploadPros.tsx";
 import User from "./pages/User.tsx";
 import Users from "./pages/Users.tsx";
 
@@ -66,6 +72,14 @@ export const router = createBrowserRouter([
         element: <Customers />,
       },
       {
+        path: "/customers/:id",
+        element: <Customer />,
+      },
+      {
+        path: "/customers/upload",
+        element: <UploadCustomers />,
+      },
+      {
         path: "/owners",
         element: <Owners />,
       },
@@ -84,6 +98,18 @@ export const router = createBrowserRouter([
       {
         path: "/employees/:id",
         element: <Employee />,
+      },
+      {
+        path: "/employees/add",
+        element: <AddEmployee />,
+      },
+      {
+        path: "/employees/:id/edit",
+        element: <EditEmployee />,
+      },
+      {
+        path: "/employees/upload",
+        element: <UploadEmployees />,
       },
       {
         path: "/companies",
@@ -150,12 +176,16 @@ export const router = createBrowserRouter([
         element: <UploadJobs />,
       },
       {
-        path: "/publicRelationOfficers",
-        element: <PublicRelationOfficers />,
+        path: "/pros",
+        element: <Pros />,
       },
       {
-        path: "/publicRelationOfficers/:id",
-        element: <PublicRelationOfficer />,
+        path: "/pros/:id",
+        element: <Pro />,
+      },
+      {
+        path: "/pros/upload",
+        element: <UploadPros />,
       },
       {
         path: "*",

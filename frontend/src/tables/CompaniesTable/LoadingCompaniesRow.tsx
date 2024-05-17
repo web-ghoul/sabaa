@@ -2,7 +2,13 @@ import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import { CompaniesTableRow } from "./CompaniesTableRow";
 
-const LoadingCompaniesRow = () => {
+const LoadingCompaniesRow = ({
+  actions = true,
+  recent,
+}: {
+  actions: boolean;
+  recent?: boolean;
+}) => {
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -17,7 +23,7 @@ const LoadingCompaniesRow = () => {
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-      {!lgScreen && (
+      {!lgScreen && !recent && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
@@ -27,7 +33,7 @@ const LoadingCompaniesRow = () => {
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-      {!mdScreen && (
+      {!mdScreen && !recent && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
@@ -35,9 +41,11 @@ const LoadingCompaniesRow = () => {
       <PrimaryTableCell align="right">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-      <PrimaryTableCell align="right">
-        <Skeleton variant="rounded" />
-      </PrimaryTableCell>
+      {actions && (
+        <PrimaryTableCell align="right">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
     </CompaniesTableRow>
   );
 };

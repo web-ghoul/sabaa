@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 import { handleAlert } from "../functions/handleAlert";
 import {
   CompaniesSheetTypes,
+  CustomersSheetTypes,
+  EmployeesSheetTypes,
   ExcelsContextProps,
   JobsSheetTypes,
   NationalitiesSheetTypes,
@@ -10,6 +12,8 @@ import {
 } from "../types/contexts.types";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -31,6 +35,20 @@ export const ExcelsContext = createContext<ExcelsContextProps>({
   handleRemoveProsSheet: () => {},
   handleEditProInSheet: () => {},
   handleDeleteProFromSheet: () => {},
+  employeesSheets: [],
+  employeeIndex: { fileIndex: 0, index: 0 },
+  setEmployeeIndex: () => {},
+  handleAddEmployeesSheet: () => {},
+  handleRemoveEmployeesSheet: () => {},
+  handleEditEmployeeInSheet: () => {},
+  handleDeleteEmployeeFromSheet: () => {},
+  customersSheets: [],
+  customerIndex: { fileIndex: 0, index: 0 },
+  setCustomerIndex: () => {},
+  handleAddCustomersSheet: () => {},
+  handleRemoveCustomersSheet: () => {},
+  handleEditCustomerInSheet: () => {},
+  handleDeleteCustomerFromSheet: () => {},
   companiesSheets: [],
   companyIndex: { fileIndex: 0, index: 0 },
   setCompanyIndex: () => {},
@@ -77,7 +95,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const handleEditOwnerInSheet = (owner: OwnerTypes) => {
-    if (companyIndex) {
+    if (ownerIndex) {
       const newOwnersSheets = [...ownersSheets];
       newOwnersSheets[ownerIndex.fileIndex].data[ownerIndex.index] = owner;
       setOwnersSheets(newOwnersSheets);
@@ -112,6 +130,80 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       const newProsSheets = [...prosSheets];
       newProsSheets[proIndex.fileIndex].data[proIndex.index] = pro;
       setProsSheets(newProsSheets);
+    } else {
+      handleAlert({ msg: "Error Occurs", status: "error" });
+    }
+  };
+
+  //Employees Sheets
+  const [employeesSheets, setEmployeesSheets] = useState<EmployeesSheetTypes[]>(
+    []
+  );
+
+  const [employeeIndex, setEmployeeIndex] = useState({
+    fileIndex: 0,
+    index: 0,
+  });
+
+  const handleAddEmployeesSheet = (employeesSheet: EmployeesSheetTypes) => {
+    setEmployeesSheets([...employeesSheets, employeesSheet]);
+  };
+
+  const handleRemoveEmployeesSheet = (fileIndex: number) => {
+    setEmployeesSheets(employeesSheets.filter((_, i) => i !== fileIndex));
+  };
+
+  const handleDeleteEmployeeFromSheet = () => {
+    const updatedEmployeesSheets = [...employeesSheets];
+    updatedEmployeesSheets[employeeIndex.fileIndex].data = employeesSheets[
+      employeeIndex.fileIndex
+    ].data.filter((_, i) => i !== employeeIndex.index);
+    setEmployeesSheets(updatedEmployeesSheets);
+  };
+
+  const handleEditEmployeeInSheet = (employee: EmployeeTypes) => {
+    if (employeeIndex) {
+      const newEmployeesSheets = [...employeesSheets];
+      newEmployeesSheets[employeeIndex.fileIndex].data[employeeIndex.index] =
+        employee;
+      setEmployeesSheets(newEmployeesSheets);
+    } else {
+      handleAlert({ msg: "Error Occurs", status: "error" });
+    }
+  };
+
+  //Customers Sheets
+  const [customersSheets, setCustomersSheets] = useState<CustomersSheetTypes[]>(
+    []
+  );
+
+  const [customerIndex, setCustomerIndex] = useState({
+    fileIndex: 0,
+    index: 0,
+  });
+
+  const handleAddCustomersSheet = (customersSheet: CustomersSheetTypes) => {
+    setCustomersSheets([...customersSheets, customersSheet]);
+  };
+
+  const handleRemoveCustomersSheet = (fileIndex: number) => {
+    setCustomersSheets(customersSheets.filter((_, i) => i !== fileIndex));
+  };
+
+  const handleDeleteCustomerFromSheet = () => {
+    const updatedCustomersSheets = [...customersSheets];
+    updatedCustomersSheets[customerIndex.fileIndex].data = customersSheets[
+      customerIndex.fileIndex
+    ].data.filter((_, i) => i !== customerIndex.index);
+    setCustomersSheets(updatedCustomersSheets);
+  };
+
+  const handleEditCustomerInSheet = (customer: CustomerTypes) => {
+    if (customerIndex) {
+      const newCustomersSheets = [...customersSheets];
+      newCustomersSheets[customerIndex.fileIndex].data[customerIndex.index] =
+        customer;
+      setCustomersSheets(newCustomersSheets);
     } else {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
@@ -227,38 +319,52 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const values = {
     ownersSheets,
-    setOwnerIndex,
     ownerIndex,
+    setOwnerIndex,
+    handleEditOwnerInSheet,
     handleAddOwnersSheet,
+    handleDeleteOwnerFromSheet,
     handleRemoveOwnersSheet,
+    employeesSheets,
+    employeeIndex,
+    setEmployeeIndex,
+    handleEditEmployeeInSheet,
+    handleAddEmployeesSheet,
+    handleDeleteEmployeeFromSheet,
+    handleRemoveEmployeesSheet,
+    customersSheets,
+    customerIndex,
+    setCustomerIndex,
+    handleEditCustomerInSheet,
+    handleAddCustomersSheet,
+    handleDeleteCustomerFromSheet,
+    handleRemoveCustomersSheet,
     companiesSheets,
-    setCompanyIndex,
     companyIndex,
+    setCompanyIndex,
+    handleEditCompanyInSheet,
     handleAddCompaniesSheet,
-    handleDeleteNationalityFromSheet,
+    handleDeleteCompanyFromSheet,
     handleRemoveCompaniesSheet,
     jobsSheets,
     jobIndex,
     setJobIndex,
     handleEditJobInSheet,
     handleAddJobsSheet,
-    handleDeleteOwnerFromSheet,
     handleRemoveJobsSheet,
     handleDeleteJobFromSheet,
     nationalitiesSheets,
     nationalityIndex,
     setNationalityIndex,
-    handleEditOwnerInSheet,
-    handleDeleteCompanyFromSheet,
     handleAddNationalitiesSheet,
-    handleEditCompanyInSheet,
+    handleDeleteNationalityFromSheet,
     handleRemoveNationalitiesSheet,
     handleEditNationalityInSheet,
     prosSheets,
+    proIndex,
     handleEditProInSheet,
     handleDeleteProFromSheet,
     setProIndex,
-    proIndex,
     handleRemoveProsSheet,
     handleAddProsSheet,
   };

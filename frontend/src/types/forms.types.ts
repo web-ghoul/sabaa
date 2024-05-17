@@ -1,6 +1,8 @@
 import { FormikProps } from "formik";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -12,6 +14,8 @@ interface FormsTypes {
   type: string;
   index?: number;
 }
+
+//Login
 
 interface LoginFormTypes {
   username: string;
@@ -29,6 +33,7 @@ interface LoginFormikTypes {
   values: LoginFormTypes;
 }
 
+//Reset Password
 interface ResetPasswordFormTypes {
   password: string;
   confirmPassword: string;
@@ -45,6 +50,8 @@ interface ResetPasswordFormikTypes {
   values: ResetPasswordFormTypes;
 }
 
+//Forgot Password
+
 interface ForgotPasswordFormTypes {
   email: string;
 }
@@ -60,10 +67,52 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
-interface CompanyFormTypes extends CompanyTypes {
-  ownerId: string[];
-  proCode: string[];
+//Activities
+interface ActivitiesOptionsFormTypes {
+  search: string;
+  type: string;
+  operation: string;
+  from: string;
+  to: string;
 }
+
+interface ActivitiesOptionsFormikTypes {
+  touched: ActivitiesOptionsFormTypes;
+  errors: ActivitiesOptionsFormTypes;
+  initialValues: ActivitiesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ActivitiesOptionsFormTypes;
+}
+
+//Company
+
+interface CompaniesOptionsFormTypes {
+  search: string;
+  state: string;
+  status: string;
+  molCategory: string;
+  establishmentType: string;
+  IMMGFrom: string;
+  IMMGTo: string;
+  licenseFrom: string;
+  licenseTo: string;
+}
+
+interface CompaniesOptionsFormikTypes {
+  touched: CompaniesOptionsFormTypes;
+  errors: CompaniesOptionsFormTypes;
+  initialValues: CompaniesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: CompaniesOptionsFormTypes;
+}
+
+interface CompanyFormTypes extends CompanyTypes {}
 
 interface CompanyFormikTypes {
   touched: CompanyFormTypes;
@@ -91,6 +140,8 @@ interface LinkToCompanyFormikTypes {
   values: LinkToCompanyFormTypes;
 }
 
+//Owner
+
 interface OwnerFormTypes extends OwnerTypes {}
 
 interface OwnerFormikTypes {
@@ -102,71 +153,6 @@ interface OwnerFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: OwnerFormTypes;
-}
-
-interface ProFormTypes extends ProTypes {}
-
-interface ProFormikTypes {
-  touched: ProFormTypes;
-  errors: ProFormTypes;
-  initialValues: ProFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: ProFormTypes;
-}
-
-interface JobFormTypes extends JobTypes {}
-
-interface JobFormikTypes {
-  touched: JobFormTypes;
-  errors: JobFormTypes;
-  initialValues: JobFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: JobFormTypes;
-}
-
-interface NationalityFormTypes extends NationalityTypes {}
-
-interface NationalityFormikTypes {
-  touched: NationalityFormTypes;
-  errors: NationalityFormTypes;
-  initialValues: NationalityFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: NationalityFormTypes;
-}
-
-interface UserFormTypes extends UserTypes {}
-
-interface UserFormikTypes {
-  touched: UserFormTypes;
-  errors: UserFormTypes;
-  initialValues: UserFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: UserFormTypes;
-}
-
-interface DeleteFormTypes {}
-
-interface DeleteFormikTypes {
-  touched: DeleteFormTypes;
-  errors: DeleteFormTypes;
-  initialValues: DeleteFormTypes;
-  validationSchema: unknown;
-  onSubmit: (values: unknown) => void;
-  handleChange: (event: unknown) => void;
-  handleBlur: (event: unknown) => void;
-  values: DeleteFormTypes;
 }
 
 interface OwnersOptionsFormTypes {
@@ -188,6 +174,21 @@ interface OwnersOptionsFormikTypes {
   values: OwnersOptionsFormTypes;
 }
 
+//Pro
+
+interface ProFormTypes extends ProTypes {}
+
+interface ProFormikTypes {
+  touched: ProFormTypes;
+  errors: ProFormTypes;
+  initialValues: ProFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ProFormTypes;
+}
+
 interface ProsOptionsFormTypes {
   search: string;
   dobFrom: string;
@@ -207,6 +208,89 @@ interface ProsOptionsFormikTypes {
   values: ProsOptionsFormTypes;
 }
 
+//Pro
+
+interface CustomerFormTypes extends CustomerTypes {}
+
+interface CustomerFormikTypes {
+  touched: CustomerFormTypes;
+  errors: CustomerFormTypes;
+  initialValues: CustomerFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: CustomerFormTypes;
+}
+
+interface CustomersOptionsFormTypes {
+  search: string;
+  dobFrom: string;
+  dobTo: string;
+  nationality: string;
+  state: string;
+}
+
+interface CustomersOptionsFormikTypes {
+  touched: CustomersOptionsFormTypes;
+  errors: CustomersOptionsFormTypes;
+  initialValues: CustomersOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: CustomersOptionsFormTypes;
+}
+
+//Employee
+
+interface EmployeeFormTypes extends EmployeeTypes {}
+
+interface EmployeeFormikTypes {
+  touched: EmployeeFormTypes;
+  errors: EmployeeFormTypes;
+  initialValues: EmployeeFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EmployeeFormTypes;
+}
+
+interface EmployeesOptionsFormTypes {
+  search: string;
+  cardType: string;
+  status: string;
+  nationality: string;
+  gender: string;
+}
+
+interface EmployeesOptionsFormikTypes {
+  touched: EmployeesOptionsFormTypes;
+  errors: EmployeesOptionsFormTypes;
+  initialValues: EmployeesOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EmployeesOptionsFormTypes;
+}
+
+//Job
+
+interface JobFormTypes extends JobTypes {}
+
+interface JobFormikTypes {
+  touched: JobFormTypes;
+  errors: JobFormTypes;
+  initialValues: JobFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: JobFormTypes;
+}
+
 interface JobsOptionsFormTypes {
   search: string;
   limit: string;
@@ -223,6 +307,21 @@ interface JobsOptionsFormikTypes {
   values: JobsOptionsFormTypes;
 }
 
+//Nationality
+
+interface NationalityFormTypes extends NationalityTypes {}
+
+interface NationalityFormikTypes {
+  touched: NationalityFormTypes;
+  errors: NationalityFormTypes;
+  initialValues: NationalityFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NationalityFormTypes;
+}
+
 interface NationalitiesOptionsFormTypes {
   search: string;
   limit: string;
@@ -237,6 +336,21 @@ interface NationalitiesOptionsFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: NationalitiesOptionsFormTypes;
+}
+
+//User
+
+interface UserFormTypes extends UserTypes {}
+
+interface UserFormikTypes {
+  touched: UserFormTypes;
+  errors: UserFormTypes;
+  initialValues: UserFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: UserFormTypes;
 }
 
 interface UsersOptionsFormTypes {
@@ -256,27 +370,36 @@ interface UsersOptionsFormikTypes {
   values: UsersOptionsFormTypes;
 }
 
-interface CompaniesOptionsFormTypes {
-  search: string;
-  state: string;
-  status: string;
-  molCategory: string;
-  establishmentType: string;
-  IMMGFrom: string;
-  IMMGTo: string;
-  licenseFrom: string;
-  licenseTo: string;
+//Download Excel
+
+interface DownloadExcelFormTypes {
+  fileName: string;
 }
 
-interface CompaniesOptionsFormikTypes {
-  touched: CompaniesOptionsFormTypes;
-  errors: CompaniesOptionsFormTypes;
-  initialValues: CompaniesOptionsFormTypes;
+interface DownloadExcelFormikTypes {
+  touched: DownloadExcelFormTypes;
+  errors: DownloadExcelFormTypes;
+  initialValues: DownloadExcelFormTypes;
   validationSchema: unknown;
   onSubmit: (values: unknown) => void;
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
-  values: CompaniesOptionsFormTypes;
+  values: DownloadExcelFormTypes;
+}
+
+//Delete
+
+interface DeleteFormTypes {}
+
+interface DeleteFormikTypes {
+  touched: DeleteFormTypes;
+  errors: DeleteFormTypes;
+  initialValues: DeleteFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: DeleteFormTypes;
 }
 
 type AllFormsTypes =
@@ -296,7 +419,13 @@ type AllFormsTypes =
   | JobsOptionsFormTypes
   | LinkToCompanyFormTypes
   | ProFormTypes
-  | ProsOptionsFormTypes;
+  | ProsOptionsFormTypes
+  | EmployeeFormTypes
+  | EmployeesOptionsFormTypes
+  | CustomersOptionsFormikTypes
+  | CustomerFormTypes
+  | DownloadExcelFormTypes
+  | ActivitiesOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -315,7 +444,13 @@ type AllFormiksTypes =
   | DeleteFormikTypes
   | LinkToCompanyFormikTypes
   | ProFormikTypes
-  | ProsOptionsFormikTypes;
+  | ProsOptionsFormikTypes
+  | EmployeeFormikTypes
+  | EmployeesOptionsFormikTypes
+  | CustomersOptionsFormikTypes
+  | CustomerFormikTypes
+  | DownloadExcelFormikTypes
+  | ActivitiesOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -331,6 +466,8 @@ interface CatchErrorTypes {
 }
 
 export type {
+  ActivitiesOptionsFormikTypes,
+  ActivitiesOptionsFormTypes,
   AllFormiksTypes,
   AllFormsTypes,
   CatchErrorTypes,
@@ -338,8 +475,18 @@ export type {
   CompaniesOptionsFormTypes,
   CompanyFormikTypes,
   CompanyFormTypes,
+  CustomerFormikTypes,
+  CustomerFormTypes,
+  CustomersOptionsFormikTypes,
+  CustomersOptionsFormTypes,
   DeleteFormikTypes,
   DeleteFormTypes,
+  DownloadExcelFormikTypes,
+  DownloadExcelFormTypes,
+  EmployeeFormikTypes,
+  EmployeeFormTypes,
+  EmployeesOptionsFormikTypes,
+  EmployeesOptionsFormTypes,
   ForgotPasswordFormikTypes,
   ForgotPasswordFormTypes,
   FormiksTypes,

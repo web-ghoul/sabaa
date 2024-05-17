@@ -15,8 +15,13 @@ import { FormiksTypes } from "../../types/forms.types";
 const JobsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenJobModal, setSearchForJobs } = useContext(FormsContext);
+  const { handleOpenJobModal, setSearchForJobs, handleOpenDownloadExcelModal } =
+    useContext(FormsContext);
   const { queries } = useContext(AppContext);
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "jobs");
+  };
 
   const handleSearch = (value: string) => {
     setSearchForJobs(value);
@@ -58,15 +63,15 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
           <Button
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant="under development"
+            handling={handleDownloadExcel}
             title={"Excel"}
           />
-          <Button
+          {/* <Button
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
             variant="under development"
             title={"Excel All"}
-          />
+          /> */}
         </Box>
       </Box>
     </Paper>

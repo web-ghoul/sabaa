@@ -20,7 +20,7 @@ export class Employee {
     personCode: string;
   
     @Prop({ type: [String], ref: 'Company', required: true })
-    companyCode: [string];
+    companyId: [string];
 
     @Prop()
     companyName: [string]
@@ -28,15 +28,17 @@ export class Employee {
     @Prop({ type: Date })
     dob: Date;
 
-    @Prop({type: String, enum: ["Active", "Cancel", "Abscond", "Complaint"]})
+    @Prop({type: String, trim: true, default: "Cancel", enum: ["Active", "Cancel", "Abscond", "Complaint", ""]})
     status: string
 
     @Prop()
     cardType: string
 
     @Prop()
-    job: string
+    cardNumber: string;
 
+    @Prop()
+    job: string
 
     @Prop()
     visaFileNumber: string
@@ -47,8 +49,15 @@ export class Employee {
     @Prop({type : Object})
     medical : object
 
+    @Prop({type : String})
+    medicalPolicyNo : string
+
     @Prop({type : Object})
     iLOE: object
+
+    @Prop({type : String})
+    iLOEPolicyNo: string
+    
   
     @Prop()
     gender: string;
@@ -92,8 +101,6 @@ export class Employee {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 
-    @Prop({default: false})
-    isCustomer: boolean
 
     @Prop({default : false})
     deleted: boolean;
@@ -107,3 +114,44 @@ EmployeeSchema.index(
   { personCode: 1, deleted: 1 },
   { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
 );
+
+EmployeeSchema.index(
+  { name: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, name: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { nameAr: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, nameAr: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { uid: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { visaFileNumber: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, visaFileNumber: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { emiratesId: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { cardNumber: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, cardNumber: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { medicalPolicyNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, medicalPolicyNo: { $exists: true } } }
+);
+
+EmployeeSchema.index(
+  { iLOEPolicyNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, iLOEPolicyNo: { $exists: true } } }
+);
+

@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { EntitiesType } from "../types/app.types";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -16,9 +19,15 @@ export const FormsContext = createContext<FormsContextTypes>({
   formsLoading: false,
   handleCloseFormsLoading: () => {},
   handleOpenFormsLoading: () => {},
+  openDownloadExcelModal: false,
+  handleOpenDownloadExcelModal: () => {},
+  handleCloseDownloadExcelModal: () => {},
   openLinkToCompanyModal: false,
   handleOpenLinkToCompanyModal: () => {},
   handleCloseLinkToCompanyModal: () => {},
+  openUploadEmployeesModal: false,
+  handleOpenUploadEmployeesModal: () => {},
+  handleCloseUploadEmployeesModal: () => {},
   openDeleteModal: false,
   handleOpenDeleteModal: () => {},
   handleCloseDeleteModal: () => {},
@@ -31,6 +40,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   openOwnerModal: false,
   handleOpenOwnerModal: () => {},
   handleCloseOwnerModal: () => {},
+  openEmployeeModal: false,
+  handleOpenEmployeeModal: () => {},
+  handleCloseEmployeeModal: () => {},
+  openCustomerModal: false,
+  handleOpenCustomerModal: () => {},
+  handleCloseCustomerModal: () => {},
   openProModal: false,
   handleOpenProModal: () => {},
   handleCloseProModal: () => {},
@@ -45,8 +60,14 @@ export const FormsContext = createContext<FormsContextTypes>({
   handleCloseNationalityModal: () => {},
   formType: "",
   setFormType: () => {},
+  excelType: { type: "excel", entity: "companies" },
+  setExcelType: () => {},
   searchForOwners: "",
   setSearchForOwners: () => {},
+  searchForEmployees: "",
+  setSearchForEmployees: () => {},
+  searchForCustomers: "",
+  setSearchForCustomers: () => {},
   searchForPros: "",
   setSearchForPros: () => {},
   searchForJobs: "",
@@ -55,12 +76,18 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForUsers: () => {},
   searchForCompanies: "",
   setSearchForCompanies: () => {},
+  searchForActivities: "",
+  setSearchForActivities: () => {},
   searchForNationalities: "",
   setSearchForNationalities: () => {},
   companyImage: "",
   setCompanyImage: () => {},
   ownerImage: "",
   setOwnerImage: () => {},
+  employeeImage: "",
+  setEmployeeImage: () => {},
+  customerImage: "",
+  setCustomerImage: () => {},
   proImage: "",
   setProImage: () => {},
   userImage: "",
@@ -69,6 +96,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableJobData: () => {},
   editableOwnerData: null,
   setEditableOwnerData: () => {},
+  editableEmployeeData: null,
+  setEditableEmployeeData: () => {},
+  editableCustomerData: null,
+  setEditableCustomerData: () => {},
   editableProData: null,
   setEditableProData: () => {},
   editableNationalityData: null,
@@ -89,10 +120,19 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Form Type
   const [formType, setFormType] = useState("");
 
+  //Excel Type
+  const [excelType, setExcelType] = useState<{
+    type: "excel" | "all";
+    entity: EntitiesType;
+  }>({ type: "excel", entity: "companies" });
+
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
+  const [searchForEmployees, setSearchForEmployees] = useState("");
+  const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
+  const [searchForActivities, setSearchForActivities] = useState("");
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
@@ -105,7 +145,34 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setFormsLoading(true);
   };
 
-  //Delete
+  //Upload Employees
+  const [openUploadEmployeesModal, setOpenUploadEmployeesModal] =
+    useState(false);
+
+  const handleCloseUploadEmployeesModal = () => {
+    setOpenUploadEmployeesModal(false);
+  };
+
+  const handleOpenUploadEmployeesModal = () => {
+    setOpenUploadEmployeesModal(true);
+  };
+
+  //Downalod Excel
+  const [openDownloadExcelModal, setOpenDownloadExcelModal] = useState(false);
+
+  const handleCloseDownloadExcelModal = () => {
+    setOpenDownloadExcelModal(false);
+  };
+
+  const handleOpenDownloadExcelModal = (
+    type: "excel" | "all",
+    entity: EntitiesType
+  ) => {
+    setOpenDownloadExcelModal(true);
+    setExcelType({ type: type, entity: entity });
+  };
+
+  //Link Company
   const [openLinkToCompanyModal, setOpenLinkToCompanyModal] = useState(false);
 
   const handleCloseLinkToCompanyModal = () => {
@@ -168,6 +235,36 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setFormType(type);
     setOpenOwnerModal(true);
+  };
+
+  //Employee Modal
+  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
+
+  const handleCloseEmployeeModal = () => {
+    setOpenEmployeeModal(false);
+  };
+
+  const handleOpenEmployeeModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableEmployeeData(null);
+    }
+    setFormType(type);
+    setOpenEmployeeModal(true);
+  };
+
+  //Customer Modal
+  const [openCustomerModal, setOpenCustomerModal] = useState(false);
+
+  const handleCloseCustomerModal = () => {
+    setOpenCustomerModal(false);
+  };
+
+  const handleOpenCustomerModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableCustomerData(null);
+    }
+    setFormType(type);
+    setOpenCustomerModal(true);
   };
 
   //Pro Modal
@@ -238,6 +335,16 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Owner Image
   const [ownerImage, setOwnerImage] = useState<File | string>(defaultAvatar);
 
+  //Employee Image
+  const [employeeImage, setEmployeeImage] = useState<File | string>(
+    defaultAvatar
+  );
+
+  //Customer Image
+  const [customerImage, setCustomerImage] = useState<File | string>(
+    defaultAvatar
+  );
+
   //Pro Image
   const [proImage, setProImage] = useState<File | string>(defaultAvatar);
 
@@ -252,7 +359,15 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
 
-  //Editable Owner Data
+  //Editable Employee Data
+  const [editableEmployeeData, setEditableEmployeeData] =
+    useState<EmployeeTypes | null>(null);
+
+  //Editable Customer Data
+  const [editableCustomerData, setEditableCustomerData] =
+    useState<CustomerTypes | null>(null);
+
+  //Editable Pro Data
   const [editableProData, setEditableProData] = useState<ProTypes | null>(null);
 
   //Editable Nationality Data
@@ -272,13 +387,25 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
     }
+    if (editableProData) {
+      setProImage(editableProData.avatar);
+    }
+    if (editableEmployeeData) {
+      setEmployeeImage(editableEmployeeData.avatar);
+    }
     if (editableUserData) {
       setUserImage(editableUserData.avatar);
     }
     if (editableCompanyData) {
       setCompanyImage(editableCompanyData.logo);
     }
-  }, [editableOwnerData, editableUserData, editableCompanyData]);
+  }, [
+    editableOwnerData,
+    editableUserData,
+    editableCompanyData,
+    editableProData,
+    editableEmployeeData,
+  ]);
 
   useEffect(() => {
     if (company) {
@@ -351,6 +478,34 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setProImage,
     searchForPros,
     setSearchForPros,
+    searchForEmployees,
+    setSearchForEmployees,
+    openEmployeeModal,
+    handleCloseEmployeeModal,
+    handleOpenEmployeeModal,
+    editableEmployeeData,
+    setEditableEmployeeData,
+    employeeImage,
+    setEmployeeImage,
+    customerImage,
+    setCustomerImage,
+    editableCustomerData,
+    setEditableCustomerData,
+    openCustomerModal,
+    handleCloseCustomerModal,
+    handleOpenCustomerModal,
+    searchForCustomers,
+    setSearchForCustomers,
+    openUploadEmployeesModal,
+    handleCloseUploadEmployeesModal,
+    handleOpenUploadEmployeesModal,
+    openDownloadExcelModal,
+    handleCloseDownloadExcelModal,
+    handleOpenDownloadExcelModal,
+    excelType,
+    setExcelType,
+    searchForActivities,
+    setSearchForActivities,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

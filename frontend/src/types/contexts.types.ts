@@ -1,6 +1,9 @@
 import { MouseEvent } from "react";
+import { EntitiesType } from "./app.types";
 import {
   CompanyTypes,
+  CustomerTypes,
+  EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
@@ -15,6 +18,12 @@ interface AppContextProps {
   openUserMenu: null | HTMLElement;
   ownersPage: number;
   setOwnersPage: (page: number) => void;
+  prosPage: number;
+  setProsPage: (page: number) => void;
+  employeesPage: number;
+  setEmployeesPage: (page: number) => void;
+  customersPage: number;
+  setCustomersPage: (page: number) => void;
   jobsPage: number;
   setJobsPage: (page: number) => void;
   companiesPage: number;
@@ -56,6 +65,20 @@ interface ExcelsContextProps {
   handleRemoveProsSheet: (fileIndex: number) => void;
   handleEditProInSheet: (value: ProTypes) => void;
   handleDeleteProFromSheet: () => void;
+  employeesSheets: EmployeesSheetTypes[];
+  employeeIndex: { fileIndex: number; index: number };
+  setEmployeeIndex: (value: { fileIndex: number; index: number }) => void;
+  handleAddEmployeesSheet: (employeesSheet: EmployeesSheetTypes) => void;
+  handleRemoveEmployeesSheet: (fileIndex: number) => void;
+  handleEditEmployeeInSheet: (value: EmployeeTypes) => void;
+  handleDeleteEmployeeFromSheet: () => void;
+  customersSheets: CustomersSheetTypes[];
+  customerIndex: { fileIndex: number; index: number };
+  setCustomerIndex: (value: { fileIndex: number; index: number }) => void;
+  handleAddCustomersSheet: (prosSheet: CustomersSheetTypes) => void;
+  handleRemoveCustomersSheet: (fileIndex: number) => void;
+  handleEditCustomerInSheet: (value: CustomerTypes) => void;
+  handleDeleteCustomerFromSheet: () => void;
   companiesSheets: CompaniesSheetTypes[];
   companyIndex: { fileIndex: number; index: number };
   setCompanyIndex: (value: { fileIndex: number; index: number }) => void;
@@ -85,15 +108,30 @@ interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
   handleOpenFormsLoading: () => void;
+  openDownloadExcelModal: boolean;
+  handleOpenDownloadExcelModal: (
+    type: "excel" | "all",
+    entity: EntitiesType
+  ) => void;
+  handleCloseDownloadExcelModal: () => void;
   openLinkToCompanyModal: boolean;
   handleOpenLinkToCompanyModal: (type: string) => void;
   handleCloseLinkToCompanyModal: () => void;
+  openUploadEmployeesModal: boolean;
+  handleOpenUploadEmployeesModal: () => void;
+  handleCloseUploadEmployeesModal: () => void;
   openDeleteModal: boolean;
   handleOpenDeleteModal: (type: string) => void;
   handleCloseDeleteModal: () => void;
   openOwnerModal: boolean;
   handleOpenOwnerModal: (string: string) => void;
   handleCloseOwnerModal: () => void;
+  openEmployeeModal: boolean;
+  handleOpenEmployeeModal: (string: string) => void;
+  handleCloseEmployeeModal: () => void;
+  openCustomerModal: boolean;
+  handleOpenCustomerModal: (string: string) => void;
+  handleCloseCustomerModal: () => void;
   openProModal: boolean;
   handleOpenProModal: (string: string) => void;
   handleCloseProModal: () => void;
@@ -105,12 +143,23 @@ interface FormsContextTypes {
   handleCloseCompanyModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
+  excelType: { type: "excel" | "all"; entity: EntitiesType };
+  setExcelType: (value: {
+    type: "excel" | "all";
+    entity: EntitiesType;
+  }) => void;
   searchForOwners: string;
   setSearchForOwners: (search: string) => void;
+  searchForEmployees: string;
+  setSearchForEmployees: (search: string) => void;
+  searchForCustomers: string;
+  setSearchForCustomers: (search: string) => void;
   searchForPros: string;
   setSearchForPros: (search: string) => void;
   searchForCompanies: string;
   setSearchForCompanies: (search: string) => void;
+  searchForActivities: string;
+  setSearchForActivities: (search: string) => void;
   searchForUsers: string;
   setSearchForUsers: (search: string) => void;
   searchForJobs: string;
@@ -130,6 +179,10 @@ interface FormsContextTypes {
   setCompanyImage: (image: File | string) => void;
   ownerImage: File | string;
   setOwnerImage: (image: File | string) => void;
+  employeeImage: File | string;
+  setEmployeeImage: (image: File | string) => void;
+  customerImage: File | string;
+  setCustomerImage: (image: File | string) => void;
   proImage: File | string;
   setProImage: (image: File | string) => void;
   userImage: File | string;
@@ -138,6 +191,10 @@ interface FormsContextTypes {
   setEditableJobData: (job: JobTypes | null) => void;
   editableOwnerData: OwnerTypes | null;
   setEditableOwnerData: (owner: OwnerTypes | null) => void;
+  editableEmployeeData: EmployeeTypes | null;
+  setEditableEmployeeData: (employee: EmployeeTypes | null) => void;
+  editableCustomerData: CustomerTypes | null;
+  setEditableCustomerData: (customer: CustomerTypes | null) => void;
   editableProData: ProTypes | null;
   setEditableProData: (pro: OwnerTypes | null) => void;
   editableCompanyData: CompanyTypes | null;
@@ -153,6 +210,12 @@ interface TabsContextProps {
   setUserTabsValue: (value: number) => void;
   ownerTabsValue: number;
   setOwnerTabsValue: (value: number) => void;
+  proTabsValue: number;
+  setProTabsValue: (value: number) => void;
+  employeeTabsValue: number;
+  setEmployeeTabsValue: (value: number) => void;
+  customerTabsValue: number;
+  setCustomerTabsValue: (value: number) => void;
   companyTabsValue: number;
   setCompanyTabsValue: (value: number) => void;
 }
@@ -165,6 +228,16 @@ interface OwnersSheetTypes {
 interface ProsSheetTypes {
   fileName: string;
   data: Array<ProTypes>;
+}
+
+interface EmployeesSheetTypes {
+  fileName: string;
+  data: Array<EmployeeTypes>;
+}
+
+interface CustomersSheetTypes {
+  fileName: string;
+  data: Array<CustomerTypes>;
 }
 
 interface CompaniesSheetTypes {
@@ -190,6 +263,8 @@ interface NationalitiesSheetTypes {
 export type {
   AppContextProps,
   CompaniesSheetTypes,
+  CustomersSheetTypes,
+  EmployeesSheetTypes,
   ExcelsContextProps,
   FormsContextTypes,
   JobsSheetTypes,

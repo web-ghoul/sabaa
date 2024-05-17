@@ -7,7 +7,7 @@ import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { ButtonTypes } from "../../types/components.types";
 
-const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
+const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
   const classes = `${
     bg === "excel"
       ? `!bg-excel hover:!bg-green-950`
@@ -19,6 +19,9 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
     handleOpenJobModal,
     handleOpenNationalityModal,
     setEditableCompanyData,
+    setEditableEmployeeData,
+    setEditableCustomerData,
+    handleOpenCustomerModal,
   } = useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -35,11 +38,15 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
       handleOpenJobModal("addJob");
     } else if (newTitle === "add nationality") {
       handleOpenNationalityModal("addNationality");
-    } else if (newTitle === "edit company") {
-      navigate(`${import.meta.env.VITE_EDIT_COMPANY_ROUTE}`);
     } else if (newTitle === "add company") {
       setEditableCompanyData(null);
       navigate(`${import.meta.env.VITE_ADD_COMPANY_ROUTE}`);
+    } else if (newTitle === "add employee") {
+      setEditableEmployeeData(null);
+      navigate(`${import.meta.env.VITE_ADD_EMPLOYEE_ROUTE}`);
+    } else if (newTitle === "add customer") {
+      setEditableCustomerData(null);
+      handleOpenCustomerModal("addCustomer");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");
@@ -54,7 +61,11 @@ const Button = ({ title, icon, bg, variant, handling }: ButtonTypes) => {
   };
 
   return title ? (
-    <PrimaryButton onClick={handling || handleClick} className={classes}>
+    <PrimaryButton
+      type={type || "button"}
+      onClick={handling || handleClick}
+      className={classes}
+    >
       {icon}
       <Typography variant="button">{title}</Typography>
     </PrimaryButton>

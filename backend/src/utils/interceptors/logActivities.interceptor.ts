@@ -14,6 +14,7 @@ export class LogInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap(async response => {
         const httpContext = context.switchToHttp();
+        const request = httpContext.getRequest();
         const res = httpContext.getResponse();
         const statusCode = res.statusCode;
         // console.log(res);
@@ -23,8 +24,14 @@ export class LogInterceptor implements NestInterceptor {
                 'logActivity',
                 context.getHandler(),
               ) || '';
+        console.log(activity);
+        activity.route = request.route.path.split('/')[2]
+        activity.id = response._id
+        activity.route == "owner" ? activity.ownerType = response.type : undefined 
+        activity.userName = request.user.name
+        activity.userId = request.user.id
+
         // console.log(activity);
-        activity.data = response
             await this.activityLogModel.create(activity)
         }
       }),

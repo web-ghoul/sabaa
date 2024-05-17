@@ -13,6 +13,12 @@ export const AppContext = createContext<AppContextProps>({
   defaultCompany: "",
   ownersPage: 1,
   setOwnersPage: () => {},
+  prosPage: 1,
+  setProsPage: () => {},
+  employeesPage: 1,
+  setEmployeesPage: () => {},
+  customersPage: 1,
+  setCustomersPage: () => {},
   jobsPage: 1,
   setJobsPage: () => {},
   companiesPage: 1,
@@ -36,6 +42,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Pagination
   const [ownersPage, setOwnersPage] = useState<number>(1);
+  const [prosPage, setProsPage] = useState<number>(1);
+  const [employeesPage, setEmployeesPage] = useState<number>(1);
+  const [customersPage, setCustomersPage] = useState<number>(1);
   const [companiesPage, setCompaniesPage] = useState<number>(1);
   const [jobsPage, setJobsPage] = useState<number>(1);
   const [nationalitiesPage, setNationalitiesPage] = useState<number>(1);
@@ -100,6 +109,12 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setQueries,
     handleAddQuery,
     handleRemoveQuery,
+    prosPage,
+    setProsPage,
+    employeesPage,
+    setEmployeesPage,
+    customersPage,
+    setCustomersPage,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };

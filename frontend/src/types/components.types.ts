@@ -1,12 +1,15 @@
 import { FormikProps } from "formik";
 import { ReactNode } from "react";
+import { EntitiesType, EntityType, HeadsType } from "./app.types";
 import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
+  CustomerTypes,
   EmployeeTypes,
+  JobTypes,
   NationalityTypes,
   OwnerTypes,
-  PROTypes,
+  ProTypes,
   UserTypes,
 } from "./store.types";
 
@@ -15,12 +18,18 @@ interface LogoTypes {
   noTitle?: boolean;
 }
 
+interface TotalBoxTypes {
+  count: number;
+  variant: EntitiesType;
+  isLoading?: boolean;
+}
+
 interface UserBoxTypes {
   avatar?: string;
   username: string;
   role?: string;
   menu?: boolean;
-  head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2";
+  head?: HeadsType;
   size: "small" | "medium" | "large" | "xlarge" | "2xlarge" | "3xlarge";
   res?: boolean;
   variant?: string;
@@ -53,6 +62,7 @@ interface ButtonTypes {
   title?: string;
   bg?: string;
   variant?: string;
+  type?: "button" | "submit";
   handling?: () => void;
 }
 
@@ -63,7 +73,7 @@ interface SubmitButtonTypes {
 }
 
 interface TitleTypes {
-  head?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  head?: HeadsType;
   title: string;
   align?: "center" | "left" | "right";
 }
@@ -91,15 +101,28 @@ interface SortBoxTypes {
 interface AutoCompleteSearchTypes {
   label: string;
   multiple?: boolean;
-  options: NationalityTypes[] | OwnerTypes[] | CompanyTypes[];
+  options:
+    | NationalityTypes[]
+    | OwnerTypes[]
+    | CompanyTypes[]
+    | JobTypes[]
+    | ProTypes[]
+    | CustomerTypes[];
   name: string;
+  variant?: EntityType;
   formik: FormikProps<AllFormiksTypes>;
 }
 
 interface ProfileDetailsTypes {
   title: string;
-  variant: "user" | "owner" | "company" | "PRO" | "employee";
-  data: UserTypes | OwnerTypes | CompanyTypes | PROTypes | EmployeeTypes;
+  variant: EntityType;
+  data:
+    | UserTypes
+    | OwnerTypes
+    | CompanyTypes
+    | ProTypes
+    | EmployeeTypes
+    | CustomerTypes;
   isLoading?: boolean;
 }
 
@@ -127,6 +150,7 @@ export type {
   SortBoxTypes,
   SubmitButtonTypes,
   TitleTypes,
+  TotalBoxTypes,
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,

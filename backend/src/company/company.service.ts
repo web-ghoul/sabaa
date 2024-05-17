@@ -1,26 +1,49 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { Company } from 'schemas/company.schema';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import * as crypto from 'crypto';
+import { ActivityLog } from 'schemas/activityLog.schema';
+import { Response } from 'express';
+import * as exceljs from 'exceljs';
+
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company.name) private companyModel: Model<Company>,
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File) {
+  encrypt(text: string): string {
+    const key = 'findwhatyouloveAndDontLeaveittillyoudie';
+    const cipher = crypto.createCipher('aes-256-cbc', key);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+  }
+  // decrypt(encryptedText: string): string {
+  //   const key = 'my-secret-key';
+  //   const decipher = crypto.createDecipher('aes-256-cbc', key);
+  //   let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+  //   decrypted += decipher.final('utf8');
+  //   return decrypted;
+  // }
+  async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File, user: ObjectId) {
     try {
       if (Array.isArray(createCompanyDto)) {
-        createCompanyDto.map((x) => {
+        createCompanyDto.map((company) => {
           //x._id = x.licenseNo + x.state ;
-          x.logo = file ? file.path : undefined;
+          // company.logo = file ? file.path : undefined;
+          company.user = user
         });
       } else {
         //createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
         createCompanyDto.logo = file ? file.path : undefined;
+        createCompanyDto.user = user;
+
       }
       
       return await this.companyModel.create(createCompanyDto);
@@ -121,14 +144,26 @@ export class CompanyService {
     }
   }
 
-  findOne(id: string) {
-    return this.companyModel
+  async findOne(id: string) {
+    const [data, activities] = await Promise.all([
+      this.companyModel
       .findById(id)
       .populate([
         { path: 'ownerId', model: 'Owner' },
         { path: 'proCode', model: 'Owner' },
+        {path: 'employees', model: 'Employee'},
+        {path: 'customerId', model: 'Owner'}
       ])
-      .exec();
+      .exec(),
+      this.activityModel.find({id: id, route: "company"}).exec()
+    ]) ;
+      if(data?.password)
+        {
+          data.password = this.encrypt(data.password);
+        }
+
+      return {data,activities} ;
+    
   }
 
   async update(
@@ -147,13 +182,14 @@ export class CompanyService {
     }
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      return this.companyModel.updateOne({ _id: id }, { deleted: true });
+      await this.companyModel.updateOne({ _id: id }, { deleted: true });
+      return {_id : id}
     } catch (err) {
       throw new HttpException(
         'Error while deleting company',
-        HttpStatus.FORBIDDEN,
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
@@ -168,8 +204,10 @@ export class CompanyService {
       const fields: any = {};
       if (typeOfPerson == 'owner') {
         fields.ownerId = Id;
-      } else {
+      } else if(typeOfPerson == 'pro') {
         fields.proCode = Id;
+      }else{
+        fields.customerId = Id;
       }
       if (operation == 'adding') {
         query = { $push: fields };
@@ -197,5 +235,95 @@ export class CompanyService {
       count,
       deleted
     };
+  }
+
+  async export(res: Response,fileName: string) {
+    const companies = await this.companyModel.find({deleted : false});
+
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet('Companies');
+    worksheet.columns = [
+      { header: 'Name', key: 'name', width: 20 },
+      { header: 'Name (Arabic)', key: 'nameAr', width: 20 },
+      { header: 'Logo', key: 'logo', width: 20 },
+      { header: 'Status', key: 'status', width: 20 },
+      { header: 'State', key: 'state', width: 20 },
+      { header: 'Address', key: 'address', width: 20 },
+      { header: 'Phone', key: 'phone', width: 20 },
+      { header: 'Pro Codes', key: 'proCode', width: 30 },
+      { header: 'Owner IDs', key: 'ownerId', width: 30 },
+      { header: 'Customer IDs', key: 'customerId', width: 30 },
+      { header: 'License No', key: 'licenseNo', width: 20 },
+      { header: 'IMMG Card No', key: 'immgCardNo', width: 20 },
+      { header: 'IMMG Card Expiry', key: 'immgCardExpiry', width: 20 },
+      { header: 'License Issue Date', key: 'licenseIssueDate', width: 20 },
+      { header: 'License Expiry Date', key: 'licenseExpiryDate', width: 20 },
+      { header: 'Establishment Type', key: 'establishmentType', width: 20 },
+      { header: 'MOL Code', key: 'molCode', width: 20 },
+      { header: 'MOL Category', key: 'molCategory', width: 20 },
+      { header: 'WhatsApp No', key: 'whatsAppNo', width: 20 },
+      { header: 'Mobile No', key: 'mobileNo', width: 20 },
+      { header: 'E-Channel Expiry Date', key: 'echannelExpiryDate', width: 20 },
+      { header: 'Website', key: 'website', width: 20 },
+      { header: 'TRN', key: 'trn', width: 20 },
+      { header: 'Email', key: 'email', width: 20 },
+      { header: 'Tenancy Contract Value', key: 'tenancyContractValue', width: 20 },
+      { header: 'Tenancy Contract Expiry', key: 'tenancyContractExp', width: 20 },
+      { header: 'Remarks', key: 'remarks', width: 20 },
+      { header: 'Country', key: 'country', width: 20 },
+      { header: 'Zip Code', key: 'zipCode', width: 20 },
+      { header: 'License Issue Place', key: 'licenseIssuePlace', width: 20 },
+      { header: 'Employees', key: 'employees', width: 30 },
+      { header: 'User', key: 'user', width: 20 },
+      { header: 'Deleted', key: 'deleted', width: 10 },
+      { header: 'Username', key: 'userName', width: 20 },
+      { header: 'Password', key: 'password', width: 20 },
+    ];
+
+    companies.forEach(company => {
+      worksheet.addRow({
+        name: company.name,
+        nameAr: company.nameAr,
+        logo: company.logo,
+        status: company.status,
+        state: company.state,
+        address: company.address,
+        phone: company.phone,
+        proCode: company.proCode.join(', '),
+        ownerId: company.ownerId.join(', '),
+        customerId: company.customerId.join(', '),
+        licenseNo: company.licenseNo,
+        immgCardNo: company.immgCardNo,
+        immgCardExpiry: company.immgCardExpiry,
+        licenseIssueDate: company.licenseIssueDate,
+        licenseExpiryDate: company.licenseExpiryDate,
+        establishmentType: company.establishmentType,
+        molCode: company.molCode,
+        molCategory: company.molCategory,
+        whatsAppNo: company.whatsAppNo,
+        mobileNo: company.mobileNo,
+        echannelExpiryDate: company.echannelExpiryDate,
+        website: company.website,
+        trn: company.trn,
+        email: company.email,
+        tenancyContractValue: company.tenancyContractValue,
+        tenancyContractExp: company.tenancyContractExp,
+        remarks: company.remarks,
+        country: company.country,
+        zipCode: company.zipCode,
+        licenseIssuePlace: company.licenseIssuePlace,
+        employees: company.employees.join(', '),
+        user: company.user,
+        deleted: company.deleted,
+        userName: company.userName,
+        password: company.password,
+      });
+    });
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    await workbook.xlsx.write(res);
+
+    res.end();
   }
 }

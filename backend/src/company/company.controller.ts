@@ -10,6 +10,7 @@ import {
   Patch,
   Post,
   Query,
+  Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -19,6 +20,11 @@ import { Company } from 'schemas/company.schema';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { User } from 'src/utils/decorators/User.decorator';
+import { Response } from 'express';
+
 @ApiTags('Company')
 @Controller('company')
 export class CompanyController {
@@ -26,7 +32,9 @@ export class CompanyController {
 
   @Post()
   @UseInterceptors(FileInterceptor('logo'))
-  create(
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "create"})
+  create(@User("id") user,
     @Body() createCompanyDto: CreateCompanyDto,
     @UploadedFile(
       new ParseFilePipe({
@@ -39,7 +47,7 @@ export class CompanyController {
     )
     file: Express.Multer.File,
   ) {
-    return this.companyService.create(createCompanyDto, file);
+    return this.companyService.create(createCompanyDto, file, user);
   }
 
   @Get()
@@ -82,6 +90,11 @@ export class CompanyController {
     return this.companyService.getCounters();
   }
 
+  @Get("export")
+  export(@Res()  res: Response,@Query('fileName') fileName: string) {
+    return this.companyService.export(res,fileName);  
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.companyService.findOne(id);
@@ -89,6 +102,8 @@ export class CompanyController {
 
   @Patch(':id')
   @UseInterceptors(FileInterceptor('logo'))
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "update"})
   update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
@@ -107,6 +122,8 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "delete"})
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }

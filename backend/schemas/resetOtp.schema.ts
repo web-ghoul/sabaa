@@ -9,8 +9,14 @@ export class ResetOtp {
   _id: ObjectId;
 
   @Prop()
+  email: string;
+
+  @Prop()
   otp: string;
+
+  @Prop()
+  expiryDate: Date;
 
 }
 
-export const UserSchema = SchemaFactory.createForClass(ResetOtp);
+export const ResetOtpSchema = SchemaFactory.createForClass(ResetOtp);

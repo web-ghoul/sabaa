@@ -25,11 +25,17 @@ const stylingPaper = {
 const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
   const {
     ownerTabsValue,
+    proTabsValue,
+    employeeTabsValue,
+    customerTabsValue,
     userTabsValue,
     setUserTabsValue,
     companyTabsValue,
     setCompanyTabsValue,
     setOwnerTabsValue,
+    setProTabsValue,
+    setEmployeeTabsValue,
+    setCustomerTabsValue,
   } = useContext(TabsContext);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -39,6 +45,12 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
       setUserTabsValue(newValue);
     } else if (variant === "company") {
       setCompanyTabsValue(newValue);
+    } else if (variant === "officer") {
+      setProTabsValue(newValue);
+    } else if (variant === "employee") {
+      setEmployeeTabsValue(newValue);
+    } else if (variant === "customer") {
+      setCustomerTabsValue(newValue);
     }
   };
 
@@ -56,7 +68,13 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
               ? ownerTabsValue
               : variant === "user"
               ? userTabsValue
-              : variant === "company" && companyTabsValue
+              : variant === "company"
+              ? companyTabsValue
+              : variant === "officer"
+              ? proTabsValue
+              : variant === "employee"
+              ? employeeTabsValue
+              : variant === "customer" && customerTabsValue
           }
           orientation={"vertical"}
           onChange={handleChange}

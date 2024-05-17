@@ -5,7 +5,18 @@ import {
   CompaniesOptionsSchema,
 } from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
 import useCompanySchema from "../forms/CompanyForm/useCompanySchema";
+import useCustomerSchema from "../forms/CustomerForm/useCustomerSchema";
+import {
+  CustomersOptionsInitailValues,
+  CustomersOptionsSchema,
+} from "../forms/CustomersOptionsForm/CustomersOptionsSchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
+import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
+import useEmployeeSchema from "../forms/EmployeeForm/useEmployeeSchema";
+import {
+  EmployeesOptionsInitailValues,
+  EmployeesOptionsSchema,
+} from "../forms/EmployeesOptionsForm/EmployeesOptionsSchema";
 import {
   ForgotPasswordInitailValues,
   ForgotPasswordSchema,
@@ -30,6 +41,11 @@ import {
   OwnersOptionsInitailValues,
   OwnersOptionsSchema,
 } from "../forms/OwnersOptionsForm/OwnersOptionsSchema";
+import useProSchema from "../forms/ProForm/useProSchema";
+import {
+  ProsOptionsInitailValues,
+  ProsOptionsSchema,
+} from "../forms/ProsOptionsForm/ProsOptionsSchema";
 import {
   ResetPasswordInitailValues,
   ResetPasswordSchema,
@@ -46,8 +62,18 @@ import {
   CompaniesOptionsFormikTypes,
   CompanyFormTypes,
   CompanyFormikTypes,
+  CustomerFormTypes,
+  CustomerFormikTypes,
+  CustomersOptionsFormTypes,
+  CustomersOptionsFormikTypes,
   DeleteFormTypes,
   DeleteFormikTypes,
+  DownloadExcelFormTypes,
+  DownloadExcelFormikTypes,
+  EmployeeFormTypes,
+  EmployeeFormikTypes,
+  EmployeesOptionsFormTypes,
+  EmployeesOptionsFormikTypes,
   ForgotPasswordFormTypes,
   ForgotPasswordFormikTypes,
   JobFormTypes,
@@ -66,6 +92,10 @@ import {
   OwnerFormikTypes,
   OwnersOptionsFormTypes,
   OwnersOptionsFormikTypes,
+  ProFormTypes,
+  ProFormikTypes,
+  ProsOptionsFormTypes,
+  ProsOptionsFormikTypes,
   ResetPasswordFormTypes,
   ResetPasswordFormikTypes,
   UserFormTypes,
@@ -82,10 +112,15 @@ const useSubmitForm = (type: string) => {
     useNationalitySchema();
   const { UserInitailValues, UserSchema } = useUserSchema();
   const { OwnerInitailValues, OwnerSchema } = useOwnerSchema();
+  const { ProInitailValues, ProSchema } = useProSchema();
+  const { EmployeeInitailValues, EmployeeSchema } = useEmployeeSchema();
+  const { CustomerInitailValues, CustomerSchema } = useCustomerSchema();
   const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
   const { CompanyInitailValues, CompanySchema } = useCompanySchema();
   const { LinkToCompanyInitailValues, LinkToCompanySchema } =
     useLinkToCompanySchema();
+  const { DownloadExcelInitailValues, DownloadExcelSchema } =
+    useDownloadExcelSchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -182,6 +217,57 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as OwnersOptionsFormikTypes;
+        case "editPro":
+        case "addPro":
+          return {
+            initialValues: ProInitailValues,
+            validationSchema: ProSchema,
+            onSubmit: (values: ProFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as ProFormikTypes;
+        case "prosOptions":
+          return {
+            initialValues: ProsOptionsInitailValues,
+            validationSchema: ProsOptionsSchema,
+            onSubmit: (values: ProsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as ProsOptionsFormikTypes;
+        case "editEmployee":
+        case "addEmployee":
+          return {
+            initialValues: EmployeeInitailValues,
+            validationSchema: EmployeeSchema,
+            onSubmit: (values: EmployeeFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as EmployeeFormikTypes;
+        case "employeesOptions":
+          return {
+            initialValues: EmployeesOptionsInitailValues,
+            validationSchema: EmployeesOptionsSchema,
+            onSubmit: (values: EmployeesOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as EmployeesOptionsFormikTypes;
+        case "editCustomer":
+        case "addCustomer":
+          return {
+            initialValues: CustomerInitailValues,
+            validationSchema: CustomerSchema,
+            onSubmit: (values: CustomerFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as CustomerFormikTypes;
+        case "customersOptions":
+          return {
+            initialValues: CustomersOptionsInitailValues,
+            validationSchema: CustomersOptionsSchema,
+            onSubmit: (values: CustomersOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as CustomersOptionsFormikTypes;
         case "addCompany":
         case "editCompany":
           return {
@@ -208,6 +294,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as LinkToCompanyFormikTypes;
+        case "downloadExcel":
+          return {
+            initialValues: DownloadExcelInitailValues,
+            validationSchema: DownloadExcelSchema,
+            onSubmit: (values: DownloadExcelFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as DownloadExcelFormikTypes;
         default:
           return {
             initialValues: DeleteInitailValues,
@@ -221,8 +315,14 @@ const useSubmitForm = (type: string) => {
     [
       CompanyInitailValues,
       CompanySchema,
+      CustomerInitailValues,
+      CustomerSchema,
       DeleteInitailValues,
       DeleteSchema,
+      DownloadExcelInitailValues,
+      DownloadExcelSchema,
+      EmployeeInitailValues,
+      EmployeeSchema,
       JobInitailValues,
       JobSchema,
       LinkToCompanyInitailValues,
@@ -231,6 +331,8 @@ const useSubmitForm = (type: string) => {
       NationalitySchema,
       OwnerInitailValues,
       OwnerSchema,
+      ProInitailValues,
+      ProSchema,
       UserInitailValues,
       UserSchema,
       handleSubmit,
