@@ -26,10 +26,10 @@ const useEmployeeSchema = () => {
     job: yup.string(),
     remarks: yup.string(),
     iLOEInsuranceCompany: yup.string(),
-    iLOEPolicy: yup.string(),
+    iLOEPolicyNo: yup.string(),
     iLOEExpireDate: yup.date(),
     medicalInsuranceCompany: yup.string(),
-    medicalPolicy: yup.string(),
+    medicalPolicyNo: yup.string(),
     medicalExpireDate: yup.date(),
     visaFileNumber: yup.string(),
     emiratesId: yup.string(),
@@ -64,7 +64,7 @@ const useEmployeeSchema = () => {
     job: editableEmployeeData?.job || "",
     remarks: editableEmployeeData?.remarks || "",
     iLOEInsuranceCompany: editableEmployeeData?.iLOEInsuranceCompany || "",
-    iLOEPolicy: editableEmployeeData?.iLOEPolicy || "",
+    iLOEPolicyNo: editableEmployeeData?.iLOEPolicyNo || "",
     iLOEExpireDate:
       (editableEmployeeData?.iLOEExpireDate &&
         new Date(editableEmployeeData?.iLOEExpireDate)
@@ -73,7 +73,7 @@ const useEmployeeSchema = () => {
       "",
     medicalInsuranceCompany:
       editableEmployeeData?.medicalInsuranceCompany || "",
-    medicalPolicy: editableEmployeeData?.medicalPolicy || "",
+    medicalPolicyNo: editableEmployeeData?.medicalPolicyNo || "",
     medicalExpireDate:
       (editableEmployeeData?.medicalExpireDate &&
         new Date(editableEmployeeData?.medicalExpireDate)

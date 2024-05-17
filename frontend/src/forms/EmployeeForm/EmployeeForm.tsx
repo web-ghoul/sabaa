@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -58,142 +58,227 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
         [type]
       )}
 
-      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-        <Input formik={formik} label={"English Name"} name={"name"} />
-        <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
-        <Input
-          formik={formik}
-          label={"Gender"}
-          name={"gender"}
-          select
-          options={["Male", "Female"]}
-        />
-        {nationalities && nationalities.length > 0 && (
-          <AutoCompleteSearch
-            label={"Nationality"}
-            options={nationalities}
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Employee Information
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input formik={formik} label={"English Name"} name={"name"} />
+          <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
+          <Input
             formik={formik}
-            name={"nationality"}
+            label={"Gender"}
+            name={"gender"}
+            select
+            options={["Male", "Female"]}
           />
-        )}
-        <Input
-          formik={formik}
-          label={"Person Code"}
-          name={"personCode"}
-          type={"text"}
-          variant={"numeric"}
-        />
-        <Input
-          formik={formik}
-          label={"Status"}
-          name={"status"}
-          select
-          options={["Active", "Cancel", "Abscond", "Complaint"]}
-        />
-        <Input
-          formik={formik}
-          type={"number"}
-          name={"passportNumber"}
-          label={"Passport Number"}
-        />
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"passportExpiry"}
-          label={"Passport Expire Date"}
-        />
-        <Input
-          label={"Card Type"}
-          name={"cardType"}
-          formik={formik}
-          options={[
-            "PRE APPROVAL FOR WORK PERMIT",
-            "NEW ELECTRONIC WORK PERMIT",
-            "RENEW ELECTRONIC WORK PERMIT",
-            "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-            "NEW ON HUSBAND/FATHER SPONSORSHIP",
-            "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-            "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-            "PART TIME PRE APPROVAL FOR WORK PERMIT",
-            "ELECTRONIC WORK PERMIT FOR PART TIME",
-          ]}
-          select
-        />
-        {jobs && jobs.length > 0 && (
-          <AutoCompleteSearch
-            label={"Job"}
-            options={jobs}
+          {nationalities && nationalities.length > 0 && (
+            <AutoCompleteSearch
+              label={"Nationality"}
+              options={nationalities}
+              formik={formik}
+              name={"nationality"}
+            />
+          )}
+          <Input
             formik={formik}
-            name={"job"}
+            label={"Person Code"}
+            name={"personCode"}
+            type={"text"}
+            variant={"numeric"}
           />
-        )}
-        <Input
-          formik={formik}
-          label={"UID Number"}
-          name={"uid"}
-          type={"text"}
-          variant={"numeric"}
-        />
-        <Input
-          formik={formik}
-          label={"Emirates ID"}
-          name={"emiratesId"}
-          type={"text"}
-          variant={"numeric"}
-        />
-        <Input
-          formik={formik}
-          type={"number"}
-          name={"visaFileNumber"}
-          label={"Visa File Number"}
-        />
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"dob"}
-          label={"Date of Birth"}
-        />
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"residenceExpireDate"}
-          label={"Residence Expire Date"}
-        />
-        <Input
-          formik={formik}
-          label={"Card Number"}
-          type={"number"}
-          name={"cardNumber"}
-        />
-        <Input
-          formik={formik}
-          type={"date"}
-          name={"lcExpireDate"}
-          label={"Labout Card Expire Date"}
-        />
-        <Input
-          formik={formik}
-          label={"Mobile Number"}
-          type={"text"}
-          variant={"numeric"}
-          name={"mobileNumber"}
-        />
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
-        <Input
-          formik={formik}
-          label={"Salary"}
-          name={"salary"}
-          type={"number"}
-        />
-        {companies && companies.length > 0 && (
-          <AutoCompleteSearch
-            label={"Company"}
-            options={companies}
+          <Input
             formik={formik}
-            name={"companyId"}
+            label={"Mobile Number"}
+            type={"text"}
+            variant={"numeric"}
+            name={"mobileNumber"}
           />
-        )}
-        <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
+          <Input
+            formik={formik}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
+          />
+          <Input
+            formik={formik}
+            label={"Salary"}
+            name={"salary"}
+            type={"number"}
+          />
+          <Input
+            formik={formik}
+            label={"Status"}
+            name={"status"}
+            select
+            options={["Active", "Cancel", "Abscond", "Complaint"]}
+          />
+          {jobs && jobs.length > 0 && (
+            <AutoCompleteSearch
+              label={"Job"}
+              options={jobs}
+              formik={formik}
+              name={"job"}
+            />
+          )}
+          <Input
+            formik={formik}
+            label={"UID Number"}
+            name={"uid"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            label={"Emirates ID"}
+            name={"emiratesId"}
+            type={"text"}
+            variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"visaFileNumber"}
+            label={"Visa File Number"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"dob"}
+            label={"Date of Birth"}
+          />
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"passportNumber"}
+            label={"Passport Number"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"passportExpiry"}
+            label={"Passport Expire Date"}
+          />
+          <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
+        </Box>
+      </Box>
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Business Details
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            label={"Card Type"}
+            name={"cardType"}
+            formik={formik}
+            options={[
+              "PRE APPROVAL FOR WORK PERMIT",
+              "NEW ELECTRONIC WORK PERMIT",
+              "RENEW ELECTRONIC WORK PERMIT",
+              "RELATIVE PRE APPROVAL FOR WORK PERMIT",
+              "NEW ON HUSBAND/FATHER SPONSORSHIP",
+              "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+              "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+              "PART TIME PRE APPROVAL FOR WORK PERMIT",
+              "ELECTRONIC WORK PERMIT FOR PART TIME",
+            ]}
+            select
+          />
+
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"residenceExpireDate"}
+            label={"Residence Expire Date"}
+          />
+          <Input
+            formik={formik}
+            label={"Card Number"}
+            type={"number"}
+            name={"cardNumber"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"lcExpireDate"}
+            label={"Labour Card Expire Date"}
+          />
+
+          {companies && companies.length > 0 && (
+            <AutoCompleteSearch
+              label={"Company"}
+              options={companies}
+              formik={formik}
+              name={"companyId"}
+            />
+          )}
+        </Box>
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Medical Insurance
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            formik={formik}
+            label={"Medical Insurance Company"}
+            type={"number"}
+            name={"medicalInsuranceCompany"}
+          />
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"medicalPolicyNo"}
+            label={"Medical Policy Number"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"medicalExpireDate"}
+            label={"Medical Expire Date"}
+          />
+        </Box>
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Involuntary Loss Of Employment (ILOE)
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            formik={formik}
+            label={"IOLE Insurance Company"}
+            type={"number"}
+            name={"iLOEInsuranceCompany"}
+          />
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"iLOEPolicyNo"}
+            label={"IOLE Policy Number"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"iLOEExpireDate"}
+            label={"IOLE Expire Date"}
+          />
+        </Box>
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

@@ -570,7 +570,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Policy Number"}
-                value={(data as EmployeeTypes).medicalPolicy}
+                value={(data as EmployeeTypes).medicalPolicyNo}
               />
               <DataBox
                 title={"Expire Date"}
@@ -590,7 +590,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Policy Number"}
-                value={(data as EmployeeTypes).iLOEPolicy}
+                value={(data as EmployeeTypes).iLOEPolicyNo}
               />
               <DataBox
                 title={"Expire Date"}

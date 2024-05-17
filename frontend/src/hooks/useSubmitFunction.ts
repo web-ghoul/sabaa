@@ -186,7 +186,6 @@ const useSubmitFunction = (type: string) => {
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }
-    formData.append("proCode", values.proCode ? "true" : "false");
     formData.append("type", type);
     return formData;
   };
@@ -231,7 +230,10 @@ const useSubmitFunction = (type: string) => {
     formData.append("job", values.job.trim());
     formData.append("visaFileNumber", values.visaFileNumber.trim());
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
-    formData.append("medical.policy", values.medicalPolicy.trim());
+    formData.append(
+      "medicalPolicyNo",
+      values.medicalPolicyNo.toString().trim()
+    );
     if (values.medicalExpireDate) {
       formData.append(
         "medical.expireDate",
@@ -239,7 +241,7 @@ const useSubmitFunction = (type: string) => {
       );
     }
     formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
-    formData.append("iLOE.policy", values.iLOEPolicy.trim());
+    formData.append("iLOEPolicyNo", values.iLOEPolicyNo.toString().trim());
     if (values.iLOEExpireDate) {
       formData.append(
         "iLOE.expireDate",

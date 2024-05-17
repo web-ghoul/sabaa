@@ -69,12 +69,12 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
           />
-          <Button
+          {/* <Button
             variant={"under development"}
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-          />
+          /> */}
         </Box>
       </Box>
     </Paper>

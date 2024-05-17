@@ -264,10 +264,10 @@ interface EmployeeTypes {
   lcExpireDate?: Date;
   workPermitNumber: string;
   medicalInsuranceCompany: string;
-  medicalPolicy: string;
+  medicalPolicyNo: string;
   medicalExpireDate?: Date;
   iLOEInsuranceCompany: string;
-  iLOEPolicy: string;
+  iLOEPolicyNo: string;
   iLOEExpireDate?: Date;
   uid: string;
   emiratesId: string;

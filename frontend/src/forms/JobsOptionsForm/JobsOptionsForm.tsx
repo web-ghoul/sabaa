@@ -66,12 +66,12 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
             handling={handleDownloadExcel}
             title={"Excel"}
           />
-          <Button
+          {/* <Button
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
             variant="under development"
             title={"Excel All"}
-          />
+          /> */}
         </Box>
       </Box>
     </Paper>
