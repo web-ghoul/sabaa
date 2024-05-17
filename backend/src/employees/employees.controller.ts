@@ -38,8 +38,8 @@ export class EmployeesController {
   }
 
   @Get("export")
-  export(@Res()  res: Response) {
-    return this.employeesService.export(res);  
+  export(@Res()  res: Response,@Query('fileName') fileName: string) {
+    return this.employeesService.export(res,fileName);  
   }
 
   @Get(':id')

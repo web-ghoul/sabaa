@@ -13,7 +13,7 @@ import { Response } from 'express';
 
 
 ApiTags('owner')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
@@ -39,8 +39,8 @@ export class OwnerController {
   }
 
   @Get("export")
-  export(@Res()  res: Response) {
-    return this.ownerService.export(res);  
+  export(@Res()  res: Response,@Query('type') type: string,@Query('fileName') fileName: string) {
+    return this.ownerService.export(res,type,fileName);  
   }
 
 

@@ -237,7 +237,7 @@ export class CompanyService {
     };
   }
 
-  async export(res: Response) {
+  async export(res: Response,fileName: string) {
     const companies = await this.companyModel.find({deleted : false});
 
     const workbook = new exceljs.Workbook();
@@ -321,7 +321,7 @@ export class CompanyService {
     });
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename=companies.xlsx');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
     await workbook.xlsx.write(res);
 
     res.end();

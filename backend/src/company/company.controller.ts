@@ -91,8 +91,8 @@ export class CompanyController {
   }
 
   @Get("export")
-  export(@Res()  res: Response) {
-    return this.companyService.export(res);  
+  export(@Res()  res: Response,@Query('fileName') fileName: string) {
+    return this.companyService.export(res,fileName);  
   }
 
   @Get(':id')

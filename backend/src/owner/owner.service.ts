@@ -181,8 +181,8 @@ export class OwnerService {
   }
 
 
-  async export(@Res() res: Response) {
-    const owners = await this.ownerModel.find();
+  async export(@Res() res: Response, type: string = 'owner', fileName: string) {
+    const owners = await this.ownerModel.find({ deleted: false, type: type });
 
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Owners');
@@ -237,7 +237,7 @@ export class OwnerService {
     });
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename=owners.xlsx');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
     await workbook.xlsx.write(res);
 
     res.end();

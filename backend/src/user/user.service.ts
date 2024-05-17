@@ -147,7 +147,7 @@ export class UserService {
     return  {message : "User deleted successfully"};
   }
 
-  async export(@Res() res: Response) {
+  async export(@Res() res: Response,fileName: string) {
     const users = await this.userModel.find();
 
     const workbook = new exceljs.Workbook();
@@ -179,7 +179,7 @@ export class UserService {
     });
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', 'attachment; filename=users.xlsx');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
     await workbook.xlsx.write(res);
 
     res.end();

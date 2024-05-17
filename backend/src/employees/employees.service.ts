@@ -130,7 +130,7 @@ export class EmployeesService {
     }
   }
 
-  async export(res: Response){
+  async export(res: Response,fileName: string) {
     const employees = await this.employeeModel.find({deleted : false});
 
       const workbook = new exceljs.Workbook();
@@ -206,7 +206,7 @@ export class EmployeesService {
       });
 
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      res.setHeader('Content-Disposition', 'attachment; filename=employees.xlsx');
+      res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx1`);
       await workbook.xlsx.write(res);
 
       res.end();

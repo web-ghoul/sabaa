@@ -54,8 +54,8 @@ export class UserController {
   }
 
   @Get("export")
-  export(@Res()  res: Response) {
-    return this.userService.export(res);  
+  export(@Res()  res: Response,@Query('fileName') fileName: string) {
+    return this.userService.export(res,fileName);  
   }
 
   @Roles(Role.Admin)
