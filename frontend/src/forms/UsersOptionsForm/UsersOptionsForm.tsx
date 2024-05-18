@@ -19,8 +19,12 @@ import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
 const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const { handleOpenUserModal, searchForUsers, setSearchForUsers } =
-    useContext(FormsContext);
+  const {
+    handleOpenUserModal,
+    searchForUsers,
+    handleOpenDownloadExcelModal,
+    setSearchForUsers,
+  } = useContext(FormsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -41,6 +45,14 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getUsers({ ...queries, search: searchForUsers }));
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "users");
+  };
+
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "users");
   };
 
   const handleResetAll = () => {
@@ -79,13 +91,13 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Add User"}
           />
           <Button
-            variant={"under development"}
+            handling={handleDownloadExcel}
             icon={<RiFileExcel2Fill />}
             title={"Excel"}
             bg={"excel"}
           />
           <Button
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
             icon={<RiFileExcel2Fill />}
             title={"Excel All"}
             bg={"excel"}
