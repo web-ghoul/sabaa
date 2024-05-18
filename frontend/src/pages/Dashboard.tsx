@@ -126,7 +126,11 @@ const Dashboard = () => {
               <Title title={"Recent Owners"} head="h4" align={"left"} />
               <OwnersTable
                 data={recentOwners.recentOwners}
-                count={+`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`}
+                count={
+                  recentOwners.recentOwners
+                    ? recentOwners.recentOwners.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentOwners.isLoading}
                 actions={false}
                 sort={false}
@@ -284,7 +288,11 @@ const Dashboard = () => {
               />
               <ProsTable
                 data={recentPros.recentPros}
-                count={+`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`}
+                count={
+                  recentPros.recentPros
+                    ? recentPros.recentPros.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentPros.isLoading}
                 actions={false}
                 sort={false}

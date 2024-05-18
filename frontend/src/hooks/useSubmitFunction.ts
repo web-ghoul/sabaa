@@ -90,6 +90,7 @@ const useSubmitFunction = (type: string) => {
     setProImage,
     handleCloseUploadEmployeesModal,
     handleCloseDownloadExcelModal,
+    handleCloseForgotPasswordModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -191,8 +192,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   const handleEmployeeFormData = (values: EmployeeFormTypes) => {
-    console.log(values);
-
     const formData = new FormData();
     formData.append("avatar", employeeImage);
     formData.append("name", values.name.trim());
@@ -211,7 +210,9 @@ const useSubmitFunction = (type: string) => {
     }
     formData.append("email", values.email.trim());
     formData.append("status", values.status.trim());
-    formData.append("salary", values.salary.trim());
+    if (values.salary) {
+      formData.append("salary", values.salary);
+    }
     formData.append("gender", values.gender.trim());
     formData.append("cardType", values.cardType.trim());
     formData.append("idNationality", values.idNationality.trim());
@@ -220,7 +221,9 @@ const useSubmitFunction = (type: string) => {
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }
-    formData.append("passportNumber", values.passportNumber.trim());
+    if (values.passportNumber) {
+      formData.append("passportNumber", values.passportNumber);
+    }
     if (values.passportExpiry) {
       formData.append(
         "passportExpiry",
@@ -237,12 +240,13 @@ const useSubmitFunction = (type: string) => {
       formData.append("lcExpireDate", values.lcExpireDate.toString().trim());
     }
     formData.append("job", values.job.trim());
-    formData.append("visaFileNumber", values.visaFileNumber.trim());
+    if (values.visaFileNumber) {
+      formData.append("visaFileNumber", values.visaFileNumber.trim());
+    }
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
-    formData.append(
-      "medicalPolicyNo",
-      values.medicalPolicyNo.toString().trim()
-    );
+    if (values.medicalPolicyNo) {
+      formData.append("medicalPolicyNo", values.medicalPolicyNo);
+    }
     if (values.medicalExpireDate) {
       formData.append(
         "medical.expireDate",
@@ -250,7 +254,9 @@ const useSubmitFunction = (type: string) => {
       );
     }
     formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
-    formData.append("iLOEPolicyNo", values.iLOEPolicyNo.toString().trim());
+    if (values.iLOEPolicyNo) {
+      formData.append("iLOEPolicyNo", values.iLOEPolicyNo);
+    }
     if (values.iLOEExpireDate) {
       formData.append(
         "iLOE.expireDate",
@@ -346,10 +352,18 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const forgotPassword = (values: ForgotPasswordFormTypes) => {
+  const forgotPassword = async (values: ForgotPasswordFormTypes) => {
     handleOpenFormsLoading();
-    console.log(values);
-    handleAlert({ msg: "Under Development...", status: "error" });
+    await server
+      .post(`/forget-password`, values)
+      .then(() => {
+        handleAlert({ msg: "Check Your Mail", status: "success" });
+        navigate(`${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`);
+        handleCloseForgotPasswordModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
     handleCloseFormsLoading();
   };
 

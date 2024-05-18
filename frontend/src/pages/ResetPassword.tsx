@@ -10,14 +10,14 @@ const ResetPassword = () => {
       <PrimaryContainer
         className={`!grid justify-stretch items-start grid-cols-2 gap-10 h-full`}
       >
-        <Box
-          className={`bg-no-repeat bg-center bg-cover w-full h-full`}
-          sx={{ backgroundImage: `url(${`/images/reset_password.jpg`})` }}
-        />
         <Box className={`grid justify-stretch items-start gap-8 h-full`}>
           <Logo />
           <Forms type="resetPassword" />
         </Box>
+        <Box
+          className={`bg-no-repeat bg-center bg-cover w-full h-full sm:!hidden`}
+          sx={{ backgroundImage: `url(${`/images/reset_password.jpg`})` }}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

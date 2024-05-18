@@ -25,7 +25,7 @@ const CustomerProfile = ({
         "Documents",
         "Sponsored Persons",
       ]}
-      variant={"owner"}
+      variant={"customer"}
     >
       <CustomTabPanel value={customerTabsValue} index={0}>
         <ProfileDetails

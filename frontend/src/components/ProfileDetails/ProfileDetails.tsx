@@ -361,7 +361,7 @@ const ProfileDetails = ({
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
-                value={handleDate((data as ProTypes).createdAt)}
+                value={handleDate((data as ProTypes).createdAt, true)}
               />
             </Box>
           </Box>
