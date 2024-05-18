@@ -27,13 +27,13 @@ export class Company {
   @Prop()
   phone: string;
 
-  @Prop({ type: Array, ref: 'Owner' })
+  @Prop({ type: Array, default: [], ref: 'Owner' })
   proCode: string[];
 
-  @Prop({ type: Array, ref: 'Owner' })
+  @Prop({ type: Array, default: [], ref: 'Owner' })
   ownerId: string[];
 
-  @Prop({ type: Array, ref: 'Owner' })
+  @Prop({ type: Array, default: [], ref: 'Owner' })
   customerId: string[];
 
   @Prop()
@@ -96,7 +96,7 @@ export class Company {
   @Prop()
   licenseIssuePlace: string;
 
-  @Prop({ type: Array, ref: 'Employee' })
+  @Prop({ type: Array, default: [], ref: 'Employee' })
   employees: string[];
   
 
