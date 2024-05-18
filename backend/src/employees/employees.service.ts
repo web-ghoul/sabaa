@@ -97,19 +97,45 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [employee, companies, activities] = await Promise.all([
-      (await this.employeeModel.findById(id)).populated('companyId').exec(),
-      this.companyModel.find({employees:id}),
+    const [employee, activities] = await Promise.all([
+      (await this.employeeModel.findById(id)).populate('companyId'),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
     ])
-    return {employee,companies,activities}
+    return {employee,activities}
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {
 
     try{
       updateEmployeeDto.avatar = file ? file.path : undefined;
-      return await this.employeeModel.findByIdAndUpdate(id, updateEmployeeDto);
+      // const oldData = await this.employeeModel.findById(id);
+
+      const oldData = await this.employeeModel.findByIdAndUpdate(id, updateEmployeeDto);
+      //check for added company
+      // console.log(updateEmployeeDto.companyId);
+      // console.log(oldData.companyId);
+      
+      updateEmployeeDto.companyId.forEach(async (company) => {
+        if(!oldData.companyId.includes(company))
+        {
+          // console.log(company);
+          
+          await this.companyModel.findByIdAndUpdate(company, {$push: {employees: id}});
+        }
+        
+      })
+
+      //check for deleted company
+      oldData.companyId.forEach(async(company) => {
+        if(!updateEmployeeDto.companyId.includes(company))
+        {
+          await this.companyModel.findByIdAndUpdate( company, {$pull: {employees: id}});
+        }
+        
+      })
+      
+
+      return oldData;
 
     }catch(err)
     {
