@@ -41,6 +41,7 @@ import {
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
+  OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
   ResetPasswordFormTypes,
@@ -328,6 +329,7 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
+  //Authentication
   const login = async (values: LoginFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -354,12 +356,30 @@ const useSubmitFunction = (type: string) => {
 
   const forgotPassword = async (values: ForgotPasswordFormTypes) => {
     handleOpenFormsLoading();
+    values.email = values.email.toLowerCase();
     await server
       .post(`/forget-password`, values)
       .then(() => {
         handleAlert({ msg: "Check Your Mail", status: "success" });
-        navigate(`${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`);
         handleCloseForgotPasswordModal();
+        navigate(`${import.meta.env.VITE_OTP_ROUTE}`);
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const OTP = async (values: OTPFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/validate-otp`, values)
+      .then(() => {
+        handleAlert({
+          msg: "You can reset your password ,Now",
+          status: "success",
+        });
+        navigate(`${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`);
       })
       .catch((err) => {
         handleCatchError(err);
@@ -1546,6 +1566,9 @@ const useSubmitFunction = (type: string) => {
     switch (type) {
       case "forgotPassword":
         forgotPassword(values as ForgotPasswordFormTypes);
+        break;
+      case "otp":
+        OTP(values as OTPFormTypes);
         break;
       case "resetPassword":
         resetPassword(values as ResetPasswordFormTypes);

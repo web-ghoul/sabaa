@@ -36,6 +36,7 @@ import {
   NationalitiesOptionsSchema,
 } from "../forms/NationalitiesOptionsForm/NationalitiesOptionsSchema";
 import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
+import { OTPInitailValues, OTPSchema } from "../forms/OTPForm/OTPSchema";
 import useOwnerSchema from "../forms/OwnerForm/useOwnerSchema";
 import {
   OwnersOptionsInitailValues,
@@ -88,6 +89,8 @@ import {
   NationalitiesOptionsFormikTypes,
   NationalityFormTypes,
   NationalityFormikTypes,
+  OTPFormTypes,
+  OTPFormikTypes,
   OwnerFormTypes,
   OwnerFormikTypes,
   OwnersOptionsFormTypes,
@@ -133,6 +136,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as ForgotPasswordFormikTypes;
+        case "otp":
+          return {
+            initialValues: OTPInitailValues,
+            validationSchema: OTPSchema,
+            onSubmit: (values: OTPFormTypes) => {
+              handleSubmit(values);
+            },
+          } as OTPFormikTypes;
         case "resetPassword":
           return {
             initialValues: ResetPasswordInitailValues,

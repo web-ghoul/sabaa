@@ -18,6 +18,7 @@ import Jobs from "./pages/Jobs.tsx";
 import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
+import OTP from "./pages/OTP.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
 import Pro from "./pages/Pro.tsx";
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "/resetPassword",
         element: <ResetPassword />,
+      },
+      {
+        path: "/otp",
+        element: <OTP />,
       },
       {
         path: "/profile",

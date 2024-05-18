@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   VITE_TOKEN_TITLE: string;
   VITE_USER_ID_TITLE: string;
   VITE_LOGIN_ROUTE: string;
+  VITE_OTP_ROUTE: string;
   VITE_RESET_PASSWORD_ROUTE: string;
   VITE_DASHBOARD_ROUTE: string;
   VITE_SETTINGS_ROUTE: string;

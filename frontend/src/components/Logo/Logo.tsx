@@ -8,6 +8,7 @@ const Logo = ({ color, noTitle }: LogoTypes) => {
   const handleGoHome = () => {
     navigate(`${import.meta.env.VITE_DASHBOARD_ROUTE}`);
   };
+
   return (
     <Button
       className={`flex justify-start items-center gap-2 w-fit !p-0`}

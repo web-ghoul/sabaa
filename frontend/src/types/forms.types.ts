@@ -67,6 +67,23 @@ interface ForgotPasswordFormikTypes {
   values: ForgotPasswordFormTypes;
 }
 
+//Forgot Password
+
+interface OTPFormTypes {
+  otp: string;
+}
+
+interface OTPFormikTypes {
+  touched: OTPFormTypes;
+  errors: OTPFormTypes;
+  initialValues: OTPFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: OTPFormTypes;
+}
+
 //Activities
 interface ActivitiesOptionsFormTypes {
   search: string;
@@ -425,7 +442,8 @@ type AllFormsTypes =
   | CustomersOptionsFormikTypes
   | CustomerFormTypes
   | DownloadExcelFormTypes
-  | ActivitiesOptionsFormTypes;
+  | ActivitiesOptionsFormTypes
+  | OTPFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -450,7 +468,8 @@ type AllFormiksTypes =
   | CustomersOptionsFormikTypes
   | CustomerFormikTypes
   | DownloadExcelFormikTypes
-  | ActivitiesOptionsFormikTypes;
+  | ActivitiesOptionsFormikTypes
+  | OTPFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -503,6 +522,8 @@ export type {
   NationalitiesOptionsFormTypes,
   NationalityFormikTypes,
   NationalityFormTypes,
+  OTPFormikTypes,
+  OTPFormTypes,
   OwnerFormikTypes,
   OwnerFormTypes,
   OwnersOptionsFormikTypes,
