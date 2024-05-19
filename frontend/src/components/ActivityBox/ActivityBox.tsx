@@ -8,7 +8,8 @@ import { handleDateForPost } from "../../functions/handleDateForPost";
 import { ActivityTypes } from "../../types/store.types";
 
 const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
-  const { avatar, userName, userId, action, route, id, createdAt } = activity;
+  const { avatar, userName, userId, action, route, id, ownerType, createdAt } =
+    activity;
   const { defaultAvatar } = useContext(AppContext);
 
   return (
@@ -28,8 +29,8 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
         />
       </Box>
       <Box className={`grid justify-start items-center gap-2 sm:!gap-1`}>
-        <Box className={`flex justify-start items-center gap-1`}>
-          <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${id}`}>
+        <Box className={`flex justify-start items-center gap-1 !capitalize`}>
+          <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${userId?._id}`}>
             <Typography variant={"h6"} className={`!font-[700]`}>
               {userName}
             </Typography>
@@ -45,12 +46,19 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
                 ? import.meta.env.VITE_JOBS_ROUTE
                 : route === "employee"
                 ? import.meta.env.VITE_EMPLOYEES_ROUTE
-                : route === "nationality" &&
-                  import.meta.env.VITE_NATIONALITIES_ROUTE
-            }/${userId?._id}`}
+                : route === "nationality"
+                ? import.meta.env.VITE_NATIONALITIES_ROUTE
+                : route === "company" && import.meta.env.VITE_COMPANIES_ROUTE
+            }/${id}`}
           >
-            <Typography variant={"h6"} className={`!font-[700]`}>
-              {route === "job-title" ? "Job" : route}
+            <Typography variant={"h6"} className={`!font-[700] !capitalize`}>
+              {route === "job-title"
+                ? "Job"
+                : route === "owner"
+                ? ownerType === "pro"
+                  ? "Officer"
+                  : ownerType
+                : route}
             </Typography>
           </Link>
         </Box>

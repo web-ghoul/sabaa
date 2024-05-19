@@ -25,6 +25,7 @@ import LinkToCompanyForm from "./LinkToCompanyForm/LinkToCompanyForm";
 import LoginForm from "./LoginForm/LoginForm";
 import NationalitiesOptionsForm from "./NationalitiesOptionsForm/NationalitiesOptionsForm";
 import NationalityForm from "./NationalityForm/NationalityForm";
+import OTPForm from "./OTPForm/OTPForm";
 import OwnerForm from "./OwnerForm/OwnerForm";
 import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
 import ProForm from "./ProForm/ProForm";
@@ -166,6 +167,9 @@ const Forms = ({ type, index }: FormsTypes) => {
         <ForgotPasswordForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
+      )}
+      {type === "otp" && (
+        <OTPForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
       )}
       {type === "downloadExcel" && (
         <DownloadExcelForm

@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "../store/store";
 import ProProfile from "../tabs/ProProfile/ProProfile";
 
 const Pro = () => {
-  const { pro, isLoading, companies } = useSelector(
+  const { pro, isLoading, companies, activities } = useSelector(
     (state: RootState) => state.pro
   );
   const { id } = useParams();
@@ -43,7 +43,12 @@ const Pro = () => {
             </Typography>
           </BreadCrumbs>
         </Box>
-        <ProProfile companies={companies} pro={pro} isLoading={isLoading} />
+        <ProProfile
+          activities={activities}
+          companies={companies}
+          pro={pro}
+          isLoading={isLoading}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

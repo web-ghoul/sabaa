@@ -1,5 +1,6 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
   TableBody,
   TableHead,
@@ -217,7 +218,9 @@ const EmployeesTable = ({
                 </PrimaryTableCell>
                 {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
-                    <NationalityBox nationality={row.nationality} />
+                    <Box className={`flex justify-center items-center`}>
+                      <NationalityBox nationality={row.nationality} />
+                    </Box>
                   </PrimaryTableCell>
                 )}
                 {!recent && (

@@ -1,5 +1,6 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
   TableBody,
   TableHead,
@@ -172,7 +173,9 @@ const CustomersTable = ({
                       />
                     ) : (
                       <Link
-                        to={`${import.meta.env.VITE_PROS_ROUTE}/${row._id}`}
+                        to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                          row._id
+                        }`}
                       >
                         <UserBox
                           username={row.name}
@@ -198,7 +201,9 @@ const CustomersTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      <NationalityBox nationality={row.nationality} />
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (

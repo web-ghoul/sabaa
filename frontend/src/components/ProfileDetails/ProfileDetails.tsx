@@ -116,7 +116,15 @@ const ProfileDetails = ({
 
   //Employee
   const handleEditEmployee = () => {
-    setEditableEmployeeData(employee);
+    if (employee) {
+      const e: EmployeeTypes = { ...employee };
+      if (employee.companyId) {
+        e.companyId = employee.companyId.map(
+          (company) => (company as CompanyTypes)._id
+        ) as string[];
+      }
+      setEditableEmployeeData(e);
+    }
     navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${id}/edit`);
   };
   const handleDeleteEmployee = () => {
@@ -361,7 +369,7 @@ const ProfileDetails = ({
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
-                value={handleDate((data as ProTypes).createdAt)}
+                value={handleDate((data as ProTypes).createdAt, true)}
               />
             </Box>
           </Box>

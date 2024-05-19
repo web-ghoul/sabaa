@@ -33,6 +33,7 @@ import { AppDispatch } from "./store/store.ts";
 const AuthRoutes = [
   `${import.meta.env.VITE_LOGIN_ROUTE}`,
   `${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`,
+  `${import.meta.env.VITE_OTP_ROUTE}`,
 ];
 
 const App = () => {
