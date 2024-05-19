@@ -4,8 +4,10 @@ import { RiFileExcel2Fill } from "react-icons/ri";
 import Button from "../../components/Button/Button";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
+import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
+import ActivitiesSection from "../../sections/ActivitiesSection";
 import CustomersTable from "../../tables/CustomersTable/CustomersTable";
 import EmployeesTable from "../../tables/EmployeesTable/EmployeesTable";
 import OwnersTable from "../../tables/OwnersTable/OwnersTable";
@@ -21,7 +23,11 @@ import { CompanyProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
+const CompanyProfile = ({
+  company,
+  isLoading,
+  activities,
+}: CompanyProfileProps) => {
   const { companyTabsValue } = useContext(TabsContext);
   const { handleOpenUploadEmployeesModal } = useContext(FormsContext);
 
@@ -35,6 +41,7 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         "Employees",
         "Transactions",
         "Activities",
+        "Documents",
       ]}
       variant={"company"}
     >
@@ -108,7 +115,10 @@ const CompanyProfile = ({ company, isLoading }: CompanyProfileProps) => {
         <ProfileSetting />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={6}>
-        <ProfileSetting />
+        <ActivitiesSection data={activities} isLoading={isLoading} />
+      </CustomTabPanel>
+      <CustomTabPanel value={companyTabsValue} index={7}>
+        <UnderDevelopment />
       </CustomTabPanel>
     </PrimaryTab>
   );

@@ -35,6 +35,7 @@ interface LoginFormikTypes {
 
 //Reset Password
 interface ResetPasswordFormTypes {
+  otp: string;
   password: string;
   confirmPassword: string;
 }

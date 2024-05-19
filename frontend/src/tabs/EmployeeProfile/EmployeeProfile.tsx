@@ -1,14 +1,19 @@
 import { useContext } from "react";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
-import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
+import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { TabsContext } from "../../contexts/TabsContext";
+import ActivitiesSection from "../../sections/ActivitiesSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
 import { CompanyTypes, EmployeeTypes } from "../../types/store.types";
 import { EmployeeProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
+const EmployeeProfile = ({
+  employee,
+  isLoading,
+  activities,
+}: EmployeeProfileProps) => {
   const { employeeTabsValue } = useContext(TabsContext);
 
   return (
@@ -40,16 +45,13 @@ const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={2}>
-        <ProfileSetting />
+        <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={3}>
-        <ProfileSetting />
+        <ActivitiesSection data={activities} isLoading={isLoading} />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={4}>
-        <ProfileSetting />
-      </CustomTabPanel>
-      <CustomTabPanel value={employeeTabsValue} index={5}>
-        <ProfileSetting />
+        <UnderDevelopment />
       </CustomTabPanel>
     </PrimaryTab>
   );

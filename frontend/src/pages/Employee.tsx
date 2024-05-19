@@ -12,9 +12,10 @@ import { AppDispatch, RootState } from "../store/store";
 import EmployeeProfile from "../tabs/EmployeeProfile/EmployeeProfile";
 
 const Employee = () => {
-  const { employee, isLoading, companies } = useSelector(
+  const { employee, isLoading, activities } = useSelector(
     (state: RootState) => state.employee
   );
+
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
@@ -44,7 +45,7 @@ const Employee = () => {
           </BreadCrumbs>
         </Box>
         <EmployeeProfile
-          companies={companies}
+          activities={activities}
           employee={employee}
           isLoading={isLoading}
         />

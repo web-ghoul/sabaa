@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -194,7 +195,9 @@ const useSubmitFunction = (type: string) => {
 
   const handleEmployeeFormData = (values: EmployeeFormTypes) => {
     const formData = new FormData();
-    formData.append("avatar", employeeImage);
+    if (employeeImage) {
+      formData.append("avatar", employeeImage);
+    }
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
@@ -347,10 +350,31 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const resetPassword = (values: ResetPasswordFormTypes) => {
+  const resetPassword = async (values: ResetPasswordFormTypes) => {
     handleOpenFormsLoading();
-    console.log(values);
-    handleAlert({ msg: "Under Development...", status: "error" });
+    try {
+      const otp = Cookies.get("otp");
+      if (otp) {
+        values.otp = otp;
+      } else {
+        handleAlert({ msg: "Not Authorized", status: "error" });
+        return;
+      }
+      await server
+        .patch(`/reset-password`, values)
+        .then(() => {
+          handleAlert({
+            msg: "Password is Changed Successfully",
+            status: "success",
+          });
+          navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
     handleCloseFormsLoading();
   };
 
@@ -374,11 +398,12 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     await server
       .post(`/validate-otp`, values)
-      .then(() => {
+      .then((res) => {
         handleAlert({
           msg: "You can reset your password ,Now",
           status: "success",
         });
+        Cookies.set("otp", res.data.unique);
         navigate(`${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`);
       })
       .catch((err) => {
@@ -388,7 +413,6 @@ const useSubmitFunction = (type: string) => {
   };
 
   //Job
-
   const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     await server

@@ -15,6 +15,7 @@ interface ActivityTypes {
   action: string;
   userId: UserTypes;
   route: string;
+  ownerType?: string;
   createdAt?: Date;
 }
 

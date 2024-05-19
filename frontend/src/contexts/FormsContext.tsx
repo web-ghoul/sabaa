@@ -390,6 +390,9 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     if (editableProData) {
       setProImage(editableProData.avatar);
     }
+    if (editableCustomerData) {
+      setCustomerImage(editableCustomerData.avatar);
+    }
     if (editableEmployeeData) {
       setEmployeeImage(editableEmployeeData.avatar);
     }
@@ -405,6 +408,7 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     editableCompanyData,
     editableProData,
     editableEmployeeData,
+    editableCustomerData,
   ]);
 
   useEffect(() => {
