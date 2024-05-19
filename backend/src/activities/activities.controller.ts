@@ -20,8 +20,9 @@ export class ActivitiesController {
   @Query('from') from: string,
   @Query('operation') operation: string,
   @Query('type') route: string,
+  @Query('userId') userId: string,
 ) {
-    return this.activitiesService.findAll(limit,page,search,operation,from,to,route);
+    return this.activitiesService.findAll(limit,page,search,operation,from,to,route,userId);
   }
 
   @Get(':id')

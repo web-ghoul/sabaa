@@ -37,10 +37,12 @@ export class EmployeesService {
           return data
         }else
         {
-          const [data,] =  await Promise.all([
-            this.employeeModel.create(createEmployeeDto),
-            this.companyModel.findByIdAndUpdate(createEmployeeDto.companyId, {$push: {employees: createEmployeeDto._id}})
-          ]) 
+          console.log(createEmployeeDto.companyId);
+          
+          const data = await this.employeeModel.create(createEmployeeDto);
+          const companies = await this.companyModel.updateMany({ _id: { $in: createEmployeeDto.companyId } }, { $push: { employees: data._id } });
+          
+          console.log(companies)
           return data
         }
 
@@ -114,7 +116,16 @@ export class EmployeesService {
       //check for added company
       // console.log(updateEmployeeDto.companyId);
       // console.log(oldData.companyId);
-      if(updateEmployeeDto.companyId == undefined) return oldData;
+      if(updateEmployeeDto.companyId == undefined)
+        {
+          if(oldData.companyId != undefined)
+          {
+            oldData.companyId.forEach(async(company) => {
+              await this.companyModel.findByIdAndUpdate( company, {$pull: {employees: id}});
+            })
+          }
+          return oldData;
+        } 
       
       updateEmployeeDto.companyId.forEach(async (company) => {
         if(!oldData.companyId.includes(company))

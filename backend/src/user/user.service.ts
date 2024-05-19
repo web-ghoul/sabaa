@@ -102,11 +102,9 @@ export class UserService {
     return {user, activities}
   }
   async findOne(email: string){
-    const [user, activities] = await Promise.all([
-      this.userModel.findOne({email: email}),
-      this.activityModel.find({email: email, route: "user"})
-    ])
-    return {user, activities}
+    const user= await this.userModel.findOne({email: email})
+
+    return user;
   }
   async userCounters(): Promise<object> {
     const [roles,count,deleted] = await Promise.all([
