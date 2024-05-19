@@ -174,7 +174,7 @@ const EmployeesTable = ({
               )}
             </PrimaryTableCell>
           )}
-          {!mdScreen && (
+          {(!mdScreen || !recent) && (
             <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
           )}
           {actions && (
@@ -238,7 +238,7 @@ const EmployeesTable = ({
                     {handleDate(row.residenceExpireDate)}
                   </PrimaryTableCell>
                 )}
-                {!mdScreen && (
+                {(!mdScreen || !recent) && (
                   <PrimaryTableCell align="center">
                     {row.cardType}
                   </PrimaryTableCell>
