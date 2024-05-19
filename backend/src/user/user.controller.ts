@@ -11,6 +11,9 @@ import { Role } from 'src/enum/role.enum';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'schemas/user.schema';
 import { Response } from 'express';
+import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { User as UserDecorator }  from 'src/utils/decorators/User.decorator';
 
 // import { Request } from 'express';
 @ApiTags('User')
@@ -30,17 +33,21 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Post()
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "create"})
   @UseInterceptors(FileInterceptor('avatar'))
-  async createUser(@Body(ValidationPipe) userData: CreateUserDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
+  async createUser(@UserDecorator("id") user,@Body(ValidationPipe) userData: CreateUserDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
     new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File){
     //DTO ==> data transfer object like schema for the 
     
     
-    return this.userService.createUser(userData,file);
+    return this.userService.createUser(userData,file,user);
   }
 
   @UseGuards(AuthGuard)
   @Put(":id")
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "update"})
   @UseInterceptors(FileInterceptor('avatar'))
   updateUser(@Param("id") id: ObjectId, @Body(ValidationPipe) userData: UpdateUserDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
     new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File){
@@ -61,12 +68,14 @@ export class UserController {
   @Roles(Role.Admin)
   @UseGuards(AuthGuard)
   @Get(":id")
-  displayUser(@Param("id") id: ObjectId): Promise<User>{
+  displayUser(@Param("id") id: ObjectId){
     return this.userService.displayUser(id);
   }
 
   @UseGuards(AuthGuard)
   @Delete(":id")
+  @UseInterceptors(LogInterceptor)
+  @ActivityLog({action: "delete"})
   deleteUser(@Param("id") id : ObjectId){
     return this.userService.deleteUser(id);
   }

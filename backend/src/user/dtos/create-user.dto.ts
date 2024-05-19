@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString, Length } from "class-validator";
+import { IsEmail, IsMongoId, IsOptional, IsString, Length } from "class-validator";
+import { ObjectId } from "mongoose";
 
 export class CreateUserDto{
     
@@ -24,6 +25,11 @@ export class CreateUserDto{
     @ApiProperty()
     @IsString()
     role: string;
+
+    @ApiProperty({ required: false })
+    @IsMongoId()
+    @IsOptional()
+    user?: ObjectId;
     
 
 }
