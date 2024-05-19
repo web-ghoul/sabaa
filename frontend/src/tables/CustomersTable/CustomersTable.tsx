@@ -173,7 +173,9 @@ const CustomersTable = ({
                       />
                     ) : (
                       <Link
-                        to={`${import.meta.env.VITE_PROS_ROUTE}/${row._id}`}
+                        to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                          row._id
+                        }`}
                       >
                         <UserBox
                           username={row.name}

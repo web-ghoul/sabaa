@@ -15,6 +15,7 @@ export const getCustomer = createAsyncThunk(
         },
       }
     );
+
     return res.data;
   }
 );
@@ -36,7 +37,7 @@ export const customerSlice = createSlice({
     });
     builder.addCase(getCustomer.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.customer = payload.customer;
+      state.customer = payload.owner;
       state.companies = payload.companies;
       state.activities = payload.activities;
     });
