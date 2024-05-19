@@ -114,6 +114,7 @@ export class EmployeesService {
       //check for added company
       // console.log(updateEmployeeDto.companyId);
       // console.log(oldData.companyId);
+      if(updateEmployeeDto.companyId == undefined) return oldData;
       
       updateEmployeeDto.companyId.forEach(async (company) => {
         if(!oldData.companyId.includes(company))

@@ -28,7 +28,8 @@ export class ActivitiesService {
         : null;
     operation  != '' ? (query['action'] = operation ) : undefined;
     route != '' ? (query['route'] = route) : undefined;
-    console.log(query);
+    // console.log(query);
+    // console.log(operation);
     
     return this.ActivityModel
       .find(query)
