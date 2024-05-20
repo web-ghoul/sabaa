@@ -297,7 +297,7 @@ const useSubmitForm = (type: string) => {
             },
           } as unknown as CompaniesOptionsFormikTypes;
         case "linkOwner":
-        case "linkPRO":
+        case "linkPro":
           return {
             initialValues: LinkToCompanyInitailValues,
             validationSchema: LinkToCompanySchema,

@@ -85,7 +85,7 @@ export const handleDownloadExcel = (
           "Arabic Name": owner.nameAr,
           Phone: owner.phone,
           Email: owner.email,
-          Status: owner.status,
+          "Date of Birth": handleDate(owner.dob),
           State: owner.state,
           Address: owner.address,
           Nationality: owner.nationality,
@@ -93,7 +93,10 @@ export const handleDownloadExcel = (
           "Person Code": owner.personCode,
           "Emirates Id": owner.emiratesId,
           "File Immigration Number": owner.fileImmgNo,
+          "Residence Expire Date": handleDate(owner.residenceExpiryDate),
+          Status: owner.status,
           Remarks: owner.remarks,
+          "Created At": handleDate(owner.createdAt),
         };
         newData.push(newOwner);
       } else if (variant === "officers") {
@@ -101,7 +104,7 @@ export const handleDownloadExcel = (
         const newPro: { [key: string]: string } = {
           "English Name": pro.name,
           "Arabic Name": pro.nameAr,
-          Status: pro.status,
+          "Date of Birth": handleDate(pro.dob),
           Nationality: pro.nationality,
           Phone: pro.phone,
           Email: pro.email,
@@ -111,7 +114,10 @@ export const handleDownloadExcel = (
           "Person Code": pro.personCode,
           "Emirates Id": pro.emiratesId,
           "File Immigration Number": pro.fileImmgNo,
+          "Residence Expire Date": handleDate(pro.residenceExpiryDate),
+          Status: pro.status,
           Remarks: pro.remarks,
+          "Created At": handleDate(pro.createdAt),
         };
         newData.push(newPro);
       } else if (variant === "customers") {
@@ -119,18 +125,20 @@ export const handleDownloadExcel = (
         const newCustomer: { [key: string]: string } = {
           "English Name": customer.name,
           "Arabic Name": customer.nameAr,
-          Status: customer.status,
           Nationality: customer.nationality,
           Phone: customer.phone,
           Email: customer.email,
           State: customer.state,
+          "Date of Birth": handleDate(customer.dob),
           Address: customer.address,
           UID: customer.uid,
           "Person Code": customer.personCode,
           "Emirates Id": customer.emiratesId,
           "File Immigration Number": customer.fileImmgNo,
-          Sponsor: customer.sponsor,
+          "Residence Expire Date": handleDate(customer.residenceExpiryDate),
+          Status: customer.status,
           Remarks: customer.remarks,
+          "Created At": handleDate(customer.createdAt),
         };
         newData.push(newCustomer);
       } else if (variant === "employees") {

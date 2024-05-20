@@ -2,11 +2,11 @@ import * as yup from "yup";
 
 const useLinkToCompanySchema = () => {
   const LinkToCompanySchema = yup.object({
-    companyId: yup.string().required("Company is required"),
+    companyId: yup.array().required("Company is required"),
   });
 
   const LinkToCompanyInitailValues = {
-    companyId: "",
+    companyId: [],
   };
 
   return { LinkToCompanyInitailValues, LinkToCompanySchema };

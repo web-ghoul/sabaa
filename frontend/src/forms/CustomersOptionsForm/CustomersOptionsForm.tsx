@@ -67,6 +67,10 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenDownloadExcelModal("excel", "customers");
   };
 
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "customers");
+  };
+
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
     dispatch(getCustomers({}));
@@ -140,7 +144,7 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
           />
         </Box>
       </Box>

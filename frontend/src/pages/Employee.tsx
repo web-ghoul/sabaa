@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "../store/store";
 import EmployeeProfile from "../tabs/EmployeeProfile/EmployeeProfile";
 
 const Employee = () => {
-  const { employee, isLoading, activities } = useSelector(
+  const { employee, isLoading, activities, sponsors } = useSelector(
     (state: RootState) => state.employee
   );
 
@@ -48,6 +48,7 @@ const Employee = () => {
           activities={activities}
           employee={employee}
           isLoading={isLoading}
+          sponsors={sponsors}
         />
       </PrimaryContainer>
     </PrimaryBox>

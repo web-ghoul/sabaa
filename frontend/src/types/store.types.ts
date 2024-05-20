@@ -88,6 +88,7 @@ interface RecentUsersValuesTypes {
 interface UserValuesTypes {
   isLoading: boolean;
   user: UserTypes | null;
+  activities: ActivityTypes[] | null;
 }
 
 //Owner
@@ -121,6 +122,7 @@ interface OwnerValuesTypes {
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  sponsors: SponsorTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -162,6 +164,7 @@ interface ProValuesTypes {
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  sponsors: SponsorTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -194,17 +197,16 @@ interface ProsCounterValuesTypes {
   prosCounter: number;
 }
 
-//PRO
+//Customer
 
-interface CustomerTypes extends OwnerTypes {
-  sponsor: string;
-}
+interface CustomerTypes extends OwnerTypes {}
 
 interface CustomerValuesTypes {
   isLoading: boolean;
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  sponsors: SponsorTypes[] | null;
 }
 
 interface CustomersValuesTypes {
@@ -235,6 +237,28 @@ interface RecentCustomersArgsTypes {
 interface CustomersCounterValuesTypes {
   isLoading: boolean;
   customersCounter: number;
+}
+
+//Sponsor
+
+interface SponsorTypes {
+  _id?: string;
+  uid: string;
+  name: string;
+  nameAr: string;
+  avatar: string;
+  dob?: Date;
+  idNationality: string;
+  nationality: string;
+  phone: string;
+  email: string;
+  state: string;
+  address: string;
+  emiratesId: string;
+  type?: string;
+  remarks: string;
+  createdAt?: Date;
+  user?: string;
 }
 
 //Employee
@@ -281,6 +305,7 @@ interface EmployeeValuesTypes {
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  sponsors: SponsorTypes[] | null;
 }
 
 interface EmployeesValuesTypes {
@@ -522,6 +547,7 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
+  SponsorTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,

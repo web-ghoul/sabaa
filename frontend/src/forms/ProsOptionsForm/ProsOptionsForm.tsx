@@ -64,6 +64,10 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenDownloadExcelModal("excel", "officers");
   };
 
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "officers");
+  };
+
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
     dispatch(getPros({}));
@@ -137,7 +141,7 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
           />
         </Box>
       </Box>

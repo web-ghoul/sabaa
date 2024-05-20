@@ -5,6 +5,7 @@ import {
   JobTypes,
   NationalityTypes,
   OwnerTypes,
+  SponsorTypes,
   UserTypes,
 } from "./store.types";
 
@@ -75,6 +76,13 @@ interface CustomersTableTypes {
   recent?: boolean;
 }
 
+interface SponsorsTableTypes {
+  data: SponsorTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+}
+
 interface NationalitiesTableTypes {
   data: NationalityTypes[] | null;
   count: number;
@@ -104,5 +112,6 @@ export type {
   NationalitiesTableTypes,
   OwnersTableTypes,
   ProsTableTypes,
+  SponsorsTableTypes,
   UsersTableTypes,
 };

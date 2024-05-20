@@ -6,6 +6,7 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
@@ -198,7 +199,9 @@ const ProsTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      <NationalityBox nationality={row.nationality} />
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (

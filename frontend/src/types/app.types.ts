@@ -54,7 +54,8 @@ type EntitiesType =
   | "transactions"
   | "officers"
   | "nationalities"
-  | "jobs";
+  | "jobs"
+  | "sponsors";
 
 type EntityType =
   | "company"
@@ -65,7 +66,8 @@ type EntityType =
   | "transaction"
   | "officer"
   | "job"
-  | "nationality";
+  | "nationality"
+  | "sponsor";
 
 type HeadsType =
   | "h1"

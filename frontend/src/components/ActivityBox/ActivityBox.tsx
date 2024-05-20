@@ -41,6 +41,13 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
           <Link
             to={`${
               route === "owner"
+                ? ownerType === "owner"
+                  ? import.meta.env.VITE_OWNERS_ROUTE
+                  : ownerType === "pro"
+                  ? import.meta.env.VITE_PROS_ROUTE
+                  : ownerType === "customer" &&
+                    import.meta.env.VITE_CUSTOMERS_ROUTE
+                : route === "user"
                 ? import.meta.env.VITE_USERS_ROUTE
                 : route === "job-title"
                 ? import.meta.env.VITE_JOBS_ROUTE

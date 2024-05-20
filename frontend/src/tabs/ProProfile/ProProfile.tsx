@@ -25,6 +25,7 @@ const ProProfile = ({
         "Transactions",
         "Activities",
         "Documents",
+        "Sponsored Persons",
       ]}
       variant={"officer"}
     >
@@ -52,6 +53,9 @@ const ProProfile = ({
         <ActivitiesSection data={activities} isLoading={isLoading} />
       </CustomTabPanel>
       <CustomTabPanel value={proTabsValue} index={4}>
+        <UnderDevelopment />
+      </CustomTabPanel>
+      <CustomTabPanel value={proTabsValue} index={5}>
         <UnderDevelopment />
       </CustomTabPanel>
     </PrimaryTab>

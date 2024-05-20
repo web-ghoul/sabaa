@@ -72,6 +72,10 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenDownloadExcelModal("excel", "companies");
   };
 
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "companies");
+  };
+
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getCompanies({ ...queries, search: searchForCompanies }));
@@ -136,7 +140,7 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
           />
           <Button
             icon={<RiFileExcel2Fill />}
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
             bg={"excel"}
             title={"Excel All"}
           />

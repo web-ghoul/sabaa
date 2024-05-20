@@ -9,11 +9,10 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
-import { getCustomers } from "../../store/customersSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { getPros } from "../../store/prosSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import { CompanyFormTypes, FormiksTypes } from "../../types/forms.types";
 
 const CompanyForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseCompanyModal, setCompanyImage } =
@@ -21,7 +20,6 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
   const { pros } = useSelector((state: RootState) => state.pros);
-  const { customers } = useSelector((state: RootState) => state.customers);
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -36,7 +34,6 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
   useEffect(() => {
     dispatch(getOwners({ limit: -1 }));
     dispatch(getPros({ limit: -1 }));
-    dispatch(getCustomers({ limit: -1 }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -144,7 +141,6 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         </Box>
       </Box>
       <Divider />
-
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
           Company Information
@@ -234,15 +230,6 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               multiple={true}
             />
           )}
-          {customers && customers.length > 0 && (
-            <AutoCompleteSearch
-              label={"Customers"}
-              options={customers}
-              formik={formik}
-              name={"customerId"}
-              multiple={true}
-            />
-          )}
           <Input
             formik={formik}
             label={"Remarks"}
@@ -251,31 +238,54 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           />
         </Box>
       </Box>
-      <Divider />
-
-      <Box className={`grid justify-stretch items-center gap-4`}>
-        <Typography variant="h4" className={`!font-[700]`}>
-          E-Channel Details
-        </Typography>
-        <Box
-          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
-        >
-          <Input
-            formik={formik}
-            type={"date"}
-            name={"echannelExpiryDate"}
-            label={"E-Channel Expire Date"}
-          />
-          <Input formik={formik} label={"Username"} name={"userName"} />
-          <Input
-            formik={formik}
-            label={"Password"}
-            type={"password"}
-            name={"password"}
-          />
-        </Box>
-      </Box>
-
+      {(formik.values as unknown as CompanyFormTypes).state.toLowerCase() !==
+      "dubai" ? (
+        <>
+          <Divider />
+          <Box className={`grid justify-stretch items-center gap-4`}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              E-Channel Details
+            </Typography>
+            <Box
+              className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+            >
+              <Input
+                formik={formik}
+                type={"date"}
+                name={"echannelExpiryDate"}
+                label={"E-Channel Expire Date"}
+              />
+              <Input formik={formik} label={"Username"} name={"userName"} />
+              <Input
+                formik={formik}
+                label={"Password"}
+                type={"password"}
+                name={"password"}
+              />
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Divider />
+          <Box className={`grid justify-stretch items-center gap-4`}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              GDRF Details
+            </Typography>
+            <Box
+              className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+            >
+              <Input formik={formik} label={"Username"} name={"userName"} />
+              <Input
+                formik={formik}
+                label={"Password"}
+                type={"password"}
+                name={"password"}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}

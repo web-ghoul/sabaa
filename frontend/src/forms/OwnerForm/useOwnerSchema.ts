@@ -6,13 +6,33 @@ import { FormsContext } from "../../contexts/FormsContext";
 const useOwnerSchema = () => {
   const { editableOwnerData, setOwnerImage } = useContext(FormsContext);
 
+  const isAdult = (date: Date) => {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age >= 18;
+  };
+
   const OwnerSchema = yup.object({
     personCode: yup.string(),
     uid: yup.string().required("UID Number is required"),
     avatar: yup.string(),
     name: yup.string().required("English Name is required"),
     nameAr: yup.string().required("Arabic Name is required"),
-    dob: yup.string(),
+    dob: yup
+      .date()
+      .test(
+        "is-adult",
+        "You must be at least 18 years old",
+        (value) => value && isAdult(value)
+      ),
     idNationality: yup.string(),
     nationality: yup.string().required("Nationality is required"),
     phone: yup.string(),

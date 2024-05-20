@@ -1059,15 +1059,9 @@ const useSubmitFunction = (type: string) => {
         `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
-            : formType === "linkPro"
-            ? editableProData && editableProData._id
-            : editableCustomerData && editableCustomerData._id
+            : formType === "linkPro" && editableProData && editableProData._id
         }&operation=adding&typeOfPerson=${
-          formType === "linkOwner"
-            ? "owner"
-            : formType === "linkPro"
-            ? "pro"
-            : "customer"
+          formType === "linkOwner" ? "owner" : formType === "linkPro" && "pro"
         }`,
         {
           headers: {
