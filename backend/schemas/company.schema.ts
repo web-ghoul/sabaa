@@ -33,8 +33,6 @@ export class Company {
   @Prop({ type: Array, default: [], ref: 'Owner' })
   ownerId: string[];
 
-  @Prop({ type: Array, default: [], ref: 'Owner' })
-  customerId: string[];
 
   @Prop()
   licenseNo: string; //can be repeated but in different state
@@ -109,6 +107,24 @@ export class Company {
   userName: string;
   @Prop()
   password: string;
+
+  @Prop()
+  noqodiWalet: string;
+
+  @Prop()
+  noqodiPass: string;
+
+  @Prop()
+  pinToken: string;
+
+  @Prop()
+  noqodiNew: string;
+
+  @Prop()
+  noqodiReg: string;
+
+  @Prop()
+  noqodiNPass: string;
 }
 
 

@@ -1,4 +1,6 @@
 import { Response } from 'express';
+import { Model } from 'mongoose';
+import { OwnerDocument } from 'schemas/owner.schema';
 import { CustomError } from 'src/utils/CustomError';
 
 
@@ -18,19 +20,34 @@ export const castErrorHandler = (err: any) => {
     return new CustomError(msg, 400);
 };
 
-export const duplicateKeyErrorHandler = (err: any) => {
-    console.log("duplicateKeyErrorHandler");
+export const duplicateKeyErrorHandler = async (err: any, ownerModel: Model<OwnerDocument>, check: boolean) => {
+    // console.log("duplicateKeyErrorHandler");
     // console.log(err);
     
     const field = Object.keys(err.keyPattern)[0];
     const value = err?.keyValue[field];
-    const msg = `${value} is already used. Please use a different value for the ${field} field.`;
-    return new CustomError(msg, 400);
+    if(check)
+        {
+            const data = await ownerModel.findOne({[field]: value})
+                const msg = `${value} is already used by ${data.type} ${data.name}. Please use a different value for the ${field} field.`;
+                const obj = new CustomError(msg, 400);
+                // console.log(obj);
+                
+                return obj
+            
+        }else
+        {
+            const msg = `${value} is already used. Please use a different value for the ${field} field.`;
+            const obj = new CustomError(msg, 400);
+            
+            return obj
+        }
+    
 };
 
 export const validationErrorHandler = (err: any) => {
-    console.log("validationErrorHandler");
-    console.log(err);
+    // console.log("validationErrorHandler");
+    // console.log(err);
     
     
     const msg = `Invalid input data: ${err?.message}`;
@@ -38,7 +55,7 @@ export const validationErrorHandler = (err: any) => {
 };
 
 export const prodErrors = (res: Response, error: CustomError) => {
-    console.log("prodErrors");
+    // console.log("prodErrors");
 
     if (error.isOperational) {
         res.status(error.statusCode).json({

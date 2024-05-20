@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { OwnerModule } from './owner/owner.module';
 import { AuthGuard } from './auth/auth.guard';
 import { NationalityModule } from './nationality/nationality.module';
@@ -20,6 +20,8 @@ import { User, UserSchema } from 'schemas/user.schema';
 import { EmployeesModule } from './employees/employees.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { MailsModule } from './mails/mails.module';
+import { OwnerSchema } from 'schemas/owner.schema';
+import { CustomErrorFilter } from './filters/CustomErrorFilter';
 
 dotenv.config();
 @Module({
@@ -29,7 +31,7 @@ dotenv.config();
   },
   
 ]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,],
+MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }])],
   controllers: [AppController],
   providers: [AppService,
     {
@@ -43,6 +45,10 @@ MailsModule,],
     {
       provide: APP_GUARD,
       useClass: MongooseModule
-    }],
+    },
+    {
+      provide: APP_FILTER,
+      useClass: CustomErrorFilter,
+    },],
 })
 export class AppModule {}

@@ -152,15 +152,14 @@ export class CompanyService {
         { path: 'ownerId', model: 'Owner' },
         { path: 'proCode', model: 'Owner' },
         {path: 'employees', model: 'Employee'},
-        {path: 'customerId', model: 'Owner'}
       ])
       .exec(),
       this.activityModel.find({id: id, route: "company"}).exec()
     ]) ;
-      if(data?.password)
-        {
-          data.password = this.encrypt(data.password);
-        }
+      // if(data?.password)
+      //   {
+      //     data.password = this.encrypt(data.password);
+      //   }
 
       return {data,activities} ;
     
@@ -194,7 +193,7 @@ export class CompanyService {
     }
   }
   async ManageCompanyOwnersAndPro(
-    companyId: string,
+    companyId: string[],
     Id: string,
     operation: string,
     typeOfPerson: string,
@@ -206,8 +205,6 @@ export class CompanyService {
         fields.ownerId = Id;
       } else if(typeOfPerson == 'pro') {
         fields.proCode = Id;
-      }else{
-        fields.customerId = Id;
       }
       if (operation == 'adding') {
         query = { $push: fields };
@@ -215,7 +212,7 @@ export class CompanyService {
         query = { $pull: fields };
       }
 
-      await this.companyModel.findByIdAndUpdate(companyId, query);
+      await this.companyModel.updateMany({ _id: { $in: companyId}}, query);
 
       return { message: 'success' };
     } catch (err) {
@@ -291,7 +288,6 @@ export class CompanyService {
         phone: company.phone,
         proCode: company.proCode.join(', '),
         ownerId: company.ownerId.join(', '),
-        customerId: company.customerId.join(', '),
         licenseNo: company.licenseNo,
         immgCardNo: company.immgCardNo,
         immgCardExpiry: company.immgCardExpiry,
