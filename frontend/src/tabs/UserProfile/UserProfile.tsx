@@ -1,14 +1,14 @@
 import { useContext } from "react";
-import ProfileActivities from "../../components/ProfileActivities/ProfileActivities";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
 import { TabsContext } from "../../contexts/TabsContext";
+import ActivitiesSection from "../../sections/ActivitiesSection";
 import { UserTypes } from "../../types/store.types";
 import { UserProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const UserProfile = ({ user, isLoading }: UserProfileProps) => {
+const UserProfile = ({ user, isLoading, activities }: UserProfileProps) => {
   const { userTabsValue } = useContext(TabsContext);
 
   return (
@@ -30,7 +30,7 @@ const UserProfile = ({ user, isLoading }: UserProfileProps) => {
         />
       </CustomTabPanel>
       <CustomTabPanel value={userTabsValue} index={1}>
-        <ProfileActivities />
+        <ActivitiesSection data={activities} isLoading={isLoading} />
       </CustomTabPanel>
       <CustomTabPanel value={userTabsValue} index={2}>
         <ProfileSetting />

@@ -20,7 +20,9 @@ const useProSchema = () => {
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),
-    sponsor: yup.string(),
+    residenceExpiryDate: yup.date(),
+    fileImmgNo: yup.string(),
+    status: yup.string(),
     remarks: yup.string(),
   });
 
@@ -37,12 +39,19 @@ const useProSchema = () => {
     nationality: editableCustomerData?.nationality || "",
     phone: editableCustomerData?.phone || "",
     email: editableCustomerData?.email || "",
-    remarks: editableCustomerData?.remarks || "",
     state: editableCustomerData?.state || "",
     address: editableCustomerData?.address || "",
-    sponsor: editableCustomerData?.sponsor || "",
     emiratesId: editableCustomerData?.emiratesId || "",
+    residenceExpiryDate:
+      (editableCustomerData?.residenceExpiryDate &&
+        new Date(editableCustomerData?.residenceExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    fileImmgNo: editableCustomerData?.fileImmgNo || "",
+    status: editableCustomerData?.status || "",
     uid: editableCustomerData?.uid || "",
+    remarks: editableCustomerData?.remarks || "",
   };
 
   useEffect(() => {

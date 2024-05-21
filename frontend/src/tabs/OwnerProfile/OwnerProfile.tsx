@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { OwnerTypes } from "../../types/store.types";
+import ProsTable from "../../tables/ProsTable/ProsTable";
+import { OwnerTypes, ProTypes } from "../../types/store.types";
 import { OwnerProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -16,15 +17,26 @@ const OwnerProfile = ({
   activities,
 }: OwnerProfileProps) => {
   const { ownerTabsValue } = useContext(TabsContext);
+  const [pros, setPros] = useState<ProTypes[]>([]);
+
+  useEffect(() => {
+    if (companies && pros.length === 0) {
+      companies.map((company) => {
+        setPros([...pros, ...(company.proCode as ProTypes[])]);
+      });
+    }
+  }, [companies, pros]);
 
   return (
     <PrimaryTab
       tabsTitles={[
         "Personal Info",
         "Companies",
+        "Officers",
         "Transactions",
         "Activities",
         "Documents",
+        "Sponsored Persons",
       ]}
       variant={"owner"}
     >
@@ -46,12 +58,23 @@ const OwnerProfile = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={2}>
-        <UnderDevelopment />
+        <ProsTable
+          count={pros.length}
+          data={pros}
+          isLoading={isLoading}
+          noPagination={true}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={3}>
-        <ActivitiesSection data={activities} isLoading={isLoading} />
+        <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={4}>
+        <ActivitiesSection data={activities} isLoading={isLoading} />
+      </CustomTabPanel>
+      <CustomTabPanel value={ownerTabsValue} index={5}>
+        <UnderDevelopment />
+      </CustomTabPanel>
+      <CustomTabPanel value={ownerTabsValue} index={6}>
         <UnderDevelopment />
       </CustomTabPanel>
     </PrimaryTab>

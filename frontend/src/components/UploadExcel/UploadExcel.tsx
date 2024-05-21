@@ -490,25 +490,25 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
   useEffect(() => {
     if (variant === "employees") {
       setSampleName("employees_sample.xlsx");
-      setSamplePath("./samples/employees.xlsx");
+      setSamplePath("/samples/employees.xlsx");
     } else if (variant === "customers") {
       setSampleName("customers_sample.xlsx");
-      setSamplePath("./samples/owners.xlsx");
+      setSamplePath("/samples/owners.xlsx");
     } else if (variant === "owners") {
       setSampleName("owners_sample.xlsx");
-      setSamplePath("./samples/owners.xlsx");
+      setSamplePath("/samples/owners.xlsx");
     } else if (variant === "officers") {
       setSampleName("public_relation_officers_sample.xlsx");
-      setSamplePath("./samples/pros.xlsx");
+      setSamplePath("/samples/pros.xlsx");
     } else if (variant === "companies") {
       setSampleName("companies_sample.xlsx");
-      setSamplePath("./samples/companies.xlsx");
+      setSamplePath("/samples/companies.xlsx");
     } else if (variant === "jobs") {
       setSampleName("jobs_sample.xlsx");
-      setSamplePath("./samples/jobs.xlsx");
+      setSamplePath("/samples/jobs.xlsx");
     } else if (variant === "nationalities") {
       setSampleName("nationalities_sample.xlsx");
-      setSamplePath("./samples/nationalities.xlsx");
+      setSamplePath("/samples/nationalities.xlsx");
     }
   }, [variant]);
 

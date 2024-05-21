@@ -125,7 +125,7 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
           formik={formik}
           label={"File Immgiration Number"}
           name={"fileImmgNo"}
-          type={"number"}
+          variant={"numeric"}
         />
         <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />

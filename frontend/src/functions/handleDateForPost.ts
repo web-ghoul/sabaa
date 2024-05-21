@@ -16,6 +16,7 @@ export const handleDateForPost = (date?: Date): string => {
   const curHour = new Date().getHours();
   const curMinute = new Date().getMinutes();
   const curSecond = new Date().getSeconds();
+
   return year === curYear && month === curMonth
     ? curDay === day
       ? curHour === hour

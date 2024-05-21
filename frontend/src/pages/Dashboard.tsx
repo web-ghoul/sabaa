@@ -119,7 +119,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          className={`grid justify-stretch items-start grid-cols-2 gap-6 md:gap-5 sm:!gap-3 md:grid-cols-1`}
+          className={`grid justify-stretch items-start grid-cols-2  gap-4 md:grid-cols-1 md:gap-3 sm:!gap-2`}
         >
           <Box className={sectionClasses}>
             <Paper className="paper">

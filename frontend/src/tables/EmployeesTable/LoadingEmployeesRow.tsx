@@ -41,7 +41,7 @@ const LoadingEmployeesRow = ({
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-      {!mdScreen && (
+      {(!mdScreen || !recent) && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />
         </PrimaryTableCell>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { EntitiesType } from "../types/app.types";
+import { EntitiesType, EntityType } from "../types/app.types";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -11,6 +11,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -46,6 +47,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   openCustomerModal: false,
   handleOpenCustomerModal: () => {},
   handleCloseCustomerModal: () => {},
+  openSponsorModal: false,
+  handleOpenSponsorModal: () => {},
+  handleCloseSponsorModal: () => {},
   openProModal: false,
   handleOpenProModal: () => {},
   handleCloseProModal: () => {},
@@ -100,6 +104,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableEmployeeData: () => {},
   editableCustomerData: null,
   setEditableCustomerData: () => {},
+  editableSponsorData: null,
+  setEditableSponsorData: () => {},
   editableProData: null,
   setEditableProData: () => {},
   editableNationalityData: null,
@@ -124,7 +130,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [excelType, setExcelType] = useState<{
     type: "excel" | "all";
     entity: EntitiesType;
-  }>({ type: "excel", entity: "companies" });
+    ent?: EntityType;
+  }>({ type: "excel", entity: "companies", ent: "company" });
 
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
@@ -166,10 +173,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const handleOpenDownloadExcelModal = (
     type: "excel" | "all",
-    entity: EntitiesType
+    entity: EntitiesType,
+    ent?: EntityType
   ) => {
     setOpenDownloadExcelModal(true);
-    setExcelType({ type: type, entity: entity });
+    setExcelType({ type: type, entity: entity, ent: ent });
   };
 
   //Link Company
@@ -265,6 +273,21 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setFormType(type);
     setOpenCustomerModal(true);
+  };
+
+  //Sponsor Modal
+  const [openSponsorModal, setOpenSponsorModal] = useState(false);
+
+  const handleCloseSponsorModal = () => {
+    setOpenSponsorModal(false);
+  };
+
+  const handleOpenSponsorModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableSponsorData(null);
+    }
+    setFormType(type);
+    setOpenSponsorModal(true);
   };
 
   //Pro Modal
@@ -366,6 +389,10 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable Customer Data
   const [editableCustomerData, setEditableCustomerData] =
     useState<CustomerTypes | null>(null);
+
+  //Editable Sponsor Data
+  const [editableSponsorData, setEditableSponsorData] =
+    useState<SponsorTypes | null>(null);
 
   //Editable Pro Data
   const [editableProData, setEditableProData] = useState<ProTypes | null>(null);
@@ -510,6 +537,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setExcelType,
     searchForActivities,
     setSearchForActivities,
+    editableSponsorData,
+    setEditableSponsorData,
+    openSponsorModal,
+    handleCloseSponsorModal,
+    handleOpenSponsorModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

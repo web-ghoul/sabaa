@@ -17,9 +17,11 @@ import {
 } from "../../types/store.types";
 import Button from "../Button/Button";
 import LinkBox from "../LinkBox/LinkBox";
+import PasswordBox from "../PasswordBox/PasswordBox";
 import StatusBox from "../StatusBox/StatusBox";
 import Title from "../Title/Title";
 import UserBox from "../UserBox/UserBox";
+import WhatsappBox from "../WhatsappBox/WhatsappBox";
 import DataBox from "./DataBox";
 import LoadingProfileDetails from "./LoadingProfileDetails";
 
@@ -101,10 +103,6 @@ const ProfileDetails = ({
   };
 
   //Customer
-  const handleCustomerLink = () => {
-    handleOpenLinkToCompanyModal("linkCustomer");
-    setEditableCustomerData(customer);
-  };
   const handleEditCustomer = () => {
     setEditableCustomerData(customer);
     handleOpenCustomerModal("editCustomer");
@@ -386,11 +384,6 @@ const ProfileDetails = ({
               res={true}
             />
             <Box className={profileButtonsClasses}>
-              <Button
-                title={"Link"}
-                handling={handleCustomerLink}
-                bg={"!bg-zinc-500"}
-              />
               <Button
                 title={"Edit"}
                 handling={handleEditCustomer}
@@ -716,7 +709,9 @@ const ProfileDetails = ({
                 />
                 <DataBox
                   title={"Whatsapp Number"}
-                  value={(data as CompanyTypes).whatsAppNo}
+                  value={
+                    <WhatsappBox number={(data as CompanyTypes).whatsAppNo} />
+                  }
                 />
                 <DataBox
                   title={"Mobile Number"}
@@ -753,7 +748,9 @@ const ProfileDetails = ({
                 />
                 <DataBox
                   title={"Password"}
-                  value={(data as CompanyTypes).password}
+                  value={
+                    <PasswordBox password={(data as CompanyTypes).password} />
+                  }
                 />
               </Box>
             </Box>

@@ -67,6 +67,10 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenDownloadExcelModal("excel", "owners");
   };
 
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "owners");
+  };
+
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
     dispatch(getOwners({}));
@@ -140,7 +144,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
           />
         </Box>
       </Box>

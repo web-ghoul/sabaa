@@ -24,7 +24,7 @@ import { CustomersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import SortBox from "../SortBox";
-import ProsTableMenu from "./CustomersTableMenu";
+import CustomersTableMenu from "./CustomersTableMenu";
 import { CustomersTableRow } from "./CustomersTableRow";
 import LoadingCustomersRow from "./LoadingCustomersRow";
 
@@ -230,7 +230,7 @@ const CustomersTable = ({
                   key={i}
                 />
               ))}
-        <ProsTableMenu />
+        <CustomersTableMenu />
       </TableBody>
     </PrimaryTable>
   );

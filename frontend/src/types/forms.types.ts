@@ -144,7 +144,7 @@ interface CompanyFormikTypes {
 }
 
 interface LinkToCompanyFormTypes {
-  companyId: string;
+  companyId: string[];
 }
 
 interface LinkToCompanyFormikTypes {
