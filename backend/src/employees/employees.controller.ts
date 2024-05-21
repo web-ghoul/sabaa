@@ -42,6 +42,11 @@ export class EmployeesController {
     return this.employeesService.export(res,fileName);  
   }
 
+  @Get("report")
+  report(@Res()  res: Response) {
+    return this.employeesService.report(res);  
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.employeesService.findOne(id);
@@ -62,6 +67,8 @@ export class EmployeesController {
   remove(@Param('id') id: string) {
     return this.employeesService.remove(id);
   }
+
+
 
   
   

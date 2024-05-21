@@ -1,3 +1,4 @@
+import { EmployeePdfGenerator } from '../utils/PdfMaker/EmployeePdfMaker';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -12,7 +13,8 @@ import { Response } from 'express';
 @Injectable()
 export class EmployeesService {
   constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>,
-  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>) {}
+  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File, user: ObjectId) {
     try{
       
@@ -100,7 +102,7 @@ export class EmployeesService {
 
   async findOne(id: string) {
     const [employee, activities] = await Promise.all([
-      (await this.employeeModel.findById(id)).populate('companyId'),
+      await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
     ])
     return {employee,activities}
@@ -178,6 +180,23 @@ export class EmployeesService {
     {
       throw new HttpException(err , HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async report(res: Response) {
+    const employees = await this.employeeModel.find();
+    const employees2 = await this.employeeModel.find();
+    const employees4 = await this.employeeModel.find();
+    const final = [...employees,...employees2,...employees4];
+    // console.log(employees);
+    
+    const pdfDoc = this.employeePdfGenerator.generateReport(final);
+    // console.log(pdfDoc);
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=employee_report.pdf');
+
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   }
 
   async export(res: Response,fileName: string) {

@@ -22,6 +22,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { MailsModule } from './mails/mails.module';
 import { OwnerSchema } from 'schemas/owner.schema';
 import { CustomErrorFilter } from './filters/CustomErrorFilter';
+import { SponsorsModule } from './sponsors/sponsors.module';
 
 dotenv.config();
 @Module({
@@ -31,7 +32,7 @@ dotenv.config();
   },
   
 ]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }])],
+MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule],
   controllers: [AppController],
   providers: [AppService,
     {

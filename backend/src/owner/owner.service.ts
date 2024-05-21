@@ -38,7 +38,7 @@ export class OwnerService {
 
       //inject in company if exits
     } catch (err) {
-      throw new HttpException(err, HttpStatus.FORBIDDEN);
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -129,7 +129,7 @@ export class OwnerService {
 
   async findOne(id: string) {
     const [owner, companies, activities] = await Promise.all([
-      this.ownerModel.findById(id),
+      this.ownerModel.findById(id).populate({ path: 'sponsors', model: 'Sponsor' }),
       this.companyModel
         .find({ $or:[
           {ownerId: id },
@@ -139,6 +139,8 @@ export class OwnerService {
         .populate([
           { path: 'ownerId', model: 'Owner' },
           { path: 'proCode', model: 'Owner' },
+          
+
         ])
         .exec(),
         this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"})
