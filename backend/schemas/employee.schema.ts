@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 export type EmployeeDocument = HydratedDocument<Employee>;
 
@@ -100,6 +100,9 @@ export class Employee {
     @Prop()
     emiratesId: string;
   
+    @Prop({ type: Array, default: [], ref: 'Sponsor' })
+    sponsors: string[];
+
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 

@@ -10,10 +10,11 @@ import * as path from 'path';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { ActivityLogSchema } from 'schemas/activityLog.schema';
+import { EmployeePdfGenerator } from 'src/utils/PdfMaker/EmployeePdfMaker';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema },{ name: Company.name, schema: CompanySchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
-      destination: './upload/employee&customer',
+      destination: './upload/employee',
       filename: (req, file, cb) => {
         // Generate a unique suffix
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -23,6 +24,6 @@ import { ActivityLogSchema } from 'schemas/activityLog.schema';
     }),
   })],
   controllers: [EmployeesController],
-  providers: [EmployeesService,LogInterceptor],
+  providers: [EmployeesService,LogInterceptor,EmployeePdfGenerator],
 })
 export class EmployeesModule {}

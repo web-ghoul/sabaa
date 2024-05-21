@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 
-export type OwnerDocument = HydratedDocument<Owner>;
+export type SponsorDocument = HydratedDocument<Sponsor>;
 
 @Schema({ timestamps: true })
-export class Owner {
+export class Sponsor {
   
     @Prop({ required: true })
     uid: string; //not unique 
@@ -23,6 +23,12 @@ export class Owner {
 
     @Prop({ type: String, ref: 'Nationality', required: true })
     idNationality: string;
+
+    @Prop({ type: String, ref: 'Owner'})
+    owner: ObjectId;
+
+    @Prop({ type: String, ref: 'Employee' })
+    employee: ObjectId;
   
     @Prop()
     nationality: string;
@@ -52,25 +58,9 @@ export class Owner {
     
     @Prop()
     status: string;
-
-    @Prop({ type: Array, default: [], ref: 'Sponsor' })
-    sponsors: string[];
-
-    // @Prop()
-    // cardNumber: string;
-
+    
     @Prop()
-    type: string;
-
-    // @Prop()
-    // proCode: string[]; //array of Pro
-
-    // @Prop({default: false})
-    // isCustomer: boolean
-
-    // @Prop({default: false})
-    // isPro: boolean;
-
+    relativeRelation: string;
 
     @Prop({ type: String, trim: true, sparse: true })
     emiratesId: string;
@@ -86,27 +76,27 @@ export class Owner {
   
 }
 
-export const OwnerSchema = SchemaFactory.createForClass(Owner);
+export const SponsorSchema = SchemaFactory.createForClass(Sponsor);
 
-OwnerSchema.index(
+SponsorSchema.index(
   { emiratesId: 1, deleted: 1 },
   { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
 );
-OwnerSchema.index(
+SponsorSchema.index(
   { personCode: 1, deleted: 1 },
   { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
 );
 
-OwnerSchema.index(
+SponsorSchema.index(
     { uid : 1, deleted: 1 },
     { unique: true,  partialFilterExpression: { deleted: false } }
   );
 
-OwnerSchema.index(
+SponsorSchema.index(
 { name : 1, deleted: 1 },
 { unique: true,  partialFilterExpression: { deleted: false } }
 );
-OwnerSchema.index(
+SponsorSchema.index(
 { nameAr : 1, deleted: 1 },
 { unique: true,  partialFilterExpression: { deleted: false } }
 );
