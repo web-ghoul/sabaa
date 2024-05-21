@@ -235,12 +235,10 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           <Input
             formik={formik}
             label={"Medical Insurance Company"}
-            type={"number"}
             name={"medicalInsuranceCompany"}
           />
           <Input
             formik={formik}
-            type={"number"}
             name={"medicalPolicyNo"}
             label={"Medical Policy Number"}
           />
@@ -265,12 +263,10 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           <Input
             formik={formik}
             label={"IOLE Insurance Company"}
-            type={"number"}
             name={"iLOEInsuranceCompany"}
           />
           <Input
             formik={formik}
-            type={"number"}
             name={"iLOEPolicyNo"}
             label={"IOLE Policy Number"}
           />
