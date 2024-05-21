@@ -15,7 +15,7 @@ const PasswordBox = ({ password }: { password: string }) => {
   const handleToggle = () => {
     setView(!view);
   };
-  return (
+  return password ? (
     <Box
       className={`px-2 py-1 bg-blue-200 rounded-md border border-blue-900 flex justify-start items-center gap-2`}
     >
@@ -58,6 +58,8 @@ const PasswordBox = ({ password }: { password: string }) => {
         )}
       </IconButton>
     </Box>
+  ) : (
+    <Typography variant="h6">-</Typography>
   );
 };
 

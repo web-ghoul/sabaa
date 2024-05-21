@@ -177,6 +177,9 @@ interface OwnersOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }
@@ -211,6 +214,9 @@ interface ProsOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }
@@ -245,6 +251,9 @@ interface CustomersOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }

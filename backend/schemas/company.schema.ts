@@ -5,7 +5,6 @@ export type CompanyDocument = HydratedDocument<Company>;
 
 @Schema({ timestamps: true })
 export class Company {
-
   @Prop()
   name: string;
 
@@ -18,7 +17,7 @@ export class Company {
   @Prop()
   status: string;
 
-  @Prop({required :true})
+  @Prop({ required: true })
   state: string;
 
   @Prop()
@@ -33,11 +32,10 @@ export class Company {
   @Prop({ type: Array, default: [], ref: 'Owner' })
   ownerId: string[];
 
-
   @Prop()
   licenseNo: string; //can be repeated but in different state
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'IMMGCard' , sparse: true })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'IMMGCard', sparse: true })
   immgCardNo: string;
 
   @Prop({ type: Date })
@@ -63,7 +61,7 @@ export class Company {
 
   @Prop()
   mobileNo: string;
-  
+
   @Prop()
   echannelExpiryDate: Date;
 
@@ -74,13 +72,13 @@ export class Company {
   trn: string;
 
   @Prop()
-  email : string;
+  email: string;
 
   @Prop()
-  tenancyContractValue : string;
+  tenancyContractValue: string;
 
   @Prop()
-  tenancyContractExp : string;
+  tenancyContractExp: string;
 
   @Prop()
   remarks: string;
@@ -96,17 +94,19 @@ export class Company {
 
   @Prop({ type: Array, default: [], ref: 'Employee' })
   employees: string[];
-  
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 
-  @Prop({default : false})
+  @Prop({ default: false })
   deleted: boolean;
   @Prop()
   userName: string;
   @Prop()
   password: string;
+
+  @Prop()
+  echannelRemarks: string;
 
   @Prop()
   noqodiWalet: string;
@@ -127,11 +127,25 @@ export class Company {
   noqodiNPass: string;
 }
 
-
 export const CompanySchema = SchemaFactory.createForClass(Company);
 
-CompanySchema.index({ molCode: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
-CompanySchema.index({ nameAr: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
-CompanySchema.index({ name: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
-CompanySchema.index({ immgCardNo: 1, state: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
-CompanySchema.index({ licenseNo: 1, state: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index(
+  { molCode: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);
+CompanySchema.index(
+  { nameAr: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);
+CompanySchema.index(
+  { name: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);
+CompanySchema.index(
+  { immgCardNo: 1, state: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);
+CompanySchema.index(
+  { licenseNo: 1, state: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);

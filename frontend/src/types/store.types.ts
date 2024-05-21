@@ -375,6 +375,12 @@ interface CompanyTypes {
   createdAt: Date;
   userName: string;
   password: string;
+  noqodiWalet: string;
+  noqodiPass: string;
+  pinToken: string;
+  noqodiNew: string;
+  noqodiReg: string;
+  noqodiNPass: string;
   echannelExpiryDate: Date;
   user?: string;
 }
