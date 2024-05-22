@@ -5,98 +5,93 @@ export type SponsorDocument = HydratedDocument<Sponsor>;
 
 @Schema({ timestamps: true })
 export class Sponsor {
-  
-    @Prop({ required: true })
-    uid: string; //not unique 
+  @Prop({ required: true })
+  uid: string; //not unique
 
-    @Prop({ required: true })
-    name: string;
-    
-    @Prop({ required: true })
-    nameAr: string;
+  @Prop({ required: true })
+  name: string;
 
-    @Prop()
-    avatar: string;
+  @Prop({ required: true })
+  nameAr: string;
 
-    @Prop()
-    dob: Date;
+  @Prop()
+  avatar: string;
 
-    @Prop({ type: String, ref: 'Nationality', required: true })
-    idNationality: string;
+  @Prop()
+  dob: Date;
 
-    @Prop({ type: String, ref: 'Owner'})
-    owner: ObjectId;
+  @Prop({ type: String, ref: 'Nationality', required: true })
+  idNationality: string;
 
-    @Prop({ type: String, ref: 'Employee' })
-    employee: ObjectId;
-  
-    @Prop()
-    nationality: string;
+  @Prop({ type: String, ref: 'Owner' })
+  owner: ObjectId;
 
-    @Prop()
-    phone: string;
+  @Prop({ type: String, ref: 'Employee' })
+  employee: ObjectId;
 
-    @Prop()
-    email: string;
+  @Prop()
+  nationality: string;
 
-    @Prop()
-    remarks: string;
+  @Prop()
+  phone: string;
 
-    @Prop()
-    state: string;
+  @Prop()
+  email: string;
 
-    @Prop()
-    address: string;
-    @Prop()
-    sponsor: string;
+  @Prop()
+  remarks: string;
 
-    @Prop()
-    residenceExpiryDate: Date;
+  @Prop()
+  state: string;
 
-    @Prop()
-    fileImmgNo: string;
-    
-    @Prop()
-    status: string;
-    
-    @Prop()
-    relativeRelation: string;
+  @Prop()
+  address: string;
 
-    @Prop({ type: String, trim: true, sparse: true })
-    emiratesId: string;
+  @Prop()
+  sponsor: string;
 
-    @Prop({ type: String, trim: true, sparse: true })
-    personCode: string;
+  @Prop()
+  residenceExpiryDate: Date;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    user: string;
+  @Prop()
+  fileImmgNo: string;
 
-    @Prop({default : false})
-    deleted: boolean;
-  
+  @Prop()
+  status: string;
+
+  @Prop()
+  relativeRelation: string;
+
+  @Prop({ type: String, trim: true, sparse: true })
+  emiratesId: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: string;
+
+  @Prop({ default: false })
+  deleted: boolean;
 }
 
 export const SponsorSchema = SchemaFactory.createForClass(Sponsor);
 
 SponsorSchema.index(
   { emiratesId: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
-);
-SponsorSchema.index(
-  { personCode: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
+  {
+    unique: true,
+    partialFilterExpression: { deleted: false, emiratesId: { $exists: true } },
+  },
 );
 
 SponsorSchema.index(
-    { uid : 1, deleted: 1 },
-    { unique: true,  partialFilterExpression: { deleted: false } }
-  );
+  { uid: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
+);
 
 SponsorSchema.index(
-{ name : 1, deleted: 1 },
-{ unique: true,  partialFilterExpression: { deleted: false } }
+  { name: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
 );
 SponsorSchema.index(
-{ nameAr : 1, deleted: 1 },
-{ unique: true,  partialFilterExpression: { deleted: false } }
+  { nameAr: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
 );
