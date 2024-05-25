@@ -113,19 +113,24 @@ private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
     try{
       updateEmployeeDto.avatar = file ? file.path : undefined;
       // const oldData = await this.employeeModel.findById(id);
-
+      if(updateEmployeeDto?.companyId == undefined)
+        {
+          updateEmployeeDto.companyId = [] ; 
+        }
       const oldData = await this.employeeModel.findByIdAndUpdate(id, updateEmployeeDto);
       //check for added company
       // console.log(updateEmployeeDto.companyId);
       // console.log(oldData.companyId);
       if(updateEmployeeDto.companyId == undefined)
         {
+
           if(oldData.companyId != undefined)
           {
             oldData.companyId.forEach(async(company) => {
               await this.companyModel.findByIdAndUpdate( company, {$pull: {employees: id}});
             })
           }
+
           return oldData;
         } 
       

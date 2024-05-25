@@ -130,7 +130,10 @@ export class Company {
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
 
-CompanySchema.index({ molCode: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
+CompanySchema.index(
+  { molCode: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, molCode: { $exists: true } } }
+);
 CompanySchema.index({ nameAr: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
 CompanySchema.index({ name: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
 CompanySchema.index({ immgCardNo: 1, state: 1, deleted: 1 }, { unique: true, partialFilterExpression: { deleted: false } });
