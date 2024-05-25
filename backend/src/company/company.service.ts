@@ -96,32 +96,32 @@ export class CompanyService {
         ],
       };
 
-      if (filterQuery?.licenseFrom != undefined && filterQuery?.licenseTo == undefined) {
+      if (filterQuery?.licenseFrom != '' && filterQuery?.licenseTo == '') {
         filterQuery.licenseTo = new Date();
       }
-      if (filterQuery?.IMMGFrom != undefined && filterQuery?.IMMGTo == undefined) {
+      if (filterQuery?.IMMGFrom != '' && filterQuery?.IMMGTo == '') {
         filterQuery.IMMGTo = new Date();
       }
 
-      filterQuery?.state != undefined
+      filterQuery?.state != ''
         ? (query['state'] = filterQuery?.state)
         : undefined;
-      filterQuery?.status != undefined
+      filterQuery?.status != ''
         ? (query['status'] = filterQuery?.status)
         : undefined;
-      filterQuery?.establishmentType != undefined
+      filterQuery?.establishmentType != ''
         ? (query['establishmentType'] = filterQuery?.establishmentType)
         : undefined;
-      filterQuery?.molCategory != undefined
+      filterQuery?.molCategory != ''
         ? (query['molCategory'] = filterQuery?.molCategory)
         : undefined;
-      filterQuery?.licenseFrom != undefined
+      filterQuery?.licenseFrom != ''
         ? (query['licenseExpiryDate'] = {
             $gte: filterQuery?.licenseFrom,
             $lte: filterQuery?.licenseTo,
           })
         : undefined;
-      filterQuery?.IMMGFrom != undefined
+      filterQuery?.IMMGFrom != ''
         ? (query['immgCardExpiry'] = {
             $gte: filterQuery?.IMMGFrom,
             $lte: filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date(),
