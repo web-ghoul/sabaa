@@ -1,6 +1,6 @@
 import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
-import { OwnersTableRow } from "./OwnersTableRow";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 
 const LoadingOwnersRow = ({
   actions = true,
@@ -13,7 +13,7 @@ const LoadingOwnersRow = ({
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
   return (
-    <OwnersTableRow>
+    <PrimaryTableRow>
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
@@ -45,7 +45,7 @@ const LoadingOwnersRow = ({
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-    </OwnersTableRow>
+    </PrimaryTableRow>
   );
 };
 

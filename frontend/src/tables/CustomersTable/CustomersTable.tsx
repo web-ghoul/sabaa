@@ -23,9 +23,9 @@ import { AppDispatch } from "../../store/store";
 import { CustomersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import CustomersTableMenu from "./CustomersTableMenu";
-import { CustomersTableRow } from "./CustomersTableRow";
 import LoadingCustomersRow from "./LoadingCustomersRow";
 
 const CustomersTable = ({
@@ -162,7 +162,7 @@ const CustomersTable = ({
           ? data &&
             data.map((row, i) => {
               return (
-                <CustomersTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
@@ -218,7 +218,7 @@ const CustomersTable = ({
                       </IconButton>
                     </PrimaryTableCell>
                   )}
-                </CustomersTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())

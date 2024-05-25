@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { useContext, useEffect } from "react";
 import { FormsContext } from "../../contexts/FormsContext";
 
-const useProSchema = () => {
+const useCustomerSchema = () => {
   const { editableCustomerData, setCustomerImage } = useContext(FormsContext);
 
   const CustomerSchema = yup.object({
@@ -63,4 +63,4 @@ const useProSchema = () => {
   return { CustomerSchema, CustomerInitailValues };
 };
 
-export default useProSchema;
+export default useCustomerSchema;

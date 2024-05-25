@@ -7,7 +7,6 @@ import {
   EmployeeTypes,
   OwnerTypes,
   ProTypes,
-  SponsorTypes,
   UserTypes,
 } from "./store.types";
 
@@ -22,7 +21,6 @@ interface OwnerProfileProps {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface ProProfileProps {
@@ -30,14 +28,12 @@ interface ProProfileProps {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface EmployeeProfileProps {
   employee: EmployeeTypes | null;
   isLoading: boolean;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface CustomerProfileProps {
@@ -45,7 +41,6 @@ interface CustomerProfileProps {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface CompanyProfileProps {

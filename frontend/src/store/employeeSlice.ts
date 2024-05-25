@@ -24,7 +24,6 @@ const initialState: EmployeeValuesTypes = {
   employee: null,
   companies: null,
   activities: null,
-  sponsors: null,
 };
 
 export const employeeSlice = createSlice({
@@ -39,7 +38,6 @@ export const employeeSlice = createSlice({
       state.isLoading = false;
       state.employee = payload.employee;
       state.activities = payload.activities;
-      state.sponsors = payload.sponsors;
     });
     builder.addCase(getEmployee.rejected, (_, action) => {
       if (action.payload) {

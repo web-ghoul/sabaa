@@ -3,9 +3,10 @@ import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
+import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
 import ProsTable from "../../tables/ProsTable/ProsTable";
-import { OwnerTypes, ProTypes } from "../../types/store.types";
+import { OwnerTypes, ProTypes, SponsorTypes } from "../../types/store.types";
 import { OwnerProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -75,7 +76,10 @@ const OwnerProfile = ({
         <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={6}>
-        <UnderDevelopment />
+        <SponsorsSection
+          data={owner && (owner.sponsors as SponsorTypes[])}
+          isLoading={isLoading}
+        />
       </CustomTabPanel>
     </PrimaryTab>
   );

@@ -188,6 +188,8 @@ interface FormsContextTypes {
   setEmployeeImage: (image: File | string) => void;
   customerImage: File | string;
   setCustomerImage: (image: File | string) => void;
+  sponsorImage: File | string;
+  setSponsorImage: (image: File | string) => void;
   proImage: File | string;
   setProImage: (image: File | string) => void;
   userImage: File | string;

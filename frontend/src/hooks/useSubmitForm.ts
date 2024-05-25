@@ -51,6 +51,7 @@ import {
   ResetPasswordInitailValues,
   ResetPasswordSchema,
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
+import useSponsorSchema from "../forms/SponsorForm/useSponsorSchema";
 import useUserSchema from "../forms/UserForm/useUserSchema";
 import {
   UsersOptionsInitailValues,
@@ -101,6 +102,8 @@ import {
   ProsOptionsFormikTypes,
   ResetPasswordFormTypes,
   ResetPasswordFormikTypes,
+  SponsorFormTypes,
+  SponsorFormikTypes,
   UserFormTypes,
   UserFormikTypes,
   UsersOptionsFormTypes,
@@ -118,6 +121,7 @@ const useSubmitForm = (type: string) => {
   const { ProInitailValues, ProSchema } = useProSchema();
   const { EmployeeInitailValues, EmployeeSchema } = useEmployeeSchema();
   const { CustomerInitailValues, CustomerSchema } = useCustomerSchema();
+  const { SponsorInitailValues, SponsorSchema } = useSponsorSchema();
   const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
   const { CompanyInitailValues, CompanySchema } = useCompanySchema();
   const { LinkToCompanyInitailValues, LinkToCompanySchema } =
@@ -279,6 +283,15 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as CustomersOptionsFormikTypes;
+        case "editSponsor":
+        case "addSponsor":
+          return {
+            initialValues: SponsorInitailValues,
+            validationSchema: SponsorSchema,
+            onSubmit: (values: SponsorFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as SponsorFormikTypes;
         case "addCompany":
         case "editCompany":
           return {
@@ -344,6 +357,8 @@ const useSubmitForm = (type: string) => {
       OwnerSchema,
       ProInitailValues,
       ProSchema,
+      SponsorInitailValues,
+      SponsorSchema,
       UserInitailValues,
       UserSchema,
       handleSubmit,

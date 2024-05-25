@@ -31,6 +31,7 @@ import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
 import ProForm from "./ProForm/ProForm";
 import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import SponsorForm from "./SponsorForm/SponsorForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
@@ -94,6 +95,12 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {(type === "addCustomer" || type === "editCustomer") && (
         <CustomerForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {(type === "addSponsor" || type === "editSponsor") && (
+        <SponsorForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
           type={type}
         />

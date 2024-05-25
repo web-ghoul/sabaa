@@ -92,6 +92,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEmployeeImage: () => {},
   customerImage: "",
   setCustomerImage: () => {},
+  sponsorImage: "",
+  setSponsorImage: () => {},
   proImage: "",
   setProImage: () => {},
   userImage: "",
@@ -368,6 +370,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     defaultAvatar
   );
 
+  //Sponsor Image
+  const [sponsorImage, setSponsorImage] = useState<File | string>(
+    defaultAvatar
+  );
+
   //Pro Image
   const [proImage, setProImage] = useState<File | string>(defaultAvatar);
 
@@ -542,6 +549,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openSponsorModal,
     handleCloseSponsorModal,
     handleOpenSponsorModal,
+    sponsorImage,
+    setSponsorImage,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

@@ -100,6 +100,7 @@ interface OwnerTypes {
   nameAr: string;
   avatar: string;
   dob?: Date;
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   phone: string;
@@ -111,6 +112,7 @@ interface OwnerTypes {
   personCode: string;
   fileImmgNo: string;
   status: string;
+  sponsor: string;
   type?: string;
   residenceExpiryDate?: Date;
   createdAt?: Date;
@@ -122,7 +124,6 @@ interface OwnerValuesTypes {
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -164,7 +165,6 @@ interface ProValuesTypes {
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -206,7 +206,6 @@ interface CustomerValuesTypes {
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface CustomersValuesTypes {
@@ -241,24 +240,13 @@ interface CustomersCounterValuesTypes {
 
 //Sponsor
 
-interface SponsorTypes {
-  _id?: string;
-  uid: string;
-  name: string;
-  nameAr: string;
-  avatar: string;
-  dob?: Date;
-  idNationality: string;
-  nationality: string;
-  phone: string;
-  email: string;
-  state: string;
-  address: string;
-  emiratesId: string;
-  type?: string;
-  remarks: string;
-  createdAt?: Date;
-  user?: string;
+interface SponsorTypes extends CustomerTypes {
+  relativeRelation: string;
+}
+
+interface SponsorsValuesTypes {
+  isLoading: boolean;
+  sponsors: SponsorTypes[] | null;
 }
 
 //Employee
@@ -271,6 +259,7 @@ interface EmployeeTypes {
   dob?: Date;
   personCode: string;
   companyId: CompanyTypes[] | string[];
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   gender: string;
@@ -305,7 +294,6 @@ interface EmployeeValuesTypes {
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface EmployeesValuesTypes {
@@ -553,6 +541,7 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
+  SponsorsValuesTypes,
   SponsorTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,

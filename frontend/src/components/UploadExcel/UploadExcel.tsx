@@ -132,6 +132,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         state: "",
         fileImmgNo: "",
         status: "",
+        sponsor: "",
       };
       owner["personCode"] = `${data[i][0]}`;
       owner["name"] = `${data[i][1]}`;
@@ -192,6 +193,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         state: "",
         fileImmgNo: "",
         status: "",
+        sponsor: "",
       };
       pro["personCode"] = `${data[i][0]}`;
       pro["name"] = `${data[i][1]}`;
@@ -397,6 +399,12 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         createdAt: new Date(),
         customerId: [],
         employees: [],
+        noqodiWalet: "",
+        noqodiPass: "",
+        pinToken: "",
+        noqodiNew: "",
+        noqodiReg: "",
+        noqodiNPass: "",
       };
       company["status"] = `${data[i][0]}`;
       company["licenseNo"] = `${data[i][1]}`;
