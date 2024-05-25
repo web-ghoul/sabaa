@@ -287,7 +287,10 @@ const useSubmitFunction = (type: string) => {
     }
     formData.append("job", values.job.trim());
     if (values.visaFileNumber) {
-      formData.append("visaFileNumber", values.visaFileNumber.trim());
+      formData.append("visaFileNumber", values.visaFileNumber);
+    }
+    if (values.cardNumber) {
+      formData.append("cardNumber", values.cardNumber);
     }
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
     if (values.medicalPolicyNo) {
@@ -1173,11 +1176,13 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     await server
       .get(
-        `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
+        `/company/ManageOwnersAndPro?id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
             : formType === "linkPro" && editableProData && editableProData._id
-        }&operation=adding&typeOfPerson=${
+        }${values.companyId
+          .map((id, i) => `&companyId[${i}]=${id}`)
+          .join("")}&operation=adding&typeOfPerson=${
           formType === "linkOwner" ? "owner" : formType === "linkPro" && "pro"
         }`,
         {

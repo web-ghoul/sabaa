@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { TabsContext } from "../../contexts/TabsContext";
@@ -23,10 +23,22 @@ const OwnerProfile = ({
   useEffect(() => {
     if (companies && pros.length === 0) {
       companies.map((company) => {
-        setPros([...pros, ...(company.proCode as ProTypes[])]);
+        setPros((p) => [...p, ...(company.proCode as ProTypes[])]);
       });
     }
-  }, [companies, pros]);
+  }, [companies, pros.length]);
+
+  useEffect(() => {
+    const ids: string[] = [];
+    const newPros: ProTypes[] = [];
+    pros.map((pro) => {
+      if (!ids.includes(pro._id as string)) {
+        ids.push(pro._id as string);
+        newPros.push(pro);
+      }
+    });
+    setPros(() => [...newPros]);
+  }, [pros]);
 
   return (
     <PrimaryTab
@@ -59,12 +71,17 @@ const OwnerProfile = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={2}>
-        <ProsTable
-          count={pros.length}
-          data={pros}
-          isLoading={isLoading}
-          noPagination={true}
-        />
+        {useMemo(
+          () => (
+            <ProsTable
+              count={pros.length}
+              data={pros}
+              isLoading={isLoading}
+              noPagination={true}
+            />
+          ),
+          [isLoading, pros]
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={ownerTabsValue} index={3}>
         <UnderDevelopment />

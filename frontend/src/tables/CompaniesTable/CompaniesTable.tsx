@@ -149,14 +149,14 @@ const CompaniesTable = ({
           {!mdScreen && (
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
-          {!smScreen && (
-            <PrimaryTableCell align="center">
-              {lgScreen ? "IMMG Expiry" : "IMMG Expire Date"}
-            </PrimaryTableCell>
-          )}
           {!mdScreen && !recent && (
             <PrimaryTableCell align="center">
               {lgScreen ? "IMMG Card" : "IMMG Card Number"}
+            </PrimaryTableCell>
+          )}
+          {!smScreen && (
+            <PrimaryTableCell align="center">
+              {lgScreen ? "IMMG Expiry" : "IMMG Expire Date"}
             </PrimaryTableCell>
           )}
           {actions && (
@@ -210,14 +210,14 @@ const CompaniesTable = ({
                     <StatusBox status={row.status} />
                   </PrimaryTableCell>
                 )}
-                {!smScreen && (
-                  <PrimaryTableCell align="center">
-                    {handleDate(row.immgCardExpiry)}
-                  </PrimaryTableCell>
-                )}
                 {!mdScreen && !recent && (
                   <PrimaryTableCell align="center">
                     {row.immgCardNo}
+                  </PrimaryTableCell>
+                )}
+                {!smScreen && (
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.immgCardExpiry)}
                   </PrimaryTableCell>
                 )}
                 {actions && (

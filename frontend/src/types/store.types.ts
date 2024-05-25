@@ -279,9 +279,11 @@ interface EmployeeTypes {
   medicalInsuranceCompany: string;
   medicalPolicyNo: string;
   medicalExpireDate?: Date;
+  medical: { insurance: string; expireDate: Date };
   iLOEInsuranceCompany: string;
   iLOEPolicyNo: string;
   iLOEExpireDate?: Date;
+  iLOE: { insurance: string; expireDate: Date };
   uid: string;
   emiratesId: string;
   remarks: string;

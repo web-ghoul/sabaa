@@ -180,7 +180,11 @@ const Dashboard = () => {
               <Title title={"Recent Companies"} head="h4" align={"left"} />
               <CompaniesTable
                 data={recentCompanies.recentCompanies}
-                count={0}
+                count={
+                  recentCompanies.recentCompanies
+                    ? recentCompanies.recentCompanies.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentCompanies.isLoading}
                 actions={false}
                 sort={false}

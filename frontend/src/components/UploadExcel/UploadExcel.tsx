@@ -133,6 +133,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         fileImmgNo: "",
         status: "",
         sponsor: "",
+        sponsors: [],
       };
       owner["personCode"] = `${data[i][0]}`;
       owner["name"] = `${data[i][1]}`;
@@ -194,6 +195,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         fileImmgNo: "",
         status: "",
         sponsor: "",
+        sponsors: [],
       };
       pro["personCode"] = `${data[i][0]}`;
       pro["name"] = `${data[i][1]}`;
@@ -255,6 +257,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         sponsor: "",
         fileImmgNo: "",
         status: "",
+        sponsors: [],
       };
       customer["personCode"] = `${data[i][0]}`;
       customer["name"] = `${data[i][1]}`;
@@ -321,6 +324,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         uid: "",
         emiratesId: "",
         remarks: "",
+        sponsors: [],
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;
@@ -522,7 +526,12 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
 
   return (
     <Box className={`grid justify-stretch items-center gap-2`}>
-      <Box component={"a"} href={samplePath} download={sampleName}>
+      <Box
+        component={"a"}
+        href={samplePath}
+        download={sampleName}
+        className={`flex justify-start items-center w-fit`}
+      >
         <Button
           icon={<DownloadRounded />}
           title={"Sample Sheet"}

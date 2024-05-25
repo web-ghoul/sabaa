@@ -158,6 +158,8 @@ const ProfileDetails = ({
     setEditableCompanyData(company);
   };
 
+  console.log(data);
+
   return isLoading ? (
     <LoadingProfileDetails />
   ) : (
@@ -567,7 +569,7 @@ const ProfileDetails = ({
             <Box className={profileInfoClasses}>
               <DataBox
                 title={"Insurance Company"}
-                value={(data as EmployeeTypes).medicalInsuranceCompany}
+                value={(data as EmployeeTypes).medical.insurance}
               />
               <DataBox
                 title={"Policy Number"}
@@ -575,7 +577,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Expire Date"}
-                value={handleDate((data as EmployeeTypes).medicalExpireDate)}
+                value={handleDate((data as EmployeeTypes).medical.expireDate)}
               />
             </Box>
           </Box>
@@ -587,7 +589,7 @@ const ProfileDetails = ({
             <Box className={profileInfoClasses}>
               <DataBox
                 title={"Insurance Company"}
-                value={(data as EmployeeTypes).iLOEInsuranceCompany}
+                value={(data as EmployeeTypes).iLOE.insurance}
               />
               <DataBox
                 title={"Policy Number"}
@@ -595,7 +597,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Expire Date"}
-                value={handleDate((data as EmployeeTypes).iLOEExpireDate)}
+                value={handleDate((data as EmployeeTypes).iLOE.expireDate)}
               />
             </Box>
           </Box>
