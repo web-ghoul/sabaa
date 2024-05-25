@@ -100,6 +100,7 @@ interface OwnerTypes {
   nameAr: string;
   avatar: string;
   dob?: Date;
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   phone: string;
@@ -123,7 +124,6 @@ interface OwnerValuesTypes {
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface OwnersValuesTypes {
@@ -165,7 +165,6 @@ interface ProValuesTypes {
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface ProsValuesTypes {
@@ -207,7 +206,6 @@ interface CustomerValuesTypes {
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface CustomersValuesTypes {
@@ -261,6 +259,7 @@ interface EmployeeTypes {
   dob?: Date;
   personCode: string;
   companyId: CompanyTypes[] | string[];
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   gender: string;
@@ -295,7 +294,6 @@ interface EmployeeValuesTypes {
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
-  sponsors: SponsorTypes[] | null;
 }
 
 interface EmployeesValuesTypes {

@@ -49,7 +49,7 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
+          <PrimaryTableCell align="center">Relative Relation</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
       </TableHead>

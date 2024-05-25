@@ -24,7 +24,7 @@ const SponsorsSection = ({
     <Paper
       className={`paper grid justify-stretch items-center gap-4 md:gap-3 sm:!gap-2`}
     >
-      <Box className={`flex justify-end items-center`}>
+      <Box className={`flex justify-end items-center gap-4 md:gap-2`}>
         <Button
           title={"Add Sponsor"}
           icon={<AddRounded />}

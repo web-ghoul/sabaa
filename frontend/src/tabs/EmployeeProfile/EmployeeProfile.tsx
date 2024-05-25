@@ -5,7 +5,11 @@ import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
 import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { CompanyTypes, EmployeeTypes } from "../../types/store.types";
+import {
+  CompanyTypes,
+  EmployeeTypes,
+  SponsorTypes,
+} from "../../types/store.types";
 import { EmployeeProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -14,7 +18,6 @@ const EmployeeProfile = ({
   employee,
   isLoading,
   activities,
-  sponsors,
 }: EmployeeProfileProps) => {
   const { employeeTabsValue } = useContext(TabsContext);
 
@@ -56,7 +59,10 @@ const EmployeeProfile = ({
         <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={5}>
-        <SponsorsSection data={sponsors} isLoading={isLoading} />
+        <SponsorsSection
+          data={employee && (employee.sponsors as SponsorTypes[])}
+          isLoading={isLoading}
+        />
       </CustomTabPanel>
     </PrimaryTab>
   );

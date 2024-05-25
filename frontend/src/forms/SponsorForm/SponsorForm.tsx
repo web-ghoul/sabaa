@@ -50,13 +50,6 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input
           formik={formik}
-          label={"Person Code"}
-          name={"personCode"}
-          type={"text"}
-          variant={"numeric"}
-        />
-        <Input
-          formik={formik}
           label={"UID Number"}
           name={"uid"}
           type={"text"}
@@ -101,6 +94,23 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
           options={["dubai"]}
         />
         <Input formik={formik} label={"Address"} name={"address"} />
+        <Input
+          formik={formik}
+          label={"Relative Relation"}
+          name={"relativeRelation"}
+          select
+          options={[
+            "Husband",
+            "Wife",
+            "Son",
+            "Daughter",
+            "Father",
+            "Mother",
+            "GrandPa",
+            "GrandMa",
+            "Uncle",
+          ]}
+        />
         <Input
           formik={formik}
           type={"date"}

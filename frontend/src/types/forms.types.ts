@@ -7,6 +7,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   UserTypes,
 } from "./store.types";
 
@@ -303,8 +304,22 @@ interface EmployeesOptionsFormikTypes {
   values: EmployeesOptionsFormTypes;
 }
 
-//Job
+//Employee
 
+interface SponsorFormTypes extends SponsorTypes {}
+
+interface SponsorFormikTypes {
+  touched: SponsorFormTypes;
+  errors: SponsorFormTypes;
+  initialValues: SponsorFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: SponsorFormTypes;
+}
+
+//Job
 interface JobFormTypes extends JobTypes {}
 
 interface JobFormikTypes {
@@ -453,7 +468,8 @@ type AllFormsTypes =
   | CustomerFormTypes
   | DownloadExcelFormTypes
   | ActivitiesOptionsFormTypes
-  | OTPFormTypes;
+  | OTPFormTypes
+  | SponsorFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -479,7 +495,8 @@ type AllFormiksTypes =
   | CustomerFormikTypes
   | DownloadExcelFormikTypes
   | ActivitiesOptionsFormikTypes
-  | OTPFormikTypes;
+  | OTPFormikTypes
+  | SponsorFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -544,6 +561,8 @@ export type {
   ProsOptionsFormTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
+  SponsorFormikTypes,
+  SponsorFormTypes,
   UserFormikTypes,
   UserFormTypes,
   UsersOptionsFormikTypes,
