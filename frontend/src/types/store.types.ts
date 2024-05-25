@@ -111,6 +111,7 @@ interface OwnerTypes {
   personCode: string;
   fileImmgNo: string;
   status: string;
+  sponsor: string;
   type?: string;
   residenceExpiryDate?: Date;
   createdAt?: Date;
@@ -241,24 +242,13 @@ interface CustomersCounterValuesTypes {
 
 //Sponsor
 
-interface SponsorTypes {
-  _id?: string;
-  uid: string;
-  name: string;
-  nameAr: string;
-  avatar: string;
-  dob?: Date;
-  idNationality: string;
-  nationality: string;
-  phone: string;
-  email: string;
-  state: string;
-  address: string;
-  emiratesId: string;
-  type?: string;
-  remarks: string;
-  createdAt?: Date;
-  user?: string;
+interface SponsorTypes extends CustomerTypes {
+  relativeRelation: string;
+}
+
+interface SponsorsValuesTypes {
+  isLoading: boolean;
+  sponsors: SponsorTypes[] | null;
 }
 
 //Employee
@@ -553,6 +543,7 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
+  SponsorsValuesTypes,
   SponsorTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,

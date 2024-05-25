@@ -1,15 +1,10 @@
-import { AddRounded } from "@mui/icons-material";
-import { Box } from "@mui/system";
 import { useContext } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
-import Button from "../../components/Button/Button";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
-import { FormsContext } from "../../contexts/FormsContext";
 import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
+import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import SponsorsTable from "../../tables/SponsorsTable/SponsorsTable";
 import { CompanyTypes, EmployeeTypes } from "../../types/store.types";
 import { EmployeeProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
@@ -22,12 +17,6 @@ const EmployeeProfile = ({
   sponsors,
 }: EmployeeProfileProps) => {
   const { employeeTabsValue } = useContext(TabsContext);
-  const { handleOpenSponsorModal, handleOpenDownloadExcelModal } =
-    useContext(FormsContext);
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "sponsors", "employee");
-  };
 
   return (
     <PrimaryTab
@@ -67,26 +56,7 @@ const EmployeeProfile = ({
         <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={5}>
-        <Box>
-          <Box>
-            <Button
-              handling={() => handleOpenSponsorModal("addSponsor")}
-              title={"Add Sponsor"}
-              icon={<AddRounded />}
-            />
-            <Button
-              handling={handleDownloadExcelAll}
-              bg={"excel"}
-              title={"Excel All"}
-              icon={<RiFileExcel2Fill />}
-            />
-          </Box>
-          <SponsorsTable
-            data={sponsors}
-            isLoading={isLoading}
-            count={sponsors?.length || 0}
-          />
-        </Box>
+        <SponsorsSection data={sponsors} isLoading={isLoading} />
       </CustomTabPanel>
     </PrimaryTab>
   );

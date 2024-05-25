@@ -19,9 +19,9 @@ import { AppDispatch } from "../../store/store";
 import { JobsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import JobsTableMenu from "./JobsTableMenu";
-import { JobsTableRow } from "./JobsTableRow";
 import LoadingJobsRow from "./LoadingJobsRow";
 
 const JobsTable = ({
@@ -130,7 +130,7 @@ const JobsTable = ({
         {!isLoading
           ? data &&
             data.map((row, i) => (
-              <JobsTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell component="th" scope="row">
                   {row.jobTitle}
                 </PrimaryTableCell>
@@ -145,7 +145,7 @@ const JobsTable = ({
                     <MoreVertRounded />
                   </IconButton>
                 </PrimaryTableCell>
-              </JobsTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)

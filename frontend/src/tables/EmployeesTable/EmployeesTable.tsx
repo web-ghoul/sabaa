@@ -25,9 +25,9 @@ import { AppDispatch } from "../../store/store";
 import { EmployeesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import EmployeesTableMenu from "./EmployeesTableMenu";
-import { EmployeesTableRow } from "./EmployeesTableRow";
 import LoadingEmployeesRow from "./LoadingEmployeesRow";
 
 const EmployeesTable = ({
@@ -187,7 +187,7 @@ const EmployeesTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => (
-              <EmployeesTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell
                   onClick={() => handleView()}
                   component="th"
@@ -250,7 +250,7 @@ const EmployeesTable = ({
                     </IconButton>
                   </PrimaryTableCell>
                 )}
-              </EmployeesTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)

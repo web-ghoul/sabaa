@@ -310,7 +310,9 @@ const useSubmitFunction = (type: string) => {
       values.licenseExpiryDate.toString().trim()
     );
     formData.append("establishmentType", values.establishmentType.trim());
-    formData.append("molCode", values.molCode.trim());
+    if (values.molCode) {
+      formData.append("molCode", values.molCode.trim());
+    }
     formData.append("molCategory", values.molCategory.trim());
     formData.append("whatsAppNo", values.whatsAppNo.trim());
     formData.append("mobileNo", values.mobileNo.trim());

@@ -17,10 +17,10 @@ import { AppDispatch } from "../../store/store";
 import { NationalitiesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import LoadingNationalitiesRow from "./LoadingNationalitiesRow";
 import NationalitiesTableMenu from "./NationalitiesTableMenu";
-import { NationaltiesTableRow } from "./NationalitiesTableRow";
 
 const NationalitiesTable = ({
   data,
@@ -127,7 +127,7 @@ const NationalitiesTable = ({
         {!isLoading
           ? data &&
             data.map((row, i) => (
-              <NationaltiesTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell component="th" scope="row" align="left">
                   <NationalityBox nationality={row.nationality} />
                 </PrimaryTableCell>
@@ -137,7 +137,7 @@ const NationalitiesTable = ({
                     <MoreVertRounded />
                   </IconButton>
                 </PrimaryTableCell>
-              </NationaltiesTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)

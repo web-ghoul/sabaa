@@ -24,6 +24,7 @@ const initialState: OwnerValuesTypes = {
   owner: null,
   companies: null,
   activities: null,
+  sponsors: null,
 };
 
 export const ownerSlice = createSlice({
@@ -39,6 +40,7 @@ export const ownerSlice = createSlice({
       state.owner = payload.owner;
       state.companies = payload.companies;
       state.activities = payload.activities;
+      state.sponsors = payload.sponsors;
     });
     builder.addCase(getOwner.rejected, (_, action) => {
       if (action.payload) {

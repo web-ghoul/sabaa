@@ -16,9 +16,9 @@ import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { SponsorsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import LoadingSponsorsRow from "./LoadingSponsorsRow";
 import ProsTableMenu from "./SponsorsTableMenu";
-import { SponsorsTableRow } from "./SponsorsTableRow";
 
 const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
   const { handleOpenTableMenu } = useContext(AppContext);
@@ -58,7 +58,7 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
           ? data &&
             data.map((row, i) => {
               return (
-                <SponsorsTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell>
                     <UserBox
                       username={row.name}
@@ -85,14 +85,14 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
                     </PrimaryTableCell>
                   )}
                   <PrimaryTableCell align="center">
-                    {row.emiratesId}
+                    {row.relativeRelation}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="right">
                     <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                       <MoreVertRounded />
                     </IconButton>
                   </PrimaryTableCell>
-                </SponsorsTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())

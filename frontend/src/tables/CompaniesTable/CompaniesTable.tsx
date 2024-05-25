@@ -23,9 +23,9 @@ import { AppDispatch } from "../../store/store";
 import { CompaniesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import CompaniesTableMenu from "./CompaniesTableMenu";
-import { CompaniesTableRow } from "./CompaniesTableRow";
 import LoadingCompaniesRow from "./LoadingCompaniesRow";
 
 const CompaniesTable = ({
@@ -169,7 +169,7 @@ const CompaniesTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => (
-              <CompaniesTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell
                   onClick={() => handleView()}
                   component="th"
@@ -227,7 +227,7 @@ const CompaniesTable = ({
                     </IconButton>
                   </PrimaryTableCell>
                 )}
-              </CompaniesTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)

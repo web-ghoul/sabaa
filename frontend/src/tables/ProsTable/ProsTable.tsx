@@ -23,10 +23,10 @@ import { AppDispatch } from "../../store/store";
 import { ProsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import LoadingProsRow from "./LoadingProsRow";
 import ProsTableMenu from "./ProsTableMenu";
-import { ProsTableRow } from "./ProsTableRow";
 
 const ProsTable = ({
   data,
@@ -162,7 +162,7 @@ const ProsTable = ({
           ? data &&
             data.map((row, i) => {
               return (
-                <ProsTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
@@ -216,7 +216,7 @@ const ProsTable = ({
                       </IconButton>
                     </PrimaryTableCell>
                   )}
-                </ProsTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())

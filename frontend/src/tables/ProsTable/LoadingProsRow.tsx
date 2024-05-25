@@ -1,6 +1,6 @@
 import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
-import { ProsTableRow } from "./ProsTableRow";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 
 const LoadingProsRow = ({
   actions = true,
@@ -13,7 +13,7 @@ const LoadingProsRow = ({
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
   return (
-    <ProsTableRow>
+    <PrimaryTableRow>
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
@@ -45,7 +45,7 @@ const LoadingProsRow = ({
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
-    </ProsTableRow>
+    </PrimaryTableRow>
   );
 };
 

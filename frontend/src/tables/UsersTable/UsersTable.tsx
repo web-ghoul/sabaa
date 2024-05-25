@@ -21,10 +21,10 @@ import { getUsers, reverseUsers } from "../../store/usersSlice";
 import { UsersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import LoadingUsersRow from "./LoadingUsersRow";
 import UsersTableMenu from "./UsersTableMenu";
-import { UsersTableRow } from "./UsersTableRow";
 
 const UsersTable = ({
   noPagination,
@@ -100,7 +100,7 @@ const UsersTable = ({
         {!isLoading
           ? data &&
             data.map((row, i) => (
-              <UsersTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell onClick={() => handleView(row._id)}>
                   <Link to={`${import.meta.env.VITE_USERS_ROUTE}/${row._id}`}>
                     <UserBox
@@ -132,7 +132,7 @@ const UsersTable = ({
                     <MoreVertRounded />
                   </IconButton>
                 </PrimaryTableCell>
-              </UsersTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)
