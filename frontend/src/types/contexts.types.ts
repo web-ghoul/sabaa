@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import { EntitiesType } from "./app.types";
+import { EntitiesType, EntityType } from "./app.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -8,6 +8,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   UserTypes,
 } from "./store.types";
 
@@ -111,7 +112,8 @@ interface FormsContextTypes {
   openDownloadExcelModal: boolean;
   handleOpenDownloadExcelModal: (
     type: "excel" | "all",
-    entity: EntitiesType
+    entity: EntitiesType,
+    ent?: EntityType
   ) => void;
   handleCloseDownloadExcelModal: () => void;
   openLinkToCompanyModal: boolean;
@@ -132,6 +134,9 @@ interface FormsContextTypes {
   openCustomerModal: boolean;
   handleOpenCustomerModal: (string: string) => void;
   handleCloseCustomerModal: () => void;
+  openSponsorModal: boolean;
+  handleOpenSponsorModal: (string: string) => void;
+  handleCloseSponsorModal: () => void;
   openProModal: boolean;
   handleOpenProModal: (string: string) => void;
   handleCloseProModal: () => void;
@@ -183,6 +188,8 @@ interface FormsContextTypes {
   setEmployeeImage: (image: File | string) => void;
   customerImage: File | string;
   setCustomerImage: (image: File | string) => void;
+  sponsorImage: File | string;
+  setSponsorImage: (image: File | string) => void;
   proImage: File | string;
   setProImage: (image: File | string) => void;
   userImage: File | string;
@@ -195,6 +202,8 @@ interface FormsContextTypes {
   setEditableEmployeeData: (employee: EmployeeTypes | null) => void;
   editableCustomerData: CustomerTypes | null;
   setEditableCustomerData: (customer: CustomerTypes | null) => void;
+  editableSponsorData: SponsorTypes | null;
+  setEditableSponsorData: (sponsor: SponsorTypes | null) => void;
   editableProData: ProTypes | null;
   setEditableProData: (pro: OwnerTypes | null) => void;
   editableCompanyData: CompanyTypes | null;

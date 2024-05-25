@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -15,6 +16,7 @@ import { getCustomersCounter } from "../store/customersCounterSlice";
 import { getCustomer } from "../store/customerSlice";
 import { getCustomers } from "../store/customersSlice";
 import { getEmployeesCounter } from "../store/employeesCounterSlice";
+import { getEmployee } from "../store/employeeSlice";
 import { getEmployees } from "../store/employeesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
@@ -41,12 +43,14 @@ import {
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
+  OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
   ResetPasswordFormTypes,
+  SponsorFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
-import { CustomerTypes } from "../types/store.types";
+import { CustomerTypes, SponsorTypes } from "../types/store.types";
 
 const server = axios.create({
   baseURL: `${import.meta.env.VITE_SERVER_URL}`,
@@ -64,6 +68,7 @@ const useSubmitFunction = (type: string) => {
     editableNationalityData,
     editableJobData,
     ownerImage,
+    sponsorImage,
     employeeImage,
     customerImage,
     userImage,
@@ -88,8 +93,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseLinkToCompanyModal,
     handleCloseProModal,
     setProImage,
+    setSponsorImage,
     handleCloseUploadEmployeesModal,
     handleCloseDownloadExcelModal,
+    handleCloseForgotPasswordModal,
+    handleCloseSponsorModal,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -173,15 +181,13 @@ const useSubmitFunction = (type: string) => {
       formData.append("emiratesId", values.emiratesId.trim());
     }
     formData.append("state", values.state.trim());
-    if (type !== "customer") {
-      formData.append("status", values.status.trim());
-      formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
-      if (values.residenceExpiryDate) {
-        formData.append(
-          "residenceExpiryDate",
-          values.residenceExpiryDate?.toString().trim()
-        );
-      }
+    formData.append("status", values.status.trim());
+    formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
+    if (values.residenceExpiryDate) {
+      formData.append(
+        "residenceExpiryDate",
+        values.residenceExpiryDate?.toString().trim()
+      );
     }
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
@@ -190,11 +196,50 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
-  const handleEmployeeFormData = (values: EmployeeFormTypes) => {
-    console.log(values);
-
+  const handleSponsorFormData = (values: SponsorTypes) => {
+    const type = pathname.split("/")[1];
     const formData = new FormData();
-    formData.append("avatar", employeeImage);
+    formData.append("uid", values?.uid);
+    formData.append("avatar", sponsorImage);
+    formData.append("name", values.name.trim());
+    formData.append("nameAr", values.nameAr.trim());
+    formData.append("phone", values.phone.trim());
+    formData.append("address", values.address.trim());
+    formData.append("nationality", values.nationality);
+    formData.append("idNationality", values.idNationality);
+    formData.append("email", values.email.trim());
+    formData.append("remarks", values.remarks.trim());
+    if (values.emiratesId) {
+      formData.append("emiratesId", values.emiratesId.trim());
+    }
+    formData.append("state", values.state.trim());
+    formData.append("status", values.status.trim());
+    formData.append("relativeRelation", values.relativeRelation.trim());
+    formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
+    if (values.residenceExpiryDate) {
+      formData.append(
+        "residenceExpiryDate",
+        values.residenceExpiryDate?.toString().trim()
+      );
+    }
+    if (values.dob) {
+      formData.append("dob", values.dob.toString().trim());
+    }
+    if (id) {
+      if (type === "employees") {
+        formData.append("employee", id);
+      } else {
+        formData.append("owner", id);
+      }
+    }
+    return formData;
+  };
+
+  const handleEmployeeFormData = (values: EmployeeFormTypes) => {
+    const formData = new FormData();
+    if (employeeImage) {
+      formData.append("avatar", employeeImage);
+    }
     formData.append("name", values.name.trim());
     formData.append("nameAr", values.nameAr.trim());
     formData.append("uid", values.uid.trim());
@@ -211,7 +256,9 @@ const useSubmitFunction = (type: string) => {
     }
     formData.append("email", values.email.trim());
     formData.append("status", values.status.trim());
-    formData.append("salary", values.salary.trim());
+    if (values.salary) {
+      formData.append("salary", values.salary);
+    }
     formData.append("gender", values.gender.trim());
     formData.append("cardType", values.cardType.trim());
     formData.append("idNationality", values.idNationality.trim());
@@ -220,7 +267,9 @@ const useSubmitFunction = (type: string) => {
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }
-    formData.append("passportNumber", values.passportNumber.trim());
+    if (values.passportNumber) {
+      formData.append("passportNumber", values.passportNumber);
+    }
     if (values.passportExpiry) {
       formData.append(
         "passportExpiry",
@@ -237,12 +286,16 @@ const useSubmitFunction = (type: string) => {
       formData.append("lcExpireDate", values.lcExpireDate.toString().trim());
     }
     formData.append("job", values.job.trim());
-    formData.append("visaFileNumber", values.visaFileNumber.trim());
+    if (values.visaFileNumber) {
+      formData.append("visaFileNumber", values.visaFileNumber);
+    }
+    if (values.cardNumber) {
+      formData.append("cardNumber", values.cardNumber);
+    }
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
-    formData.append(
-      "medicalPolicyNo",
-      values.medicalPolicyNo.toString().trim()
-    );
+    if (values.medicalPolicyNo) {
+      formData.append("medicalPolicyNo", values.medicalPolicyNo);
+    }
     if (values.medicalExpireDate) {
       formData.append(
         "medical.expireDate",
@@ -250,7 +303,9 @@ const useSubmitFunction = (type: string) => {
       );
     }
     formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
-    formData.append("iLOEPolicyNo", values.iLOEPolicyNo.toString().trim());
+    if (values.iLOEPolicyNo) {
+      formData.append("iLOEPolicyNo", values.iLOEPolicyNo);
+    }
     if (values.iLOEExpireDate) {
       formData.append(
         "iLOE.expireDate",
@@ -300,7 +355,9 @@ const useSubmitFunction = (type: string) => {
       values.licenseExpiryDate.toString().trim()
     );
     formData.append("establishmentType", values.establishmentType.trim());
-    formData.append("molCode", values.molCode.trim());
+    if (values.molCode) {
+      formData.append("molCode", values.molCode.trim());
+    }
     formData.append("molCategory", values.molCategory.trim());
     formData.append("whatsAppNo", values.whatsAppNo.trim());
     formData.append("mobileNo", values.mobileNo.trim());
@@ -322,6 +379,7 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
+  //Authentication
   const login = async (values: LoginFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -339,22 +397,69 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  const resetPassword = (values: ResetPasswordFormTypes) => {
+  const resetPassword = async (values: ResetPasswordFormTypes) => {
     handleOpenFormsLoading();
-    console.log(values);
-    handleAlert({ msg: "Under Development...", status: "error" });
+    try {
+      const otp = Cookies.get("otp");
+      if (otp) {
+        values.otp = otp;
+      } else {
+        handleAlert({ msg: "Not Authorized", status: "error" });
+        return;
+      }
+      await server
+        .patch(`/reset-password`, values)
+        .then(() => {
+          handleAlert({
+            msg: "Password is Changed Successfully",
+            status: "success",
+          });
+          navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
     handleCloseFormsLoading();
   };
 
-  const forgotPassword = (values: ForgotPasswordFormTypes) => {
+  const forgotPassword = async (values: ForgotPasswordFormTypes) => {
     handleOpenFormsLoading();
-    console.log(values);
-    handleAlert({ msg: "Under Development...", status: "error" });
+    values.email = values.email.toLowerCase();
+    await server
+      .post(`/forget-password`, values)
+      .then(() => {
+        handleAlert({ msg: "Check Your Mail", status: "success" });
+        handleCloseForgotPasswordModal();
+        navigate(`${import.meta.env.VITE_OTP_ROUTE}`);
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const OTP = async (values: OTPFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/validate-otp`, values)
+      .then((res) => {
+        handleAlert({
+          msg: "You can reset your password ,Now",
+          status: "success",
+        });
+        Cookies.set("otp", res.data.unique);
+        navigate(`${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`);
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
     handleCloseFormsLoading();
   };
 
   //Job
-
   const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -929,6 +1034,79 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Sponsor
+  const addSponsor = async (values: SponsorFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/sponsor`, handleSponsorFormData(values), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Sponsor is Created Successfully",
+          status: "success",
+        });
+        const type = pathname.split("/")[1];
+        if (id) {
+          if (type === "employees") {
+            dispatch(getEmployee({ id }));
+          } else if (type === "owners") {
+            dispatch(getOwner({ id }));
+          } else if (type === "customers") {
+            dispatch(getCustomer({ id }));
+          } else if (type === "pros") {
+            dispatch(getPro({ id }));
+          }
+        }
+
+        handleCloseSponsorModal();
+        setSponsorImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editSponsor = async (values: SponsorFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/sponsor/${editableCustomerData && editableCustomerData._id}`,
+        handleSponsorFormData(values),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Customer is Updated Successfully",
+          status: "success",
+        });
+        if (id) {
+          if (type === "employees") {
+            dispatch(getEmployee({ id }));
+          } else if (type === "owners") {
+            dispatch(getOwner({ id }));
+          } else if (type === "customers") {
+            dispatch(getCustomer({ id }));
+          } else if (type === "pros") {
+            dispatch(getPro({ id }));
+          }
+        }
+        handleCloseSponsorModal();
+        setSponsorImage("");
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   //Company
   const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
@@ -998,18 +1176,14 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     await server
       .get(
-        `/company/ManageOwnersAndPro?companyId=${values.companyId}&id=${
+        `/company/ManageOwnersAndPro?id=${
           formType === "linkOwner"
             ? editableOwnerData && editableOwnerData._id
-            : formType === "linkPro"
-            ? editableProData && editableProData._id
-            : editableCustomerData && editableCustomerData._id
-        }&operation=adding&typeOfPerson=${
-          formType === "linkOwner"
-            ? "owner"
-            : formType === "linkPro"
-            ? "pro"
-            : "customer"
+            : formType === "linkPro" && editableProData && editableProData._id
+        }${values.companyId
+          .map((id, i) => `&companyId[${i}]=${id}`)
+          .join("")}&operation=adding&typeOfPerson=${
+          formType === "linkOwner" ? "owner" : formType === "linkPro" && "pro"
         }`,
         {
           headers: {
@@ -1533,6 +1707,9 @@ const useSubmitFunction = (type: string) => {
       case "forgotPassword":
         forgotPassword(values as ForgotPasswordFormTypes);
         break;
+      case "otp":
+        OTP(values as OTPFormTypes);
+        break;
       case "resetPassword":
         resetPassword(values as ResetPasswordFormTypes);
         break;
@@ -1598,6 +1775,12 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCustomersSheet":
         createCustomersSheet(values as unknown);
+        break;
+      case "addSponsor":
+        addSponsor(values as SponsorFormTypes);
+        break;
+      case "editSponsor":
+        editSponsor(values as SponsorFormTypes);
         break;
       case "addCompany":
         addCompany(values as CompanyFormTypes);

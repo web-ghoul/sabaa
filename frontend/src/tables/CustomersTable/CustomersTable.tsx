@@ -1,5 +1,6 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
   TableBody,
   TableHead,
@@ -22,9 +23,9 @@ import { AppDispatch } from "../../store/store";
 import { CustomersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
-import ProsTableMenu from "./CustomersTableMenu";
-import { CustomersTableRow } from "./CustomersTableRow";
+import CustomersTableMenu from "./CustomersTableMenu";
 import LoadingCustomersRow from "./LoadingCustomersRow";
 
 const CustomersTable = ({
@@ -161,7 +162,7 @@ const CustomersTable = ({
           ? data &&
             data.map((row, i) => {
               return (
-                <CustomersTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
@@ -172,7 +173,9 @@ const CustomersTable = ({
                       />
                     ) : (
                       <Link
-                        to={`${import.meta.env.VITE_PROS_ROUTE}/${row._id}`}
+                        to={`${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                          row._id
+                        }`}
                       >
                         <UserBox
                           username={row.name}
@@ -198,7 +201,9 @@ const CustomersTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      <NationalityBox nationality={row.nationality} />
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (
@@ -213,7 +218,7 @@ const CustomersTable = ({
                       </IconButton>
                     </PrimaryTableCell>
                   )}
-                </CustomersTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())
@@ -225,7 +230,7 @@ const CustomersTable = ({
                   key={i}
                 />
               ))}
-        <ProsTableMenu />
+        <CustomersTableMenu />
       </TableBody>
     </PrimaryTable>
   );

@@ -66,6 +66,10 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
     handleOpenDownloadExcelModal("excel", "employees");
   };
 
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "employees");
+  };
+
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
     dispatch(getEmployees({}));
@@ -135,7 +139,7 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
             title={"Excel All"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
-            variant={"under development"}
+            handling={handleDownloadExcelAll}
           />
         </Box>
       </Box>

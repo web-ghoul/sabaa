@@ -6,7 +6,9 @@ export type EmployeeDocument = HydratedDocument<Employee>;
 @Schema({ timestamps: true })
 export class Employee {
   
-  
+
+    
+
     @Prop({ required: true })
     name: string;
     
@@ -97,7 +99,13 @@ export class Employee {
 
     @Prop()
     emiratesId: string;
+
+    @Prop()
+    sponsor: string;
   
+    @Prop({ type: Array, default: [], ref: 'Sponsor' })
+    sponsors: string[];
+
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 

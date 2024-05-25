@@ -6,6 +6,7 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
@@ -22,10 +23,10 @@ import { AppDispatch } from "../../store/store";
 import { ProsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import LoadingProsRow from "./LoadingProsRow";
 import ProsTableMenu from "./ProsTableMenu";
-import { ProsTableRow } from "./ProsTableRow";
 
 const ProsTable = ({
   data,
@@ -161,7 +162,7 @@ const ProsTable = ({
           ? data &&
             data.map((row, i) => {
               return (
-                <ProsTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
@@ -198,7 +199,9 @@ const ProsTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      <NationalityBox nationality={row.nationality} />
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (
@@ -213,7 +216,7 @@ const ProsTable = ({
                       </IconButton>
                     </PrimaryTableCell>
                   )}
-                </ProsTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())

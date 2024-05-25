@@ -12,7 +12,7 @@ export class ActivitiesService {
     return 'This action adds a new activity';
   }
 
-  findAll(limit: number, page: number, search: string = '', operation: string = '', from: string = '', to: string= '', route: string= '') {
+  findAll(limit: number, page: number, search: string = '', operation: string = '', from: string = '', to: string= '', route: string= '', userId: string = '') {
 
     const query = {}  
 
@@ -28,7 +28,9 @@ export class ActivitiesService {
         : null;
     operation  != '' ? (query['action'] = operation ) : undefined;
     route != '' ? (query['route'] = route) : undefined;
-    console.log(query);
+    userId != '' ? (query['userId'] = userId) : undefined;
+    // console.log(query);
+    // console.log(operation);
     
     return this.ActivityModel
       .find(query)

@@ -1,11 +1,11 @@
 import { Skeleton, useMediaQuery } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
-import { JobsTableRow } from "./JobsTableRow";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 
 const LoadingJobsRow = () => {
   const mdScreen = useMediaQuery("(max-width:992px)");
   return (
-    <JobsTableRow>
+    <PrimaryTableRow>
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
@@ -20,7 +20,7 @@ const LoadingJobsRow = () => {
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-    </JobsTableRow>
+    </PrimaryTableRow>
   );
 };
 

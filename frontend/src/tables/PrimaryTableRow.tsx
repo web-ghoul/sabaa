@@ -1,6 +1,6 @@
 import { TableRow, styled } from "@mui/material";
 
-export const CustomersTableRow = styled(TableRow)(({ theme }) => ({
+export const PrimaryTableRow = styled(TableRow)(({ theme }) => ({
   "&:hover": {
     backgroundColor: `${theme.palette.action.hover} !important`,
     cursor: "pointer",

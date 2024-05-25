@@ -412,3 +412,23 @@ Notes :
 8- Handle Spell of Owner to Employee in Employee API
 9- Set Default Value for status of Employee
 10- Finish Forgot And Reset Password
+
+
+Notes :
+1- add Checkbox for pro and owner forms (Waiting)
+2- Make File Immg Number (Numbers and / only)
+3- Sponsor Form (- Person Code) [Husband , Maid , Wife , Son , Daughter , Mother , Father]
+4- Insurance Company is Text 
+5- Policy is Text
+6- File Immg Number at enployee Form
+7- Link to More than One Company For owner and pro (Customer) and Hide company already linked
+8- Add Sponsor for all employees , owners, customer, pros
+9- Remove Customers for Company Form
+10- See Password in Company 
+11- Add Whatsapp Icon to whatsapp Number and when click on it go to WhatsApp
+12- Switch Immg Card Number and Immg Expire Date in Company Table 
+13- HandleDateForPost (Handle Different of Date)
+14- Fit Button of Sample (Fit Link) 
+15- Add Officer to owner tabs 
+16- Owner and officer date of birth not less than 18
+17- GRFA (Username, Password , Noqodi Wallet (Lower and Upper) , Noqodi Passport , Pin Token (Numric) , Noqodi New , Noqodi registeration , Noqodi NPass (Text))

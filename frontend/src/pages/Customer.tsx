@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "../store/store";
 import CustomerProfile from "../tabs/CustomerProfile/CustomerProfile";
 
 const Customer = () => {
-  const { customer, isLoading, companies } = useSelector(
+  const { customer, isLoading, companies, activities } = useSelector(
     (state: RootState) => state.customer
   );
   const { id } = useParams();
@@ -44,6 +44,7 @@ const Customer = () => {
           </BreadCrumbs>
         </Box>
         <CustomerProfile
+          activities={activities}
           companies={companies}
           customer={customer}
           isLoading={isLoading}

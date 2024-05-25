@@ -100,8 +100,25 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
           select
           options={["dubai"]}
         />
-        <Input formik={formik} label={"Sponsor"} name={"sponsor"} />
         <Input formik={formik} label={"Address"} name={"address"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"residenceExpiryDate"}
+          label={"Residence Expire Date"}
+        />
+        <Input
+          formik={formik}
+          label={"Status"}
+          name={"status"}
+          select
+          options={["Active", "Pending", "Blocked"]}
+        />
+        <Input
+          formik={formik}
+          label={"File Immgiration Number"}
+          name={"fileImmgNo"}
+        />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
       </Box>
 

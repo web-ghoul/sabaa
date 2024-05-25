@@ -7,6 +7,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   UserTypes,
 } from "./store.types";
 
@@ -35,6 +36,7 @@ interface LoginFormikTypes {
 
 //Reset Password
 interface ResetPasswordFormTypes {
+  otp: string;
   password: string;
   confirmPassword: string;
 }
@@ -65,6 +67,23 @@ interface ForgotPasswordFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: ForgotPasswordFormTypes;
+}
+
+//Forgot Password
+
+interface OTPFormTypes {
+  otp: string;
+}
+
+interface OTPFormikTypes {
+  touched: OTPFormTypes;
+  errors: OTPFormTypes;
+  initialValues: OTPFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: OTPFormTypes;
 }
 
 //Activities
@@ -126,7 +145,7 @@ interface CompanyFormikTypes {
 }
 
 interface LinkToCompanyFormTypes {
-  companyId: string;
+  companyId: string[];
 }
 
 interface LinkToCompanyFormikTypes {
@@ -159,6 +178,9 @@ interface OwnersOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }
@@ -193,6 +215,9 @@ interface ProsOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }
@@ -227,6 +252,9 @@ interface CustomersOptionsFormTypes {
   search: string;
   dobFrom: string;
   dobTo: string;
+  residenceFrom: string;
+  residenceTo: string;
+  status: string;
   nationality: string;
   state: string;
 }
@@ -276,8 +304,22 @@ interface EmployeesOptionsFormikTypes {
   values: EmployeesOptionsFormTypes;
 }
 
-//Job
+//Employee
 
+interface SponsorFormTypes extends SponsorTypes {}
+
+interface SponsorFormikTypes {
+  touched: SponsorFormTypes;
+  errors: SponsorFormTypes;
+  initialValues: SponsorFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: SponsorFormTypes;
+}
+
+//Job
 interface JobFormTypes extends JobTypes {}
 
 interface JobFormikTypes {
@@ -425,7 +467,9 @@ type AllFormsTypes =
   | CustomersOptionsFormikTypes
   | CustomerFormTypes
   | DownloadExcelFormTypes
-  | ActivitiesOptionsFormTypes;
+  | ActivitiesOptionsFormTypes
+  | OTPFormTypes
+  | SponsorFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -450,7 +494,9 @@ type AllFormiksTypes =
   | CustomersOptionsFormikTypes
   | CustomerFormikTypes
   | DownloadExcelFormikTypes
-  | ActivitiesOptionsFormikTypes;
+  | ActivitiesOptionsFormikTypes
+  | OTPFormikTypes
+  | SponsorFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -503,6 +549,8 @@ export type {
   NationalitiesOptionsFormTypes,
   NationalityFormikTypes,
   NationalityFormTypes,
+  OTPFormikTypes,
+  OTPFormTypes,
   OwnerFormikTypes,
   OwnerFormTypes,
   OwnersOptionsFormikTypes,
@@ -513,6 +561,8 @@ export type {
   ProsOptionsFormTypes,
   ResetPasswordFormikTypes,
   ResetPasswordFormTypes,
+  SponsorFormikTypes,
+  SponsorFormTypes,
   UserFormikTypes,
   UserFormTypes,
   UsersOptionsFormikTypes,

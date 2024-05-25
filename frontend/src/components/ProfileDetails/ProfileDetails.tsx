@@ -17,9 +17,11 @@ import {
 } from "../../types/store.types";
 import Button from "../Button/Button";
 import LinkBox from "../LinkBox/LinkBox";
+import PasswordBox from "../PasswordBox/PasswordBox";
 import StatusBox from "../StatusBox/StatusBox";
 import Title from "../Title/Title";
 import UserBox from "../UserBox/UserBox";
+import WhatsappBox from "../WhatsappBox/WhatsappBox";
 import DataBox from "./DataBox";
 import LoadingProfileDetails from "./LoadingProfileDetails";
 
@@ -101,10 +103,6 @@ const ProfileDetails = ({
   };
 
   //Customer
-  const handleCustomerLink = () => {
-    handleOpenLinkToCompanyModal("linkCustomer");
-    setEditableCustomerData(customer);
-  };
   const handleEditCustomer = () => {
     setEditableCustomerData(customer);
     handleOpenCustomerModal("editCustomer");
@@ -116,7 +114,15 @@ const ProfileDetails = ({
 
   //Employee
   const handleEditEmployee = () => {
-    setEditableEmployeeData(employee);
+    if (employee) {
+      const e: EmployeeTypes = { ...employee };
+      if (employee.companyId) {
+        e.companyId = employee.companyId.map(
+          (company) => (company as CompanyTypes)._id
+        ) as string[];
+      }
+      setEditableEmployeeData(e);
+    }
     navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${id}/edit`);
   };
   const handleDeleteEmployee = () => {
@@ -151,6 +157,8 @@ const ProfileDetails = ({
     handleOpenDeleteModal("company");
     setEditableCompanyData(company);
   };
+
+  console.log(data);
 
   return isLoading ? (
     <LoadingProfileDetails />
@@ -361,7 +369,7 @@ const ProfileDetails = ({
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
-                value={handleDate((data as ProTypes).createdAt)}
+                value={handleDate((data as ProTypes).createdAt, true)}
               />
             </Box>
           </Box>
@@ -378,11 +386,6 @@ const ProfileDetails = ({
               res={true}
             />
             <Box className={profileButtonsClasses}>
-              <Button
-                title={"Link"}
-                handling={handleCustomerLink}
-                bg={"!bg-zinc-500"}
-              />
               <Button
                 title={"Edit"}
                 handling={handleEditCustomer}
@@ -566,7 +569,7 @@ const ProfileDetails = ({
             <Box className={profileInfoClasses}>
               <DataBox
                 title={"Insurance Company"}
-                value={(data as EmployeeTypes).medicalInsuranceCompany}
+                value={(data as EmployeeTypes).medical.insurance}
               />
               <DataBox
                 title={"Policy Number"}
@@ -574,7 +577,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Expire Date"}
-                value={handleDate((data as EmployeeTypes).medicalExpireDate)}
+                value={handleDate((data as EmployeeTypes).medical.expireDate)}
               />
             </Box>
           </Box>
@@ -586,7 +589,7 @@ const ProfileDetails = ({
             <Box className={profileInfoClasses}>
               <DataBox
                 title={"Insurance Company"}
-                value={(data as EmployeeTypes).iLOEInsuranceCompany}
+                value={(data as EmployeeTypes).iLOE.insurance}
               />
               <DataBox
                 title={"Policy Number"}
@@ -594,7 +597,7 @@ const ProfileDetails = ({
               />
               <DataBox
                 title={"Expire Date"}
-                value={handleDate((data as EmployeeTypes).iLOEExpireDate)}
+                value={handleDate((data as EmployeeTypes).iLOE.expireDate)}
               />
             </Box>
           </Box>
@@ -708,7 +711,9 @@ const ProfileDetails = ({
                 />
                 <DataBox
                   title={"Whatsapp Number"}
-                  value={(data as CompanyTypes).whatsAppNo}
+                  value={
+                    <WhatsappBox number={(data as CompanyTypes).whatsAppNo} />
+                  }
                 />
                 <DataBox
                   title={"Mobile Number"}
@@ -730,25 +735,81 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Divider />
-            <Box className={sectionClasses}>
-              <Typography variant="h4" className={`!font-[700]`}>
-                E-Channel Information
-              </Typography>
-              <Box className={profileInfoClasses}>
-                <DataBox
-                  title={"E-channel Expire Date"}
-                  value={handleDate((data as CompanyTypes).echannelExpiryDate)}
-                />
-                <DataBox
-                  title={"Username"}
-                  value={(data as CompanyTypes).userName}
-                />
-                <DataBox
-                  title={"Password"}
-                  value={(data as CompanyTypes).password}
-                />
+            {data.status.toLowerCase() === "dubai" ? (
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  GDRFA Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox
+                    title={"Username"}
+                    value={(data as CompanyTypes).userName}
+                  />
+                  <DataBox
+                    title={"Password"}
+                    value={
+                      <PasswordBox password={(data as CompanyTypes).password} />
+                    }
+                  />
+                </Box>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
+                  <DataBox
+                    title={"Noqodi Wallet"}
+                    value={(data as CompanyTypes).noqodiWalet}
+                  />
+                  <DataBox
+                    title={"Noqodi Pass"}
+                    value={(data as CompanyTypes).noqodiPass}
+                  />
+                  <DataBox
+                    title={"Pin Token"}
+                    value={(data as CompanyTypes).pinToken}
+                  />
+                </Box>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
+                  <DataBox
+                    title={"Noqodi New"}
+                    value={(data as CompanyTypes).noqodiNew}
+                  />
+                  <DataBox
+                    title={"Noqodi Reg"}
+                    value={(data as CompanyTypes).noqodiReg}
+                  />
+                  <DataBox
+                    title={"Noqodi NPass"}
+                    value={(data as CompanyTypes).noqodiNPass}
+                  />
+                </Box>
               </Box>
-            </Box>
+            ) : (
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox
+                    title={"E-channel Expire Date"}
+                    value={handleDate(
+                      (data as CompanyTypes).echannelExpiryDate
+                    )}
+                  />
+                  <DataBox
+                    title={"Username"}
+                    value={(data as CompanyTypes).userName}
+                  />
+                  <DataBox
+                    title={"Password"}
+                    value={
+                      <PasswordBox password={(data as CompanyTypes).password} />
+                    }
+                  />
+                </Box>
+              </Box>
+            )}
           </Paper>
         )
       ))

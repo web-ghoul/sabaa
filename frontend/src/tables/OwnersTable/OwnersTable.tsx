@@ -6,6 +6,7 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
@@ -22,10 +23,10 @@ import { AppDispatch } from "../../store/store";
 import { OwnersTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import LoadingOwnersRow from "./LoadingOwnersRow";
 import OwnersTableMenu from "./OwnersTableMenu";
-import { OwnersTableRow } from "./OwnersTableRow";
 
 const OwnersTable = ({
   data,
@@ -153,7 +154,7 @@ const OwnersTable = ({
           ? data &&
             data.map((row, i) => {
               return (
-                <OwnersTableRow key={i}>
+                <PrimaryTableRow key={i}>
                   <PrimaryTableCell onClick={() => handleView()}>
                     {sheet ? (
                       <UserBox
@@ -190,7 +191,9 @@ const OwnersTable = ({
                   )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
-                      <NationalityBox nationality={row.nationality} />
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (
@@ -205,7 +208,7 @@ const OwnersTable = ({
                       </IconButton>
                     </PrimaryTableCell>
                   )}
-                </OwnersTableRow>
+                </PrimaryTableRow>
               );
             })
           : new Array(handleRandomNumber())

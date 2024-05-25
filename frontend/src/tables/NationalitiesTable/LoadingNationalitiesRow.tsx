@@ -1,10 +1,10 @@
 import { Skeleton } from "@mui/material";
 import { PrimaryTableCell } from "../PrimaryTableCell";
-import { NationaltiesTableRow } from "./NationalitiesTableRow";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 
 const LoadingNationalitiesRow = () => {
   return (
-    <NationaltiesTableRow>
+    <PrimaryTableRow>
       <PrimaryTableCell component="th" scope="row">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
@@ -14,7 +14,7 @@ const LoadingNationalitiesRow = () => {
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
-    </NationaltiesTableRow>
+    </PrimaryTableRow>
   );
 };
 

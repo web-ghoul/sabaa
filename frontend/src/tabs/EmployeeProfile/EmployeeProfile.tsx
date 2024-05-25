@@ -1,14 +1,24 @@
 import { useContext } from "react";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
-import ProfileSetting from "../../components/ProfileSetting/ProfileSetting";
+import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
 import { TabsContext } from "../../contexts/TabsContext";
+import ActivitiesSection from "../../sections/ActivitiesSection";
+import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { CompanyTypes, EmployeeTypes } from "../../types/store.types";
+import {
+  CompanyTypes,
+  EmployeeTypes,
+  SponsorTypes,
+} from "../../types/store.types";
 import { EmployeeProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
-const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
+const EmployeeProfile = ({
+  employee,
+  isLoading,
+  activities,
+}: EmployeeProfileProps) => {
   const { employeeTabsValue } = useContext(TabsContext);
 
   return (
@@ -19,6 +29,7 @@ const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
         "Transactions",
         "Activities",
         "Documents",
+        "Sponsored Persons",
       ]}
       variant={"employee"}
     >
@@ -35,21 +46,23 @@ const EmployeeProfile = ({ employee, isLoading }: EmployeeProfileProps) => {
           count={employee?.companyId?.length || 0}
           data={employee && (employee.companyId as CompanyTypes[])}
           isLoading={isLoading}
-          unLink={true}
           noPagination={true}
         />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={2}>
-        <ProfileSetting />
+        <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={3}>
-        <ProfileSetting />
+        <ActivitiesSection data={activities} isLoading={isLoading} />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={4}>
-        <ProfileSetting />
+        <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={employeeTabsValue} index={5}>
-        <ProfileSetting />
+        <SponsorsSection
+          data={employee && (employee.sponsors as SponsorTypes[])}
+          isLoading={isLoading}
+        />
       </CustomTabPanel>
     </PrimaryTab>
   );

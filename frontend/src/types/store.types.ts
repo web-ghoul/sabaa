@@ -15,6 +15,7 @@ interface ActivityTypes {
   action: string;
   userId: UserTypes;
   route: string;
+  ownerType?: string;
   createdAt?: Date;
 }
 
@@ -87,6 +88,7 @@ interface RecentUsersValuesTypes {
 interface UserValuesTypes {
   isLoading: boolean;
   user: UserTypes | null;
+  activities: ActivityTypes[] | null;
 }
 
 //Owner
@@ -98,6 +100,7 @@ interface OwnerTypes {
   nameAr: string;
   avatar: string;
   dob?: Date;
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   phone: string;
@@ -109,6 +112,7 @@ interface OwnerTypes {
   personCode: string;
   fileImmgNo: string;
   status: string;
+  sponsor: string;
   type?: string;
   residenceExpiryDate?: Date;
   createdAt?: Date;
@@ -193,11 +197,9 @@ interface ProsCounterValuesTypes {
   prosCounter: number;
 }
 
-//PRO
+//Customer
 
-interface CustomerTypes extends OwnerTypes {
-  sponsor: string;
-}
+interface CustomerTypes extends OwnerTypes {}
 
 interface CustomerValuesTypes {
   isLoading: boolean;
@@ -236,6 +238,17 @@ interface CustomersCounterValuesTypes {
   customersCounter: number;
 }
 
+//Sponsor
+
+interface SponsorTypes extends CustomerTypes {
+  relativeRelation: string;
+}
+
+interface SponsorsValuesTypes {
+  isLoading: boolean;
+  sponsors: SponsorTypes[] | null;
+}
+
 //Employee
 
 interface EmployeeTypes {
@@ -246,6 +259,7 @@ interface EmployeeTypes {
   dob?: Date;
   personCode: string;
   companyId: CompanyTypes[] | string[];
+  sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
   gender: string;
@@ -265,9 +279,11 @@ interface EmployeeTypes {
   medicalInsuranceCompany: string;
   medicalPolicyNo: string;
   medicalExpireDate?: Date;
+  medical: { insurance: string; expireDate: Date };
   iLOEInsuranceCompany: string;
   iLOEPolicyNo: string;
   iLOEExpireDate?: Date;
+  iLOE: { insurance: string; expireDate: Date };
   uid: string;
   emiratesId: string;
   remarks: string;
@@ -349,6 +365,12 @@ interface CompanyTypes {
   createdAt: Date;
   userName: string;
   password: string;
+  noqodiWalet: string;
+  noqodiPass: string;
+  pinToken: string;
+  noqodiNew: string;
+  noqodiReg: string;
+  noqodiNPass: string;
   echannelExpiryDate: Date;
   user?: string;
 }
@@ -521,6 +543,8 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
+  SponsorsValuesTypes,
+  SponsorTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,

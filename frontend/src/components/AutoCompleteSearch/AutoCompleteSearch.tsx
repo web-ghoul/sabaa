@@ -67,10 +67,11 @@ export default function AutoCompleteSearch({
       if (variant === "employee") {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
-        formik.setFieldValue(name, IDs);
+        formik.setFieldValue(name, IDs.slice(IDs.length - 1));
       } else {
-        const company = newValue as CompanyTypes;
-        formik.setFieldValue(name, company._id);
+        const companies = newValue as CompanyTypes[];
+        const IDs = companies.map((company: CompanyTypes) => company._id);
+        formik.setFieldValue(name, IDs);
       }
     } else if (name === "job") {
       const job = newValue as JobTypes;
@@ -150,10 +151,11 @@ export default function AutoCompleteSearch({
                 .companyId as string[]
             ).includes(option._id || "")
           )
-        : (values as CompanyTypes[]).find(
-            (option) =>
-              option._id ===
-              (formik as unknown as LinkToCompanyFormikTypes).values.companyId
+        : values.filter((option) =>
+            (
+              (formik as unknown as LinkToCompanyFormikTypes).values
+                .companyId as string[]
+            ).includes(option._id || "")
           )
       : (name === "job" &&
           (values as JobTypes[]).find(
@@ -177,6 +179,7 @@ export default function AutoCompleteSearch({
         multiple={multiple}
         value={value}
         isOptionEqualToValue={(option, value) => option?._id === value?._id}
+        filterSelectedOptions
         options={values}
         onChange={handleChange}
         renderTags={(tagValue, getTagProps) =>

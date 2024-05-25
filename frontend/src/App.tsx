@@ -25,6 +25,7 @@ import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
 import ProModal from "./modals/ProModal.tsx";
+import SponsorModal from "./modals/SponsorModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import { getProfile, setAuth } from "./store/auth.ts";
@@ -33,6 +34,7 @@ import { AppDispatch } from "./store/store.ts";
 const AuthRoutes = [
   `${import.meta.env.VITE_LOGIN_ROUTE}`,
   `${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`,
+  `${import.meta.env.VITE_OTP_ROUTE}`,
 ];
 
 const App = () => {
@@ -75,6 +77,7 @@ const App = () => {
       <UserModal />
       <CompanyModal />
       <ProModal />
+      <SponsorModal />
       <EmployeeModal />
       <CustomerModal />
       <LinkToCompanyModal />

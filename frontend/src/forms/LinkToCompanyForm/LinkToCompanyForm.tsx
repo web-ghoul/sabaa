@@ -35,6 +35,7 @@ const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
           options={companies}
           formik={formik}
           name={"companyId"}
+          multiple={true}
         />
       )}
 

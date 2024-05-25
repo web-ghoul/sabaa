@@ -119,14 +119,18 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          className={`grid justify-stretch items-start grid-cols-2 gap-6 md:gap-5 sm:!gap-3 md:grid-cols-1`}
+          className={`grid justify-stretch items-start grid-cols-2  gap-4 md:grid-cols-1 md:gap-3 sm:!gap-2`}
         >
           <Box className={sectionClasses}>
             <Paper className="paper">
               <Title title={"Recent Owners"} head="h4" align={"left"} />
               <OwnersTable
                 data={recentOwners.recentOwners}
-                count={+`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`}
+                count={
+                  recentOwners.recentOwners
+                    ? recentOwners.recentOwners.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentOwners.isLoading}
                 actions={false}
                 sort={false}
@@ -176,7 +180,11 @@ const Dashboard = () => {
               <Title title={"Recent Companies"} head="h4" align={"left"} />
               <CompaniesTable
                 data={recentCompanies.recentCompanies}
-                count={0}
+                count={
+                  recentCompanies.recentCompanies
+                    ? recentCompanies.recentCompanies.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentCompanies.isLoading}
                 actions={false}
                 sort={false}
@@ -284,7 +292,11 @@ const Dashboard = () => {
               />
               <ProsTable
                 data={recentPros.recentPros}
-                count={+`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`}
+                count={
+                  recentPros.recentPros
+                    ? recentPros.recentPros.length
+                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                }
                 isLoading={recentPros.isLoading}
                 actions={false}
                 sort={false}

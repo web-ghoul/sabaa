@@ -1,5 +1,6 @@
 import { MoreVertRounded } from "@mui/icons-material";
 import {
+  Box,
   IconButton,
   TableBody,
   TableHead,
@@ -24,9 +25,9 @@ import { AppDispatch } from "../../store/store";
 import { EmployeesTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
 import SortBox from "../SortBox";
 import EmployeesTableMenu from "./EmployeesTableMenu";
-import { EmployeesTableRow } from "./EmployeesTableRow";
 import LoadingEmployeesRow from "./LoadingEmployeesRow";
 
 const EmployeesTable = ({
@@ -173,7 +174,7 @@ const EmployeesTable = ({
               )}
             </PrimaryTableCell>
           )}
-          {!mdScreen && (
+          {(!mdScreen || !recent) && (
             <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
           )}
           {actions && (
@@ -186,7 +187,7 @@ const EmployeesTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => (
-              <EmployeesTableRow key={i}>
+              <PrimaryTableRow key={i}>
                 <PrimaryTableCell
                   onClick={() => handleView()}
                   component="th"
@@ -217,7 +218,9 @@ const EmployeesTable = ({
                 </PrimaryTableCell>
                 {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
-                    <NationalityBox nationality={row.nationality} />
+                    <Box className={`flex justify-center items-center`}>
+                      <NationalityBox nationality={row.nationality} />
+                    </Box>
                   </PrimaryTableCell>
                 )}
                 {!recent && (
@@ -235,7 +238,7 @@ const EmployeesTable = ({
                     {handleDate(row.residenceExpireDate)}
                   </PrimaryTableCell>
                 )}
-                {!mdScreen && (
+                {(!mdScreen || !recent) && (
                   <PrimaryTableCell align="center">
                     {row.cardType}
                   </PrimaryTableCell>
@@ -247,7 +250,7 @@ const EmployeesTable = ({
                     </IconButton>
                   </PrimaryTableCell>
                 )}
-              </EmployeesTableRow>
+              </PrimaryTableRow>
             ))
           : new Array(handleRandomNumber())
               .fill(0)

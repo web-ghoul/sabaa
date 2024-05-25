@@ -1,7 +1,6 @@
 import {
   DeleteRounded,
   EditRounded,
-  JoinFullRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -12,7 +11,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const ProsTableMenu = () => {
+const CustomersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -20,7 +19,6 @@ const ProsTableMenu = () => {
   const {
     handleOpenCustomerModal,
     handleOpenDeleteModal,
-    handleOpenLinkToCompanyModal,
     editableCustomerData,
   } = useContext(FormsContext);
   const { handleDeleteCustomerFromSheet } = useContext(ExcelsContext);
@@ -33,10 +31,6 @@ const ProsTableMenu = () => {
     );
   };
 
-  const handleLink = () => {
-    handleOpenLinkToCompanyModal("linkCustomer");
-  };
-
   const handleEdit = () => {
     handleOpenCustomerModal("editCustomer");
   };
@@ -45,12 +39,12 @@ const ProsTableMenu = () => {
     if (sheet) {
       handleDeleteCustomerFromSheet();
     } else {
-      handleOpenDeleteModal("pro");
+      handleOpenDeleteModal("customer");
     }
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`);
   }, [pathname, sheet]);
 
   return (
@@ -76,13 +70,6 @@ const ProsTableMenu = () => {
           handling={handleView}
         />
       )}
-      {!sheet && (
-        <TableMenuItem
-          icon={<JoinFullRounded />}
-          title={"Link"}
-          handling={handleLink}
-        />
-      )}
 
       <TableMenuItem
         icon={<EditRounded />}
@@ -98,4 +85,4 @@ const ProsTableMenu = () => {
   );
 };
 
-export default ProsTableMenu;
+export default CustomersTableMenu;

@@ -1,7 +1,4 @@
-export const handleDate = (
-  date?: Date | string,
-  time: boolean = false
-): string => {
+export const handleDate = (date?: Date | string, time?: boolean): string => {
   let parsedDate: Date;
   if (!date) {
     return "";

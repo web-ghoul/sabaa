@@ -38,7 +38,7 @@ export class OwnerService {
 
       //inject in company if exits
     } catch (err) {
-      throw new HttpException(err, HttpStatus.FORBIDDEN);
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -54,6 +54,9 @@ export class OwnerService {
     dobTo: string = '',
     deleted: boolean = false,
     type: string = '',
+    status: string = '',
+    residenceFrom: string = '',
+    residenceTo: string = '',
   ): Promise<Owner[]> {
     try {
       const projection: any = {};
@@ -77,11 +80,17 @@ export class OwnerService {
       if (dobFrom != '' && dobTo == '') {
         dobTo = '9999-12-31';
       }
+      if (residenceFrom != '' && residenceTo == '') {
+        residenceTo = '9999-12-31';
+      }
 
-      const query = {
+      const query: any = {
         $or: [
           { name: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
+          { phone: { $regex: new RegExp(search, 'i') } },
+          { uid: { $regex: new RegExp(search, 'i') } },
+          { emiratesId: { $regex: new RegExp(search, 'i') } },
         ],
       };
       dobFrom != ''
@@ -92,10 +101,17 @@ export class OwnerService {
       deleted != false
         ? (query['deleted'] = deleted)
         : (query['deleted'] = false);
-      type != '' ? (query['type'] = type) : (query['type'] = undefined);
+      type != '' ? (query['type'] = type) : undefined;
+      status != '' ? (query['status'] = status) : undefined;
+      residenceFrom != ''
+        ? (query['residenceExpiryDate'] = { $gte: new Date(residenceFrom), $lte: new Date(residenceTo) })
+        : undefined;
       
 
-      // console.log(query);
+      
+      
+
+      console.log(query);
 
       return this.ownerModel
         .find(query)
@@ -113,7 +129,7 @@ export class OwnerService {
 
   async findOne(id: string) {
     const [owner, companies, activities] = await Promise.all([
-      this.ownerModel.findById(id),
+      this.ownerModel.findById(id).populate({ path: 'sponsors', model: 'Sponsor' }),
       this.companyModel
         .find({ $or:[
           {ownerId: id },
@@ -123,7 +139,8 @@ export class OwnerService {
         .populate([
           { path: 'ownerId', model: 'Owner' },
           { path: 'proCode', model: 'Owner' },
-          { path: 'customerId', model: 'Owner' },
+          
+
         ])
         .exec(),
         this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"})

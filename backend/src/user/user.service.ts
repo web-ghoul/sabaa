@@ -8,14 +8,17 @@ import { Express } from 'express'
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
+import { ActivityLog } from 'schemas/activityLog.schema';
 
 
 @Injectable()
 export class UserService {
   
-  constructor(@InjectModel(User.name) private userModel: Model<User> ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>,
+  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
+ ) {}
 
-  async createUser(createUserDto: CreateUserDto ,file: Express.Multer.File): Promise<object> {
+  async createUser(createUserDto: CreateUserDto ,file: Express.Multer.File, user: ObjectId): Promise<object> {
     //const secretPassword = this.configService.get<string>('SECRET_PASSWORD');
     // Hash the password
     const emailIsTaken = await this.userModel.findOne({email: createUserDto.email});
@@ -31,12 +34,13 @@ export class UserService {
       avatar: file ? file.path : undefined,
       password: hashedPassword, // Replace plain password with hashed password
     });
+    createUserDto.user = user;
 
     // Save the user to the database
     try{
       const user = await createdUser.save();
 
-      return {message : "account created successfully" , user}
+      return user ; 
 
     }catch(err)
     {
@@ -58,15 +62,15 @@ export class UserService {
       avatar: file ? file.path : undefined,
     };
     try{
-      await this.userModel.findByIdAndUpdate(id,updateUser)
-
+       
+      return this.userModel.findByIdAndUpdate(id,updateUser)
     }catch(err)
     {
       throw new HttpException(err , HttpStatus.FORBIDDEN);
     }
     // Save the user to the database
 
-    return {message : "account updated successfully"}
+    
   }
 
   listUsers(limit: number, page: number, search:string,sortType:string,status:string = '',role:string = '', deleted: boolean = false): Promise<User[]> {
@@ -90,11 +94,17 @@ export class UserService {
 
     return this.userModel.find(query, "-password").limit(limit).skip(page*limit).sort(sort);
 }
-  displayUser(id: Schema.Types.ObjectId): Promise<User> {
-    return this.userModel.findById(id);
+  async displayUser(id: Schema.Types.ObjectId){
+    const [user, activities] = await Promise.all([
+      this.userModel.findById(id),
+      this.activityModel.find({id: id, route: "user"})
+    ])
+    return {user, activities}
   }
-  findOne(email: string): Promise<User>{
-    return this.userModel.findOne({email: email})
+  async findOne(email: string){
+    const user= await this.userModel.findOne({email: email})
+
+    return user;
   }
   async userCounters(): Promise<object> {
     const [roles,count,deleted] = await Promise.all([
@@ -139,12 +149,13 @@ export class UserService {
 
   async deleteUser(id: ObjectId){
     try{
-      await this.userModel.findByIdAndUpdate(id, {deleted: true});      
+      await this.userModel.findByIdAndUpdate(id, {deleted: true});    
+      return {_id: id} ;   
     }catch(err)
     {
       throw new HttpException("Error while deleting user" , HttpStatus.FORBIDDEN);
     }
-    return  {message : "User deleted successfully"};
+    
   }
 
   async export(@Res() res: Response,fileName: string) {

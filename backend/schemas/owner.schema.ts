@@ -50,8 +50,11 @@ export class Owner {
     @Prop()
     fileImmgNo: string;
     
-    @Prop()
+    @Prop({default: 'pending'})
     status: string;
+
+    @Prop({ type: Array, default: [], ref: 'Sponsor' })
+    sponsors: string[];
 
     // @Prop()
     // cardNumber: string;
@@ -67,6 +70,7 @@ export class Owner {
 
     // @Prop({default: false})
     // isPro: boolean;
+
 
 
     @Prop({ type: String, trim: true, sparse: true })

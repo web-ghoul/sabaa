@@ -13,7 +13,7 @@ import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
 @Module({
   imports: [MongooseModule.forFeature([{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema}, { name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
-      destination: './upload/owner&pro',
+      destination: './upload/owner&pro&customer',
       filename: (req, file, cb) => {
         // Generate a unique suffix
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);

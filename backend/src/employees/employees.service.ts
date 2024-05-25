@@ -1,3 +1,4 @@
+import { EmployeePdfGenerator } from '../utils/PdfMaker/EmployeePdfMaker';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
@@ -12,7 +13,8 @@ import { Response } from 'express';
 @Injectable()
 export class EmployeesService {
   constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>,
-  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>) {}
+  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File, user: ObjectId) {
     try{
       
@@ -37,10 +39,12 @@ export class EmployeesService {
           return data
         }else
         {
-          const [data,] =  await Promise.all([
-            this.employeeModel.create(createEmployeeDto),
-            this.companyModel.findByIdAndUpdate(createEmployeeDto.companyId, {$push: {employees: createEmployeeDto._id}})
-          ]) 
+          console.log(createEmployeeDto.companyId);
+          
+          const data = await this.employeeModel.create(createEmployeeDto);
+          const companies = await this.companyModel.updateMany({ _id: { $in: createEmployeeDto.companyId } }, { $push: { employees: data._id } });
+          
+          console.log(companies)
           return data
         }
 
@@ -97,19 +101,60 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [employee, companies, activities] = await Promise.all([
-      (await this.employeeModel.findById(id)).populated('companyId').exec(),
-      this.companyModel.find({employees:id}),
+    const [employee, activities] = await Promise.all([
+      await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
     ])
-    return {employee,companies,activities}
+    return {employee,activities}
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {
 
     try{
       updateEmployeeDto.avatar = file ? file.path : undefined;
-      return await this.employeeModel.findByIdAndUpdate(id, updateEmployeeDto);
+      // const oldData = await this.employeeModel.findById(id);
+      if(updateEmployeeDto?.companyId == undefined)
+        {
+          updateEmployeeDto.companyId = [] ; 
+        }
+      const oldData = await this.employeeModel.findByIdAndUpdate(id, updateEmployeeDto);
+      //check for added company
+      // console.log(updateEmployeeDto.companyId);
+      // console.log(oldData.companyId);
+      if(updateEmployeeDto.companyId == undefined)
+        {
+
+          if(oldData.companyId != undefined)
+          {
+            oldData.companyId.forEach(async(company) => {
+              await this.companyModel.findByIdAndUpdate( company, {$pull: {employees: id}});
+            })
+          }
+
+          return oldData;
+        } 
+      
+      updateEmployeeDto.companyId.forEach(async (company) => {
+        if(!oldData.companyId.includes(company))
+        {
+          // console.log(company);
+          
+          await this.companyModel.findByIdAndUpdate(company, {$push: {employees: id}});
+        }
+        
+      })
+
+      //check for deleted company
+      oldData.companyId.forEach(async(company) => {
+        if(!updateEmployeeDto.companyId.includes(company))
+        {
+          await this.companyModel.findByIdAndUpdate( company, {$pull: {employees: id}});
+        }
+        
+      })
+      
+
+      return oldData;
 
     }catch(err)
     {
@@ -140,6 +185,23 @@ export class EmployeesService {
     {
       throw new HttpException(err , HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async report(res: Response) {
+    const employees = await this.employeeModel.find();
+    const employees2 = await this.employeeModel.find();
+    const employees4 = await this.employeeModel.find();
+    const final = [...employees,...employees2,...employees4];
+    // console.log(employees);
+    
+    const pdfDoc = this.employeePdfGenerator.generateReport(final);
+    // console.log(pdfDoc);
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=employee_report.pdf');
+
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   }
 
   async export(res: Response,fileName: string) {

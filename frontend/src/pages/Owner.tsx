@@ -11,7 +11,7 @@ import { getOwner } from "../store/ownerSlice";
 import { AppDispatch, RootState } from "../store/store";
 import OwnerProfile from "../tabs/OwnerProfile/OwnerProfile";
 const Owner = () => {
-  const { owner, isLoading, companies } = useSelector(
+  const { owner, isLoading, companies, activities } = useSelector(
     (state: RootState) => state.owner
   );
   const { id } = useParams();
@@ -46,6 +46,7 @@ const Owner = () => {
           companies={companies}
           owner={owner}
           isLoading={isLoading}
+          activities={activities}
         />
       </PrimaryContainer>
     </PrimaryBox>

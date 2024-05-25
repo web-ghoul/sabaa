@@ -18,6 +18,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     setProImage,
     userImage,
     setUserImage,
+    employeeImage,
+    setEmployeeImage,
   } = useContext(FormsContext);
 
   const [chosenImage, setChosenImage] = useState(
@@ -31,6 +33,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       ? customerImage || defaultAvatar
       : variant === "addUser" || variant === "editUser"
       ? userImage || defaultAvatar
+      : variant === "addEmployee" || variant === "editEmployee"
+      ? employeeImage || defaultAvatar
       : defaultAvatar
   );
 
@@ -48,6 +52,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         setCustomerImage(image);
       } else if (variant === "addUser" || variant === "editUser") {
         setUserImage(image);
+      } else if (variant === "addEmployee" || variant === "editEmployee") {
+        setEmployeeImage(image);
       }
       setChosenImage(image);
     }
@@ -65,6 +71,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         ? customerImage || defaultAvatar
         : variant === "addUser" || variant === "editUser"
         ? userImage || defaultAvatar
+        : variant === "addEmployee" || variant === "editEmployee"
+        ? employeeImage || defaultAvatar
         : defaultAvatar
     );
   }, [
@@ -72,6 +80,7 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     customerImage,
     defaultAvatar,
     defaultCompany,
+    employeeImage,
     ownerImage,
     proImage,
     userImage,

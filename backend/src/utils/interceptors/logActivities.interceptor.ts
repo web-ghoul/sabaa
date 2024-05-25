@@ -24,7 +24,7 @@ export class LogInterceptor implements NestInterceptor {
                 'logActivity',
                 context.getHandler(),
               ) || '';
-        console.log(activity);
+        // console.log(activity);
         activity.route = request.route.path.split('/')[2]
         activity.id = response._id
         activity.route == "owner" ? activity.ownerType = response.type : undefined 
