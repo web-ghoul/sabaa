@@ -750,6 +750,38 @@ const ProfileDetails = ({
                     }
                   />
                 </Box>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
+                  <DataBox
+                    title={"Noqodi Wallet"}
+                    value={(data as CompanyTypes).noqodiWalet}
+                  />
+                  <DataBox
+                    title={"Noqodi Pass"}
+                    value={(data as CompanyTypes).noqodiPass}
+                  />
+                  <DataBox
+                    title={"Pin Token"}
+                    value={(data as CompanyTypes).pinToken}
+                  />
+                </Box>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
+                  <DataBox
+                    title={"Noqodi New"}
+                    value={(data as CompanyTypes).noqodiNew}
+                  />
+                  <DataBox
+                    title={"Noqodi Reg"}
+                    value={(data as CompanyTypes).noqodiReg}
+                  />
+                  <DataBox
+                    title={"Noqodi NPass"}
+                    value={(data as CompanyTypes).noqodiNPass}
+                  />
+                </Box>
               </Box>
             ) : (
               <Box className={sectionClasses}>

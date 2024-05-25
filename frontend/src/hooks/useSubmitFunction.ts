@@ -16,6 +16,7 @@ import { getCustomersCounter } from "../store/customersCounterSlice";
 import { getCustomer } from "../store/customerSlice";
 import { getCustomers } from "../store/customersSlice";
 import { getEmployeesCounter } from "../store/employeesCounterSlice";
+import { getEmployee } from "../store/employeeSlice";
 import { getEmployees } from "../store/employeesSlice";
 import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
@@ -1044,6 +1045,19 @@ const useSubmitFunction = (type: string) => {
           msg: "Sponsor is Created Successfully",
           status: "success",
         });
+        const type = pathname.split("/")[1];
+        if (id) {
+          if (type === "employees") {
+            dispatch(getEmployee({ id }));
+          } else if (type === "owners") {
+            dispatch(getOwner({ id }));
+          } else if (type === "customers") {
+            dispatch(getCustomer({ id }));
+          } else if (type === "pros") {
+            dispatch(getPro({ id }));
+          }
+        }
+
         handleCloseSponsorModal();
         setSponsorImage("");
       })
@@ -1070,6 +1084,17 @@ const useSubmitFunction = (type: string) => {
           msg: "Customer is Updated Successfully",
           status: "success",
         });
+        if (id) {
+          if (type === "employees") {
+            dispatch(getEmployee({ id }));
+          } else if (type === "owners") {
+            dispatch(getOwner({ id }));
+          } else if (type === "customers") {
+            dispatch(getCustomer({ id }));
+          } else if (type === "pros") {
+            dispatch(getPro({ id }));
+          }
+        }
         handleCloseSponsorModal();
         setSponsorImage("");
       })
