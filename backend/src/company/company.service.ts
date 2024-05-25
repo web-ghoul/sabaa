@@ -96,32 +96,32 @@ export class CompanyService {
         ],
       };
 
-      if (filterQuery?.licenseFrom != '' && filterQuery?.licenseTo == '') {
+      if (filterQuery?.licenseFrom != undefined && filterQuery?.licenseTo == undefined) {
         filterQuery.licenseTo = new Date();
       }
-      if (filterQuery?.IMMGFrom != '' && filterQuery?.IMMGTo == '') {
+      if (filterQuery?.IMMGFrom != undefined && filterQuery?.IMMGTo == undefined) {
         filterQuery.IMMGTo = new Date();
       }
 
-      filterQuery?.state != ''
+      filterQuery?.state != undefined
         ? (query['state'] = filterQuery?.state)
         : undefined;
-      filterQuery?.status != ''
+      filterQuery?.status != undefined
         ? (query['status'] = filterQuery?.status)
         : undefined;
-      filterQuery?.establishmentType != ''
+      filterQuery?.establishmentType != undefined
         ? (query['establishmentType'] = filterQuery?.establishmentType)
         : undefined;
-      filterQuery?.molCategory != ''
+      filterQuery?.molCategory != undefined
         ? (query['molCategory'] = filterQuery?.molCategory)
         : undefined;
-      filterQuery?.licenseFrom != ''
+      filterQuery?.licenseFrom != undefined
         ? (query['licenseExpiryDate'] = {
             $gte: filterQuery?.licenseFrom,
             $lte: filterQuery?.licenseTo,
           })
         : undefined;
-      filterQuery?.IMMGFrom != ''
+      filterQuery?.IMMGFrom != undefined
         ? (query['immgCardExpiry'] = {
             $gte: filterQuery?.IMMGFrom,
             $lte: filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date(),
@@ -130,6 +130,7 @@ export class CompanyService {
       
       filterQuery?.deleted != undefined ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false
         
+      console.log(query);
       
       
 
