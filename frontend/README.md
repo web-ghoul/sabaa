@@ -414,6 +414,43 @@ Notes :
 10- Finish Forgot And Reset Password
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Notes :
 1- add Checkbox for pro and owner forms (Waiting)
 2- Make File Immg Number (Numbers and / only)
@@ -432,3 +469,32 @@ Notes :
 15- Add Officer to owner tabs 
 16- Owner and officer date of birth not less than 18
 17- GRFA (Username, Password , Noqodi Wallet (Lower and Upper) , Noqodi Passport , Pin Token (Numric) , Noqodi New , Noqodi registeration , Noqodi NPass (Text))
+18- Convert Customer into (Owner , Pro)
+
+
+
+
+E-Channel For Person (Owner , Customers , Employees , Pros):
+
+1- Searching for UID
+2- Filter by User Type , Status[active , inactive] , Gender
+3- Same Search of Owner
+4- Name , Username , password , user type , uid , emirates id
+5- Sort By Name
+6- Default Sort By Status 
+7- Add E-Channel To Owner
+
+
+
+Tasheel : 
+1- Username , password , Security ques 1 , Security ques 2 , Email user , mobile user , notes
+2- When Searching Display Results and Select it when searchin for company seach for establishment type is mol
+3- Search by owner code, employee code, company code
+4- Name , Person Code
+5- Name , Arabic Name , username , password , security 1, security 2
+6- Filter by type
+7- sort by Name 
+
+
+Natwasal is Same of Tasheel
+

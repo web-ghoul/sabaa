@@ -325,6 +325,14 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         emiratesId: "",
         remarks: "",
         sponsors: [],
+        medical: {
+          insurance: "",
+          expireDate: new Date(),
+        },
+        iLOE: {
+          insurance: "",
+          expireDate: new Date(),
+        },
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;

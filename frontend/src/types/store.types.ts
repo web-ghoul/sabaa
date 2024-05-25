@@ -4,6 +4,7 @@ interface AuthValuesTypes {
   token: string | null;
   userId: string | null;
   user: UserTypes | null;
+  activities: ActivityTypes[] | null;
   isLoading: boolean;
 }
 
