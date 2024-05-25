@@ -111,7 +111,7 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           label={"Status"}
           name={"status"}
           select
-          options={["Active", "Pending", "Blocked"]}
+          options={["Active", "Inactive"]}
         />
         <Input
           formik={formik}
