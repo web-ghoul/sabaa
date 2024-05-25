@@ -99,6 +99,9 @@ export class Employee {
 
     @Prop()
     emiratesId: string;
+
+    @Prop()
+    sponsor: string;
   
     @Prop({ type: Array, default: [], ref: 'Sponsor' })
     sponsors: string[];

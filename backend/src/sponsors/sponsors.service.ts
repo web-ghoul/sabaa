@@ -25,7 +25,7 @@ export class SponsorsService {
           createSponsorDto.user = user;
           createSponsorDto.avatar = file ? file.path : undefined;
         }
-  
+        
         const data = await this.sponsorModel.create(createSponsorDto) ;
 
         if(data.owner)

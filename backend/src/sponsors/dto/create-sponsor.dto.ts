@@ -25,6 +25,9 @@ export class CreateSponsorDto {
   idNationality: string;
 
   @IsString()
+  relativeRelation: string;
+
+  @IsString()
   owner: ObjectId;
 
   @IsString()
