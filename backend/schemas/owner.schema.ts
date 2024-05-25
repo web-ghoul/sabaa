@@ -72,6 +72,7 @@ export class Owner {
     // isPro: boolean;
 
 
+
     @Prop({ type: String, trim: true, sparse: true })
     emiratesId: string;
 

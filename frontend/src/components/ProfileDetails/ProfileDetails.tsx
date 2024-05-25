@@ -733,27 +733,49 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Divider />
-            <Box className={sectionClasses}>
-              <Typography variant="h4" className={`!font-[700]`}>
-                E-Channel Information
-              </Typography>
-              <Box className={profileInfoClasses}>
-                <DataBox
-                  title={"E-channel Expire Date"}
-                  value={handleDate((data as CompanyTypes).echannelExpiryDate)}
-                />
-                <DataBox
-                  title={"Username"}
-                  value={(data as CompanyTypes).userName}
-                />
-                <DataBox
-                  title={"Password"}
-                  value={
-                    <PasswordBox password={(data as CompanyTypes).password} />
-                  }
-                />
+            {data.status.toLowerCase() === "dubai" ? (
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  GDRFA Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox
+                    title={"Username"}
+                    value={(data as CompanyTypes).userName}
+                  />
+                  <DataBox
+                    title={"Password"}
+                    value={
+                      <PasswordBox password={(data as CompanyTypes).password} />
+                    }
+                  />
+                </Box>
               </Box>
-            </Box>
+            ) : (
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox
+                    title={"E-channel Expire Date"}
+                    value={handleDate(
+                      (data as CompanyTypes).echannelExpiryDate
+                    )}
+                  />
+                  <DataBox
+                    title={"Username"}
+                    value={(data as CompanyTypes).userName}
+                  />
+                  <DataBox
+                    title={"Password"}
+                    value={
+                      <PasswordBox password={(data as CompanyTypes).password} />
+                    }
+                  />
+                </Box>
+              </Box>
+            )}
           </Paper>
         )
       ))

@@ -47,12 +47,24 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
     handleAddQuery({ state: value });
   };
 
+  const handleFilterByStatus = (value: string) => {
+    handleAddQuery({ status: value });
+  };
+
   const handleFilterByDateOfBirthFrom = (value: string) => {
     handleAddQuery({ dobFrom: value });
   };
 
   const handleFilterByDateOfBirthTo = (value: string) => {
     handleAddQuery({ dobTo: value });
+  };
+
+  const handleFilterByResidenceFrom = (value: string) => {
+    handleAddQuery({ residenceFrom: value });
+  };
+
+  const handleFilterByResidenceTo = (value: string) => {
+    handleAddQuery({ residenceTo: value });
   };
 
   const handleFilter = () => {
@@ -82,6 +94,12 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
     queries.dobFrom || "";
   (formik as unknown as ProsOptionsFormikTypes).values.dobTo =
     queries.dobTo || "";
+  (formik as unknown as ProsOptionsFormikTypes).values.residenceFrom =
+    queries.residenceFrom || "";
+  (formik as unknown as ProsOptionsFormikTypes).values.residenceTo =
+    queries.residenceTo || "";
+  (formik as unknown as ProsOptionsFormikTypes).values.state =
+    queries.status || "";
   (formik as unknown as ProsOptionsFormikTypes).values.state =
     queries.state || "";
   (formik as unknown as ProsOptionsFormikTypes).values.nationality =
@@ -162,7 +180,7 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`grid grid-cols-[1fr,1fr,2fr,auto] justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
+          className={`grid grid-cols-3 justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
@@ -180,6 +198,14 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
             formik={formik}
             change={handleFilterByState}
             options={["dubai"]}
+            select
+          />
+          <Input
+            label={"Filter By Status"}
+            name={"status"}
+            formik={formik}
+            change={handleFilterByStatus}
+            options={["Active", "Pending", "Blocked"]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
@@ -203,11 +229,36 @@ const ProsOptionsForm = ({ formik }: FormiksTypes) => {
               />
             </Box>
           </Box>
-          <Button
-            icon={<FilterListRounded />}
-            title={"Filter"}
-            handling={handleFilter}
-          />
+          <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
+            <Typography variant="h6">
+              Filter By Residence Expire Date
+            </Typography>
+            <Box
+              className={`flex justify-stretch gap-4 md:gap-3 sm:!gap-2 md:flex-wrap`}
+            >
+              <Input
+                name={"residenceFrom"}
+                label={"From"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByResidenceFrom}
+              />
+              <Input
+                name={"residenceTo"}
+                label={"To"}
+                type={"date"}
+                formik={formik}
+                change={handleFilterByResidenceTo}
+              />
+            </Box>
+          </Box>
+          <Box className={`flex justify-end items-center`}>
+            <Button
+              icon={<FilterListRounded />}
+              title={"Filter"}
+              handling={handleFilter}
+            />
+          </Box>
         </Box>
       </Box>
     </Paper>

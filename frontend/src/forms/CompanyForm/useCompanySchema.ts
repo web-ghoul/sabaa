@@ -46,6 +46,12 @@ const useCompanySchema = () => {
     echannelExpiryDate: yup.date(),
     userName: yup.string(),
     password: yup.string(),
+    noqodiWalet: yup.string(),
+    noqodiPass: yup.string(),
+    pinToken: yup.string(),
+    noqodiNew: yup.string(),
+    noqodiReg: yup.string(),
+    noqodiNPass: yup.string(),
     remarks: yup.string(),
   });
 
@@ -107,6 +113,12 @@ const useCompanySchema = () => {
       "",
     userName: editableCompanyData?.userName || "",
     password: "",
+    noqodiWalet: editableCompanyData?.noqodiWalet || "",
+    noqodiPass: editableCompanyData?.noqodiPass || "",
+    pinToken: editableCompanyData?.pinToken || "",
+    noqodiNew: editableCompanyData?.noqodiNew || "",
+    noqodiReg: editableCompanyData?.noqodiReg || "",
+    noqodiNPass: editableCompanyData?.noqodiNPass || "",
   };
 
   return { CompanyInitailValues, CompanySchema };

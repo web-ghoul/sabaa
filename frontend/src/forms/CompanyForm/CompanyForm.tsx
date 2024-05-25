@@ -238,44 +238,59 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           />
         </Box>
       </Box>
+      <Divider />
       {(formik.values as unknown as CompanyFormTypes).state.toLowerCase() !==
       "dubai" ? (
-        <>
-          <Divider />
-          <Box className={`grid justify-stretch items-center gap-4`}>
-            <Typography variant="h4" className={`!font-[700]`}>
-              E-Channel Details
-            </Typography>
-            <Box
-              className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
-            >
+        <Box className={`grid justify-stretch items-center gap-4`}>
+          <Typography variant="h4" className={`!font-[700]`}>
+            E-Channel Details
+          </Typography>
+          <Box
+            className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+          >
+            <Input
+              formik={formik}
+              type={"date"}
+              name={"echannelExpiryDate"}
+              label={"E-Channel Expire Date"}
+            />
+            <Input
+              formik={formik}
+              label={"Username"}
+              name={"userName"}
+              type={"text"}
+            />
+            <Input
+              formik={formik}
+              label={"Password"}
+              type={"password"}
+              name={"password"}
+            />
               <Input
-                formik={formik}
-                type={"date"}
-                name={"echannelExpiryDate"}
-                label={"E-Channel Expire Date"}
-              />
-              <Input formik={formik} label={"Username"} name={"userName"} />
-              <Input
-                formik={formik}
-                label={"Password"}
-                type={"password"}
-                name={"password"}
-              />
-            </Box>
+              formik={formik}
+              label={"E-Channel Remarks"}
+              type={"text"}
+              name={"echannelRemarks"}
+            />
           </Box>
-        </>
+        </Box>
       ) : (
-        <>
-          <Divider />
-          <Box className={`grid justify-stretch items-center gap-4`}>
-            <Typography variant="h4" className={`!font-[700]`}>
-              GDRF Details
-            </Typography>
+        <Box className={`grid justify-stretch items-center gap-4`}>
+          <Typography variant="h4" className={`!font-[700]`}>
+            GDRF Details
+          </Typography>
+          <Box
+            className={`grid justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
+          >
             <Box
-              className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+              className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
             >
-              <Input formik={formik} label={"Username"} name={"userName"} />
+              <Input
+                formik={formik}
+                label={"Username"}
+                name={"userName"}
+                type={"text"}
+              />
               <Input
                 formik={formik}
                 label={"Password"}
@@ -283,8 +298,52 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
                 name={"password"}
               />
             </Box>
+            <Box
+              className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
+            >
+              <Input
+                formik={formik}
+                label={"Noqodi Wallet"}
+                name={"noqodiWalet"}
+                type={"text"}
+              />
+              <Input
+                formik={formik}
+                label={"Noqodi Pass"}
+                name={"noqodiPass"}
+                type={"text"}
+              />
+              <Input
+                formik={formik}
+                label={"Pin Token"}
+                name={"pinToken"}
+                type={"text"}
+              />
+            </Box>
+            <Box
+              className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
+            >
+              <Input
+                formik={formik}
+                label={"Noqodi New"}
+                name={"noqodiNew"}
+                type={"text"}
+              />
+              <Input
+                formik={formik}
+                label={"Noqodi Reg"}
+                name={"noqodiReg"}
+                type={"text"}
+              />
+              <Input
+                formik={formik}
+                label={"Noqodi NPass"}
+                name={"noqodiNPass"}
+                type={"text"}
+              />
+            </Box>
           </Box>
-        </>
+        </Box>
       )}
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>

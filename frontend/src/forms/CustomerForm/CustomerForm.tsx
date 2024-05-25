@@ -118,7 +118,6 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
           formik={formik}
           label={"File Immgiration Number"}
           name={"fileImmgNo"}
-          variant={"numeric"}
         />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
       </Box>
