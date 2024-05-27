@@ -85,13 +85,15 @@ export class OwnerService {
       }
 
       const query: any = {
-        $or: [
+        $and: [{$or: [
           { name: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
           { phone: { $regex: new RegExp(search, 'i') } },
           { uid: { $regex: new RegExp(search, 'i') } },
           { emiratesId: { $regex: new RegExp(search, 'i') } },
-        ],
+        ]}
+      ],
+        
       };
       dobFrom != ''
         ? (query['dob'] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) })
@@ -101,15 +103,22 @@ export class OwnerService {
       deleted != false
         ? (query['deleted'] = deleted)
         : (query['deleted'] = false);
-      type != '' ? (query['type'] = type) : undefined;
+
+
       status != '' ? (query['status'] = status) : undefined;
       residenceFrom != ''
         ? (query['residenceExpiryDate'] = { $gte: new Date(residenceFrom), $lte: new Date(residenceTo) })
         : undefined;
       
 
-      
-      
+      if(type == 'owner'){
+        query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
+      }else if (type == 'pro') {
+        query['$and'].push({ $or : [{type: 'pro'},{type: 'owner&pro'}]});
+      }else
+      {
+        type != '' ? (query['type'] = type) : undefined;
+      }
 
       console.log(query);
 
