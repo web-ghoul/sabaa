@@ -137,30 +137,14 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             type={"text"}
             variant={"numeric"}
           />
-          <Input
-            formik={formik}
-            type={"number"}
-            name={"visaFileNumber"}
-            label={"Visa File Number"}
-          />
+
           <Input
             formik={formik}
             type={"date"}
             name={"dob"}
             label={"Date of Birth"}
           />
-          <Input
-            formik={formik}
-            type={"number"}
-            name={"passportNumber"}
-            label={"Passport Number"}
-          />
-          <Input
-            formik={formik}
-            type={"date"}
-            name={"passportExpiry"}
-            label={"Passport Expire Date"}
-          />
+
           <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
         </Box>
       </Box>
@@ -173,6 +157,24 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
         <Box
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"passportNumber"}
+            label={"Passport Number"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"passportExpiry"}
+            label={"Passport Expire Date"}
+          />
+          <Input
+            formik={formik}
+            type={"number"}
+            name={"visaFileNumber"}
+            label={"Visa File Number"}
+          />
           <Input
             label={"Card Type"}
             name={"cardType"}
@@ -190,18 +192,23 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             ]}
             select
           />
-
-          <Input
-            formik={formik}
-            type={"date"}
-            name={"residenceExpireDate"}
-            label={"Residence Expire Date"}
-          />
           <Input
             formik={formik}
             label={"Card Number"}
             type={"number"}
             name={"cardNumber"}
+          />
+          <Input
+            formik={formik}
+            label={"File Immgration Number"}
+            type={"text"}
+            name={"fileImmgNo"}
+          />
+          <Input
+            formik={formik}
+            type={"date"}
+            name={"residenceExpireDate"}
+            label={"Residence Expire Date"}
           />
           <Input
             formik={formik}

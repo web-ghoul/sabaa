@@ -31,6 +31,7 @@ const useEmployeeSchema = () => {
     medicalPolicyNo: yup.string(),
     medicalExpireDate: yup.date(),
     visaFileNumber: yup.string(),
+    fileImmgNo: yup.string(),
     emiratesId: yup.string(),
     workPermitNumber: yup.string(),
     passportNumber: yup.string(),
@@ -78,6 +79,7 @@ const useEmployeeSchema = () => {
           .split("T")[0]) ||
       "",
     visaFileNumber: editableEmployeeData?.visaFileNumber || "",
+    fileImmgNo: editableEmployeeData?.fileImmgNo || "",
     emiratesId: editableEmployeeData?.emiratesId || "",
     workPermitNumber: editableEmployeeData?.workPermitNumber || "",
     passportNumber: editableEmployeeData?.passportNumber || "",

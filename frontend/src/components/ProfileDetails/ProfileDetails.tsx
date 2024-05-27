@@ -480,25 +480,8 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).nameAr}
               />
               <DataBox
-                title={"Person Code"}
-                value={(data as EmployeeTypes).personCode}
-              />
-              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
-              <DataBox
-                title={"Mobile Number"}
-                value={(data as EmployeeTypes).mobileNumber}
-              />
-              <DataBox
-                title={"Job Title"}
-                value={(data as EmployeeTypes).job}
-              />
-              <DataBox
-                title={"Date of Birth"}
-                value={handleDate((data as EmployeeTypes).dob)}
-              />
-              <DataBox
-                title={"Status"}
-                value={<StatusBox status={(data as EmployeeTypes).status} />}
+                title={"Gender"}
+                value={(data as EmployeeTypes).gender}
               />
               <DataBox
                 title={"Nationality"}
@@ -506,12 +489,37 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).nationality}
               />
               <DataBox
-                title={"Emirates Id"}
-                value={(data as EmployeeTypes).emiratesId}
+                title={"Person Code"}
+                value={(data as EmployeeTypes).personCode}
+              />
+              <DataBox
+                title={"Mobile Number"}
+                value={(data as EmployeeTypes).mobileNumber}
+              />
+              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
+              <DataBox
+                title={"Salary"}
+                value={(data as EmployeeTypes).salary}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as EmployeeTypes).status} />}
+              />
+              <DataBox
+                title={"Job Title"}
+                value={(data as EmployeeTypes).job}
               />
               <DataBox
                 title={"UID Number"}
                 value={(data as EmployeeTypes).uid}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as EmployeeTypes).emiratesId}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as EmployeeTypes).dob)}
               />
               <DataBox
                 title={"Remarks"}
@@ -538,6 +546,10 @@ const ProfileDetails = ({
                 value={handleDate((data as EmployeeTypes).passportExpiry)}
               />
               <DataBox
+                title={"Visa File Number"}
+                value={(data as EmployeeTypes).visaFileNumber}
+              />
+              <DataBox
                 title={"Card Type"}
                 value={(data as EmployeeTypes).cardType}
               />
@@ -546,8 +558,8 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).cardNumber}
               />
               <DataBox
-                title={"Visa File Number"}
-                value={(data as EmployeeTypes).visaFileNumber}
+                title={"File Immgration Number"}
+                value={(data as EmployeeTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}

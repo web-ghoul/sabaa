@@ -67,6 +67,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseDeleteModal,
     editableNationalityData,
     editableJobData,
+    editableSponsorData,
     ownerImage,
     sponsorImage,
     employeeImage,
@@ -290,6 +291,9 @@ const useSubmitFunction = (type: string) => {
     formData.append("job", values.job.trim());
     if (values.visaFileNumber) {
       formData.append("visaFileNumber", values.visaFileNumber);
+    }
+    if (values.fileImmgNo) {
+      formData.append("fileImmgNo", values.fileImmgNo);
     }
     if (values.cardNumber) {
       formData.append("cardNumber", values.cardNumber);
@@ -1076,7 +1080,7 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     await server
       .patch(
-        `/sponsor/${editableCustomerData && editableCustomerData._id}`,
+        `/sponsor/${editableSponsorData && editableSponsorData._id}`,
         handleSponsorFormData(values),
         {
           headers: {
@@ -1086,9 +1090,10 @@ const useSubmitFunction = (type: string) => {
       )
       .then(() => {
         handleAlert({
-          msg: "Customer is Updated Successfully",
+          msg: "Sponsor is Updated Successfully",
           status: "success",
         });
+        const type = pathname.split("/")[1];
         if (id) {
           if (type === "employees") {
             dispatch(getEmployee({ id }));
@@ -1517,6 +1522,35 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "sponsor") {
+      await server
+        .delete(`/sponsor/${editableSponsorData && editableSponsorData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Sponsor is Deleted Successfully",
+            status: "success",
+          });
+          if (id) {
+            const type = pathname.split("/")[1];
+            if (type === "employees") {
+              dispatch(getEmployee({ id }));
+            } else if (type === "owners") {
+              dispatch(getOwner({ id }));
+            } else if (type === "customers") {
+              dispatch(getCustomer({ id }));
+            } else if (type === "pros") {
+              dispatch(getPro({ id }));
+            }
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "employee") {
       await server
         .delete(
@@ -1669,31 +1703,6 @@ const useSubmitFunction = (type: string) => {
           });
           if (id) {
             dispatch(getPro({ id }));
-          }
-          handleCloseDeleteModal();
-        })
-        .catch((err) => {
-          handleCatchError(err);
-        });
-    } else if (formType === "unLinkCustomer") {
-      await server
-        .get(
-          `/company/ManageOwnersAndPro?companyId=${
-            editableCompanyData && editableCompanyData._id
-          }&id=${id}&operation=deleting&typeOfPerson=customer`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          handleAlert({
-            msg: "Customer is unLinked with Company Successfully",
-            status: "success",
-          });
-          if (id) {
-            dispatch(getCustomer({ id }));
           }
           handleCloseDeleteModal();
         })
