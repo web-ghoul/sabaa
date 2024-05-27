@@ -17,7 +17,7 @@ const TotalBox = ({ count, variant, isLoading }: TotalBoxTypes) => {
     if (variant === "owners") {
       navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
     } else if (variant === "officers") {
-      navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
+      navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
     } else if (variant === "employees") {
       navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
     } else if (variant === "companies") {
