@@ -22,6 +22,10 @@ export class CreateEmployeeDto {
 
   @IsOptional()
   @IsString()
+  fileImmgNo: string;
+
+  @IsOptional()
+  @IsString()
   personCode: string;
 
   @IsNotEmpty()

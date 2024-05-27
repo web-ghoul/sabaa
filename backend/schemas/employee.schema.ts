@@ -98,6 +98,9 @@ export class Employee {
     remarks: string
 
     @Prop()
+    fileImmgNo: string
+
+    @Prop()
     emiratesId: string;
 
     @Prop()
