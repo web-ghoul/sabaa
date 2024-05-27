@@ -11,7 +11,7 @@ import { getCompany } from "../store/companySlice";
 import { AppDispatch, RootState } from "../store/store";
 import CompanyProfile from "../tabs/CompanyProfile/CompanyProfile";
 const Company = () => {
-  const { company, isLoading } = useSelector(
+  const { company, isLoading, activities } = useSelector(
     (state: RootState) => state.company
   );
   const { id } = useParams();
@@ -42,7 +42,11 @@ const Company = () => {
             </Typography>
           </BreadCrumbs>
         </Box>
-        <CompanyProfile company={company} isLoading={isLoading} />
+        <CompanyProfile
+          company={company}
+          isLoading={isLoading}
+          activities={activities}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

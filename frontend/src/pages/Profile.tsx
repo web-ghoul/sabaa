@@ -10,7 +10,9 @@ import { AppDispatch, RootState } from "../store/store";
 import UserProfile from "../tabs/UserProfile/UserProfile";
 
 const Profile = () => {
-  const { user, isLoading } = useSelector((state: RootState) => state.auth);
+  const { user, isLoading, activities } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
 
@@ -26,7 +28,11 @@ const Profile = () => {
             Profile
           </Typography>
         </BreadCrumbs>
-        <UserProfile user={user} isLoading={isLoading} />
+        <UserProfile
+          user={user}
+          isLoading={isLoading}
+          activities={activities}
+        />
       </PrimaryContainer>
     </PrimaryBox>
   );

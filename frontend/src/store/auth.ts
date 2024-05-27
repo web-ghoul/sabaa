@@ -21,6 +21,7 @@ const initialState: AuthValuesTypes = {
   token: null,
   userId: null,
   user: null,
+  activities: null,
   isLoading: true,
 };
 
@@ -61,7 +62,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(getProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.user = payload;
+      state.user = payload.user;
+      state.activities = payload.activities;
     });
     builder.addCase(getProfile.rejected, (_, action) => {
       if (action.payload) {
