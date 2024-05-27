@@ -158,8 +158,6 @@ const ProfileDetails = ({
     setEditableCompanyData(company);
   };
 
-  console.log(data);
-
   return isLoading ? (
     <LoadingProfileDetails />
   ) : (

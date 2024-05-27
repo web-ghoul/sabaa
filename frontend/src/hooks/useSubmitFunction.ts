@@ -152,10 +152,11 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
-  const handleOwnerFormData = (
-    values: OwnerFormTypes | ProFormTypes | CustomerTypes,
-    type: "pro" | "customer" | "owner"
+  const handlePersonFormData = (
+    values: OwnerFormTypes | ProFormTypes | CustomerTypes
   ) => {
+    const type = values.type;
+    console.log(type);
     const avatar = type
       ? type === "pro"
         ? proImage
@@ -192,7 +193,9 @@ const useSubmitFunction = (type: string) => {
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }
-    formData.append("type", type);
+    if (type) {
+      formData.append("type", type);
+    }
     return formData;
   };
 
@@ -678,7 +681,7 @@ const useSubmitFunction = (type: string) => {
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "owner"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -712,7 +715,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableOwnerData && editableOwnerData._id}`,
-          handleOwnerFormData(values, "owner"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -766,7 +769,7 @@ const useSubmitFunction = (type: string) => {
   const addPro = async (values: ProFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "pro"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -800,7 +803,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableProData && editableProData._id}`,
-          handleOwnerFormData(values, "pro"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -854,7 +857,7 @@ const useSubmitFunction = (type: string) => {
   const addCustomer = async (values: CustomerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "customer"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -888,7 +891,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableCustomerData && editableCustomerData._id}`,
-          handleOwnerFormData(values, "customer"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,

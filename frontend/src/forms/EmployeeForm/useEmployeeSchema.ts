@@ -61,20 +61,19 @@ const useEmployeeSchema = () => {
     cardNumber: editableEmployeeData?.cardNumber || "",
     job: editableEmployeeData?.job || "",
     remarks: editableEmployeeData?.remarks || "",
-    iLOEInsuranceCompany: editableEmployeeData?.iLOEInsuranceCompany || "",
+    iLOEInsuranceCompany: editableEmployeeData?.iLOE.insurance || "",
     iLOEPolicyNo: editableEmployeeData?.iLOEPolicyNo || "",
     iLOEExpireDate:
-      (editableEmployeeData?.iLOEExpireDate &&
-        new Date(editableEmployeeData?.iLOEExpireDate)
+      (editableEmployeeData?.iLOE.expireDate &&
+        new Date(editableEmployeeData?.iLOE.expireDate)
           .toISOString()
           .split("T")[0]) ||
       "",
-    medicalInsuranceCompany:
-      editableEmployeeData?.medicalInsuranceCompany || "",
+    medicalInsuranceCompany: editableEmployeeData?.medical.insurance || "",
     medicalPolicyNo: editableEmployeeData?.medicalPolicyNo || "",
     medicalExpireDate:
-      (editableEmployeeData?.medicalExpireDate &&
-        new Date(editableEmployeeData?.medicalExpireDate)
+      (editableEmployeeData?.medical.expireDate &&
+        new Date(editableEmployeeData?.medical.expireDate)
           .toISOString()
           .split("T")[0]) ||
       "",
