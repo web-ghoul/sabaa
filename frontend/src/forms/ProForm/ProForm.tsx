@@ -1,5 +1,5 @@
-import { Box, Paper } from "@mui/material";
-import { useContext, useEffect, useMemo } from "react";
+import { Box, Checkbox, Paper, Typography } from "@mui/material";
+import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Button from "../../components/Button/Button";
@@ -10,7 +10,7 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes, ProFormikTypes } from "../../types/forms.types";
 
 const ProForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseProModal, setProImage } =
@@ -18,6 +18,16 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+  const [checked, setChecked] = useState(false);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setChecked(checked);
+    if (checked) {
+      (formik as unknown as ProFormikTypes).values.type = "owner&pro";
+    } else {
+      (formik as unknown as ProFormikTypes).values.type = "pro";
+    }
+  };
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -54,6 +64,17 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
         () => type && <UploadImage title={"Officer Avatar"} variant={type} />,
         [type]
       )}
+
+      <Box
+        className={`flex justify-start items-center gap-2 md:gap-1 sm:!gap-0`}
+      >
+        <Checkbox
+          checked={checked}
+          onChange={handleChange}
+          inputProps={{ "aria-label": "controlled" }}
+        />
+        <Typography variant="h6">Owner & Officer</Typography>
+      </Box>
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input

@@ -156,7 +156,6 @@ const useSubmitFunction = (type: string) => {
     values: OwnerFormTypes | ProFormTypes | CustomerTypes
   ) => {
     const type = values.type;
-    console.log(type);
     const avatar = type
       ? type === "pro"
         ? proImage
