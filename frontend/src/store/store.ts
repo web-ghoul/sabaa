@@ -69,6 +69,10 @@ export const store = configureStore({
     usersCounter: usersCounterReducers,
     nationalitiesCounter: nationalitiesCounterReducers,
   },
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware({
+      serializableCheck: false, 
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

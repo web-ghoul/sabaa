@@ -35,6 +35,7 @@ import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
   CompanyFormTypes,
+  ConvertCustomerFormTypes,
   CustomerFormTypes,
   DownloadExcelFormTypes,
   EmployeeFormTypes,
@@ -65,6 +66,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseJobModal,
     handleCloseNationalityModal,
     handleCloseDeleteModal,
+    handleCloseConvertCustomerModal,
     editableNationalityData,
     editableJobData,
     editableSponsorData,
@@ -947,6 +949,47 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  const convertCustomer = async (values: ConvertCustomerFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/owner/${editableCustomerData && editableCustomerData._id}`,
+        { type: values.type === "Owner" ? "owner" : "pro" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Customer is Converted Successfully",
+          status: "success",
+        });
+        if (
+          id &&
+          pathname === `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${id}`
+        ) {
+          if (values.type === "Owner") {
+            navigate(`${import.meta.env.VITE_OWNERS_ROUTE}/${id}`);
+          } else {
+            navigate(`${import.meta.env.VITE_PROS_ROUTE}/${id}`);
+          }
+        } else {
+          if (values.type === "Owner") {
+            navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+          } else {
+            navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+          }
+        }
+        handleCloseConvertCustomerModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   //Employees
   const addEmployee = async (values: EmployeeFormTypes) => {
     handleOpenFormsLoading();
@@ -1786,6 +1829,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCustomersSheet":
         createCustomersSheet(values as unknown);
+        break;
+      case "convertCustomer":
+        convertCustomer(values as ConvertCustomerFormTypes);
         break;
       case "addSponsor":
         addSponsor(values as SponsorFormTypes);

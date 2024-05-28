@@ -1,4 +1,5 @@
 import {
+  ChangeCircleRounded,
   DeleteRounded,
   EditRounded,
   VisibilityRounded,
@@ -20,6 +21,7 @@ const CustomersTableMenu = () => {
     handleOpenCustomerModal,
     handleOpenDeleteModal,
     editableCustomerData,
+    handleOpenConvertCustomerModal,
   } = useContext(FormsContext);
   const { handleDeleteCustomerFromSheet } = useContext(ExcelsContext);
 
@@ -33,6 +35,10 @@ const CustomersTableMenu = () => {
 
   const handleEdit = () => {
     handleOpenCustomerModal("editCustomer");
+  };
+
+  const handleConvert = () => {
+    handleOpenConvertCustomerModal();
   };
 
   const handleDelete = () => {
@@ -70,11 +76,15 @@ const CustomersTableMenu = () => {
           handling={handleView}
         />
       )}
-
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}
         handling={handleEdit}
+      />
+      <TableMenuItem
+        icon={<ChangeCircleRounded />}
+        title={"Convert"}
+        handling={handleConvert}
       />
       <TableMenuItem
         icon={<DeleteRounded />}

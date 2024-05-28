@@ -4,7 +4,7 @@ const StatusBox = ({ status }: { status: string }) => {
   return (
     status && (
       <Box
-        className={`py-1 font-[700] px-4 md:px-3 sm:py-[2px] sm:!px-2 xs:!px-1 m-auto rounded-md sm:rounded-sm w-fit 
+        className={`py-1 font-[700] px-4 md:px-3 sm:py-[2px] sm:!px-2 xs:!px-1 m-auto rounded-md sm:rounded-sm w-fit capitalize 
         ${
           (status.toLowerCase() === "pending" ||
             status.toLowerCase() === "abscond") &&

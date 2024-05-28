@@ -24,6 +24,8 @@ const TotalBox = ({ count, variant, isLoading }: TotalBoxTypes) => {
       navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
     } else if (variant === "customers") {
       navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
+    } else if (variant === "transactions") {
+      navigate(`${import.meta.env.VITE_TRANSACTIONS_ROUTE}`);
     }
   };
 

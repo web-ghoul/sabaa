@@ -5,6 +5,7 @@ import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
 import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
+import ConvertCustomerForm from "./ConvertCustomerForm/ConvertCustomerForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
 import CreateCustomersSheetForm from "./CreateCustomersSheetForm/CreateCustomersSheetForm";
 import CreateEmployeesSheetForm from "./CreateEmployeesSheetForm/CreateEmployeesSheetForm";
@@ -158,6 +159,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {type === "customersOptions" && (
         <CustomersOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "convertCustomer" && (
+        <ConvertCustomerForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}

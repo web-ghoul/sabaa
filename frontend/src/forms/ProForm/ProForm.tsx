@@ -1,4 +1,4 @@
-import { Box, Checkbox, Paper, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Paper } from "@mui/material";
 import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
@@ -65,16 +65,16 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
         [type]
       )}
 
-      <Box
-        className={`flex justify-start items-center gap-2 md:gap-1 sm:!gap-0`}
-      >
-        <Checkbox
-          checked={checked}
-          onChange={handleChange}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <Typography variant="h6">Owner & Officer</Typography>
-      </Box>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        }
+        label={"Owner & Officer"}
+      />
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input

@@ -33,7 +33,7 @@ const ProfileDetails = ({
 }: ProfileDetailsTypes) => {
   const profileClasses = `grid justify-stretch items-center gap-8 p-6 !rounded-xl md:gap-6 sm:!gap-4`;
   const profileDataClasses = `flex justify-between items-center gap-6 md:gap-4 sm:grid sm:justify-center`;
-  const profileInfoClasses = `grid justify-start items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
+  const profileInfoClasses = `grid justify-stretch items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
   const profileButtonsClasses = `flex justify-end items-center gap-2 sm:justify-center`;
   const sectionClasses = `grid gap-8 md:gap-6 sm:gap-3`;
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ const ProfileDetails = ({
     setEditableCustomerData,
     handleOpenCustomerModal,
     setEditableEmployeeData,
+    handleOpenConvertCustomerModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { pro } = useSelector((state: RootState) => state.pro);
@@ -106,6 +107,10 @@ const ProfileDetails = ({
   const handleEditCustomer = () => {
     setEditableCustomerData(customer);
     handleOpenCustomerModal("editCustomer");
+  };
+  const handleConvertCustomer = () => {
+    setEditableCustomerData(customer);
+    handleOpenConvertCustomerModal();
   };
   const handleDeleteCustomer = () => {
     handleOpenDeleteModal("customer");
@@ -390,6 +395,11 @@ const ProfileDetails = ({
                 bg={`!bg-green-500`}
               />
               <Button
+                title={"Convert"}
+                handling={handleConvertCustomer}
+                bg={`!bg-purple-500`}
+              />
+              <Button
                 title={"Delete"}
                 bg={`!bg-red-500`}
                 handling={handleDeleteCustomer}
@@ -499,7 +509,7 @@ const ProfileDetails = ({
               <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
               <DataBox
                 title={"Salary"}
-                value={(data as EmployeeTypes).salary}
+                value={(data as EmployeeTypes).salary.toString()}
               />
               <DataBox
                 title={"Status"}
