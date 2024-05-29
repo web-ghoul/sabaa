@@ -33,7 +33,7 @@ const ProfileDetails = ({
 }: ProfileDetailsTypes) => {
   const profileClasses = `grid justify-stretch items-center gap-8 p-6 !rounded-xl md:gap-6 sm:!gap-4`;
   const profileDataClasses = `flex justify-between items-center gap-6 md:gap-4 sm:grid sm:justify-center`;
-  const profileInfoClasses = `grid justify-start items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
+  const profileInfoClasses = `grid justify-stretch items-start gap-6 md:gap-4 grid-cols-[1fr,1fr,1fr,1fr] lg:grid-cols-[1fr,1fr,1fr] sm:grid-cols-[1fr,1fr] xs:grid-cols-1`;
   const profileButtonsClasses = `flex justify-end items-center gap-2 sm:justify-center`;
   const sectionClasses = `grid gap-8 md:gap-6 sm:gap-3`;
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ const ProfileDetails = ({
     setEditableCustomerData,
     handleOpenCustomerModal,
     setEditableEmployeeData,
+    handleOpenConvertCustomerModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { pro } = useSelector((state: RootState) => state.pro);
@@ -107,6 +108,10 @@ const ProfileDetails = ({
     setEditableCustomerData(customer);
     handleOpenCustomerModal("editCustomer");
   };
+  const handleConvertCustomer = () => {
+    setEditableCustomerData(customer);
+    handleOpenConvertCustomerModal();
+  };
   const handleDeleteCustomer = () => {
     handleOpenDeleteModal("customer");
     setEditableCustomerData(customer);
@@ -157,8 +162,6 @@ const ProfileDetails = ({
     handleOpenDeleteModal("company");
     setEditableCompanyData(company);
   };
-
-  console.log(data);
 
   return isLoading ? (
     <LoadingProfileDetails />
@@ -392,6 +395,11 @@ const ProfileDetails = ({
                 bg={`!bg-green-500`}
               />
               <Button
+                title={"Convert"}
+                handling={handleConvertCustomer}
+                bg={`!bg-purple-500`}
+              />
+              <Button
                 title={"Delete"}
                 bg={`!bg-red-500`}
                 handling={handleDeleteCustomer}
@@ -482,25 +490,8 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).nameAr}
               />
               <DataBox
-                title={"Person Code"}
-                value={(data as EmployeeTypes).personCode}
-              />
-              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
-              <DataBox
-                title={"Mobile Number"}
-                value={(data as EmployeeTypes).mobileNumber}
-              />
-              <DataBox
-                title={"Job Title"}
-                value={(data as EmployeeTypes).job}
-              />
-              <DataBox
-                title={"Date of Birth"}
-                value={handleDate((data as EmployeeTypes).dob)}
-              />
-              <DataBox
-                title={"Status"}
-                value={<StatusBox status={(data as EmployeeTypes).status} />}
+                title={"Gender"}
+                value={(data as EmployeeTypes).gender}
               />
               <DataBox
                 title={"Nationality"}
@@ -508,12 +499,37 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).nationality}
               />
               <DataBox
-                title={"Emirates Id"}
-                value={(data as EmployeeTypes).emiratesId}
+                title={"Person Code"}
+                value={(data as EmployeeTypes).personCode}
+              />
+              <DataBox
+                title={"Mobile Number"}
+                value={(data as EmployeeTypes).mobileNumber}
+              />
+              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
+              <DataBox
+                title={"Salary"}
+                value={(data as EmployeeTypes).salary.toString()}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as EmployeeTypes).status} />}
+              />
+              <DataBox
+                title={"Job Title"}
+                value={(data as EmployeeTypes).job}
               />
               <DataBox
                 title={"UID Number"}
                 value={(data as EmployeeTypes).uid}
+              />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as EmployeeTypes).emiratesId}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as EmployeeTypes).dob)}
               />
               <DataBox
                 title={"Remarks"}
@@ -540,6 +556,10 @@ const ProfileDetails = ({
                 value={handleDate((data as EmployeeTypes).passportExpiry)}
               />
               <DataBox
+                title={"Visa File Number"}
+                value={(data as EmployeeTypes).visaFileNumber}
+              />
+              <DataBox
                 title={"Card Type"}
                 value={(data as EmployeeTypes).cardType}
               />
@@ -548,8 +568,8 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).cardNumber}
               />
               <DataBox
-                title={"Visa File Number"}
-                value={(data as EmployeeTypes).visaFileNumber}
+                title={"File Immgration Number"}
+                value={(data as EmployeeTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}

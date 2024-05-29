@@ -21,6 +21,8 @@ const TableMenuItem = ({ icon, title, color, handling }: MenuItemTypes) => {
           ? "!text-blue-500"
           : title.toLowerCase() === "delete"
           ? "!text-red-500"
+          : title.toLowerCase() === "convert"
+          ? "!text-purple-500"
           : title.toLowerCase() === "link" && "!text-zinc-500"
       } !${color}`}
       sx={{ "& >svg": { fontSize: "18px" } }}

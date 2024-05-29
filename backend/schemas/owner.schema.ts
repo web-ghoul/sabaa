@@ -50,7 +50,7 @@ export class Owner {
     @Prop()
     fileImmgNo: string;
     
-    @Prop({default: 'pending'})
+    @Prop({default: 'active'})
     status: string;
 
     @Prop({ type: Array, default: [], ref: 'Sponsor' })

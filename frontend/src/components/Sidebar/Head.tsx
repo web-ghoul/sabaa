@@ -31,9 +31,7 @@ const Head = () => {
           </IconButton>
         </>
       ) : (
-        <IconButton onClick={handleOpenSidebar}>
-          <Logo color={"light"} noTitle={true} />
-        </IconButton>
+        <Logo color={"light"} noTitle={true} handling={handleOpenSidebar} />
       )}
     </Box>
   );

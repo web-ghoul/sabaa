@@ -23,6 +23,7 @@ const useProSchema = () => {
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
+    type: yup.string(),
     remarks: yup.string(),
   });
 
@@ -39,7 +40,6 @@ const useProSchema = () => {
     nationality: editableProData?.nationality || "",
     phone: editableProData?.phone || "",
     email: editableProData?.email || "",
-    remarks: editableProData?.remarks || "",
     state: editableProData?.state || "",
     address: editableProData?.address || "",
     residenceExpiryDate:
@@ -52,6 +52,8 @@ const useProSchema = () => {
     status: editableProData?.status || "",
     emiratesId: editableProData?.emiratesId || "",
     uid: editableProData?.uid || "",
+    type: "pro",
+    remarks: editableProData?.remarks || "",
   };
 
   useEffect(() => {

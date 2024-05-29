@@ -13,6 +13,7 @@ import UserBox from "../UserBox/UserBox.tsx";
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
+
 const Header = () => {
   const { openSidebar, sidebarWidth, handleOpenSidebar } =
     useContext(SidebarContext);

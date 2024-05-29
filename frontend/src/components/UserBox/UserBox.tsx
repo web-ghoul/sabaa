@@ -6,7 +6,6 @@ import {
 } from "@mui/icons-material";
 import { Box, IconButton, Menu, Typography } from "@mui/material";
 import { MouseEvent, useContext, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
@@ -67,9 +66,18 @@ const UserBox = ({
             : size === "medium"
             ? "w-[40px] h-[40px] md:w-[35px] md:h-[35px] sm:!w-[30px] sm:!h-[30px]"
             : "w-[30px] h-[30px] md:w-[28px] md:h-[28px] sm:w-[25px] sm:h-[25px]"
-        }`}
+        } bg-no-repeat bg-cover bg-center`}
+        sx={{
+          backgroundImage: `url(${
+            avatar
+              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
+              : variant === "company"
+              ? defaultCompany
+              : defaultAvatar
+          })`,
+        }}
       >
-        <LazyLoadImage
+        {/* <LazyLoadImage
           alt={"avatar"}
           src={
             avatar
@@ -78,7 +86,7 @@ const UserBox = ({
               ? defaultCompany
               : defaultAvatar
           }
-        />
+        /> */}
       </Box>
       <Box className={`grid justify-start items-center gap-1`}>
         <Typography variant={head || "h6"}>{username}</Typography>

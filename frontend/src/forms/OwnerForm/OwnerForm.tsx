@@ -1,5 +1,5 @@
-import { Box, Paper } from "@mui/material";
-import { useContext, useEffect, useMemo } from "react";
+import { Box, Checkbox, FormControlLabel, Paper } from "@mui/material";
+import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Button from "../../components/Button/Button";
@@ -10,7 +10,7 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes, OwnerFormikTypes } from "../../types/forms.types";
 
 const OwnerForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseOwnerModal, setOwnerImage } =
@@ -18,6 +18,16 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+  const [checked, setChecked] = useState(false);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setChecked(checked);
+    if (checked) {
+      (formik as unknown as OwnerFormikTypes).values.type = "owner&pro";
+    } else {
+      (formik as unknown as OwnerFormikTypes).values.type = "owner";
+    }
+  };
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -46,6 +56,17 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
         () => type && <UploadImage title={"Owner Avatar"} variant={type} />,
         [type]
       )}
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        }
+        label={"Owner & Officer"}
+      />
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input

@@ -35,6 +35,7 @@ import { getUsers } from "../store/usersSlice";
 import {
   AllFormsTypes,
   CompanyFormTypes,
+  ConvertCustomerFormTypes,
   CustomerFormTypes,
   DownloadExcelFormTypes,
   EmployeeFormTypes,
@@ -65,8 +66,10 @@ const useSubmitFunction = (type: string) => {
     handleCloseJobModal,
     handleCloseNationalityModal,
     handleCloseDeleteModal,
+    handleCloseConvertCustomerModal,
     editableNationalityData,
     editableJobData,
+    editableSponsorData,
     ownerImage,
     sponsorImage,
     employeeImage,
@@ -152,10 +155,10 @@ const useSubmitFunction = (type: string) => {
     return formData;
   };
 
-  const handleOwnerFormData = (
-    values: OwnerFormTypes | ProFormTypes | CustomerTypes,
-    type: "pro" | "customer" | "owner"
+  const handlePersonFormData = (
+    values: OwnerFormTypes | ProFormTypes | CustomerTypes
   ) => {
+    const type = values.type;
     const avatar = type
       ? type === "pro"
         ? proImage
@@ -192,7 +195,9 @@ const useSubmitFunction = (type: string) => {
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
     }
-    formData.append("type", type);
+    if (type) {
+      formData.append("type", type);
+    }
     return formData;
   };
 
@@ -288,6 +293,9 @@ const useSubmitFunction = (type: string) => {
     formData.append("job", values.job.trim());
     if (values.visaFileNumber) {
       formData.append("visaFileNumber", values.visaFileNumber);
+    }
+    if (values.fileImmgNo) {
+      formData.append("fileImmgNo", values.fileImmgNo);
     }
     if (values.cardNumber) {
       formData.append("cardNumber", values.cardNumber);
@@ -678,7 +686,7 @@ const useSubmitFunction = (type: string) => {
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "owner"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -712,7 +720,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableOwnerData && editableOwnerData._id}`,
-          handleOwnerFormData(values, "owner"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -766,7 +774,7 @@ const useSubmitFunction = (type: string) => {
   const addPro = async (values: ProFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "pro"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -800,7 +808,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableProData && editableProData._id}`,
-          handleOwnerFormData(values, "pro"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -854,7 +862,7 @@ const useSubmitFunction = (type: string) => {
   const addCustomer = async (values: CustomerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handleOwnerFormData(values, "customer"), {
+      .post(`/owner`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -888,7 +896,7 @@ const useSubmitFunction = (type: string) => {
       await server
         .patch(
           `/owner/${editableCustomerData && editableCustomerData._id}`,
-          handleOwnerFormData(values, "customer"),
+          handlePersonFormData(values),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -934,6 +942,47 @@ const useSubmitFunction = (type: string) => {
         });
         navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
         dispatch(getCustomers({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const convertCustomer = async (values: ConvertCustomerFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/owner/${editableCustomerData && editableCustomerData._id}`,
+        { type: values.type === "Owner" ? "owner" : "pro" },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Customer is Converted Successfully",
+          status: "success",
+        });
+        if (
+          id &&
+          pathname === `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${id}`
+        ) {
+          if (values.type === "Owner") {
+            navigate(`${import.meta.env.VITE_OWNERS_ROUTE}/${id}`);
+          } else {
+            navigate(`${import.meta.env.VITE_PROS_ROUTE}/${id}`);
+          }
+        } else {
+          if (values.type === "Owner") {
+            navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
+          } else {
+            navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
+          }
+        }
+        handleCloseConvertCustomerModal();
       })
       .catch((err) => {
         handleCatchError(err);
@@ -1074,7 +1123,7 @@ const useSubmitFunction = (type: string) => {
     handleOpenFormsLoading();
     await server
       .patch(
-        `/sponsor/${editableCustomerData && editableCustomerData._id}`,
+        `/sponsor/${editableSponsorData && editableSponsorData._id}`,
         handleSponsorFormData(values),
         {
           headers: {
@@ -1084,9 +1133,10 @@ const useSubmitFunction = (type: string) => {
       )
       .then(() => {
         handleAlert({
-          msg: "Customer is Updated Successfully",
+          msg: "Sponsor is Updated Successfully",
           status: "success",
         });
+        const type = pathname.split("/")[1];
         if (id) {
           if (type === "employees") {
             dispatch(getEmployee({ id }));
@@ -1515,6 +1565,35 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "sponsor") {
+      await server
+        .delete(`/sponsor/${editableSponsorData && editableSponsorData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Sponsor is Deleted Successfully",
+            status: "success",
+          });
+          if (id) {
+            const type = pathname.split("/")[1];
+            if (type === "employees") {
+              dispatch(getEmployee({ id }));
+            } else if (type === "owners") {
+              dispatch(getOwner({ id }));
+            } else if (type === "customers") {
+              dispatch(getCustomer({ id }));
+            } else if (type === "pros") {
+              dispatch(getPro({ id }));
+            }
+          }
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "employee") {
       await server
         .delete(
@@ -1673,31 +1752,6 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
-    } else if (formType === "unLinkCustomer") {
-      await server
-        .get(
-          `/company/ManageOwnersAndPro?companyId=${
-            editableCompanyData && editableCompanyData._id
-          }&id=${id}&operation=deleting&typeOfPerson=customer`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          handleAlert({
-            msg: "Customer is unLinked with Company Successfully",
-            status: "success",
-          });
-          if (id) {
-            dispatch(getCustomer({ id }));
-          }
-          handleCloseDeleteModal();
-        })
-        .catch((err) => {
-          handleCatchError(err);
-        });
     }
     handleCloseFormsLoading();
   };
@@ -1775,6 +1829,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCustomersSheet":
         createCustomersSheet(values as unknown);
+        break;
+      case "convertCustomer":
+        convertCustomer(values as ConvertCustomerFormTypes);
         break;
       case "addSponsor":
         addSponsor(values as SponsorFormTypes);

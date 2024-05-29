@@ -15,6 +15,7 @@ import MdSidebar from "./components/Sidebar/MdSidebar.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import { AppContext } from "./contexts/AppContext.tsx";
 import CompanyModal from "./modals/CompanyModal.tsx";
+import ConvertCustomerModal from "./modals/ConvertCustomerModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
 import DownloadExcelModal from "./modals/DownloadExcelModal.tsx";
@@ -59,7 +60,7 @@ const App = () => {
       }
       setSigned(false);
     }
-  }, [dispatch, navigate, pathname]);
+  }, [dispatch]);
 
   useEffect(() => {
     const allParams: { [key: string]: string } = {};
@@ -72,6 +73,7 @@ const App = () => {
   return signed && !AuthRoutes.includes(pathname) ? (
     <Box sx={{ display: "flex" }} className={`bg-bg relative`}>
       <CssBaseline />
+      {/* Modals */}
       <JobModal />
       <OwnerModal />
       <UserModal />
@@ -80,11 +82,13 @@ const App = () => {
       <SponsorModal />
       <EmployeeModal />
       <CustomerModal />
+      <ConvertCustomerModal />
       <LinkToCompanyModal />
       <UploadEmployeesModal />
       <NationalityModal />
       <DownloadExcelModal />
       <DeleteModal />
+      {/* Modals */}
       <Toaster />
       <Header />
       {mdScreen ? <MdSidebar /> : <Sidebar />}

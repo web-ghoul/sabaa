@@ -23,6 +23,7 @@ const useCustomerSchema = () => {
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
+    type: yup.string(),
     remarks: yup.string(),
   });
 
@@ -51,6 +52,7 @@ const useCustomerSchema = () => {
     fileImmgNo: editableCustomerData?.fileImmgNo || "",
     status: editableCustomerData?.status || "",
     uid: editableCustomerData?.uid || "",
+    type: "customer",
     remarks: editableCustomerData?.remarks || "",
   };
 

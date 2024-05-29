@@ -134,6 +134,9 @@ interface FormsContextTypes {
   openCustomerModal: boolean;
   handleOpenCustomerModal: (string: string) => void;
   handleCloseCustomerModal: () => void;
+  openConvertCustomerModal: boolean;
+  handleOpenConvertCustomerModal: () => void;
+  handleCloseConvertCustomerModal: () => void;
   openSponsorModal: boolean;
   handleOpenSponsorModal: (string: string) => void;
   handleCloseSponsorModal: () => void;

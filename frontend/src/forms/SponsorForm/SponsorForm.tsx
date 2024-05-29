@@ -109,6 +109,7 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
             "GrandPa",
             "GrandMa",
             "Uncle",
+            "Maid",
           ]}
         />
         <Input

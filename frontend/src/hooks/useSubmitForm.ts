@@ -5,6 +5,10 @@ import {
   CompaniesOptionsSchema,
 } from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
 import useCompanySchema from "../forms/CompanyForm/useCompanySchema";
+import {
+  ConvertCustomerInitailValues,
+  ConvertCustomerSchema,
+} from "../forms/ConvertCustomerForm/useCustomerSchema";
 import useCustomerSchema from "../forms/CustomerForm/useCustomerSchema";
 import {
   CustomersOptionsInitailValues,
@@ -64,6 +68,8 @@ import {
   CompaniesOptionsFormikTypes,
   CompanyFormTypes,
   CompanyFormikTypes,
+  ConvertCustomerFormTypes,
+  ConvertCustomerFormikTypes,
   CustomerFormTypes,
   CustomerFormikTypes,
   CustomersOptionsFormTypes,
@@ -197,7 +203,7 @@ const useSubmitForm = (type: string) => {
             onSubmit: (values: NationalitiesOptionsFormTypes) => {
               handleSubmit(values);
             },
-          } as unknown as NationalitiesOptionsFormikTypes;
+          } as NationalitiesOptionsFormikTypes;
         case "editUser":
         case "addUser":
           return {
@@ -231,7 +237,7 @@ const useSubmitForm = (type: string) => {
             onSubmit: (values: OwnersOptionsFormTypes) => {
               handleSubmit(values);
             },
-          } as unknown as OwnersOptionsFormikTypes;
+          } as OwnersOptionsFormikTypes;
         case "editPro":
         case "addPro":
           return {
@@ -248,7 +254,7 @@ const useSubmitForm = (type: string) => {
             onSubmit: (values: ProsOptionsFormTypes) => {
               handleSubmit(values);
             },
-          } as unknown as ProsOptionsFormikTypes;
+          } as ProsOptionsFormikTypes;
         case "editEmployee":
         case "addEmployee":
           return {
@@ -265,7 +271,7 @@ const useSubmitForm = (type: string) => {
             onSubmit: (values: EmployeesOptionsFormTypes) => {
               handleSubmit(values);
             },
-          } as unknown as EmployeesOptionsFormikTypes;
+          } as EmployeesOptionsFormikTypes;
         case "editCustomer":
         case "addCustomer":
           return {
@@ -282,7 +288,15 @@ const useSubmitForm = (type: string) => {
             onSubmit: (values: CustomersOptionsFormTypes) => {
               handleSubmit(values);
             },
-          } as unknown as CustomersOptionsFormikTypes;
+          } as CustomersOptionsFormikTypes;
+        case "convertCustomer":
+          return {
+            initialValues: ConvertCustomerInitailValues,
+            validationSchema: ConvertCustomerSchema,
+            onSubmit: (values: ConvertCustomerFormTypes) => {
+              handleSubmit(values);
+            },
+          } as ConvertCustomerFormikTypes;
         case "editSponsor":
         case "addSponsor":
           return {
