@@ -272,6 +272,7 @@ interface EmployeeTypes {
   cardNumber: string;
   status: string;
   visaFileNumber: string;
+  fileImmgNo: string;
   passportNumber: string;
   passportExpiry?: Date;
   residenceExpireDate?: Date;

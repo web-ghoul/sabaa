@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { SidebarContext } from "../../contexts/SidebarsContext";
 import CompaniesIcon from "../Icons/CompaniesIcon";
 import CustomersIcon from "../Icons/CustomersIcon";
+import EChannelsIcon from "../Icons/EChannelsIcon";
 import EmployeesIcon from "../Icons/EmployeesIcon";
 import JobsIcon from "../Icons/JobsIcon";
 import NationalitiesIcon from "../Icons/NationalitiesIcon";
@@ -71,6 +72,11 @@ const Items = () => {
         icon={<NationalitiesIcon />}
         title="Nationalities"
         url={`${import.meta.env.VITE_NATIONALITIES_ROUTE}`}
+      />
+      <Item
+        icon={<EChannelsIcon />}
+        title="E-Channel"
+        url={`${import.meta.env.VITE_ECHANNEL_ROUTE}`}
       />
       <Item
         icon={<TransactionsIcon />}

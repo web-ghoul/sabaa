@@ -47,6 +47,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   openCustomerModal: false,
   handleOpenCustomerModal: () => {},
   handleCloseCustomerModal: () => {},
+  openConvertCustomerModal: false,
+  handleOpenConvertCustomerModal: () => {},
+  handleCloseConvertCustomerModal: () => {},
   openSponsorModal: false,
   handleOpenSponsorModal: () => {},
   handleCloseSponsorModal: () => {},
@@ -275,6 +278,18 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setFormType(type);
     setOpenCustomerModal(true);
+  };
+
+  //Convert Modal
+  const [openConvertCustomerModal, setOpenConvertCustomerModal] =
+    useState(false);
+
+  const handleCloseConvertCustomerModal = () => {
+    setOpenConvertCustomerModal(false);
+  };
+
+  const handleOpenConvertCustomerModal = () => {
+    setOpenConvertCustomerModal(true);
   };
 
   //Sponsor Modal
@@ -551,6 +566,9 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenSponsorModal,
     sponsorImage,
     setSponsorImage,
+    openConvertCustomerModal,
+    handleCloseConvertCustomerModal,
+    handleOpenConvertCustomerModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

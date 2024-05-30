@@ -233,7 +233,7 @@ interface ProsOptionsFormikTypes {
   values: ProsOptionsFormTypes;
 }
 
-//Pro
+//Customer
 
 interface CustomerFormTypes extends CustomerTypes {}
 
@@ -268,6 +268,21 @@ interface CustomersOptionsFormikTypes {
   handleChange: (event: unknown) => void;
   handleBlur: (event: unknown) => void;
   values: CustomersOptionsFormTypes;
+}
+
+interface ConvertCustomerFormTypes {
+  type: string;
+}
+
+interface ConvertCustomerFormikTypes {
+  touched: ConvertCustomerFormTypes;
+  errors: ConvertCustomerFormTypes;
+  initialValues: ConvertCustomerFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: ConvertCustomerFormTypes;
 }
 
 //Employee
@@ -469,7 +484,8 @@ type AllFormsTypes =
   | DownloadExcelFormTypes
   | ActivitiesOptionsFormTypes
   | OTPFormTypes
-  | SponsorFormTypes;
+  | SponsorFormTypes
+  | ConvertCustomerFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -496,7 +512,8 @@ type AllFormiksTypes =
   | DownloadExcelFormikTypes
   | ActivitiesOptionsFormikTypes
   | OTPFormikTypes
-  | SponsorFormikTypes;
+  | SponsorFormikTypes
+  | ConvertCustomerFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -521,6 +538,8 @@ export type {
   CompaniesOptionsFormTypes,
   CompanyFormikTypes,
   CompanyFormTypes,
+  ConvertCustomerFormikTypes,
+  ConvertCustomerFormTypes,
   CustomerFormikTypes,
   CustomerFormTypes,
   CustomersOptionsFormikTypes,

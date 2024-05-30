@@ -16,6 +16,7 @@ import {
 interface LogoTypes {
   color?: string;
   noTitle?: boolean;
+  handling?: () => void;
 }
 
 interface TotalBoxTypes {

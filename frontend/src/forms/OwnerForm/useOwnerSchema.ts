@@ -2,23 +2,10 @@ import * as yup from "yup";
 
 import { useContext, useEffect } from "react";
 import { FormsContext } from "../../contexts/FormsContext";
+import { isAdult } from "../../functions/handleIsAdult";
 
 const useOwnerSchema = () => {
   const { editableOwnerData, setOwnerImage } = useContext(FormsContext);
-
-  const isAdult = (date: Date) => {
-    const today = new Date();
-    const birthDate = new Date(date);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age >= 18;
-  };
 
   const OwnerSchema = yup.object({
     personCode: yup.string(),
@@ -43,6 +30,7 @@ const useOwnerSchema = () => {
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
+    type: yup.string(),
     remarks: yup.string(),
   });
 
@@ -59,7 +47,6 @@ const useOwnerSchema = () => {
     nationality: editableOwnerData?.nationality || "",
     phone: editableOwnerData?.phone || "",
     email: editableOwnerData?.email || "",
-    remarks: editableOwnerData?.remarks || "",
     state: editableOwnerData?.state || "",
     address: editableOwnerData?.address || "",
     residenceExpiryDate:
@@ -72,6 +59,8 @@ const useOwnerSchema = () => {
     status: editableOwnerData?.status || "",
     emiratesId: editableOwnerData?.emiratesId || "",
     uid: editableOwnerData?.uid || "",
+    type: "owner",
+    remarks: editableOwnerData?.remarks || "",
   };
 
   useEffect(() => {

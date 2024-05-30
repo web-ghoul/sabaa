@@ -22,23 +22,20 @@ const OwnerProfile = ({
 
   useEffect(() => {
     if (companies && pros.length === 0) {
+      const allPros: ProTypes[] = [];
+      const ids: string[] = [];
       companies.map((company) => {
-        setPros((p) => [...p, ...(company.proCode as ProTypes[])]);
+        company.proCode.map((pro) => {
+          const p: ProTypes = pro as ProTypes;
+          if (!ids.includes(p._id as string)) {
+            ids.push(p._id as string);
+            allPros.push(p);
+          }
+        });
       });
+      setPros(() => [...allPros]);
     }
-  }, [companies, pros.length]);
-
-  useEffect(() => {
-    const ids: string[] = [];
-    const newPros: ProTypes[] = [];
-    pros.map((pro) => {
-      if (!ids.includes(pro._id as string)) {
-        ids.push(pro._id as string);
-        newPros.push(pro);
-      }
-    });
-    setPros(() => [...newPros]);
-  }, [pros]);
+  }, [companies, pros]);
 
   return (
     <PrimaryTab
