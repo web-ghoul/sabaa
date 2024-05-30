@@ -23,6 +23,14 @@ export class Tasaheel {
   @Prop()
   security2: string;
 
+  @Prop()
+  email: string;
+
+  @Prop()
+  mobile: string;
+  
+  @Prop()
+  notes: string;
   
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Employee"})
   employee:ObjectId
@@ -31,7 +39,7 @@ export class Tasaheel {
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Owner"})
   owner: ObjectId
 
-  @Prop()
+  @Prop({default : false})
   deleted: boolean;
 
 }

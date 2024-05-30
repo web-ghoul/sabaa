@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { TasheelModule } from './tasheel/tasheel.module';
 import { WorkPermitModule } from './work-permit/work-permit.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -29,7 +28,7 @@ import { NatwasalsModule } from './natwasals/natwasals.module';
 
 dotenv.config();
 @Module({
-  imports: [UserModule, TasheelModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
+  imports: [UserModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
   },

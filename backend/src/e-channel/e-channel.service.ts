@@ -42,7 +42,7 @@ export class EChannelService {
       
       const query: any = {
         $and: [{$or: [
-          { name: { $regex: new RegExp(search, 'i') } },
+          { username: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
           { phone: { $regex: new RegExp(search, 'i') } },
           { uid: { $regex: new RegExp(search, 'i') } },
@@ -66,7 +66,8 @@ export class EChannelService {
         type != '' ? (query['type'] = type) : undefined;
       }
 
-      console.log(query.$and);
+      // console.log(query.$and);
+      query.$and.push({deleted: false});
 
       return this.eChannelModel
         .find(query)
@@ -76,7 +77,7 @@ export class EChannelService {
         .sort(sort);
     } catch (err) {
       throw new HttpException(
-        'Error while getting owners',
+        'Error while getting eChannel data',
         HttpStatus.BAD_REQUEST,
       );
     }

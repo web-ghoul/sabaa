@@ -20,6 +20,18 @@ export class CreateTasheelDto {
     @IsString()
     @IsNotEmpty()
     security2: string;
+
+    @IsString()
+    @IsNotEmpty()
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    mobile: string;
+
+    @IsString()
+    @IsNotEmpty()
+    notes: string;
   
     @IsMongoId()
     @IsOptional()

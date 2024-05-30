@@ -5,7 +5,6 @@ export type NatwasalDocument = HydratedDocument<Natwasal>;
 
 @Schema({ timestamps: true })
 export class Natwasal {
-  
   _id: ObjectId;
 
   @Prop()
@@ -23,6 +22,14 @@ export class Natwasal {
   @Prop()
   security2: string;
 
+  @Prop()
+  email: string;
+
+  @Prop()
+  mobile: string;
+  
+  @Prop()
+  notes: string;
   
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Employee"})
   employee:ObjectId
@@ -31,7 +38,7 @@ export class Natwasal {
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Owner"})
   owner: ObjectId
 
-  @Prop()
+  @Prop({default : false})
   deleted: boolean;
 
 }
