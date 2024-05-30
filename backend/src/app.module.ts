@@ -24,6 +24,8 @@ import { OwnerSchema } from 'schemas/owner.schema';
 import { CustomErrorFilter } from './filters/CustomErrorFilter';
 import { SponsorsModule } from './sponsors/sponsors.module';
 import { EChannelModule } from './e-channel/e-channel.module';
+import { TasheelsModule } from './tasheels/tasheels.module';
+import { NatwasalsModule } from './natwasals/natwasals.module';
 
 dotenv.config();
 @Module({
@@ -33,7 +35,7 @@ dotenv.config();
   },
   
 ]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule],
+MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule],
   controllers: [AppController],
   providers: [AppService,
     {

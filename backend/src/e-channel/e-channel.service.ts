@@ -1,26 +1,161 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { CreateEChannelDto } from './dto/create-e-channel.dto';
 import { UpdateEChannelDto } from './dto/update-e-channel.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { EChannel } from 'schemas/eChannel.schema';
+import * as exceljs from 'exceljs';
+import { Response } from 'express';
+import { Employee } from 'schemas/employee.schema';
+import { Owner } from 'schemas/owner.schema';
 
 @Injectable()
 export class EChannelService {
+
+  constructor(
+    @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
+    @InjectModel('Employee') private employeeModel: Model<Employee>,
+    @InjectModel('Owner') private ownerModel: Model<Owner>,
+  ) {}
   create(createEChannelDto: CreateEChannelDto) {
-    return 'This action adds a new eChannel';
+    return this.eChannelModel.create(createEChannelDto);
   }
 
-  findAll() {
-    return `This action returns all eChannel`;
+  findAll(limit: number, page: number, search: string, type: string, status: string,gender: string, sort: string,fields: string[],) {
+
+    try {
+      const projection: any = {};
+      if (fields && fields.length > 0) {
+        fields.forEach((field) => {
+          projection[field] = 1; // Include the field
+        });
+      }
+      const sort: any = {};
+      sort['createdAt'] = -1;
+      sort['status'] = 1;
+
+      if (sort == 'name_asc') {
+        sort['name'] = 1;
+      }
+
+     
+      
+      const query: any = {
+        $and: [{$or: [
+          { name: { $regex: new RegExp(search, 'i') } },
+          { personCode: { $regex: new RegExp(search, 'i') } },
+          { phone: { $regex: new RegExp(search, 'i') } },
+          { uid: { $regex: new RegExp(search, 'i') } },
+          { emiratesId: { $regex: new RegExp(search, 'i') } },
+        ]}
+      ],
+        
+      };
+
+      status != '' ? (query['status'] = status) : undefined;
+      gender != '' ? (query['gender'] = gender) : undefined;
+
+
+
+      if(type == 'owner'){
+        query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
+      }else if (type == 'pro') {
+        query['$and'].push({ $or : [{type: 'pro'},{type: 'owner&pro'}]});
+      }else
+      {
+        type != '' ? (query['type'] = type) : undefined;
+      }
+
+      console.log(query.$and);
+
+      return this.eChannelModel
+        .find(query)
+        .select(projection)
+        .limit(limit)
+        .skip(page * limit)
+        .sort(sort);
+    } catch (err) {
+      throw new HttpException(
+        'Error while getting owners',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} eChannel`;
+  async findOne(id: string) {
+    const echannel = await this.eChannelModel.findById(id).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+    if(echannel){
+      return echannel;
+    }else{
+      const [emp,owner] = await Promise.all([
+        this.employeeModel.findById(id),
+        this.ownerModel.findById(id),
+      ])
+
+      return (emp || owner);
+    }
   }
 
-  update(id: number, updateEChannelDto: UpdateEChannelDto) {
-    return `This action updates a #${id} eChannel`;
+  update(id: string, updateEChannelDto: UpdateEChannelDto) {
+    return this.eChannelModel.findByIdAndUpdate(id, updateEChannelDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} eChannel`;
+  async remove(id: string) {
+    await this.eChannelModel.updateOne({ _id: id }, { deleted: true });
+
+    return { _id: id };
+  }
+
+  async getCounters() {
+    const [count, deleted] = await Promise.all([
+      this.eChannelModel.countDocuments({ deleted: false}),
+      this.eChannelModel.countDocuments({ deleted: true}),
+      
+    ]);
+    return {
+      count,
+      deleted,
+    };
+  }
+
+  async export(@Res() res: Response, fileName: string) {
+    const eChannels = await this.eChannelModel.find({ deleted: false});
+
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet('EChannels');
+    worksheet.columns = [
+      { header: 'ID', key: '_id', width: 20 },
+      { header: 'Type', key: 'type', width: 20 },
+      { header: 'Gender', key: 'gender', width: 20 },
+      { header: 'Status', key: 'status', width: 20 },
+      { header: 'Username', key: 'username', width: 20 },
+      { header: 'Password', key: 'password', width: 20 },
+      { header: 'Employee', key: 'employee', width: 20 },
+      { header: 'Owner', key: 'owner', width: 20 },
+      { header: 'Deleted', key: 'deleted', width: 10 },
+    ];
+
+    eChannels.forEach(eChannel => {
+      worksheet.addRow({
+        _id: eChannel._id.toString(),
+        type: eChannel.type,
+        gender: eChannel.gender,
+        status: eChannel.status,
+        username: eChannel.username,
+        password: eChannel.password,
+        employee: eChannel.employee ? eChannel.employee.toString() : '',
+        owner: eChannel.owner ? eChannel.owner.toString() : '',
+        deleted: eChannel.deleted,
+      });
+    });
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    await workbook.xlsx.write(res);
+
+    res.end();
   }
 }
