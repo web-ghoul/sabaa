@@ -95,14 +95,6 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
         >
           <Button title={"Add E-Channel"} icon={<AddRounded />} />
           <Button
-            title={"Upload Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`)
-            }
-          />
-          <Button
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
             bg={"excel"}
@@ -142,7 +134,7 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
             name={"status"}
             formik={formik}
             change={handleFilterByStatus}
-            options={["active", "cancel", "complaint", "abscond"]}
+            options={["active", "inactive"]}
             select
           />
           <Input

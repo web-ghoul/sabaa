@@ -18,7 +18,7 @@ export const getEChannels = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }`,
+      }&page=${args?.page || 0}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

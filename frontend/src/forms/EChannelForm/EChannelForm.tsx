@@ -1,6 +1,7 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -8,6 +9,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
+import { RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 import { EChannelTypes } from "../../types/store.types";
 
@@ -15,10 +17,15 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseEChannelModal, setEditableEChannelData } =
     useContext(FormsContext);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const { token } = useSelector((state: RootState) => state.auth);
 
   const handleSearch = async () => {
     setLoading(true);
-    await axios(`${import.meta.env.VITE_SERVER_URL}/`)
+    await axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/e-channel/${search}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log(res);
         setEditableEChannelData({} as EChannelTypes);
@@ -47,6 +54,7 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           label={"Search uid , emirates id..."}
           name={"search_for_person"}
           type={"search"}
+          change={(val) => setSearch(val)}
         />
         <PrimaryButton onClick={handleSearch} loading={loading}>
           Search
@@ -67,6 +75,8 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           />
         </Box>
       </Box>
+
+      <Divider />
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
