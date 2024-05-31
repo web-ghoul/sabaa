@@ -17,6 +17,7 @@ import CustomerForm from "./CustomerForm/CustomerForm";
 import CustomersOptionsForm from "./CustomersOptionsForm/CustomersOptionsForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
 import DownloadExcelForm from "./DownloadExcelForm/DownloadExcelForm";
+import EChannelForm from "./EChannelForm/EChannelForm";
 import EChannelsOptionsForm from "./EChannelsOptionsForm/EChannelsOptionsForm";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import EmployeesOptionsForm from "./EmployeesOptionsForm/EmployeesOptionsForm";
@@ -203,6 +204,12 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Link Company */}
 
       {/* E-Channel */}
+      {(type === "addEChannel" || type === "editEChannel") && (
+        <EChannelForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
       {type === "eChannelsOptions" && (
         <EChannelsOptionsForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}

@@ -1,6 +1,7 @@
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
@@ -104,9 +105,21 @@ interface UsersTableTypes {
   recent?: boolean;
 }
 
+interface EChannelsTableTypes {
+  data: EChannelTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
 export type {
   CompaniesTableTypes,
   CustomersTableTypes,
+  EChannelsTableTypes,
   EmployeesTableTypes,
   JobsTableTypes,
   NationalitiesTableTypes,

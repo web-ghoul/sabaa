@@ -9,11 +9,11 @@ import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getEChannels } from "../store/eChannelsSlice";
 import { AppDispatch, RootState } from "../store/store";
-import CustomersTable from "../tables/CustomersTable/CustomersTable";
+import EChannelsTable from "../tables/EChannelsTable/EChannelsTable";
 
 const EChannels = () => {
-  const { customers, isLoading } = useSelector(
-    (state: RootState) => state.customers
+  const { eChannels, isLoading } = useSelector(
+    (state: RootState) => state.eChannels
   );
   const { pageContainerClasses } = useContext(AppContext);
   const { eChannelsCounter } = useSelector(
@@ -27,6 +27,7 @@ const EChannels = () => {
       dispatch(getEChannels({}));
     }
   }, [dispatch, searchParams]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
@@ -36,9 +37,9 @@ const EChannels = () => {
           </Typography>
         </BreadCrumbs>
         <Forms type={"eChannelsOptions"} />
-        <CustomersTable
+        <EChannelsTable
           count={eChannelsCounter}
-          data={customers}
+          data={eChannels}
           isLoading={isLoading}
         />
       </PrimaryContainer>

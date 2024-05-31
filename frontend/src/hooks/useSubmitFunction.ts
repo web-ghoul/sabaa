@@ -15,6 +15,8 @@ import { getCompany } from "../store/companySlice";
 import { getCustomersCounter } from "../store/customersCounterSlice";
 import { getCustomer } from "../store/customerSlice";
 import { getCustomers } from "../store/customersSlice";
+import { getEChannelsCounter } from "../store/eChannelsCounterSlice";
+import { getEChannels } from "../store/eChannelsSlice";
 import { getEmployeesCounter } from "../store/employeesCounterSlice";
 import { getEmployee } from "../store/employeeSlice";
 import { getEmployees } from "../store/employeesSlice";
@@ -38,6 +40,7 @@ import {
   ConvertCustomerFormTypes,
   CustomerFormTypes,
   DownloadExcelFormTypes,
+  EChannelFormTypes,
   EmployeeFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
@@ -78,6 +81,7 @@ const useSubmitFunction = (type: string) => {
     proImage,
     editableUserData,
     editableOwnerData,
+    editableEChannelData,
     formType,
     excelType,
     editableCompanyData,
@@ -1294,6 +1298,54 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Employees
+  const addEChannel = async (values: EChannelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/e-channel`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "E-Channel is Created Successfully",
+          status: "success",
+        });
+        dispatch(getEChannels({}));
+        dispatch(getEChannelsCounter());
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editEChannel = async (values: EChannelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/e-channel/${editableEChannelData && editableEChannelData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "E-Channel is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getEChannels({}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   //Download Excel
   const handleDownloadExcelSubmit = async (values: DownloadExcelFormTypes) => {
     handleOpenFormsLoading();
@@ -1851,6 +1903,12 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);
+        break;
+      case "addEChannel":
+        addEChannel(values as EChannelFormTypes);
+        break;
+      case "editEChannel":
+        editEChannel(values as EChannelFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

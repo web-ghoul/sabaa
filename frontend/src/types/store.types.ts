@@ -334,7 +334,18 @@ interface EmployeesCounterValuesTypes {
 
 interface EChannelTypes {
   _id?: string;
-
+  name: string;
+  username: string;
+  password: string;
+  type: string;
+  phone: string;
+  gender: string;
+  uid: string;
+  emiratesId: string;
+  personCode: string;
+  status: "active" | "inactive";
+  owner?: string | OwnerTypes;
+  employee?: string | EmployeeTypes;
   user?: string;
   createdAt?: Date;
 }

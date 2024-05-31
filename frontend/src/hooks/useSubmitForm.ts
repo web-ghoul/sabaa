@@ -16,6 +16,7 @@ import {
 } from "../forms/CustomersOptionsForm/CustomersOptionsSchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
 import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
+import useEChannelSchema from "../forms/EChannelForm/useEChannelSchema";
 import useEmployeeSchema from "../forms/EmployeeForm/useEmployeeSchema";
 import {
   EmployeesOptionsInitailValues,
@@ -78,6 +79,8 @@ import {
   DeleteFormikTypes,
   DownloadExcelFormTypes,
   DownloadExcelFormikTypes,
+  EChannelFormTypes,
+  EChannelFormikTypes,
   EmployeeFormTypes,
   EmployeeFormikTypes,
   EmployeesOptionsFormTypes,
@@ -134,6 +137,7 @@ const useSubmitForm = (type: string) => {
     useLinkToCompanySchema();
   const { DownloadExcelInitailValues, DownloadExcelSchema } =
     useDownloadExcelSchema();
+  const { EChannelInitailValues, EChannelSchema } = useEChannelSchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -332,6 +336,15 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as LinkToCompanyFormikTypes;
+        case "editEChannel":
+        case "addEChannel":
+          return {
+            initialValues: EChannelInitailValues,
+            validationSchema: EChannelSchema,
+            onSubmit: (values: EChannelFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as EChannelFormikTypes;
         case "downloadExcel":
           return {
             initialValues: DownloadExcelInitailValues,
@@ -359,6 +372,8 @@ const useSubmitForm = (type: string) => {
       DeleteSchema,
       DownloadExcelInitailValues,
       DownloadExcelSchema,
+      EChannelInitailValues,
+      EChannelSchema,
       EmployeeInitailValues,
       EmployeeSchema,
       JobInitailValues,

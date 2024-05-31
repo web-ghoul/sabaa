@@ -6,6 +6,7 @@ import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
@@ -65,6 +66,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   openNationalityModal: false,
   handleOpenNationalityModal: () => {},
   handleCloseNationalityModal: () => {},
+  openEChannelModal: false,
+  handleOpenEChannelModal: () => {},
+  handleCloseEChannelModal: () => {},
   formType: "",
   setFormType: () => {},
   excelType: { type: "excel", entity: "companies" },
@@ -121,6 +125,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableUserData: () => {},
   editableCompanyData: null,
   setEditableCompanyData: () => {},
+  editableEChannelData: null,
+  setEditableEChannelData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -325,6 +331,21 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenProModal(true);
   };
 
+  //E-Channel Modal
+  const [openEChannelModal, setOpenEChannelModal] = useState(false);
+
+  const handleCloseEChannelModal = () => {
+    setOpenEChannelModal(false);
+  };
+
+  const handleOpenEChannelModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableEChannelData(null);
+    }
+    setFormType(type);
+    setOpenEChannelModal(true);
+  };
+
   //User Modal
   const [openUserModal, setOpenUserModal] = useState(false);
 
@@ -434,6 +455,10 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable Company Data
   const [editableCompanyData, setEditableCompanyData] =
     useState<CompanyTypes | null>(null);
+
+  //Editable E-Channel Data
+  const [editableEChannelData, setEditableEChannelData] =
+    useState<EChannelTypes | null>(null);
 
   useEffect(() => {
     if (editableOwnerData) {
@@ -574,6 +599,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenConvertCustomerModal,
     searchForEChannels,
     setSearchForEChannels,
+    openEChannelModal,
+    handleCloseEChannelModal,
+    handleOpenEChannelModal,
+    editableEChannelData,
+    setEditableEChannelData,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

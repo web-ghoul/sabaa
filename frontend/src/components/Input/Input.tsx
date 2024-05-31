@@ -21,6 +21,7 @@ const Input = ({
   ac,
   textarea,
   variant,
+  disabled,
 }: InputTypes & FormiksTypes) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,6 +48,7 @@ const Input = ({
         </Typography>
         {select ? (
           <PrimaryTextField
+            disabled={disabled}
             fullWidth
             id={name}
             name={name}
@@ -109,6 +111,7 @@ const Input = ({
           />
         ) : (
           <PrimaryTextField
+            disabled={disabled}
             fullWidth
             id={name}
             type={
@@ -199,6 +202,7 @@ const Input = ({
     [
       ac,
       change,
+      disabled,
       error,
       formik,
       helperText,

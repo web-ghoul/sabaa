@@ -19,6 +19,7 @@ import ConvertCustomerModal from "./modals/ConvertCustomerModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
 import DownloadExcelModal from "./modals/DownloadExcelModal.tsx";
+import EChannelModal from "./modals/EChannelModal.tsx";
 import EmployeeModal from "./modals/EmployeeModal.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
@@ -81,6 +82,7 @@ const App = () => {
       <ProModal />
       <SponsorModal />
       <EmployeeModal />
+      <EChannelModal />
       <CustomerModal />
       <ConvertCustomerModal />
       <LinkToCompanyModal />

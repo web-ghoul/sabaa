@@ -3,6 +3,7 @@ import { EntitiesType, EntityType } from "./app.types";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
@@ -149,6 +150,9 @@ interface FormsContextTypes {
   openCompanyModal: boolean;
   handleOpenCompanyModal: (type: string) => void;
   handleCloseCompanyModal: () => void;
+  openEChannelModal: boolean;
+  handleOpenEChannelModal: (string: string) => void;
+  handleCloseEChannelModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
   excelType: { type: "excel" | "all"; entity: EntitiesType };
@@ -217,6 +221,8 @@ interface FormsContextTypes {
   setEditableNationalityData: (nationality: NationalityTypes | null) => void;
   editableUserData: UserTypes | null;
   setEditableUserData: (user: UserTypes | null) => void;
+  editableEChannelData: EChannelTypes | null;
+  setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
 }
 
 interface TabsContextProps {

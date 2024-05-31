@@ -584,6 +584,8 @@ export type {
   DeleteFormTypes,
   DownloadExcelFormikTypes,
   DownloadExcelFormTypes,
+  EChannelFormikTypes,
+  EChannelFormTypes,
   EChannelsOptionsFormikTypes,
   EChannelsOptionsFormTypes,
   EmployeeFormikTypes,
