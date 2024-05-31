@@ -17,6 +17,7 @@ import CustomerForm from "./CustomerForm/CustomerForm";
 import CustomersOptionsForm from "./CustomersOptionsForm/CustomersOptionsForm";
 import DeleteForm from "./DeleteForm/DeleteForm";
 import DownloadExcelForm from "./DownloadExcelForm/DownloadExcelForm";
+import EChannelsOptionsForm from "./EChannelsOptionsForm/EChannelsOptionsForm";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import EmployeesOptionsForm from "./EmployeesOptionsForm/EmployeesOptionsForm";
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
@@ -45,29 +46,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       {type === "createCompaniesSheet" && (
         <CreateCompaniesSheetForm index={index || 0} />
       )}
-      {type === "createNationalitiesSheet" && (
-        <CreateNationalitiesSheetForm index={index || 0} />
-      )}
-      {type === "createOwnersSheet" && (
-        <CreateOwnersSheetForm index={index || 0} />
-      )}
-      {type === "createEmployeesSheet" && (
-        <CreateEmployeesSheetForm index={index || 0} />
-      )}
-      {type === "createCustomersSheet" && (
-        <CreateCustomersSheetForm index={index || 0} />
-      )}
-      {type === "createProsSheet" && <CreateProsSheetForm index={index || 0} />}
-      {(type === "editNationality" || type === "addNationality") && (
-        <NationalityForm
+
+      {/* User */}
+      {type === "usersOptions" && (
+        <UsersOptionsForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
-          type={type}
-        />
-      )}
-      {(type === "editJob" || type === "addJob") && (
-        <JobForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-          type={type}
         />
       )}
       {(type === "addUser" || type === "editUser") && (
@@ -76,10 +59,29 @@ const Forms = ({ type, index }: FormsTypes) => {
           type={type}
         />
       )}
+      {/* User */}
+
+      {/* Owner */}
+      {type === "ownersOptions" && (
+        <OwnersOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
       {(type === "addOwner" || type === "editOwner") && (
         <OwnerForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
           type={type}
+        />
+      )}
+      {type === "createOwnersSheet" && (
+        <CreateOwnersSheetForm index={index || 0} />
+      )}
+      {/* Owner */}
+
+      {/* Pro */}
+      {type === "prosOptions" && (
+        <ProsOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
       {(type === "addPro" || type === "editPro") && (
@@ -88,73 +90,31 @@ const Forms = ({ type, index }: FormsTypes) => {
           type={type}
         />
       )}
+      {type === "createProsSheet" && <CreateProsSheetForm index={index || 0} />}
+      {/* Pro */}
+
+      {/* Employee */}
+      {type === "employeesOptions" && (
+        <EmployeesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
       {(type === "addEmployee" || type === "editEmployee") && (
         <EmployeeForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
           type={type}
         />
       )}
+      {type === "createEmployeesSheet" && (
+        <CreateEmployeesSheetForm index={index || 0} />
+      )}
+      {/* Employee */}
+
+      {/* Customer */}
       {(type === "addCustomer" || type === "editCustomer") && (
         <CustomerForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
           type={type}
-        />
-      )}
-      {(type === "addSponsor" || type === "editSponsor") && (
-        <SponsorForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-          type={type}
-        />
-      )}
-      {(type === "addCompany" || type === "editCompany") && (
-        <CompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-          type={type}
-        />
-      )}
-      {type === "jobsOptions" && (
-        <JobsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "nationalitiesOptions" && (
-        <NationalitiesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "companiesOptions" && (
-        <CompaniesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "activitiesOptions" && (
-        <ActivitiesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {(type === "linkOwner" || type === "linkPro") && (
-        <LinkToCompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "usersOptions" && (
-        <UsersOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "ownersOptions" && (
-        <OwnersOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "prosOptions" && (
-        <ProsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
-        />
-      )}
-      {type === "employeesOptions" && (
-        <EmployeesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
       {type === "customersOptions" && (
@@ -167,7 +127,94 @@ const Forms = ({ type, index }: FormsTypes) => {
           formik={formik as unknown as FormikProps<AllFormiksTypes>}
         />
       )}
+      {type === "createCustomersSheet" && (
+        <CreateCustomersSheetForm index={index || 0} />
+      )}
+      {/* Customer */}
+
+      {/* Sponsor */}
+      {(type === "addSponsor" || type === "editSponsor") && (
+        <SponsorForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {/* Sponsor */}
+
+      {/* Company */}
+      {(type === "addCompany" || type === "editCompany") && (
+        <CompanyForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {type === "companiesOptions" && (
+        <CompaniesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Company */}
+
+      {/* Job */}
+      {(type === "editJob" || type === "addJob") && (
+        <JobForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {type === "jobsOptions" && (
+        <JobsOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Job */}
+
+      {/* Nationaliy */}
+      {(type === "editNationality" || type === "addNationality") && (
+        <NationalityForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {type === "nationalitiesOptions" && (
+        <NationalitiesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {type === "createNationalitiesSheet" && (
+        <CreateNationalitiesSheetForm index={index || 0} />
+      )}
+      {/* Nationaliy */}
+
+      {/* Activity */}
+      {type === "activitiesOptions" && (
+        <ActivitiesOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Activity */}
+
+      {/* Link Company */}
+      {(type === "linkOwner" || type === "linkPro") && (
+        <LinkToCompanyForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Link Company */}
+
+      {/* E-Channel */}
+      {type === "eChannelsOptions" && (
+        <EChannelsOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* E-Channel */}
+
+      {/* Delete */}
       {type === "delete" && <DeleteForm />}
+      {/* Delete */}
+
+      {/* Authentication */}
       {type === "login" && (
         <LoginForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
       )}
@@ -184,6 +231,8 @@ const Forms = ({ type, index }: FormsTypes) => {
       {type === "otp" && (
         <OTPForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
       )}
+      {/* Authentication */}
+
       {type === "downloadExcel" && (
         <DownloadExcelForm
           formik={formik as unknown as FormikProps<AllFormiksTypes>}

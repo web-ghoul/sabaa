@@ -73,6 +73,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForOwners: () => {},
   searchForEmployees: "",
   setSearchForEmployees: () => {},
+  searchForEChannels: "",
+  setSearchForEChannels: () => {},
   searchForCustomers: "",
   setSearchForCustomers: () => {},
   searchForPros: "",
@@ -141,6 +143,7 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
+  const [searchForEChannels, setSearchForEChannels] = useState("");
   const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
@@ -569,6 +572,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openConvertCustomerModal,
     handleCloseConvertCustomerModal,
     handleOpenConvertCustomerModal,
+    searchForEChannels,
+    setSearchForEChannels,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

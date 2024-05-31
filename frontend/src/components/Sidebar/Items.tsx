@@ -75,8 +75,8 @@ const Items = () => {
       />
       <Item
         icon={<EChannelsIcon />}
-        title="E-Channel"
-        url={`${import.meta.env.VITE_ECHANNEL_ROUTE}`}
+        title="E-Channels"
+        url={`${import.meta.env.VITE_ECHANNELS_ROUTE}`}
       />
       <Item
         icon={<TransactionsIcon />}

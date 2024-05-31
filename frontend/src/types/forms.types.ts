@@ -2,6 +2,7 @@ import { FormikProps } from "formik";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
@@ -319,7 +320,7 @@ interface EmployeesOptionsFormikTypes {
   values: EmployeesOptionsFormTypes;
 }
 
-//Employee
+//Sponsor
 
 interface SponsorFormTypes extends SponsorTypes {}
 
@@ -427,6 +428,39 @@ interface UsersOptionsFormikTypes {
   values: UsersOptionsFormTypes;
 }
 
+//E-Channels
+
+interface EChannelFormTypes extends EChannelTypes {}
+
+interface EChannelFormikTypes {
+  touched: EChannelFormTypes;
+  errors: EChannelFormTypes;
+  initialValues: EChannelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EChannelFormTypes;
+}
+
+interface EChannelsOptionsFormTypes {
+  search: string;
+  type: string;
+  status: string;
+  gender: string;
+}
+
+interface EChannelsOptionsFormikTypes {
+  touched: EChannelsOptionsFormTypes;
+  errors: EChannelsOptionsFormTypes;
+  initialValues: EChannelsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EChannelsOptionsFormTypes;
+}
+
 //Download Excel
 
 interface DownloadExcelFormTypes {
@@ -485,7 +519,8 @@ type AllFormsTypes =
   | ActivitiesOptionsFormTypes
   | OTPFormTypes
   | SponsorFormTypes
-  | ConvertCustomerFormTypes;
+  | ConvertCustomerFormTypes
+  | EChannelFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -513,7 +548,8 @@ type AllFormiksTypes =
   | ActivitiesOptionsFormikTypes
   | OTPFormikTypes
   | SponsorFormikTypes
-  | ConvertCustomerFormikTypes;
+  | ConvertCustomerFormikTypes
+  | EChannelFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -548,6 +584,8 @@ export type {
   DeleteFormTypes,
   DownloadExcelFormikTypes,
   DownloadExcelFormTypes,
+  EChannelsOptionsFormikTypes,
+  EChannelsOptionsFormTypes,
   EmployeeFormikTypes,
   EmployeeFormTypes,
   EmployeesOptionsFormikTypes,

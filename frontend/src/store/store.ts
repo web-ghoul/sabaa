@@ -7,6 +7,8 @@ import companyReducers from "./companySlice.ts";
 import customersCounterReducers from "./customersCounterSlice.ts";
 import customerReducers from "./customerSlice.ts";
 import customersReducers from "./customersSlice.ts";
+import eChannelsCounterReducer from "./eChannelsCounterSlice.ts";
+import eChannelsReducer from "./eChannelsSlice.ts";
 import employeesCounterReducers from "./employeesCounterSlice.ts";
 import employeeReducers from "./employeeSlice.ts";
 import employeesReducers from "./employeesSlice.ts";
@@ -36,42 +38,44 @@ import usersReducers from "./usersSlice.ts";
 export const store = configureStore({
   reducer: {
     auth: authReducers,
+    user: userReducers,
+    users: usersReducers,
+    usersCounter: usersCounterReducers,
     activities: activitiesReducers,
     recentActivities: recentActivitiesReducers,
-    jobs: jobsReducers,
     recentJobs: recentJobsReducers,
     recentEmployees: recentEmployeesReducers,
-    nationalities: nationalitiesReducers,
     recentNationalities: recentNationalitiesReducers,
-    users: usersReducers,
     recentUsers: recentUsersReducers,
-    user: userReducers,
+    company: companyReducers,
     companies: companiesReducers,
     recentCompanies: recentCompaniesReducers,
-    company: companyReducers,
+    companiesCounter: companiesCounterReducers,
+    owner: ownerReducers,
     owners: ownersReducers,
+    ownersCounter: ownersCounterReducers,
     recentOwners: recentOwnersReducers,
-    pros: prosReducers,
-    recentPros: recentProsReducers,
-    employees: employeesReducers,
     employee: employeeReducers,
+    employees: employeesReducers,
+    employeesCounter: employeesCounterReducers,
     customer: customerReducers,
     customers: customersReducers,
     recentCustomers: recentCustomersReducers,
-    owner: ownerReducers,
     pro: proReducers,
-    ownersCounter: ownersCounterReducers,
+    pros: prosReducers,
     prosCounter: prosCounterReducers,
+    recentPros: recentProsReducers,
+    jobs: jobsReducers,
     jobsCounter: jobsCounterReducers,
-    companiesCounter: companiesCounterReducers,
-    employeesCounter: employeesCounterReducers,
     customersCounter: customersCounterReducers,
-    usersCounter: usersCounterReducers,
+    nationalities: nationalitiesReducers,
     nationalitiesCounter: nationalitiesCounterReducers,
+    eChannels: eChannelsReducer,
+    eChannelsCounter: eChannelsCounterReducer,
   },
-  middleware: (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, 
+      serializableCheck: false,
     }),
 });
 

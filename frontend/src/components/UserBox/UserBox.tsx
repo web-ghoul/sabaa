@@ -47,7 +47,9 @@ const UserBox = ({
   };
   return (
     <Box
-      className={`flex justify-start items-center gap-2 sm:!gap-1 ${
+      className={`${
+        menu ? "flex" : "grid grid-cols-[auto,1fr]"
+      } justify-start items-center gap-2 sm:!gap-1 ${
         res && "sm:grid sm:justify-center"
       }`}
     >
@@ -76,18 +78,7 @@ const UserBox = ({
               : defaultAvatar
           })`,
         }}
-      >
-        {/* <LazyLoadImage
-          alt={"avatar"}
-          src={
-            avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
-              : variant === "company"
-              ? defaultCompany
-              : defaultAvatar
-          }
-        /> */}
-      </Box>
+      />
       <Box className={`grid justify-start items-center gap-1`}>
         <Typography variant={head || "h6"}>{username}</Typography>
         {role && (

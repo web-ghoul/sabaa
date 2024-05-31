@@ -35,7 +35,7 @@ interface ImportMetaEnv {
   VITE_UPLOAD_JOBS_ROUTE: string;
   VITE_UPLOAD_NATIONALITIES_ROUTE: string;
   VITE_PROFILE_ROUTE: string;
-  VITE_ECHANNEL_ROUTE: string;
+  VITE_ECHANNELS_ROUTE: string;
 }
 
 interface AlertFunTypes {

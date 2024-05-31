@@ -330,8 +330,36 @@ interface EmployeesCounterValuesTypes {
   employeesCounter: number;
 }
 
-//Company
+//E-Channel
 
+interface EChannelTypes {
+  _id?: string;
+
+  user?: string;
+  createdAt?: Date;
+}
+
+interface EChannelsValuesTypes {
+  isLoading: boolean;
+  eChannels: EChannelTypes[] | null;
+}
+
+interface EChannelsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface EChannelsCounterValuesTypes {
+  isLoading: boolean;
+  eChannelsCounter: number;
+}
+
+//Company
 interface CompanyTypes {
   _id?: string;
   name: string;
@@ -504,6 +532,10 @@ export type {
   CustomersValuesTypes,
   CustomerTypes,
   CustomerValuesTypes,
+  EChannelsArgsTypes,
+  EChannelsCounterValuesTypes,
+  EChannelsValuesTypes,
+  EChannelTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,
