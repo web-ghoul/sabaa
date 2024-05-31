@@ -79,17 +79,17 @@ export class NatwasalsService {
 
 
   async findOne(id: string) {
-    const data = await this.natwasalModel.findById(id).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+    const data = await this.natwasalModel.findOne({$or:[{uid: id}, {emiratesId: id}]}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
     if(data){
       return data;
     }else{
       const [emp,owner,company] = await Promise.all([
-        this.employeeModel.findById(id),
-        this.ownerModel.findById(id),
-        this.companyModel.findById({_id: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'}]),
+        this.employeeModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
+        this.ownerModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
+        this.companyModel.findById({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'}]),
       ])
 
-      return (emp || owner || company);
+      return (emp || owner || company || {});
     }
   }
 
