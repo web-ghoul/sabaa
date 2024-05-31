@@ -1,28 +1,31 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
-import { CreateEChannelDto } from './dto/create-e-channel.dto';
-import { UpdateEChannelDto } from './dto/update-e-channel.dto';
-import { InjectModel } from '@nestjs/mongoose';
+import { CreateNatwasalDto } from './dto/create-natwasal.dto';
+import { UpdateNatwasalDto } from './dto/update-natwasal.dto';
 import { Model } from 'mongoose';
-import { EChannel } from 'schemas/eChannel.schema';
-import * as exceljs from 'exceljs';
-import { Response } from 'express';
+import { Natwasal } from 'schemas/natwasal.schema';
+import { InjectModel } from '@nestjs/mongoose';
 import { Employee } from 'schemas/employee.schema';
 import { Owner } from 'schemas/owner.schema';
+import { Company } from 'schemas/company.schema';
+import * as exceljs from 'exceljs';
+import { Response } from 'express';
 
 @Injectable()
-export class EChannelService {
+export class NatwasalsService {
 
   constructor(
-    @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
+    @InjectModel('Natwasal') private natwasalModel: Model<Natwasal>,
     @InjectModel('Employee') private employeeModel: Model<Employee>,
     @InjectModel('Owner') private ownerModel: Model<Owner>,
+    @InjectModel('Company') private companyModel: Model<Company>,
+
   ) {}
-  create(createEChannelDto: CreateEChannelDto) {
-    return this.eChannelModel.create(createEChannelDto);
+  create(createNatwasalDto: CreateNatwasalDto) {
+    return this.natwasalModel.create(createNatwasalDto);
+
   }
 
-  findAll(limit: number, page: number, search: string, type: string, status: string,gender: string, sort: string,fields: string[],) {
-
+  findAll(limit: number, page: number, search: string, type: string,sort: string,fields: string[]) {
     try {
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -32,13 +35,9 @@ export class EChannelService {
       }
       const sort: any = {};
       sort['createdAt'] = -1;
-      sort['status'] = 1;
-
       if (sort == 'name_asc') {
         sort['name'] = 1;
       }
-
-     
       
       const query: any = {
         $and: [{$or: [
@@ -52,11 +51,6 @@ export class EChannelService {
         
       };
 
-      status != '' ? (query['status'] = status) : undefined;
-      gender != '' ? (query['gender'] = gender) : undefined;
-
-
-
       if(type == 'owner'){
         query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
       }else if (type == 'pro') {
@@ -69,7 +63,7 @@ export class EChannelService {
       // console.log(query.$and);
       query.$and.push({deleted: false});
 
-      return this.eChannelModel
+      return this.natwasalModel
         .find(query)
         .select(projection)
         .limit(limit)
@@ -77,43 +71,43 @@ export class EChannelService {
         .sort(sort);
     } catch (err) {
       throw new HttpException(
-        'Error while getting eChannel data',
+        'Error while getting tasaheel',
         HttpStatus.BAD_REQUEST,
       );
     }
-
-
-
   }
 
+
   async findOne(id: string) {
-    const echannel = await this.eChannelModel.findById(id).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
-    if(echannel){
-      return echannel;
+    const data = await this.natwasalModel.findById(id).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+    if(data){
+      return data;
     }else{
-      const [emp,owner] = await Promise.all([
+      const [emp,owner,company] = await Promise.all([
         this.employeeModel.findById(id),
         this.ownerModel.findById(id),
+        this.companyModel.findById({_id: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'}]),
       ])
 
-      return (emp || owner);
+      return (emp || owner || company);
     }
   }
 
-  update(id: string, updateEChannelDto: UpdateEChannelDto) {
-    return this.eChannelModel.findByIdAndUpdate(id, updateEChannelDto);
+  update(id: string, updateNatwasalDto: UpdateNatwasalDto) {
+    return this.natwasalModel.findByIdAndUpdate(id, updateNatwasalDto);
+
   }
 
   async remove(id: string) {
-    await this.eChannelModel.updateOne({ _id: id }, { deleted: true });
+    await this.natwasalModel.updateOne({ _id: id }, { deleted: true });
 
     return { _id: id };
   }
 
   async getCounters() {
     const [count, deleted] = await Promise.all([
-      this.eChannelModel.countDocuments({ deleted: false}),
-      this.eChannelModel.countDocuments({ deleted: true}),
+      this.natwasalModel.countDocuments({ deleted: false}),
+      this.natwasalModel.countDocuments({ deleted: true}),
       
     ]);
     return {
@@ -123,15 +117,15 @@ export class EChannelService {
   }
 
   async export(@Res() res: Response, fileName: string) {
-    const eChannels = await this.eChannelModel.find({ deleted: false});
+    const eChannels = await this.natwasalModel.find({ deleted: false});
 
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('EChannels');
     worksheet.columns = [
       { header: 'ID', key: '_id', width: 20 },
       { header: 'Type', key: 'type', width: 20 },
-      { header: 'Gender', key: 'gender', width: 20 },
-      { header: 'Status', key: 'status', width: 20 },
+      { header: 'email', key: 'email', width: 20 },
+      { header: 'mobile', key: 'mobile', width: 20 },
       { header: 'Username', key: 'username', width: 20 },
       { header: 'Password', key: 'password', width: 20 },
       { header: 'Employee', key: 'employee', width: 20 },
@@ -143,8 +137,8 @@ export class EChannelService {
       worksheet.addRow({
         _id: eChannel._id.toString(),
         type: eChannel.type,
-        gender: eChannel.gender,
-        status: eChannel.status,
+        gender: eChannel.email,
+        status: eChannel.mobile,
         username: eChannel.username,
         password: eChannel.password,
         employee: eChannel.employee ? eChannel.employee.toString() : '',
