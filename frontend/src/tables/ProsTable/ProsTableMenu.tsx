@@ -50,7 +50,7 @@ const ProsTableMenu = () => {
   };
 
   useEffect(() => {
-    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`);
+    setSheet(pathname === `${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`);
   }, [pathname, sheet]);
 
   return (

@@ -194,7 +194,7 @@ export const router = createBrowserRouter([
         element: <Pro />,
       },
       {
-        path: "/pros/upload",
+        path: "/officers/upload",
         element: <UploadPros />,
       },
       {

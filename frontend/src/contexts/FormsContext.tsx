@@ -135,6 +135,13 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Loading Form
   const [formsLoading, setFormsLoading] = useState(false);
+  const handleCloseFormsLoading = () => {
+    setFormsLoading(false);
+  };
+
+  const handleOpenFormsLoading = () => {
+    setFormsLoading(true);
+  };
 
   //Form Type
   const [formType, setFormType] = useState("");
@@ -157,14 +164,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
-
-  const handleCloseFormsLoading = () => {
-    setFormsLoading(false);
-  };
-
-  const handleOpenFormsLoading = () => {
-    setFormsLoading(true);
-  };
 
   //Upload Employees
   const [openUploadEmployeesModal, setOpenUploadEmployeesModal] =

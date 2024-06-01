@@ -36,7 +36,8 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
         (formik as unknown as EChannelFormikTypes).values.emiratesId =
           data.emiratesId;
         (formik as unknown as EChannelFormikTypes).values.phone = data.phone;
-        (formik as unknown as EChannelFormikTypes).values.type = data.type;
+        (formik as unknown as EChannelFormikTypes).values.type =
+          data.type || "employee";
         (formik as unknown as EChannelFormikTypes).values.status = data.status;
         if (data.type) {
           (formik as unknown as EChannelFormikTypes).values.owner = search;
