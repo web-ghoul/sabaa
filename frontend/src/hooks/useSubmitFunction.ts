@@ -68,6 +68,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseCustomerModal,
     handleCloseJobModal,
     handleCloseNationalityModal,
+    handleCloseEChannelModal,
     handleCloseDeleteModal,
     handleCloseConvertCustomerModal,
     editableNationalityData,
@@ -1314,6 +1315,7 @@ const useSubmitFunction = (type: string) => {
         });
         dispatch(getEChannels({}));
         dispatch(getEChannelsCounter());
+        handleCloseEChannelModal();
       })
       .catch((err) => {
         handleCatchError(err);
@@ -1339,6 +1341,7 @@ const useSubmitFunction = (type: string) => {
           status: "success",
         });
         dispatch(getEChannels({}));
+        handleCloseEChannelModal();
       })
       .catch((err) => {
         handleCatchError(err);

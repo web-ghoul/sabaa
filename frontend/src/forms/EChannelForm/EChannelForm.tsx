@@ -10,7 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
-import { FormiksTypes } from "../../types/forms.types";
+import { EChannelFormikTypes, FormiksTypes } from "../../types/forms.types";
 import { EChannelTypes } from "../../types/store.types";
 
 const EChannelForm = ({ formik, type }: FormiksTypes) => {
@@ -27,8 +27,22 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res);
-        setEditableEChannelData({} as EChannelTypes);
+        const data: EChannelTypes = res.data;
+        setEditableEChannelData(data);
+        (formik as unknown as EChannelFormikTypes).values.name = data.name;
+        (formik as unknown as EChannelFormikTypes).values.uid = data.uid;
+        (formik as unknown as EChannelFormikTypes).values.personCode =
+          data.personCode;
+        (formik as unknown as EChannelFormikTypes).values.emiratesId =
+          data.emiratesId;
+        (formik as unknown as EChannelFormikTypes).values.phone = data.phone;
+        (formik as unknown as EChannelFormikTypes).values.type = data.type;
+        (formik as unknown as EChannelFormikTypes).values.status = data.status;
+        if (data.type) {
+          (formik as unknown as EChannelFormikTypes).values.owner = search;
+        } else {
+          (formik as unknown as EChannelFormikTypes).values.employee = search;
+        }
       })
       .catch((err) => {
         handleCatchError(err);
@@ -51,7 +65,7 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
       <Box className={`flex justify-start items-end gap-4`}>
         <Input
           formik={formik}
-          label={"Search uid , emirates id..."}
+          label={"Search UID , emirates id..."}
           name={"search_for_person"}
           type={"search"}
           change={(val) => setSearch(val)}
@@ -73,6 +87,13 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
             name={"password"}
             type={"password"}
           />
+          <Input
+            formik={formik}
+            label={"Status"}
+            name={"status"}
+            select
+            options={["Active", "Inactive"]}
+          />
         </Box>
       </Box>
 
@@ -82,7 +103,15 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
         <Typography variant="h4" className={`!font-[700]`}>
           Person Information
         </Typography>
-        <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+        <Box
+          className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+          sx={{
+            "& input , & select": {
+              textFillColor: (theme) =>
+                `${theme.palette.primary.main} !important`,
+            },
+          }}
+        >
           <Input
             formik={formik}
             label={"English Name"}
@@ -127,14 +156,6 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
             name={"type"}
             select
             options={["owner", "customer", "officer", "employee"]}
-            disabled
-          />
-          <Input
-            formik={formik}
-            label={"Status"}
-            name={"status"}
-            select
-            options={["Active", "Inactive"]}
             disabled
           />
         </Box>

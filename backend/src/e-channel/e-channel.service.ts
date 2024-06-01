@@ -88,6 +88,7 @@ export class EChannelService {
   }
 
   async findOne(id: string) {
+<<<<<<< HEAD
     const echannel = await this.eChannelModel.findById(id).populate([
       { path: 'employee', model: 'Employee' },
       { path: 'owner', model: 'Owner' },
@@ -101,6 +102,18 @@ export class EChannelService {
       ]);
 
       return emp || owner;
+=======
+    const echannel = await this.eChannelModel.findOne({$or:[{uid: id}, {emiratesId: id}]}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+    if(echannel){
+      return echannel;
+    }else{
+      const [emp,owner] = await Promise.all([
+        this.employeeModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
+        this.ownerModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
+      ])
+
+      return (emp || owner || {});
+>>>>>>> 845f65d61401ab3e6f96ba3b0a853b4a92be6218
     }
   }
 

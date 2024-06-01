@@ -57,6 +57,16 @@ const Input = ({
               native: true,
               "aria-label": label,
             }}
+            sx={{
+              "& input , & select": {
+                textFillColor: (theme) =>
+                  `${
+                    disabled && formik.values[name as keyof AllFormiksTypes]
+                      ? theme.palette.primary.main
+                      : "#333"
+                  } !important`,
+              },
+            }}
             value={formik.values[name as keyof AllFormiksTypes]}
             onChange={(e) => {
               if (change) {
@@ -114,6 +124,16 @@ const Input = ({
             disabled={disabled}
             fullWidth
             id={name}
+            sx={{
+              "& input , & select": {
+                textFillColor: (theme) =>
+                  `${
+                    disabled && formik.values[name as keyof AllFormiksTypes]
+                      ? theme.palette.primary.main
+                      : "#333"
+                  } !important`,
+              },
+            }}
             type={
               type
                 ? type === "password"

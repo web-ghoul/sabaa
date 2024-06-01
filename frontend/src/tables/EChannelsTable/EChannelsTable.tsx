@@ -147,7 +147,9 @@ const EChannelsTable = ({
                   </PrimaryTableCell>
                 )}
                 {!smScreen && (
-                  <PrimaryTableCell align="center">{row.type}</PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {row.type || "employee"}
+                  </PrimaryTableCell>
                 )}
                 <PrimaryTableCell align="center">
                   <StatusBox status={row.status} />
