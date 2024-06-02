@@ -140,6 +140,7 @@ const OwnerForm = ({ formik, type }: FormiksTypes) => {
           name={"fileImmgNo"}
         />
         <Input formik={formik} label={"Address"} name={"address"} />
+        <Input formik={formik} label={"Sponsor"} name={"sponsor"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
       </Box>
 

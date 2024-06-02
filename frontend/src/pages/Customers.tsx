@@ -23,9 +23,11 @@ const Customers = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getCustomers({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
+    dispatch(getCustomers(allParams));
   }, [dispatch, searchParams]);
   return (
     <PrimaryBox>

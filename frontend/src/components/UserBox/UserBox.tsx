@@ -45,6 +45,9 @@ const UserBox = ({
     handleAlert({ msg: "Logout Successfully", status: "success" });
     navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
   };
+
+  console.log(avatar);
+
   return (
     <Box
       className={`${
@@ -72,7 +75,10 @@ const UserBox = ({
         sx={{
           backgroundImage: `url(${
             avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
+              ? `${import.meta.env.VITE_SERVER_URL}/${avatar.replaceAll(
+                  "\\",
+                  "/"
+                )}`
               : variant === "company"
               ? defaultCompany
               : defaultAvatar

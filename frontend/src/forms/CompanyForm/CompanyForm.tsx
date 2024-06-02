@@ -175,7 +175,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             select={true}
             name={"state"}
             label={"State"}
-            options={["dubai"]}
+            options={["dubai", "abozabi"]}
           />
           <Input formik={formik} label={"Address"} name={"address"} />
 
@@ -266,7 +266,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               type={"password"}
               name={"password"}
             />
-              <Input
+            <Input
               formik={formik}
               label={"E-Channel Remarks"}
               type={"text"}

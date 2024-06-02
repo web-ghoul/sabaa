@@ -20,9 +20,11 @@ const Owners = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getOwners({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
+    dispatch(getOwners(allParams));
   }, [dispatch, searchParams]);
   return (
     <PrimaryBox>

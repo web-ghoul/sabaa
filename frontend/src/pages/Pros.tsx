@@ -19,9 +19,11 @@ const Pros = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getPros({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
+    dispatch(getPros(allParams));
   }, [dispatch, searchParams]);
   return (
     <PrimaryBox>

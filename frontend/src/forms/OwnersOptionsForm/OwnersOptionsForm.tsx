@@ -208,7 +208,7 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             name={"status"}
             formik={formik}
             change={handleFilterByStatus}
-            options={["Active", "Pending", "Blocked"]}
+            options={["active", "inactive"]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>

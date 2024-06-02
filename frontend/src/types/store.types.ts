@@ -100,6 +100,8 @@ interface OwnerTypes {
   name: string;
   nameAr: string;
   avatar: string;
+  gender: string;
+  job: string;
   dob?: Date;
   sponsors: SponsorTypes[];
   idNationality: string;
@@ -222,6 +224,7 @@ interface CustomersArgsTypes {
   dobTo?: string;
   dobFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -404,6 +407,7 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
+  echannelRemarks: string;
   userName: string;
   password: string;
   noqodiWalet: string;

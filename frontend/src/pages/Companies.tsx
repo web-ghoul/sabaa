@@ -23,9 +23,11 @@ const Companies = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getCompanies({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
+    dispatch(getCompanies(allParams));
   }, [dispatch, searchParams]);
   return (
     <PrimaryBox>

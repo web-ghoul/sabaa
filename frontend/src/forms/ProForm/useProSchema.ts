@@ -23,6 +23,7 @@ const useProSchema = () => {
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
+    sponsor: yup.string(),
     type: yup.string(),
     remarks: yup.string(),
   });
@@ -52,6 +53,7 @@ const useProSchema = () => {
     status: editableProData?.status || "",
     emiratesId: editableProData?.emiratesId || "",
     uid: editableProData?.uid || "",
+    sponsor: editableProData?.sponsor || "",
     type: "pro",
     remarks: editableProData?.remarks || "",
   };

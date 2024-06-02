@@ -21,9 +21,11 @@ const Users = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getUsers({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
+    dispatch(getUsers(allParams));
   }, [dispatch, searchParams]);
   return (
     <PrimaryBox>

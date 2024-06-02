@@ -39,7 +39,6 @@ interface EmployeeProfileProps {
 interface CustomerProfileProps {
   customer: CustomerTypes | null;
   isLoading: boolean;
-  companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
 }
 

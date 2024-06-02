@@ -12,6 +12,7 @@ import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { SponsorsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
@@ -43,7 +44,9 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>Name</PrimaryTableCell>
           {!mdScreen && (
-            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              Residence Expire Date
+            </PrimaryTableCell>
           )}
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (
@@ -69,7 +72,7 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
                   </PrimaryTableCell>
                   {!mdScreen && (
                     <PrimaryTableCell align="center">
-                      {row.phone}
+                      {handleDate(row.residenceExpiryDate)}
                     </PrimaryTableCell>
                   )}
                   {!smScreen && (
