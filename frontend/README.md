@@ -505,3 +505,5 @@ Notes For Amr :
 2- Return PersonId at Echannel Schema
 3- If Link Company To Owner or Pro more than once that is owner appear more than once in company profile in owners tab
 4- Add Job and Gender in Customer and Sponsor Schema
+5- Return E-Channel Details of Person with profile Data
+

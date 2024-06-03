@@ -10,6 +10,7 @@ import {
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -166,6 +167,10 @@ interface FormsContextTypes {
   setSearchForEmployees: (search: string) => void;
   searchForEChannels: string;
   setSearchForEChannels: (search: string) => void;
+  searchForTasheel: string;
+  setSearchForTasheel: (search: string) => void;
+  searchForNatwasal: string;
+  setSearchForNatwasal: (search: string) => void;
   searchForCustomers: string;
   setSearchForCustomers: (search: string) => void;
   searchForPros: string;
@@ -223,6 +228,10 @@ interface FormsContextTypes {
   setEditableUserData: (user: UserTypes | null) => void;
   editableEChannelData: EChannelTypes | null;
   setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
+  editableTasheelData: TasheelTypes | null;
+  setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
+  editableNatwasalData: TasheelTypes | null;
+  setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
 }
 
 interface TabsContextProps {

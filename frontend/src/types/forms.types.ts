@@ -9,6 +9,7 @@ import {
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -461,6 +462,37 @@ interface EChannelsOptionsFormikTypes {
   values: EChannelsOptionsFormTypes;
 }
 
+//Tasheel
+
+interface TasheelFormTypes extends TasheelTypes {}
+
+interface TasheelFormikTypes {
+  touched: TasheelFormTypes;
+  errors: TasheelFormTypes;
+  initialValues: TasheelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: TasheelFormTypes;
+}
+
+interface TasheelsOptionsFormTypes {
+  search: string;
+  type: string;
+}
+
+interface TasheelsOptionsFormikTypes {
+  touched: TasheelsOptionsFormTypes;
+  errors: TasheelsOptionsFormTypes;
+  initialValues: TasheelsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: TasheelsOptionsFormTypes;
+}
+
 //Download Excel
 
 interface DownloadExcelFormTypes {
@@ -520,7 +552,9 @@ type AllFormsTypes =
   | OTPFormTypes
   | SponsorFormTypes
   | ConvertCustomerFormTypes
-  | EChannelFormTypes;
+  | EChannelFormTypes
+  | TasheelFormTypes
+  | TasheelsOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -549,7 +583,9 @@ type AllFormiksTypes =
   | OTPFormikTypes
   | SponsorFormikTypes
   | ConvertCustomerFormikTypes
-  | EChannelFormikTypes;
+  | EChannelFormikTypes
+  | TasheelFormikTypes
+  | TasheelsOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -622,6 +658,10 @@ export type {
   ResetPasswordFormTypes,
   SponsorFormikTypes,
   SponsorFormTypes,
+  TasheelFormikTypes,
+  TasheelFormTypes,
+  TasheelsOptionsFormikTypes,
+  TasheelsOptionsFormTypes,
   UserFormikTypes,
   UserFormTypes,
   UsersOptionsFormikTypes,

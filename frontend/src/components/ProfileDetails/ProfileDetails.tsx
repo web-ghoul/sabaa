@@ -254,6 +254,8 @@ const ProfileDetails = ({
                 value={handleDate((data as OwnerTypes).dob)}
               />
               <DataBox title={"State"} value={(data as OwnerTypes).state} />
+              <DataBox title={"Job Title"} value={(data as OwnerTypes).job} />
+              <DataBox title={"Gender"} value={(data as OwnerTypes).gender} />
               <DataBox
                 title={"Nationality"}
                 flag={handleGetFlag((data as OwnerTypes).nationality)}
@@ -336,6 +338,8 @@ const ProfileDetails = ({
                 value={handleDate((data as ProTypes).dob)}
               />
               <DataBox title={"State"} value={(data as ProTypes).state} />
+              <DataBox title={"Job Title"} value={(data as ProTypes).job} />
+              <DataBox title={"Gender"} value={(data as ProTypes).gender} />
               <DataBox
                 title={"Nationality"}
                 flag={handleGetFlag((data as ProTypes).nationality)}
@@ -430,7 +434,10 @@ const ProfileDetails = ({
                 flag={handleGetFlag((data as CustomerTypes).nationality)}
                 value={(data as CustomerTypes).nationality}
               />
-              <DataBox title={"Job"} value={(data as CustomerTypes).job} />
+              <DataBox
+                title={"Job Title"}
+                value={(data as CustomerTypes).job}
+              />
               <DataBox
                 title={"Gender"}
                 value={(data as CustomerTypes).gender}
@@ -528,7 +535,7 @@ const ProfileDetails = ({
               <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
               <DataBox
                 title={"Salary"}
-                value={(data as EmployeeTypes).salary.toString()}
+                value={(data as EmployeeTypes)?.salary?.toString()}
               />
               <DataBox
                 title={"Status"}

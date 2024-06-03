@@ -159,9 +159,9 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
         >
           <Input
             formik={formik}
-            type={"number"}
             name={"passportNumber"}
             label={"Passport Number"}
+            type={"text"}
           />
           <Input
             formik={formik}

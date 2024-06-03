@@ -7,17 +7,17 @@ import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { getEChannels } from "../store/eChannelsSlice";
 import { AppDispatch, RootState } from "../store/store";
-import EChannelsTable from "../tables/EChannelsTable/EChannelsTable";
+import { getTasheels } from "../store/tasheelsSlice";
+import TasheelsTable from "../tables/TasheelsTable/TasheelsTable";
 
-const EChannels = () => {
-  const { eChannels, isLoading } = useSelector(
-    (state: RootState) => state.eChannels
+const Tasheel = () => {
+  const { tasheels, isLoading } = useSelector(
+    (state: RootState) => state.tasheels
   );
   const { pageContainerClasses } = useContext(AppContext);
-  const { eChannelsCounter } = useSelector(
-    (state: RootState) => state.eChannelsCounter
+  const { tasheelsCounter } = useSelector(
+    (state: RootState) => state.tasheelsCounter
   );
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
@@ -27,7 +27,7 @@ const EChannels = () => {
     for (const [key, value] of searchParams.entries()) {
       allParams[key] = value;
     }
-    dispatch(getEChannels(allParams));
+    dispatch(getTasheels(allParams));
   }, [dispatch, searchParams]);
 
   return (
@@ -35,13 +35,13 @@ const EChannels = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
-            E-Channels
+            Tasheel
           </Typography>
         </BreadCrumbs>
-        <Forms type={"eChannelsOptions"} />
-        <EChannelsTable
-          count={eChannelsCounter}
-          data={eChannels}
+        <Forms type={"tasheelsOptions"} />
+        <TasheelsTable
+          count={tasheelsCounter}
+          data={tasheels}
           isLoading={isLoading}
         />
       </PrimaryContainer>
@@ -49,4 +49,4 @@ const EChannels = () => {
   );
 };
 
-export default EChannels;
+export default Tasheel;

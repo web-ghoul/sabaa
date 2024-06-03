@@ -8,6 +8,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes, ProFormikTypes } from "../../types/forms.types";
@@ -18,6 +19,7 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+  const { jobs } = useSelector((state: RootState) => state.jobs);
   const [checked, setChecked] = useState(false);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -32,6 +34,7 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
 
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
+    dispatch(getJobs({ limit: -1 }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -101,6 +104,14 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
             name={"nationality"}
           />
         )}
+        {jobs && jobs.length > 0 && (
+          <AutoCompleteSearch
+            label={"Job"}
+            options={jobs}
+            formik={formik}
+            name={"job"}
+          />
+        )}
         <Input
           formik={formik}
           label={"Emirates ID"}
@@ -141,6 +152,13 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
           name={"status"}
           select
           options={["Active", "Inactive"]}
+        />
+        <Input
+          formik={formik}
+          label={"Gender"}
+          name={"gender"}
+          select
+          options={["Male", "Female"]}
         />
         <Input
           formik={formik}

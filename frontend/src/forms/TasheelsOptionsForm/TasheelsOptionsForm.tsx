@@ -12,19 +12,19 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { getEChannels } from "../../store/eChannelsSlice";
 import { AppDispatch } from "../../store/store";
+import { getTasheels } from "../../store/tasheelsSlice";
 import {
-  EChannelsOptionsFormikTypes,
   FormiksTypes,
+  TasheelsOptionsFormikTypes,
 } from "../../types/forms.types";
 
-const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
+const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const {
-    searchForEChannels,
-    setSearchForEChannels,
+    searchForTasheel,
+    setSearchForTasheel,
     handleOpenDownloadExcelModal,
   } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
@@ -32,47 +32,35 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
   const [showFilters, setShowFilters] = useState(false);
 
   const handleSearch = (value: string) => {
-    setSearchForEChannels(value);
-    dispatch(getEChannels({ ...queries, search: value }));
+    setSearchForTasheel(value);
+    dispatch(getTasheels({ ...queries, search: value }));
   };
 
   const handleFilterByType = (value: string) => {
     handleAddQuery({ type: value });
   };
 
-  const handleFilterByStatus = (value: string) => {
-    handleAddQuery({ status: value });
-  };
-
-  const handleFilterByGender = (value: string) => {
-    handleAddQuery({ gender: value });
-  };
-
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getEChannels({ ...queries, search: searchForEChannels }));
+    dispatch(getTasheels({ ...queries, search: searchForTasheel }));
   };
 
   const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "eChannels");
+    handleOpenDownloadExcelModal("excel", "tasheels");
   };
 
   const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "eChannels");
+    handleOpenDownloadExcelModal("all", "tasheels");
   };
 
   const handleResetAll = () => {
-    navigate(`${import.meta.env.VITE_ECHANNELS_ROUTE}`);
-    dispatch(getEChannels({}));
+    navigate(`${import.meta.env.VITE_TASHEEL_ROUTE}`);
+    dispatch(getTasheels({}));
     setQueries({});
   };
 
-  (formik as unknown as EChannelsOptionsFormikTypes).values.type =
+  (formik as unknown as TasheelsOptionsFormikTypes).values.type =
     queries.type || "";
-  (formik as unknown as EChannelsOptionsFormikTypes).values.gender =
-    queries.gender || "";
-  (formik as unknown as EChannelsOptionsFormikTypes).values.status =
-    queries.status || "";
 
   return (
     <Paper
@@ -93,7 +81,7 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
         <Box
           className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
         >
-          <Button title={"Add E-Channel"} icon={<AddRounded />} />
+          <Button title={"Add Tasheel"} icon={<AddRounded />} />
           <Button
             title={"Excel"}
             icon={<RiFileExcel2Fill />}
@@ -125,26 +113,10 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
           />
         </Box>
         <Box
-          className={`grid grid-cols-[1fr,1fr,1fr,1fr,auto] justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
+          className={`flex justify-stretch items-end gap-4 transition-all md:gap-3 sm:!gap-2 md:flex md:flex-wrap  ${
             showFilters ? "h-full" : "h-[0px]"
           } overflow-hidden`}
         >
-          <Input
-            label={"Filter By Status"}
-            name={"status"}
-            formik={formik}
-            change={handleFilterByStatus}
-            options={["active", "inactive"]}
-            select
-          />
-          <Input
-            label={"Filter By Gender"}
-            name={"gender"}
-            formik={formik}
-            change={handleFilterByGender}
-            options={["male", "female"]}
-            select
-          />
           <Input
             label={"Filter By User Type"}
             name={"type"}
@@ -164,4 +136,4 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
   );
 };
 
-export default EChannelsOptionsForm;
+export default TasheelsOptionsForm;
