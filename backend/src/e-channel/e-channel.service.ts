@@ -74,7 +74,7 @@ export class EChannelService {
         .select(projection)
         .limit(limit)
         .skip(page * limit)
-        .sort(sort);
+        .sort(sort).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
     } catch (err) {
       throw new HttpException(
         'Error while getting eChannel data',
@@ -94,6 +94,7 @@ export class EChannelService {
       const [emp,owner] = await Promise.all([
         this.employeeModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
         this.ownerModel.findOne({$or:[{uid: id}, {emiratesId: id}]}),
+
       ])
 
       return (emp || owner || {});

@@ -9,10 +9,12 @@ import { Company } from 'schemas/company.schema';
 import { ActivityLog } from 'schemas/activityLog.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { EChannel } from 'schemas/eChannel.schema';
 
 @Injectable()
 export class EmployeesService {
   constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>,
+  @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
   @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
 private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File, user: ObjectId) {
@@ -101,11 +103,12 @@ private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   }
 
   async findOne(id: string) {
-    const [employee, activities] = await Promise.all([
+    const [employee, activities,eChannel] = await Promise.all([
       await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
-      this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec()
+      this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
+      this.eChannelModel.findOne({employee:id}),
     ])
-    return {employee,activities}
+    return {employee,activities,eChannel};
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {

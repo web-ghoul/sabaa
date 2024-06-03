@@ -33,6 +33,14 @@ export class CreateOwnerDto {
 
   @ApiProperty()
   @IsString()
+  gender: string;
+
+  @ApiProperty()
+  @IsString()
+  job: string;
+
+  @ApiProperty()
+  @IsString()
   state: string;
 
   @ApiProperty()
