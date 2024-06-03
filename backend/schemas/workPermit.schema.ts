@@ -55,8 +55,8 @@ export class WorkPermit extends Document {
   @Prop({ type: Date })
   dateEntry: Date;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: string;
+  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  // user: string;
 
   @Prop({default : false})
   deleted: boolean;
