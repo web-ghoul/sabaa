@@ -31,6 +31,7 @@ const useOwnerSchema = () => {
     fileImmgNo: yup.string(),
     status: yup.string(),
     type: yup.string(),
+    sponsor: yup.string(),
     remarks: yup.string(),
   });
 
@@ -59,6 +60,7 @@ const useOwnerSchema = () => {
     status: editableOwnerData?.status || "",
     emiratesId: editableOwnerData?.emiratesId || "",
     uid: editableOwnerData?.uid || "",
+    sponsor: editableOwnerData?.sponsor || "",
     type: "owner",
     remarks: editableOwnerData?.remarks || "",
   };

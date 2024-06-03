@@ -1,3 +1,4 @@
+import { AddRounded } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { useContext } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
@@ -26,7 +27,11 @@ const CompanyProfile = ({
   activities,
 }: CompanyProfileProps) => {
   const { companyTabsValue } = useContext(TabsContext);
-  const { handleOpenUploadEmployeesModal } = useContext(FormsContext);
+  const {
+    handleOpenUploadEmployeesModal,
+    handleOpenOwnerModal,
+    handleOpenProModal,
+  } = useContext(FormsContext);
 
   return (
     <PrimaryTab
@@ -50,20 +55,38 @@ const CompanyProfile = ({
         />
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={1}>
-        <OwnersTable
-          count={company?.ownerId?.length || 0}
-          data={company && (company.ownerId as OwnerTypes[])}
-          isLoading={isLoading}
-          noPagination={true}
-        />
+        <Box className={`grid justify-stretch items-center gap-4`}>
+          <Box className={`flex justify-end items-center`}>
+            <Button
+              title={"Add Owner"}
+              icon={<AddRounded />}
+              handling={() => handleOpenOwnerModal("addOwner")}
+            />
+          </Box>
+          <OwnersTable
+            count={company?.ownerId?.length || 0}
+            data={company && (company.ownerId as OwnerTypes[])}
+            isLoading={isLoading}
+            noPagination={true}
+          />
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={2}>
-        <ProsTable
-          count={company?.proCode?.length || 0}
-          data={company && (company.proCode as ProTypes[])}
-          isLoading={isLoading}
-          noPagination={true}
-        />
+        <Box className={`grid justify-stretch items-center gap-4`}>
+          <Box className={`flex justify-end items-center`}>
+            <Button
+              title={"Add Officer"}
+              icon={<AddRounded />}
+              handling={() => handleOpenProModal("addPro")}
+            />
+          </Box>
+          <ProsTable
+            count={company?.proCode?.length || 0}
+            data={company && (company.proCode as ProTypes[])}
+            isLoading={isLoading}
+            noPagination={true}
+          />
+        </Box>
       </CustomTabPanel>
       <CustomTabPanel value={companyTabsValue} index={3}>
         <Box

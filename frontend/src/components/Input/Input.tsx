@@ -21,6 +21,7 @@ const Input = ({
   ac,
   textarea,
   variant,
+  disabled,
 }: InputTypes & FormiksTypes) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,6 +48,7 @@ const Input = ({
         </Typography>
         {select ? (
           <PrimaryTextField
+            disabled={disabled}
             fullWidth
             id={name}
             name={name}
@@ -54,6 +56,16 @@ const Input = ({
             SelectProps={{
               native: true,
               "aria-label": label,
+            }}
+            sx={{
+              "& input , & select": {
+                textFillColor: (theme) =>
+                  `${
+                    disabled && formik.values[name as keyof AllFormiksTypes]
+                      ? theme.palette.primary.main
+                      : "#333"
+                  } !important`,
+              },
             }}
             value={formik.values[name as keyof AllFormiksTypes]}
             onChange={(e) => {
@@ -109,8 +121,19 @@ const Input = ({
           />
         ) : (
           <PrimaryTextField
+            disabled={disabled}
             fullWidth
             id={name}
+            sx={{
+              "& input , & select": {
+                textFillColor: (theme) =>
+                  `${
+                    disabled && formik.values[name as keyof AllFormiksTypes]
+                      ? theme.palette.primary.main
+                      : "#333"
+                  } !important`,
+              },
+            }}
             type={
               type
                 ? type === "password"
@@ -156,35 +179,37 @@ const Input = ({
               if (change) {
                 change(val);
               }
-              if (
-                !(
-                  type === "email" ||
+              if (!(type === "text" || type === "password")) {
+                if (
+                  !(
+                    type === "email" ||
+                    label?.toLowerCase() === "username" ||
+                    label?.toLowerCase() === "website"
+                  )
+                ) {
+                  e.target.value = val.toUpperCase();
+                }
+                if (label?.split(" ")[0].toLowerCase() === "arabic") {
+                  e.target.value = handleAcceptArabic(e.target.value);
+                }
+                if (
+                  label?.split(" ")[0].toLowerCase() === "english" ||
+                  variant === "english"
+                ) {
+                  e.target.value = handleAcceptEnglish(e.target.value);
+                }
+                if (variant === "numeric") {
+                  e.target.value = handleAcceptNumeric(e.target.value);
+                }
+                if (variant === "url") {
+                  e.target.value = handleAcceptURL(e.target.value);
+                }
+                if (
                   label?.toLowerCase() === "username" ||
-                  label?.toLowerCase() === "website"
-                )
-              ) {
-                e.target.value = val.toUpperCase();
-              }
-              if (label?.split(" ")[0].toLowerCase() === "arabic") {
-                e.target.value = handleAcceptArabic(e.target.value);
-              }
-              if (
-                label?.split(" ")[0].toLowerCase() === "english" ||
-                variant === "english"
-              ) {
-                e.target.value = handleAcceptEnglish(e.target.value);
-              }
-              if (variant === "numeric") {
-                e.target.value = handleAcceptNumeric(e.target.value);
-              }
-              if (variant === "url") {
-                e.target.value = handleAcceptURL(e.target.value);
-              }
-              if (
-                label?.toLowerCase() === "username" ||
-                variant === "username"
-              ) {
-                e.target.value = handleAcceptUsername(e.target.value);
+                  variant === "username"
+                ) {
+                  e.target.value = handleAcceptUsername(e.target.value);
+                }
               }
               formik.handleChange(e);
             }}
@@ -199,6 +224,7 @@ const Input = ({
     [
       ac,
       change,
+      disabled,
       error,
       formik,
       helperText,

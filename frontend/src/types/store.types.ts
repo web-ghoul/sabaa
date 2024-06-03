@@ -100,6 +100,8 @@ interface OwnerTypes {
   name: string;
   nameAr: string;
   avatar: string;
+  gender: string;
+  job: string;
   dob?: Date;
   sponsors: SponsorTypes[];
   idNationality: string;
@@ -222,6 +224,7 @@ interface CustomersArgsTypes {
   dobTo?: string;
   dobFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -330,8 +333,47 @@ interface EmployeesCounterValuesTypes {
   employeesCounter: number;
 }
 
-//Company
+//E-Channel
 
+interface EChannelTypes {
+  _id?: string;
+  name: string;
+  username: string;
+  password: string;
+  type: string;
+  phone: string;
+  gender: string;
+  uid: string;
+  emiratesId: string;
+  personCode: string;
+  status: "active" | "inactive";
+  owner?: string | OwnerTypes;
+  employee?: string | EmployeeTypes;
+  user?: string;
+  createdAt?: Date;
+}
+
+interface EChannelsValuesTypes {
+  isLoading: boolean;
+  eChannels: EChannelTypes[] | null;
+}
+
+interface EChannelsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface EChannelsCounterValuesTypes {
+  isLoading: boolean;
+  eChannelsCounter: number;
+}
+
+//Company
 interface CompanyTypes {
   _id?: string;
   name: string;
@@ -365,6 +407,7 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
+  echannelRemarks: string;
   userName: string;
   password: string;
   noqodiWalet: string;
@@ -504,6 +547,10 @@ export type {
   CustomersValuesTypes,
   CustomerTypes,
   CustomerValuesTypes,
+  EChannelsArgsTypes,
+  EChannelsCounterValuesTypes,
+  EChannelsValuesTypes,
+  EChannelTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,

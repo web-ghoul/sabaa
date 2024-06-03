@@ -7,40 +7,39 @@ import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
-import { getCustomers } from "../store/customersSlice";
+import { getEChannels } from "../store/eChannelsSlice";
 import { AppDispatch, RootState } from "../store/store";
-import CustomersTable from "../tables/CustomersTable/CustomersTable";
+import EChannelsTable from "../tables/EChannelsTable/EChannelsTable";
 
-const Customers = () => {
-  const { customers, isLoading } = useSelector(
-    (state: RootState) => state.customers
+const EChannels = () => {
+  const { eChannels, isLoading } = useSelector(
+    (state: RootState) => state.eChannels
   );
   const { pageContainerClasses } = useContext(AppContext);
-  const { customersCounter } = useSelector(
-    (state: RootState) => state.customersCounter
+  const { eChannelsCounter } = useSelector(
+    (state: RootState) => state.eChannelsCounter
   );
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
+    if (searchParams.size === 0) {
+      dispatch(getEChannels({}));
     }
-    dispatch(getCustomers(allParams));
   }, [dispatch, searchParams]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
-            Customers
+            E-Channels
           </Typography>
         </BreadCrumbs>
-        <Forms type={"customersOptions"} />
-        <CustomersTable
-          count={customersCounter}
-          data={customers}
+        <Forms type={"eChannelsOptions"} />
+        <EChannelsTable
+          count={eChannelsCounter}
+          data={eChannels}
           isLoading={isLoading}
         />
       </PrimaryContainer>
@@ -48,4 +47,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default EChannels;

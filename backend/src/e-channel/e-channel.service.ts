@@ -1,17 +1,16 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
-import { CreateEChannelDto } from './dto/create-e-channel.dto';
-import { UpdateEChannelDto } from './dto/update-e-channel.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { EChannel } from 'schemas/eChannel.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { Model } from 'mongoose';
+import { EChannel } from 'schemas/eChannel.schema';
 import { Employee } from 'schemas/employee.schema';
 import { Owner } from 'schemas/owner.schema';
+import { CreateEChannelDto } from './dto/create-e-channel.dto';
+import { UpdateEChannelDto } from './dto/update-e-channel.dto';
 
 @Injectable()
 export class EChannelService {
-
   constructor(
     @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
     @InjectModel('Employee') private employeeModel: Model<Employee>,
@@ -21,8 +20,16 @@ export class EChannelService {
     return this.eChannelModel.create(createEChannelDto);
   }
 
-  findAll(limit: number, page: number, search: string, type: string, status: string,gender: string, sort: string,fields: string[],) {
-
+  findAll(
+    limit: number,
+    page: number,
+    search: string,
+    type: string,
+    status: string,
+    gender: string,
+    sort: string,
+    fields: string[],
+  ) {
     try {
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -38,36 +45,33 @@ export class EChannelService {
         sort['name'] = 1;
       }
 
-     
-      
       const query: any = {
-        $and: [{$or: [
-          { username: { $regex: new RegExp(search, 'i') } },
-          { personCode: { $regex: new RegExp(search, 'i') } },
-          { phone: { $regex: new RegExp(search, 'i') } },
-          { uid: { $regex: new RegExp(search, 'i') } },
-          { emiratesId: { $regex: new RegExp(search, 'i') } },
-        ]}
-      ],
-        
+        $and: [
+          {
+            $or: [
+              { username: { $regex: new RegExp(search, 'i') } },
+              { personCode: { $regex: new RegExp(search, 'i') } },
+              { phone: { $regex: new RegExp(search, 'i') } },
+              { uid: { $regex: new RegExp(search, 'i') } },
+              { emiratesId: { $regex: new RegExp(search, 'i') } },
+            ],
+          },
+        ],
       };
 
       status != '' ? (query['status'] = status) : undefined;
       gender != '' ? (query['gender'] = gender) : undefined;
 
-
-
-      if(type == 'owner'){
-        query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
-      }else if (type == 'pro') {
-        query['$and'].push({ $or : [{type: 'pro'},{type: 'owner&pro'}]});
-      }else
-      {
+      if (type == 'owner') {
+        query['$and'].push({ $or: [{ type: 'owner' }, { type: 'owner&pro' }] });
+      } else if (type == 'pro') {
+        query['$and'].push({ $or: [{ type: 'pro' }, { type: 'owner&pro' }] });
+      } else {
         type != '' ? (query['type'] = type) : undefined;
       }
 
       // console.log(query.$and);
-      query.$and.push({deleted: false});
+      query.$and.push({ deleted: false });
 
       return this.eChannelModel
         .find(query)
@@ -81,14 +85,16 @@ export class EChannelService {
         HttpStatus.BAD_REQUEST,
       );
     }
-
-
-
   }
 
   async findOne(id: string) {
-    const echannel = await this.eChannelModel.findOne({$or:[{uid: id}, {emiratesId: id}]}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
-    if(echannel){
+    const echannel = await this.eChannelModel
+      .findOne({ $or: [{ uid: id }, { emiratesId: id }] })
+      .populate([
+        { path: 'employee', model: 'Employee' },
+        { path: 'owner', model: 'Owner' },
+      ]);
+    if (echannel) {
       return echannel;
     }else{
       const [emp,owner] = await Promise.all([
@@ -113,9 +119,8 @@ export class EChannelService {
 
   async getCounters() {
     const [count, deleted] = await Promise.all([
-      this.eChannelModel.countDocuments({ deleted: false}),
-      this.eChannelModel.countDocuments({ deleted: true}),
-      
+      this.eChannelModel.countDocuments({ deleted: false }),
+      this.eChannelModel.countDocuments({ deleted: true }),
     ]);
     return {
       count,
@@ -124,7 +129,7 @@ export class EChannelService {
   }
 
   async export(@Res() res: Response, fileName: string) {
-    const eChannels = await this.eChannelModel.find({ deleted: false});
+    const eChannels = await this.eChannelModel.find({ deleted: false });
 
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('EChannels');
@@ -140,7 +145,7 @@ export class EChannelService {
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    eChannels.forEach(eChannel => {
+    eChannels.forEach((eChannel) => {
       worksheet.addRow({
         _id: eChannel._id.toString(),
         type: eChannel.type,
@@ -154,8 +159,14 @@ export class EChannelService {
       });
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileName}.xlsx`,
+    );
     await workbook.xlsx.write(res);
 
     res.end();

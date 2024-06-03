@@ -498,3 +498,10 @@ Tasheel :
 
 Natwasal is Same of Tasheel
 
+
+
+Notes For Amr :
+1- Return Name of Person at echannel schema
+2- Return PersonId at Echannel Schema
+3- If Link Company To Owner or Pro more than once that is owner appear more than once in company profile in owners tab
+4- Add Job and Gender in Customer and Sponsor Schema

@@ -55,6 +55,7 @@ interface InputTypes {
   ac?: string;
   textarea?: boolean;
   variant?: string;
+  disabled?: boolean;
   change?: (value: string) => void;
 }
 

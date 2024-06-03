@@ -8,6 +8,7 @@ import Company from "./pages/Company.tsx";
 import Customer from "./pages/Customer.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import EChannels from "./pages/EChannels.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
 import Employee from "./pages/Employee.tsx";
@@ -137,6 +138,10 @@ export const router = createBrowserRouter([
         element: <UploadCompanies />,
       },
       {
+        path: "/e-channels",
+        element: <EChannels />,
+      },
+      {
         path: "/transactions",
         element: <Transactions />,
       },
@@ -181,15 +186,15 @@ export const router = createBrowserRouter([
         element: <UploadJobs />,
       },
       {
-        path: "/pros",
+        path: "/officers",
         element: <Pros />,
       },
       {
-        path: "/pros/:id",
+        path: "/officers/:id",
         element: <Pro />,
       },
       {
-        path: "/pros/upload",
+        path: "/officers/upload",
         element: <UploadPros />,
       },
       {

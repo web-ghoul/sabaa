@@ -22,6 +22,8 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     setEditableEmployeeData,
     setEditableCustomerData,
     handleOpenCustomerModal,
+    setEditableEChannelData,
+    handleOpenEChannelModal,
   } = useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -47,6 +49,9 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     } else if (newTitle === "add customer") {
       setEditableCustomerData(null);
       handleOpenCustomerModal("addCustomer");
+    } else if (newTitle === "add e-channel") {
+      setEditableEChannelData(null);
+      handleOpenEChannelModal("addEChannel");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");

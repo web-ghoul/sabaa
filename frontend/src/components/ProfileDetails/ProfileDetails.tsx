@@ -270,20 +270,17 @@ const ProfileDetails = ({
               <DataBox title={"UID Number"} value={(data as OwnerTypes).uid} />
               <DataBox
                 title={"File Immigration Number"}
-                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+                value={(data as OwnerTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}
-                value={handleDate(
-                  (data as OwnerTypes | ProTypes).residenceExpiryDate
-                )}
+                value={handleDate((data as OwnerTypes).residenceExpiryDate)}
               />
               <DataBox
                 title={"Status"}
-                value={
-                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
-                }
+                value={<StatusBox status={(data as OwnerTypes).status} />}
               />
+              <DataBox title={"Sponsor"} value={(data as OwnerTypes).sponsor} />
               <DataBox title={"Remarks"} value={(data as OwnerTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -355,20 +352,17 @@ const ProfileDetails = ({
               <DataBox title={"UID Number"} value={(data as ProTypes).uid} />
               <DataBox
                 title={"File Immigration Number"}
-                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+                value={(data as ProTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}
-                value={handleDate(
-                  (data as OwnerTypes | ProTypes).residenceExpiryDate
-                )}
+                value={handleDate((data as ProTypes).residenceExpiryDate)}
               />
               <DataBox
                 title={"Status"}
-                value={
-                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
-                }
+                value={<StatusBox status={(data as ProTypes).status} />}
               />
+              <DataBox title={"Sponsor"} value={(data as OwnerTypes).sponsor} />
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -436,6 +430,11 @@ const ProfileDetails = ({
                 flag={handleGetFlag((data as CustomerTypes).nationality)}
                 value={(data as CustomerTypes).nationality}
               />
+              <DataBox title={"Job"} value={(data as CustomerTypes).job} />
+              <DataBox
+                title={"Gender"}
+                value={(data as CustomerTypes).gender}
+              />
               <DataBox
                 title={"Emirates Id"}
                 value={(data as CustomerTypes).emiratesId}
@@ -443,6 +442,26 @@ const ProfileDetails = ({
               <DataBox
                 title={"UID Number"}
                 value={(data as CustomerTypes).uid}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as CustomerTypes).status} />}
+              />
+              <DataBox
+                title={"File Immigration Number"}
+                value={(data as CustomerTypes).fileImmgNo}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate((data as CustomerTypes).residenceExpiryDate)}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as CustomerTypes).status} />}
+              />
+              <DataBox
+                title={"Sponsor"}
+                value={(data as CustomerTypes).sponsor}
               />
               <DataBox
                 title={"Remarks"}
@@ -755,12 +774,14 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Divider />
-            {data.status.toLowerCase() === "dubai" ? (
+            {(data as CompanyTypes).state.toLowerCase() === "dubai" ? (
               <Box className={sectionClasses}>
                 <Typography variant="h4" className={`!font-[700]`}>
                   GDRFA Information
                 </Typography>
-                <Box className={profileInfoClasses}>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
                   <DataBox
                     title={"Username"}
                     value={(data as CompanyTypes).userName}
@@ -826,6 +847,10 @@ const ProfileDetails = ({
                     value={
                       <PasswordBox password={(data as CompanyTypes).password} />
                     }
+                  />
+                  <DataBox
+                    title={"E-Channel Remarks"}
+                    value={(data as CompanyTypes).echannelRemarks}
                   />
                 </Box>
               </Box>
