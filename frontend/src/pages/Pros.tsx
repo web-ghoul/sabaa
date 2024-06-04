@@ -24,7 +24,7 @@ const Pros = () => {
       allParams[key] = value;
     }
     dispatch(getPros(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

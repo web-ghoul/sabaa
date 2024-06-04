@@ -26,7 +26,7 @@ const Users = () => {
       allParams[key] = value;
     }
     dispatch(getUsers(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

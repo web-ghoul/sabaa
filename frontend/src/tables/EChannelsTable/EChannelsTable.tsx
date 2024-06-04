@@ -141,13 +141,14 @@ const EChannelsTable = ({
                     }
                   >
                     <UserBox
-                      username={
-                        row.owner
-                          ? (row.owner as OwnerTypes).name
-                          : (row.employee as EmployeeTypes).name
-                      }
+                      username={row.name}
                       head={"subtitle1"}
                       size={"small"}
+                      avatar={
+                        row.owner
+                          ? (row.owner as OwnerTypes).avatar
+                          : (row.employee as EmployeeTypes).avatar
+                      }
                     />
                   </Link>
                 </PrimaryTableCell>

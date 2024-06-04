@@ -10,15 +10,15 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
-import { EChannelFormikTypes, FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes, TasheelFormikTypes } from "../../types/forms.types";
 import {
-  EChannelTypes,
   EmployeeTypes,
+  NatwasalTypes,
   OwnerTypes,
 } from "../../types/store.types";
 
-const EChannelForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseEChannelModal, setEditableEChannelData } =
+const NatwasalForm = ({ formik, type }: FormiksTypes) => {
+  const { formsLoading, handleCloseEChannelModal, setEditableTasheelData } =
     useContext(FormsContext);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -27,45 +27,44 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
   const handleSearch = async () => {
     setLoading(true);
     await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}/e-channel/${search}`, {
+      .get(`${import.meta.env.VITE_SERVER_URL}/tasheels/${search}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const data: EChannelTypes = res.data;
-        setEditableEChannelData(data);
-        (formik as unknown as EChannelFormikTypes).values.uid = data.uid;
-        (formik as unknown as EChannelFormikTypes).values.personCode =
+        const data: NatwasalTypes = res.data;
+        console.log(data);
+        setEditableTasheelData(data);
+        (formik as unknown as TasheelFormikTypes).values.name = data.name;
+        (formik as unknown as TasheelFormikTypes).values.nameAr = data.nameAr;
+        (formik as unknown as TasheelFormikTypes).values.personCode =
           data.personCode;
-        (formik as unknown as EChannelFormikTypes).values.emiratesId =
-          data.emiratesId;
-        (formik as unknown as EChannelFormikTypes).values.phone = data.phone;
-        (formik as unknown as EChannelFormikTypes).values.type =
+        (formik as unknown as TasheelFormikTypes).values.email = data.email;
+        (formik as unknown as TasheelFormikTypes).values.type =
           data.type && data.type.toLowerCase() === "pro"
             ? "officer"
             : data.type || "employee";
-        (formik as unknown as EChannelFormikTypes).values.status = data.status;
         if (data.owner) {
-          (formik as unknown as EChannelFormikTypes).values.owner = (
+          (formik as unknown as TasheelFormikTypes).values.owner = (
             data.owner as OwnerTypes
           )._id;
-          (formik as unknown as EChannelFormikTypes).values.name = (
+          (formik as unknown as TasheelFormikTypes).values.name = (
             data.owner as OwnerTypes
           ).name;
         } else if (data.employee) {
-          (formik as unknown as EChannelFormikTypes).values.employee = (
+          (formik as unknown as TasheelFormikTypes).values.employee = (
             data.employee as EmployeeTypes
           )._id;
-          (formik as unknown as EChannelFormikTypes).values.name = (
+          (formik as unknown as TasheelFormikTypes).values.name = (
             data.employee as EmployeeTypes
           ).name;
         } else {
           if (data.type) {
-            (formik as unknown as EChannelFormikTypes).values.owner = data._id;
-            (formik as unknown as EChannelFormikTypes).values.name = data.name;
+            (formik as unknown as TasheelFormikTypes).values.owner = data._id;
+            (formik as unknown as TasheelFormikTypes).values.name = data.name;
           } else {
-            (formik as unknown as EChannelFormikTypes).values.employee =
+            (formik as unknown as TasheelFormikTypes).values.employee =
               data._id;
-            (formik as unknown as EChannelFormikTypes).values.name = data.name;
+            (formik as unknown as TasheelFormikTypes).values.name = data.name;
           }
         }
       })
@@ -79,32 +78,30 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
     <Paper
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      {type === "addEChannel" ? (
-        <Title head={"h4"} align={"left"} title={"Add New E-Channel"} />
+      {type === "addTasheel" ? (
+        <Title head={"h4"} align={"left"} title={"Add New Tasheel"} />
       ) : (
-        type === "editEChannel" && (
-          <Title head={"h4"} align={"left"} title={"Edit E-Channel"} />
+        type === "editTasheel" && (
+          <Title head={"h4"} align={"left"} title={"Edit Tasheel"} />
         )
       )}
 
-      {type === "addEChannel" && (
-        <Box className={`flex justify-start items-end gap-4`}>
-          <Input
-            formik={formik}
-            label={"Search UID , emirates id..."}
-            name={"search_for_person"}
-            type={"search"}
-            change={(val) => setSearch(val)}
-          />
-          <PrimaryButton onClick={handleSearch} loading={loading}>
-            Search
-          </PrimaryButton>
-        </Box>
-      )}
+      <Box className={`flex justify-start items-end gap-4`}>
+        <Input
+          formik={formik}
+          label={"Search person code , MOL code..."}
+          name={"search_for_person"}
+          type={"search"}
+          change={(val) => setSearch(val)}
+        />
+        <PrimaryButton onClick={handleSearch} loading={loading}>
+          Search
+        </PrimaryButton>
+      </Box>
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
-          E-Channel Details
+          Tasheel Details
         </Typography>
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
           <Input formik={formik} label={"Username"} name={"username"} />
@@ -116,10 +113,28 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
-            label={"Status"}
-            name={"status"}
-            select
-            options={["Active", "Inactive"]}
+            label={"Security 1"}
+            name={"security1"}
+            type={"text"}
+          />
+          <Input
+            formik={formik}
+            label={"Security 2"}
+            name={"security2"}
+            type={"text"}
+          />
+          <Input
+            formik={formik}
+            label={"Mobile"}
+            name={"mobile"}
+            variant="numeric"
+          />
+          <Input
+            formik={formik}
+            label={"Notes"}
+            name={"notes"}
+            type={"text"}
+            textarea
           />
         </Box>
       </Box>
@@ -147,34 +162,21 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
-            label={"UID Number"}
-            name={"uid"}
-            type={"text"}
-            variant={"numeric"}
+            label={"Arabic Name"}
+            name={"nameAr"}
             disabled
           />
           <Input
             formik={formik}
             label={"Person Code"}
             name={"personCode"}
-            type={"text"}
-            variant={"numeric"}
             disabled
           />
           <Input
             formik={formik}
-            label={"Emirates ID"}
-            name={"emiratesId"}
-            type={"text"}
-            variant={"numeric"}
-            disabled
-          />
-          <Input
-            formik={formik}
-            label={"Phone"}
-            type={"text"}
-            variant={"numeric"}
-            name={"phone"}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
             disabled
           />
           <Input
@@ -202,4 +204,4 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
   );
 };
 
-export default EChannelForm;
+export default NatwasalForm;

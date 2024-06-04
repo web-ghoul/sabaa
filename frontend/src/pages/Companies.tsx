@@ -28,7 +28,7 @@ const Companies = () => {
       allParams[key] = value;
     }
     dispatch(getCompanies(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

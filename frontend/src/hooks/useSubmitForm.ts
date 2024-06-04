@@ -57,6 +57,7 @@ import {
   ResetPasswordSchema,
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
 import useSponsorSchema from "../forms/SponsorForm/useSponsorSchema";
+import useTasheelSchema from "../forms/TasheelForm/useTasheelSchema";
 import useUserSchema from "../forms/UserForm/useUserSchema";
 import {
   UsersOptionsInitailValues,
@@ -113,6 +114,8 @@ import {
   ResetPasswordFormikTypes,
   SponsorFormTypes,
   SponsorFormikTypes,
+  TasheelFormTypes,
+  TasheelFormikTypes,
   UserFormTypes,
   UserFormikTypes,
   UsersOptionsFormTypes,
@@ -138,6 +141,7 @@ const useSubmitForm = (type: string) => {
   const { DownloadExcelInitailValues, DownloadExcelSchema } =
     useDownloadExcelSchema();
   const { EChannelInitailValues, EChannelSchema } = useEChannelSchema();
+  const { TasheelInitailValues, TasheelSchema } = useTasheelSchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -345,6 +349,15 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as EChannelFormikTypes;
+        case "editTasheel":
+        case "addTasheel":
+          return {
+            initialValues: TasheelInitailValues,
+            validationSchema: TasheelSchema,
+            onSubmit: (values: TasheelFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as TasheelFormikTypes;
         case "downloadExcel":
           return {
             initialValues: DownloadExcelInitailValues,
@@ -388,6 +401,8 @@ const useSubmitForm = (type: string) => {
       ProSchema,
       SponsorInitailValues,
       SponsorSchema,
+      TasheelInitailValues,
+      TasheelSchema,
       UserInitailValues,
       UserSchema,
       handleSubmit,
