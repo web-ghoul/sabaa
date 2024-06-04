@@ -46,8 +46,6 @@ const UserBox = ({
     navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
   };
 
-  console.log(avatar);
-
   return (
     <Box
       className={`${

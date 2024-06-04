@@ -7,6 +7,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -116,6 +117,17 @@ interface EChannelsTableTypes {
   recent?: boolean;
 }
 
+interface TasheelsTableTypes {
+  data: TasheelTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
 export type {
   CompaniesTableTypes,
   CustomersTableTypes,
@@ -126,5 +138,6 @@ export type {
   OwnersTableTypes,
   ProsTableTypes,
   SponsorsTableTypes,
+  TasheelsTableTypes,
   UsersTableTypes,
 };

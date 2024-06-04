@@ -127,6 +127,7 @@ interface OwnerValuesTypes {
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface OwnersValuesTypes {
@@ -168,6 +169,7 @@ interface ProValuesTypes {
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface ProsValuesTypes {
@@ -209,6 +211,7 @@ interface CustomerValuesTypes {
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface CustomersValuesTypes {
@@ -373,6 +376,45 @@ interface EChannelsCounterValuesTypes {
   eChannelsCounter: number;
 }
 
+//Tasheel
+
+interface TasheelTypes {
+  _id?: string;
+  name: string;
+  username: string;
+  password: string;
+  security1: string;
+  security2: string;
+  email: string;
+  mobile: string;
+  type: string;
+  notes: string;
+  owner?: string | OwnerTypes;
+  employee?: string | EmployeeTypes;
+  user?: string;
+  createdAt?: Date;
+}
+
+interface TasheelsValuesTypes {
+  isLoading: boolean;
+  tasheels: TasheelTypes[] | null;
+}
+
+interface TasheelsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface TasheelsCounterValuesTypes {
+  isLoading: boolean;
+  tasheelsCounter: number;
+}
+
 //Company
 interface CompanyTypes {
   _id?: string;
@@ -438,6 +480,7 @@ interface CompaniesValuesTypes {
 
 interface CompaniesArgsTypes {
   page?: number;
+  id?: string;
   search?: string;
   sort?: string;
   limit?: number;
@@ -594,6 +637,10 @@ export type {
   RecentUsersValuesTypes,
   SponsorsValuesTypes,
   SponsorTypes,
+  TasheelsArgsTypes,
+  TasheelsCounterValuesTypes,
+  TasheelsValuesTypes,
+  TasheelTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,

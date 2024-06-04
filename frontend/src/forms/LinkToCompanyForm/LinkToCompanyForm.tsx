@@ -11,8 +11,13 @@ import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
 const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
-  const { formsLoading, handleCloseLinkToCompanyModal } =
-    useContext(FormsContext);
+  const {
+    formsLoading,
+    handleCloseLinkToCompanyModal,
+    editableOwnerData,
+    editableProData,
+    formType,
+  } = useContext(FormsContext);
   const { companies } = useSelector((state: RootState) => state.companies);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -21,8 +26,16 @@ const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
   };
 
   useEffect(() => {
-    dispatch(getCompanies({ limit: -1 }));
-  }, [dispatch]);
+    dispatch(
+      getCompanies({
+        limit: -1,
+        id:
+          formType === "linkOwner"
+            ? (editableOwnerData && editableOwnerData._id) || ""
+            : (editableProData && editableProData._id) || "",
+      })
+    );
+  }, [dispatch, editableOwnerData, editableProData, formType]);
 
   return (
     <Paper

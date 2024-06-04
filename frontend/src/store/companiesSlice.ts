@@ -13,7 +13,7 @@ export const getCompanies = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/company?search=${
         (args && args.search) || ""
-      }&sort=${args?.sort || ""}&limit=${
+      }&id=${args?.id || ""}&sort=${args?.sort || ""}&limit=${
         args?.limit
           ? args.limit == -1
             ? ""

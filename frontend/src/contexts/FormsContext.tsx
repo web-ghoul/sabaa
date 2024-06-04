@@ -13,6 +13,7 @@ import {
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -79,6 +80,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForEmployees: () => {},
   searchForEChannels: "",
   setSearchForEChannels: () => {},
+  searchForTasheel: "",
+  setSearchForTasheel: () => {},
+  searchForNatwasal: "",
+  setSearchForNatwasal: () => {},
   searchForCustomers: "",
   setSearchForCustomers: () => {},
   searchForPros: "",
@@ -127,6 +132,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableCompanyData: () => {},
   editableEChannelData: null,
   setEditableEChannelData: () => {},
+  editableTasheelData: null,
+  setEditableTasheelData: () => {},
+  editableNatwasalData: null,
+  setEditableNatwasalData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -157,6 +166,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
   const [searchForEChannels, setSearchForEChannels] = useState("");
+  const [searchForTasheel, setSearchForTasheel] = useState("");
+  const [searchForNatwasal, setSearchForNatwasal] = useState("");
   const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
@@ -459,6 +470,14 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableEChannelData, setEditableEChannelData] =
     useState<EChannelTypes | null>(null);
 
+  //Editable Tasheel Data
+  const [editableTasheelData, setEditableTasheelData] =
+    useState<TasheelTypes | null>(null);
+
+  //Editable E-Channel Data
+  const [editableNatwasalData, setEditableNatwasalData] =
+    useState<TasheelTypes | null>(null);
+
   useEffect(() => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
@@ -603,6 +622,14 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenEChannelModal,
     editableEChannelData,
     setEditableEChannelData,
+    editableTasheelData,
+    setEditableTasheelData,
+    editableNatwasalData,
+    setEditableNatwasalData,
+    searchForTasheel,
+    setSearchForTasheel,
+    searchForNatwasal,
+    setSearchForNatwasal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

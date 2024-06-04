@@ -30,6 +30,8 @@ const useOwnerSchema = () => {
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
+    gender: yup.string(),
+    job: yup.string(),
     type: yup.string(),
     sponsor: yup.string(),
     remarks: yup.string(),
@@ -50,6 +52,8 @@ const useOwnerSchema = () => {
     email: editableOwnerData?.email || "",
     state: editableOwnerData?.state || "",
     address: editableOwnerData?.address || "",
+    gender: editableOwnerData?.gender || "",
+    job: editableOwnerData?.job || "",
     residenceExpiryDate:
       (editableOwnerData?.residenceExpiryDate &&
         new Date(editableOwnerData?.residenceExpiryDate)
