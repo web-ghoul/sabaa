@@ -15,6 +15,10 @@ export class CreateEChannelDto {
 
   @IsString()
   @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
   gender: string;
 
   @IsString()

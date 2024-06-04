@@ -12,6 +12,11 @@ export class CreateNatwasalDto {
     @IsString()
     @IsNotEmpty()
     password: string;
+
+
+    @IsString()
+    @IsNotEmpty()
+    name: string;
   
     @IsString()
     @IsNotEmpty()
@@ -28,6 +33,10 @@ export class CreateNatwasalDto {
     @IsString()
     @IsNotEmpty()
     mobile: string;
+
+    @IsString()
+    @IsNotEmpty()
+    personCode: string;
 
     @IsString()
     @IsNotEmpty()

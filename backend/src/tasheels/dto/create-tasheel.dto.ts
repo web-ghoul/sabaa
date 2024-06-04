@@ -16,10 +16,19 @@ export class CreateTasheelDto {
     @IsString()
     @IsNotEmpty()
     security1: string;
+
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+    
   
     @IsString()
     @IsNotEmpty()
     security2: string;
+
+    @IsString()
+    @IsNotEmpty()
+    personCode: string;
 
     @IsString()
     @IsNotEmpty()
