@@ -69,25 +69,16 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
           <Input
             formik={formik}
-            label={"Gender"}
-            name={"gender"}
-            select
-            options={["Male", "Female"]}
-          />
-          {nationalities && nationalities.length > 0 && (
-            <AutoCompleteSearch
-              label={"Nationality"}
-              options={nationalities}
-              formik={formik}
-              name={"nationality"}
-            />
-          )}
-          <Input
-            formik={formik}
             label={"Person Code"}
             name={"personCode"}
             type={"text"}
             variant={"numeric"}
+          />
+          <Input
+            formik={formik}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
           />
           <Input
             formik={formik}
@@ -98,9 +89,16 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
-            label={"Email"}
-            name={"email"}
-            type={"email"}
+            type={"date"}
+            name={"dob"}
+            label={"Date of Birth"}
+          />
+          <Input
+            formik={formik}
+            label={"Gender"}
+            name={"gender"}
+            select
+            options={["Male", "Female"]}
           />
           <Input
             formik={formik}
@@ -108,13 +106,14 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             name={"salary"}
             type={"number"}
           />
-          <Input
-            formik={formik}
-            label={"Status"}
-            name={"status"}
-            select
-            options={["Active", "Cancel", "Abscond", "Complaint"]}
-          />
+          {nationalities && nationalities.length > 0 && (
+            <AutoCompleteSearch
+              label={"Nationality"}
+              options={nationalities}
+              formik={formik}
+              name={"nationality"}
+            />
+          )}
           {jobs && jobs.length > 0 && (
             <AutoCompleteSearch
               label={"Job"}
@@ -137,14 +136,6 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             type={"text"}
             variant={"numeric"}
           />
-
-          <Input
-            formik={formik}
-            type={"date"}
-            name={"dob"}
-            label={"Date of Birth"}
-          />
-
           <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
         </Box>
       </Box>
@@ -212,11 +203,17 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
+            label={"Status"}
+            name={"status"}
+            select
+            options={["Active", "Cancel", "Abscond", "Complaint"]}
+          />
+          <Input
+            formik={formik}
             type={"date"}
             name={"lcExpireDate"}
             label={"Labour Card Expire Date"}
           />
-
           {companies && companies.length > 0 && (
             <AutoCompleteSearch
               label={"Company"}

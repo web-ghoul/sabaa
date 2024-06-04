@@ -51,6 +51,8 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
       )}
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+        <Input formik={formik} label={"English Name"} name={"name"} />
+        <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
         <Input
           formik={formik}
           label={"Person Code"}
@@ -58,15 +60,28 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
           type={"text"}
           variant={"numeric"}
         />
+        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
           formik={formik}
-          label={"UID Number"}
-          name={"uid"}
+          label={"Phone"}
           type={"text"}
           variant={"numeric"}
+          name={"phone"}
         />
-        <Input formik={formik} label={"English Name"} name={"name"} />
-        <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
+        <Input formik={formik} label={"Address"} name={"address"} />
+        <Input
+          formik={formik}
+          type={"date"}
+          name={"dob"}
+          label={"Date of Birth"}
+        />
+        <Input
+          formik={formik}
+          label={"State"}
+          name={"state"}
+          select
+          options={["dubai"]}
+        />
         {nationalities && nationalities.length > 0 && (
           <AutoCompleteSearch
             label={"Nationality"}
@@ -85,6 +100,13 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
         )}
         <Input
           formik={formik}
+          label={"Gender"}
+          name={"gender"}
+          select
+          options={["Male", "Female"]}
+        />
+        <Input
+          formik={formik}
           label={"Emirates ID"}
           name={"emiratesId"}
           type={"text"}
@@ -92,31 +114,15 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
         />
         <Input
           formik={formik}
-          type={"date"}
-          name={"dob"}
-          label={"Date of Birth"}
-        />
-        <Input
-          formik={formik}
-          label={"Phone"}
+          label={"UID Number"}
+          name={"uid"}
           type={"text"}
           variant={"numeric"}
-          name={"phone"}
-        />
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
-        <Input
-          formik={formik}
-          label={"State"}
-          name={"state"}
-          select
-          options={["dubai"]}
         />
         <Input
           formik={formik}
-          label={"Gender"}
-          name={"gender"}
-          select
-          options={["Male", "Female"]}
+          label={"File Immgiration Number"}
+          name={"fileImmgNo"}
         />
         <Input
           formik={formik}
@@ -131,12 +137,6 @@ const CustomerForm = ({ formik, type }: FormiksTypes) => {
           select
           options={["active", "inactive"]}
         />
-        <Input
-          formik={formik}
-          label={"File Immgiration Number"}
-          name={"fileImmgNo"}
-        />
-        <Input formik={formik} label={"Address"} name={"address"} />
         <Input formik={formik} label={"Sponsor"} name={"sponsor"} />
         <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
       </Box>
