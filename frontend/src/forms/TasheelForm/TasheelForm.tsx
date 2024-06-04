@@ -10,7 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
-import { FormiksTypes, TasheelFormikTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import { TasheelTypes } from "../../types/store.types";
 
 const TasheelForm = ({ formik, type }: FormiksTypes) => {
@@ -28,16 +28,17 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       })
       .then((res) => {
         const data: TasheelTypes = res.data;
+        console.log(data);
         setEditableTasheelData(data);
-        (formik as unknown as TasheelFormikTypes).values.name = data.name;
-        (formik as unknown as TasheelFormikTypes).values.email = data.email;
-        (formik as unknown as TasheelFormikTypes).values.type =
-          data.type || "employee";
-        if (data.type) {
-          (formik as unknown as TasheelFormikTypes).values.owner = search;
-        } else {
-          (formik as unknown as TasheelFormikTypes).values.employee = search;
-        }
+        // (formik as unknown as TasheelFormikTypes).values.name = data.name;
+        // (formik as unknown as TasheelFormikTypes).values.email = data.email;
+        // (formik as unknown as TasheelFormikTypes).values.type =
+        //   data.type || "employee";
+        // if (data.type) {
+        //   (formik as unknown as TasheelFormikTypes).values.owner = search;
+        // } else {
+        //   (formik as unknown as TasheelFormikTypes).values.employee = search;
+        // }
       })
       .catch((err) => {
         handleCatchError(err);
