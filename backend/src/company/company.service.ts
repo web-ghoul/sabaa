@@ -62,6 +62,7 @@ export class CompanyService {
     id: string,
     filterQuery: any,
   ): Promise<Company[]> {
+    
     try {
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -72,7 +73,7 @@ export class CompanyService {
       if (id) {
         return this.companyModel
           .find({
-            $nor: [{ ownerId: id }, { proCode: id }],
+            $nor: [{ ownerId: id }, { proCode: id }],deleted: false
           })
           .select(projection)
           .limit(limit)
@@ -128,9 +129,9 @@ export class CompanyService {
           })
         : undefined;
       
-      filterQuery?.deleted != undefined ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false
+      filterQuery?.deleted != undefined ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false  ;
         
-      console.log(query);
+      // console.log(filterQuery);
       
       
 
@@ -141,6 +142,8 @@ export class CompanyService {
         .skip(page * limit)
         .sort(sort);
     } catch (err) {
+      console.log(err);
+      
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
