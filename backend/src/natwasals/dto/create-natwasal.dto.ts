@@ -40,6 +40,10 @@ export class CreateNatwasalDto {
 
     @IsString()
     @IsNotEmpty()
+    nameAr: string;
+
+    @IsString()
+    @IsNotEmpty()
     notes: string;
   
     @IsMongoId()

@@ -37,6 +37,9 @@ export class Tasaheel {
 
   @Prop()
   name: string;
+
+  @Prop()
+  nameAr: string;
   
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Employee"})
   employee:ObjectId
