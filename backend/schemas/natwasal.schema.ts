@@ -33,6 +33,9 @@ export class Natwasal {
 
   @Prop()
   name: string;
+
+  @Prop()
+  nameAr: string;
   
   @Prop()
   notes: string;

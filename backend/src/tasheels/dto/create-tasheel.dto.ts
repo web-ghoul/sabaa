@@ -40,6 +40,10 @@ export class CreateTasheelDto {
 
     @IsString()
     @IsNotEmpty()
+    nameAr: string;
+
+    @IsString()
+    @IsNotEmpty()
     notes: string;
   
     @IsMongoId()
