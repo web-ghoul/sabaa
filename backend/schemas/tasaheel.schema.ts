@@ -27,10 +27,16 @@ export class Tasaheel {
   email: string;
 
   @Prop()
+  personCode: string;
+
+  @Prop()
   mobile: string;
   
   @Prop()
   notes: string;
+
+  @Prop()
+  name: string;
   
   @Prop({type : mongoose.Schema.Types.ObjectId , ref : "Employee"})
   employee:ObjectId
@@ -46,6 +52,6 @@ export class Tasaheel {
 
 export const TasaheelSchema = SchemaFactory.createForClass(Tasaheel);
 
-// UserSchema.index({ email: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+TasaheelSchema.index({ personCode: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
