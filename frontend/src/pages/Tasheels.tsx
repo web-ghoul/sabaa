@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { getTasheels } from "../store/tasheelsSlice";
 import TasheelsTable from "../tables/TasheelsTable/TasheelsTable";
 
-const Tasheel = () => {
+const Tasheels = () => {
   const { tasheels, isLoading } = useSelector(
     (state: RootState) => state.tasheels
   );
@@ -28,7 +28,7 @@ const Tasheel = () => {
       allParams[key] = value;
     }
     dispatch(getTasheels(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
 
   return (
     <PrimaryBox>
@@ -49,4 +49,4 @@ const Tasheel = () => {
   );
 };
 
-export default Tasheel;
+export default Tasheels;

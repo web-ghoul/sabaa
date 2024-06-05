@@ -32,6 +32,8 @@ import { getProsCounter } from "../store/prosCounterSlice";
 import { getPro } from "../store/proSlice";
 import { getPros } from "../store/prosSlice";
 import { AppDispatch, RootState } from "../store/store";
+import { getTasheelsCounter } from "../store/tasheelsCounterSlice";
+import { getTasheels } from "../store/tasheelsSlice";
 import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUser } from "../store/userSlice";
 import { getUsers } from "../store/usersSlice";
@@ -53,6 +55,7 @@ import {
   ProFormTypes,
   ResetPasswordFormTypes,
   SponsorFormTypes,
+  TasheelFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
 import { CustomerTypes, SponsorTypes } from "../types/store.types";
@@ -108,6 +111,8 @@ const useSubmitFunction = (type: string) => {
     handleCloseDownloadExcelModal,
     handleCloseForgotPasswordModal,
     handleCloseSponsorModal,
+    handleCloseTasheelModal,
+    editableTasheelData,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -1375,7 +1380,7 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
-  //Employees
+  //E-Channel
   const addEChannel = async (values: EChannelFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -1418,6 +1423,56 @@ const useSubmitFunction = (type: string) => {
         });
         dispatch(getEChannels({}));
         handleCloseEChannelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Tasheel
+  const addTasheel = async (values: TasheelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/tasheels`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Tasheel is Created Successfully",
+          status: "success",
+        });
+        dispatch(getTasheels({}));
+        dispatch(getTasheelsCounter());
+        handleCloseTasheelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editTasheel = async (values: TasheelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/tasheels/${editableTasheelData && editableTasheelData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Tasheel is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getTasheels({}));
+        handleCloseTasheelModal();
       })
       .catch((err) => {
         handleCatchError(err);
@@ -1855,6 +1910,25 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "tasheel") {
+      await server
+        .delete(`/tasheels/${editableTasheelData && editableTasheelData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Tasheel is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getTasheels({}));
+          dispatch(getTasheelsCounter());
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "unLinkOwner") {
       await server
         .get(
@@ -2010,6 +2084,12 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editEChannel":
         editEChannel(values as EChannelFormTypes);
+        break;
+      case "addTasheel":
+        addTasheel(values as TasheelFormTypes);
+        break;
+      case "editTasheel":
+        editTasheel(values as TasheelFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

@@ -25,7 +25,7 @@ const Owners = () => {
       allParams[key] = value;
     }
     dispatch(getOwners(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

@@ -70,6 +70,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   openEChannelModal: false,
   handleOpenEChannelModal: () => {},
   handleCloseEChannelModal: () => {},
+  openTasheelModal: false,
+  handleOpenTasheelModal: () => {},
+  handleCloseTasheelModal: () => {},
+  openNatwasalModal: false,
+  handleOpenNatwasalModal: () => {},
+  handleCloseNatwasalModal: () => {},
   formType: "",
   setFormType: () => {},
   excelType: { type: "excel", entity: "companies" },
@@ -356,6 +362,36 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenEChannelModal(true);
   };
 
+  //Tasheel Modal
+  const [openTasheelModal, setOpenTasheelModal] = useState(false);
+
+  const handleCloseTasheelModal = () => {
+    setOpenTasheelModal(false);
+  };
+
+  const handleOpenTasheelModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableTasheelData(null);
+    }
+    setFormType(type);
+    setOpenTasheelModal(true);
+  };
+
+  //Natwasal Modal
+  const [openNatwasalModal, setOpenNatwasalModal] = useState(false);
+
+  const handleCloseNatwasalModal = () => {
+    setOpenNatwasalModal(false);
+  };
+
+  const handleOpenNatwasalModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableNatwasalData(null);
+    }
+    setFormType(type);
+    setOpenNatwasalModal(true);
+  };
+
   //User Modal
   const [openUserModal, setOpenUserModal] = useState(false);
 
@@ -630,6 +666,12 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForTasheel,
     searchForNatwasal,
     setSearchForNatwasal,
+    openTasheelModal,
+    handleCloseTasheelModal,
+    handleOpenTasheelModal,
+    openNatwasalModal,
+    handleCloseNatwasalModal,
+    handleOpenNatwasalModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

@@ -154,6 +154,12 @@ interface FormsContextTypes {
   openEChannelModal: boolean;
   handleOpenEChannelModal: (string: string) => void;
   handleCloseEChannelModal: () => void;
+  openTasheelModal: boolean;
+  handleOpenTasheelModal: (string: string) => void;
+  handleCloseTasheelModal: () => void;
+  openNatwasalModal: boolean;
+  handleOpenNatwasalModal: (string: string) => void;
+  handleCloseNatwasalModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
   excelType: { type: "excel" | "all"; entity: EntitiesType };

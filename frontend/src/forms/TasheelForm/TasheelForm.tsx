@@ -11,7 +11,11 @@ import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
 import { FormiksTypes, TasheelFormikTypes } from "../../types/forms.types";
-import { TasheelTypes } from "../../types/store.types";
+import {
+  EmployeeTypes,
+  OwnerTypes,
+  TasheelTypes,
+} from "../../types/store.types";
 
 const TasheelForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseEChannelModal, setEditableTasheelData } =
@@ -28,15 +32,40 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       })
       .then((res) => {
         const data: TasheelTypes = res.data;
+        console.log(data);
         setEditableTasheelData(data);
         (formik as unknown as TasheelFormikTypes).values.name = data.name;
+        (formik as unknown as TasheelFormikTypes).values.nameAr = data.nameAr;
+        (formik as unknown as TasheelFormikTypes).values.personCode =
+          data.personCode;
         (formik as unknown as TasheelFormikTypes).values.email = data.email;
         (formik as unknown as TasheelFormikTypes).values.type =
-          data.type || "employee";
-        if (data.type) {
-          (formik as unknown as TasheelFormikTypes).values.owner = search;
+          data.type && data.type.toLowerCase() === "pro"
+            ? "officer"
+            : data.type || "employee";
+        if (data.owner) {
+          (formik as unknown as TasheelFormikTypes).values.owner = (
+            data.owner as OwnerTypes
+          )._id;
+          (formik as unknown as TasheelFormikTypes).values.name = (
+            data.owner as OwnerTypes
+          ).name;
+        } else if (data.employee) {
+          (formik as unknown as TasheelFormikTypes).values.employee = (
+            data.employee as EmployeeTypes
+          )._id;
+          (formik as unknown as TasheelFormikTypes).values.name = (
+            data.employee as EmployeeTypes
+          ).name;
         } else {
-          (formik as unknown as TasheelFormikTypes).values.employee = search;
+          if (data.type) {
+            (formik as unknown as TasheelFormikTypes).values.owner = data._id;
+            (formik as unknown as TasheelFormikTypes).values.name = data.name;
+          } else {
+            (formik as unknown as TasheelFormikTypes).values.employee =
+              data._id;
+            (formik as unknown as TasheelFormikTypes).values.name = data.name;
+          }
         }
       })
       .catch((err) => {
@@ -129,6 +158,18 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
             formik={formik}
             label={"English Name"}
             name={"name"}
+            disabled
+          />
+          <Input
+            formik={formik}
+            label={"Arabic Name"}
+            name={"nameAr"}
+            disabled
+          />
+          <Input
+            formik={formik}
+            label={"Person Code"}
+            name={"personCode"}
             disabled
           />
           <Input

@@ -27,7 +27,7 @@ const Employees = () => {
       allParams[key] = value;
     }
     dispatch(getEmployees(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
 
   return (
     <PrimaryBox>

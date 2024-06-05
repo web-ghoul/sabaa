@@ -381,6 +381,8 @@ interface EChannelsCounterValuesTypes {
 interface TasheelTypes {
   _id?: string;
   name: string;
+  nameAr: string;
+  personCode: string;
   username: string;
   password: string;
   security1: string;
@@ -413,6 +415,30 @@ interface TasheelsArgsTypes {
 interface TasheelsCounterValuesTypes {
   isLoading: boolean;
   tasheelsCounter: number;
+}
+
+//Tasheel
+
+interface NatwasalTypes extends TasheelTypes {}
+
+interface NatwasalsValuesTypes {
+  isLoading: boolean;
+  natwasal: NatwasalTypes[] | null;
+}
+
+interface NatwasalsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface NatwasalsCounterValuesTypes {
+  isLoading: boolean;
+  natwasalsCounter: number;
 }
 
 //Company
@@ -607,6 +633,10 @@ export type {
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
+  NatwasalsArgsTypes,
+  NatwasalsCounterValuesTypes,
+  NatwasalsValuesTypes,
+  NatwasalTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,

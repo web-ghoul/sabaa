@@ -28,7 +28,7 @@ const EChannels = () => {
       allParams[key] = value;
     }
     dispatch(getEChannels(allParams));
-  }, [dispatch, searchParams]);
+  }, [dispatch]);
 
   return (
     <PrimaryBox>

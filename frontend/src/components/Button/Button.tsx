@@ -24,6 +24,10 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     handleOpenCustomerModal,
     setEditableEChannelData,
     handleOpenEChannelModal,
+    handleOpenTasheelModal,
+    setEditableTasheelData,
+    setEditableNatwasalData,
+    handleOpenNatwasalModal,
   } = useContext(FormsContext);
   const navigate = useNavigate();
 
@@ -52,6 +56,12 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     } else if (newTitle === "add e-channel") {
       setEditableEChannelData(null);
       handleOpenEChannelModal("addEChannel");
+    } else if (newTitle === "add tasheel") {
+      setEditableTasheelData(null);
+      handleOpenTasheelModal("addTasheel");
+    } else if (newTitle === "add natwasal") {
+      setEditableNatwasalData(null);
+      handleOpenNatwasalModal("addNatwasal");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");

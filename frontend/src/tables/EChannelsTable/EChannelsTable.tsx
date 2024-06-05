@@ -17,6 +17,7 @@ import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getEChannelsCounter } from "../../store/eChannelsCounterSlice";
 import { getEChannels, reverseEChannels } from "../../store/eChannelsSlice";
 import { AppDispatch } from "../../store/store";
+import { EmployeeTypes, OwnerTypes } from "../../types/store.types";
 import { EChannelsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -128,11 +129,26 @@ const EChannelsTable = ({
                   component="th"
                   scope="row"
                 >
-                  <Link to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}>
+                  <Link
+                    to={
+                      row.owner
+                        ? `${import.meta.env.VITE_OWNERS_ROUTE}/${
+                            (row.owner as OwnerTypes)._id
+                          }`
+                        : `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                            (row.employee as EmployeeTypes)._id
+                          }`
+                    }
+                  >
                     <UserBox
                       username={row.name}
                       head={"subtitle1"}
                       size={"small"}
+                      avatar={
+                        row.owner
+                          ? (row.owner as OwnerTypes).avatar
+                          : (row.employee as EmployeeTypes).avatar
+                      }
                     />
                   </Link>
                 </PrimaryTableCell>
