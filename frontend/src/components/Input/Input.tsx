@@ -179,35 +179,37 @@ const Input = ({
               if (change) {
                 change(val);
               }
-              if (
-                !(
-                  type === "email" ||
+              if (!(type === "text" || type === "password")) {
+                if (
+                  !(
+                    type === "email" ||
+                    label?.toLowerCase() === "username" ||
+                    label?.toLowerCase() === "website"
+                  )
+                ) {
+                  e.target.value = val.toUpperCase();
+                }
+                if (label?.split(" ")[0].toLowerCase() === "arabic") {
+                  e.target.value = handleAcceptArabic(e.target.value);
+                }
+                if (
+                  label?.split(" ")[0].toLowerCase() === "english" ||
+                  variant === "english"
+                ) {
+                  e.target.value = handleAcceptEnglish(e.target.value);
+                }
+                if (variant === "numeric") {
+                  e.target.value = handleAcceptNumeric(e.target.value);
+                }
+                if (variant === "url") {
+                  e.target.value = handleAcceptURL(e.target.value);
+                }
+                if (
                   label?.toLowerCase() === "username" ||
-                  label?.toLowerCase() === "website"
-                )
-              ) {
-                e.target.value = val.toUpperCase();
-              }
-              if (label?.split(" ")[0].toLowerCase() === "arabic") {
-                e.target.value = handleAcceptArabic(e.target.value);
-              }
-              if (
-                label?.split(" ")[0].toLowerCase() === "english" ||
-                variant === "english"
-              ) {
-                e.target.value = handleAcceptEnglish(e.target.value);
-              }
-              if (variant === "numeric") {
-                e.target.value = handleAcceptNumeric(e.target.value);
-              }
-              if (variant === "url") {
-                e.target.value = handleAcceptURL(e.target.value);
-              }
-              if (
-                label?.toLowerCase() === "username" ||
-                variant === "username"
-              ) {
-                e.target.value = handleAcceptUsername(e.target.value);
+                  variant === "username"
+                ) {
+                  e.target.value = handleAcceptUsername(e.target.value);
+                }
               }
               formik.handleChange(e);
             }}

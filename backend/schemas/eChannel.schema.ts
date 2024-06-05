@@ -30,6 +30,9 @@ export class EChannel {
   emiratesId: string;
 
   @Prop()
+  name: string;
+
+  @Prop()
   username: string;
 
   @Prop()
@@ -49,6 +52,6 @@ export class EChannel {
 
 export const EChannelSchema = SchemaFactory.createForClass(EChannel);
 
-// UserSchema.index({ email: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+EChannelSchema.index({ uid: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})

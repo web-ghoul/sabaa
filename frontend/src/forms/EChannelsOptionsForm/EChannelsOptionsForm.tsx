@@ -12,7 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { getEmployees } from "../../store/employeesSlice";
+import { getEChannels } from "../../store/eChannelsSlice";
 import { AppDispatch } from "../../store/store";
 import {
   EChannelsOptionsFormikTypes,
@@ -33,7 +33,7 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleSearch = (value: string) => {
     setSearchForEChannels(value);
-    dispatch(getEmployees({ ...queries, search: value }));
+    dispatch(getEChannels({ ...queries, search: value }));
   };
 
   const handleFilterByType = (value: string) => {
@@ -50,20 +50,20 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
 
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getEmployees({ ...queries, search: searchForEChannels }));
+    dispatch(getEChannels({ ...queries, search: searchForEChannels }));
   };
 
   const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "employees");
+    handleOpenDownloadExcelModal("excel", "eChannels");
   };
 
   const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "employees");
+    handleOpenDownloadExcelModal("all", "eChannels");
   };
 
   const handleResetAll = () => {
-    navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
-    dispatch(getEmployees({}));
+    navigate(`${import.meta.env.VITE_ECHANNELS_ROUTE}`);
+    dispatch(getEChannels({}));
     setQueries({});
   };
 

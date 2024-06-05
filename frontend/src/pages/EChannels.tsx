@@ -23,10 +23,12 @@ const EChannels = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getEChannels({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
-  }, [dispatch, searchParams]);
+    dispatch(getEChannels(allParams));
+  }, [dispatch]);
 
   return (
     <PrimaryBox>

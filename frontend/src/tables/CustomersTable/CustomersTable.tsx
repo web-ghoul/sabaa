@@ -16,6 +16,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
+import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getCustomersCounter } from "../../store/customersCounterSlice";
 import { getCustomers, reverseCustomers } from "../../store/customersSlice";
@@ -63,18 +64,18 @@ const CustomersTable = ({
     }
   };
 
-  const handleSortByCode = () => {
-    if (searchParams.get("sort") === "code_asc") {
-      handleAddQuery({ sort: "code_desc" });
-      dispatch(reverseCustomers());
-      setSearchParams({ ...queries, sort: "code_desc" });
-    } else {
-      handleAddQuery({ sort: "code_asc" });
-      const all = { ...queries, sort: "code_asc" };
-      dispatch(getCustomers(all));
-      setSearchParams(all);
-    }
-  };
+  // const handleSortByCode = () => {
+  //   if (searchParams.get("sort") === "code_asc") {
+  //     handleAddQuery({ sort: "code_desc" });
+  //     dispatch(reverseCustomers());
+  //     setSearchParams({ ...queries, sort: "code_desc" });
+  //   } else {
+  //     handleAddQuery({ sort: "code_asc" });
+  //     const all = { ...queries, sort: "code_asc" };
+  //     dispatch(getCustomers(all));
+  //     setSearchParams(all);
+  //   }
+  // };
 
   const handleView = () => {
     if (sheet) {
@@ -129,7 +130,7 @@ const CustomersTable = ({
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
-            {sheet || !sort ? (
+            {/* {sheet || !sort ? (
               mdScreen ? (
                 "Code"
               ) : (
@@ -143,7 +144,8 @@ const CustomersTable = ({
                 desc={searchParams.get("sort") === "code_desc"}
                 jc="center"
               />
-            )}
+            )} */}
+            Residence Expire Date
           </PrimaryTableCell>
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (
@@ -192,7 +194,7 @@ const CustomersTable = ({
                     </PrimaryTableCell>
                   )}
                   <PrimaryTableCell align="center">
-                    {row.personCode}
+                    {handleDate(row.residenceExpiryDate)}
                   </PrimaryTableCell>
                   {!smScreen && (
                     <PrimaryTableCell align="center">

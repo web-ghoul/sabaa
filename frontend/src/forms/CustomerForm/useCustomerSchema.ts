@@ -19,11 +19,14 @@ const useCustomerSchema = () => {
     emiratesId: yup.string(),
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
+    job: yup.string(),
+    gender: yup.string(),
     address: yup.string(),
     residenceExpiryDate: yup.date(),
     fileImmgNo: yup.string(),
     status: yup.string(),
     type: yup.string(),
+    sponsor: yup.string(),
     remarks: yup.string(),
   });
 
@@ -41,6 +44,8 @@ const useCustomerSchema = () => {
     phone: editableCustomerData?.phone || "",
     email: editableCustomerData?.email || "",
     state: editableCustomerData?.state || "",
+    gender: editableCustomerData?.gender || "",
+    job: editableCustomerData?.job || "",
     address: editableCustomerData?.address || "",
     emiratesId: editableCustomerData?.emiratesId || "",
     residenceExpiryDate:
@@ -52,6 +57,7 @@ const useCustomerSchema = () => {
     fileImmgNo: editableCustomerData?.fileImmgNo || "",
     status: editableCustomerData?.status || "",
     uid: editableCustomerData?.uid || "",
+    sponsor: editableCustomerData?.sponsor || "",
     type: "customer",
     remarks: editableCustomerData?.remarks || "",
   };

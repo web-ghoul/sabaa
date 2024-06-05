@@ -11,7 +11,11 @@ import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
 import { EChannelFormikTypes, FormiksTypes } from "../../types/forms.types";
-import { EChannelTypes } from "../../types/store.types";
+import {
+  EChannelTypes,
+  EmployeeTypes,
+  OwnerTypes,
+} from "../../types/store.types";
 
 const EChannelForm = ({ formik, type }: FormiksTypes) => {
   const { formsLoading, handleCloseEChannelModal, setEditableEChannelData } =
@@ -29,7 +33,6 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
       .then((res) => {
         const data: EChannelTypes = res.data;
         setEditableEChannelData(data);
-        (formik as unknown as EChannelFormikTypes).values.name = data.name;
         (formik as unknown as EChannelFormikTypes).values.uid = data.uid;
         (formik as unknown as EChannelFormikTypes).values.personCode =
           data.personCode;
@@ -37,12 +40,33 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           data.emiratesId;
         (formik as unknown as EChannelFormikTypes).values.phone = data.phone;
         (formik as unknown as EChannelFormikTypes).values.type =
-          data.type || "employee";
+          data.type && data.type.toLowerCase() === "pro"
+            ? "officer"
+            : data.type || "employee";
         (formik as unknown as EChannelFormikTypes).values.status = data.status;
-        if (data.type) {
-          (formik as unknown as EChannelFormikTypes).values.owner = search;
+        if (data.owner) {
+          (formik as unknown as EChannelFormikTypes).values.owner = (
+            data.owner as OwnerTypes
+          )._id;
+          (formik as unknown as EChannelFormikTypes).values.name = (
+            data.owner as OwnerTypes
+          ).name;
+        } else if (data.employee) {
+          (formik as unknown as EChannelFormikTypes).values.employee = (
+            data.employee as EmployeeTypes
+          )._id;
+          (formik as unknown as EChannelFormikTypes).values.name = (
+            data.employee as EmployeeTypes
+          ).name;
         } else {
-          (formik as unknown as EChannelFormikTypes).values.employee = search;
+          if (data.type) {
+            (formik as unknown as EChannelFormikTypes).values.owner = data._id;
+            (formik as unknown as EChannelFormikTypes).values.name = data.name;
+          } else {
+            (formik as unknown as EChannelFormikTypes).values.employee =
+              data._id;
+            (formik as unknown as EChannelFormikTypes).values.name = data.name;
+          }
         }
       })
       .catch((err) => {
@@ -59,22 +83,24 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
         <Title head={"h4"} align={"left"} title={"Add New E-Channel"} />
       ) : (
         type === "editEChannel" && (
-          <Title head={"h4"} align={"left"} title={"Edit Owner"} />
+          <Title head={"h4"} align={"left"} title={"Edit E-Channel"} />
         )
       )}
 
-      <Box className={`flex justify-start items-end gap-4`}>
-        <Input
-          formik={formik}
-          label={"Search UID , emirates id..."}
-          name={"search_for_person"}
-          type={"search"}
-          change={(val) => setSearch(val)}
-        />
-        <PrimaryButton onClick={handleSearch} loading={loading}>
-          Search
-        </PrimaryButton>
-      </Box>
+      {type === "addEChannel" && (
+        <Box className={`flex justify-start items-end gap-4`}>
+          <Input
+            formik={formik}
+            label={"Search UID , emirates id..."}
+            name={"search_for_person"}
+            type={"search"}
+            change={(val) => setSearch(val)}
+          />
+          <PrimaryButton onClick={handleSearch} loading={loading}>
+            Search
+          </PrimaryButton>
+        </Box>
+      )}
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>

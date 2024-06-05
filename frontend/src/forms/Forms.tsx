@@ -35,8 +35,10 @@ import ProForm from "./ProForm/ProForm";
 import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
+import TasheelForm from "./TasheelForm/TasheelForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
+import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
 
 const Forms = ({ type, index }: FormsTypes) => {
   const { formik } = useSubmitForm(type);
@@ -216,6 +218,20 @@ const Forms = ({ type, index }: FormsTypes) => {
         />
       )}
       {/* E-Channel */}
+
+      {/* Tasheel */}
+      {(type === "addTasheel" || type === "editTasheel") && (
+        <TasheelForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {type === "tasheelsOptions" && (
+        <TasheelsOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Tasheel */}
 
       {/* Delete */}
       {type === "delete" && <DeleteForm />}

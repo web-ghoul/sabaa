@@ -100,6 +100,8 @@ interface OwnerTypes {
   name: string;
   nameAr: string;
   avatar: string;
+  gender: string;
+  job: string;
   dob?: Date;
   sponsors: SponsorTypes[];
   idNationality: string;
@@ -125,6 +127,7 @@ interface OwnerValuesTypes {
   owner: OwnerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface OwnersValuesTypes {
@@ -166,6 +169,7 @@ interface ProValuesTypes {
   pro: ProTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface ProsValuesTypes {
@@ -207,6 +211,7 @@ interface CustomerValuesTypes {
   customer: CustomerTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
 }
 
 interface CustomersValuesTypes {
@@ -222,6 +227,7 @@ interface CustomersArgsTypes {
   dobTo?: string;
   dobFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -370,6 +376,71 @@ interface EChannelsCounterValuesTypes {
   eChannelsCounter: number;
 }
 
+//Tasheel
+
+interface TasheelTypes {
+  _id?: string;
+  name: string;
+  nameAr: string;
+  personCode: string;
+  username: string;
+  password: string;
+  security1: string;
+  security2: string;
+  email: string;
+  mobile: string;
+  type: string;
+  notes: string;
+  owner?: string | OwnerTypes;
+  employee?: string | EmployeeTypes;
+  user?: string;
+  createdAt?: Date;
+}
+
+interface TasheelsValuesTypes {
+  isLoading: boolean;
+  tasheels: TasheelTypes[] | null;
+}
+
+interface TasheelsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface TasheelsCounterValuesTypes {
+  isLoading: boolean;
+  tasheelsCounter: number;
+}
+
+//Tasheel
+
+interface NatwasalTypes extends TasheelTypes {}
+
+interface NatwasalsValuesTypes {
+  isLoading: boolean;
+  natwasal: NatwasalTypes[] | null;
+}
+
+interface NatwasalsArgsTypes {
+  search?: string;
+  sort?: string;
+  type?: string;
+  gender?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+interface NatwasalsCounterValuesTypes {
+  isLoading: boolean;
+  natwasalsCounter: number;
+}
+
 //Company
 interface CompanyTypes {
   _id?: string;
@@ -404,6 +475,7 @@ interface CompanyTypes {
   tenancyContractExp: Date;
   remarks: string;
   createdAt: Date;
+  echannelRemarks: string;
   userName: string;
   password: string;
   noqodiWalet: string;
@@ -434,6 +506,7 @@ interface CompaniesValuesTypes {
 
 interface CompaniesArgsTypes {
   page?: number;
+  id?: string;
   search?: string;
   sort?: string;
   limit?: number;
@@ -560,6 +633,10 @@ export type {
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
+  NatwasalsArgsTypes,
+  NatwasalsCounterValuesTypes,
+  NatwasalsValuesTypes,
+  NatwasalTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
@@ -590,6 +667,10 @@ export type {
   RecentUsersValuesTypes,
   SponsorsValuesTypes,
   SponsorTypes,
+  TasheelsArgsTypes,
+  TasheelsCounterValuesTypes,
+  TasheelsValuesTypes,
+  TasheelTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,

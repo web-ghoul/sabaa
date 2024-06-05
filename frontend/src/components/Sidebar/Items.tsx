@@ -1,5 +1,7 @@
 import {
   AssessmentRounded,
+  AutoAwesomeMotionRounded,
+  CallToActionRounded,
   EmailRounded,
   GridViewRounded,
   ListAltRounded,
@@ -77,6 +79,16 @@ const Items = () => {
         icon={<EChannelsIcon />}
         title="E-Channels"
         url={`${import.meta.env.VITE_ECHANNELS_ROUTE}`}
+      />
+      <Item
+        icon={<AutoAwesomeMotionRounded />}
+        title="Tasheel"
+        url={`${import.meta.env.VITE_TASHEEL_ROUTE}`}
+      />
+      <Item
+        icon={<CallToActionRounded />}
+        title="Natwasal"
+        url={`${import.meta.env.VITE_NATWASAL_ROUTE}`}
       />
       <Item
         icon={<TransactionsIcon />}

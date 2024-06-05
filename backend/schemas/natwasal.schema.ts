@@ -27,6 +27,15 @@ export class Natwasal {
 
   @Prop()
   mobile: string;
+
+  @Prop()
+  personCode: string;
+
+  @Prop()
+  name: string;
+
+  @Prop()
+  nameAr: string;
   
   @Prop()
   notes: string;
@@ -45,6 +54,6 @@ export class Natwasal {
 
 export const NatwasalSchema = SchemaFactory.createForClass(Natwasal);
 
-// UserSchema.index({ email: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+NatwasalSchema.index({ personCode: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})

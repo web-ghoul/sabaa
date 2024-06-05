@@ -21,9 +21,9 @@ export const getCustomers = createAsyncThunk(
           : import.meta.env.VITE_LIMIT_PAGES
       }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&state=${
         args?.state || ""
-      }&nationality=${args?.nationality || ""}&page=${
-        args?.page || 0
-      }&type=customer`,
+      }&status=${args?.status || ""}&nationality=${
+        args?.nationality || ""
+      }&page=${args?.page || 0}&type=customer`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

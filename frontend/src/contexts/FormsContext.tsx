@@ -13,6 +13,7 @@ import {
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -69,6 +70,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   openEChannelModal: false,
   handleOpenEChannelModal: () => {},
   handleCloseEChannelModal: () => {},
+  openTasheelModal: false,
+  handleOpenTasheelModal: () => {},
+  handleCloseTasheelModal: () => {},
+  openNatwasalModal: false,
+  handleOpenNatwasalModal: () => {},
+  handleCloseNatwasalModal: () => {},
   formType: "",
   setFormType: () => {},
   excelType: { type: "excel", entity: "companies" },
@@ -79,6 +86,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForEmployees: () => {},
   searchForEChannels: "",
   setSearchForEChannels: () => {},
+  searchForTasheel: "",
+  setSearchForTasheel: () => {},
+  searchForNatwasal: "",
+  setSearchForNatwasal: () => {},
   searchForCustomers: "",
   setSearchForCustomers: () => {},
   searchForPros: "",
@@ -127,6 +138,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableCompanyData: () => {},
   editableEChannelData: null,
   setEditableEChannelData: () => {},
+  editableTasheelData: null,
+  setEditableTasheelData: () => {},
+  editableNatwasalData: null,
+  setEditableNatwasalData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -157,6 +172,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
   const [searchForEChannels, setSearchForEChannels] = useState("");
+  const [searchForTasheel, setSearchForTasheel] = useState("");
+  const [searchForNatwasal, setSearchForNatwasal] = useState("");
   const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
@@ -345,6 +362,36 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenEChannelModal(true);
   };
 
+  //Tasheel Modal
+  const [openTasheelModal, setOpenTasheelModal] = useState(false);
+
+  const handleCloseTasheelModal = () => {
+    setOpenTasheelModal(false);
+  };
+
+  const handleOpenTasheelModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableTasheelData(null);
+    }
+    setFormType(type);
+    setOpenTasheelModal(true);
+  };
+
+  //Natwasal Modal
+  const [openNatwasalModal, setOpenNatwasalModal] = useState(false);
+
+  const handleCloseNatwasalModal = () => {
+    setOpenNatwasalModal(false);
+  };
+
+  const handleOpenNatwasalModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableNatwasalData(null);
+    }
+    setFormType(type);
+    setOpenNatwasalModal(true);
+  };
+
   //User Modal
   const [openUserModal, setOpenUserModal] = useState(false);
 
@@ -458,6 +505,14 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable E-Channel Data
   const [editableEChannelData, setEditableEChannelData] =
     useState<EChannelTypes | null>(null);
+
+  //Editable Tasheel Data
+  const [editableTasheelData, setEditableTasheelData] =
+    useState<TasheelTypes | null>(null);
+
+  //Editable E-Channel Data
+  const [editableNatwasalData, setEditableNatwasalData] =
+    useState<TasheelTypes | null>(null);
 
   useEffect(() => {
     if (editableOwnerData) {
@@ -603,6 +658,20 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenEChannelModal,
     editableEChannelData,
     setEditableEChannelData,
+    editableTasheelData,
+    setEditableTasheelData,
+    editableNatwasalData,
+    setEditableNatwasalData,
+    searchForTasheel,
+    setSearchForTasheel,
+    searchForNatwasal,
+    setSearchForNatwasal,
+    openTasheelModal,
+    handleCloseTasheelModal,
+    handleOpenTasheelModal,
+    openNatwasalModal,
+    handleCloseNatwasalModal,
+    handleOpenNatwasalModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

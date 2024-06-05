@@ -28,6 +28,7 @@ import Pros from "./pages/Pros.tsx";
 import Reports from "./pages/Reports.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Settings from "./pages/Settings.tsx";
+import Tasheels from "./pages/Tasheels.tsx";
 import TodoList from "./pages/TodoList.tsx";
 import Transactions from "./pages/Transactions.tsx";
 import UploadCompanies from "./pages/UploadCompanies.tsx";
@@ -140,6 +141,10 @@ export const router = createBrowserRouter([
       {
         path: "/e-channels",
         element: <EChannels />,
+      },
+      {
+        path: "/tasheels",
+        element: <Tasheels />,
       },
       {
         path: "/transactions",
