@@ -54,7 +54,7 @@ const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
   };
 
   const handleResetAll = () => {
-    navigate(`${import.meta.env.VITE_TASHEEL_ROUTE}`);
+    navigate(`${import.meta.env.VITE_TASHEELS_ROUTE}`);
     dispatch(getTasheels({}));
     setQueries({});
   };
