@@ -86,7 +86,7 @@ export class NatwasalsService {
       const [emp,owner,company] = await Promise.all([
         this.employeeModel.findOne({personCode: id}),
         this.ownerModel.findOne({personCode: id}),
-        this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'}]),
+        this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
       ])
 
       return (emp || owner || company || {});

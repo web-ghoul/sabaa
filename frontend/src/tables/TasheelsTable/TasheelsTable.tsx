@@ -16,6 +16,11 @@ import { handleRandomNumber } from '../../functions/handleRandomNumber';
 import { AppDispatch } from '../../store/store';
 import { getTasheelsCounter } from '../../store/tasheelsCounterSlice';
 import { getTasheels, reverseTasheels } from '../../store/tasheelsSlice';
+import {
+  EmployeeTypes,
+  OwnerTypes,
+  TasheelTypes,
+} from '../../types/store.types';
 import { TasheelsTableTypes } from '../../types/tables.types';
 import PrimaryTable from '../PrimaryTable';
 import { PrimaryTableCell } from '../PrimaryTableCell';
@@ -119,51 +124,79 @@ const TasheelsTable = ({
         {!isLoading
           ? data &&
             data.length > 0 &&
-            data.map((row, i) => (
-              <PrimaryTableRow key={i}>
-                <PrimaryTableCell
-                  // onClick={() => handleView()}
-                  component="th"
-                  scope="row"
-                >
-                  <Link to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}>
-                    <UserBox
-                      username={row.name}
-                      head={'subtitle1'}
-                      size={'small'}
-                    />
-                  </Link>
-                </PrimaryTableCell>
-                {!lgScreen && (
+            data.map((row, i) => {
+              const type = (row as TasheelTypes).type.toLowerCase();
+              return (
+                <PrimaryTableRow key={i}>
+                  <PrimaryTableCell
+                    // onClick={() => handleView()}
+                    component="th"
+                    scope="row"
+                  >
+                    <Link
+                      to={
+                        type === 'owner'
+                          ? `${import.meta.env.VITE_OWNERS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'officer'
+                          ? `${import.meta.env.VITE_PROS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'customer'
+                          ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'employee'
+                          ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                              (row.employee as EmployeeTypes)._id
+                            }`
+                          : ''
+                      }
+                    >
+                      <UserBox
+                        username={row.name}
+                        head={'subtitle1'}
+                        size={'small'}
+                        avatar={
+                          row.owner
+                            ? (row.owner as OwnerTypes).avatar
+                            : (row.employee as EmployeeTypes).avatar
+                        }
+                      />
+                    </Link>
+                  </PrimaryTableCell>
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.nameAr}
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
-                    {row.nameAr}
+                    {row.username}
                   </PrimaryTableCell>
-                )}
-                <PrimaryTableCell align="center">
-                  {row.username}
-                </PrimaryTableCell>
-                {!smScreen && (
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.password}
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
-                    {row.password}
+                    {row.security1}
                   </PrimaryTableCell>
-                )}
-                <PrimaryTableCell align="center">
-                  {row.security1}
-                </PrimaryTableCell>
-                {!mdScreen && (
-                  <PrimaryTableCell align="center">
-                    {row.security2}
-                  </PrimaryTableCell>
-                )}
-                {actions && (
-                  <PrimaryTableCell align="right">
-                    <IconButton onClick={e => handleOpenMenu(e, i)}>
-                      <MoreVertRounded />
-                    </IconButton>
-                  </PrimaryTableCell>
-                )}
-              </PrimaryTableRow>
-            ))
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.security2}
+                    </PrimaryTableCell>
+                  )}
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={e => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
+                </PrimaryTableRow>
+              );
+            })
           : new Array(handleRandomNumber())
               .fill(0)
               .map((_, i) => <LoadingTasheelsRow actions={actions} key={i} />)}

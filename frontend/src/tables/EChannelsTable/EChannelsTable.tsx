@@ -1,30 +1,34 @@
-import { MoreVertRounded } from "@mui/icons-material";
+import { MoreVertRounded } from '@mui/icons-material';
 import {
   IconButton,
   TableBody,
   TableHead,
   TableRow,
   useMediaQuery,
-} from "@mui/material";
-import { MouseEvent, useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
-import StatusBox from "../../components/StatusBox/StatusBox";
-import UserBox from "../../components/UserBox/UserBox";
-import { AppContext } from "../../contexts/AppContext";
-import { FormsContext } from "../../contexts/FormsContext";
-import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { getEChannelsCounter } from "../../store/eChannelsCounterSlice";
-import { getEChannels, reverseEChannels } from "../../store/eChannelsSlice";
-import { AppDispatch } from "../../store/store";
-import { EmployeeTypes, OwnerTypes } from "../../types/store.types";
-import { EChannelsTableTypes } from "../../types/tables.types";
-import PrimaryTable from "../PrimaryTable";
-import { PrimaryTableCell } from "../PrimaryTableCell";
-import { PrimaryTableRow } from "../PrimaryTableRow";
-import SortBox from "../SortBox";
-import EChannelsTableMenu from "./EChannelsTableMenu";
-import LoadingEChannelsRow from "./LoadingEChannelsRow";
+} from '@mui/material';
+import { MouseEvent, useContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useSearchParams } from 'react-router-dom';
+import StatusBox from '../../components/StatusBox/StatusBox';
+import UserBox from '../../components/UserBox/UserBox';
+import { AppContext } from '../../contexts/AppContext';
+import { FormsContext } from '../../contexts/FormsContext';
+import { handleRandomNumber } from '../../functions/handleRandomNumber';
+import { getEChannelsCounter } from '../../store/eChannelsCounterSlice';
+import { getEChannels, reverseEChannels } from '../../store/eChannelsSlice';
+import { AppDispatch } from '../../store/store';
+import {
+  EChannelTypes,
+  EmployeeTypes,
+  OwnerTypes,
+} from '../../types/store.types';
+import { EChannelsTableTypes } from '../../types/tables.types';
+import PrimaryTable from '../PrimaryTable';
+import { PrimaryTableCell } from '../PrimaryTableCell';
+import { PrimaryTableRow } from '../PrimaryTableRow';
+import SortBox from '../SortBox';
+import EChannelsTableMenu from './EChannelsTableMenu';
+import LoadingEChannelsRow from './LoadingEChannelsRow';
 
 const EChannelsTable = ({
   data,
@@ -38,19 +42,19 @@ const EChannelsTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   // const { setEChannelIndex } = useContext(ExcelsContext);
   const { setEditableEChannelData } = useContext(FormsContext);
-  const mdScreen = useMediaQuery("(max-width:992px)");
-  const smScreen = useMediaQuery("(max-width:768px)");
-  const lgScreen = useMediaQuery("(max-width:1200px)");
+  const mdScreen = useMediaQuery('(max-width:992px)');
+  const smScreen = useMediaQuery('(max-width:768px)');
+  const lgScreen = useMediaQuery('(max-width:1200px)');
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
-    if (searchParams.get("sort") === "name_asc") {
-      handleAddQuery({ sort: "name_desc" });
+    if (searchParams.get('sort') === 'name_asc') {
+      handleAddQuery({ sort: 'name_desc' });
       dispatch(reverseEChannels());
-      setSearchParams({ ...queries, sort: "name_desc" });
+      setSearchParams({ ...queries, sort: 'name_desc' });
     } else {
-      handleAddQuery({ sort: "name_asc" });
-      const all = { ...queries, sort: "name_asc" };
+      handleAddQuery({ sort: 'name_asc' });
+      const all = { ...queries, sort: 'name_asc' };
       dispatch(getEChannels(all));
       setSearchParams(all);
     }
@@ -64,7 +68,7 @@ const EChannelsTable = ({
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
-    index: number
+    index: number,
   ) => {
     if (data) {
       setEditableEChannelData(data[index]);
@@ -88,17 +92,17 @@ const EChannelsTable = ({
   return (
     <PrimaryTable
       count={count}
-      variant={"employees"}
+      variant={'employees'}
       noPagination={noPagination}
     >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
             <SortBox
-              title={"Name"}
+              title={'Name'}
               handling={handleSortByName}
-              asc={searchParams.get("sort") === "name_asc"}
-              desc={searchParams.get("sort") === "name_desc"}
+              asc={searchParams.get('sort') === 'name_asc'}
+              desc={searchParams.get('sort') === 'name_desc'}
             />
           </PrimaryTableCell>
           <PrimaryTableCell align="center">Username</PrimaryTableCell>
@@ -122,69 +126,84 @@ const EChannelsTable = ({
         {!isLoading
           ? data &&
             data.length > 0 &&
-            data.map((row, i) => (
-              <PrimaryTableRow key={i}>
-                <PrimaryTableCell
-                  // onClick={() => handleView()}
-                  component="th"
-                  scope="row"
-                >
-                  <Link
-                    to={
-                      row.owner
-                        ? `${import.meta.env.VITE_OWNERS_ROUTE}/${
-                            (row.owner as OwnerTypes)._id
-                          }`
-                        : `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-                            (row.employee as EmployeeTypes)._id
-                          }`
-                    }
+            data.map((row, i) => {
+              const type = (row as EChannelTypes).type.toLowerCase();
+              return (
+                <PrimaryTableRow key={i}>
+                  <PrimaryTableCell
+                    // onClick={() => handleView()}
+                    component="th"
+                    scope="row"
                   >
-                    <UserBox
-                      username={row.name}
-                      head={"subtitle1"}
-                      size={"small"}
-                      avatar={
-                        row.owner
-                          ? (row.owner as OwnerTypes).avatar
-                          : (row.employee as EmployeeTypes).avatar
+                    <Link
+                      to={
+                        type === 'owner'
+                          ? `${import.meta.env.VITE_OWNERS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'officer'
+                          ? `${import.meta.env.VITE_PROS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'customer'
+                          ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                              (row.owner as OwnerTypes)._id
+                            }`
+                          : type === 'employee'
+                          ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                              (row.employee as EmployeeTypes)._id
+                            }`
+                          : ''
                       }
-                    />
-                  </Link>
-                </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.username}
-                </PrimaryTableCell>
-                {!smScreen && (
+                    >
+                      <UserBox
+                        username={row.name}
+                        head={'subtitle1'}
+                        size={'small'}
+                        avatar={
+                          row.owner
+                            ? (row.owner as OwnerTypes).avatar
+                            : (row.employee as EmployeeTypes).avatar
+                        }
+                      />
+                    </Link>
+                  </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {row.password}
+                    {row.username}
                   </PrimaryTableCell>
-                )}
-                {!smScreen && (
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.password}
+                    </PrimaryTableCell>
+                  )}
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.type || 'employee'}
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
-                    {row.type || "employee"}
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
-                )}
-                <PrimaryTableCell align="center">
-                  <StatusBox status={row.status} />
-                </PrimaryTableCell>
-                {!mdScreen && (
-                  <PrimaryTableCell align="center">{row.uid}</PrimaryTableCell>
-                )}
-                {!lgScreen && (
-                  <PrimaryTableCell align="center">
-                    {row.emiratesId}
-                  </PrimaryTableCell>
-                )}
-                {actions && (
-                  <PrimaryTableCell align="right">
-                    <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                      <MoreVertRounded />
-                    </IconButton>
-                  </PrimaryTableCell>
-                )}
-              </PrimaryTableRow>
-            ))
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.uid}
+                    </PrimaryTableCell>
+                  )}
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.emiratesId}
+                    </PrimaryTableCell>
+                  )}
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={e => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
+                </PrimaryTableRow>
+              );
+            })
           : new Array(handleRandomNumber())
               .fill(0)
               .map((_, i) => <LoadingEChannelsRow actions={actions} key={i} />)}

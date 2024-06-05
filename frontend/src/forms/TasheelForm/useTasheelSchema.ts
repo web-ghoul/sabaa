@@ -1,17 +1,17 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
-import { useContext } from "react";
-import { FormsContext } from "../../contexts/FormsContext";
-import { OwnerTypes } from "../../types/store.types";
+import { useContext } from 'react';
+import { FormsContext } from '../../contexts/FormsContext';
+import { OwnerTypes } from '../../types/store.types';
 
 const useTasheelSchema = () => {
   const { editableTasheelData } = useContext(FormsContext);
 
   const TasheelSchema = yup.object({
-    username: yup.string().required("Username is required"),
-    password: yup.string().required("Password is required"),
-    name: yup.string(),
-    nameAr: yup.string(),
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
+    name: yup.string().required('English Name is required'),
+    nameAr: yup.string().required('Arabic Name is required'),
     personCode: yup.string(),
     security1: yup.string(),
     security2: yup.string(),
@@ -22,17 +22,17 @@ const useTasheelSchema = () => {
   });
 
   const TasheelInitailValues = {
-    username: editableTasheelData?.username || "",
-    password: editableTasheelData?.password || "",
-    name: editableTasheelData?.name || "",
-    nameAr: editableTasheelData?.nameAr || "",
-    personCode: editableTasheelData?.personCode || "",
-    security1: editableTasheelData?.security1 || "",
-    security2: editableTasheelData?.security2 || "",
-    email: editableTasheelData?.email || "",
-    mobile: editableTasheelData?.mobile || "",
-    notes: editableTasheelData?.notes || "",
-    type: (editableTasheelData?.owner as OwnerTypes)?.type || "",
+    username: editableTasheelData?.username || '',
+    password: editableTasheelData?.password || '',
+    name: editableTasheelData?.name || '',
+    nameAr: editableTasheelData?.nameAr || '',
+    personCode: editableTasheelData?.personCode || '',
+    security1: editableTasheelData?.security1 || '',
+    security2: editableTasheelData?.security2 || '',
+    email: editableTasheelData?.email || '',
+    mobile: editableTasheelData?.mobile || '',
+    notes: editableTasheelData?.notes || '',
+    type: (editableTasheelData?.owner as OwnerTypes)?.type || '',
   };
 
   return { TasheelSchema, TasheelInitailValues };
