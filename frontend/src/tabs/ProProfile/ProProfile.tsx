@@ -5,7 +5,13 @@ import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
 import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { ProTypes, SponsorTypes } from "../../types/store.types";
+import {
+  EChannelTypes,
+  NatwasalTypes,
+  ProTypes,
+  SponsorTypes,
+  TasheelTypes,
+} from "../../types/store.types";
 import { ProProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -14,6 +20,9 @@ const ProProfile = ({
   pro,
   isLoading,
   companies,
+  eChannel,
+  natwasal,
+  tasheel,
   activities,
 }: ProProfileProps) => {
   const { proTabsValue } = useContext(TabsContext);
@@ -34,6 +43,9 @@ const ProProfile = ({
         <ProfileDetails
           title={`Personal Info`}
           variant={"officer"}
+          eChannel={eChannel as EChannelTypes}
+          tasheel={tasheel as TasheelTypes}
+          natwasal={natwasal as NatwasalTypes}
           data={pro as ProTypes}
           isLoading={isLoading}
         />

@@ -12,9 +12,8 @@ import { AppDispatch, RootState } from "../store/store";
 import ProProfile from "../tabs/ProProfile/ProProfile";
 
 const Pro = () => {
-  const { pro, isLoading, companies, activities } = useSelector(
-    (state: RootState) => state.pro
-  );
+  const { pro, isLoading, companies, activities, eChannel, tasheel, natwasal } =
+    useSelector((state: RootState) => state.pro);
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
@@ -47,6 +46,9 @@ const Pro = () => {
           activities={activities}
           companies={companies}
           pro={pro}
+          eChannel={eChannel}
+          natwasal={natwasal}
+          tasheel={tasheel}
           isLoading={isLoading}
         />
       </PrimaryContainer>

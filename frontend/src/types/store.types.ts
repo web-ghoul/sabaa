@@ -128,6 +128,8 @@ interface OwnerValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface OwnersValuesTypes {
@@ -170,6 +172,8 @@ interface ProValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface ProsValuesTypes {
@@ -212,6 +216,8 @@ interface CustomerValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface CustomersValuesTypes {
@@ -304,6 +310,9 @@ interface EmployeeValuesTypes {
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface EmployeesValuesTypes {
