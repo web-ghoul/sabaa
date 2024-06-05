@@ -10,9 +10,11 @@ import { Company, CompanySchema } from 'schemas/company.schema';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
 import { EChannelSchema } from 'schemas/eChannel.schema';
+import { Natwasal, NatwasalSchema } from 'schemas/natwasal.schema';
+import { Tasaheel, TasaheelSchema } from 'schemas/tasaheel.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'EChannel', schema: EChannelSchema },{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema}, { name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
+  imports: [MongooseModule.forFeature([{ name: 'EChannel', schema: EChannelSchema },{ name: Natwasal.name, schema: NatwasalSchema },{ name: Tasaheel.name, schema: TasaheelSchema },{ name: Owner.name, schema: OwnerSchema },{ name: Company.name, schema: CompanySchema}, { name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
       destination: './upload/owner&pro&customer',
       filename: (req, file, cb) => {
