@@ -16,6 +16,8 @@ import jobsCounterReducers from "./jobsCounterSlice.ts";
 import jobsReducers from "./jobsSlice.ts";
 import nationalitiesCounterReducers from "./nationalitiesCounterSlice.ts";
 import nationalitiesReducers from "./nationalitiesSlice.ts";
+import natwasalsCounterReducer from "./natwasalsCounterSlice.ts";
+import natwasalsReducer from "./natwasalsSlice.ts";
 import ownersCounterReducers from "./ownersCounterSlice.ts";
 import ownerReducers from "./ownerSlice.ts";
 import ownersReducers from "./ownersSlice.ts";
@@ -76,6 +78,8 @@ export const store = configureStore({
     eChannelsCounter: eChannelsCounterReducer,
     tasheels: tasheelsReducer,
     tasheelsCounter: tasheelsCounterReducer,
+    natwasals: natwasalsReducer,
+    natwasalsCounter: natwasalsCounterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -17,6 +17,10 @@ import {
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
 import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
 import useEChannelSchema from "../forms/EChannelForm/useEChannelSchema";
+import {
+  EChannelsOptionsInitailValues,
+  EChannelsOptionsSchema,
+} from "../forms/EChannelsOptionsForm/EChannelsOptionsSchema";
 import useEmployeeSchema from "../forms/EmployeeForm/useEmployeeSchema";
 import {
   EmployeesOptionsInitailValues,
@@ -41,6 +45,11 @@ import {
   NationalitiesOptionsSchema,
 } from "../forms/NationalitiesOptionsForm/NationalitiesOptionsSchema";
 import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
+import useNatwasalSchema from "../forms/NatwasalForm/useNatwasalSchema";
+import {
+  NatwasalsOptionsInitailValues,
+  NatwasalsOptionsSchema,
+} from "../forms/NatwasalsOptionsForm/NatwasalsOptionsSchema";
 import { OTPInitailValues, OTPSchema } from "../forms/OTPForm/OTPSchema";
 import useOwnerSchema from "../forms/OwnerForm/useOwnerSchema";
 import {
@@ -58,6 +67,10 @@ import {
 } from "../forms/ResetPasswordForm/ResetPasswordSchema";
 import useSponsorSchema from "../forms/SponsorForm/useSponsorSchema";
 import useTasheelSchema from "../forms/TasheelForm/useTasheelSchema";
+import {
+  TasheelsOptionsInitailValues,
+  TasheelsOptionsSchema,
+} from "../forms/TasheelsOptionsForm/TasheelsOptionsSchema";
 import useUserSchema from "../forms/UserForm/useUserSchema";
 import {
   UsersOptionsInitailValues,
@@ -82,6 +95,8 @@ import {
   DownloadExcelFormikTypes,
   EChannelFormTypes,
   EChannelFormikTypes,
+  EChannelsOptionsFormTypes,
+  EChannelsOptionsFormikTypes,
   EmployeeFormTypes,
   EmployeeFormikTypes,
   EmployeesOptionsFormTypes,
@@ -100,6 +115,10 @@ import {
   NationalitiesOptionsFormikTypes,
   NationalityFormTypes,
   NationalityFormikTypes,
+  NatwasalFormTypes,
+  NatwasalFormikTypes,
+  NatwasalsOptionsFormTypes,
+  NatwasalsOptionsFormikTypes,
   OTPFormTypes,
   OTPFormikTypes,
   OwnerFormTypes,
@@ -116,6 +135,8 @@ import {
   SponsorFormikTypes,
   TasheelFormTypes,
   TasheelFormikTypes,
+  TasheelsOptionsFormTypes,
+  TasheelsOptionsFormikTypes,
   UserFormTypes,
   UserFormikTypes,
   UsersOptionsFormTypes,
@@ -142,6 +163,7 @@ const useSubmitForm = (type: string) => {
     useDownloadExcelSchema();
   const { EChannelInitailValues, EChannelSchema } = useEChannelSchema();
   const { TasheelInitailValues, TasheelSchema } = useTasheelSchema();
+  const { NatwasalInitailValues, NatwasalSchema } = useNatwasalSchema();
 
   const chosenFormik = useMemo(
     () => (): AllFormiksTypes => {
@@ -349,6 +371,14 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as EChannelFormikTypes;
+        case "eChannelsOptions":
+          return {
+            initialValues: EChannelsOptionsInitailValues,
+            validationSchema: EChannelsOptionsSchema,
+            onSubmit: (values: EChannelsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as EChannelsOptionsFormikTypes;
         case "editTasheel":
         case "addTasheel":
           return {
@@ -358,6 +388,31 @@ const useSubmitForm = (type: string) => {
               handleSubmit(values);
             },
           } as unknown as TasheelFormikTypes;
+        case "tasheelsOptions":
+          return {
+            initialValues: TasheelsOptionsInitailValues,
+            validationSchema: TasheelsOptionsSchema,
+            onSubmit: (values: TasheelsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as TasheelsOptionsFormikTypes;
+        case "editNatwasal":
+        case "addNatwasal":
+          return {
+            initialValues: NatwasalInitailValues,
+            validationSchema: NatwasalSchema,
+            onSubmit: (values: NatwasalFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as NatwasalFormikTypes;
+        case "natwasalsOptions":
+          return {
+            initialValues: NatwasalsOptionsInitailValues,
+            validationSchema: NatwasalsOptionsSchema,
+            onSubmit: (values: NatwasalsOptionsFormTypes) => {
+              handleSubmit(values);
+            },
+          } as unknown as NatwasalsOptionsFormikTypes;
         case "downloadExcel":
           return {
             initialValues: DownloadExcelInitailValues,
@@ -395,6 +450,8 @@ const useSubmitForm = (type: string) => {
       LinkToCompanySchema,
       NationalityInitailValues,
       NationalitySchema,
+      NatwasalInitailValues,
+      NatwasalSchema,
       OwnerInitailValues,
       OwnerSchema,
       ProInitailValues,

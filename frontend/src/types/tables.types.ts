@@ -10,7 +10,7 @@ import {
   SponsorTypes,
   TasheelTypes,
   UserTypes,
-} from './store.types';
+} from "./store.types";
 
 interface JobsTableTypes {
   data: JobTypes[] | null;
@@ -129,6 +129,17 @@ interface TasheelsTableTypes {
   recent?: boolean;
 }
 
+interface NatwasalsTableTypes {
+  data: NatwasalTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
 interface PersonsTableTypes {
   data:
     | {
@@ -155,6 +166,7 @@ export type {
   EmployeesTableTypes,
   JobsTableTypes,
   NationalitiesTableTypes,
+  NatwasalsTableTypes,
   OwnersTableTypes,
   PersonsTableTypes,
   ProsTableTypes,

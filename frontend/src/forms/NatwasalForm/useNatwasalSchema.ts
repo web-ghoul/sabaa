@@ -2,7 +2,6 @@ import * as yup from "yup";
 
 import { useContext } from "react";
 import { FormsContext } from "../../contexts/FormsContext";
-import { OwnerTypes } from "../../types/store.types";
 
 const useNatwasalSchema = () => {
   const { editableNatwasalData } = useContext(FormsContext);
@@ -10,11 +9,11 @@ const useNatwasalSchema = () => {
   const NatwasalSchema = yup.object({
     username: yup.string().required("Username is required"),
     password: yup.string().required("Password is required"),
-    name: yup.string(),
-    nameAr: yup.string(),
+    name: yup.string().required("English Name is required"),
+    nameAr: yup.string().required("Arabic Name is required"),
     personCode: yup.string(),
-    security1: yup.string(),
-    security2: yup.string(),
+    security1: yup.string().required("Security 1 is required"),
+    security2: yup.string().required("Security 2 is required"),
     email: yup.string(),
     mobile: yup.string(),
     type: yup.string(),
@@ -32,7 +31,7 @@ const useNatwasalSchema = () => {
     email: editableNatwasalData?.email || "",
     mobile: editableNatwasalData?.mobile || "",
     notes: editableNatwasalData?.notes || "",
-    type: (editableNatwasalData?.owner as OwnerTypes)?.type || "",
+    type: editableNatwasalData?.type,
   };
 
   return { NatwasalSchema, NatwasalInitailValues };

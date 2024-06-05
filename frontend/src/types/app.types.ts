@@ -1,4 +1,4 @@
-import { Renderable, ToastPosition } from 'react-hot-toast';
+import { Renderable, ToastPosition } from "react-hot-toast";
 
 interface ImportMetaEnv {
   VITE_USERS_ROUTE: string;
@@ -36,8 +36,8 @@ interface ImportMetaEnv {
   VITE_UPLOAD_NATIONALITIES_ROUTE: string;
   VITE_PROFILE_ROUTE: string;
   VITE_ECHANNELS_ROUTE: string;
-  VITE_TASHEEL_ROUTE: string;
-  VITE_NATWASAL_ROUTE: string;
+  VITE_TASHEELS_ROUTE: string;
+  VITE_NATWASALS_ROUTE: string;
 }
 
 interface AlertFunTypes {
@@ -49,48 +49,48 @@ interface AlertFunTypes {
 }
 
 type EntitiesType =
-  | 'companies'
-  | 'users'
-  | 'owners'
-  | 'employees'
-  | 'customers'
-  | 'transactions'
-  | 'officers'
-  | 'nationalities'
-  | 'jobs'
-  | 'sponsors'
-  | 'tasheels'
-  | 'natwasals'
-  | 'eChannels'
-  | 'persons';
+  | "companies"
+  | "users"
+  | "owners"
+  | "employees"
+  | "customers"
+  | "transactions"
+  | "officers"
+  | "nationalities"
+  | "jobs"
+  | "sponsors"
+  | "tasheels"
+  | "natwasals"
+  | "eChannels"
+  | "persons";
 
 type EntityType =
-  | 'company'
-  | 'user'
-  | 'owner'
-  | 'employee'
-  | 'customer'
-  | 'transaction'
-  | 'officer'
-  | 'job'
-  | 'nationality'
-  | 'sponsor'
-  | 'tasheel'
-  | 'natwasal'
-  | 'eChannel'
-  | 'person';
+  | "company"
+  | "user"
+  | "owner"
+  | "employee"
+  | "customer"
+  | "transaction"
+  | "officer"
+  | "job"
+  | "nationality"
+  | "sponsor"
+  | "tasheel"
+  | "natwasal"
+  | "eChannel"
+  | "person";
 
 type HeadsType =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'body1'
-  | 'body2';
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "subtitle1"
+  | "subtitle2"
+  | "body1"
+  | "body2";
 
 export type {
   AlertFunTypes,

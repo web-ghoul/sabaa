@@ -19,6 +19,7 @@ import Jobs from "./pages/Jobs.tsx";
 import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
+import Natwasals from "./pages/Natwasals.tsx";
 import OTP from "./pages/OTP.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
@@ -145,6 +146,10 @@ export const router = createBrowserRouter([
       {
         path: "/tasheels",
         element: <Tasheels />,
+      },
+      {
+        path: "/natwasals",
+        element: <Natwasals />,
       },
       {
         path: "/transactions",

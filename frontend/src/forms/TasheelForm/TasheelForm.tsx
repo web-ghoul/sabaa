@@ -1,29 +1,29 @@
-import { Box, Divider, Paper, Typography } from '@mui/material';
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import SubmitButton from '../../components/SubmitButton/SubmitButton';
-import Title from '../../components/Title/Title';
-import { FormsContext } from '../../contexts/FormsContext';
-import { handleCatchError } from '../../functions/handleCatchError';
-import { PrimaryButton } from '../../mui/buttons/PrimaryButton';
-import { RootState } from '../../store/store';
-import PersonsTable from '../../tables/PersonsTable/PersonsTable';
-import { FormiksTypes, TasheelFormikTypes } from '../../types/forms.types';
+import { Box, Divider, Paper, Typography } from "@mui/material";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import Title from "../../components/Title/Title";
+import { FormsContext } from "../../contexts/FormsContext";
+import { handleCatchError } from "../../functions/handleCatchError";
+import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
+import { RootState } from "../../store/store";
+import PersonsTable from "../../tables/PersonsTable/PersonsTable";
+import { FormiksTypes, TasheelFormikTypes } from "../../types/forms.types";
 import {
   CompanyTypes,
   EmployeeTypes,
   OwnerTypes,
   ProTypes,
   TasheelTypes,
-} from '../../types/store.types';
+} from "../../types/store.types";
 
 const TasheelForm = ({ formik, type }: FormiksTypes) => {
   const {
     formsLoading,
-    handleCloseEChannelModal,
+    handleCloseTasheelModal,
     setEditableTasheelData,
     editableTasheelData,
   } = useContext(FormsContext);
@@ -40,19 +40,19 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       }[]
     | null
   >(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const { token } = useSelector((state: RootState) => state.auth);
 
   const handleChangeValues = (d: TasheelTypes, reset?: boolean) => {
-    (formik as unknown as TasheelFormikTypes).values.name = d.name || '';
-    (formik as unknown as TasheelFormikTypes).values.nameAr = d.nameAr || '';
+    (formik as unknown as TasheelFormikTypes).values.name = d.name || "";
+    (formik as unknown as TasheelFormikTypes).values.nameAr = d.nameAr || "";
     (formik as unknown as TasheelFormikTypes).values.personCode =
-      d.personCode || '';
+      d.personCode || "";
     (formik as unknown as TasheelFormikTypes).values.email = d.email;
     (formik as unknown as TasheelFormikTypes).values.type =
-      d.type && d.type.toLowerCase() === 'pro'
-        ? 'officer'
-        : d.type || 'employee';
+      d.type && d.type.toLowerCase() === "pro"
+        ? "officer"
+        : d.type || "employee";
     if (d.owner) {
       (formik as unknown as TasheelFormikTypes).values.owner = (
         d.owner as OwnerTypes
@@ -88,7 +88,7 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       .get(`${import.meta.env.VITE_SERVER_URL}/tasheels/${search}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then(res => {
+      .then((res) => {
         const data: TasheelTypes | CompanyTypes = res.data;
         if ((data as CompanyTypes).molCode) {
           const owners = (data as CompanyTypes).ownerId as OwnerTypes[];
@@ -103,32 +103,32 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
             owner?: OwnerTypes;
             employee?: EmployeeTypes;
           }[] = [];
-          owners.map(owner => {
+          owners.map((owner) => {
             p.push({
               name: owner.name,
               nameAr: owner.nameAr,
               email: owner.email,
-              type: 'owner',
+              type: "owner",
               personCode: owner.personCode,
               owner: owner,
             });
           });
-          pros.map(pro => {
+          pros.map((pro) => {
             p.push({
               name: pro.name,
               nameAr: pro.nameAr,
               email: pro.email,
-              type: 'officer',
+              type: "officer",
               personCode: pro.personCode,
               owner: pro,
             });
           });
-          employees.map(employee => {
+          employees.map((employee) => {
             p.push({
               name: employee.name,
               nameAr: employee.nameAr,
               email: employee.email,
-              type: 'employee',
+              type: "employee",
               personCode: employee.personCode,
               employee: employee,
             });
@@ -140,7 +140,7 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
           handleChangeValues(d);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         handleCatchError(err);
       });
     setLoading(false);
@@ -156,26 +156,28 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
     <Paper
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      {type === 'addTasheel' ? (
-        <Title head={'h4'} align={'left'} title={'Add New Tasheel'} />
+      {type === "addTasheel" ? (
+        <Title head={"h4"} align={"left"} title={"Add New Tasheel"} />
       ) : (
-        type === 'editTasheel' && (
-          <Title head={'h4'} align={'left'} title={'Edit Tasheel'} />
+        type === "editTasheel" && (
+          <Title head={"h4"} align={"left"} title={"Edit Tasheel"} />
         )
       )}
 
-      <Box className={`flex justify-start items-end gap-4`}>
-        <Input
-          formik={formik}
-          label={'Search person code , MOL code...'}
-          name={'search_for_person'}
-          type={'search'}
-          change={val => setSearch(val)}
-        />
-        <PrimaryButton onClick={handleSearch} loading={loading}>
-          Search
-        </PrimaryButton>
-      </Box>
+      {type === "addTasheel" && (
+        <Box className={`flex justify-start items-end gap-4`}>
+          <Input
+            formik={formik}
+            label={"Search person code , MOL code..."}
+            name={"search_for_person"}
+            type={"search"}
+            change={(val) => setSearch(val)}
+          />
+          <PrimaryButton onClick={handleSearch} loading={loading}>
+            Search
+          </PrimaryButton>
+        </Box>
+      )}
 
       {persons && (
         <PersonsTable
@@ -190,36 +192,36 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
           Tasheel Details
         </Typography>
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-          <Input formik={formik} label={'Username'} name={'username'} />
+          <Input formik={formik} label={"Username"} name={"username"} />
           <Input
             formik={formik}
-            label={'Password'}
-            name={'password'}
-            type={'password'}
+            label={"Password"}
+            name={"password"}
+            type={"password"}
           />
           <Input
             formik={formik}
-            label={'Security 1'}
-            name={'security1'}
-            type={'text'}
+            label={"Security 1"}
+            name={"security1"}
+            type={"text"}
           />
           <Input
             formik={formik}
-            label={'Security 2'}
-            name={'security2'}
-            type={'text'}
+            label={"Security 2"}
+            name={"security2"}
+            type={"text"}
           />
           <Input
             formik={formik}
-            label={'Mobile'}
-            name={'mobile'}
+            label={"Mobile"}
+            name={"mobile"}
             variant="numeric"
           />
           <Input
             formik={formik}
-            label={'Notes'}
-            name={'notes'}
-            type={'text'}
+            label={"Notes"}
+            name={"notes"}
+            type={"text"}
             textarea
           />
         </Box>
@@ -234,43 +236,43 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
         <Box
           className={`grid grid-cols-3 justify-stretch items-start gap-6`}
           sx={{
-            '& input , & select': {
-              textFillColor: theme =>
+            "& input , & select": {
+              textFillColor: (theme) =>
                 `${theme.palette.primary.main} !important`,
             },
           }}
         >
           <Input
             formik={formik}
-            label={'English Name'}
-            name={'name'}
+            label={"English Name"}
+            name={"name"}
             disabled
           />
           <Input
             formik={formik}
-            label={'Arabic Name'}
-            name={'nameAr'}
+            label={"Arabic Name"}
+            name={"nameAr"}
             disabled
           />
           <Input
             formik={formik}
-            label={'Person Code'}
-            name={'personCode'}
+            label={"Person Code"}
+            name={"personCode"}
             disabled
           />
           <Input
             formik={formik}
-            label={'Email'}
-            name={'email'}
-            type={'email'}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
             disabled
           />
           <Input
             formik={formik}
-            label={'type'}
-            name={'type'}
+            label={"type"}
+            name={"type"}
             select
-            options={['owner', 'customer', 'officer', 'employee']}
+            options={["owner", "customer", "officer", "employee"]}
             disabled
           />
         </Box>
@@ -278,12 +280,12 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>
-          {type?.startsWith('add') ? 'Add' : 'Edit'}
+          {type?.startsWith("add") ? "Add" : "Edit"}
         </SubmitButton>
         <Button
-          title={'Cancel'}
-          handling={handleCloseEChannelModal}
-          bg={'!bg-red-500'}
+          title={"Cancel"}
+          handling={handleCloseTasheelModal}
+          bg={"!bg-red-500"}
         />
       </Box>
     </Paper>

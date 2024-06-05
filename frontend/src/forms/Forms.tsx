@@ -28,6 +28,8 @@ import LinkToCompanyForm from "./LinkToCompanyForm/LinkToCompanyForm";
 import LoginForm from "./LoginForm/LoginForm";
 import NationalitiesOptionsForm from "./NationalitiesOptionsForm/NationalitiesOptionsForm";
 import NationalityForm from "./NationalityForm/NationalityForm";
+import NatwasalForm from "./NatwasalForm/NatwasalForm";
+import NatwasalsOptionsForm from "./NatwasalsOptionsForm/NatwasalsOptionsForm";
 import OTPForm from "./OTPForm/OTPForm";
 import OwnerForm from "./OwnerForm/OwnerForm";
 import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
@@ -36,9 +38,9 @@ import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
+import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
-import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
 
 const Forms = ({ type, index }: FormsTypes) => {
   const { formik } = useSubmitForm(type);
@@ -232,6 +234,20 @@ const Forms = ({ type, index }: FormsTypes) => {
         />
       )}
       {/* Tasheel */}
+
+      {/* Natwasal */}
+      {(type === "addNatwasal" || type === "editNatwasal") && (
+        <NatwasalForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          type={type}
+        />
+      )}
+      {type === "natwasalsOptions" && (
+        <NatwasalsOptionsForm
+          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+        />
+      )}
+      {/* Natwasal */}
 
       {/* Delete */}
       {type === "delete" && <DeleteForm />}

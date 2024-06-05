@@ -423,7 +423,7 @@ interface NatwasalTypes extends TasheelTypes {}
 
 interface NatwasalsValuesTypes {
   isLoading: boolean;
-  natwasal: NatwasalTypes[] | null;
+  natwasals: NatwasalTypes[] | null;
 }
 
 interface NatwasalsArgsTypes {
