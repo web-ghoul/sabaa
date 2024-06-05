@@ -68,7 +68,7 @@ export class TasheelsService {
         .select(projection)
         .limit(limit)
         .skip(page * limit)
-        .sort(sort);
+        .sort(sort).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
     } catch (err) {
       throw new HttpException(
         'Error while getting tasaheel',
