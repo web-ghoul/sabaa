@@ -39,6 +39,15 @@ export class ActivitiesService {
       .sort({createdAt: -1}).populate({path: 'userId', model: 'User', select: 'avatar phone'});
   }
 
+  async getCounters() {
+    const [count] = await Promise.all([
+      this.ActivityModel.countDocuments()
+    ]) ;
+    return {
+      count
+    };
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} activity`;
   }

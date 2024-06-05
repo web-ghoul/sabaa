@@ -10,12 +10,16 @@ import { ActivityLog } from 'schemas/activityLog.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
 import { EChannel } from 'schemas/eChannel.schema';
+import { Tasaheel } from 'schemas/tasaheel.schema';
+import { Natwasal } from 'schemas/natwasal.schema';
 
 @Injectable()
 export class EmployeesService {
   constructor(@InjectModel('Employee') private employeeModel: Model<Employee>, @InjectModel('Company') private companyModel: Model<Company>,
   @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
   @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+  @InjectModel('Tasaheel') private eTasaheelModel: Model<Tasaheel>,
+    @InjectModel('Natwasal') private eNatwasalModel: Model<Natwasal>,
 private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   async create(createEmployeeDto: CreateEmployeeDto, file: Express.Multer.File, user: ObjectId) {
     try{
@@ -103,12 +107,15 @@ private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
   }
 
   async findOne(id: string) {
-    const [employee, activities,eChannel] = await Promise.all([
+    const [employee, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
       await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
       this.eChannelModel.findOne({employee:id}),
+      this.eNatwasalModel.findOne({owner:id}),
+      this.eTasaheelModel.findOne({owner:id}),
+
     ])
-    return {employee,activities,eChannel};
+    return {employee,activities,eChannel,eNatwasal,eTasaheel};
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto, file: Express.Multer.File) {

@@ -18,6 +18,7 @@ export class TasheelsService {
     @InjectModel('Employee') private employeeModel: Model<Employee>,
     @InjectModel('Owner') private ownerModel: Model<Owner>,
     @InjectModel('Company') private companyModel: Model<Company>,
+    
 
   ) {}
   create(createTasheelDto: CreateTasheelDto) {

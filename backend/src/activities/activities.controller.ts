@@ -25,6 +25,11 @@ export class ActivitiesController {
     return this.activitiesService.findAll(limit,page,search,operation,from,to,route,userId);
   }
 
+  @Get("counters")
+  getCounters() {
+    return this.activitiesService.getCounters();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.activitiesService.findOne(+id);
