@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ExcelsContext } from "../contexts/ExcelsContext";
 import { FormsContext } from "../contexts/FormsContext";
+import { TabsContext } from "../contexts/TabsContext";
 import { handleAlert } from "../functions/handleAlert";
 import { handleCatchError } from "../functions/handleCatchError";
 import { handleDownloadExcel } from "../functions/handleDownloadExcel";
@@ -15,6 +16,8 @@ import { getCompany } from "../store/companySlice";
 import { getCustomersCounter } from "../store/customersCounterSlice";
 import { getCustomer } from "../store/customerSlice";
 import { getCustomers } from "../store/customersSlice";
+import { getEChannelsCounter } from "../store/eChannelsCounterSlice";
+import { getEChannels } from "../store/eChannelsSlice";
 import { getEmployeesCounter } from "../store/employeesCounterSlice";
 import { getEmployee } from "../store/employeeSlice";
 import { getEmployees } from "../store/employeesSlice";
@@ -22,6 +25,8 @@ import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
+import { getNatwasalsCounter } from "../store/natwasalsCounterSlice";
+import { getNatwasals } from "../store/natwasalsSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
@@ -29,6 +34,8 @@ import { getProsCounter } from "../store/prosCounterSlice";
 import { getPro } from "../store/proSlice";
 import { getPros } from "../store/prosSlice";
 import { AppDispatch, RootState } from "../store/store";
+import { getTasheelsCounter } from "../store/tasheelsCounterSlice";
+import { getTasheels } from "../store/tasheelsSlice";
 import { getUsersCounter } from "../store/usersCounterSlice";
 import { getUser } from "../store/userSlice";
 import { getUsers } from "../store/usersSlice";
@@ -38,17 +45,20 @@ import {
   ConvertCustomerFormTypes,
   CustomerFormTypes,
   DownloadExcelFormTypes,
+  EChannelFormTypes,
   EmployeeFormTypes,
   ForgotPasswordFormTypes,
   JobFormTypes,
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
+  NatwasalFormTypes,
   OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
   ResetPasswordFormTypes,
   SponsorFormTypes,
+  TasheelFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
 import { CustomerTypes, SponsorTypes } from "../types/store.types";
@@ -58,6 +68,7 @@ const server = axios.create({
 });
 
 const useSubmitFunction = (type: string) => {
+  const { setCompanyTabsValue } = useContext(TabsContext);
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
@@ -65,9 +76,12 @@ const useSubmitFunction = (type: string) => {
     handleCloseCustomerModal,
     handleCloseJobModal,
     handleCloseNationalityModal,
+    handleCloseEChannelModal,
+    handleCloseNatwasalModal,
     handleCloseDeleteModal,
     handleCloseConvertCustomerModal,
     editableNationalityData,
+    editableNatwasalData,
     editableJobData,
     editableSponsorData,
     ownerImage,
@@ -78,6 +92,7 @@ const useSubmitFunction = (type: string) => {
     proImage,
     editableUserData,
     editableOwnerData,
+    editableEChannelData,
     formType,
     excelType,
     editableCompanyData,
@@ -101,6 +116,8 @@ const useSubmitFunction = (type: string) => {
     handleCloseDownloadExcelModal,
     handleCloseForgotPasswordModal,
     handleCloseSponsorModal,
+    handleCloseTasheelModal,
+    editableTasheelData,
   } = useContext(FormsContext);
   const {
     handleEditNationalityInSheet,
@@ -178,6 +195,12 @@ const useSubmitFunction = (type: string) => {
     formData.append("address", values.address.trim());
     formData.append("nationality", values.nationality);
     formData.append("idNationality", values.idNationality);
+    if (values.gender) {
+      formData.append("gender", values.gender.trim());
+    }
+    if (values.job) {
+      formData.append("job", values.job.trim());
+    }
     formData.append("email", values.email.trim());
     formData.append("remarks", values.remarks.trim());
     if (values.emiratesId) {
@@ -185,6 +208,7 @@ const useSubmitFunction = (type: string) => {
     }
     formData.append("state", values.state.trim());
     formData.append("status", values.status.trim());
+    formData.append("sponsor", values.sponsor.trim());
     formData.append("fileImmgNo", values.fileImmgNo.toString().trim());
     if (values.residenceExpiryDate) {
       formData.append(
@@ -213,6 +237,12 @@ const useSubmitFunction = (type: string) => {
     formData.append("nationality", values.nationality);
     formData.append("idNationality", values.idNationality);
     formData.append("email", values.email.trim());
+    if (values.gender) {
+      formData.append("gender", values.gender.trim());
+    }
+    if (values.job) {
+      formData.append("job", values.job.trim());
+    }
     formData.append("remarks", values.remarks.trim());
     if (values.emiratesId) {
       formData.append("emiratesId", values.emiratesId.trim());
@@ -374,6 +404,13 @@ const useSubmitFunction = (type: string) => {
     formData.append("trn", values.trn.trim());
     formData.append("userName", values.userName.trim());
     formData.append("password", values.password.trim());
+    formData.append("noqodiWalet", values.noqodiWalet.trim());
+    formData.append("noqodiPass", values.noqodiPass.trim());
+    formData.append("pinToken", values.pinToken.trim());
+    formData.append("noqodiNew", values.noqodiNew.trim());
+    formData.append("noqodiReg", values.noqodiReg.trim());
+    formData.append("noqodiNPass", values.noqodiNPass.trim());
+    formData.append("echannelRemarks", values.echannelRemarks.trim());
     formData.append(
       "echannelExpiryDate",
       values.echannelExpiryDate.toString().trim()
@@ -691,15 +728,42 @@ const useSubmitFunction = (type: string) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => {
+      .then(async (res) => {
         handleAlert({
           msg: "Owner is Created Successfully",
           status: "success",
         });
-        dispatch(getOwners({}));
-        dispatch(getOwnersCounter());
         handleCloseOwnerModal();
         setOwnerImage("");
+        if (pathname === `${import.meta.env.VITE_COMPANIES_ROUTE}/${id}`) {
+          await server
+            .get(
+              `/company/ManageOwnersAndPro?id=${
+                res.data._id
+              }${`&companyId[0]=${id}`}&operation=adding&typeOfPerson=owner`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then(() => {
+              handleAlert({
+                msg: "Owner is Linked to Company Successfully",
+                status: "success",
+              });
+              if (id) {
+                dispatch(getCompany({ id }));
+              }
+              setCompanyTabsValue(1);
+            })
+            .catch((err) => {
+              handleCatchError(err);
+            });
+        } else {
+          dispatch(getOwners({}));
+          dispatch(getOwnersCounter());
+        }
       })
       .catch((err) => {
         handleCatchError(err);
@@ -779,15 +843,42 @@ const useSubmitFunction = (type: string) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => {
+      .then(async (res) => {
         handleAlert({
           msg: "Officer is Created Successfully",
           status: "success",
         });
-        dispatch(getPros({}));
-        dispatch(getProsCounter());
         handleCloseProModal();
         setProImage("");
+        if (pathname === `${import.meta.env.VITE_COMPANIES_ROUTE}/${id}`) {
+          await server
+            .get(
+              `/company/ManageOwnersAndPro?id=${
+                res.data._id
+              }${`&companyId[0]=${id}`}&operation=adding&typeOfPerson=pro`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
+            .then(() => {
+              handleAlert({
+                msg: "Officer is Linked to Company Successfully",
+                status: "success",
+              });
+              if (id) {
+                dispatch(getCompany({ id }));
+              }
+              setCompanyTabsValue(2);
+            })
+            .catch((err) => {
+              handleCatchError(err);
+            });
+        } else {
+          dispatch(getPros({}));
+          dispatch(getProsCounter());
+        }
       })
       .catch((err) => {
         handleCatchError(err);
@@ -1294,6 +1385,156 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //E-Channel
+  const addEChannel = async (values: EChannelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/e-channel`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "E-Channel is Created Successfully",
+          status: "success",
+        });
+        dispatch(getEChannels({}));
+        dispatch(getEChannelsCounter());
+        handleCloseEChannelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editEChannel = async (values: EChannelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/e-channel/${editableEChannelData && editableEChannelData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "E-Channel is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getEChannels({}));
+        handleCloseEChannelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Tasheel
+  const addTasheel = async (values: TasheelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/tasheels`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Tasheel is Created Successfully",
+          status: "success",
+        });
+        dispatch(getTasheels({}));
+        dispatch(getTasheelsCounter());
+        handleCloseTasheelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editTasheel = async (values: TasheelFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/tasheels/${editableTasheelData && editableTasheelData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Tasheel is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getTasheels({}));
+        handleCloseTasheelModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  //Natwasal
+  const addNatwasal = async (values: NatwasalFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/natwasals`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Natwasal is Created Successfully",
+          status: "success",
+        });
+        dispatch(getNatwasals({}));
+        dispatch(getNatwasalsCounter());
+        handleCloseNatwasalModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editNatwasal = async (values: NatwasalFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/natwasals/${editableNatwasalData && editableNatwasalData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Natwasal is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getNatwasals({}));
+        handleCloseNatwasalModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   //Download Excel
   const handleDownloadExcelSubmit = async (values: DownloadExcelFormTypes) => {
     handleOpenFormsLoading();
@@ -1702,6 +1943,70 @@ const useSubmitFunction = (type: string) => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "eChannel") {
+      await server
+        .delete(
+          `/e-channel/${editableEChannelData && editableEChannelData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "E-Channel is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getEChannels({}));
+          dispatch(getEChannelsCounter());
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "tasheel") {
+      console.log(editableTasheelData);
+      await server
+        .delete(`/tasheels/${editableTasheelData && editableTasheelData._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          handleAlert({
+            msg: "Tasheel is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getTasheels({}));
+          dispatch(getTasheelsCounter());
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "natwasal") {
+      await server
+        .delete(
+          `/natwasals/${editableNatwasalData && editableNatwasalData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Natwasal is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getNatwasals({}));
+          dispatch(getNatwasalsCounter());
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "unLinkOwner") {
       await server
         .get(
@@ -1851,6 +2156,24 @@ const useSubmitFunction = (type: string) => {
         break;
       case "createCompaniesSheet":
         createCompaniesSheet(values as unknown);
+        break;
+      case "addEChannel":
+        addEChannel(values as EChannelFormTypes);
+        break;
+      case "editEChannel":
+        editEChannel(values as EChannelFormTypes);
+        break;
+      case "addTasheel":
+        addTasheel(values as TasheelFormTypes);
+        break;
+      case "editTasheel":
+        editTasheel(values as TasheelFormTypes);
+        break;
+      case "addNatwasal":
+        addNatwasal(values as NatwasalFormTypes);
+        break;
+      case "editNatwasal":
+        editNatwasal(values as NatwasalFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

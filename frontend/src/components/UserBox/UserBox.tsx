@@ -45,9 +45,12 @@ const UserBox = ({
     handleAlert({ msg: "Logout Successfully", status: "success" });
     navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
   };
+
   return (
     <Box
-      className={`flex justify-start items-center gap-2 sm:!gap-1 ${
+      className={`${
+        menu ? "flex" : "grid grid-cols-[auto,1fr]"
+      } justify-start items-center gap-2 sm:!gap-1 ${
         res && "sm:grid sm:justify-center"
       }`}
     >
@@ -70,24 +73,16 @@ const UserBox = ({
         sx={{
           backgroundImage: `url(${
             avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
+              ? `${import.meta.env.VITE_SERVER_URL}/${avatar.replaceAll(
+                  "\\",
+                  "/"
+                )}`
               : variant === "company"
               ? defaultCompany
               : defaultAvatar
           })`,
         }}
-      >
-        {/* <LazyLoadImage
-          alt={"avatar"}
-          src={
-            avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
-              : variant === "company"
-              ? defaultCompany
-              : defaultAvatar
-          }
-        /> */}
-      </Box>
+      />
       <Box className={`grid justify-start items-center gap-1`}>
         <Typography variant={head || "h6"}>{username}</Typography>
         {role && (

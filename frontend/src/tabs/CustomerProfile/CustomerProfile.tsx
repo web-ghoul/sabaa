@@ -4,16 +4,23 @@ import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment
 import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
 import SponsorsSection from "../../sections/SponsorsSection";
-import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
-import { CustomerTypes, SponsorTypes } from "../../types/store.types";
+import {
+  CustomerTypes,
+  EChannelTypes,
+  NatwasalTypes,
+  SponsorTypes,
+  TasheelTypes,
+} from "../../types/store.types";
 import { CustomerProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
 
 const CustomerProfile = ({
   customer,
+  eChannel,
+  natwasal,
+  tasheel,
   isLoading,
-  companies,
   activities,
 }: CustomerProfileProps) => {
   const { customerTabsValue } = useContext(TabsContext);
@@ -22,7 +29,6 @@ const CustomerProfile = ({
     <PrimaryTab
       tabsTitles={[
         "Personal Info",
-        "Companies",
         "Transactions",
         "Activities",
         "Documents",
@@ -35,28 +41,22 @@ const CustomerProfile = ({
           title={`Personal Info`}
           variant={"customer"}
           data={customer as CustomerTypes}
+          eChannel={eChannel as EChannelTypes}
+          tasheel={tasheel as TasheelTypes}
+          natwasal={natwasal as NatwasalTypes}
           isLoading={isLoading}
         />
       </CustomTabPanel>
       <CustomTabPanel value={customerTabsValue} index={1}>
-        <CompaniesTable
-          count={companies ? companies.length : 0}
-          data={companies}
-          isLoading={isLoading}
-          unLink={true}
-          noPagination={true}
-        />
+        <UnderDevelopment />
       </CustomTabPanel>
       <CustomTabPanel value={customerTabsValue} index={2}>
-        <UnderDevelopment />
-      </CustomTabPanel>
-      <CustomTabPanel value={customerTabsValue} index={3}>
         <ActivitiesSection data={activities} isLoading={isLoading} />
       </CustomTabPanel>
-      <CustomTabPanel value={customerTabsValue} index={4}>
+      <CustomTabPanel value={customerTabsValue} index={3}>
         <UnderDevelopment />
       </CustomTabPanel>
-      <CustomTabPanel value={customerTabsValue} index={5}>
+      <CustomTabPanel value={customerTabsValue} index={4}>
         <SponsorsSection
           data={customer && (customer.sponsors as SponsorTypes[])}
           isLoading={isLoading}

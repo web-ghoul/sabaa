@@ -8,13 +8,19 @@ import { Company } from 'schemas/company.schema';
 import { ActivityLog } from 'schemas/activityLog.schema';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
+import { EChannel } from 'schemas/eChannel.schema';
+import { Tasaheel } from 'schemas/tasaheel.schema';
+import { Natwasal } from 'schemas/natwasal.schema';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @InjectModel('Owner') private ownerModel: Model<Owner>,
     @InjectModel('Company') private companyModel: Model<Company>,
-    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+    @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
+    @InjectModel('Tasaheel') private eTasaheelModel: Model<Tasaheel>,
+    @InjectModel('Natwasal') private eNatwasalModel: Model<Natwasal>,
   ) {}
   async create(
     createOwnerDto: CreateOwnerDto,
@@ -137,7 +143,7 @@ export class OwnerService {
   }
 
   async findOne(id: string) {
-    const [owner, companies, activities] = await Promise.all([
+    const [owner, companies, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
       this.ownerModel.findById(id).populate({ path: 'sponsors', model: 'Sponsor' }),
       this.companyModel
         .find({ $or:[
@@ -152,10 +158,13 @@ export class OwnerService {
 
         ])
         .exec(),
-        this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"})
+        this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"}),
+        this.eChannelModel.findOne({owner:id}),
+        this.eNatwasalModel.findOne({owner:id}),
+        this.eTasaheelModel.findOne({owner:id}),
       
     ]);
-    return { owner, companies, activities};
+    return { owner, companies, activities,eChannel,eNatwasal,eTasaheel };
   }
 
   async update(

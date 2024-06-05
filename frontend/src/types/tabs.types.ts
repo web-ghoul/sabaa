@@ -4,9 +4,12 @@ import {
   ActivityTypes,
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
+  NatwasalTypes,
   OwnerTypes,
   ProTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -21,6 +24,9 @@ interface OwnerProfileProps {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
 }
 
 interface ProProfileProps {
@@ -28,19 +34,27 @@ interface ProProfileProps {
   isLoading: boolean;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
 }
 
 interface EmployeeProfileProps {
   employee: EmployeeTypes | null;
   isLoading: boolean;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
 }
 
 interface CustomerProfileProps {
   customer: CustomerTypes | null;
   isLoading: boolean;
-  companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
 }
 
 interface CompanyProfileProps {

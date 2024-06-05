@@ -1,0 +1,23 @@
+import { Box, Modal } from "@mui/material";
+import { useContext } from "react";
+import { FormsContext } from "../contexts/FormsContext";
+import Forms from "../forms/Forms";
+
+const EChannelModal = () => {
+  const { openEChannelModal, handleCloseEChannelModal, formType } =
+    useContext(FormsContext);
+  return (
+    <Modal
+      open={openEChannelModal}
+      onClose={handleCloseEChannelModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box className={`modal`}>
+        <Forms type={formType} />
+      </Box>
+    </Modal>
+  );
+};
+
+export default EChannelModal;

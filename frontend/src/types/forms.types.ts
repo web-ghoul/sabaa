@@ -2,12 +2,15 @@ import { FormikProps } from "formik";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -319,7 +322,7 @@ interface EmployeesOptionsFormikTypes {
   values: EmployeesOptionsFormTypes;
 }
 
-//Employee
+//Sponsor
 
 interface SponsorFormTypes extends SponsorTypes {}
 
@@ -427,6 +430,101 @@ interface UsersOptionsFormikTypes {
   values: UsersOptionsFormTypes;
 }
 
+//E-Channels
+
+interface EChannelFormTypes extends EChannelTypes {}
+
+interface EChannelFormikTypes {
+  touched: EChannelFormTypes;
+  errors: EChannelFormTypes;
+  initialValues: EChannelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EChannelFormTypes;
+}
+
+interface EChannelsOptionsFormTypes {
+  search: string;
+  type: string;
+  status: string;
+  gender: string;
+}
+
+interface EChannelsOptionsFormikTypes {
+  touched: EChannelsOptionsFormTypes;
+  errors: EChannelsOptionsFormTypes;
+  initialValues: EChannelsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: EChannelsOptionsFormTypes;
+}
+
+//Tasheel
+
+interface TasheelFormTypes extends TasheelTypes {}
+
+interface TasheelFormikTypes {
+  touched: TasheelFormTypes;
+  errors: TasheelFormTypes;
+  initialValues: TasheelFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: TasheelFormTypes;
+}
+
+interface TasheelsOptionsFormTypes {
+  search: string;
+  type: string;
+}
+
+interface TasheelsOptionsFormikTypes {
+  touched: TasheelsOptionsFormTypes;
+  errors: TasheelsOptionsFormTypes;
+  initialValues: TasheelsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: TasheelsOptionsFormTypes;
+}
+
+//Natwasal
+
+interface NatwasalFormTypes extends NatwasalTypes {}
+
+interface NatwasalFormikTypes {
+  touched: NatwasalFormTypes;
+  errors: NatwasalFormTypes;
+  initialValues: NatwasalFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NatwasalFormTypes;
+}
+
+interface NatwasalsOptionsFormTypes {
+  search: string;
+  type: string;
+}
+
+interface NatwasalsOptionsFormikTypes {
+  touched: NatwasalsOptionsFormTypes;
+  errors: NatwasalsOptionsFormTypes;
+  initialValues: NatwasalsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NatwasalsOptionsFormTypes;
+}
+
 //Download Excel
 
 interface DownloadExcelFormTypes {
@@ -485,7 +583,12 @@ type AllFormsTypes =
   | ActivitiesOptionsFormTypes
   | OTPFormTypes
   | SponsorFormTypes
-  | ConvertCustomerFormTypes;
+  | ConvertCustomerFormTypes
+  | EChannelFormTypes
+  | TasheelFormTypes
+  | TasheelsOptionsFormTypes
+  | NatwasalFormTypes
+  | NatwasalsOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -513,7 +616,12 @@ type AllFormiksTypes =
   | ActivitiesOptionsFormikTypes
   | OTPFormikTypes
   | SponsorFormikTypes
-  | ConvertCustomerFormikTypes;
+  | ConvertCustomerFormikTypes
+  | EChannelFormikTypes
+  | TasheelFormikTypes
+  | TasheelsOptionsFormikTypes
+  | NatwasalFormikTypes
+  | NatwasalsOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -548,6 +656,10 @@ export type {
   DeleteFormTypes,
   DownloadExcelFormikTypes,
   DownloadExcelFormTypes,
+  EChannelFormikTypes,
+  EChannelFormTypes,
+  EChannelsOptionsFormikTypes,
+  EChannelsOptionsFormTypes,
   EmployeeFormikTypes,
   EmployeeFormTypes,
   EmployeesOptionsFormikTypes,
@@ -568,6 +680,10 @@ export type {
   NationalitiesOptionsFormTypes,
   NationalityFormikTypes,
   NationalityFormTypes,
+  NatwasalFormikTypes,
+  NatwasalFormTypes,
+  NatwasalsOptionsFormikTypes,
+  NatwasalsOptionsFormTypes,
   OTPFormikTypes,
   OTPFormTypes,
   OwnerFormikTypes,
@@ -582,6 +698,10 @@ export type {
   ResetPasswordFormTypes,
   SponsorFormikTypes,
   SponsorFormTypes,
+  TasheelFormikTypes,
+  TasheelFormTypes,
+  TasheelsOptionsFormikTypes,
+  TasheelsOptionsFormTypes,
   UserFormikTypes,
   UserFormTypes,
   UsersOptionsFormikTypes,

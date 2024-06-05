@@ -161,29 +161,12 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             type={"text"}
             variant={"numeric"}
           />
-
           <Input
             formik={formik}
-            select={true}
-            name={"status"}
-            label={"Status"}
-            options={["Active", "Inactive"]}
-          />
-          <Input formik={formik} label={"Country"} name={"country"} />
-          <Input
-            formik={formik}
-            select={true}
-            name={"state"}
-            label={"State"}
-            options={["dubai"]}
-          />
-          <Input formik={formik} label={"Address"} name={"address"} />
-
-          <Input
-            formik={formik}
-            label={"Website"}
-            name={"website"}
-            variant={"url"}
+            label={"Mobile Number"}
+            name={"mobileNo"}
+            type={"text"}
+            variant={"numeric"}
           />
           <Input
             formik={formik}
@@ -192,14 +175,28 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             type={"text"}
             variant={"numeric"}
           />
+          <Input formik={formik} label={"Address"} name={"address"} />
+          <Input formik={formik} label={"Country"} name={"country"} />
           <Input
             formik={formik}
-            label={"Mobile Number"}
-            name={"mobileNo"}
-            type={"text"}
-            variant={"numeric"}
+            select={true}
+            name={"state"}
+            label={"State"}
+            options={["dubai", "abozabi"]}
           />
-
+          <Input
+            formik={formik}
+            label={"Website"}
+            name={"website"}
+            variant={"url"}
+          />
+          <Input
+            formik={formik}
+            select={true}
+            name={"status"}
+            label={"Status"}
+            options={["Active", "Inactive"]}
+          />
           <Input formik={formik} label={"TRN"} name={"trn"} variant="numeric" />
           <Input
             formik={formik}
@@ -266,7 +263,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               type={"password"}
               name={"password"}
             />
-              <Input
+            <Input
               formik={formik}
               label={"E-Channel Remarks"}
               type={"text"}

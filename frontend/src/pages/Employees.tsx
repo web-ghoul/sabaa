@@ -22,10 +22,12 @@ const Employees = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.size === 0) {
-      dispatch(getEmployees({}));
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
     }
-  }, [dispatch, searchParams]);
+    dispatch(getEmployees(allParams));
+  }, [dispatch]);
 
   return (
     <PrimaryBox>

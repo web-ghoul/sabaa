@@ -71,7 +71,11 @@ export class Owner {
     // @Prop({default: false})
     // isPro: boolean;
 
-
+    @Prop()
+    gender: string;
+  
+    @Prop()
+    job: string;
 
     @Prop({ type: String, trim: true, sparse: true })
     emiratesId: string;

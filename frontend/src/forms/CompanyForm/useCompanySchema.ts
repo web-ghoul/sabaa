@@ -14,7 +14,7 @@ const useCompanySchema = () => {
     address: yup.string().required("Company Address is required"),
     phone: yup.string().required("Company Phone is required"),
     proCode: yup.array(),
-    ownerId: yup.array(),
+    ownerId: yup.array().required("Onwer is required"),
     customerId: yup.array(),
     licenseNo: yup.string().required("License Number is required"),
     immgCardNo: yup.string().required("Immg Card Number is required"),
@@ -52,6 +52,7 @@ const useCompanySchema = () => {
     noqodiNew: yup.string(),
     noqodiReg: yup.string(),
     noqodiNPass: yup.string(),
+    echannelRemarks: yup.string(),
     remarks: yup.string(),
   });
 
@@ -112,7 +113,8 @@ const useCompanySchema = () => {
           .split("T")[0]) ||
       "",
     userName: editableCompanyData?.userName || "",
-    password: "",
+    echannelRemarks: editableCompanyData?.echannelRemarks || "",
+    password: editableCompanyData?.password || "",
     noqodiWalet: editableCompanyData?.noqodiWalet || "",
     noqodiPass: editableCompanyData?.noqodiPass || "",
     pinToken: editableCompanyData?.pinToken || "",

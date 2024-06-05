@@ -6,12 +6,14 @@ import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -65,6 +67,15 @@ export const FormsContext = createContext<FormsContextTypes>({
   openNationalityModal: false,
   handleOpenNationalityModal: () => {},
   handleCloseNationalityModal: () => {},
+  openEChannelModal: false,
+  handleOpenEChannelModal: () => {},
+  handleCloseEChannelModal: () => {},
+  openTasheelModal: false,
+  handleOpenTasheelModal: () => {},
+  handleCloseTasheelModal: () => {},
+  openNatwasalModal: false,
+  handleOpenNatwasalModal: () => {},
+  handleCloseNatwasalModal: () => {},
   formType: "",
   setFormType: () => {},
   excelType: { type: "excel", entity: "companies" },
@@ -73,6 +84,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForOwners: () => {},
   searchForEmployees: "",
   setSearchForEmployees: () => {},
+  searchForEChannels: "",
+  setSearchForEChannels: () => {},
+  searchForTasheel: "",
+  setSearchForTasheel: () => {},
+  searchForNatwasal: "",
+  setSearchForNatwasal: () => {},
   searchForCustomers: "",
   setSearchForCustomers: () => {},
   searchForPros: "",
@@ -119,6 +136,12 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableUserData: () => {},
   editableCompanyData: null,
   setEditableCompanyData: () => {},
+  editableEChannelData: null,
+  setEditableEChannelData: () => {},
+  editableTasheelData: null,
+  setEditableTasheelData: () => {},
+  editableNatwasalData: null,
+  setEditableNatwasalData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -127,6 +150,13 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Loading Form
   const [formsLoading, setFormsLoading] = useState(false);
+  const handleCloseFormsLoading = () => {
+    setFormsLoading(false);
+  };
+
+  const handleOpenFormsLoading = () => {
+    setFormsLoading(true);
+  };
 
   //Form Type
   const [formType, setFormType] = useState("");
@@ -141,6 +171,9 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
+  const [searchForEChannels, setSearchForEChannels] = useState("");
+  const [searchForTasheel, setSearchForTasheel] = useState("");
+  const [searchForNatwasal, setSearchForNatwasal] = useState("");
   const [searchForCustomers, setSearchForCustomers] = useState("");
   const [searchForPros, setSearchForPros] = useState("");
   const [searchForCompanies, setSearchForCompanies] = useState("");
@@ -148,14 +181,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
-
-  const handleCloseFormsLoading = () => {
-    setFormsLoading(false);
-  };
-
-  const handleOpenFormsLoading = () => {
-    setFormsLoading(true);
-  };
 
   //Upload Employees
   const [openUploadEmployeesModal, setOpenUploadEmployeesModal] =
@@ -322,6 +347,51 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenProModal(true);
   };
 
+  //E-Channel Modal
+  const [openEChannelModal, setOpenEChannelModal] = useState(false);
+
+  const handleCloseEChannelModal = () => {
+    setOpenEChannelModal(false);
+  };
+
+  const handleOpenEChannelModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableEChannelData(null);
+    }
+    setFormType(type);
+    setOpenEChannelModal(true);
+  };
+
+  //Tasheel Modal
+  const [openTasheelModal, setOpenTasheelModal] = useState(false);
+
+  const handleCloseTasheelModal = () => {
+    setOpenTasheelModal(false);
+  };
+
+  const handleOpenTasheelModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableTasheelData(null);
+    }
+    setFormType(type);
+    setOpenTasheelModal(true);
+  };
+
+  //Natwasal Modal
+  const [openNatwasalModal, setOpenNatwasalModal] = useState(false);
+
+  const handleCloseNatwasalModal = () => {
+    setOpenNatwasalModal(false);
+  };
+
+  const handleOpenNatwasalModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableNatwasalData(null);
+    }
+    setFormType(type);
+    setOpenNatwasalModal(true);
+  };
+
   //User Modal
   const [openUserModal, setOpenUserModal] = useState(false);
 
@@ -431,6 +501,18 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable Company Data
   const [editableCompanyData, setEditableCompanyData] =
     useState<CompanyTypes | null>(null);
+
+  //Editable E-Channel Data
+  const [editableEChannelData, setEditableEChannelData] =
+    useState<EChannelTypes | null>(null);
+
+  //Editable Tasheel Data
+  const [editableTasheelData, setEditableTasheelData] =
+    useState<TasheelTypes | null>(null);
+
+  //Editable E-Channel Data
+  const [editableNatwasalData, setEditableNatwasalData] =
+    useState<TasheelTypes | null>(null);
 
   useEffect(() => {
     if (editableOwnerData) {
@@ -569,6 +651,27 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openConvertCustomerModal,
     handleCloseConvertCustomerModal,
     handleOpenConvertCustomerModal,
+    searchForEChannels,
+    setSearchForEChannels,
+    openEChannelModal,
+    handleCloseEChannelModal,
+    handleOpenEChannelModal,
+    editableEChannelData,
+    setEditableEChannelData,
+    editableTasheelData,
+    setEditableTasheelData,
+    editableNatwasalData,
+    setEditableNatwasalData,
+    searchForTasheel,
+    setSearchForTasheel,
+    searchForNatwasal,
+    setSearchForNatwasal,
+    openTasheelModal,
+    handleCloseTasheelModal,
+    handleOpenTasheelModal,
+    openNatwasalModal,
+    handleCloseNatwasalModal,
+    handleOpenNatwasalModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

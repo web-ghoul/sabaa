@@ -1,11 +1,14 @@
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -104,14 +107,70 @@ interface UsersTableTypes {
   recent?: boolean;
 }
 
+interface EChannelsTableTypes {
+  data: EChannelTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
+interface TasheelsTableTypes {
+  data: TasheelTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
+interface NatwasalsTableTypes {
+  data: NatwasalTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+}
+
+interface PersonsTableTypes {
+  data:
+    | {
+        email: string;
+        name: string;
+        nameAr: string;
+        type: string;
+        personCode: string;
+        owner?: OwnerTypes;
+        employee?: EmployeeTypes;
+      }[]
+    | TasheelTypes[]
+    | NatwasalTypes[]
+    | null;
+  count: number;
+  clicked: (data: TasheelTypes, reset?: boolean) => void;
+  noPagination?: boolean;
+}
+
 export type {
   CompaniesTableTypes,
   CustomersTableTypes,
+  EChannelsTableTypes,
   EmployeesTableTypes,
   JobsTableTypes,
   NationalitiesTableTypes,
+  NatwasalsTableTypes,
   OwnersTableTypes,
+  PersonsTableTypes,
   ProsTableTypes,
   SponsorsTableTypes,
+  TasheelsTableTypes,
   UsersTableTypes,
 };

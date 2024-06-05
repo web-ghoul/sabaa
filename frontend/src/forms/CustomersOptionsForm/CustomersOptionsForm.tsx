@@ -101,7 +101,7 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
     queries.residenceFrom || "";
   (formik as unknown as CustomersOptionsFormikTypes).values.residenceTo =
     queries.residenceTo || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.state =
+  (formik as unknown as CustomersOptionsFormikTypes).values.status =
     queries.status || "";
   (formik as unknown as CustomersOptionsFormikTypes).values.state =
     queries.state || "";
@@ -208,7 +208,7 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
             name={"status"}
             formik={formik}
             change={handleFilterByStatus}
-            options={["Active", "Pending", "Blocked"]}
+            options={["active", "inactive"]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>

@@ -28,6 +28,9 @@ import LoadingProfileDetails from "./LoadingProfileDetails";
 const ProfileDetails = ({
   title,
   data,
+  eChannel,
+  tasheel,
+  natwasal,
   variant,
   isLoading,
 }: ProfileDetailsTypes) => {
@@ -191,7 +194,6 @@ const ProfileDetails = ({
             </Box>
           </Box>
           <Box className={profileInfoClasses}>
-            <DataBox title={"English Name"} value={(data as UserTypes).name} />
             <DataBox title={"Email"} value={(data as UserTypes).email} />
             <DataBox title={"Phone"} value={(data as UserTypes).phone} />
             <DataBox title={"Role"} value={(data as UserTypes).role} />
@@ -246,6 +248,10 @@ const ProfileDetails = ({
                 title={"Arabic Name"}
                 value={(data as OwnerTypes).nameAr}
               />
+              <DataBox
+                title={"Person Code"}
+                value={(data as OwnerTypes).personCode}
+              />
               <DataBox title={"Email"} value={(data as OwnerTypes).email} />
               <DataBox title={"Phone"} value={(data as OwnerTypes).phone} />
               <DataBox title={"Address"} value={(data as OwnerTypes).address} />
@@ -259,10 +265,8 @@ const ProfileDetails = ({
                 flag={handleGetFlag((data as OwnerTypes).nationality)}
                 value={(data as OwnerTypes).nationality}
               />
-              <DataBox
-                title={"Person Code"}
-                value={(data as OwnerTypes).personCode}
-              />
+              <DataBox title={"Job Title"} value={(data as OwnerTypes).job} />
+              <DataBox title={"Gender"} value={(data as OwnerTypes).gender} />
               <DataBox
                 title={"Emirates Id"}
                 value={(data as OwnerTypes).emiratesId}
@@ -270,20 +274,17 @@ const ProfileDetails = ({
               <DataBox title={"UID Number"} value={(data as OwnerTypes).uid} />
               <DataBox
                 title={"File Immigration Number"}
-                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+                value={(data as OwnerTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}
-                value={handleDate(
-                  (data as OwnerTypes | ProTypes).residenceExpiryDate
-                )}
+                value={handleDate((data as OwnerTypes).residenceExpiryDate)}
               />
               <DataBox
                 title={"Status"}
-                value={
-                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
-                }
+                value={<StatusBox status={(data as OwnerTypes).status} />}
               />
+              <DataBox title={"Sponsor"} value={(data as OwnerTypes).sponsor} />
               <DataBox title={"Remarks"} value={(data as OwnerTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -291,6 +292,79 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
+          {eChannel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={eChannel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={eChannel.password} />}
+                  />
+                  <DataBox
+                    title={"Status"}
+                    value={<StatusBox status={eChannel.status} />}
+                  />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
         </Paper>
       ) : variant === "officer" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -331,6 +405,10 @@ const ProfileDetails = ({
                 title={"Arabic Name"}
                 value={(data as ProTypes).nameAr}
               />
+              <DataBox
+                title={"Person Code"}
+                value={(data as ProTypes).personCode}
+              />
               <DataBox title={"Email"} value={(data as ProTypes).email} />
               <DataBox title={"Phone"} value={(data as ProTypes).phone} />
               <DataBox title={"Address"} value={(data as ProTypes).address} />
@@ -344,10 +422,8 @@ const ProfileDetails = ({
                 flag={handleGetFlag((data as ProTypes).nationality)}
                 value={(data as ProTypes).nationality}
               />
-              <DataBox
-                title={"Person Code"}
-                value={(data as ProTypes).personCode}
-              />
+              <DataBox title={"Job Title"} value={(data as ProTypes).job} />
+              <DataBox title={"Gender"} value={(data as ProTypes).gender} />
               <DataBox
                 title={"Emirates Id"}
                 value={(data as ProTypes).emiratesId}
@@ -355,20 +431,17 @@ const ProfileDetails = ({
               <DataBox title={"UID Number"} value={(data as ProTypes).uid} />
               <DataBox
                 title={"File Immigration Number"}
-                value={(data as OwnerTypes | ProTypes).fileImmgNo}
+                value={(data as ProTypes).fileImmgNo}
               />
               <DataBox
                 title={"Residence Expire Date"}
-                value={handleDate(
-                  (data as OwnerTypes | ProTypes).residenceExpiryDate
-                )}
+                value={handleDate((data as ProTypes).residenceExpiryDate)}
               />
               <DataBox
                 title={"Status"}
-                value={
-                  <StatusBox status={(data as OwnerTypes | ProTypes).status} />
-                }
+                value={<StatusBox status={(data as ProTypes).status} />}
               />
+              <DataBox title={"Sponsor"} value={(data as OwnerTypes).sponsor} />
               <DataBox title={"Remarks"} value={(data as ProTypes).remarks} />
               <DataBox
                 title={"Created At"}
@@ -376,6 +449,79 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
+          {eChannel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={eChannel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={eChannel.password} />}
+                  />
+                  <DataBox
+                    title={"Status"}
+                    value={<StatusBox status={eChannel.status} />}
+                  />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
         </Paper>
       ) : variant === "customer" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -437,12 +583,36 @@ const ProfileDetails = ({
                 value={(data as CustomerTypes).nationality}
               />
               <DataBox
+                title={"Job Title"}
+                value={(data as CustomerTypes).job}
+              />
+              <DataBox
+                title={"Gender"}
+                value={(data as CustomerTypes).gender}
+              />
+              <DataBox
                 title={"Emirates Id"}
                 value={(data as CustomerTypes).emiratesId}
               />
               <DataBox
                 title={"UID Number"}
                 value={(data as CustomerTypes).uid}
+              />
+              <DataBox
+                title={"File Immigration Number"}
+                value={(data as CustomerTypes).fileImmgNo}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate((data as CustomerTypes).residenceExpiryDate)}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as CustomerTypes).status} />}
+              />
+              <DataBox
+                title={"Sponsor"}
+                value={(data as CustomerTypes).sponsor}
               />
               <DataBox
                 title={"Remarks"}
@@ -454,6 +624,79 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
+          {eChannel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={eChannel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={eChannel.password} />}
+                  />
+                  <DataBox
+                    title={"Status"}
+                    value={<StatusBox status={eChannel.status} />}
+                  />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
         </Paper>
       ) : variant === "employee" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -490,30 +733,30 @@ const ProfileDetails = ({
                 value={(data as EmployeeTypes).nameAr}
               />
               <DataBox
+                title={"Person Code"}
+                value={(data as EmployeeTypes).personCode}
+              />
+              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
+              <DataBox
+                title={"Mobile Number"}
+                value={(data as EmployeeTypes).mobileNumber}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as EmployeeTypes).dob)}
+              />
+              <DataBox
                 title={"Gender"}
                 value={(data as EmployeeTypes).gender}
+              />
+              <DataBox
+                title={"Salary"}
+                value={(data as EmployeeTypes)?.salary?.toString()}
               />
               <DataBox
                 title={"Nationality"}
                 flag={handleGetFlag((data as EmployeeTypes).nationality)}
                 value={(data as EmployeeTypes).nationality}
-              />
-              <DataBox
-                title={"Person Code"}
-                value={(data as EmployeeTypes).personCode}
-              />
-              <DataBox
-                title={"Mobile Number"}
-                value={(data as EmployeeTypes).mobileNumber}
-              />
-              <DataBox title={"Email"} value={(data as EmployeeTypes).email} />
-              <DataBox
-                title={"Salary"}
-                value={(data as EmployeeTypes).salary.toString()}
-              />
-              <DataBox
-                title={"Status"}
-                value={<StatusBox status={(data as EmployeeTypes).status} />}
               />
               <DataBox
                 title={"Job Title"}
@@ -527,10 +770,7 @@ const ProfileDetails = ({
                 title={"Emirates Id"}
                 value={(data as EmployeeTypes).emiratesId}
               />
-              <DataBox
-                title={"Date of Birth"}
-                value={handleDate((data as EmployeeTypes).dob)}
-              />
+
               <DataBox
                 title={"Remarks"}
                 value={(data as EmployeeTypes).remarks}
@@ -576,11 +816,88 @@ const ProfileDetails = ({
                 value={handleDate((data as EmployeeTypes).residenceExpireDate)}
               />
               <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as EmployeeTypes).status} />}
+              />
+              <DataBox
                 title={"Labour Card Expire Date"}
                 value={handleDate((data as EmployeeTypes).lcExpireDate)}
               />
             </Box>
           </Box>
+          {eChannel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  E-Channel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={eChannel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={eChannel.password} />}
+                  />
+                  <DataBox
+                    title={"Status"}
+                    value={<StatusBox status={eChannel.status} />}
+                  />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
           <Divider />
           <Box className={sectionClasses}>
             <Typography variant="h4" className={`!font-[700]`}>
@@ -713,21 +1030,8 @@ const ProfileDetails = ({
                 <DataBox title={"Email"} value={(data as CompanyTypes).email} />
                 <DataBox title={"Phone"} value={(data as CompanyTypes).phone} />
                 <DataBox
-                  title={"Status"}
-                  value={<StatusBox status={(data as CompanyTypes).status} />}
-                />
-                <DataBox
-                  title={"Country"}
-                  value={(data as CompanyTypes).country}
-                />
-                <DataBox title={"State"} value={(data as CompanyTypes).state} />
-                <DataBox
-                  title={"Address"}
-                  value={(data as CompanyTypes).address}
-                />
-                <DataBox
-                  title={"Website"}
-                  value={<LinkBox link={(data as CompanyTypes).website} />}
+                  title={"Mobile Number"}
+                  value={(data as CompanyTypes).mobileNo}
                 />
                 <DataBox
                   title={"Whatsapp Number"}
@@ -736,8 +1040,21 @@ const ProfileDetails = ({
                   }
                 />
                 <DataBox
-                  title={"Mobile Number"}
-                  value={(data as CompanyTypes).mobileNo}
+                  title={"Address"}
+                  value={(data as CompanyTypes).address}
+                />
+                <DataBox
+                  title={"Country"}
+                  value={(data as CompanyTypes).country}
+                />
+                <DataBox title={"State"} value={(data as CompanyTypes).state} />
+                <DataBox
+                  title={"Website"}
+                  value={<LinkBox link={(data as CompanyTypes).website} />}
+                />
+                <DataBox
+                  title={"Status"}
+                  value={<StatusBox status={(data as CompanyTypes).status} />}
                 />
                 <DataBox title={"TRN"} value={(data as CompanyTypes).trn} />
                 <DataBox
@@ -755,12 +1072,14 @@ const ProfileDetails = ({
               </Box>
             </Box>
             <Divider />
-            {data.status.toLowerCase() === "dubai" ? (
+            {(data as CompanyTypes).state.toLowerCase() === "dubai" ? (
               <Box className={sectionClasses}>
                 <Typography variant="h4" className={`!font-[700]`}>
                   GDRFA Information
                 </Typography>
-                <Box className={profileInfoClasses}>
+                <Box
+                  className={`grid justify-stretch items-center grid-cols-3 gap-4 md:gap-3 md:grid-cols-2 sm:grid-cols-1`}
+                >
                   <DataBox
                     title={"Username"}
                     value={(data as CompanyTypes).userName}
@@ -826,6 +1145,10 @@ const ProfileDetails = ({
                     value={
                       <PasswordBox password={(data as CompanyTypes).password} />
                     }
+                  />
+                  <DataBox
+                    title={"E-Channel Remarks"}
+                    value={(data as CompanyTypes).echannelRemarks}
                   />
                 </Box>
               </Box>

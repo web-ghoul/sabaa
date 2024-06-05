@@ -8,6 +8,7 @@ import Company from "./pages/Company.tsx";
 import Customer from "./pages/Customer.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import EChannels from "./pages/EChannels.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
 import Employee from "./pages/Employee.tsx";
@@ -18,6 +19,7 @@ import Jobs from "./pages/Jobs.tsx";
 import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
+import Natwasals from "./pages/Natwasals.tsx";
 import OTP from "./pages/OTP.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
@@ -27,6 +29,7 @@ import Pros from "./pages/Pros.tsx";
 import Reports from "./pages/Reports.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Settings from "./pages/Settings.tsx";
+import Tasheels from "./pages/Tasheels.tsx";
 import TodoList from "./pages/TodoList.tsx";
 import Transactions from "./pages/Transactions.tsx";
 import UploadCompanies from "./pages/UploadCompanies.tsx";
@@ -137,6 +140,18 @@ export const router = createBrowserRouter([
         element: <UploadCompanies />,
       },
       {
+        path: "/e-channels",
+        element: <EChannels />,
+      },
+      {
+        path: "/tasheels",
+        element: <Tasheels />,
+      },
+      {
+        path: "/natwasals",
+        element: <Natwasals />,
+      },
+      {
         path: "/transactions",
         element: <Transactions />,
       },
@@ -181,15 +196,15 @@ export const router = createBrowserRouter([
         element: <UploadJobs />,
       },
       {
-        path: "/pros",
+        path: "/officers",
         element: <Pros />,
       },
       {
-        path: "/pros/:id",
+        path: "/officers/:id",
         element: <Pro />,
       },
       {
-        path: "/pros/upload",
+        path: "/officers/upload",
         element: <UploadPros />,
       },
       {

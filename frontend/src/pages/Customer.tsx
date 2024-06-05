@@ -12,9 +12,8 @@ import { AppDispatch, RootState } from "../store/store";
 import CustomerProfile from "../tabs/CustomerProfile/CustomerProfile";
 
 const Customer = () => {
-  const { customer, isLoading, companies, activities } = useSelector(
-    (state: RootState) => state.customer
-  );
+  const { customer, isLoading, activities, eChannel, tasheel, natwasal } =
+    useSelector((state: RootState) => state.customer);
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
@@ -45,9 +44,11 @@ const Customer = () => {
         </Box>
         <CustomerProfile
           activities={activities}
-          companies={companies}
           customer={customer}
           isLoading={isLoading}
+          eChannel={eChannel}
+          natwasal={natwasal}
+          tasheel={tasheel}
         />
       </PrimaryContainer>
     </PrimaryBox>

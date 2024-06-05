@@ -15,6 +15,8 @@ export const getEmployee = createAsyncThunk(
         },
       }
     );
+    console.log(res.data);
+
     return res.data;
   }
 );
@@ -24,6 +26,9 @@ const initialState: EmployeeValuesTypes = {
   employee: null,
   companies: null,
   activities: null,
+  eChannel: null,
+  natwasal: null,
+  tasheel: null,
 };
 
 export const employeeSlice = createSlice({
@@ -38,6 +43,9 @@ export const employeeSlice = createSlice({
       state.isLoading = false;
       state.employee = payload.employee;
       state.activities = payload.activities;
+      state.eChannel = payload.eChannel;
+      state.natwasal = payload.eNatwasal;
+      state.tasheel = payload.eTasaheel;
     });
     builder.addCase(getEmployee.rejected, (_, action) => {
       if (action.payload) {

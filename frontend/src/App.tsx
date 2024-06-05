@@ -19,14 +19,17 @@ import ConvertCustomerModal from "./modals/ConvertCustomerModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
 import DeleteModal from "./modals/DeleteModa.tsx";
 import DownloadExcelModal from "./modals/DownloadExcelModal.tsx";
+import EChannelModal from "./modals/EChannelModal.tsx";
 import EmployeeModal from "./modals/EmployeeModal.tsx";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal.tsx";
 import JobModal from "./modals/JobModal.tsx";
 import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
+import NatwasalModal from "./modals/NatwasalModal.jsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
 import ProModal from "./modals/ProModal.tsx";
 import SponsorModal from "./modals/SponsorModal.tsx";
+import TasheelModal from "./modals/TasheelModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import { getProfile, setAuth } from "./store/auth.ts";
@@ -81,6 +84,9 @@ const App = () => {
       <ProModal />
       <SponsorModal />
       <EmployeeModal />
+      <EChannelModal />
+      <TasheelModal />
+      <NatwasalModal />
       <CustomerModal />
       <ConvertCustomerModal />
       <LinkToCompanyModal />

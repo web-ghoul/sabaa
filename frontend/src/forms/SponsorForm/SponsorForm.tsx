@@ -8,6 +8,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -18,10 +19,12 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+  const { jobs } = useSelector((state: RootState) => state.jobs);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
+    dispatch(getJobs({ limit: -1 }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -63,6 +66,14 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
             options={nationalities}
             formik={formik}
             name={"nationality"}
+          />
+        )}
+        {jobs && jobs.length > 0 && (
+          <AutoCompleteSearch
+            label={"Jobs"}
+            options={jobs}
+            formik={formik}
+            name={"job"}
           />
         )}
         <Input
@@ -123,7 +134,14 @@ const SponsorForm = ({ formik, type }: FormiksTypes) => {
           label={"Status"}
           name={"status"}
           select
-          options={["Active", "Pending", "Blocked"]}
+          options={["active", "inactive"]}
+        />
+        <Input
+          formik={formik}
+          label={"Gender"}
+          name={"gender"}
+          select
+          options={["Male", "Female"]}
         />
         <Input
           formik={formik}

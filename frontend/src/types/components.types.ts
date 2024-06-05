@@ -5,11 +5,14 @@ import { AllFormiksTypes } from "./forms.types";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   ProTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -55,6 +58,7 @@ interface InputTypes {
   ac?: string;
   textarea?: boolean;
   variant?: string;
+  disabled?: boolean;
   change?: (value: string) => void;
 }
 
@@ -124,6 +128,9 @@ interface ProfileDetailsTypes {
     | ProTypes
     | EmployeeTypes
     | CustomerTypes;
+  eChannel?: EChannelTypes;
+  tasheel?: TasheelTypes;
+  natwasal?: NatwasalTypes;
   isLoading?: boolean;
 }
 

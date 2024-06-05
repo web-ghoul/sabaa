@@ -12,9 +12,8 @@ import { AppDispatch, RootState } from "../store/store";
 import EmployeeProfile from "../tabs/EmployeeProfile/EmployeeProfile";
 
 const Employee = () => {
-  const { employee, isLoading, activities } = useSelector(
-    (state: RootState) => state.employee
-  );
+  const { employee, isLoading, activities, eChannel, tasheel, natwasal } =
+    useSelector((state: RootState) => state.employee);
 
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +45,9 @@ const Employee = () => {
         </Box>
         <EmployeeProfile
           activities={activities}
+          eChannel={eChannel}
+          natwasal={natwasal}
+          tasheel={tasheel}
           employee={employee}
           isLoading={isLoading}
         />

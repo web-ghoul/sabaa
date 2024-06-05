@@ -3,12 +3,14 @@ import { EntitiesType, EntityType } from "./app.types";
 import {
   CompanyTypes,
   CustomerTypes,
+  EChannelTypes,
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
   OwnerTypes,
   ProTypes,
   SponsorTypes,
+  TasheelTypes,
   UserTypes,
 } from "./store.types";
 
@@ -149,6 +151,15 @@ interface FormsContextTypes {
   openCompanyModal: boolean;
   handleOpenCompanyModal: (type: string) => void;
   handleCloseCompanyModal: () => void;
+  openEChannelModal: boolean;
+  handleOpenEChannelModal: (string: string) => void;
+  handleCloseEChannelModal: () => void;
+  openTasheelModal: boolean;
+  handleOpenTasheelModal: (string: string) => void;
+  handleCloseTasheelModal: () => void;
+  openNatwasalModal: boolean;
+  handleOpenNatwasalModal: (string: string) => void;
+  handleCloseNatwasalModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
   excelType: { type: "excel" | "all"; entity: EntitiesType };
@@ -160,6 +171,12 @@ interface FormsContextTypes {
   setSearchForOwners: (search: string) => void;
   searchForEmployees: string;
   setSearchForEmployees: (search: string) => void;
+  searchForEChannels: string;
+  setSearchForEChannels: (search: string) => void;
+  searchForTasheel: string;
+  setSearchForTasheel: (search: string) => void;
+  searchForNatwasal: string;
+  setSearchForNatwasal: (search: string) => void;
   searchForCustomers: string;
   setSearchForCustomers: (search: string) => void;
   searchForPros: string;
@@ -215,6 +232,12 @@ interface FormsContextTypes {
   setEditableNationalityData: (nationality: NationalityTypes | null) => void;
   editableUserData: UserTypes | null;
   setEditableUserData: (user: UserTypes | null) => void;
+  editableEChannelData: EChannelTypes | null;
+  setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
+  editableTasheelData: TasheelTypes | null;
+  setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
+  editableNatwasalData: TasheelTypes | null;
+  setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
 }
 
 interface TabsContextProps {

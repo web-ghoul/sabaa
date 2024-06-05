@@ -51,6 +51,12 @@ export class Sponsor {
   sponsor: string;
 
   @Prop()
+  gender: string;
+
+  @Prop()
+  job: string;
+
+  @Prop()
   residenceExpiryDate: Date;
 
   @Prop()
