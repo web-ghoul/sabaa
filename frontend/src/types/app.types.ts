@@ -36,8 +36,8 @@ interface ImportMetaEnv {
   VITE_UPLOAD_NATIONALITIES_ROUTE: string;
   VITE_PROFILE_ROUTE: string;
   VITE_ECHANNELS_ROUTE: string;
-  VITE_TASHEEL_ROUTE: string;
-  VITE_NATWASAL_ROUTE: string;
+  VITE_TASHEELS_ROUTE: string;
+  VITE_NATWASALS_ROUTE: string;
 }
 
 interface AlertFunTypes {
@@ -61,7 +61,8 @@ type EntitiesType =
   | "sponsors"
   | "tasheels"
   | "natwasals"
-  | "eChannels";
+  | "eChannels"
+  | "persons";
 
 type EntityType =
   | "company"
@@ -76,7 +77,8 @@ type EntityType =
   | "sponsor"
   | "tasheel"
   | "natwasal"
-  | "eChannel";
+  | "eChannel"
+  | "person";
 
 type HeadsType =
   | "h1"

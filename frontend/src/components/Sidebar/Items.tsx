@@ -82,13 +82,13 @@ const Items = () => {
       />
       <Item
         icon={<AutoAwesomeMotionRounded />}
-        title="Tasheel"
-        url={`${import.meta.env.VITE_TASHEEL_ROUTE}`}
+        title="Tasheels"
+        url={`${import.meta.env.VITE_TASHEELS_ROUTE}`}
       />
       <Item
         icon={<CallToActionRounded />}
-        title="Natwasal"
-        url={`${import.meta.env.VITE_NATWASAL_ROUTE}`}
+        title="Natwasals"
+        url={`${import.meta.env.VITE_NATWASALS_ROUTE}`}
       />
       <Item
         icon={<TransactionsIcon />}

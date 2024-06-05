@@ -1,6 +1,6 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -10,19 +10,77 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
+import PersonsTable from "../../tables/PersonsTable/PersonsTable";
 import { FormiksTypes, TasheelFormikTypes } from "../../types/forms.types";
 import {
+  CompanyTypes,
   EmployeeTypes,
   OwnerTypes,
+  ProTypes,
   TasheelTypes,
 } from "../../types/store.types";
 
 const TasheelForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseEChannelModal, setEditableTasheelData } =
-    useContext(FormsContext);
+  const {
+    formsLoading,
+    handleCloseTasheelModal,
+    setEditableTasheelData,
+    editableTasheelData,
+  } = useContext(FormsContext);
   const [loading, setLoading] = useState(false);
+  const [persons, setPersons] = useState<
+    | {
+        name: string;
+        nameAr: string;
+        email: string;
+        type: string;
+        personCode: string;
+        owner?: OwnerTypes;
+        employee?: EmployeeTypes;
+      }[]
+    | null
+  >(null);
   const [search, setSearch] = useState("");
   const { token } = useSelector((state: RootState) => state.auth);
+
+  const handleChangeValues = (d: TasheelTypes, reset?: boolean) => {
+    (formik as unknown as TasheelFormikTypes).values.name = d.name || "";
+    (formik as unknown as TasheelFormikTypes).values.nameAr = d.nameAr || "";
+    (formik as unknown as TasheelFormikTypes).values.personCode =
+      d.personCode || "";
+    (formik as unknown as TasheelFormikTypes).values.email = d.email;
+    (formik as unknown as TasheelFormikTypes).values.type =
+      d.type && d.type.toLowerCase() === "pro"
+        ? "officer"
+        : d.type || "employee";
+    if (d.owner) {
+      (formik as unknown as TasheelFormikTypes).values.owner = (
+        d.owner as OwnerTypes
+      )._id;
+      (formik as unknown as TasheelFormikTypes).values.name = (
+        d.owner as OwnerTypes
+      ).name;
+    } else if (d.employee) {
+      (formik as unknown as TasheelFormikTypes).values.employee = (
+        d.employee as EmployeeTypes
+      )._id;
+      (formik as unknown as TasheelFormikTypes).values.name = (
+        d.employee as EmployeeTypes
+      ).name;
+    } else {
+      if (d.type) {
+        (formik as unknown as TasheelFormikTypes).values.owner = d._id;
+        (formik as unknown as TasheelFormikTypes).values.name = d.name;
+      } else {
+        (formik as unknown as TasheelFormikTypes).values.employee = d._id;
+        (formik as unknown as TasheelFormikTypes).values.name = d.name;
+      }
+    }
+
+    if (reset) {
+      setPersons(null);
+    }
+  };
 
   const handleSearch = async () => {
     setLoading(true);
@@ -31,41 +89,55 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const data: TasheelTypes = res.data;
-        console.log(data);
-        setEditableTasheelData(data);
-        (formik as unknown as TasheelFormikTypes).values.name = data.name;
-        (formik as unknown as TasheelFormikTypes).values.nameAr = data.nameAr;
-        (formik as unknown as TasheelFormikTypes).values.personCode =
-          data.personCode;
-        (formik as unknown as TasheelFormikTypes).values.email = data.email;
-        (formik as unknown as TasheelFormikTypes).values.type =
-          data.type && data.type.toLowerCase() === "pro"
-            ? "officer"
-            : data.type || "employee";
-        if (data.owner) {
-          (formik as unknown as TasheelFormikTypes).values.owner = (
-            data.owner as OwnerTypes
-          )._id;
-          (formik as unknown as TasheelFormikTypes).values.name = (
-            data.owner as OwnerTypes
-          ).name;
-        } else if (data.employee) {
-          (formik as unknown as TasheelFormikTypes).values.employee = (
-            data.employee as EmployeeTypes
-          )._id;
-          (formik as unknown as TasheelFormikTypes).values.name = (
-            data.employee as EmployeeTypes
-          ).name;
+        const data: TasheelTypes | CompanyTypes = res.data;
+        if ((data as CompanyTypes).molCode) {
+          const owners = (data as CompanyTypes).ownerId as OwnerTypes[];
+          const pros = (data as CompanyTypes).proCode as ProTypes[];
+          const employees = (data as CompanyTypes).employees as EmployeeTypes[];
+          const p: {
+            name: string;
+            nameAr: string;
+            email: string;
+            type: string;
+            personCode: string;
+            owner?: OwnerTypes;
+            employee?: EmployeeTypes;
+          }[] = [];
+          owners.map((owner) => {
+            p.push({
+              name: owner.name,
+              nameAr: owner.nameAr,
+              email: owner.email,
+              type: "owner",
+              personCode: owner.personCode,
+              owner: owner,
+            });
+          });
+          pros.map((pro) => {
+            p.push({
+              name: pro.name,
+              nameAr: pro.nameAr,
+              email: pro.email,
+              type: "officer",
+              personCode: pro.personCode,
+              owner: pro,
+            });
+          });
+          employees.map((employee) => {
+            p.push({
+              name: employee.name,
+              nameAr: employee.nameAr,
+              email: employee.email,
+              type: "employee",
+              personCode: employee.personCode,
+              employee: employee,
+            });
+          });
+          setPersons(p);
         } else {
-          if (data.type) {
-            (formik as unknown as TasheelFormikTypes).values.owner = data._id;
-            (formik as unknown as TasheelFormikTypes).values.name = data.name;
-          } else {
-            (formik as unknown as TasheelFormikTypes).values.employee =
-              data._id;
-            (formik as unknown as TasheelFormikTypes).values.name = data.name;
-          }
+          const d = data as TasheelTypes;
+          setEditableTasheelData(d);
+          handleChangeValues(d);
         }
       })
       .catch((err) => {
@@ -73,6 +145,12 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       });
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (editableTasheelData) {
+      handleChangeValues(editableTasheelData);
+    }
+  }, [editableTasheelData]);
 
   return (
     <Paper
@@ -86,18 +164,28 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
         )
       )}
 
-      <Box className={`flex justify-start items-end gap-4`}>
-        <Input
-          formik={formik}
-          label={"Search person code , MOL code..."}
-          name={"search_for_person"}
-          type={"search"}
-          change={(val) => setSearch(val)}
+      {type === "addTasheel" && (
+        <Box className={`flex justify-start items-end gap-4`}>
+          <Input
+            formik={formik}
+            label={"Search person code , MOL code..."}
+            name={"search_for_person"}
+            type={"search"}
+            change={(val) => setSearch(val)}
+          />
+          <PrimaryButton onClick={handleSearch} loading={loading}>
+            Search
+          </PrimaryButton>
+        </Box>
+      )}
+
+      {persons && (
+        <PersonsTable
+          count={persons.length}
+          data={persons}
+          clicked={handleChangeValues}
         />
-        <PrimaryButton onClick={handleSearch} loading={loading}>
-          Search
-        </PrimaryButton>
-      </Box>
+      )}
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
@@ -196,7 +284,7 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
         </SubmitButton>
         <Button
           title={"Cancel"}
-          handling={handleCloseEChannelModal}
+          handling={handleCloseTasheelModal}
           bg={"!bg-red-500"}
         />
       </Box>

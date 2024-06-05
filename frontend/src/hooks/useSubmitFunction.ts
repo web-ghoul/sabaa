@@ -25,6 +25,8 @@ import { getJobsCounter } from "../store/jobsCounterSlice";
 import { getJobs } from "../store/jobsSlice";
 import { getNationalitiesCounter } from "../store/nationalitiesCounterSlice";
 import { getNationalities } from "../store/nationalitiesSlice";
+import { getNatwasalsCounter } from "../store/natwasalsCounterSlice";
+import { getNatwasals } from "../store/natwasalsSlice";
 import { getOwnersCounter } from "../store/ownersCounterSlice";
 import { getOwner } from "../store/ownerSlice";
 import { getOwners } from "../store/ownersSlice";
@@ -50,6 +52,7 @@ import {
   LinkToCompanyFormTypes,
   LoginFormTypes,
   NationalityFormTypes,
+  NatwasalFormTypes,
   OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
@@ -74,9 +77,11 @@ const useSubmitFunction = (type: string) => {
     handleCloseJobModal,
     handleCloseNationalityModal,
     handleCloseEChannelModal,
+    handleCloseNatwasalModal,
     handleCloseDeleteModal,
     handleCloseConvertCustomerModal,
     editableNationalityData,
+    editableNatwasalData,
     editableJobData,
     editableSponsorData,
     ownerImage,
@@ -1480,6 +1485,56 @@ const useSubmitFunction = (type: string) => {
     handleCloseFormsLoading();
   };
 
+  //Natwasal
+  const addNatwasal = async (values: NatwasalFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .post(`/natwasals`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Natwasal is Created Successfully",
+          status: "success",
+        });
+        dispatch(getNatwasals({}));
+        dispatch(getNatwasalsCounter());
+        handleCloseNatwasalModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const editNatwasal = async (values: NatwasalFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(
+        `/natwasals/${editableNatwasalData && editableNatwasalData._id}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(() => {
+        handleAlert({
+          msg: "Natwasal is Updated Successfully",
+          status: "success",
+        });
+        dispatch(getNatwasals({}));
+        handleCloseNatwasalModal();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   //Download Excel
   const handleDownloadExcelSubmit = async (values: DownloadExcelFormTypes) => {
     handleOpenFormsLoading();
@@ -1911,6 +1966,7 @@ const useSubmitFunction = (type: string) => {
           handleCatchError(err);
         });
     } else if (formType === "tasheel") {
+      console.log(editableTasheelData);
       await server
         .delete(`/tasheels/${editableTasheelData && editableTasheelData._id}`, {
           headers: {
@@ -1924,6 +1980,28 @@ const useSubmitFunction = (type: string) => {
           });
           dispatch(getTasheels({}));
           dispatch(getTasheelsCounter());
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "natwasal") {
+      await server
+        .delete(
+          `/natwasals/${editableNatwasalData && editableNatwasalData._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Natwasal is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getNatwasals({}));
+          dispatch(getNatwasalsCounter());
           handleCloseDeleteModal();
         })
         .catch((err) => {
@@ -2090,6 +2168,12 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editTasheel":
         editTasheel(values as TasheelFormTypes);
+        break;
+      case "addNatwasal":
+        addNatwasal(values as NatwasalFormTypes);
+        break;
+      case "editNatwasal":
+        editNatwasal(values as NatwasalFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

@@ -8,29 +8,39 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { EmployeeTypes, OwnerTypes } from "../../types/store.types";
 import TableMenuItem from "../TableMenuItem";
 
-const EChannelsTableMenu = () => {
+const NatwasalsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const navigate = useNavigate();
   const {
     handleOpenDeleteModal,
-    editableEChannelData,
-    handleOpenEChannelModal,
+    editableNatwasalData,
+    handleOpenNatwasalModal,
   } = useContext(FormsContext);
 
   const handleView = () => {
-    if (editableEChannelData) {
-      if (editableEChannelData.type) {
+    if (editableNatwasalData) {
+      if (editableNatwasalData.owner) {
+        const type = (editableNatwasalData.owner as OwnerTypes).type;
         navigate(
-          `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-            editableEChannelData && editableEChannelData._id
+          `${
+            type === "owner"
+              ? import.meta.env.VITE_OWNERS_ROUTE
+              : type === "pro"
+              ? import.meta.env.VITE_PROS_ROUTE
+              : import.meta.env.VITE_CUSTOMERS_ROUTE
+          }/${
+            editableNatwasalData &&
+            (editableNatwasalData.owner as OwnerTypes)._id
           }`
         );
       } else {
         navigate(
           `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-            editableEChannelData && editableEChannelData._id
+            editableNatwasalData &&
+            (editableNatwasalData.employee as EmployeeTypes)._id
           }`
         );
       }
@@ -38,13 +48,13 @@ const EChannelsTableMenu = () => {
   };
 
   const handleEdit = () => {
-    if (editableEChannelData) {
-      handleOpenEChannelModal("editEChannel");
+    if (editableNatwasalData) {
+      handleOpenNatwasalModal("editNatwasal");
     }
   };
 
   const handleDelete = () => {
-    handleOpenDeleteModal("eChannel");
+    handleOpenDeleteModal("natwasal");
   };
 
   return (
@@ -82,4 +92,4 @@ const EChannelsTableMenu = () => {
   );
 };
 
-export default EChannelsTableMenu;
+export default NatwasalsTableMenu;

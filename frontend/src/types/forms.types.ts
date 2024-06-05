@@ -6,6 +6,7 @@ import {
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   ProTypes,
   SponsorTypes,
@@ -493,6 +494,37 @@ interface TasheelsOptionsFormikTypes {
   values: TasheelsOptionsFormTypes;
 }
 
+//Natwasal
+
+interface NatwasalFormTypes extends NatwasalTypes {}
+
+interface NatwasalFormikTypes {
+  touched: NatwasalFormTypes;
+  errors: NatwasalFormTypes;
+  initialValues: NatwasalFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NatwasalFormTypes;
+}
+
+interface NatwasalsOptionsFormTypes {
+  search: string;
+  type: string;
+}
+
+interface NatwasalsOptionsFormikTypes {
+  touched: NatwasalsOptionsFormTypes;
+  errors: NatwasalsOptionsFormTypes;
+  initialValues: NatwasalsOptionsFormTypes;
+  validationSchema: unknown;
+  onSubmit: (values: unknown) => void;
+  handleChange: (event: unknown) => void;
+  handleBlur: (event: unknown) => void;
+  values: NatwasalsOptionsFormTypes;
+}
+
 //Download Excel
 
 interface DownloadExcelFormTypes {
@@ -554,7 +586,9 @@ type AllFormsTypes =
   | ConvertCustomerFormTypes
   | EChannelFormTypes
   | TasheelFormTypes
-  | TasheelsOptionsFormTypes;
+  | TasheelsOptionsFormTypes
+  | NatwasalFormTypes
+  | NatwasalsOptionsFormTypes;
 
 type AllFormiksTypes =
   | LoginFormikTypes
@@ -585,7 +619,9 @@ type AllFormiksTypes =
   | ConvertCustomerFormikTypes
   | EChannelFormikTypes
   | TasheelFormikTypes
-  | TasheelsOptionsFormikTypes;
+  | TasheelsOptionsFormikTypes
+  | NatwasalFormikTypes
+  | NatwasalsOptionsFormikTypes;
 
 interface FormiksTypes {
   formik: FormikProps<AllFormiksTypes>;
@@ -644,6 +680,10 @@ export type {
   NationalitiesOptionsFormTypes,
   NationalityFormikTypes,
   NationalityFormTypes,
+  NatwasalFormikTypes,
+  NatwasalFormTypes,
+  NatwasalsOptionsFormikTypes,
+  NatwasalsOptionsFormTypes,
   OTPFormikTypes,
   OTPFormTypes,
   OwnerFormikTypes,
