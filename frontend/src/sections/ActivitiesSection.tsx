@@ -1,9 +1,13 @@
 import { Divider, Pagination, Paper } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Fragment } from "react/jsx-runtime";
 import ActivityBox from "../components/ActivityBox/ActivityBox";
 import LoadingActivityBox from "../components/ActivityBox/LoadingActivityBox";
 import { handleRandomNumber } from "../functions/handleRandomNumber";
+import { getActivitiesCounter } from "../store/activitiesCounterSlice";
+import { getActivities } from "../store/activitiesSlice";
+import { AppDispatch, RootState } from "../store/store";
 import { ActivityTypes } from "../types/store.types";
 
 const ActivitiesSection = ({
@@ -13,10 +17,19 @@ const ActivitiesSection = ({
   data: ActivityTypes[] | null;
   isLoading: boolean;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { activitiesCounter } = useSelector(
+    (state: RootState) => state.activitiesCounter
+  );
   const [page, setPage] = useState(1);
   const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    dispatch(getActivities({ page: page - 1 }));
   };
+
+  useEffect(() => {
+    dispatch(getActivitiesCounter());
+  }, [dispatch]);
 
   return (
     <Paper
@@ -38,7 +51,7 @@ const ActivitiesSection = ({
               </Fragment>
             ))}
       <Pagination
-        count={data ? Math.ceil(data.length / 10) : 10}
+        count={activitiesCounter || 10}
         variant="outlined"
         color="primary"
         page={page}

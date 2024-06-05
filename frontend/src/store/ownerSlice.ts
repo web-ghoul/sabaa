@@ -43,8 +43,8 @@ export const ownerSlice = createSlice({
       state.companies = payload.companies;
       state.activities = payload.activities;
       state.eChannel = payload.eChannel;
-      state.natwasal = payload.natwasal;
-      state.tasheel = payload.tasheel;
+      state.natwasal = payload.eNatwasal;
+      state.tasheel = payload.eTasaheel;
     });
     builder.addCase(getOwner.rejected, (_, action) => {
       if (action.payload) {

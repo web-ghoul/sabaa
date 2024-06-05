@@ -35,6 +35,11 @@ interface ActivitiesArgsTypes {
   from?: string;
 }
 
+interface ActivitiesCounterValuesTypes {
+  isLoading: boolean;
+  activitiesCounter: number;
+}
+
 interface RecentActivitiesValuesTypes {
   recentActivities: ActivityTypes[] | null;
   isLoading: boolean;
@@ -612,6 +617,7 @@ interface NationalityTypes {
 
 export type {
   ActivitiesArgsTypes,
+  ActivitiesCounterValuesTypes,
   ActivitiesValuesTypes,
   ActivityTypes,
   AuthValuesTypes,

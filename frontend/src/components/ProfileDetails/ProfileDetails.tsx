@@ -166,8 +166,6 @@ const ProfileDetails = ({
     setEditableCompanyData(company);
   };
 
-  console.log(tasheel);
-
   return isLoading ? (
     <LoadingProfileDetails />
   ) : (
@@ -319,6 +317,54 @@ const ProfileDetails = ({
               </Box>
             </>
           )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
         </Paper>
       ) : variant === "officer" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -423,6 +469,54 @@ const ProfileDetails = ({
                   <DataBox
                     title={"Created At"}
                     value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
                   />
                 </Box>
               </Box>
@@ -550,6 +644,54 @@ const ProfileDetails = ({
                   <DataBox
                     title={"Created At"}
                     value={handleDate(eChannel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {tasheel && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Tasheel Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={tasheel.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={tasheel.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
+                  <DataBox title={"Mobile"} value={tasheel.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
                   />
                 </Box>
               </Box>
@@ -721,10 +863,36 @@ const ProfileDetails = ({
                     title={"Password"}
                     value={<PasswordBox password={tasheel.password} />}
                   />
+                  <DataBox title={"Security 1"} value={tasheel.security1} />
+                  <DataBox title={"Security 2"} value={tasheel.security2} />
                   <DataBox title={"Mobile"} value={tasheel.mobile} />
                   <DataBox
                     title={"Created At"}
                     value={handleDate(tasheel.createdAt, true)}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
+          {natwasal && (
+            <>
+              <Divider />
+              <Box className={sectionClasses}>
+                <Typography variant="h4" className={`!font-[700]`}>
+                  Natwasal Information
+                </Typography>
+                <Box className={profileInfoClasses}>
+                  <DataBox title={"Username"} value={natwasal.username} />
+                  <DataBox
+                    title={"Password"}
+                    value={<PasswordBox password={natwasal.password} />}
+                  />
+                  <DataBox title={"Security 1"} value={natwasal.security1} />
+                  <DataBox title={"Security 2"} value={natwasal.security2} />
+                  <DataBox title={"Mobile"} value={natwasal.mobile} />
+                  <DataBox
+                    title={"Created At"}
+                    value={handleDate(natwasal.createdAt, true)}
                   />
                 </Box>
               </Box>

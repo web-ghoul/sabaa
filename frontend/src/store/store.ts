@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import activitiesCounterReducer from "./activitiesCounterSlice.ts";
 import activitiesReducers from "./activitiesSlice.ts";
 import authReducers from "./auth.ts";
 import companiesCounterReducers from "./companiesCounterSlice.ts";
@@ -46,6 +47,7 @@ export const store = configureStore({
     users: usersReducers,
     usersCounter: usersCounterReducers,
     activities: activitiesReducers,
+    activitiesCounter: activitiesCounterReducer,
     recentActivities: recentActivitiesReducers,
     recentJobs: recentJobsReducers,
     recentEmployees: recentEmployeesReducers,
