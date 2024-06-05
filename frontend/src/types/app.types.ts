@@ -1,4 +1,4 @@
-import { Renderable, ToastPosition } from "react-hot-toast";
+import { Renderable, ToastPosition } from 'react-hot-toast';
 
 interface ImportMetaEnv {
   VITE_USERS_ROUTE: string;
@@ -49,46 +49,48 @@ interface AlertFunTypes {
 }
 
 type EntitiesType =
-  | "companies"
-  | "users"
-  | "owners"
-  | "employees"
-  | "customers"
-  | "transactions"
-  | "officers"
-  | "nationalities"
-  | "jobs"
-  | "sponsors"
-  | "tasheels"
-  | "natwasals"
-  | "eChannels";
+  | 'companies'
+  | 'users'
+  | 'owners'
+  | 'employees'
+  | 'customers'
+  | 'transactions'
+  | 'officers'
+  | 'nationalities'
+  | 'jobs'
+  | 'sponsors'
+  | 'tasheels'
+  | 'natwasals'
+  | 'eChannels'
+  | 'persons';
 
 type EntityType =
-  | "company"
-  | "user"
-  | "owner"
-  | "employee"
-  | "customer"
-  | "transaction"
-  | "officer"
-  | "job"
-  | "nationality"
-  | "sponsor"
-  | "tasheel"
-  | "natwasal"
-  | "eChannel";
+  | 'company'
+  | 'user'
+  | 'owner'
+  | 'employee'
+  | 'customer'
+  | 'transaction'
+  | 'officer'
+  | 'job'
+  | 'nationality'
+  | 'sponsor'
+  | 'tasheel'
+  | 'natwasal'
+  | 'eChannel'
+  | 'person';
 
 type HeadsType =
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "subtitle1"
-  | "subtitle2"
-  | "body1"
-  | "body2";
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body1'
+  | 'body2';
 
 export type {
   AlertFunTypes,

@@ -5,11 +5,12 @@ import {
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   SponsorTypes,
   TasheelTypes,
   UserTypes,
-} from "./store.types";
+} from './store.types';
 
 interface JobsTableTypes {
   data: JobTypes[] | null;
@@ -128,6 +129,25 @@ interface TasheelsTableTypes {
   recent?: boolean;
 }
 
+interface PersonsTableTypes {
+  data:
+    | {
+        email: string;
+        name: string;
+        nameAr: string;
+        type: string;
+        personCode: string;
+        owner?: OwnerTypes;
+        employee?: EmployeeTypes;
+      }[]
+    | TasheelTypes[]
+    | NatwasalTypes[]
+    | null;
+  count: number;
+  clicked: (data: TasheelTypes, reset?: boolean) => void;
+  noPagination?: boolean;
+}
+
 export type {
   CompaniesTableTypes,
   CustomersTableTypes,
@@ -136,6 +156,7 @@ export type {
   JobsTableTypes,
   NationalitiesTableTypes,
   OwnersTableTypes,
+  PersonsTableTypes,
   ProsTableTypes,
   SponsorsTableTypes,
   TasheelsTableTypes,
