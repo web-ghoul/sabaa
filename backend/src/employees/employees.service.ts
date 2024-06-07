@@ -111,8 +111,8 @@ private readonly employeePdfGenerator: EmployeePdfGenerator,) {}
       await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
       this.eChannelModel.findOne({employee:id}),
-      this.eNatwasalModel.findOne({owner:id}),
-      this.eTasaheelModel.findOne({owner:id}),
+      this.eNatwasalModel.findOne({employee:id}),
+      this.eTasaheelModel.findOne({employee:id}),
 
     ])
     return {employee,activities,eChannel,eNatwasal,eTasaheel};
