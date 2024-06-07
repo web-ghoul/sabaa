@@ -63,7 +63,7 @@ const App = () => {
       }
       setSigned(false);
     }
-  }, [dispatch]);
+  }, [dispatch, navigate, pathname]);
 
   useEffect(() => {
     const allParams: { [key: string]: string } = {};
@@ -72,6 +72,8 @@ const App = () => {
     }
     setQueries(allParams);
   }, [searchParams, setQueries]);
+
+  console.log(mdScreen, signed);
 
   return signed && !AuthRoutes.includes(pathname) ? (
     <Box sx={{ display: "flex" }} className={`bg-bg relative`}>

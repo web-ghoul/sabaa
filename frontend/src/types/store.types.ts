@@ -35,6 +35,11 @@ interface ActivitiesArgsTypes {
   from?: string;
 }
 
+interface ActivitiesCounterValuesTypes {
+  isLoading: boolean;
+  activitiesCounter: number;
+}
+
 interface RecentActivitiesValuesTypes {
   recentActivities: ActivityTypes[] | null;
   isLoading: boolean;
@@ -128,6 +133,8 @@ interface OwnerValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface OwnersValuesTypes {
@@ -170,6 +177,8 @@ interface ProValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface ProsValuesTypes {
@@ -212,6 +221,8 @@ interface CustomerValuesTypes {
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
   eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface CustomersValuesTypes {
@@ -304,6 +315,9 @@ interface EmployeeValuesTypes {
   employee: EmployeeTypes | null;
   companies: CompanyTypes[] | null;
   activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  tasheel: TasheelTypes | null;
+  natwasal: NatwasalTypes | null;
 }
 
 interface EmployeesValuesTypes {
@@ -603,6 +617,7 @@ interface NationalityTypes {
 
 export type {
   ActivitiesArgsTypes,
+  ActivitiesCounterValuesTypes,
   ActivitiesValuesTypes,
   ActivityTypes,
   AuthValuesTypes,

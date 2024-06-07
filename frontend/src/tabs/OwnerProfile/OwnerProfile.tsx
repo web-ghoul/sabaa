@@ -6,7 +6,14 @@ import ActivitiesSection from "../../sections/ActivitiesSection";
 import SponsorsSection from "../../sections/SponsorsSection";
 import CompaniesTable from "../../tables/CompaniesTable/CompaniesTable";
 import ProsTable from "../../tables/ProsTable/ProsTable";
-import { OwnerTypes, ProTypes, SponsorTypes } from "../../types/store.types";
+import {
+  EChannelTypes,
+  NatwasalTypes,
+  OwnerTypes,
+  ProTypes,
+  SponsorTypes,
+  TasheelTypes,
+} from "../../types/store.types";
 import { OwnerProfileProps } from "../../types/tabs.types";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
@@ -15,6 +22,9 @@ const OwnerProfile = ({
   owner,
   isLoading,
   companies,
+  eChannel,
+  natwasal,
+  tasheel,
   activities,
 }: OwnerProfileProps) => {
   const { ownerTabsValue } = useContext(TabsContext);
@@ -55,6 +65,9 @@ const OwnerProfile = ({
           title={`Personal Info`}
           variant={"owner"}
           data={owner as OwnerTypes}
+          eChannel={eChannel as EChannelTypes}
+          tasheel={tasheel as TasheelTypes}
+          natwasal={natwasal as NatwasalTypes}
           isLoading={isLoading}
         />
       </CustomTabPanel>
