@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { WorkPermitModule } from './work-permit/work-permit.module';
-import { TransactionModule } from './transaction/transaction.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
@@ -25,16 +24,17 @@ import { SponsorsModule } from './sponsors/sponsors.module';
 import { EChannelModule } from './e-channel/e-channel.module';
 import { TasheelsModule } from './tasheels/tasheels.module';
 import { NatwasalsModule } from './natwasals/natwasals.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 dotenv.config();
 @Module({
-  imports: [UserModule, WorkPermitModule, TransactionModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
+  imports: [UserModule, WorkPermitModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
     ttl: 20000,
     limit: 100,
   },
   
 ]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule],
+MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule, TransactionsModule],
   controllers: [AppController],
   providers: [AppService,
     {

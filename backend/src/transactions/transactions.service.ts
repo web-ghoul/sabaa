@@ -1,0 +1,249 @@
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { ActivityLog } from 'schemas/activityLog.schema';
+import { Employee } from 'schemas/employee.schema';
+import { Transaction } from 'schemas/transaction.schema';
+import * as exceljs from 'exceljs';
+import { Response } from 'express';
+import { EmployeesService } from 'src/employees/employees.service';
+
+@Injectable()
+export class TransactionsService {
+  constructor(
+    @InjectModel('Employee') private employeeModel: Model<Employee>,
+    @InjectModel('Transaction') private transactionModel: Model<Transaction>,
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+  ) {}
+  async create(createTransactionDto: CreateTransactionDto) {
+    try {
+      const empData = await this.employeeModel.findById(createTransactionDto.employeeId);
+
+      if(!empData)
+        {
+          const newObj = {
+            name: createTransactionDto.employeeName,
+            nationality : createTransactionDto.nationality,
+            dob : createTransactionDto.dob,
+            gender: createTransactionDto.gender
+          }
+          const newEmp = await this.employeeModel.create(newObj);
+          createTransactionDto.employeeId = newEmp._id as any;
+        }
+      return await this.transactionModel.create(createTransactionDto);
+
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async findAll(
+    limit: number,
+    page: number,
+    search: string,
+    selectFields: string[],
+    sort: string,
+    expireWorkPermitFrom: string,
+    status: string,
+    expireWorkPermitTo: string,
+    deleted: boolean,
+    type: string,
+    residenceTo: string,
+    residenceFrom: string,
+    changeStatusDateFrom: string,
+    changeStatusDateTo: string,
+  ): Promise<Transaction[]> {
+    const query: any = {};
+
+    if (search) {
+      query.$or = [
+        { transactionNo: { $regex: search, $options: 'i' } },
+        { employeeName: { $regex: search, $options: 'i' } },
+        { companyName: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    if (expireWorkPermitFrom || expireWorkPermitTo) {
+      query.workPermitExpiryDate = {};
+      if (expireWorkPermitFrom) {
+        query.workPermitExpiryDate.$gte = new Date(expireWorkPermitFrom);
+      }
+      if (expireWorkPermitTo) {
+        query.workPermitExpiryDate.$lte = new Date(expireWorkPermitTo);
+      }
+    }
+
+    if (status) {
+      query.status = status;
+    }
+
+    if (typeof deleted !== 'undefined') {
+      query.deleted = deleted;
+    }else{
+      query.deleted = false
+    }
+
+    if (type) {
+      query.type = type;
+    }
+
+    if (residenceFrom || residenceTo) {
+      query.residenceExpiryDate = {};
+      if (residenceFrom) {
+        query.residenceExpiryDate.$gte = new Date(residenceFrom);
+      }
+      if (residenceTo) {
+        query.residenceExpiryDate.$lte = new Date(residenceTo);
+      }
+    }
+
+    if (changeStatusDateFrom || changeStatusDateTo) {
+      query.changeStatusDate = {};
+      if (changeStatusDateFrom) {
+        query.changeStatusDate.$gte = new Date(changeStatusDateFrom);
+      }
+      if (changeStatusDateTo) {
+        query.changeStatusDate.$lte = new Date(changeStatusDateTo);
+      }
+    }
+
+    const skip = (page - 1) * limit;
+
+    const fieldsToSelect = selectFields && selectFields.length ? selectFields.join(' ') : '';
+
+    const sortBy = {};
+
+    return this.transactionModel
+      .find(query)
+      .skip(skip)
+      .limit(limit)
+      .select(fieldsToSelect)
+      .sort(sortBy)
+      .exec();
+  }
+
+  findOne(id: string) {
+    return this.transactionModel.findById(id);
+  }
+
+  update(id: string, updateTransactionDto: UpdateTransactionDto) {
+    //not handeled yet
+    /*
+    1- WPStatus change when changing to lc 
+    2- 
+    */
+    return `This action updates a #${id} transaction`;
+  }
+
+  async remove(id: string) {
+    try {
+      await Promise.all([
+        this.transactionModel.updateOne({ _id: id }, { deleted: true }),
+      ]);
+
+      return {_id: id} ; 
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
+    }
+  }
+
+  async export(
+    res: Response,
+    fileName: string,
+  ) {
+    const transactions = await this.transactionModel.find({ deleted: false});
+
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet('Transactions');
+    worksheet.columns = [
+      { header: 'Transaction No', key: 'transactionNo', width: 20 },
+      { header: 'Employee ID', key: 'employeeId', width: 20 },
+      { header: 'Serial No', key: 'serialNo', width: 20 },
+      { header: 'Company Code', key: 'companyCode', width: 20 },
+      { header: 'Company ID', key: 'companyId', width: 20 },
+      { header: 'Company Name', key: 'companyName', width: 20 },
+      { header: 'Employee Name', key: 'employeeName', width: 20 },
+      { header: 'Date of Birth', key: 'dob', width: 20 },
+      { header: 'Gender', key: 'gender', width: 20 },
+      { header: 'Nationality ID', key: 'nationalityId', width: 20 },
+      { header: 'Nationality', key: 'nationality', width: 20 },
+      { header: 'Passport Number', key: 'passportNumber', width: 20 },
+      { header: 'Passport Expiry', key: 'passportExpiry', width: 20 },
+      { header: 'Job', key: 'job', width: 20 },
+      { header: 'Person Code', key: 'personCode', width: 20 },
+      { header: 'UID', key: 'uid', width: 20 },
+      { header: 'Emirates No', key: 'emiratesNo', width: 20 },
+      { header: 'Work Permit', key: 'workPermit', width: 20 },
+      { header: 'LC No', key: 'lcNo', width: 20 },
+      { header: 'LC Expiry Date', key: 'lcExpiryDate', width: 20 },
+      { header: 'Work Permit Expiry Date', key: 'workPermitExpiryDate', width: 20 },
+      { header: 'Visit Expiry Date', key: 'visitExpiryDate', width: 20 },
+      { header: 'Tawjeeh Date', key: 'tawjeehDate', width: 20 },
+      { header: 'Medical Date', key: 'medicalDate', width: 20 },
+      { header: 'Change Status Date', key: 'changeStatusDate', width: 20 },
+      { header: 'Status', key: 'status', width: 20 },
+      { header: 'WP Status', key: 'wpStatus', width: 20 },
+      { header: 'Status Date', key: 'statusDate', width: 20 },
+      { header: 'Card Type', key: 'cardType', width: 20 },
+      { header: 'Salary', key: 'salary', width: 20 },
+      { header: 'Remarks', key: 'remarks', width: 20 },
+      { header: 'Residence Expiry Date', key: 'residenceExpiryDate', width: 20 },
+      { header: 'Deleted', key: 'deleted', width: 10 },
+    ];
+
+    transactions.forEach(transaction => {
+      worksheet.addRow({
+        transactionNo: transaction.transactionNo,
+        employeeId: transaction.employeeId,
+        serialNo: transaction.serialNo,
+        companyCode: transaction.companyCode,
+        companyId: transaction.companyId,
+        companyName: transaction.companyName,
+        employeeName: transaction.employeeName,
+        dob: transaction.dob,
+        gender: transaction.gender,
+        nationalityId: transaction.nationalityId,
+        nationality: transaction.nationality,
+        passportNumber: transaction.passportNumber,
+        passportExpiry: transaction.passportExpiry,
+        job: transaction.job,
+        personCode: transaction.personCode,
+        uid: transaction.uid,
+        emiratesNo: transaction.emiratesNo,
+        workPermit: transaction.workPermit,
+        lcNo: transaction.lcNo,
+        lcExpiryDate: transaction.lcExpiryDate,
+        workPermitExpiryDate: transaction.workPermitExpiryDate,
+        visitExpiryDate: transaction.visitExpiryDate,
+        tawjeehDate: transaction.tawjeehDate,
+        medicalDate: transaction.medicalDate,
+        changeStatusDate: transaction.changeStatusDate,
+        status: transaction.status,
+        wpStatus: transaction.wpStatus,
+        statusDate: transaction.statusDate,
+        cardType: transaction.cardType,
+        salary: transaction.salary,
+        remarks: transaction.remarks,
+        residenceExpiryDate: transaction.residenceExpiryDate,
+        deleted: transaction.deleted,
+      });
+    });
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    await workbook.xlsx.write(res);
+    res.end();
+  }
+  async getCounters() {
+    const [count, deleted] = await Promise.all([
+      this.transactionModel.countDocuments({ deleted: false }),
+      this.transactionModel.countDocuments({ deleted: true }),
+    ]);
+    return {
+      count,
+      deleted,
+    };
+  }
+}

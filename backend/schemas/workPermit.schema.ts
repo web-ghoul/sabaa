@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+
+export type WorkPermitDocument = HydratedDocument<WorkPermit>;
 
 @Schema({ timestamps: true })
-export class WorkPermit extends Document {
+export class WorkPermit  {
   @Prop({ required: true })
   _id: string;
 

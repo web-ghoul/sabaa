@@ -223,14 +223,30 @@ export class EmployeesService {
     }
   }
 
-  async report(res: Response) {
-    const employees = await this.employeeModel.find();
-    const employees2 = await this.employeeModel.find();
-    const employees4 = await this.employeeModel.find();
-    const final = [...employees, ...employees2, ...employees4];
-    // console.log(employees);
+  async checkExistance(createEmployeeDto: CreateEmployeeDto) {
+    const employee = await this.employeeModel.findOne({
+      gender: createEmployeeDto.gender,
+       nationality: createEmployeeDto.nationality,
+       dob: createEmployeeDto.dob,
+       name: createEmployeeDto.name,
+     });
 
-    const pdfDoc = this.employeePdfGenerator.generateReport(final);
+     if(employee)
+       {
+         return employee;  
+       }else
+       {
+        throw  new HttpException("employee not found",HttpStatus.NOT_FOUND)
+       }
+  }
+  async report(res: Response) {
+    const employees = await this.employeeModel.find({ deleted: false });
+    // const employees2 = await this.employeeModel.find();
+    // const employees4 = await this.employeeModel.find();
+    // const final = [...employees, ...employees2, ...employees4];
+    // // console.log(employees);
+
+    const pdfDoc = this.employeePdfGenerator.generateReport(employees);
     // console.log(pdfDoc);
 
     res.setHeader('Content-Type', 'application/pdf');

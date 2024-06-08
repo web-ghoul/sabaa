@@ -37,6 +37,11 @@ export class EmployeesController {
     return this.employeesService.getCounters();
   }
 
+  @Post("checkExistance")
+  checkExistance(@Body() createEmployeeDto: CreateEmployeeDto,) {
+    return this.employeesService.checkExistance(createEmployeeDto);
+  }
+
   @Get("export")
   export(@Res()  res: Response,@Query('fileName') fileName: string) {
     return this.employeesService.export(res,fileName);  
