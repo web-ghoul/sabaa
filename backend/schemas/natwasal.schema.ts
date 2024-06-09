@@ -55,5 +55,7 @@ export class Natwasal {
 export const NatwasalSchema = SchemaFactory.createForClass(Natwasal);
 
 NatwasalSchema.index({ personCode: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+NatwasalSchema.index({ username: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+
 // UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})

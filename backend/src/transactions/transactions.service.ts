@@ -8,7 +8,6 @@ import { Employee } from 'schemas/employee.schema';
 import { Transaction } from 'schemas/transaction.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
-import { EmployeesService } from 'src/employees/employees.service';
 
 @Injectable()
 export class TransactionsService {

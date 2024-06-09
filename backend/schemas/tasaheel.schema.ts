@@ -56,5 +56,7 @@ export class Tasaheel {
 export const TasaheelSchema = SchemaFactory.createForClass(Tasaheel);
 
 TasaheelSchema.index({ personCode: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+TasaheelSchema.index({ username: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+
 // UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
 // UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})

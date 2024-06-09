@@ -134,9 +134,9 @@ export class EmployeesService {
     const [employee, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
       await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
-      this.eChannelModel.findOne({employee:id}),
-      this.eNatwasalModel.findOne({employee:id}),
-      this.eTasaheelModel.findOne({employee:id}),
+      this.eChannelModel.findOne({employee:id, deleted: false}),
+      this.eNatwasalModel.findOne({employee:id, deleted: false}),
+      this.eTasaheelModel.findOne({employee:id, deleted: false}),
 
     ])
     return {employee,activities,eChannel,eNatwasal,eTasaheel};

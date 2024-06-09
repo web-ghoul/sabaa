@@ -23,6 +23,10 @@ export class CreateEChannelDto {
 
   @IsString()
   @IsNotEmpty()
+  eChannelNotes: string;
+
+  @IsString()
+  @IsNotEmpty()
   status: string;
 
   @IsString()

@@ -93,7 +93,7 @@ export class EChannelService {
 
   async findOne(id: string) {
     const echannel = await this.eChannelModel
-      .findOne({ $or: [{ uid: id }, { emiratesId: id }] })
+      .findOne({ $or: [{ uid: id }, { emiratesId: id }] ,  deleted: false })
       .populate([
         { path: 'employee', model: 'Employee' },
         { path: 'owner', model: 'Owner' },

@@ -150,7 +150,7 @@ export class OwnerService {
           {ownerId: id },
           {proCode: id },
         ]
-        })
+        , deleted: false})
         .populate([
           { path: 'ownerId', model: 'Owner' },
           { path: 'proCode', model: 'Owner' },
@@ -159,9 +159,9 @@ export class OwnerService {
         ])
         .exec(),
         this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"}),
-        this.eChannelModel.findOne({owner:id}),
-        this.eNatwasalModel.findOne({owner:id}),
-        this.eTasaheelModel.findOne({owner:id}),
+        this.eChannelModel.findOne({owner:id, deleted: false}),
+        this.eNatwasalModel.findOne({owner:id , deleted: false}),
+        this.eTasaheelModel.findOne({owner:id, deleted: false}),
       
     ]);
     return { owner, companies, activities,eChannel,eNatwasal,eTasaheel };
