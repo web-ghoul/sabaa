@@ -36,6 +36,7 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
         (formik as unknown as EChannelFormikTypes).values.uid = data.uid;
         (formik as unknown as EChannelFormikTypes).values.personCode =
           data.personCode;
+        (formik as unknown as EChannelFormikTypes).values.gender = data.gender;
         (formik as unknown as EChannelFormikTypes).values.emiratesId =
           data.emiratesId;
         (formik as unknown as EChannelFormikTypes).values.phone = data.phone;
@@ -43,7 +44,6 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           data.type && data.type.toLowerCase() === "pro"
             ? "officer"
             : data.type || "employee";
-        (formik as unknown as EChannelFormikTypes).values.status = data.status;
         if (data.owner) {
           (formik as unknown as EChannelFormikTypes).values.owner = (
             data.owner as OwnerTypes
@@ -121,6 +121,12 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
             select
             options={["Active", "Inactive"]}
           />
+          <Input
+            formik={formik}
+            label={"Notes"}
+            name={"eChannelNotes"}
+            textarea
+          />
         </Box>
       </Box>
 
@@ -155,10 +161,10 @@ const EChannelForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
-            label={"Person Code"}
-            name={"personCode"}
-            type={"text"}
-            variant={"numeric"}
+            label={"Gender"}
+            name={"gender"}
+            select
+            options={["Male", "Female"]}
             disabled
           />
           <Input

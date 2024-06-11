@@ -48,7 +48,10 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
     (formik as unknown as TasheelFormikTypes).values.nameAr = d.nameAr || "";
     (formik as unknown as TasheelFormikTypes).values.personCode =
       d.personCode || "";
+    (formik as unknown as TasheelFormikTypes).values.emiratesId =
+      d.emiratesId || "";
     (formik as unknown as TasheelFormikTypes).values.email = d.email;
+    (formik as unknown as TasheelFormikTypes).values.name = d.name;
     (formik as unknown as TasheelFormikTypes).values.type =
       d.type && d.type.toLowerCase() === "pro"
         ? "officer"
@@ -57,24 +60,24 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       (formik as unknown as TasheelFormikTypes).values.owner = (
         d.owner as OwnerTypes
       )._id;
-      (formik as unknown as TasheelFormikTypes).values.name = (
+      (formik as unknown as TasheelFormikTypes).values.emiratesId = (
         d.owner as OwnerTypes
-      ).name;
+      ).emiratesId;
     } else if (d.employee) {
       (formik as unknown as TasheelFormikTypes).values.employee = (
         d.employee as EmployeeTypes
       )._id;
-      (formik as unknown as TasheelFormikTypes).values.name = (
+      (formik as unknown as TasheelFormikTypes).values.emiratesId = (
         d.employee as EmployeeTypes
-      ).name;
+      ).emiratesId;
     } else {
       if (d.type) {
         (formik as unknown as TasheelFormikTypes).values.owner = d._id;
-        (formik as unknown as TasheelFormikTypes).values.name = d.name;
       } else {
         (formik as unknown as TasheelFormikTypes).values.employee = d._id;
-        (formik as unknown as TasheelFormikTypes).values.name = d.name;
       }
+      (formik as unknown as TasheelFormikTypes).values.emiratesId =
+        d.emiratesId;
     }
 
     if (reset) {
@@ -258,6 +261,12 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
             formik={formik}
             label={"Person Code"}
             name={"personCode"}
+            disabled
+          />
+          <Input
+            formik={formik}
+            label={"Emirates Id"}
+            name={"emiratesId"}
             disabled
           />
           <Input

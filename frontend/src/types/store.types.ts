@@ -363,6 +363,7 @@ interface EChannelTypes {
   uid: string;
   emiratesId: string;
   personCode: string;
+  eChannelNotes: string;
   status: "active" | "inactive";
   owner?: string | OwnerTypes;
   employee?: string | EmployeeTypes;
@@ -397,6 +398,7 @@ interface TasheelTypes {
   name: string;
   nameAr: string;
   personCode: string;
+  emiratesId: string;
   username: string;
   password: string;
   security1: string;
@@ -626,42 +628,42 @@ export type {
   CompaniesValuesTypes,
   CompanyTypes,
   CompanyValuesTypes,
+  CustomerTypes,
+  CustomerValuesTypes,
   CustomersArgsTypes,
   CustomersCounterValuesTypes,
   CustomersValuesTypes,
-  CustomerTypes,
-  CustomerValuesTypes,
+  EChannelTypes,
   EChannelsArgsTypes,
   EChannelsCounterValuesTypes,
   EChannelsValuesTypes,
-  EChannelTypes,
+  EmployeeTypes,
+  EmployeeValuesTypes,
   EmployeesArgsTypes,
   EmployeesCounterValuesTypes,
   EmployeesValuesTypes,
-  EmployeeTypes,
-  EmployeeValuesTypes,
+  JobTypes,
   JobsArgsTypes,
   JobsCounterValuesTypes,
   JobsValuesTypes,
-  JobTypes,
   NationalitiesArgsTypes,
   NationalitiesCounterValuesTypes,
   NationalitiesValuesTypes,
   NationalityTypes,
+  NatwasalTypes,
   NatwasalsArgsTypes,
   NatwasalsCounterValuesTypes,
   NatwasalsValuesTypes,
-  NatwasalTypes,
+  OwnerTypes,
+  OwnerValuesTypes,
   OwnersArgsTypes,
   OwnersCounterValuesTypes,
   OwnersValuesTypes,
-  OwnerTypes,
-  OwnerValuesTypes,
+  ProTypes,
+  ProValuesTypes,
   ProsArgsTypes,
   ProsCounterValuesTypes,
   ProsValuesTypes,
-  ProTypes,
-  ProValuesTypes,
   RecentActivitiesArgsTypes,
   RecentActivitiesValuesTypes,
   RecentCompaniesArgsTypes,
@@ -680,15 +682,15 @@ export type {
   RecentProsValuesTypes,
   RecentUsersArgsTypes,
   RecentUsersValuesTypes,
-  SponsorsValuesTypes,
   SponsorTypes,
+  SponsorsValuesTypes,
+  TasheelTypes,
   TasheelsArgsTypes,
   TasheelsCounterValuesTypes,
   TasheelsValuesTypes,
-  TasheelTypes,
+  UserTypes,
+  UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
   UsersValuesTypes,
-  UserTypes,
-  UserValuesTypes,
 };

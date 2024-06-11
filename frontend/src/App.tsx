@@ -73,8 +73,6 @@ const App = () => {
     setQueries(allParams);
   }, [searchParams, setQueries]);
 
-  console.log(mdScreen, signed);
-
   return signed && !AuthRoutes.includes(pathname) ? (
     <Box sx={{ display: "flex" }} className={`bg-bg relative`}>
       <CssBaseline />
