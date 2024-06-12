@@ -50,8 +50,7 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       d.personCode || "";
     (formik as unknown as TasheelFormikTypes).values.emiratesId =
       d.emiratesId || "";
-    (formik as unknown as TasheelFormikTypes).values.email = d.email;
-    (formik as unknown as TasheelFormikTypes).values.name = d.name;
+    (formik as unknown as TasheelFormikTypes).values.email = d.email || "";
     (formik as unknown as TasheelFormikTypes).values.type =
       d.type && d.type.toLowerCase() === "pro"
         ? "officer"
@@ -79,7 +78,6 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
       (formik as unknown as TasheelFormikTypes).values.emiratesId =
         d.emiratesId;
     }
-
     if (reset) {
       setPersons(null);
     }
@@ -213,6 +211,12 @@ const TasheelForm = ({ formik, type }: FormiksTypes) => {
             label={"Security 2"}
             name={"security2"}
             type={"text"}
+          />
+          <Input
+            formik={formik}
+            label={"Email"}
+            name={"email"}
+            type={"email"}
           />
           <Input
             formik={formik}

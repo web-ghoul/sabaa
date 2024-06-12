@@ -507,3 +507,16 @@ Notes For Amr :
 4- Add Job and Gender in Customer and Sponsor Schema
 5- Return E-Channel Details of Person with profile Data
 
+
+
+Notes for Amr :
+1- First Edits in Tasheel       
+
+32545623423 0561545121
+
+
+
+Meeting Track:
+1- Handle all Sample Files
+2- Talk about Convert input to text label
+3- 

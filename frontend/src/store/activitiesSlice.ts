@@ -13,11 +13,15 @@ export const getActivities = createAsyncThunk(
     const res = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/activity?page=${
         args?.page || 0
-      }&limit=${args?.limit || 0}&to=${args?.to || ""}&from=${
-        args?.from || ""
-      }&operation=${args?.operation || ""}&type=${args?.type || ""}&search=${
-        args?.search || ""
-      }`,
+      }&limit=${
+        args?.limit
+          ? args.limit == -1
+            ? ""
+            : args.limit
+          : import.meta.env.VITE_LIMIT_PAGES
+      }&to=${args?.to || ""}&from=${args?.from || ""}&operation=${
+        args?.operation || ""
+      }&type=${args?.type || ""}&search=${args?.search || ""}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

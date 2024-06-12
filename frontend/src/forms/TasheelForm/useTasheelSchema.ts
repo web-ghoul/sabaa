@@ -15,7 +15,7 @@ const useTasheelSchema = () => {
     personCode: yup.string(),
     security1: yup.string().required("Security 1 is required"),
     security2: yup.string().required("Security 2 is required"),
-    email: yup.string(),
+    email: yup.string().required("Email is required"),
     mobile: yup.string(),
     type: yup.string(),
     notes: yup.string(),
