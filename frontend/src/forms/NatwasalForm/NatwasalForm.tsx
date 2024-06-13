@@ -50,6 +50,7 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
     (formik as unknown as NatwasalFormikTypes).values.personCode =
       d.personCode || "";
     (formik as unknown as NatwasalFormikTypes).values.email = d.email;
+    (formik as unknown as NatwasalFormikTypes).values.name = d.name;
     (formik as unknown as NatwasalFormikTypes).values.type =
       d.type && d.type.toLowerCase() === "pro"
         ? "officer"
@@ -58,24 +59,24 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
       (formik as unknown as NatwasalFormikTypes).values.owner = (
         d.owner as OwnerTypes
       )._id;
-      (formik as unknown as NatwasalFormikTypes).values.name = (
+      (formik as unknown as NatwasalFormikTypes).values.emiratesId = (
         d.owner as OwnerTypes
-      ).name;
+      ).emiratesId;
     } else if (d.employee) {
       (formik as unknown as NatwasalFormikTypes).values.employee = (
         d.employee as EmployeeTypes
       )._id;
-      (formik as unknown as NatwasalFormikTypes).values.name = (
+      (formik as unknown as NatwasalFormikTypes).values.emiratesId = (
         d.employee as EmployeeTypes
-      ).name;
+      ).emiratesId;
     } else {
       if (d.type) {
         (formik as unknown as NatwasalFormikTypes).values.owner = d._id;
-        (formik as unknown as NatwasalFormikTypes).values.name = d.name;
       } else {
         (formik as unknown as NatwasalFormikTypes).values.employee = d._id;
-        (formik as unknown as NatwasalFormikTypes).values.name = d.name;
       }
+      (formik as unknown as NatwasalFormikTypes).values.emiratesId =
+        d.emiratesId;
     }
 
     if (reset) {
@@ -202,13 +203,13 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
           />
           <Input
             formik={formik}
-            label={"Security 1"}
+            label={"Security question 1"}
             name={"security1"}
             type={"text"}
           />
           <Input
             formik={formik}
-            label={"Security 2"}
+            label={"Security question 2"}
             name={"security2"}
             type={"text"}
           />
@@ -259,6 +260,12 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
             formik={formik}
             label={"Person Code"}
             name={"personCode"}
+            disabled
+          />
+          <Input
+            formik={formik}
+            label={"Emirates Id"}
+            name={"emiratesId"}
             disabled
           />
           <Input

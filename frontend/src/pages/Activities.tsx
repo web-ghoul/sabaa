@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
@@ -16,11 +17,15 @@ const Activities = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    dispatch(getActivities());
+    const allParams: { [key: string]: string } = {};
+    for (const [key, value] of searchParams.entries()) {
+      allParams[key] = value;
+    }
+    dispatch(getActivities(allParams));
   }, [dispatch]);
-
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
