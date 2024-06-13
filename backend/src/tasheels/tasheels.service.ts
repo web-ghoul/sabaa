@@ -79,14 +79,14 @@ export class TasheelsService {
   }
 
   async findOne(id: string) {
-    const data = await this.tasheelModel.findOne({personCode: id}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+    const data = await this.tasheelModel.findOne({personCode: id,  deleted: false}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
     if(data){
       return data;
     }else{
       const [emp,owner,company] = await Promise.all([
-        this.employeeModel.findOne({personCode: id}),
-        this.ownerModel.findOne({personCode: id}),
-        this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
+        this.employeeModel.findOne({personCode: id,  deleted: false}),
+        this.ownerModel.findOne({personCode: id,  deleted: false}),
+        this.companyModel.findOne({molCode: id,  deleted: false}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
       ])
 
       return (emp || owner || company || {});
