@@ -102,8 +102,13 @@ export class EChannelService {
       return echannel;
     } else {
       const [emp, owner] = await Promise.all([
+<<<<<<< HEAD
         this.employeeModel.findOne({ $or: [{ uid: id }, { emiratesId: id }] }),
         this.ownerModel.findOne({ $or: [{ uid: id }, { emiratesId: id }] }),
+=======
+        this.employeeModel.findOne({ $or: [{ uid: id }, { emiratesId: id }] ,  deleted: false}),
+        this.ownerModel.findOne({ $or: [{ uid: id }, { emiratesId: id }],  deleted: false }),
+>>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
       ]);
 
       return emp || owner || {};

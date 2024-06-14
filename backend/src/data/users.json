@@ -1,0 +1,27 @@
+[{
+  "name": "Amr008",
+  "password": "$2a$10$vO7f8s5/GRQ0RZ/5r1ChjOr6GwoIoaFn1IMF3Rf0qdhOZbkxYdIMm",
+  "email": "amr@gmail.com",
+  "role": "Admin",
+  "phone": "01013714762",
+  "status": "active",
+  "deleted": false
+},
+{
+  "name": "Amr007",
+  "password": "$2a$10$.JOWBN.Srn7Wba/m21hYDemw8Ybmka9E3egdb/cXZV8shDiZ0rNRq",
+  "email": "admin@gmail.com",
+  "role": "Admin",
+  "phone": "010137147666",
+  "status": "active",
+  "deleted": false
+},
+{
+  "name": "Amr006",
+  "password": "$2a$10$ugMFQjSBCePf4kRhvuVAz.tQSW6VjgV2gLmb/M/lMi21M69vf7FXO",
+  "email": "admin006@gmail.com",
+  "role": "Admin",
+  "phone": "01013714763",
+  "deleted": false,
+  "status": "active"
+}]

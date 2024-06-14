@@ -79,14 +79,24 @@ export class NatwasalsService {
 
 
   async findOne(id: string) {
+<<<<<<< HEAD
     const data = await this.natwasalModel.findOne({personCode: id}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+=======
+    const data = await this.natwasalModel.findOne({personCode: id,  deleted: false}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+>>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
     if(data){
       return data;
     }else{
       const [emp,owner,company] = await Promise.all([
+<<<<<<< HEAD
         this.employeeModel.findOne({personCode: id}),
         this.ownerModel.findOne({personCode: id}),
         this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
+=======
+        this.employeeModel.findOne({personCode: id,  deleted: false}),
+        this.ownerModel.findOne({personCode: id,  deleted: false}),
+        this.companyModel.findOne({molCode: id,  deleted: false}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
+>>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
       ])
 
       return (emp || owner || company || {});
