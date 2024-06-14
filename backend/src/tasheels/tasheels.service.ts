@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
-import { CreateTasheelDto } from './dto/create-tasheel.dto';
-import { UpdateTasheelDto } from './dto/update-tasheel.dto';
-import { Model } from 'mongoose';
-import { Tasaheel } from 'schemas/tasaheel.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee } from 'schemas/employee.schema';
-import { Owner } from 'schemas/owner.schema';
-import { Company } from 'schemas/company.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { Model } from 'mongoose';
+import { Company } from 'schemas/company.schema';
+import { Employee } from 'schemas/employee.schema';
+import { Owner } from 'schemas/owner.schema';
+import { Tasaheel } from 'schemas/tasaheel.schema';
+import { CreateTasheelDto } from './dto/create-tasheel.dto';
+import { UpdateTasheelDto } from './dto/update-tasheel.dto';
 
 @Injectable()
 export class TasheelsService {
@@ -79,24 +79,14 @@ export class TasheelsService {
   }
 
   async findOne(id: string) {
-<<<<<<< HEAD
-    const data = await this.tasheelModel.findOne({personCode: id}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
-=======
     const data = await this.tasheelModel.findOne({personCode: id,  deleted: false}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
->>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
     if(data){
       return data;
     }else{
       const [emp,owner,company] = await Promise.all([
-<<<<<<< HEAD
-        this.employeeModel.findOne({personCode: id}),
-        this.ownerModel.findOne({personCode: id}),
-        this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
-=======
         this.employeeModel.findOne({personCode: id,  deleted: false}),
         this.ownerModel.findOne({personCode: id,  deleted: false}),
         this.companyModel.findOne({molCode: id,  deleted: false}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
->>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
       ])
 
       return (emp || owner || company || {});
