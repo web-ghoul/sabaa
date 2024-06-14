@@ -1,31 +1,35 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
-import { CreateNatwasalDto } from './dto/create-natwasal.dto';
-import { UpdateNatwasalDto } from './dto/update-natwasal.dto';
-import { Model } from 'mongoose';
-import { Natwasal } from 'schemas/natwasal.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee } from 'schemas/employee.schema';
-import { Owner } from 'schemas/owner.schema';
-import { Company } from 'schemas/company.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { Model } from 'mongoose';
+import { Company } from 'schemas/company.schema';
+import { Employee } from 'schemas/employee.schema';
+import { Natwasal } from 'schemas/natwasal.schema';
+import { Owner } from 'schemas/owner.schema';
+import { CreateNatwasalDto } from './dto/create-natwasal.dto';
+import { UpdateNatwasalDto } from './dto/update-natwasal.dto';
 
 @Injectable()
 export class NatwasalsService {
-
   constructor(
     @InjectModel('Natwasal') private natwasalModel: Model<Natwasal>,
     @InjectModel('Employee') private employeeModel: Model<Employee>,
     @InjectModel('Owner') private ownerModel: Model<Owner>,
     @InjectModel('Company') private companyModel: Model<Company>,
-
   ) {}
   create(createNatwasalDto: CreateNatwasalDto) {
     return this.natwasalModel.create(createNatwasalDto);
-
   }
 
-  findAll(limit: number, page: number, search: string, type: string,sort: string,fields: string[]) {
+  findAll(
+    limit: number,
+    page: number,
+    search: string,
+    type: string,
+    sort: string,
+    fields: string[],
+  ) {
     try {
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -38,37 +42,42 @@ export class NatwasalsService {
       if (sort == 'name_asc') {
         sort['name'] = 1;
       }
-      
+
       const query: any = {
-        $and: [{$or: [
-          { username: { $regex: new RegExp(search, 'i') } },
-          { personCode: { $regex: new RegExp(search, 'i') } },
-          { phone: { $regex: new RegExp(search, 'i') } },
-          { uid: { $regex: new RegExp(search, 'i') } },
-          { emiratesId: { $regex: new RegExp(search, 'i') } },
-        ]}
-      ],
-        
+        $and: [
+          {
+            $or: [
+              { username: { $regex: new RegExp(search, 'i') } },
+              { personCode: { $regex: new RegExp(search, 'i') } },
+              { phone: { $regex: new RegExp(search, 'i') } },
+              { uid: { $regex: new RegExp(search, 'i') } },
+              { emiratesId: { $regex: new RegExp(search, 'i') } },
+            ],
+          },
+        ],
       };
 
-      if(type == 'owner'){
-        query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
-      }else if (type == 'pro') {
-        query['$and'].push({ $or : [{type: 'pro'},{type: 'owner&pro'}]});
-      }else
-      {
+      if (type == 'owner') {
+        query['$and'].push({ $or: [{ type: 'owner' }, { type: 'owner&pro' }] });
+      } else if (type == 'pro') {
+        query['$and'].push({ $or: [{ type: 'pro' }, { type: 'owner&pro' }] });
+      } else {
         type != '' ? (query['type'] = type) : undefined;
       }
 
       // console.log(query.$and);
-      query.$and.push({deleted: false});
+      query.$and.push({ deleted: false });
 
       return this.natwasalModel
         .find(query)
         .select(projection)
         .limit(limit)
         .skip(page * limit)
-        .sort(sort).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
+        .sort(sort)
+        .populate([
+          { path: 'employee', model: 'Employee' },
+          { path: 'owner', model: 'Owner' },
+        ]);
     } catch (err) {
       throw new HttpException(
         'Error while getting tasaheel',
@@ -77,35 +86,32 @@ export class NatwasalsService {
     }
   }
 
-
   async findOne(id: string) {
-<<<<<<< HEAD
-    const data = await this.natwasalModel.findOne({personCode: id}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
-=======
-    const data = await this.natwasalModel.findOne({personCode: id,  deleted: false}).populate([{ path: 'employee', model: 'Employee'},{path: 'owner', model: 'Owner'}]);
->>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
-    if(data){
+    const data = await this.natwasalModel
+      .findOne({ personCode: id, deleted: false })
+      .populate([
+        { path: 'employee', model: 'Employee' },
+        { path: 'owner', model: 'Owner' },
+      ]);
+    if (data) {
       return data;
-    }else{
-      const [emp,owner,company] = await Promise.all([
-<<<<<<< HEAD
-        this.employeeModel.findOne({personCode: id}),
-        this.ownerModel.findOne({personCode: id}),
-        this.companyModel.findOne({molCode: id}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
-=======
-        this.employeeModel.findOne({personCode: id,  deleted: false}),
-        this.ownerModel.findOne({personCode: id,  deleted: false}),
-        this.companyModel.findOne({molCode: id,  deleted: false}).populate([{ path: 'employees', model: 'Employee'},{path: 'ownerId', model: 'Owner'},{ path: 'proCode', model: 'Owner' },]),
->>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10
-      ])
+    } else {
+      const [emp, owner, company] = await Promise.all([
+        this.employeeModel.findOne({ personCode: id, deleted: false }),
+        this.ownerModel.findOne({ personCode: id, deleted: false }),
+        this.companyModel.findOne({ molCode: id, deleted: false }).populate([
+          { path: 'employees', model: 'Employee' },
+          { path: 'ownerId', model: 'Owner' },
+          { path: 'proCode', model: 'Owner' },
+        ]),
+      ]);
 
-      return (emp || owner || company || {});
+      return emp || owner || company || {};
     }
   }
 
   update(id: string, updateNatwasalDto: UpdateNatwasalDto) {
     return this.natwasalModel.findByIdAndUpdate(id, updateNatwasalDto);
-
   }
 
   async remove(id: string) {
@@ -116,9 +122,8 @@ export class NatwasalsService {
 
   async getCounters() {
     const [count, deleted] = await Promise.all([
-      this.natwasalModel.countDocuments({ deleted: false}),
-      this.natwasalModel.countDocuments({ deleted: true}),
-      
+      this.natwasalModel.countDocuments({ deleted: false }),
+      this.natwasalModel.countDocuments({ deleted: true }),
     ]);
     return {
       count,
@@ -127,7 +132,7 @@ export class NatwasalsService {
   }
 
   async export(@Res() res: Response, fileName: string) {
-    const eChannels = await this.natwasalModel.find({ deleted: false});
+    const eChannels = await this.natwasalModel.find({ deleted: false });
 
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('EChannels');
@@ -143,7 +148,7 @@ export class NatwasalsService {
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    eChannels.forEach(eChannel => {
+    eChannels.forEach((eChannel) => {
       worksheet.addRow({
         _id: eChannel._id.toString(),
         type: eChannel.type,
@@ -157,8 +162,14 @@ export class NatwasalsService {
       });
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileName}.xlsx`,
+    );
     await workbook.xlsx.write(res);
 
     res.end();
