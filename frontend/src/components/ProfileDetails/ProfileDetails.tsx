@@ -166,6 +166,83 @@ const ProfileDetails = ({
     setEditableCompanyData(company);
   };
 
+  const eChannelBox = eChannel && (
+    <>
+      <Divider />
+      <Box className={sectionClasses}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          E-Channel Information
+        </Typography>
+        <Box className={profileInfoClasses}>
+          <DataBox title={"Username"} value={eChannel.username} />
+          <DataBox
+            title={"Password"}
+            value={<PasswordBox password={eChannel.password} />}
+          />
+          <DataBox
+            title={"Status"}
+            value={<StatusBox status={eChannel.status} />}
+          />
+          <DataBox title={"Notes"} value={eChannel.eChannelNotes} />
+          <DataBox
+            title={"Created At"}
+            value={handleDate(eChannel.createdAt, true)}
+          />
+        </Box>
+      </Box>
+    </>
+  );
+
+  const tasheelBox = tasheel && (
+    <>
+      <Divider />
+      <Box className={sectionClasses}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Tasheel Information
+        </Typography>
+        <Box className={profileInfoClasses}>
+          <DataBox title={"Username"} value={tasheel.username} />
+          <DataBox
+            title={"Password"}
+            value={<PasswordBox password={tasheel.password} />}
+          />
+          <DataBox title={"Security 1"} value={tasheel.security1} />
+          <DataBox title={"Security 2"} value={tasheel.security2} />
+          <DataBox title={"Mobile"} value={tasheel.mobile} />
+          <DataBox
+            title={"Created At"}
+            value={handleDate(tasheel.createdAt, true)}
+          />
+        </Box>
+      </Box>
+    </>
+  );
+
+  const natwasalBox = natwasal && (
+    <>
+      <Divider />
+      <Box className={sectionClasses}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Natwasal Information
+        </Typography>
+        <Box className={profileInfoClasses}>
+          <DataBox title={"Username"} value={natwasal.username} />
+          <DataBox
+            title={"Password"}
+            value={<PasswordBox password={natwasal.password} />}
+          />
+          <DataBox title={"Security 1"} value={natwasal.security1} />
+          <DataBox title={"Security 2"} value={natwasal.security2} />
+          <DataBox title={"Mobile"} value={natwasal.mobile} />
+          <DataBox
+            title={"Created At"}
+            value={handleDate(natwasal.createdAt, true)}
+          />
+        </Box>
+      </Box>
+    </>
+  );
+
   return isLoading ? (
     <LoadingProfileDetails />
   ) : (
@@ -292,79 +369,9 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
-          {eChannel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  E-Channel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={eChannel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={eChannel.password} />}
-                  />
-                  <DataBox
-                    title={"Status"}
-                    value={<StatusBox status={eChannel.status} />}
-                  />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(eChannel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {tasheel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Tasheel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={tasheel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={tasheel.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={tasheel.security1} />
-                  <DataBox title={"Security 2"} value={tasheel.security2} />
-                  <DataBox title={"Mobile"} value={tasheel.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(tasheel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {natwasal && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Natwasal Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={natwasal.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={natwasal.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={natwasal.security1} />
-                  <DataBox title={"Security 2"} value={natwasal.security2} />
-                  <DataBox title={"Mobile"} value={natwasal.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(natwasal.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
+          {eChannelBox}
+          {tasheelBox}
+          {natwasalBox}
         </Paper>
       ) : variant === "officer" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -449,79 +456,9 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
-          {eChannel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  E-Channel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={eChannel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={eChannel.password} />}
-                  />
-                  <DataBox
-                    title={"Status"}
-                    value={<StatusBox status={eChannel.status} />}
-                  />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(eChannel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {tasheel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Tasheel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={tasheel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={tasheel.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={tasheel.security1} />
-                  <DataBox title={"Security 2"} value={tasheel.security2} />
-                  <DataBox title={"Mobile"} value={tasheel.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(tasheel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {natwasal && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Natwasal Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={natwasal.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={natwasal.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={natwasal.security1} />
-                  <DataBox title={"Security 2"} value={natwasal.security2} />
-                  <DataBox title={"Mobile"} value={natwasal.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(natwasal.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
+          {eChannelBox}
+          {tasheelBox}
+          {natwasalBox}
         </Paper>
       ) : variant === "customer" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -624,79 +561,9 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
-          {eChannel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  E-Channel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={eChannel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={eChannel.password} />}
-                  />
-                  <DataBox
-                    title={"Status"}
-                    value={<StatusBox status={eChannel.status} />}
-                  />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(eChannel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {tasheel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Tasheel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={tasheel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={tasheel.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={tasheel.security1} />
-                  <DataBox title={"Security 2"} value={tasheel.security2} />
-                  <DataBox title={"Mobile"} value={tasheel.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(tasheel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {natwasal && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Natwasal Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={natwasal.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={natwasal.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={natwasal.security1} />
-                  <DataBox title={"Security 2"} value={natwasal.security2} />
-                  <DataBox title={"Mobile"} value={natwasal.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(natwasal.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
+          {eChannelBox}
+          {tasheelBox}
+          {natwasalBox}
         </Paper>
       ) : variant === "employee" ? (
         <Paper className={profileClasses} elevation={11}>
@@ -825,79 +692,9 @@ const ProfileDetails = ({
               />
             </Box>
           </Box>
-          {eChannel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  E-Channel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={eChannel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={eChannel.password} />}
-                  />
-                  <DataBox
-                    title={"Status"}
-                    value={<StatusBox status={eChannel.status} />}
-                  />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(eChannel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {tasheel && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Tasheel Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={tasheel.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={tasheel.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={tasheel.security1} />
-                  <DataBox title={"Security 2"} value={tasheel.security2} />
-                  <DataBox title={"Mobile"} value={tasheel.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(tasheel.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
-          {natwasal && (
-            <>
-              <Divider />
-              <Box className={sectionClasses}>
-                <Typography variant="h4" className={`!font-[700]`}>
-                  Natwasal Information
-                </Typography>
-                <Box className={profileInfoClasses}>
-                  <DataBox title={"Username"} value={natwasal.username} />
-                  <DataBox
-                    title={"Password"}
-                    value={<PasswordBox password={natwasal.password} />}
-                  />
-                  <DataBox title={"Security 1"} value={natwasal.security1} />
-                  <DataBox title={"Security 2"} value={natwasal.security2} />
-                  <DataBox title={"Mobile"} value={natwasal.mobile} />
-                  <DataBox
-                    title={"Created At"}
-                    value={handleDate(natwasal.createdAt, true)}
-                  />
-                </Box>
-              </Box>
-            </>
-          )}
+          {eChannelBox}
+          {tasheelBox}
+          {natwasalBox}
           <Divider />
           <Box className={sectionClasses}>
             <Typography variant="h4" className={`!font-[700]`}>

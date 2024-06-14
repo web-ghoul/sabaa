@@ -28,5 +28,6 @@ import { Natwasal, NatwasalSchema } from 'schemas/natwasal.schema';
   })],
   controllers: [EmployeesController],
   providers: [EmployeesService,LogInterceptor,EmployeePdfGenerator],
+  exports: [EmployeesService],
 })
 export class EmployeesModule {}

@@ -1,13 +1,30 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import {HydratedDocument } from 'mongoose';
+
+export type TransactionDocument = HydratedDocument<Transaction>;
 
 @Schema({ timestamps: true })
-export class Transaction extends Document {
-  @Prop({ required: true })
-  _id: string;
+export class Transaction{
+
+  @Prop({ type: String })
+  transactionNo: string;
+
+  @Prop({ type: String, ref: 'Employee', required: true })
+  employeeId: string;
+
+  @Prop({ type: String })
+  serialNo: string;
+
+
+
+  @Prop({ type: String, required: true })
+  companyCode: string;
+
 
   @Prop({ type: String, ref: 'Company', required: true })
-  companyCode: string;
+  companyId: string;
+
+
 
   @Prop()
   companyName: string;
@@ -16,13 +33,13 @@ export class Transaction extends Document {
   employeeName: string;
 
   @Prop({ type: Date })
-  dateOfBirth: Date;
+  dob: Date;
 
   @Prop()
   gender: string;
 
   @Prop({ type: String, ref: 'Nationality', required: true })
-  idNationality: string;
+  nationalityId: string;
 
   @Prop()
   nationality: string;
@@ -33,20 +50,30 @@ export class Transaction extends Document {
   @Prop({ type: Date })
   passportExpiry: Date;
 
-  @Prop({ type: String, ref: 'JobTitle', required: true })
-    codeMOHREJOB: string;
-
   @Prop()
   job: string;
 
-  @Prop({ type: String, ref: 'Employee', required: true })
-    personCode: string;
+  @Prop({type: String, required: true })
+  personCode: string;
 
   @Prop()
-  uidNo: string;
+  uid: string;
+
+  @Prop({})
+  emiratesNo: string;
 
   @Prop()
-  emiratesIdNo: string;
+  workPermit: string;
+
+
+  @Prop()
+  lcNo: string;
+
+  @Prop({ type: Date })
+  lcExpiryDate: Date;
+
+  @Prop({ type: Date })
+  workPermitExpiryDate: Date;
 
   @Prop({ type: Date })
   visitExpiryDate: Date;
@@ -54,14 +81,18 @@ export class Transaction extends Document {
   @Prop({ type: Date })
   tawjeehDate: Date;
 
+
   @Prop({ type: Date })
   medicalDate: Date;
 
   @Prop({ type: Date })
   changeStatusDate: Date;
 
-  @Prop()
+  @Prop({default: "In Process"})
   status: string;
+
+  @Prop()
+  wpStatus: string;
 
   @Prop({ type: Date })
   statusDate: Date;
@@ -69,17 +100,28 @@ export class Transaction extends Document {
   @Prop()
   cardType: string;
 
-  @Prop({ type: Date })
-  dateEntry: Date;
+  @Prop()
+  salary: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: string;
+  @Prop()
+  remarks: string;
 
   @Prop({ type: Date })
   residenceExpiryDate: Date;
 
-  @Prop()
+  @Prop({default: false})
   deleted: boolean;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);
+
+
+TransactionSchema.index(
+  { uid: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+);
+
+TransactionSchema.index(
+  { emiratesNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
+);

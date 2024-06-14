@@ -24,7 +24,7 @@ const ActivitiesSection = ({
   const [page, setPage] = useState(1);
   const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    dispatch(getActivities({ page: page - 1 }));
+    dispatch(getActivities({ page: value - 1 }));
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const ActivitiesSection = ({
       className={`paper grid justify-stretch items-center gap-4 md:gap-3 sm:!gap-2`}
     >
       {!isLoading && data
-        ? data.slice(10 * page - 10, 10 * page).map((data, i) => (
+        ? data.map((data, i) => (
             <Fragment key={i}>
               {i > 0 && <Divider />}
               <ActivityBox activity={data} />
@@ -51,7 +51,7 @@ const ActivitiesSection = ({
               </Fragment>
             ))}
       <Pagination
-        count={activitiesCounter || 10}
+        count={Math.ceil(activitiesCounter / 10) || 10}
         variant="outlined"
         color="primary"
         page={page}

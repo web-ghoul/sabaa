@@ -134,7 +134,7 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
             name={"status"}
             formik={formik}
             change={handleFilterByStatus}
-            options={["active", "inactive"]}
+            options={["Active", "Inactive"]}
             select
           />
           <Input
@@ -142,7 +142,7 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
             name={"gender"}
             formik={formik}
             change={handleFilterByGender}
-            options={["male", "female"]}
+            options={["Male", "Female"]}
             select
           />
           <Input

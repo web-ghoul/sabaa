@@ -131,20 +131,15 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [employee, activities, eChannel, eNatwasal, eTasaheel] =
-      await Promise.all([
-        await this.employeeModel.findById(id).populate([
-          { path: 'sponsors', model: 'Sponsor' },
-          { path: 'companyId', model: 'Company' },
-        ]),
-        this.activityModel
-          .find({ id: new mongoose.Types.ObjectId(id), route: 'employee' })
-          .exec(),
-        this.eChannelModel.findOne({ employee: id }),
-        this.eNatwasalModel.findOne({ owner: id }),
-        this.eTasaheelModel.findOne({ owner: id }),
-      ]);
-    return { employee, activities, eChannel, eNatwasal, eTasaheel };
+    const [employee, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
+      await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
+      this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
+      this.eChannelModel.findOne({employee:id, deleted: false}),
+      this.eNatwasalModel.findOne({employee:id, deleted: false}),
+      this.eTasaheelModel.findOne({employee:id, deleted: false}),
+
+    ])
+    return {employee,activities,eChannel,eNatwasal,eTasaheel};
   }
 
   async update(
@@ -228,14 +223,30 @@ export class EmployeesService {
     }
   }
 
-  async report(res: Response) {
-    const employees = await this.employeeModel.find();
-    const employees2 = await this.employeeModel.find();
-    const employees4 = await this.employeeModel.find();
-    const final = [...employees, ...employees2, ...employees4];
-    // console.log(employees);
+  async checkExistance(createEmployeeDto: CreateEmployeeDto) {
+    const employee = await this.employeeModel.findOne({
+      gender: createEmployeeDto.gender,
+       nationality: createEmployeeDto.nationality,
+       dob: createEmployeeDto.dob,
+       name: createEmployeeDto.name,
+     });
 
-    const pdfDoc = this.employeePdfGenerator.generateReport(final);
+     if(employee)
+       {
+         return employee;  
+       }else
+       {
+        throw  new HttpException("employee not found",HttpStatus.NOT_FOUND)
+       }
+  }
+  async report(res: Response) {
+    const employees = await this.employeeModel.find({ deleted: false });
+    // const employees2 = await this.employeeModel.find();
+    // const employees4 = await this.employeeModel.find();
+    // const final = [...employees, ...employees2, ...employees4];
+    // // console.log(employees);
+
+    const pdfDoc = this.employeePdfGenerator.generateReport(employees);
     // console.log(pdfDoc);
 
     res.setHeader('Content-Type', 'application/pdf');
