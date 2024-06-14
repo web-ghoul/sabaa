@@ -1,0 +1,127 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {HydratedDocument } from 'mongoose';
+
+export type TransactionDocument = HydratedDocument<Transaction>;
+
+@Schema({ timestamps: true })
+export class Transaction{
+
+  @Prop({ type: String })
+  transactionNo: string;
+
+  @Prop({ type: String, ref: 'Employee', required: true })
+  employeeId: string;
+
+  @Prop({ type: String })
+  serialNo: string;
+
+
+
+  @Prop({ type: String, required: true })
+  companyCode: string;
+
+
+  @Prop({ type: String, ref: 'Company', required: true })
+  companyId: string;
+
+
+
+  @Prop()
+  companyName: string;
+
+  @Prop()
+  employeeName: string;
+
+  @Prop({ type: Date })
+  dob: Date;
+
+  @Prop()
+  gender: string;
+
+  @Prop({ type: String, ref: 'Nationality', required: true })
+  nationalityId: string;
+
+  @Prop()
+  nationality: string;
+
+  @Prop()
+  passportNumber: string;
+
+  @Prop({ type: Date })
+  passportExpiry: Date;
+
+  @Prop()
+  job: string;
+
+  @Prop({type: String, required: true })
+  personCode: string;
+
+  @Prop()
+  uid: string;
+
+  @Prop({})
+  emiratesNo: string;
+
+  @Prop()
+  workPermit: string;
+
+
+  @Prop()
+  lcNo: string;
+
+  @Prop({ type: Date })
+  lcExpiryDate: Date;
+
+  @Prop({ type: Date })
+  workPermitExpiryDate: Date;
+
+  @Prop({ type: Date })
+  visitExpiryDate: Date;
+
+  @Prop({ type: Date })
+  tawjeehDate: Date;
+
+
+  @Prop({ type: Date })
+  medicalDate: Date;
+
+  @Prop({ type: Date })
+  changeStatusDate: Date;
+
+  @Prop({default: "In Process"})
+  status: string;
+
+  @Prop()
+  wpStatus: string;
+
+  @Prop({ type: Date })
+  statusDate: Date;
+
+  @Prop()
+  cardType: string;
+
+  @Prop()
+  salary: number;
+
+  @Prop()
+  remarks: string;
+
+  @Prop({ type: Date })
+  residenceExpiryDate: Date;
+
+  @Prop({default: false})
+  deleted: boolean;
+}
+
+export const TransactionSchema = SchemaFactory.createForClass(Transaction);
+
+
+TransactionSchema.index(
+  { uid: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+);
+
+TransactionSchema.index(
+  { emiratesNo: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
+);

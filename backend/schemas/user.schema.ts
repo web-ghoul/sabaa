@@ -1,0 +1,43 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
+
+export type UserDocument = HydratedDocument<User>;
+
+@Schema({ timestamps: true })
+export class User {
+  
+  _id: ObjectId;
+  @Prop()
+  name: string;
+
+  @Prop()
+  password: string;
+
+  @Prop()
+  email: string;
+
+  @Prop()
+  role: string;
+
+  @Prop()
+  phone: string;
+
+  @Prop()
+  avatar: string;
+
+  @Prop()
+  status: string;
+
+  @Prop({default : false})
+  deleted: boolean;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: string;
+
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.index({ email: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+UserSchema.index({ phone: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
+UserSchema.index({ name: 1 , deleted: 1 } , {unique : true, partialFilterExpression : {deleted : false}})
