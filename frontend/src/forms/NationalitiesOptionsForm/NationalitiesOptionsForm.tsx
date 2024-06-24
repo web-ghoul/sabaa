@@ -12,7 +12,7 @@ import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
+const NationalitiesOptionsForm = ({ register, errors }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -43,7 +43,8 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Nationality, ID..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>

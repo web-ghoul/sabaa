@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
+import useQueries from "../hooks/useQueries";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getPros } from "../store/prosSlice";
@@ -15,16 +15,14 @@ const Pros = () => {
   const { pros, isLoading } = useSelector((state: RootState) => state.pros);
   const { pageContainerClasses } = useContext(AppContext);
   const { prosCounter } = useSelector((state: RootState) => state.prosCounter);
+
   const dispatch = useDispatch<AppDispatch>();
-  const [searchParams] = useSearchParams();
+  const { handleGetQueries } = useQueries();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    dispatch(getPros(allParams));
+    dispatch(getPros(handleGetQueries()));
   }, [dispatch]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

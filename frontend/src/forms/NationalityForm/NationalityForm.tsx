@@ -7,7 +7,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const NationalityForm = ({ formik, type }: FormiksTypes) => {
+const NationalityForm = ({ register, errors, type }: FormiksTypes) => {
   const { formsLoading, handleCloseNationalityModal } =
     useContext(FormsContext);
 
@@ -25,17 +25,17 @@ const NationalityForm = ({ formik, type }: FormiksTypes) => {
 
       <Box className={`grid grid-cols-2 justify-stretch items-start gap-6`}>
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Nationality Id"}
           name={"id"}
           type={"text"}
-          variant={"numeric"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           name={"nationality"}
           label={"Nationality"}
-          variant={"english"}
         />
       </Box>
 

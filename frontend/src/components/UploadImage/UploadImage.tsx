@@ -12,6 +12,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     setCompanyImage,
     ownerImage,
     setOwnerImage,
+    sponsorImage,
+    setSponsorImage,
     customerImage,
     setCustomerImage,
     proImage,
@@ -31,6 +33,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       ? proImage || defaultAvatar
       : variant === "addCustomer" || variant === "editCustomer"
       ? customerImage || defaultAvatar
+      : variant === "addSponsor" || variant === "editSponsor"
+      ? sponsorImage || defaultAvatar
       : variant === "addUser" || variant === "editUser"
       ? userImage || defaultAvatar
       : variant === "addEmployee" || variant === "editEmployee"
@@ -50,6 +54,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         setProImage(image);
       } else if (variant === "addCustomer" || variant === "editCustomer") {
         setCustomerImage(image);
+      } else if (variant === "addSponsor" || variant === "editSponsor") {
+        setSponsorImage(image);
       } else if (variant === "addUser" || variant === "editUser") {
         setUserImage(image);
       } else if (variant === "addEmployee" || variant === "editEmployee") {
@@ -69,6 +75,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
         ? proImage || defaultAvatar
         : variant === "addCustomer" || variant === "editCustomer"
         ? customerImage || defaultAvatar
+        : variant === "addSponsor" || variant === "editSponsor"
+        ? sponsorImage || defaultAvatar
         : variant === "addUser" || variant === "editUser"
         ? userImage || defaultAvatar
         : variant === "addEmployee" || variant === "editEmployee"
@@ -83,6 +91,7 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     employeeImage,
     ownerImage,
     proImage,
+    sponsorImage,
     userImage,
     variant,
   ]);

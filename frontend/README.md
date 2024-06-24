@@ -519,7 +519,6 @@ Notes for Amr :
 Meeting Track:
 1- Handle all Sample Files
 2- Talk about Convert input to text label
-<<<<<<< HEAD
 3- 
 
 
@@ -543,6 +542,3 @@ footer
 blogs (Open Modal)
 
 https://www.bigmove.agency/
-=======
-3- 
->>>>>>> ab3e7f96361ab2ef5b5a8b9c9de5791d3ebd2b10

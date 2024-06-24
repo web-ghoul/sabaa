@@ -16,11 +16,13 @@ export const getOwners = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&state=${
-        args?.state || ""
-      }&nationality=${args?.nationality || ""}&page=${
-        args?.page || 0
-      }&type=owner`,
+      }&residenceTo=${args?.residenceTo || ""}&residenceFrom=${
+        args?.residenceFrom || ""
+      }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&status=${
+        args?.status || ""
+      }&state=${args?.state || ""}&nationality=${
+        args?.nationality || ""
+      }&page=${args?.page || 0}&type=owner`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

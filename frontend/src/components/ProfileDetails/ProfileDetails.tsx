@@ -13,6 +13,7 @@ import {
   EmployeeTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   UserTypes,
 } from "../../types/store.types";
 import Button from "../Button/Button";
@@ -55,6 +56,8 @@ const ProfileDetails = ({
     handleOpenCustomerModal,
     setEditableEmployeeData,
     handleOpenConvertCustomerModal,
+    setEditableSponsorData,
+    handleOpenSponsorModal,
   } = useContext(FormsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { pro } = useSelector((state: RootState) => state.pro);
@@ -118,6 +121,16 @@ const ProfileDetails = ({
   const handleDeleteCustomer = () => {
     handleOpenDeleteModal("customer");
     setEditableCustomerData(customer);
+  };
+
+  //Sponsor
+  const handleEditSponsor = () => {
+    setEditableSponsorData(data as SponsorTypes);
+    handleOpenSponsorModal("editSponsor");
+  };
+  const handleDeleteSponsor = () => {
+    setEditableSponsorData(data as SponsorTypes);
+    handleOpenDeleteModal("sponsor");
   };
 
   //Employee
@@ -209,6 +222,7 @@ const ProfileDetails = ({
           <DataBox title={"Security 1"} value={tasheel.security1} />
           <DataBox title={"Security 2"} value={tasheel.security2} />
           <DataBox title={"Mobile"} value={tasheel.mobile} />
+          <DataBox title={"Notes"} value={tasheel.notes} />
           <DataBox
             title={"Created At"}
             value={handleDate(tasheel.createdAt, true)}
@@ -234,6 +248,7 @@ const ProfileDetails = ({
           <DataBox title={"Security 1"} value={natwasal.security1} />
           <DataBox title={"Security 2"} value={natwasal.security2} />
           <DataBox title={"Mobile"} value={natwasal.mobile} />
+          <DataBox title={"Notes"} value={natwasal.notes} />
           <DataBox
             title={"Created At"}
             value={handleDate(natwasal.createdAt, true)}
@@ -564,6 +579,89 @@ const ProfileDetails = ({
           {eChannelBox}
           {tasheelBox}
           {natwasalBox}
+        </Paper>
+      ) : variant === "sponsor" ? (
+        <Paper className={profileClasses} elevation={11}>
+          <Title align={"left"} head={"h4"} title={title} />
+          <Box className={profileDataClasses}>
+            <UserBox
+              avatar={(data as SponsorTypes).avatar}
+              username={(data as SponsorTypes).name}
+              size={"3xlarge"}
+              head={"h5"}
+              res={true}
+            />
+            <Box className={profileButtonsClasses}>
+              <Button
+                title={"Edit"}
+                handling={handleEditSponsor}
+                bg={`!bg-green-500`}
+              />
+              <Button
+                title={"Delete"}
+                bg={`!bg-red-500`}
+                handling={handleDeleteSponsor}
+              />
+            </Box>
+          </Box>
+          <Divider />
+          <Box className={sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Sponsor Information
+            </Typography>
+            <Box className={profileInfoClasses}>
+              <DataBox
+                title={"Arabic Name"}
+                value={(data as SponsorTypes).nameAr}
+              />
+              <DataBox title={"Email"} value={(data as CustomerTypes).email} />
+              <DataBox title={"Phone"} value={(data as CustomerTypes).phone} />
+              <DataBox
+                title={"Address"}
+                value={(data as SponsorTypes).address}
+              />
+              <DataBox
+                title={"Date of Birth"}
+                value={handleDate((data as SponsorTypes).dob)}
+              />
+              <DataBox title={"State"} value={(data as CustomerTypes).state} />
+              <DataBox
+                title={"Nationality"}
+                flag={handleGetFlag((data as SponsorTypes).nationality)}
+                value={(data as CustomerTypes).nationality}
+              />
+              <DataBox title={"Job Title"} value={(data as SponsorTypes).job} />
+              <DataBox title={"Gender"} value={(data as SponsorTypes).gender} />
+              <DataBox
+                title={"Emirates Id"}
+                value={(data as SponsorTypes).emiratesId}
+              />
+              <DataBox
+                title={"UID Number"}
+                value={(data as SponsorTypes).uid}
+              />
+              <DataBox
+                title={"File Immigration Number"}
+                value={(data as SponsorTypes).fileImmgNo}
+              />
+              <DataBox
+                title={"Residence Expire Date"}
+                value={handleDate((data as SponsorTypes).residenceExpiryDate)}
+              />
+              <DataBox
+                title={"Status"}
+                value={<StatusBox status={(data as SponsorTypes).status} />}
+              />
+              <DataBox
+                title={"Remarks"}
+                value={(data as SponsorTypes).remarks}
+              />
+              <DataBox
+                title={"Created At"}
+                value={handleDate((data as SponsorTypes).createdAt, true)}
+              />
+            </Box>
+          </Box>
         </Paper>
       ) : variant === "employee" ? (
         <Paper className={profileClasses} elevation={11}>

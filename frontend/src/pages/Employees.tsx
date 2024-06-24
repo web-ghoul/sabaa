@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
+import useQueries from "../hooks/useQueries";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getEmployees } from "../store/employeesSlice";
@@ -18,15 +18,12 @@ const Employees = () => {
   const { employeesCounter } = useSelector(
     (state: RootState) => state.employeesCounter
   );
+
   const dispatch = useDispatch<AppDispatch>();
-  const [searchParams] = useSearchParams();
+  const { handleGetQueries } = useQueries();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    dispatch(getEmployees(allParams));
+    dispatch(getEmployees(handleGetQueries()));
   }, [dispatch]);
 
   return (

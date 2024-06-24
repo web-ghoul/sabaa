@@ -15,6 +15,7 @@ import {
 } from "./store.types";
 
 interface AppContextProps {
+  AuthRoutes: string[];
   pageContainerClasses: string;
   defaultAvatar: string;
   defaultCompany: string;
@@ -142,6 +143,9 @@ interface FormsContextTypes {
   openSponsorModal: boolean;
   handleOpenSponsorModal: (string: string) => void;
   handleCloseSponsorModal: () => void;
+  openViewSponsorModal: boolean;
+  handleOpenViewSponsorModal: () => void;
+  handleCloseViewSponsorModal: () => void;
   openProModal: boolean;
   handleOpenProModal: (string: string) => void;
   handleCloseProModal: () => void;

@@ -2,6 +2,7 @@ import { MouseEvent, createContext, useState } from "react";
 import { AppContextProps } from "../types/contexts.types";
 
 export const AppContext = createContext<AppContextProps>({
+  AuthRoutes: [],
   pageContainerClasses: "",
   openUserMenu: null,
   handleCloseUserMenu: () => {},
@@ -34,6 +35,12 @@ export const AppContext = createContext<AppContextProps>({
 });
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
+  const AuthRoutes = [
+    `${import.meta.env.VITE_LOGIN_ROUTE}`,
+    `${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`,
+    `${import.meta.env.VITE_OTP_ROUTE}`,
+  ];
+
   const defaultAvatar = "/images/default_avatar.png";
 
   const defaultCompany = "/images/default_company.png";
@@ -86,6 +93,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const values = {
+    AuthRoutes,
     defaultAvatar,
     defaultCompany,
     openUserMenu,

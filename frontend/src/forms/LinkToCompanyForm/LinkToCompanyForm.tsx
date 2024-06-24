@@ -10,13 +10,18 @@ import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
+const LinkToCompanyForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
   const {
     formsLoading,
     handleCloseLinkToCompanyModal,
     editableOwnerData,
     editableProData,
-    formType,
   } = useContext(FormsContext);
   const { companies } = useSelector((state: RootState) => state.companies);
   const dispatch = useDispatch<AppDispatch>();
@@ -30,12 +35,12 @@ const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
       getCompanies({
         limit: -1,
         id:
-          formType === "linkOwner"
+          type === "linkOwner"
             ? (editableOwnerData && editableOwnerData._id) || ""
             : (editableProData && editableProData._id) || "",
       })
     );
-  }, [dispatch, editableOwnerData, editableProData, formType]);
+  }, [dispatch, editableOwnerData, editableProData, type]);
 
   return (
     <Paper
@@ -46,7 +51,10 @@ const LinkToCompanyForm = ({ formik }: FormiksTypes) => {
         <AutoCompleteSearch
           label={"Companies"}
           options={companies}
-          formik={formik}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           name={"companyId"}
           multiple={true}
         />

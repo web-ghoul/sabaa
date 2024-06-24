@@ -1,4 +1,8 @@
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import {
+  DeleteRounded,
+  EditRounded,
+  RemoveRedEyeRounded,
+} from "@mui/icons-material";
 import { Menu } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
@@ -7,8 +11,15 @@ import TableMenuItem from "../TableMenuItem";
 
 const SponsorsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const { handleOpenSponsorModal, handleOpenDeleteModal } =
-    useContext(FormsContext);
+  const {
+    handleOpenSponsorModal,
+    handleOpenViewSponsorModal,
+    handleOpenDeleteModal,
+  } = useContext(FormsContext);
+
+  const handleView = () => {
+    handleOpenViewSponsorModal();
+  };
 
   const handleEdit = () => {
     handleOpenSponsorModal("editSponsor");
@@ -34,6 +45,11 @@ const SponsorsTableMenu = () => {
         horizontal: "right",
       }}
     >
+      <TableMenuItem
+        icon={<RemoveRedEyeRounded />}
+        title={"View"}
+        handling={handleView}
+      />
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}

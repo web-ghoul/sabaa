@@ -23,7 +23,8 @@ import ProsTableMenu from "./SponsorsTableMenu";
 
 const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
   const { handleOpenTableMenu } = useContext(AppContext);
-  const { setEditableSponsorData } = useContext(FormsContext);
+  const { setEditableSponsorData, handleOpenViewSponsorModal } =
+    useContext(FormsContext);
   const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -36,6 +37,13 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
       setEditableSponsorData(data[index]);
     }
     handleOpenTableMenu(event);
+  };
+
+  const handleView = (index: number) => {
+    handleOpenViewSponsorModal();
+    if (data) {
+      setEditableSponsorData(data[index]);
+    }
   };
 
   return (
@@ -62,7 +70,7 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
             data.map((row, i) => {
               return (
                 <PrimaryTableRow key={i}>
-                  <PrimaryTableCell>
+                  <PrimaryTableCell onClick={() => handleView(i)}>
                     <UserBox
                       username={row.name}
                       head={"subtitle1"}

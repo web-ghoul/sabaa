@@ -18,6 +18,7 @@ const useNatwasalSchema = () => {
     mobile: yup.string(),
     type: yup.string(),
     notes: yup.string(),
+    searchForPerson: yup.string(),
   });
 
   const NatwasalInitailValues = {
@@ -32,6 +33,7 @@ const useNatwasalSchema = () => {
     mobile: editableNatwasalData?.mobile || "",
     notes: editableNatwasalData?.notes || "",
     type: editableNatwasalData?.type,
+    searchForPerson: "",
   };
 
   return { NatwasalSchema, NatwasalInitailValues };

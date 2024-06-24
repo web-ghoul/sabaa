@@ -7,7 +7,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const JobForm = ({ formik, type }: FormiksTypes) => {
+const JobForm = ({ register, errors, type }: FormiksTypes) => {
   const { formsLoading, handleCloseJobModal } = useContext(FormsContext);
   return (
     <Box
@@ -22,22 +22,22 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
       )}
       <Box className={`grid justify-stretch items-start gap-6 grid-cols-3`}>
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Job Title"}
           name={"jobTitle"}
-          variant={"english"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"ENSCO Code"}
           name={"ENSCOCode"}
           type={"text"}
-          variant={"numeric"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           type={"text"}
-          variant={"numeric"}
           label={"MOHRE Code"}
           name={"MOHRE"}
         />

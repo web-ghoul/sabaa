@@ -149,7 +149,10 @@ interface OwnersArgsTypes {
   limit?: number;
   dobTo?: string;
   dobFrom?: string;
+  residenceTo?: string;
+  residenceFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -369,6 +372,7 @@ interface EChannelTypes {
   employee?: string | EmployeeTypes;
   user?: string;
   createdAt?: Date;
+  searchForPerson: string;
 }
 
 interface EChannelsValuesTypes {
@@ -411,6 +415,7 @@ interface TasheelTypes {
   employee?: string | EmployeeTypes;
   user?: string;
   createdAt?: Date;
+  searchForPerson: string;
 }
 
 interface TasheelsValuesTypes {

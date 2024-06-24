@@ -22,7 +22,7 @@ const useSponsorSchema = () => {
     address: yup.string(),
     gender: yup.string(),
     relativeRelation: yup.string().required("Relative Relation is required"),
-    residenceExpiryDate: yup.date(),
+    residenceExpiryDate: yup.string(),
     fileImmgNo: yup.string(),
     status: yup.string(),
     remarks: yup.string(),

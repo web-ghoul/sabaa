@@ -7,13 +7,18 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const DownloadExcelForm = ({ formik }: FormiksTypes) => {
+const DownloadExcelForm = ({ register, errors }: FormiksTypes) => {
   const { formsLoading, handleCloseDownloadExcelModal } =
     useContext(FormsContext);
   return (
     <Box className={`grid justify-stretch items-center gap-16`}>
       <Title head={"h4"} align={"center"} title={"Download Excel"} />
-      <Input name={"fileName"} label={"File Name"} formik={formik} />
+      <Input
+        name={"fileName"}
+        label={"File Name"}
+        register={register}
+        errors={errors}
+      />
       <Box className={`flex justify-center items-center gap-8`}>
         <SubmitButton loading={formsLoading}>Download</SubmitButton>
         <Button

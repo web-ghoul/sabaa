@@ -11,7 +11,7 @@ const useDeleteSchema = () => {
   });
 
   const DeleteInitailValues = {
-    string: formType,
+    type: formType,
   };
 
   return { DeleteSchema, DeleteInitailValues };

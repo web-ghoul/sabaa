@@ -6,7 +6,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const LoginForm = ({ formik }: FormiksTypes) => {
+const LoginForm = ({ register, errors }: FormiksTypes) => {
   const { formsLoading, handleOpenForgotPasswordModal } =
     useContext(FormsContext);
   return (
@@ -17,9 +17,16 @@ const LoginForm = ({ formik }: FormiksTypes) => {
       <Box
         className={`grid flex-wrap justify-stretch items-start grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:justify-center`}
       >
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
+          label={"Email"}
+          name={"email"}
+          type={"email"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           label={"Password"}
           type={"password"}
           name={"password"}

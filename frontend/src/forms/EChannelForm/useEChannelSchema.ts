@@ -7,6 +7,7 @@ const useEChannelSchema = () => {
   const { editableEChannelData } = useContext(FormsContext);
 
   const EChannelSchema = yup.object({
+    searchForPerson: yup.string(),
     username: yup.string().required("Username is required"),
     password: yup.string().required("Password is required"),
     name: yup.string().required("English Name is required"),
@@ -21,6 +22,7 @@ const useEChannelSchema = () => {
   });
 
   const EChannelInitailValues = {
+    searchForPerson: "",
     username: editableEChannelData?.username || "",
     password: editableEChannelData?.password || "",
     name: editableEChannelData?.name || "",

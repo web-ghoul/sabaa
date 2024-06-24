@@ -15,13 +15,10 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { getEmployees } from "../../store/employeesSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  EmployeesOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import { NationalityTypes } from "../../types/store.types";
 
-const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
+const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -74,20 +71,16 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
     dispatch(getEmployees({}));
     setQueries({});
+    setValue("search", "");
+    setValue("nationality", "");
+    setValue("gender", "");
+    setValue("cardType", "");
+    setValue("status", "");
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
-
-  (formik as unknown as EmployeesOptionsFormikTypes).values.cardType =
-    queries.cardType || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.gender =
-    queries.gender || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.status =
-    queries.status || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.nationality =
-    queries.nationality || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -113,7 +106,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -167,7 +161,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Nationality"}
             name={"nationality"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByNationality}
             options={handledNationalities}
             select
@@ -175,7 +170,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
             options={["active", "cancel", "complaint", "abscond"]}
             select
@@ -183,7 +179,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Gender"}
             name={"gender"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByGender}
             options={["male", "female"]}
             select
@@ -191,7 +188,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Card Type"}
             name={"cardType"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByCardType}
             options={[
               "PRE APPROVAL FOR WORK PERMIT",

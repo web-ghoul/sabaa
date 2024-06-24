@@ -1,14 +1,8 @@
 import { Autocomplete, Box, Chip, Typography } from "@mui/material";
 import { SyntheticEvent, useEffect, useState } from "react";
+import { FieldErrors, FieldValues, Path } from "react-hook-form";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { AutoCompleteSearchTypes } from "../../types/components.types";
-import {
-  AllFormiksTypes,
-  CompanyFormikTypes,
-  EmployeeFormikTypes,
-  LinkToCompanyFormikTypes,
-  OwnerFormikTypes,
-} from "../../types/forms.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -18,12 +12,26 @@ import {
   ProTypes,
 } from "../../types/store.types";
 
+function getError<T extends FieldValues>(
+  errors: FieldErrors<T>,
+  name: Path<T>
+): string | undefined {
+  const error = errors[name];
+  if (error && typeof error === "object" && "message" in error) {
+    return (error as { message?: string }).message;
+  }
+  return undefined;
+}
+
 export default function AutoCompleteSearch({
   label,
   multiple,
   options,
   name,
-  formik,
+  register,
+  errors,
+  setValue,
+  getValues,
   variant,
 }: AutoCompleteSearchTypes) {
   const style = {
@@ -38,45 +46,54 @@ export default function AutoCompleteSearch({
       fontSize: "20px",
     },
   };
-  const error =
-    formik.touched[name as keyof AllFormiksTypes] &&
-    Boolean(formik.errors[name as keyof AllFormiksTypes]);
-  const helperText = error
-    ? (formik.errors[name as keyof AllFormiksTypes] as string)
-    : undefined;
-  const [values, setValues] = useState(options);
+  const error = Boolean(getError(errors, name));
+  const helperText = getError(errors, name);
+  const [val, setVal] = useState<
+    | JobTypes
+    | NationalityTypes
+    | (CompanyTypes | OwnerTypes | ProTypes | CustomerTypes)[]
+    | null
+  >(
+    name === "companyId" ||
+      name === "ownerId" ||
+      name === "proCode" ||
+      name === "customerId"
+      ? []
+      : null
+  );
 
   const handleChange = (_: SyntheticEvent, newValue: unknown) => {
     if (name === "nationality") {
       const nationality = newValue as NationalityTypes;
-      formik.setFieldValue(name, nationality.nationality);
-      formik.setFieldValue("idNationality", nationality.id);
+      setValue(name, nationality.nationality);
+      setValue("idNationality", nationality.id);
     } else if (name === "ownerId") {
       const owners = newValue as OwnerTypes[];
       const IDs = owners.map((owner: OwnerTypes) => owner._id);
-      formik.setFieldValue(name, IDs);
+      setValue(name, IDs as string[]);
     } else if (name === "proCode") {
       const pros = newValue as ProTypes[];
       const IDs = pros.map((pro: ProTypes) => pro._id);
-      formik.setFieldValue(name, IDs);
+      setValue(name, IDs as string[]);
     } else if (name === "customerId") {
       const customers = newValue as CustomerTypes[];
       const IDs = customers.map((customer: CustomerTypes) => customer._id);
-      formik.setFieldValue(name, IDs);
+      setValue(name, IDs as string[]);
     } else if (name === "companyId") {
       if (variant === "employee") {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
-        formik.setFieldValue(name, IDs.slice(IDs.length - 1));
+        setValue(name, (IDs as string[]).slice(IDs.length - 1));
       } else {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
-        formik.setFieldValue(name, IDs);
+        setValue(name, IDs as string[]);
       }
     } else if (name === "job") {
       const job = newValue as JobTypes;
-      formik.setFieldValue(name, job.jobTitle);
+      setValue(name, job.jobTitle);
     }
+    handleVal();
   };
 
   const handleOptionLabel = (
@@ -116,58 +133,43 @@ export default function AutoCompleteSearch({
     return "";
   };
 
-  const value =
-    name === "nationality"
-      ? (values as NationalityTypes[]).find(
-          (option) =>
-            option.id ===
-            (formik as unknown as OwnerFormikTypes | EmployeeFormikTypes).values
-              .idNationality
-        ) || null
-      : name === "ownerId"
-      ? values.filter((option) =>
-          (
-            (formik as unknown as CompanyFormikTypes).values.ownerId as string[]
-          ).includes(option._id || "")
-        )
-      : name === "proCode"
-      ? values.filter((option) =>
-          (
-            (formik as unknown as CompanyFormikTypes).values.proCode as string[]
-          ).includes(option._id || "")
-        )
-      : name === "customerId"
-      ? values.filter((option) =>
-          (
-            (formik as unknown as CompanyFormikTypes).values
-              .customerId as string[]
-          ).includes(option._id || "")
-        )
-      : name === "companyId"
-      ? variant === "employee"
-        ? values.filter((option) =>
-            (
-              (formik as unknown as EmployeeFormikTypes).values
-                .companyId as string[]
-            ).includes(option._id || "")
-          )
-        : values.filter((option) =>
-            (
-              (formik as unknown as LinkToCompanyFormikTypes).values
-                .companyId as string[]
-            ).includes(option._id || "")
-          )
-      : (name === "job" &&
-          (values as JobTypes[]).find(
-            (option) =>
-              option.jobTitle ===
-              (formik as unknown as EmployeeFormikTypes).values.job
-          )) ||
-        null;
+  const handleVal = () => {
+    if (name === "nationality") {
+      const nationality = (options as NationalityTypes[]).find(
+        (option) => option.id === getValues("idNationality")
+      );
+      setVal(nationality || null);
+    } else if (name === "ownerId") {
+      const owners = (options as OwnerTypes[]).filter((option) =>
+        (getValues("ownerId") as string[]).includes(option._id || "")
+      );
+      setVal(owners || null);
+    } else if (name === "proCode") {
+      const pros = (options as ProTypes[]).filter((option) =>
+        (getValues("proCode") as string[]).includes(option._id || "")
+      );
+      setVal(pros || null);
+    } else if (name === "customerId") {
+      const customers = (options as CustomerTypes[]).filter((option) =>
+        (getValues("customerId") as string[]).includes(option._id || "")
+      );
+      setVal(customers || null);
+    } else if (name === "companyId") {
+      const companies = (options as CompanyTypes[]).filter((option) =>
+        (getValues("companyId") as string[]).includes(option._id || "")
+      );
+      setVal(companies || null);
+    } else if (name === "job") {
+      const job = (options as JobTypes[]).find(
+        (option) => option.jobTitle === getValues("job")
+      );
+      setVal(job || null);
+    }
+  };
 
   useEffect(() => {
-    setValues(options);
-  }, [options]);
+    handleVal();
+  }, []);
 
   return (
     <Box className={`grid justify-stretch items-center gap-2`}>
@@ -177,10 +179,10 @@ export default function AutoCompleteSearch({
         disablePortal
         id="combo-box-demo"
         multiple={multiple}
-        value={value}
+        value={val}
         isOptionEqualToValue={(option, value) => option?._id === value?._id}
         filterSelectedOptions
-        options={values}
+        options={options}
         onChange={handleChange}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => {
@@ -232,8 +234,8 @@ export default function AutoCompleteSearch({
         getOptionLabel={handleOptionLabel}
         renderInput={(params) => (
           <PrimaryTextField
-            onBlur={formik.handleBlur}
             error={error}
+            {...register}
             helperText={helperText}
             {...params}
             placeholder={label}

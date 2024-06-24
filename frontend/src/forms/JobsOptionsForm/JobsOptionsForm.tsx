@@ -12,7 +12,7 @@ import { getJobs } from "../../store/jobsSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const JobsOptionsForm = ({ formik }: FormiksTypes) => {
+const JobsOptionsForm = ({ register, errors }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { handleOpenJobModal, setSearchForJobs, handleOpenDownloadExcelModal } =
@@ -40,7 +40,8 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, MOHRE..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>

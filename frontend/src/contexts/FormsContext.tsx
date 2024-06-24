@@ -55,6 +55,9 @@ export const FormsContext = createContext<FormsContextTypes>({
   openSponsorModal: false,
   handleOpenSponsorModal: () => {},
   handleCloseSponsorModal: () => {},
+  openViewSponsorModal: false,
+  handleOpenViewSponsorModal: () => {},
+  handleCloseViewSponsorModal: () => {},
   openProModal: false,
   handleOpenProModal: () => {},
   handleCloseProModal: () => {},
@@ -330,6 +333,17 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setFormType(type);
     setOpenSponsorModal(true);
+  };
+
+  //View Sponsor Modal
+  const [openViewSponsorModal, setOpenViewSponsorModal] = useState(false);
+
+  const handleCloseViewSponsorModal = () => {
+    setOpenViewSponsorModal(false);
+  };
+
+  const handleOpenViewSponsorModal = () => {
+    setOpenViewSponsorModal(true);
   };
 
   //Pro Modal
@@ -672,6 +686,9 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     openNatwasalModal,
     handleCloseNatwasalModal,
     handleOpenNatwasalModal,
+    openViewSponsorModal,
+    handleCloseViewSponsorModal,
+    handleOpenViewSponsorModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>
