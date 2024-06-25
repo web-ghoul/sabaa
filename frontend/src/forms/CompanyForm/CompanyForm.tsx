@@ -9,6 +9,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getOwners } from "../../store/ownersSlice";
 import { getPros } from "../../store/prosSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -21,8 +22,8 @@ const CompanyForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const { formsLoading, handleCloseCompanyModal, setCompanyImage } =
-    useContext(FormsContext);
+  const { formsLoading, setCompanyImage } = useContext(FormsContext);
+  const { handleCloseCompanyModal } = useContext(ModalsContext);
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
   const { pros } = useSelector((state: RootState) => state.pros);

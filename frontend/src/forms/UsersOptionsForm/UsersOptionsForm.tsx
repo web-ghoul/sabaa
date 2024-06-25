@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { AppDispatch } from "../../store/store";
 import { getUsers } from "../../store/usersSlice";
 import { FormiksTypes } from "../../types/forms.types";
@@ -19,12 +20,9 @@ import { FormiksTypes } from "../../types/forms.types";
 const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const {
-    handleOpenUserModal,
-    searchForUsers,
-    handleOpenDownloadExcelModal,
-    setSearchForUsers,
-  } = useContext(FormsContext);
+  const { searchForUsers, setSearchForUsers } = useContext(FormsContext);
+  const { handleOpenUserModal, handleOpenDownloadExcelModal } =
+    useContext(ModalsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();

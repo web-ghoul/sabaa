@@ -6,11 +6,11 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
+import { ModalsContext } from "../../contexts/ModalsContext";
 
 const NationalityForm = ({ register, errors, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseNationalityModal } =
-    useContext(FormsContext);
-
+  const { formsLoading } = useContext(FormsContext);
+  const { handleCloseNationalityModal } = useContext(ModalsContext);
   return (
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}

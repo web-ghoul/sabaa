@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { useContext } from "react";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import Button from "../components/Button/Button";
-import { FormsContext } from "../contexts/FormsContext";
+import { ModalsContext } from "../contexts/ModalsContext";
 import SponsorsTable from "../tables/SponsorsTable/SponsorsTable";
 import { SponsorTypes } from "../types/store.types";
 
@@ -16,7 +16,7 @@ const SponsorsSection = ({
   isLoading: boolean;
 }) => {
   const { handleOpenSponsorModal, handleOpenDownloadExcelModal } =
-    useContext(FormsContext);
+    useContext(ModalsContext);
   const handleDownloadExcelAll = () => {
     handleOpenDownloadExcelModal("all", "sponsors", "employee");
   };

@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getPros } from "../../store/prosSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -21,12 +22,10 @@ import { NationalityTypes } from "../../types/store.types";
 const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    handleOpenProModal,
-    searchForPros,
-    handleOpenDownloadExcelModal,
-    setSearchForPros,
-  } = useContext(FormsContext);
+  const { searchForPros, setSearchForPros } = useContext(FormsContext);
+  const { handleOpenDownloadExcelModal, handleOpenProModal } =
+    useContext(ModalsContext);
+
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);

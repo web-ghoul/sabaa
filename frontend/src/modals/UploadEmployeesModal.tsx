@@ -5,14 +5,14 @@ import SheetAccordion from "../components/SheetAccordion/SheetAccordion";
 import Title from "../components/Title/Title";
 import UploadExcel from "../components/UploadExcel/UploadExcel";
 import { ExcelsContext } from "../contexts/ExcelsContext";
-import { FormsContext } from "../contexts/FormsContext";
+import { ModalsContext } from "../contexts/ModalsContext";
 import Forms from "../forms/Forms";
 import EmployeesTable from "../tables/EmployeesTable/EmployeesTable";
 import { EmployeesSheetTypes } from "../types/contexts.types";
 
 const UploadEmployeesModal = () => {
   const { openUploadEmployeesModal, handleCloseUploadEmployeesModal } =
-    useContext(FormsContext);
+    useContext(ModalsContext);
   const { employeesSheets } = useContext(ExcelsContext);
   return (
     <Modal

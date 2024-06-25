@@ -12,6 +12,7 @@ import NationalityBox from "../../components/NationalityBox/NationalityBox";
 import UserBox from "../../components/UserBox/UserBox";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { SponsorsTableTypes } from "../../types/tables.types";
@@ -23,8 +24,8 @@ import ProsTableMenu from "./SponsorsTableMenu";
 
 const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
   const { handleOpenTableMenu } = useContext(AppContext);
-  const { setEditableSponsorData, handleOpenViewSponsorModal } =
-    useContext(FormsContext);
+  const { setEditableSponsorData } = useContext(FormsContext);
+  const { handleOpenViewSponsorModal } = useContext(ModalsContext);
   const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");

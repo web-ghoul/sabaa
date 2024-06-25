@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -52,9 +53,10 @@ const useDeleteSubmit = () => {
     editableNationalityData,
     editableUserData,
     formType,
-    handleCloseDeleteModal,
-    handleCloseViewSponsorModal,
   } = useContext(FormsContext);
+  const { handleCloseDeleteModal, handleCloseViewSponsorModal } =
+    useContext(ModalsContext);
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();

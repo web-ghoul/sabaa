@@ -2,20 +2,22 @@ import {
   DeleteRounded,
   EditRounded,
   VisibilityRounded,
-} from '@mui/icons-material';
-import { Menu } from '@mui/material';
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../contexts/AppContext';
-import { FormsContext } from '../../contexts/FormsContext';
-import { EmployeeTypes, OwnerTypes } from '../../types/store.types';
-import TableMenuItem from '../TableMenuItem';
+} from "@mui/icons-material";
+import { Menu } from "@mui/material";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../contexts/AppContext";
+import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
+import { EmployeeTypes, OwnerTypes } from "../../types/store.types";
+import TableMenuItem from "../TableMenuItem";
 
 const TasheelsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const navigate = useNavigate();
-  const { handleOpenDeleteModal, editableTasheelData, handleOpenTasheelModal } =
-    useContext(FormsContext);
+  const { handleOpenDeleteModal, handleOpenTasheelModal } =
+    useContext(ModalsContext);
+  const { editableTasheelData } = useContext(FormsContext);
 
   const handleView = () => {
     if (editableTasheelData) {
@@ -23,21 +25,21 @@ const TasheelsTableMenu = () => {
         const type = (editableTasheelData.owner as OwnerTypes).type;
         navigate(
           `${
-            type === 'owner'
+            type === "owner"
               ? import.meta.env.VITE_OWNERS_ROUTE
-              : type === 'pro'
+              : type === "pro"
               ? import.meta.env.VITE_PROS_ROUTE
               : import.meta.env.VITE_CUSTOMERS_ROUTE
           }/${
             editableTasheelData && (editableTasheelData.owner as OwnerTypes)._id
-          }`,
+          }`
         );
       } else {
         navigate(
           `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
             editableTasheelData &&
             (editableTasheelData.employee as EmployeeTypes)._id
-          }`,
+          }`
         );
       }
     }
@@ -45,12 +47,12 @@ const TasheelsTableMenu = () => {
 
   const handleEdit = () => {
     if (editableTasheelData) {
-      handleOpenTasheelModal('editTasheel');
+      handleOpenTasheelModal("editTasheel");
     }
   };
 
   const handleDelete = () => {
-    handleOpenDeleteModal('tasheel');
+    handleOpenDeleteModal("tasheel");
   };
 
   return (
@@ -61,27 +63,27 @@ const TasheelsTableMenu = () => {
       onClose={handleCloseTableMenu}
       anchorEl={openTableMenu}
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
+        vertical: "bottom",
+        horizontal: "right",
       }}
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
     >
       <TableMenuItem
         icon={<VisibilityRounded />}
-        title={'View'}
+        title={"View"}
         handling={handleView}
       />
       <TableMenuItem
         icon={<EditRounded />}
-        title={'Edit'}
+        title={"Edit"}
         handling={handleEdit}
       />
       <TableMenuItem
         icon={<DeleteRounded />}
-        title={'Delete'}
+        title={"Delete"}
         handling={handleDelete}
       />
     </Menu>

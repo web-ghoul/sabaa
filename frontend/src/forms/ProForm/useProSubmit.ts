@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { TabsContext } from "../../contexts/TabsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
@@ -23,9 +24,9 @@ const useProSubmit = () => {
     handleCloseFormsLoading,
     setProImage,
     proImage,
-    handleCloseProModal,
     editableProData,
   } = useContext(FormsContext);
+  const { handleCloseProModal } = useContext(ModalsContext);
   const { handleEditProInSheet } = useContext(ExcelsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();

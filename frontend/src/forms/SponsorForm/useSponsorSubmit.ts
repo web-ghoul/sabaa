@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -21,9 +22,11 @@ const useSponsorSubmit = () => {
     handleCloseFormsLoading,
     sponsorImage,
     setSponsorImage,
-    handleCloseSponsorModal,
-    editableSponsorData,handleCloseViewSponsorModal
+    editableSponsorData,
   } = useContext(FormsContext);
+  const { handleCloseViewSponsorModal, handleCloseSponsorModal } =
+    useContext(ModalsContext);
+
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
   const { id } = useParams();

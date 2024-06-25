@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -17,9 +18,9 @@ const useNationalitySubmit = () => {
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
-    handleCloseNationalityModal,
     editableNationalityData,
   } = useContext(FormsContext);
+  const { handleCloseNationalityModal } = useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { handleEditNationalityInSheet } = useContext(ExcelsContext);
   const { pathname } = useLocation();

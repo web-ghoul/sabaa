@@ -7,6 +7,7 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
@@ -18,8 +19,8 @@ import {
 } from "../../types/store.types";
 
 const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseEChannelModal, setEditableEChannelData } =
-    useContext(FormsContext);
+  const { formsLoading, setEditableEChannelData } = useContext(FormsContext);
+  const { handleCloseEChannelModal } = useContext(ModalsContext);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const { token } = useSelector((state: RootState) => state.auth);

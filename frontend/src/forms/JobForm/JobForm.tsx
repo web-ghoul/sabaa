@@ -5,10 +5,12 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
 const JobForm = ({ register, errors, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseJobModal } = useContext(FormsContext);
+  const { formsLoading } = useContext(FormsContext);
+  const { handleCloseJobModal } = useContext(ModalsContext);
   return (
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4`}

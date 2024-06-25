@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -23,8 +24,8 @@ const useLinkToCompanySubmit = () => {
     editableOwnerData,
     handleOpenFormsLoading,
     handleCloseFormsLoading,
-    handleCloseLinkToCompanyModal,
   } = useContext(FormsContext);
+  const { handleCloseLinkToCompanyModal } = useContext(ModalsContext);
 
   const linkToCompany = async (values: LinkToCompanyFormTypes) => {
     handleOpenFormsLoading();

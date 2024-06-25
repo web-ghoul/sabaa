@@ -1,10 +1,10 @@
 import { Box, Modal } from "@mui/material";
 import { useContext } from "react";
-import { FormsContext } from "../contexts/FormsContext";
+import { ModalsContext } from "../contexts/ModalsContext";
 import Forms from "../forms/Forms";
 
 const DeleteModal = () => {
-  const { openDeleteModal, handleCloseDeleteModal } = useContext(FormsContext);
+  const { openDeleteModal, handleCloseDeleteModal } = useContext(ModalsContext);
   return (
     <Modal
       open={openDeleteModal}

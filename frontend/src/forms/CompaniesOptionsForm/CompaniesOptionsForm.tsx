@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -22,11 +23,10 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
-  const {
-    searchForCompanies,
-    setSearchForCompanies,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForCompanies, setSearchForCompanies } =
+    useContext(FormsContext);
+
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
 
   const handleSearch = (value: string) => {
     setSearchForCompanies(value);

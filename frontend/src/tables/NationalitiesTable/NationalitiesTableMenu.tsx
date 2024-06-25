@@ -4,13 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
-import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const NationalitiesTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const { handleOpenNationalityModal, handleOpenDeleteModal } =
-    useContext(FormsContext);
+    useContext(ModalsContext);
   const { handleDeleteNationalityFromSheet } = useContext(ExcelsContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();

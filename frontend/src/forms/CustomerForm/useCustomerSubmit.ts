@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -21,9 +22,9 @@ const useCustomerSubmit = () => {
     handleCloseFormsLoading,
     setCustomerImage,
     customerImage,
-    handleCloseCustomerModal,
     editableCustomerData,
   } = useContext(FormsContext);
+  const { handleCloseCustomerModal } = useContext(ModalsContext);
   const { handleEditCustomerInSheet } = useContext(ExcelsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();

@@ -6,11 +6,12 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
 const UserForm = ({ register, errors, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseUserModal, setUserImage } =
-    useContext(FormsContext);
+  const { formsLoading, setUserImage } = useContext(FormsContext);
+  const { handleCloseUserModal } = useContext(ModalsContext);
 
   useEffect(() => {
     if (type?.startsWith("add")) {

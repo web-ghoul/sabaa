@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNatwasals } from "../../store/natwasalsSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -19,11 +20,8 @@ import { FormiksTypes } from "../../types/forms.types";
 const NatwasalsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForNatwasal,
-    setSearchForNatwasal,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForNatwasal, setSearchForNatwasal } = useContext(FormsContext);
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);

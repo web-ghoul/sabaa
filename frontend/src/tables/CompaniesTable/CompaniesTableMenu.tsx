@@ -10,6 +10,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const CompaniesTableMenu = ({ unLink }: { unLink?: boolean }) => {
@@ -18,8 +19,9 @@ const CompaniesTableMenu = ({ unLink }: { unLink?: boolean }) => {
   const [sheet, setSheet] = useState(false);
   const { id } = useParams();
   const { pathname } = useLocation();
-  const { handleOpenCompanyModal, editableCompanyData, handleOpenDeleteModal } =
-    useContext(FormsContext);
+  const { editableCompanyData } = useContext(FormsContext);
+  const { handleOpenCompanyModal, handleOpenDeleteModal } =
+    useContext(ModalsContext);
   const { handleDeleteCompanyFromSheet } = useContext(ExcelsContext);
 
   const handleUnLink = () => {

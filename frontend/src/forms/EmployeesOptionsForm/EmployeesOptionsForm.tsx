@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getEmployees } from "../../store/employeesSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -21,11 +22,9 @@ import { NationalityTypes } from "../../types/store.types";
 const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForEmployees,
-    setSearchForEmployees,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForEmployees, setSearchForEmployees } =
+    useContext(FormsContext);
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);

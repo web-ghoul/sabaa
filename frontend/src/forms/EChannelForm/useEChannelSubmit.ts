@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -15,9 +16,9 @@ const useEChannelSubmit = () => {
   const {
     handleOpenFormsLoading,
     handleCloseFormsLoading,
-    handleCloseEChannelModal,
     editableEChannelData,
   } = useContext(FormsContext);
+  const { handleCloseEChannelModal } = useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
 
   const addEChannel = async (values: EChannelFormTypes) => {

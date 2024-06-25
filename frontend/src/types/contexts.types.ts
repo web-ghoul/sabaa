@@ -55,6 +55,12 @@ interface SidebarsContextProps {
 }
 
 interface ExcelsContextProps {
+  excelType: { type: "excel" | "all"; entity: EntitiesType };
+  setExcelType: (value: {
+    type: "excel" | "all";
+    entity: EntitiesType;
+    ent?: EntityType;
+  }) => void;
   ownersSheets: OwnersSheetTypes[];
   ownerIndex: { fileIndex: number; index: number };
   setOwnerIndex: (value: { fileIndex: number; index: number }) => void;
@@ -112,6 +118,73 @@ interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
   handleOpenFormsLoading: () => void;
+  formType: string;
+  setFormType: (type: string) => void;
+  searchForOwners: string;
+  setSearchForOwners: (search: string) => void;
+  searchForEmployees: string;
+  setSearchForEmployees: (search: string) => void;
+  searchForEChannels: string;
+  setSearchForEChannels: (search: string) => void;
+  searchForTasheel: string;
+  setSearchForTasheel: (search: string) => void;
+  searchForNatwasal: string;
+  setSearchForNatwasal: (search: string) => void;
+  searchForCustomers: string;
+  setSearchForCustomers: (search: string) => void;
+  searchForPros: string;
+  setSearchForPros: (search: string) => void;
+  searchForCompanies: string;
+  setSearchForCompanies: (search: string) => void;
+  searchForActivities: string;
+  setSearchForActivities: (search: string) => void;
+  searchForUsers: string;
+  setSearchForUsers: (search: string) => void;
+  searchForJobs: string;
+  setSearchForJobs: (search: string) => void;
+  searchForNationalities: string;
+  setSearchForNationalities: (search: string) => void;
+  companyImage: File | string;
+  setCompanyImage: (image: File | string) => void;
+  ownerImage: File | string;
+  setOwnerImage: (image: File | string) => void;
+  employeeImage: File | string;
+  setEmployeeImage: (image: File | string) => void;
+  customerImage: File | string;
+  setCustomerImage: (image: File | string) => void;
+  sponsorImage: File | string;
+  setSponsorImage: (image: File | string) => void;
+  proImage: File | string;
+  setProImage: (image: File | string) => void;
+  userImage: File | string;
+  setUserImage: (image: File | string) => void;
+  editableJobData: JobTypes | null;
+  setEditableJobData: (job: JobTypes | null) => void;
+  editableOwnerData: OwnerTypes | null;
+  setEditableOwnerData: (owner: OwnerTypes | null) => void;
+  editableEmployeeData: EmployeeTypes | null;
+  setEditableEmployeeData: (employee: EmployeeTypes | null) => void;
+  editableCustomerData: CustomerTypes | null;
+  setEditableCustomerData: (customer: CustomerTypes | null) => void;
+  editableSponsorData: SponsorTypes | null;
+  setEditableSponsorData: (sponsor: SponsorTypes | null) => void;
+  editableProData: ProTypes | null;
+  setEditableProData: (pro: OwnerTypes | null) => void;
+  editableCompanyData: CompanyTypes | null;
+  setEditableCompanyData: (company: CompanyTypes | null) => void;
+  editableNationalityData: NationalityTypes | null;
+  setEditableNationalityData: (nationality: NationalityTypes | null) => void;
+  editableUserData: UserTypes | null;
+  setEditableUserData: (user: UserTypes | null) => void;
+  editableEChannelData: EChannelTypes | null;
+  setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
+  editableTasheelData: TasheelTypes | null;
+  setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
+  editableNatwasalData: TasheelTypes | null;
+  setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
+}
+
+interface ModalsContextTypes {
   openDownloadExcelModal: boolean;
   handleOpenDownloadExcelModal: (
     type: "excel" | "all",
@@ -119,6 +192,15 @@ interface FormsContextTypes {
     ent?: EntityType
   ) => void;
   handleCloseDownloadExcelModal: () => void;
+  openForgotPasswordModal: boolean;
+  handleOpenForgotPasswordModal: () => void;
+  handleCloseForgotPasswordModal: () => void;
+  openJobModal: boolean;
+  handleOpenJobModal: (type: string) => void;
+  handleCloseJobModal: () => void;
+  openNationalityModal: boolean;
+  handleOpenNationalityModal: (string: string) => void;
+  handleCloseNationalityModal: () => void;
   openLinkToCompanyModal: boolean;
   handleOpenLinkToCompanyModal: (type: string) => void;
   handleCloseLinkToCompanyModal: () => void;
@@ -164,84 +246,6 @@ interface FormsContextTypes {
   openNatwasalModal: boolean;
   handleOpenNatwasalModal: (string: string) => void;
   handleCloseNatwasalModal: () => void;
-  formType: string;
-  setFormType: (type: string) => void;
-  excelType: { type: "excel" | "all"; entity: EntitiesType };
-  setExcelType: (value: {
-    type: "excel" | "all";
-    entity: EntitiesType;
-  }) => void;
-  searchForOwners: string;
-  setSearchForOwners: (search: string) => void;
-  searchForEmployees: string;
-  setSearchForEmployees: (search: string) => void;
-  searchForEChannels: string;
-  setSearchForEChannels: (search: string) => void;
-  searchForTasheel: string;
-  setSearchForTasheel: (search: string) => void;
-  searchForNatwasal: string;
-  setSearchForNatwasal: (search: string) => void;
-  searchForCustomers: string;
-  setSearchForCustomers: (search: string) => void;
-  searchForPros: string;
-  setSearchForPros: (search: string) => void;
-  searchForCompanies: string;
-  setSearchForCompanies: (search: string) => void;
-  searchForActivities: string;
-  setSearchForActivities: (search: string) => void;
-  searchForUsers: string;
-  setSearchForUsers: (search: string) => void;
-  searchForJobs: string;
-  setSearchForJobs: (search: string) => void;
-  searchForNationalities: string;
-  setSearchForNationalities: (search: string) => void;
-  openForgotPasswordModal: boolean;
-  handleOpenForgotPasswordModal: () => void;
-  handleCloseForgotPasswordModal: () => void;
-  openJobModal: boolean;
-  handleOpenJobModal: (type: string) => void;
-  handleCloseJobModal: () => void;
-  openNationalityModal: boolean;
-  handleOpenNationalityModal: (string: string) => void;
-  handleCloseNationalityModal: () => void;
-  companyImage: File | string;
-  setCompanyImage: (image: File | string) => void;
-  ownerImage: File | string;
-  setOwnerImage: (image: File | string) => void;
-  employeeImage: File | string;
-  setEmployeeImage: (image: File | string) => void;
-  customerImage: File | string;
-  setCustomerImage: (image: File | string) => void;
-  sponsorImage: File | string;
-  setSponsorImage: (image: File | string) => void;
-  proImage: File | string;
-  setProImage: (image: File | string) => void;
-  userImage: File | string;
-  setUserImage: (image: File | string) => void;
-  editableJobData: JobTypes | null;
-  setEditableJobData: (job: JobTypes | null) => void;
-  editableOwnerData: OwnerTypes | null;
-  setEditableOwnerData: (owner: OwnerTypes | null) => void;
-  editableEmployeeData: EmployeeTypes | null;
-  setEditableEmployeeData: (employee: EmployeeTypes | null) => void;
-  editableCustomerData: CustomerTypes | null;
-  setEditableCustomerData: (customer: CustomerTypes | null) => void;
-  editableSponsorData: SponsorTypes | null;
-  setEditableSponsorData: (sponsor: SponsorTypes | null) => void;
-  editableProData: ProTypes | null;
-  setEditableProData: (pro: OwnerTypes | null) => void;
-  editableCompanyData: CompanyTypes | null;
-  setEditableCompanyData: (company: CompanyTypes | null) => void;
-  editableNationalityData: NationalityTypes | null;
-  setEditableNationalityData: (nationality: NationalityTypes | null) => void;
-  editableUserData: UserTypes | null;
-  setEditableUserData: (user: UserTypes | null) => void;
-  editableEChannelData: EChannelTypes | null;
-  setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
-  editableTasheelData: TasheelTypes | null;
-  setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
-  editableNatwasalData: TasheelTypes | null;
-  setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
 }
 
 interface TabsContextProps {
@@ -307,6 +311,7 @@ export type {
   ExcelsContextProps,
   FormsContextTypes,
   JobsSheetTypes,
+  ModalsContextTypes,
   NationalitiesSheetTypes,
   OwnersSheetTypes,
   ProsSheetTypes,

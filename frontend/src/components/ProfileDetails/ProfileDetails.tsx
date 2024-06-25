@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleGetFlag } from "../../functions/handleGetFlag";
 import { RootState } from "../../store/store";
@@ -43,22 +44,24 @@ const ProfileDetails = ({
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    handleOpenDeleteModal,
     setEditableOwnerData,
-    handleOpenOwnerModal,
     setEditableProData,
-    handleOpenProModal,
     setEditableUserData,
-    handleOpenUserModal,
     setEditableCompanyData,
-    handleOpenLinkToCompanyModal,
     setEditableCustomerData,
-    handleOpenCustomerModal,
     setEditableEmployeeData,
-    handleOpenConvertCustomerModal,
     setEditableSponsorData,
-    handleOpenSponsorModal,
   } = useContext(FormsContext);
+  const {
+    handleOpenDeleteModal,
+    handleOpenOwnerModal,
+    handleOpenProModal,
+    handleOpenUserModal,
+    handleOpenLinkToCompanyModal,
+    handleOpenCustomerModal,
+    handleOpenConvertCustomerModal,
+    handleOpenSponsorModal,
+  } = useContext(ModalsContext);
   const { owner } = useSelector((state: RootState) => state.owner);
   const { pro } = useSelector((state: RootState) => state.pro);
   const { user } = useSelector((state: RootState) => state.user);

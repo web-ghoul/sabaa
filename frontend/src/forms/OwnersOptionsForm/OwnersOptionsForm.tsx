@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -21,12 +22,9 @@ import { NationalityTypes } from "../../types/store.types";
 const OwnersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    handleOpenOwnerModal,
-    searchForOwners,
-    setSearchForOwners,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForOwners, setSearchForOwners } = useContext(FormsContext);
+  const { handleOpenDownloadExcelModal, handleOpenOwnerModal } =
+    useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);

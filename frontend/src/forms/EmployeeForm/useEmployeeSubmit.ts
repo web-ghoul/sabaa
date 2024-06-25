@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
@@ -20,8 +21,8 @@ const useEmployeeSubmit = () => {
     handleCloseFormsLoading,
     setEmployeeImage,
     editableEmployeeData,
-    handleCloseEmployeeModal,
   } = useContext(FormsContext);
+  const { handleCloseEmployeeModal } = useContext(ModalsContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();

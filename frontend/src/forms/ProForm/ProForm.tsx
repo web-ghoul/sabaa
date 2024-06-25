@@ -8,6 +8,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -20,8 +21,8 @@ const ProForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const { formsLoading, handleCloseProModal, setProImage } =
-    useContext(FormsContext);
+  const { formsLoading, setProImage } = useContext(FormsContext);
+  const { handleCloseProModal } = useContext(ModalsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );

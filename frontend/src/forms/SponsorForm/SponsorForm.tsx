@@ -12,6 +12,7 @@ import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
+import { ModalsContext } from "../../contexts/ModalsContext";
 
 const SponsorForm = ({
   register,
@@ -20,8 +21,8 @@ const SponsorForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const { formsLoading, handleCloseSponsorModal, setSponsorImage } =
-    useContext(FormsContext);
+  const { formsLoading, setSponsorImage } = useContext(FormsContext);
+  const { handleCloseSponsorModal } = useContext(ModalsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );

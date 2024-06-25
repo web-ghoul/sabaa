@@ -6,7 +6,7 @@ import {
 import { Menu } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
-import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const SponsorsTableMenu = () => {
@@ -15,7 +15,7 @@ const SponsorsTableMenu = () => {
     handleOpenSponsorModal,
     handleOpenViewSponsorModal,
     handleOpenDeleteModal,
-  } = useContext(FormsContext);
+  } = useContext(ModalsContext);
 
   const handleView = () => {
     handleOpenViewSponsorModal();

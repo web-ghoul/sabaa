@@ -7,6 +7,7 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
@@ -22,12 +23,9 @@ import {
 } from "../../types/store.types";
 
 const NatwasalForm = ({ register, errors, setValue, type }: FormiksTypes) => {
-  const {
-    formsLoading,
-    handleCloseNatwasalModal,
-    setEditableNatwasalData,
-    editableNatwasalData,
-  } = useContext(FormsContext);
+  const { formsLoading, setEditableNatwasalData, editableNatwasalData } =
+    useContext(FormsContext);
+  const { handleCloseNatwasalModal } = useContext(ModalsContext);
   const [loading, setLoading] = useState(false);
   const [persons, setPersons] = useState<
     | {

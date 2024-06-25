@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -17,12 +18,10 @@ const LinkToCompanyForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const {
-    formsLoading,
-    handleCloseLinkToCompanyModal,
-    editableOwnerData,
-    editableProData,
-  } = useContext(FormsContext);
+  const { formsLoading, editableOwnerData, editableProData } =
+    useContext(FormsContext);
+  const { handleCloseLinkToCompanyModal } = useContext(ModalsContext);
+
   const { companies } = useSelector((state: RootState) => state.companies);
   const dispatch = useDispatch<AppDispatch>();
 
