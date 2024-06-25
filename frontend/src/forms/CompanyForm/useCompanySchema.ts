@@ -43,7 +43,7 @@ const useCompanySchema = () => {
     licenseIssuePlace: yup.string(),
     zipCode: yup.string(),
     trn: yup.string(),
-    echannelExpiryDate: yup.date(),
+    echannelExpiryDate: yup.string(),
     userName: yup.string(),
     password: yup.string(),
     noqodiWalet: yup.string(),

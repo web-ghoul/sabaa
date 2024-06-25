@@ -12,19 +12,17 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { AppDispatch } from "../../store/store";
 import { getUsers } from "../../store/usersSlice";
-import { FormiksTypes, UsersOptionsFormikTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const UsersOptionsForm = ({ formik }: FormiksTypes) => {
+const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const {
-    handleOpenUserModal,
-    searchForUsers,
-    handleOpenDownloadExcelModal,
-    setSearchForUsers,
-  } = useContext(FormsContext);
+  const { searchForUsers, setSearchForUsers } = useContext(FormsContext);
+  const { handleOpenUserModal, handleOpenDownloadExcelModal } =
+    useContext(ModalsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -59,12 +57,9 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
     dispatch(getUsers({}));
     setQueries({});
+    setValue("status", "");
+    setValue("role", "");
   };
-
-  (formik as unknown as UsersOptionsFormikTypes).values.role =
-    queries.role || "";
-  (formik as unknown as UsersOptionsFormikTypes).values.status =
-    queries.status || "";
 
   return (
     <Paper
@@ -78,7 +73,8 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Username..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -128,7 +124,8 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
             options={["Active", "Pending", "Blocked"]}
             select
@@ -138,7 +135,8 @@ const UsersOptionsForm = ({ formik }: FormiksTypes) => {
             name={"role"}
             options={["Admin", "User"]}
             select
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByRole}
           />
           <Button

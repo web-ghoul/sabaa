@@ -8,16 +8,18 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const JobsOptionsForm = ({ formik }: FormiksTypes) => {
+const JobsOptionsForm = ({ register, errors }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenJobModal, setSearchForJobs, handleOpenDownloadExcelModal } =
-    useContext(FormsContext);
+  const { setSearchForJobs } = useContext(FormsContext);
   const { queries } = useContext(AppContext);
+  const { handleOpenJobModal, handleOpenDownloadExcelModal } =
+    useContext(ModalsContext);
 
   const handleDownloadExcel = () => {
     handleOpenDownloadExcelModal("excel", "jobs");
@@ -40,7 +42,8 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, MOHRE..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>

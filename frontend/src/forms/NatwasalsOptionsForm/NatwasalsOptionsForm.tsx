@@ -12,21 +12,16 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNatwasals } from "../../store/natwasalsSlice";
 import { AppDispatch } from "../../store/store";
-import {
-  FormiksTypes,
-  NatwasalsOptionsFormikTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const NatwasalsOptionsForm = ({ formik }: FormiksTypes) => {
+const NatwasalsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForNatwasal,
-    setSearchForNatwasal,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForNatwasal, setSearchForNatwasal } = useContext(FormsContext);
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -57,10 +52,9 @@ const NatwasalsOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_TASHEELS_ROUTE}`);
     dispatch(getNatwasals({}));
     setQueries({});
+    setValue("search", "");
+    setValue("type", "");
   };
-
-  (formik as unknown as NatwasalsOptionsFormikTypes).values.type =
-    queries.type || "";
 
   return (
     <Paper
@@ -74,7 +68,8 @@ const NatwasalsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -120,7 +115,8 @@ const NatwasalsOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By User Type"}
             name={"type"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByType}
             options={["owner", "officer", "customer", "employee"]}
             select

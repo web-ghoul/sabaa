@@ -1,11 +1,13 @@
 import { Box, Modal } from "@mui/material";
 import { useContext } from "react";
-import { FormsContext } from "../contexts/FormsContext";
+import { ModalsContext } from "../contexts/ModalsContext";
 import Forms from "../forms/Forms";
+import { FormsContext } from "../contexts/FormsContext";
 
 const NatwasalModal = () => {
-  const { openNatwasalModal, handleCloseNatwasalModal, formType } =
-    useContext(FormsContext);
+  const { openNatwasalModal, handleCloseNatwasalModal } =
+    useContext(ModalsContext);
+  const { formType } = useContext(FormsContext);
   return (
     <Modal
       open={openNatwasalModal}

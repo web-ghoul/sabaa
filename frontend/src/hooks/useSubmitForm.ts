@@ -1,476 +1,173 @@
-import { FormikProps, useFormik } from "formik";
-import { useMemo } from "react";
-import {
-  CompaniesOptionsInitailValues,
-  CompaniesOptionsSchema,
-} from "../forms/CompaniesOptionsForm/CompaniesOptionsSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { ObjectSchema } from "yup";
+import useCompaniesOptionsSchema from "../forms/CompaniesOptionsForm/useCompaniesOptionsSchema";
 import useCompanySchema from "../forms/CompanyForm/useCompanySchema";
-import {
-  ConvertCustomerInitailValues,
-  ConvertCustomerSchema,
-} from "../forms/ConvertCustomerForm/useCustomerSchema";
 import useCustomerSchema from "../forms/CustomerForm/useCustomerSchema";
-import {
-  CustomersOptionsInitailValues,
-  CustomersOptionsSchema,
-} from "../forms/CustomersOptionsForm/CustomersOptionsSchema";
+import useCustomersOptionsSchema from "../forms/CustomersOptionsForm/useCustomersOptionsSchema";
 import useDeleteSchema from "../forms/DeleteForm/useDeleteSchema";
-import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
 import useEChannelSchema from "../forms/EChannelForm/useEChannelSchema";
-import {
-  EChannelsOptionsInitailValues,
-  EChannelsOptionsSchema,
-} from "../forms/EChannelsOptionsForm/EChannelsOptionsSchema";
+import useEChannelsOptionsSchema from "../forms/EChannelsOptionsForm/useEChannelsOptionsSchema";
 import useEmployeeSchema from "../forms/EmployeeForm/useEmployeeSchema";
-import {
-  EmployeesOptionsInitailValues,
-  EmployeesOptionsSchema,
-} from "../forms/EmployeesOptionsForm/EmployeesOptionsSchema";
-import {
-  ForgotPasswordInitailValues,
-  ForgotPasswordSchema,
-} from "../forms/ForgotPasswordForm/ForgotPasswordSchema";
-import useJobSchema from "../forms/JobForm/useJobSchema";
-import {
-  JobsOptionsInitailValues,
-  JobsOptionsSchema,
-} from "../forms/JobsOptionsForm/JobsOptionsSchema";
-import useLinkToCompanySchema from "../forms/LinkToCompanyForm/useCompanySchema";
-import {
-  LoginInitailValues,
-  LoginSchema,
-} from "../forms/LoginForm/LoginSchema";
-import {
-  NationalitiesOptionsInitailValues,
-  NationalitiesOptionsSchema,
-} from "../forms/NationalitiesOptionsForm/NationalitiesOptionsSchema";
-import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
+import useEmployeesOptionsSchema from "../forms/EmployeesOptionsForm/useEmployeesOptionsSchema";
+import useForgotPasswordSchema from "../forms/ForgotPasswordForm/useForgotPasswordSchema";
+import useLinkToCompanySchema from "../forms/LinkToCompanyForm/useLinkToCompanySchema";
+import useLoginSchema from "../forms/LoginForm/useLoginSchema";
 import useNatwasalSchema from "../forms/NatwasalForm/useNatwasalSchema";
-import {
-  NatwasalsOptionsInitailValues,
-  NatwasalsOptionsSchema,
-} from "../forms/NatwasalsOptionsForm/NatwasalsOptionsSchema";
-import { OTPInitailValues, OTPSchema } from "../forms/OTPForm/OTPSchema";
+import useNatwasalsOptionsSchema from "../forms/NatwasalsOptionsForm/useNatwasalsOptionsSchema";
+import useOTPSchema from "../forms/OTPForm/useOTPSchema";
 import useOwnerSchema from "../forms/OwnerForm/useOwnerSchema";
-import {
-  OwnersOptionsInitailValues,
-  OwnersOptionsSchema,
-} from "../forms/OwnersOptionsForm/OwnersOptionsSchema";
+import useOwnersOptionsSchema from "../forms/OwnersOptionsForm/useOwnersOptionsSchema";
 import useProSchema from "../forms/ProForm/useProSchema";
-import {
-  ProsOptionsInitailValues,
-  ProsOptionsSchema,
-} from "../forms/ProsOptionsForm/ProsOptionsSchema";
-import {
-  ResetPasswordInitailValues,
-  ResetPasswordSchema,
-} from "../forms/ResetPasswordForm/ResetPasswordSchema";
+import useProsOptionsSchema from "../forms/ProsOptionsForm/useProsOptionsSchema";
+import useResetPasswordSchema from "../forms/ResetPasswordForm/useResetPasswordSchema";
 import useSponsorSchema from "../forms/SponsorForm/useSponsorSchema";
 import useTasheelSchema from "../forms/TasheelForm/useTasheelSchema";
-import {
-  TasheelsOptionsInitailValues,
-  TasheelsOptionsSchema,
-} from "../forms/TasheelsOptionsForm/TasheelsOptionsSchema";
+import useTasheelsOptionsSchema from "../forms/TasheelsOptionsForm/useTasheelsOptionsSchema";
 import useUserSchema from "../forms/UserForm/useUserSchema";
-import {
-  UsersOptionsInitailValues,
-  UsersOptionsSchema,
-} from "../forms/UsersOptionsForm/UsersOptionsSchema";
-import {
-  AllFormiksTypes,
-  AllFormsTypes,
-  CompaniesOptionsFormTypes,
-  CompaniesOptionsFormikTypes,
-  CompanyFormTypes,
-  CompanyFormikTypes,
-  ConvertCustomerFormTypes,
-  ConvertCustomerFormikTypes,
-  CustomerFormTypes,
-  CustomerFormikTypes,
-  CustomersOptionsFormTypes,
-  CustomersOptionsFormikTypes,
-  DeleteFormTypes,
-  DeleteFormikTypes,
-  DownloadExcelFormTypes,
-  DownloadExcelFormikTypes,
-  EChannelFormTypes,
-  EChannelFormikTypes,
-  EChannelsOptionsFormTypes,
-  EChannelsOptionsFormikTypes,
-  EmployeeFormTypes,
-  EmployeeFormikTypes,
-  EmployeesOptionsFormTypes,
-  EmployeesOptionsFormikTypes,
-  ForgotPasswordFormTypes,
-  ForgotPasswordFormikTypes,
-  JobFormTypes,
-  JobFormikTypes,
-  JobsOptionsFormTypes,
-  JobsOptionsFormikTypes,
-  LinkToCompanyFormTypes,
-  LinkToCompanyFormikTypes,
-  LoginFormTypes,
-  LoginFormikTypes,
-  NationalitiesOptionsFormTypes,
-  NationalitiesOptionsFormikTypes,
-  NationalityFormTypes,
-  NationalityFormikTypes,
-  NatwasalFormTypes,
-  NatwasalFormikTypes,
-  NatwasalsOptionsFormTypes,
-  NatwasalsOptionsFormikTypes,
-  OTPFormTypes,
-  OTPFormikTypes,
-  OwnerFormTypes,
-  OwnerFormikTypes,
-  OwnersOptionsFormTypes,
-  OwnersOptionsFormikTypes,
-  ProFormTypes,
-  ProFormikTypes,
-  ProsOptionsFormTypes,
-  ProsOptionsFormikTypes,
-  ResetPasswordFormTypes,
-  ResetPasswordFormikTypes,
-  SponsorFormTypes,
-  SponsorFormikTypes,
-  TasheelFormTypes,
-  TasheelFormikTypes,
-  TasheelsOptionsFormTypes,
-  TasheelsOptionsFormikTypes,
-  UserFormTypes,
-  UserFormikTypes,
-  UsersOptionsFormTypes,
-  UsersOptionsFormikTypes,
-} from "../types/forms.types";
+import useUsersOptionsSchema from "../forms/UsersOptionsForm/useUsersOptionsSchema";
+import { AllFormsTypes } from "../types/forms.types";
 import useSubmitFunction from "./useSubmitFunction";
 
 const useSubmitForm = (type: string) => {
-  const { handleSubmit } = useSubmitFunction(type);
-  const { JobInitailValues, JobSchema } = useJobSchema();
-  const { NationalityInitailValues, NationalitySchema } =
-    useNationalitySchema();
-  const { UserInitailValues, UserSchema } = useUserSchema();
-  const { OwnerInitailValues, OwnerSchema } = useOwnerSchema();
-  const { ProInitailValues, ProSchema } = useProSchema();
-  const { EmployeeInitailValues, EmployeeSchema } = useEmployeeSchema();
-  const { CustomerInitailValues, CustomerSchema } = useCustomerSchema();
-  const { SponsorInitailValues, SponsorSchema } = useSponsorSchema();
-  const { DeleteInitailValues, DeleteSchema } = useDeleteSchema();
-  const { CompanyInitailValues, CompanySchema } = useCompanySchema();
-  const { LinkToCompanyInitailValues, LinkToCompanySchema } =
+  const { submitFunction } = useSubmitFunction(type);
+  const { LoginSchema, LoginInitailValues } = useLoginSchema();
+  const { ForgotPasswordSchema, ForgotPasswordInitailValues } =
+    useForgotPasswordSchema();
+  const { OTPSchema, OTPInitailValues } = useOTPSchema();
+  const { ResetPasswordSchema, ResetPasswordInitailValues } =
+    useResetPasswordSchema();
+  const { DeleteSchema, DeleteInitailValues } = useDeleteSchema();
+  const { CustomerSchema, CustomerInitailValues } = useCustomerSchema();
+  const { CustomersOptionsSchema, CustomersOptionsInitailValues } =
+    useCustomersOptionsSchema();
+  const { OwnerSchema, OwnerInitailValues } = useOwnerSchema();
+  const { OwnersOptionsSchema, OwnersOptionsInitailValues } =
+    useOwnersOptionsSchema();
+  const { UserSchema, UserInitailValues } = useUserSchema();
+  const { UsersOptionsSchema, UsersOptionsInitailValues } =
+    useUsersOptionsSchema();
+  const { ProSchema, ProInitailValues } = useProSchema();
+  const { ProsOptionsSchema, ProsOptionsInitailValues } =
+    useProsOptionsSchema();
+  const { SponsorSchema, SponsorInitailValues } = useSponsorSchema();
+  const { EmployeeSchema, EmployeeInitailValues } = useEmployeeSchema();
+  const { EmployeesOptionsSchema, EmployeesOptionsInitailValues } =
+    useEmployeesOptionsSchema();
+  const { CompanySchema, CompanyInitailValues } = useCompanySchema();
+  const { CompaniesOptionsSchema, CompaniesOptionsInitailValues } =
+    useCompaniesOptionsSchema();
+  const { EChannelSchema, EChannelInitailValues } = useEChannelSchema();
+  const { EChannelsOptionsSchema, EChannelsOptionsInitailValues } =
+    useEChannelsOptionsSchema();
+  const { TasheelSchema, TasheelInitailValues } = useTasheelSchema();
+  const { TasheelsOptionsSchema, TasheelsOptionsInitailValues } =
+    useTasheelsOptionsSchema();
+  const { NatwasalSchema, NatwasalInitailValues } = useNatwasalSchema();
+  const { LinkToCompanySchema, LinkToCompanyInitailValues } =
     useLinkToCompanySchema();
-  const { DownloadExcelInitailValues, DownloadExcelSchema } =
-    useDownloadExcelSchema();
-  const { EChannelInitailValues, EChannelSchema } = useEChannelSchema();
-  const { TasheelInitailValues, TasheelSchema } = useTasheelSchema();
-  const { NatwasalInitailValues, NatwasalSchema } = useNatwasalSchema();
+  const { NatwasalsOptionsSchema, NatwasalsOptionsInitailValues } =
+    useNatwasalsOptionsSchema();
 
-  const chosenFormik = useMemo(
-    () => (): AllFormiksTypes => {
-      switch (type) {
-        case "forgotPassword":
-          return {
-            initialValues: ForgotPasswordInitailValues,
-            validationSchema: ForgotPasswordSchema,
-            onSubmit: (values: ForgotPasswordFormTypes) => {
-              handleSubmit(values);
-            },
-          } as ForgotPasswordFormikTypes;
-        case "otp":
-          return {
-            initialValues: OTPInitailValues,
-            validationSchema: OTPSchema,
-            onSubmit: (values: OTPFormTypes) => {
-              handleSubmit(values);
-            },
-          } as OTPFormikTypes;
-        case "resetPassword":
-          return {
-            initialValues: ResetPasswordInitailValues,
-            validationSchema: ResetPasswordSchema,
-            onSubmit: (values: ResetPasswordFormTypes) => {
-              handleSubmit(values);
-            },
-          } as ResetPasswordFormikTypes;
-        case "login":
-          return {
-            initialValues: LoginInitailValues,
-            validationSchema: LoginSchema,
-            onSubmit: (values: LoginFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as LoginFormikTypes;
-        case "editJob":
-        case "addJob":
-          return {
-            initialValues: JobInitailValues,
-            validationSchema: JobSchema,
-            onSubmit: (values: JobFormTypes) => {
-              handleSubmit(values);
-            },
-          } as JobFormikTypes;
-        case "jobsOptions":
-          return {
-            initialValues: JobsOptionsInitailValues,
-            validationSchema: JobsOptionsSchema,
-            onSubmit: (values: JobsOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as JobsOptionsFormikTypes;
-        case "editNationality":
-        case "addNationality":
-          return {
-            initialValues: NationalityInitailValues,
-            validationSchema: NationalitySchema,
-            onSubmit: (values: NationalityFormTypes) => {
-              handleSubmit(values);
-            },
-          } as NationalityFormikTypes;
-        case "nationalitiesOptions":
-          return {
-            initialValues: NationalitiesOptionsInitailValues,
-            validationSchema: NationalitiesOptionsSchema,
-            onSubmit: (values: NationalitiesOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as NationalitiesOptionsFormikTypes;
-        case "editUser":
-        case "addUser":
-          return {
-            initialValues: UserInitailValues,
-            validationSchema: UserSchema,
-            onSubmit: (values: UserFormTypes) => {
-              handleSubmit(values);
-            },
-          } as UserFormikTypes;
-        case "usersOptions":
-          return {
-            initialValues: UsersOptionsInitailValues,
-            validationSchema: UsersOptionsSchema,
-            onSubmit: (values: UsersOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as UsersOptionsFormikTypes;
-        case "editOwner":
-        case "addOwner":
-          return {
-            initialValues: OwnerInitailValues,
-            validationSchema: OwnerSchema,
-            onSubmit: (values: OwnerFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as OwnerFormikTypes;
-        case "ownersOptions":
-          return {
-            initialValues: OwnersOptionsInitailValues,
-            validationSchema: OwnersOptionsSchema,
-            onSubmit: (values: OwnersOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as OwnersOptionsFormikTypes;
-        case "editPro":
-        case "addPro":
-          return {
-            initialValues: ProInitailValues,
-            validationSchema: ProSchema,
-            onSubmit: (values: ProFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as ProFormikTypes;
-        case "prosOptions":
-          return {
-            initialValues: ProsOptionsInitailValues,
-            validationSchema: ProsOptionsSchema,
-            onSubmit: (values: ProsOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as ProsOptionsFormikTypes;
-        case "editEmployee":
-        case "addEmployee":
-          return {
-            initialValues: EmployeeInitailValues,
-            validationSchema: EmployeeSchema,
-            onSubmit: (values: EmployeeFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as EmployeeFormikTypes;
-        case "employeesOptions":
-          return {
-            initialValues: EmployeesOptionsInitailValues,
-            validationSchema: EmployeesOptionsSchema,
-            onSubmit: (values: EmployeesOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as EmployeesOptionsFormikTypes;
-        case "editCustomer":
-        case "addCustomer":
-          return {
-            initialValues: CustomerInitailValues,
-            validationSchema: CustomerSchema,
-            onSubmit: (values: CustomerFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as CustomerFormikTypes;
-        case "customersOptions":
-          return {
-            initialValues: CustomersOptionsInitailValues,
-            validationSchema: CustomersOptionsSchema,
-            onSubmit: (values: CustomersOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as CustomersOptionsFormikTypes;
-        case "convertCustomer":
-          return {
-            initialValues: ConvertCustomerInitailValues,
-            validationSchema: ConvertCustomerSchema,
-            onSubmit: (values: ConvertCustomerFormTypes) => {
-              handleSubmit(values);
-            },
-          } as ConvertCustomerFormikTypes;
-        case "editSponsor":
-        case "addSponsor":
-          return {
-            initialValues: SponsorInitailValues,
-            validationSchema: SponsorSchema,
-            onSubmit: (values: SponsorFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as SponsorFormikTypes;
-        case "addCompany":
-        case "editCompany":
-          return {
-            initialValues: CompanyInitailValues,
-            validationSchema: CompanySchema,
-            onSubmit: (values: CompanyFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as CompanyFormikTypes;
-        case "companiesOptions":
-          return {
-            initialValues: CompaniesOptionsInitailValues,
-            validationSchema: CompaniesOptionsSchema,
-            onSubmit: (values: CompaniesOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as CompaniesOptionsFormikTypes;
-        case "linkOwner":
-        case "linkPro":
-          return {
-            initialValues: LinkToCompanyInitailValues,
-            validationSchema: LinkToCompanySchema,
-            onSubmit: (values: LinkToCompanyFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as LinkToCompanyFormikTypes;
-        case "editEChannel":
-        case "addEChannel":
-          return {
-            initialValues: EChannelInitailValues,
-            validationSchema: EChannelSchema,
-            onSubmit: (values: EChannelFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as EChannelFormikTypes;
-        case "eChannelsOptions":
-          return {
-            initialValues: EChannelsOptionsInitailValues,
-            validationSchema: EChannelsOptionsSchema,
-            onSubmit: (values: EChannelsOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as EChannelsOptionsFormikTypes;
-        case "editTasheel":
-        case "addTasheel":
-          return {
-            initialValues: TasheelInitailValues,
-            validationSchema: TasheelSchema,
-            onSubmit: (values: TasheelFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as TasheelFormikTypes;
-        case "tasheelsOptions":
-          return {
-            initialValues: TasheelsOptionsInitailValues,
-            validationSchema: TasheelsOptionsSchema,
-            onSubmit: (values: TasheelsOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as TasheelsOptionsFormikTypes;
-        case "editNatwasal":
-        case "addNatwasal":
-          return {
-            initialValues: NatwasalInitailValues,
-            validationSchema: NatwasalSchema,
-            onSubmit: (values: NatwasalFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as NatwasalFormikTypes;
-        case "natwasalsOptions":
-          return {
-            initialValues: NatwasalsOptionsInitailValues,
-            validationSchema: NatwasalsOptionsSchema,
-            onSubmit: (values: NatwasalsOptionsFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as NatwasalsOptionsFormikTypes;
-        case "downloadExcel":
-          return {
-            initialValues: DownloadExcelInitailValues,
-            validationSchema: DownloadExcelSchema,
-            onSubmit: (values: DownloadExcelFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as DownloadExcelFormikTypes;
-        default:
-          return {
-            initialValues: DeleteInitailValues,
-            validationSchema: DeleteSchema,
-            onSubmit: (values: DeleteFormTypes) => {
-              handleSubmit(values);
-            },
-          } as unknown as DeleteFormikTypes;
-      }
-    },
-    [
-      CompanyInitailValues,
-      CompanySchema,
-      CustomerInitailValues,
-      CustomerSchema,
-      DeleteInitailValues,
-      DeleteSchema,
-      DownloadExcelInitailValues,
-      DownloadExcelSchema,
-      EChannelInitailValues,
-      EChannelSchema,
-      EmployeeInitailValues,
-      EmployeeSchema,
-      JobInitailValues,
-      JobSchema,
-      LinkToCompanyInitailValues,
-      LinkToCompanySchema,
-      NationalityInitailValues,
-      NationalitySchema,
-      NatwasalInitailValues,
-      NatwasalSchema,
-      OwnerInitailValues,
-      OwnerSchema,
-      ProInitailValues,
-      ProSchema,
-      SponsorInitailValues,
-      SponsorSchema,
-      TasheelInitailValues,
-      TasheelSchema,
-      UserInitailValues,
-      UserSchema,
-      handleSubmit,
-      type,
-    ]
-  );
+  const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
+    login: LoginSchema,
+    otp: OTPSchema,
+    forgotPassword: ForgotPasswordSchema,
+    resetPassword: ResetPasswordSchema,
+    delete: DeleteSchema,
+    linkOwner: LinkToCompanySchema,
+    linkPro: LinkToCompanySchema,
+    addCustomer: CustomerSchema,
+    editCustomer: CustomerSchema,
+    customersOptions: CustomersOptionsSchema,
+    addOwner: OwnerSchema,
+    editOwner: OwnerSchema,
+    ownersOptions: OwnersOptionsSchema,
+    addUser: UserSchema,
+    editUser: UserSchema,
+    usersOptions: UsersOptionsSchema,
+    addEmployee: EmployeeSchema,
+    editEmployee: EmployeeSchema,
+    employeesOptions: EmployeesOptionsSchema,
+    addPro: ProSchema,
+    editPro: ProSchema,
+    prosOptions: ProsOptionsSchema,
+    addSponsor: SponsorSchema,
+    editSponsor: SponsorSchema,
+    addCompany: CompanySchema,
+    editCompany: CompanySchema,
+    companiesOptions: CompaniesOptionsSchema,
+    addEChannel: EChannelSchema,
+    editEChannel: EChannelSchema,
+    eChannelsOptions: EChannelsOptionsSchema,
+    addTasheel: TasheelSchema,
+    editTasheel: TasheelSchema,
+    tasheelsOptions: TasheelsOptionsSchema,
+    addNatwasal: NatwasalSchema,
+    editNatwasal: NatwasalSchema,
+    natwasalsOptions: NatwasalsOptionsSchema,
+  };
+
+  const initialValues: { [key: string]: AllFormsTypes } = {
+    login: LoginInitailValues,
+    otp: OTPInitailValues,
+    forgotPassword: ForgotPasswordInitailValues,
+    resetPassword: ResetPasswordInitailValues,
+    delete: DeleteInitailValues,
+    linkOwner: LinkToCompanyInitailValues,
+    linkPro: LinkToCompanyInitailValues,
+    addCustomer: CustomerInitailValues,
+    editCustomer: CustomerInitailValues,
+    customersOptions: CustomersOptionsInitailValues,
+    addOwner: OwnerInitailValues,
+    editOwner: OwnerInitailValues,
+    ownersOptions: OwnersOptionsInitailValues,
+    addUser: UserInitailValues,
+    editUser: UserInitailValues,
+    usersOptions: UsersOptionsInitailValues,
+    addPro: ProInitailValues,
+    editPro: ProInitailValues,
+    prosOptions: ProsOptionsInitailValues,
+    addSponsor: SponsorInitailValues,
+    editSponsor: SponsorInitailValues,
+    addEmployee: EmployeeInitailValues,
+    editEmployee: EmployeeInitailValues,
+    employeesOptions: EmployeesOptionsInitailValues,
+    addCompany: CompanyInitailValues,
+    editCompany: CompanyInitailValues,
+    companiesOptions: CompaniesOptionsInitailValues,
+    addEChannel: EChannelInitailValues,
+    editEChannel: EChannelInitailValues,
+    eChannelsOptions: EChannelsOptionsInitailValues,
+    addTasheel: TasheelInitailValues,
+    editTasheel: TasheelInitailValues,
+    tasheelsOptions: TasheelsOptionsInitailValues,
+    addNatwasal: NatwasalInitailValues,
+    editNatwasal: NatwasalInitailValues,
+    natwasalsOptions: NatwasalsOptionsInitailValues,
+  };
+
+  const chosenSchema = schemas[type];
+
+  const chosenInitialValues = initialValues[type];
+
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(chosenSchema),
+    defaultValues: chosenInitialValues,
+  });
 
   return {
-    formik: useFormik<AllFormsTypes>(
-      chosenFormik()
-    ) as FormikProps<AllFormsTypes>,
+    register,
+    errors,
+    setValue,
+    getValues,
+    handleSubmitForm: handleSubmit(submitFunction),
   };
 };
 

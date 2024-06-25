@@ -4,9 +4,11 @@ import Button from "../../components/Button/Button";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 
 const DeleteForm = () => {
-  const { formsLoading, handleCloseDeleteModal } = useContext(FormsContext);
+  const { formsLoading } = useContext(FormsContext);
+  const { handleCloseDeleteModal } = useContext(ModalsContext);
   return (
     <Box className={`grid justify-stretch items-center gap-16`}>
       <Title head={"h4"} align={"center"} title={"Are you sure ?"} />

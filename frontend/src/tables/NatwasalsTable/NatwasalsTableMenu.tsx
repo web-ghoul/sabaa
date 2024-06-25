@@ -8,17 +8,16 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { EmployeeTypes, OwnerTypes } from "../../types/store.types";
 import TableMenuItem from "../TableMenuItem";
 
 const NatwasalsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const navigate = useNavigate();
-  const {
-    handleOpenDeleteModal,
-    editableNatwasalData,
-    handleOpenNatwasalModal,
-  } = useContext(FormsContext);
+  const { editableNatwasalData } = useContext(FormsContext);
+  const { handleOpenDeleteModal, handleOpenNatwasalModal } =
+    useContext(ModalsContext);
 
   const handleView = () => {
     if (editableNatwasalData) {

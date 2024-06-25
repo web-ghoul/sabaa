@@ -8,12 +8,14 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const UsersTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
-  const { editableUserData, handleOpenDeleteModal, handleOpenUserModal } =
-    useContext(FormsContext);
+  const { editableUserData } = useContext(FormsContext);
+  const { handleOpenDeleteModal, handleOpenUserModal } =
+    useContext(ModalsContext);
   const navigate = useNavigate();
 
   const handleView = () => {

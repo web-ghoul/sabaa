@@ -12,24 +12,20 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCustomers } from "../../store/customersSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  CustomersOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import { NationalityTypes } from "../../types/store.types";
 
-const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
+const CustomersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    handleOpenCustomerModal,
-    searchForCustomers,
-    setSearchForCustomers,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForCustomers, setSearchForCustomers } =
+    useContext(FormsContext);
+  const { handleOpenDownloadExcelModal, handleOpenCustomerModal } =
+    useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -87,26 +83,19 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_CUSTOMERS_ROUTE}`);
     dispatch(getCustomers({}));
     setQueries({});
+    setValue("search", "");
+    setValue("status", "");
+    setValue("state", "");
+    setValue("nationality", "");
+    setValue("dobFrom", "");
+    setValue("dobTo", "");
+    setValue("residenceTo", "");
+    setValue("residenceFrom", "");
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
-
-  (formik as unknown as CustomersOptionsFormikTypes).values.dobFrom =
-    queries.dobFrom || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.dobTo =
-    queries.dobTo || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.residenceFrom =
-    queries.residenceFrom || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.residenceTo =
-    queries.residenceTo || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.status =
-    queries.status || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.state =
-    queries.state || "";
-  (formik as unknown as CustomersOptionsFormikTypes).values.nationality =
-    queries.nationality || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -132,7 +121,8 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -190,7 +180,8 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Nationality"}
             name={"nationality"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByNationality}
             options={handledNationalities}
             select
@@ -198,7 +189,8 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By State"}
             name={"state"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByState}
             options={["dubai"]}
             select
@@ -206,7 +198,8 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
             options={["active", "inactive"]}
             select
@@ -220,14 +213,16 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
                 name={"dobFrom"}
                 label={"From"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateOfBirthFrom}
               />
               <Input
                 name={"dobTo"}
                 label={"To"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateOfBirthTo}
               />
             </Box>
@@ -243,14 +238,16 @@ const CustomersOptionsForm = ({ formik }: FormiksTypes) => {
                 name={"residenceFrom"}
                 label={"From"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByResidenceFrom}
               />
               <Input
                 name={"residenceTo"}
                 label={"To"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByResidenceTo}
               />
             </Box>

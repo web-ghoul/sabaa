@@ -10,12 +10,13 @@ import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getActivities } from "../../store/activitiesSlice";
 import { AppDispatch } from "../../store/store";
-import {
-  ActivitiesOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
+const ActivitiesOptionsForm = ({
+  register,
+  errors,
+  setValue,
+}: FormiksTypes) => {
   const navigate = useNavigate();
   const [showFilters, setShowFilters] = useState(false);
   const [, setSearchParams] = useSearchParams();
@@ -54,16 +55,12 @@ const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_ACTIVITIES_ROUTE}`);
     dispatch(getActivities({}));
     setQueries({});
+    setValue("search", "");
+    setValue("type", "");
+    setValue("operation", "");
+    setValue("from", "");
+    setValue("to", "");
   };
-
-  (formik as unknown as ActivitiesOptionsFormikTypes).values.type =
-    queries?.type || "";
-  (formik as unknown as ActivitiesOptionsFormikTypes).values.operation =
-    queries?.operation || "";
-  (formik as unknown as ActivitiesOptionsFormikTypes).values.from =
-    queries?.from || "";
-  (formik as unknown as ActivitiesOptionsFormikTypes).values.to =
-    queries?.to || "";
 
   return (
     <Paper
@@ -77,7 +74,8 @@ const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Username..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -124,7 +122,8 @@ const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By Type"}
               name={"type"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByType}
               options={[
                 "owner",
@@ -140,7 +139,8 @@ const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By Operation"}
               name={"operation"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByOperation}
               options={["create", "update", "delete"]}
               select
@@ -154,14 +154,16 @@ const ActivitiesOptionsForm = ({ formik }: FormiksTypes) => {
                 name={"from"}
                 label={"From"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateFrom}
               />
               <Input
                 name={"to"}
                 label={"To"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateTo}
               />
             </Box>

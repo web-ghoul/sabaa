@@ -15,6 +15,7 @@ import {
 } from "./store.types";
 
 interface AppContextProps {
+  AuthRoutes: string[];
   pageContainerClasses: string;
   defaultAvatar: string;
   defaultCompany: string;
@@ -54,6 +55,12 @@ interface SidebarsContextProps {
 }
 
 interface ExcelsContextProps {
+  excelType: { type: "excel" | "all"; entity: EntitiesType };
+  setExcelType: (value: {
+    type: "excel" | "all";
+    entity: EntitiesType;
+    ent?: EntityType;
+  }) => void;
   ownersSheets: OwnersSheetTypes[];
   ownerIndex: { fileIndex: number; index: number };
   setOwnerIndex: (value: { fileIndex: number; index: number }) => void;
@@ -111,62 +118,8 @@ interface FormsContextTypes {
   formsLoading: boolean;
   handleCloseFormsLoading: () => void;
   handleOpenFormsLoading: () => void;
-  openDownloadExcelModal: boolean;
-  handleOpenDownloadExcelModal: (
-    type: "excel" | "all",
-    entity: EntitiesType,
-    ent?: EntityType
-  ) => void;
-  handleCloseDownloadExcelModal: () => void;
-  openLinkToCompanyModal: boolean;
-  handleOpenLinkToCompanyModal: (type: string) => void;
-  handleCloseLinkToCompanyModal: () => void;
-  openUploadEmployeesModal: boolean;
-  handleOpenUploadEmployeesModal: () => void;
-  handleCloseUploadEmployeesModal: () => void;
-  openDeleteModal: boolean;
-  handleOpenDeleteModal: (type: string) => void;
-  handleCloseDeleteModal: () => void;
-  openOwnerModal: boolean;
-  handleOpenOwnerModal: (string: string) => void;
-  handleCloseOwnerModal: () => void;
-  openEmployeeModal: boolean;
-  handleOpenEmployeeModal: (string: string) => void;
-  handleCloseEmployeeModal: () => void;
-  openCustomerModal: boolean;
-  handleOpenCustomerModal: (string: string) => void;
-  handleCloseCustomerModal: () => void;
-  openConvertCustomerModal: boolean;
-  handleOpenConvertCustomerModal: () => void;
-  handleCloseConvertCustomerModal: () => void;
-  openSponsorModal: boolean;
-  handleOpenSponsorModal: (string: string) => void;
-  handleCloseSponsorModal: () => void;
-  openProModal: boolean;
-  handleOpenProModal: (string: string) => void;
-  handleCloseProModal: () => void;
-  openUserModal: boolean;
-  handleOpenUserModal: (string: string) => void;
-  handleCloseUserModal: () => void;
-  openCompanyModal: boolean;
-  handleOpenCompanyModal: (type: string) => void;
-  handleCloseCompanyModal: () => void;
-  openEChannelModal: boolean;
-  handleOpenEChannelModal: (string: string) => void;
-  handleCloseEChannelModal: () => void;
-  openTasheelModal: boolean;
-  handleOpenTasheelModal: (string: string) => void;
-  handleCloseTasheelModal: () => void;
-  openNatwasalModal: boolean;
-  handleOpenNatwasalModal: (string: string) => void;
-  handleCloseNatwasalModal: () => void;
   formType: string;
   setFormType: (type: string) => void;
-  excelType: { type: "excel" | "all"; entity: EntitiesType };
-  setExcelType: (value: {
-    type: "excel" | "all";
-    entity: EntitiesType;
-  }) => void;
   searchForOwners: string;
   setSearchForOwners: (search: string) => void;
   searchForEmployees: string;
@@ -191,15 +144,6 @@ interface FormsContextTypes {
   setSearchForJobs: (search: string) => void;
   searchForNationalities: string;
   setSearchForNationalities: (search: string) => void;
-  openForgotPasswordModal: boolean;
-  handleOpenForgotPasswordModal: () => void;
-  handleCloseForgotPasswordModal: () => void;
-  openJobModal: boolean;
-  handleOpenJobModal: (type: string) => void;
-  handleCloseJobModal: () => void;
-  openNationalityModal: boolean;
-  handleOpenNationalityModal: (string: string) => void;
-  handleCloseNationalityModal: () => void;
   companyImage: File | string;
   setCompanyImage: (image: File | string) => void;
   ownerImage: File | string;
@@ -238,6 +182,70 @@ interface FormsContextTypes {
   setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
   editableNatwasalData: TasheelTypes | null;
   setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
+}
+
+interface ModalsContextTypes {
+  openDownloadExcelModal: boolean;
+  handleOpenDownloadExcelModal: (
+    type: "excel" | "all",
+    entity: EntitiesType,
+    ent?: EntityType
+  ) => void;
+  handleCloseDownloadExcelModal: () => void;
+  openForgotPasswordModal: boolean;
+  handleOpenForgotPasswordModal: () => void;
+  handleCloseForgotPasswordModal: () => void;
+  openJobModal: boolean;
+  handleOpenJobModal: (type: string) => void;
+  handleCloseJobModal: () => void;
+  openNationalityModal: boolean;
+  handleOpenNationalityModal: (string: string) => void;
+  handleCloseNationalityModal: () => void;
+  openLinkToCompanyModal: boolean;
+  handleOpenLinkToCompanyModal: (type: string) => void;
+  handleCloseLinkToCompanyModal: () => void;
+  openUploadEmployeesModal: boolean;
+  handleOpenUploadEmployeesModal: () => void;
+  handleCloseUploadEmployeesModal: () => void;
+  openDeleteModal: boolean;
+  handleOpenDeleteModal: (type: string) => void;
+  handleCloseDeleteModal: () => void;
+  openOwnerModal: boolean;
+  handleOpenOwnerModal: (string: string) => void;
+  handleCloseOwnerModal: () => void;
+  openEmployeeModal: boolean;
+  handleOpenEmployeeModal: (string: string) => void;
+  handleCloseEmployeeModal: () => void;
+  openCustomerModal: boolean;
+  handleOpenCustomerModal: (string: string) => void;
+  handleCloseCustomerModal: () => void;
+  openConvertCustomerModal: boolean;
+  handleOpenConvertCustomerModal: () => void;
+  handleCloseConvertCustomerModal: () => void;
+  openSponsorModal: boolean;
+  handleOpenSponsorModal: (string: string) => void;
+  handleCloseSponsorModal: () => void;
+  openViewSponsorModal: boolean;
+  handleOpenViewSponsorModal: () => void;
+  handleCloseViewSponsorModal: () => void;
+  openProModal: boolean;
+  handleOpenProModal: (string: string) => void;
+  handleCloseProModal: () => void;
+  openUserModal: boolean;
+  handleOpenUserModal: (string: string) => void;
+  handleCloseUserModal: () => void;
+  openCompanyModal: boolean;
+  handleOpenCompanyModal: (type: string) => void;
+  handleCloseCompanyModal: () => void;
+  openEChannelModal: boolean;
+  handleOpenEChannelModal: (string: string) => void;
+  handleCloseEChannelModal: () => void;
+  openTasheelModal: boolean;
+  handleOpenTasheelModal: (string: string) => void;
+  handleCloseTasheelModal: () => void;
+  openNatwasalModal: boolean;
+  handleOpenNatwasalModal: (string: string) => void;
+  handleCloseNatwasalModal: () => void;
 }
 
 interface TabsContextProps {
@@ -303,6 +311,7 @@ export type {
   ExcelsContextProps,
   FormsContextTypes,
   JobsSheetTypes,
+  ModalsContextTypes,
   NationalitiesSheetTypes,
   OwnersSheetTypes,
   ProsSheetTypes,

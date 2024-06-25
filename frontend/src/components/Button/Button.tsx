@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
@@ -14,21 +15,23 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
       : bg && `${bg} hover:${bg.replace("5", "6")}`
   }`;
   const {
+    setEditableCompanyData,
+    setEditableEmployeeData,
+    setEditableCustomerData,
+    setEditableEChannelData,
+    setEditableTasheelData,
+    setEditableNatwasalData,
+  } = useContext(FormsContext);
+  const {
     handleOpenUserModal,
     handleOpenOwnerModal,
     handleOpenJobModal,
     handleOpenNationalityModal,
-    setEditableCompanyData,
-    setEditableEmployeeData,
-    setEditableCustomerData,
     handleOpenCustomerModal,
-    setEditableEChannelData,
     handleOpenEChannelModal,
     handleOpenTasheelModal,
-    setEditableTasheelData,
-    setEditableNatwasalData,
     handleOpenNatwasalModal,
-  } = useContext(FormsContext);
+  } = useContext(ModalsContext);
   const navigate = useNavigate();
 
   const handleClick = () => {

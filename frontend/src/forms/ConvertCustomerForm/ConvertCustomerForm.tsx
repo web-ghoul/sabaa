@@ -5,11 +5,12 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const ConvertCustomerForm = ({ formik }: FormiksTypes) => {
-  const { formsLoading, handleCloseConvertCustomerModal } =
-    useContext(FormsContext);
+const ConvertCustomerForm = ({ register, errors }: FormiksTypes) => {
+  const { formsLoading } = useContext(FormsContext);
+  const { handleCloseConvertCustomerModal } = useContext(ModalsContext);
 
   return (
     <Paper
@@ -18,7 +19,8 @@ const ConvertCustomerForm = ({ formik }: FormiksTypes) => {
       <Title head={"h4"} align={"left"} title={"Convert Customer"} />
 
       <Input
-        formik={formik}
+        register={register}
+        errors={errors}
         label={"Type"}
         name={"type"}
         select

@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { handleAlert } from "../functions/handleAlert";
+import { EntitiesType, EntityType } from "../types/app.types";
 import {
   CompaniesSheetTypes,
   CustomersSheetTypes,
@@ -21,6 +22,8 @@ import {
 } from "../types/store.types";
 
 export const ExcelsContext = createContext<ExcelsContextProps>({
+  excelType: { type: "excel", entity: "companies" },
+  setExcelType: () => {},
   ownersSheets: [],
   ownerIndex: { fileIndex: 0, index: 0 },
   setOwnerIndex: () => {},
@@ -73,6 +76,13 @@ export const ExcelsContext = createContext<ExcelsContextProps>({
 });
 
 const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
+  //Excel Type
+  const [excelType, setExcelType] = useState<{
+    type: "excel" | "all";
+    entity: EntitiesType;
+    ent?: EntityType;
+  }>({ type: "excel", entity: "companies", ent: "company" });
+
   //Owners Sheets
   const [ownersSheets, setOwnersSheets] = useState<OwnersSheetTypes[]>([]);
 
@@ -318,6 +328,8 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const values = {
+    excelType,
+    setExcelType,
     ownersSheets,
     ownerIndex,
     setOwnerIndex,

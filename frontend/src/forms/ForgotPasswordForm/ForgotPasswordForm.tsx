@@ -6,7 +6,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const ForgotPasswordForm = ({ formik }: FormiksTypes) => {
+const ForgotPasswordForm = ({ register, errors }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
 
   return (
@@ -16,7 +16,12 @@ const ForgotPasswordForm = ({ formik }: FormiksTypes) => {
       <Title title={"Forgot Password"} />
 
       <Box className={`grid justify-stretch items-center gap-6`}>
-        <Input formik={formik} label={"Email"} name={"email"} />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Email"}
+          name={"email"}
+        />
       </Box>
 
       <Box className={`m-auto`}>

@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { EntitiesType, EntityType } from "../types/app.types";
 import { FormsContextTypes } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -22,64 +21,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   formsLoading: false,
   handleCloseFormsLoading: () => {},
   handleOpenFormsLoading: () => {},
-  openDownloadExcelModal: false,
-  handleOpenDownloadExcelModal: () => {},
-  handleCloseDownloadExcelModal: () => {},
-  openLinkToCompanyModal: false,
-  handleOpenLinkToCompanyModal: () => {},
-  handleCloseLinkToCompanyModal: () => {},
-  openUploadEmployeesModal: false,
-  handleOpenUploadEmployeesModal: () => {},
-  handleCloseUploadEmployeesModal: () => {},
-  openDeleteModal: false,
-  handleOpenDeleteModal: () => {},
-  handleCloseDeleteModal: () => {},
-  openForgotPasswordModal: false,
-  handleOpenForgotPasswordModal: () => {},
-  handleCloseForgotPasswordModal: () => {},
-  openJobModal: false,
-  handleOpenJobModal: () => {},
-  handleCloseJobModal: () => {},
-  openOwnerModal: false,
-  handleOpenOwnerModal: () => {},
-  handleCloseOwnerModal: () => {},
-  openEmployeeModal: false,
-  handleOpenEmployeeModal: () => {},
-  handleCloseEmployeeModal: () => {},
-  openCustomerModal: false,
-  handleOpenCustomerModal: () => {},
-  handleCloseCustomerModal: () => {},
-  openConvertCustomerModal: false,
-  handleOpenConvertCustomerModal: () => {},
-  handleCloseConvertCustomerModal: () => {},
-  openSponsorModal: false,
-  handleOpenSponsorModal: () => {},
-  handleCloseSponsorModal: () => {},
-  openProModal: false,
-  handleOpenProModal: () => {},
-  handleCloseProModal: () => {},
-  openUserModal: false,
-  handleOpenUserModal: () => {},
-  handleCloseUserModal: () => {},
-  openCompanyModal: false,
-  handleOpenCompanyModal: () => {},
-  handleCloseCompanyModal: () => {},
-  openNationalityModal: false,
-  handleOpenNationalityModal: () => {},
-  handleCloseNationalityModal: () => {},
-  openEChannelModal: false,
-  handleOpenEChannelModal: () => {},
-  handleCloseEChannelModal: () => {},
-  openTasheelModal: false,
-  handleOpenTasheelModal: () => {},
-  handleCloseTasheelModal: () => {},
-  openNatwasalModal: false,
-  handleOpenNatwasalModal: () => {},
-  handleCloseNatwasalModal: () => {},
   formType: "",
   setFormType: () => {},
-  excelType: { type: "excel", entity: "companies" },
-  setExcelType: () => {},
   searchForOwners: "",
   setSearchForOwners: () => {},
   searchForEmployees: "",
@@ -161,13 +104,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Form Type
   const [formType, setFormType] = useState("");
 
-  //Excel Type
-  const [excelType, setExcelType] = useState<{
-    type: "excel" | "all";
-    entity: EntitiesType;
-    ent?: EntityType;
-  }>({ type: "excel", entity: "companies", ent: "company" });
-
   //Search
   const [searchForOwners, setSearchForOwners] = useState("");
   const [searchForEmployees, setSearchForEmployees] = useState("");
@@ -181,261 +117,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
-
-  //Upload Employees
-  const [openUploadEmployeesModal, setOpenUploadEmployeesModal] =
-    useState(false);
-
-  const handleCloseUploadEmployeesModal = () => {
-    setOpenUploadEmployeesModal(false);
-  };
-
-  const handleOpenUploadEmployeesModal = () => {
-    setOpenUploadEmployeesModal(true);
-  };
-
-  //Downalod Excel
-  const [openDownloadExcelModal, setOpenDownloadExcelModal] = useState(false);
-
-  const handleCloseDownloadExcelModal = () => {
-    setOpenDownloadExcelModal(false);
-  };
-
-  const handleOpenDownloadExcelModal = (
-    type: "excel" | "all",
-    entity: EntitiesType,
-    ent?: EntityType
-  ) => {
-    setOpenDownloadExcelModal(true);
-    setExcelType({ type: type, entity: entity, ent: ent });
-  };
-
-  //Link Company
-  const [openLinkToCompanyModal, setOpenLinkToCompanyModal] = useState(false);
-
-  const handleCloseLinkToCompanyModal = () => {
-    setOpenLinkToCompanyModal(false);
-  };
-
-  const handleOpenLinkToCompanyModal = (type: string) => {
-    setFormType(type);
-    setOpenLinkToCompanyModal(true);
-  };
-
-  //Delete
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false);
-  };
-
-  const handleOpenDeleteModal = (type: string) => {
-    setFormType(type);
-    setOpenDeleteModal(true);
-  };
-
-  //Forgot Password
-  const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false);
-
-  const handleCloseForgotPasswordModal = () => {
-    setOpenForgotPasswordModal(false);
-  };
-
-  const handleOpenForgotPasswordModal = () => {
-    setOpenForgotPasswordModal(true);
-  };
-
-  //Job Modal
-  const [openJobModal, setOpenJobModal] = useState(false);
-
-  const handleCloseJobModal = () => {
-    setOpenJobModal(false);
-  };
-
-  const handleOpenJobModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableJobData(null);
-    }
-    setFormType(type);
-    setOpenJobModal(true);
-  };
-
-  //Owner Modal
-  const [openOwnerModal, setOpenOwnerModal] = useState(false);
-
-  const handleCloseOwnerModal = () => {
-    setOpenOwnerModal(false);
-  };
-
-  const handleOpenOwnerModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableOwnerData(null);
-    }
-    setFormType(type);
-    setOpenOwnerModal(true);
-  };
-
-  //Employee Modal
-  const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
-
-  const handleCloseEmployeeModal = () => {
-    setOpenEmployeeModal(false);
-  };
-
-  const handleOpenEmployeeModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableEmployeeData(null);
-    }
-    setFormType(type);
-    setOpenEmployeeModal(true);
-  };
-
-  //Customer Modal
-  const [openCustomerModal, setOpenCustomerModal] = useState(false);
-
-  const handleCloseCustomerModal = () => {
-    setOpenCustomerModal(false);
-  };
-
-  const handleOpenCustomerModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableCustomerData(null);
-    }
-    setFormType(type);
-    setOpenCustomerModal(true);
-  };
-
-  //Convert Modal
-  const [openConvertCustomerModal, setOpenConvertCustomerModal] =
-    useState(false);
-
-  const handleCloseConvertCustomerModal = () => {
-    setOpenConvertCustomerModal(false);
-  };
-
-  const handleOpenConvertCustomerModal = () => {
-    setOpenConvertCustomerModal(true);
-  };
-
-  //Sponsor Modal
-  const [openSponsorModal, setOpenSponsorModal] = useState(false);
-
-  const handleCloseSponsorModal = () => {
-    setOpenSponsorModal(false);
-  };
-
-  const handleOpenSponsorModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableSponsorData(null);
-    }
-    setFormType(type);
-    setOpenSponsorModal(true);
-  };
-
-  //Pro Modal
-  const [openProModal, setOpenProModal] = useState(false);
-
-  const handleCloseProModal = () => {
-    setOpenProModal(false);
-  };
-
-  const handleOpenProModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableProData(null);
-    }
-    setFormType(type);
-    setOpenProModal(true);
-  };
-
-  //E-Channel Modal
-  const [openEChannelModal, setOpenEChannelModal] = useState(false);
-
-  const handleCloseEChannelModal = () => {
-    setOpenEChannelModal(false);
-  };
-
-  const handleOpenEChannelModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableEChannelData(null);
-    }
-    setFormType(type);
-    setOpenEChannelModal(true);
-  };
-
-  //Tasheel Modal
-  const [openTasheelModal, setOpenTasheelModal] = useState(false);
-
-  const handleCloseTasheelModal = () => {
-    setOpenTasheelModal(false);
-  };
-
-  const handleOpenTasheelModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableTasheelData(null);
-    }
-    setFormType(type);
-    setOpenTasheelModal(true);
-  };
-
-  //Natwasal Modal
-  const [openNatwasalModal, setOpenNatwasalModal] = useState(false);
-
-  const handleCloseNatwasalModal = () => {
-    setOpenNatwasalModal(false);
-  };
-
-  const handleOpenNatwasalModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableNatwasalData(null);
-    }
-    setFormType(type);
-    setOpenNatwasalModal(true);
-  };
-
-  //User Modal
-  const [openUserModal, setOpenUserModal] = useState(false);
-
-  const handleCloseUserModal = () => {
-    setOpenUserModal(false);
-  };
-
-  const handleOpenUserModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableUserData(null);
-    }
-    setFormType(type);
-    setOpenUserModal(true);
-  };
-
-  //Company Modal
-  const [openCompanyModal, setOpenCompanyModal] = useState(false);
-
-  const handleCloseCompanyModal = () => {
-    setOpenCompanyModal(false);
-  };
-
-  const handleOpenCompanyModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableCompanyData(null);
-    }
-    setFormType(type);
-    setOpenCompanyModal(true);
-  };
-
-  //Nationality Modal
-  const [openNationalityModal, setOpenNationalityModal] = useState(false);
-
-  const handleCloseNationalityModal = () => {
-    setOpenNationalityModal(false);
-  };
-
-  const handleOpenNationalityModal = (type: string) => {
-    if (type.startsWith("add")) {
-      setEditableNationalityData(null);
-    }
-    setFormType(type);
-    setOpenNationalityModal(true);
-  };
 
   //Company Image
   const [companyImage, setCompanyImage] = useState<File | string>(
@@ -554,33 +235,12 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     handleOpenFormsLoading,
     formType,
     setFormType,
-    openForgotPasswordModal,
-    handleOpenForgotPasswordModal,
-    handleCloseForgotPasswordModal,
-    openJobModal,
-    openUserModal,
-    handleCloseUserModal,
-    handleOpenUserModal,
     companyImage,
     setCompanyImage,
-    openDeleteModal,
-    handleCloseDeleteModal,
-    handleOpenDeleteModal,
-    handleCloseJobModal,
     userImage,
     setUserImage,
     ownerImage,
-    openCompanyModal,
-    handleCloseCompanyModal,
-    handleOpenCompanyModal,
     setOwnerImage,
-    handleOpenJobModal,
-    openOwnerModal,
-    handleCloseOwnerModal,
-    handleOpenOwnerModal,
-    openNationalityModal,
-    handleCloseNationalityModal,
-    handleOpenNationalityModal,
     editableOwnerData,
     setEditableOwnerData,
     editableJobData,
@@ -601,12 +261,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setEditableUserData,
     editableCompanyData,
     setEditableCompanyData,
-    openLinkToCompanyModal,
-    handleCloseLinkToCompanyModal,
-    handleOpenLinkToCompanyModal,
-    handleCloseProModal,
-    handleOpenProModal,
-    openProModal,
     editableProData,
     setEditableProData,
     proImage,
@@ -615,9 +269,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForPros,
     searchForEmployees,
     setSearchForEmployees,
-    openEmployeeModal,
-    handleCloseEmployeeModal,
-    handleOpenEmployeeModal,
     editableEmployeeData,
     setEditableEmployeeData,
     employeeImage,
@@ -626,36 +277,16 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setCustomerImage,
     editableCustomerData,
     setEditableCustomerData,
-    openCustomerModal,
-    handleCloseCustomerModal,
-    handleOpenCustomerModal,
     searchForCustomers,
     setSearchForCustomers,
-    openUploadEmployeesModal,
-    handleCloseUploadEmployeesModal,
-    handleOpenUploadEmployeesModal,
-    openDownloadExcelModal,
-    handleCloseDownloadExcelModal,
-    handleOpenDownloadExcelModal,
-    excelType,
-    setExcelType,
     searchForActivities,
     setSearchForActivities,
     editableSponsorData,
     setEditableSponsorData,
-    openSponsorModal,
-    handleCloseSponsorModal,
-    handleOpenSponsorModal,
     sponsorImage,
     setSponsorImage,
-    openConvertCustomerModal,
-    handleCloseConvertCustomerModal,
-    handleOpenConvertCustomerModal,
     searchForEChannels,
     setSearchForEChannels,
-    openEChannelModal,
-    handleCloseEChannelModal,
-    handleOpenEChannelModal,
     editableEChannelData,
     setEditableEChannelData,
     editableTasheelData,
@@ -666,12 +297,6 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForTasheel,
     searchForNatwasal,
     setSearchForNatwasal,
-    openTasheelModal,
-    handleCloseTasheelModal,
-    handleOpenTasheelModal,
-    openNatwasalModal,
-    handleCloseNatwasalModal,
-    handleOpenNatwasalModal,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

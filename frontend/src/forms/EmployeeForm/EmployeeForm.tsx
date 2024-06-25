@@ -15,7 +15,13 @@ import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const EmployeeForm = ({ formik, type }: FormiksTypes) => {
+const EmployeeForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
   const { formsLoading, setEmployeeImage } = useContext(FormsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
@@ -65,43 +71,57 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
         <Box
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
-          <Input formik={formik} label={"English Name"} name={"name"} />
-          <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
+            label={"English Name"}
+            name={"name"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Arabic Name"}
+            name={"nameAr"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             label={"Person Code"}
             name={"personCode"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Email"}
             name={"email"}
             type={"email"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Mobile Number"}
             type={"text"}
-            variant={"numeric"}
             name={"mobileNumber"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"dob"}
             label={"Date of Birth"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Gender"}
             name={"gender"}
             select
             options={["Male", "Female"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Salary"}
             name={"salary"}
             type={"number"}
@@ -110,7 +130,10 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             <AutoCompleteSearch
               label={"Nationality"}
               options={nationalities}
-              formik={formik}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
               name={"nationality"}
             />
           )}
@@ -118,25 +141,34 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             <AutoCompleteSearch
               label={"Job"}
               options={jobs}
-              formik={formik}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
               name={"job"}
             />
           )}
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"UID Number"}
             name={"uid"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Emirates ID"}
             name={"emiratesId"}
             type={"text"}
-            variant={"numeric"}
           />
-          <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Remarks"}
+            name={"remarks"}
+            textarea
+          />
         </Box>
       </Box>
       <Divider />
@@ -149,19 +181,22 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             name={"passportNumber"}
             label={"Passport Number"}
             type={"text"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"passportExpiry"}
             label={"Passport Expire Date"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"number"}
             name={"visaFileNumber"}
             label={"Visa File Number"}
@@ -169,7 +204,8 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           <Input
             label={"Card Type"}
             name={"cardType"}
-            formik={formik}
+            register={register}
+            errors={errors}
             options={[
               "PRE APPROVAL FOR WORK PERMIT",
               "NEW ELECTRONIC WORK PERMIT",
@@ -184,32 +220,37 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             select
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Card Number"}
             type={"number"}
             name={"cardNumber"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"File Immgration Number"}
             type={"text"}
             name={"fileImmgNo"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"residenceExpireDate"}
             label={"Residence Expire Date"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Status"}
             name={"status"}
             select
             options={["Active", "Cancel", "Abscond", "Complaint"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"lcExpireDate"}
             label={"Labour Card Expire Date"}
@@ -218,7 +259,10 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
             <AutoCompleteSearch
               label={"Company"}
               options={companies}
-              formik={formik}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
               name={"companyId"}
               variant={"employee"}
               multiple={true}
@@ -237,17 +281,20 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Medical Insurance Company"}
             name={"medicalInsuranceCompany"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             name={"medicalPolicyNo"}
             label={"Medical Policy Number"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"medicalExpireDate"}
             label={"Medical Expire Date"}
@@ -265,17 +312,20 @@ const EmployeeForm = ({ formik, type }: FormiksTypes) => {
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"IOLE Insurance Company"}
             name={"iLOEInsuranceCompany"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             name={"iLOEPolicyNo"}
             label={"IOLE Policy Number"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"iLOEExpireDate"}
             label={"IOLE Expire Date"}

@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
-import { FormikProps } from "formik";
 import useSubmitForm from "../hooks/useSubmitForm";
-import { AllFormiksTypes, FormsTypes } from "../types/forms.types";
+import { FormsTypes } from "../types/forms.types";
 import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
@@ -43,10 +42,11 @@ import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
 const Forms = ({ type, index }: FormsTypes) => {
-  const { formik } = useSubmitForm(type);
+  const { register, handleSubmitForm, errors, setValue, getValues } =
+    useSubmitForm(type);
 
   return (
-    <Box component={"form"} onSubmit={formik.handleSubmit}>
+    <Box component={"form"} onSubmit={handleSubmitForm}>
       {type === "createJobsSheet" && <CreateJobsSheetForm index={index || 0} />}
       {type === "createCompaniesSheet" && (
         <CreateCompaniesSheetForm index={index || 0} />
@@ -55,12 +55,18 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* User */}
       {type === "usersOptions" && (
         <UsersOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
         />
       )}
       {(type === "addUser" || type === "editUser") && (
         <UserForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
@@ -69,12 +75,19 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Owner */}
       {type === "ownersOptions" && (
         <OwnersOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {(type === "addOwner" || type === "editOwner") && (
         <OwnerForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
@@ -86,12 +99,19 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Pro */}
       {type === "prosOptions" && (
         <ProsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {(type === "addPro" || type === "editPro") && (
         <ProForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
@@ -101,12 +121,19 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Employee */}
       {type === "employeesOptions" && (
         <EmployeesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {(type === "addEmployee" || type === "editEmployee") && (
         <EmployeeForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
@@ -118,18 +145,29 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Customer */}
       {(type === "addCustomer" || type === "editCustomer") && (
         <CustomerForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          setValue={setValue}
+          register={register}
+          getValues={getValues}
+          errors={errors}
           type={type}
         />
       )}
       {type === "customersOptions" && (
         <CustomersOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {type === "convertCustomer" && (
         <ConvertCustomerForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {type === "createCustomersSheet" && (
@@ -140,7 +178,10 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Sponsor */}
       {(type === "addSponsor" || type === "editSponsor") && (
         <SponsorForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
@@ -149,13 +190,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Company */}
       {(type === "addCompany" || type === "editCompany") && (
         <CompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "companiesOptions" && (
         <CompaniesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Company */}
@@ -163,13 +211,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Job */}
       {(type === "editJob" || type === "addJob") && (
         <JobForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "jobsOptions" && (
         <JobsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Job */}
@@ -177,13 +232,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Nationaliy */}
       {(type === "editNationality" || type === "addNationality") && (
         <NationalityForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "nationalitiesOptions" && (
         <NationalitiesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {type === "createNationalitiesSheet" && (
@@ -194,7 +256,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Activity */}
       {type === "activitiesOptions" && (
         <ActivitiesOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Activity */}
@@ -202,7 +268,11 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Link Company */}
       {(type === "linkOwner" || type === "linkPro") && (
         <LinkToCompanyForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Link Company */}
@@ -210,13 +280,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* E-Channel */}
       {(type === "addEChannel" || type === "editEChannel") && (
         <EChannelForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "eChannelsOptions" && (
         <EChannelsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* E-Channel */}
@@ -224,13 +301,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Tasheel */}
       {(type === "addTasheel" || type === "editTasheel") && (
         <TasheelForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "tasheelsOptions" && (
         <TasheelsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Tasheel */}
@@ -238,13 +322,20 @@ const Forms = ({ type, index }: FormsTypes) => {
       {/* Natwasal */}
       {(type === "addNatwasal" || type === "editNatwasal") && (
         <NatwasalForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
           type={type}
         />
       )}
       {type === "natwasalsOptions" && (
         <NatwasalsOptionsForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {/* Natwasal */}
@@ -255,26 +346,50 @@ const Forms = ({ type, index }: FormsTypes) => {
 
       {/* Authentication */}
       {type === "login" && (
-        <LoginForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
+        <LoginForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
       )}
       {type === "resetPassword" && (
         <ResetPasswordForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {type === "forgotPassword" && (
         <ForgotPasswordForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
       {type === "otp" && (
-        <OTPForm formik={formik as unknown as FormikProps<AllFormiksTypes>} />
+        <OTPForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
       )}
       {/* Authentication */}
 
       {type === "downloadExcel" && (
         <DownloadExcelForm
-          formik={formik as unknown as FormikProps<AllFormiksTypes>}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
         />
       )}
     </Box>

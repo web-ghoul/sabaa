@@ -1,19 +1,13 @@
 import { Box, CssBaseline, useMediaQuery } from "@mui/material";
-import Cookies from "js-cookie";
 import { useContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header/Header.tsx";
 import MdSidebar from "./components/Sidebar/MdSidebar.tsx";
 import Sidebar from "./components/Sidebar/Sidebar.tsx";
 import { AppContext } from "./contexts/AppContext.tsx";
+import useSecureRoute from "./hooks/useSecureRoute.ts";
 import CompanyModal from "./modals/CompanyModal.tsx";
 import ConvertCustomerModal from "./modals/ConvertCustomerModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
@@ -32,38 +26,19 @@ import SponsorModal from "./modals/SponsorModal.tsx";
 import TasheelModal from "./modals/TasheelModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
-import { getProfile, setAuth } from "./store/auth.ts";
-import { AppDispatch } from "./store/store.ts";
-
-const AuthRoutes = [
-  `${import.meta.env.VITE_LOGIN_ROUTE}`,
-  `${import.meta.env.VITE_RESET_PASSWORD_ROUTE}`,
-  `${import.meta.env.VITE_OTP_ROUTE}`,
-];
+import ViewSponsorModal from "./modals/ViewSponsorModal.tsx";
 
 const App = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const [signed, setSigned] = useState(true);
   const mdScreen = useMediaQuery("(max-width:992px)");
-  const { setQueries } = useContext(AppContext);
+  const { setQueries, AuthRoutes } = useContext(AppContext);
   const [searchParams] = useSearchParams();
+  const { handleSecureRoute } = useSecureRoute();
 
   useEffect(() => {
-    const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
-    const userId = Cookies.get(`${import.meta.env.VITE_USER_ID_TITLE}`);
-    if (token && userId) {
-      dispatch(setAuth({ token, userId }));
-      dispatch(getProfile());
-      setSigned(true);
-    } else {
-      if (!AuthRoutes.includes(pathname)) {
-        navigate(`${import.meta.env.VITE_LOGIN_ROUTE}`);
-      }
-      setSigned(false);
-    }
-  }, [dispatch, navigate, pathname]);
+    setSigned(handleSecureRoute());
+  }, [handleSecureRoute]);
 
   useEffect(() => {
     const allParams: { [key: string]: string } = {};
@@ -83,6 +58,7 @@ const App = () => {
       <CompanyModal />
       <ProModal />
       <SponsorModal />
+      <ViewSponsorModal />
       <EmployeeModal />
       <EChannelModal />
       <TasheelModal />

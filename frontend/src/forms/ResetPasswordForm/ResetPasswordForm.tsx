@@ -6,7 +6,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const ResetPasswordForm = ({ formik }: FormiksTypes) => {
+const ResetPasswordForm = ({ register, errors }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   return (
     <Box className={`grid justify-stretch items-center gap-8`}>
@@ -15,13 +15,15 @@ const ResetPasswordForm = ({ formik }: FormiksTypes) => {
         className={`grid justify-stretch items-center gap-6 grid-cols-2 xs:grid-cols-1`}
       >
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Password"}
           type={"password"}
           name={"password"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Confirm Password"}
           type={"password"}
           name={"confirmPassword"}

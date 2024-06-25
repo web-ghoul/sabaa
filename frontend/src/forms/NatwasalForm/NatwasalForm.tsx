@@ -7,11 +7,12 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
 import PersonsTable from "../../tables/PersonsTable/PersonsTable";
-import { FormiksTypes, NatwasalFormikTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import {
   CompanyTypes,
   EmployeeTypes,
@@ -21,13 +22,10 @@ import {
   TasheelTypes,
 } from "../../types/store.types";
 
-const NatwasalForm = ({ formik, type }: FormiksTypes) => {
-  const {
-    formsLoading,
-    handleCloseNatwasalModal,
-    setEditableNatwasalData,
-    editableNatwasalData,
-  } = useContext(FormsContext);
+const NatwasalForm = ({ register, errors, setValue, type }: FormiksTypes) => {
+  const { formsLoading, setEditableNatwasalData, editableNatwasalData } =
+    useContext(FormsContext);
+  const { handleCloseNatwasalModal } = useContext(ModalsContext);
   const [loading, setLoading] = useState(false);
   const [persons, setPersons] = useState<
     | {
@@ -45,40 +43,30 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
   const { token } = useSelector((state: RootState) => state.auth);
 
   const handleChangeValues = (d: NatwasalTypes, reset?: boolean) => {
-    (formik as unknown as NatwasalFormikTypes).values.name = d.name || "";
-    (formik as unknown as NatwasalFormikTypes).values.nameAr = d.nameAr || "";
-    (formik as unknown as NatwasalFormikTypes).values.personCode =
-      d.personCode || "";
-    (formik as unknown as NatwasalFormikTypes).values.email = d.email;
-    (formik as unknown as NatwasalFormikTypes).values.name = d.name;
-    (formik as unknown as NatwasalFormikTypes).values.type =
+    setValue("name", d.name || "");
+    setValue("nameAr", d.nameAr || "");
+    setValue("personCode", d.personCode || "");
+    setValue("email", d.email || "");
+    setValue(
+      "type",
       d.type && d.type.toLowerCase() === "pro"
         ? "officer"
-        : d.type || "employee";
+        : d.type || "employee"
+    );
     if (d.owner) {
-      (formik as unknown as NatwasalFormikTypes).values.owner = (
-        d.owner as OwnerTypes
-      )._id;
-      (formik as unknown as NatwasalFormikTypes).values.emiratesId = (
-        d.owner as OwnerTypes
-      ).emiratesId;
+      setValue("owner", (d.owner as OwnerTypes)._id);
+      setValue("emiratesId", (d.owner as OwnerTypes).emiratesId);
     } else if (d.employee) {
-      (formik as unknown as NatwasalFormikTypes).values.employee = (
-        d.employee as EmployeeTypes
-      )._id;
-      (formik as unknown as NatwasalFormikTypes).values.emiratesId = (
-        d.employee as EmployeeTypes
-      ).emiratesId;
+      setValue("employee", (d.employee as EmployeeTypes)._id);
+      setValue("emiratesId", (d.employee as EmployeeTypes).emiratesId);
     } else {
       if (d.type) {
-        (formik as unknown as NatwasalFormikTypes).values.owner = d._id;
+        setValue("owner", d._id);
       } else {
-        (formik as unknown as NatwasalFormikTypes).values.employee = d._id;
+        setValue("employee", d._id);
       }
-      (formik as unknown as NatwasalFormikTypes).values.emiratesId =
-        d.emiratesId;
+      setValue("emiratesId", d.emiratesId);
     }
-
     if (reset) {
       setPersons(null);
     }
@@ -169,9 +157,10 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
       {type === "addNatwasal" && (
         <Box className={`flex justify-start items-end gap-4`}>
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Search person code , MOL code..."}
-            name={"search_for_person"}
+            name={"searchForPerson"}
             type={"search"}
             change={(val) => setSearch(val)}
           />
@@ -194,33 +183,42 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
           Natwasal Details
         </Typography>
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-          <Input formik={formik} label={"Username"} name={"username"} />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
+            label={"Username"}
+            name={"username"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             label={"Password"}
             name={"password"}
             type={"password"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Security question 1"}
             name={"security1"}
             type={"text"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Security question 2"}
             name={"security2"}
             type={"text"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Mobile"}
             name={"mobile"}
-            variant="numeric"
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Notes"}
             name={"notes"}
             type={"text"}
@@ -245,38 +243,44 @@ const NatwasalForm = ({ formik, type }: FormiksTypes) => {
           }}
         >
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"English Name"}
             name={"name"}
             disabled
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Arabic Name"}
             name={"nameAr"}
             disabled
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Person Code"}
             name={"personCode"}
             disabled
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Emirates Id"}
             name={"emiratesId"}
             disabled
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Email"}
             name={"email"}
             type={"email"}
             disabled
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"type"}
             name={"type"}
             select

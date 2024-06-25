@@ -12,24 +12,21 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
-import {
-  CompaniesOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
+const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const [showFilters, setShowFilters] = useState(false);
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
-  const {
-    searchForCompanies,
-    setSearchForCompanies,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForCompanies, setSearchForCompanies } =
+    useContext(FormsContext);
+
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
 
   const handleSearch = (value: string) => {
     setSearchForCompanies(value);
@@ -85,24 +82,16 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_COMPANIES_ROUTE}`);
     dispatch(getCompanies({}));
     setQueries({});
+    setValue("search", "");
+    setValue("state", "");
+    setValue("status", "");
+    setValue("molCategory", "");
+    setValue("establishmentType", "");
+    setValue("IMMGFrom", "");
+    setValue("IMMGTo", "");
+    setValue("licenseFrom", "");
+    setValue("licenseTo", "");
   };
-
-  (formik as unknown as CompaniesOptionsFormikTypes).values.state =
-    queries?.state || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.status =
-    queries?.status || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.IMMGFrom =
-    queries?.IMMGFrom || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.IMMGTo =
-    queries?.IMMGTo || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.licenseFrom =
-    queries?.licenseFrom || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.licenseTo =
-    queries?.licenseTo || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.molCategory =
-    queries?.molCategory || "";
-  (formik as unknown as CompaniesOptionsFormikTypes).values.establishmentType =
-    queries?.establishmentType || "";
 
   return (
     <Paper
@@ -116,7 +105,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, MOL, Trade, IMMG ..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -172,7 +162,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By Status"}
               name={"status"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByStatus}
               options={["Active", "Inactive"]}
               select
@@ -180,7 +171,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By State"}
               name={"state"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByState}
               options={["dubai"]}
               select
@@ -188,7 +180,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By MOL Category"}
               name={"molCategory"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByMOLCategory}
               options={[]}
               select
@@ -196,7 +189,8 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
             <Input
               label={"Filter By Establishment Type"}
               name={"establishmentType"}
-              formik={formik}
+              register={register}
+              errors={errors}
               change={handleFilterByEstablishmentType}
               options={[]}
               select
@@ -212,14 +206,16 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
                   name={"IMMGFrom"}
                   type={"date"}
                   label={"From"}
-                  formik={formik}
+                  register={register}
+                  errors={errors}
                   change={handleFilterByIMMGExpireDateFrom}
                 />
                 <Input
                   name={"IMMGTo"}
                   type={"date"}
                   label={"to"}
-                  formik={formik}
+                  register={register}
+                  errors={errors}
                   change={handleFilterByIMMGExpireDateTo}
                 />
               </Box>
@@ -234,14 +230,16 @@ const CompaniesOptionsForm = ({ formik }: FormiksTypes) => {
                   name={"licenseFrom"}
                   label={"From"}
                   type={"date"}
-                  formik={formik}
+                  register={register}
+                  errors={errors}
                   change={handleFilterByLicenseExpireDateFrom}
                 />
                 <Input
                   name={"licenseTo"}
                   label={"To"}
                   type={"date"}
-                  formik={formik}
+                  register={register}
+                  errors={errors}
                   change={handleFilterByLicenseExpireDateTo}
                 />
               </Box>

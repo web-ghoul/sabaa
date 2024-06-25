@@ -14,7 +14,6 @@ import EmployeeProfile from "../tabs/EmployeeProfile/EmployeeProfile";
 const Employee = () => {
   const { employee, isLoading, activities, eChannel, tasheel, natwasal } =
     useSelector((state: RootState) => state.employee);
-
   const { id } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);

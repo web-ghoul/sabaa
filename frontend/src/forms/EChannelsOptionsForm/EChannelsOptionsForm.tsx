@@ -12,21 +12,17 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getEChannels } from "../../store/eChannelsSlice";
 import { AppDispatch } from "../../store/store";
-import {
-  EChannelsOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
+const EChannelsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForEChannels,
-    setSearchForEChannels,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForEChannels, setSearchForEChannels } =
+    useContext(FormsContext);
+  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -65,14 +61,11 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
     navigate(`${import.meta.env.VITE_ECHANNELS_ROUTE}`);
     dispatch(getEChannels({}));
     setQueries({});
+    setValue("search", "");
+    setValue("type", "");
+    setValue("status", "");
+    setValue("gender", "");
   };
-
-  (formik as unknown as EChannelsOptionsFormikTypes).values.type =
-    queries.type || "";
-  (formik as unknown as EChannelsOptionsFormikTypes).values.gender =
-    queries.gender || "";
-  (formik as unknown as EChannelsOptionsFormikTypes).values.status =
-    queries.status || "";
 
   return (
     <Paper
@@ -86,7 +79,8 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
@@ -132,7 +126,8 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
             options={["Active", "Inactive"]}
             select
@@ -140,7 +135,8 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Gender"}
             name={"gender"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByGender}
             options={["Male", "Female"]}
             select
@@ -148,16 +144,19 @@ const EChannelsOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By User Type"}
             name={"type"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByType}
             options={["owner", "officer", "customer", "employee"]}
             select
           />
-          <Button
-            icon={<FilterListRounded />}
-            title={"Filter"}
-            handling={handleFilter}
-          />
+          <Box className={`flex justify-end items-center`}>
+            <Button
+              icon={<FilterListRounded />}
+              title={"Filter"}
+              handling={handleFilter}
+            />
+          </Box>
         </Box>
       </Box>
     </Paper>
