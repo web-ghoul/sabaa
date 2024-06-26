@@ -23,7 +23,7 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
     fontSize: "20px",
   },
   "& input:not(:placeholder-shown)": {
-    color: theme.palette.primary.main,
+    fontWeight: "600",
   },
   [theme.breakpoints.down("lg")]: {
     "& input , & select": {

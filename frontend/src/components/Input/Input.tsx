@@ -89,7 +89,7 @@ const Input = ({
               backgroundColor: "transparent !important",
             },
             "&:not(:placeholder-shown)": {
-              color: (theme) => theme.palette.primary.main,
+              fontWeight: "600",
             },
           }}
           {...register(name)}
