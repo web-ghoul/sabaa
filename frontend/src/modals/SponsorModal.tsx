@@ -7,8 +7,9 @@ import Forms from "../forms/Forms";
 const SponsorModal = () => {
   const { openSponsorModal, handleCloseSponsorModal } =
     useContext(ModalsContext);
-    const {formType} = useContext(FormsContext)
-    return (
+  const { formType } = useContext(FormsContext);
+
+  return (
     <Modal
       open={openSponsorModal}
       onClose={handleCloseSponsorModal}

@@ -27,15 +27,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Provider store={store}>
         <ExcelsProvider>
           <TabsProvider>
-            <ModalsProvider>
-              <FormsProvider>
+            <FormsProvider>
+              <ModalsProvider>
                 <SidebarProvider>
                   <AppProvider>
                     <RouterProvider router={router} />
                   </AppProvider>
                 </SidebarProvider>
-              </FormsProvider>
-            </ModalsProvider>
+              </ModalsProvider>
+            </FormsProvider>
           </TabsProvider>
         </ExcelsProvider>
       </Provider>
