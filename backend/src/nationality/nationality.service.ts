@@ -1,0 +1,126 @@
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { Nationality } from 'schemas/nationality.schema';
+import { CreateNationalityDto } from './dto/create-nationality.dto';
+import { UpdateNationalityDto } from './dto/update-nationality.dto';
+
+@Injectable()
+export class NationalityService {
+  constructor(
+    @InjectModel(Nationality.name) private nationalityModel: Model<Nationality>,
+  ) {}
+
+  async create(
+    createNationalityDto: CreateNationalityDto,user: ObjectId
+  ): Promise<Nationality> {
+
+    if (Array.isArray(createNationalityDto)) {
+      createNationalityDto.map((nationality) => {
+        
+        nationality.user = user
+      });
+    } else {
+      createNationalityDto.user = user
+
+    }
+    // createNationalityDto.user = user ; 
+    return await this.nationalityModel.create(createNationalityDto);
+    
+  }
+
+  findAll(
+    limit: number,
+    page: number,
+    search: string,
+    fields: string[],
+    sortType: string,
+    deleted: boolean = false,
+  ): Promise<Nationality[]> {
+    const projection: any = {};
+    if (fields && fields.length > 0) {
+      fields.forEach((field) => {
+        projection[field] = 1; // Include the field
+      });
+    }
+
+    const sort: any = {};
+    if (sortType == 'nationality_asc') {
+      sort['nationality'] = 1;
+    } else if (sortType == 'code_asc') {
+      sort['id'] = 1;
+    } else {
+      sort['createdAt'] = -1;
+    }
+
+    return this.nationalityModel
+      .find({
+        $or: [
+          { nationality: { $regex: new RegExp(search, 'i') } },
+          { id: { $regex: new RegExp(search, 'i') } },
+        ],
+        deleted: deleted,
+      })
+      .select(projection)
+      .limit(limit)
+      .skip(page * limit)
+      .sort(sort);
+  }
+
+  findOne(id: string) {
+    return this.nationalityModel.findById(id);
+  }
+
+  async update(id: string, updateNationalityDto: UpdateNationalityDto) {
+    try {
+      return await this.nationalityModel.findByIdAndUpdate(
+        id,
+        updateNationalityDto,
+      );
+    } catch (err) {
+      throw new HttpException(
+        err,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      await this.nationalityModel.updateOne({ _id: id }, { deleted: true });
+      return { _id: id };
+    } catch (err) {
+      throw new HttpException(
+        'Error while deleting nationality',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  importNationalities(createNationalityDto: CreateNationalityDto[]) {
+    try {
+      return this.nationalityModel.insertMany(createNationalityDto);
+    } catch (err) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: err,
+        },
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: err,
+        },
+      );
+    }
+  }
+  async getCounters() {
+    const [count, deleted] = await Promise.all([
+      this.nationalityModel.countDocuments({ deleted: false }),
+      this.nationalityModel.countDocuments({ deleted: true }),
+    ]);
+    return {
+      count,
+      deleted,
+    };
+  }
+}

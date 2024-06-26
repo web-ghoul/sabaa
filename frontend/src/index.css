@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Cairo", sans-serif !important;
+}
+
+@layer components {
+  .modal {
+    @apply bg-white rounded-xl p-6 md:p-4 sm:p-2 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] absolute grid justify-stretch items-center max-w-[90vw] max-h-[90vh] w-max min-w-[60vw] overflow-auto gap-6
+  }
+
+  .paper {
+    @apply p-4 !rounded-lg grid justify-stretch items-center gap-6 md:gap-5 sm:gap-4
+  }
+}
+
+::-webkit-scrollbar-track {
+  background-color: #F3F4F7;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #F3F4F7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00A4E4;
+  border-radius: 30px;
+}
+
+ul.MuiAutocomplete-listbox {
+  font-size: 14px !important
+}
+
+@media (max-width:992px) {
+  .MuiBreadcrumbs-separator {
+    margin: 0px 6px !important;
+  }
+}
+
+@media (max-width:768px) {
+  .MuiBreadcrumbs-separator {
+    margin: 0px 4px !important;
+  }
+}

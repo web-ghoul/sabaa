@@ -1,0 +1,153 @@
+import {
+  AddRounded,
+  FilterAltRounded,
+  FilterListRounded,
+} from "@mui/icons-material";
+import { Box, Paper } from "@mui/material";
+import { useContext, useState } from "react";
+import { RiFileExcel2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
+import { AppContext } from "../../contexts/AppContext";
+import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
+import { AppDispatch } from "../../store/store";
+import { getUsers } from "../../store/usersSlice";
+import { FormiksTypes } from "../../types/forms.types";
+
+const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [showFilters, setShowFilters] = useState(false);
+  const { searchForUsers, setSearchForUsers } = useContext(FormsContext);
+  const { handleOpenUserModal, handleOpenDownloadExcelModal } =
+    useContext(ModalsContext);
+  const { queries, setQueries, handleAddQuery } = useContext(AppContext);
+  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const handleSearch = (value: string) => {
+    setSearchForUsers(value);
+    dispatch(getUsers({ ...queries, search: value }));
+  };
+
+  const handleFilterByRole = (value: string) => {
+    handleAddQuery({ role: value });
+  };
+
+  const handleFilterByStatus = (value: string) => {
+    handleAddQuery({ status: value });
+  };
+
+  const handleFilter = () => {
+    setSearchParams(queries);
+    dispatch(getUsers({ ...queries, search: searchForUsers }));
+  };
+
+  const handleDownloadExcel = () => {
+    handleOpenDownloadExcelModal("excel", "users");
+  };
+
+  const handleDownloadExcelAll = () => {
+    handleOpenDownloadExcelModal("all", "users");
+  };
+
+  const handleResetAll = () => {
+    navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
+    dispatch(getUsers({}));
+    setQueries({});
+    setValue("status", "");
+    setValue("role", "");
+  };
+
+  return (
+    <Paper
+      className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md:gap-3 sm:!gap-2 md:p-3 sm:!p-2`}
+    >
+      <Box
+        className={`grid justify-stretch items-end gap-8 grid-cols-2 md:grid-cols-1 md:gap-4 sm:!gap-2`}
+      >
+        <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
+          <Input
+            label={"Search Username..."}
+            name={"search"}
+            type={"search"}
+            register={register}
+            errors={errors}
+            change={handleSearch}
+          />
+        </Box>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2`}
+        >
+          <Button
+            handling={() => handleOpenUserModal("addUser")}
+            icon={<AddRounded />}
+            title={"Add User"}
+          />
+          <Button
+            handling={handleDownloadExcel}
+            icon={<RiFileExcel2Fill />}
+            title={"Excel"}
+            bg={"excel"}
+          />
+          <Button
+            handling={handleDownloadExcelAll}
+            icon={<RiFileExcel2Fill />}
+            title={"Excel All"}
+            bg={"excel"}
+          />
+        </Box>
+      </Box>
+      <Box className={`grid justify-stretch items-center gap-2`}>
+        <Box
+          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 md:order-1`}
+        >
+          <Button
+            icon={<FilterAltRounded />}
+            bg={"!bg-green-500"}
+            handling={() => setShowFilters(!showFilters)}
+          />
+
+          <Button
+            title={"Reset All"}
+            handling={handleResetAll}
+            bg={"!bg-red-500"}
+          />
+        </Box>
+        <Box
+          className={`grid grid-cols-[1fr,1fr,auto,1fr,1fr] justify-start items-end gap-4 transition-all md:!flex md:gap-3 sm:!gap-2 sm:flex-wrap ${
+            showFilters ? "h-full" : "h-[0px]"
+          } overflow-hidden xs:grid xs:justify-stretch`}
+        >
+          <Input
+            label={"Filter By Status"}
+            name={"status"}
+            register={register}
+            errors={errors}
+            change={handleFilterByStatus}
+            options={["Active", "Pending", "Blocked"]}
+            select
+          />
+          <Input
+            label={"Filter By Role"}
+            name={"role"}
+            options={["Admin", "User"]}
+            select
+            register={register}
+            errors={errors}
+            change={handleFilterByRole}
+          />
+          <Button
+            icon={<FilterListRounded />}
+            title={"Filter"}
+            handling={handleFilter}
+          />
+        </Box>
+      </Box>
+    </Paper>
+  );
+};
+
+export default UsersOptionsForm;

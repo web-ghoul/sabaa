@@ -1,0 +1,87 @@
+import { ReactNode } from "react";
+import { EntityType } from "./app.types";
+import {
+  ActivityTypes,
+  CompanyTypes,
+  CustomerTypes,
+  EChannelTypes,
+  EmployeeTypes,
+  NatwasalTypes,
+  OwnerTypes,
+  ProTypes,
+  TasheelTypes,
+  UserTypes,
+} from "./store.types";
+
+interface UserProfileProps {
+  user: UserTypes | null;
+  isLoading: boolean;
+  activities: ActivityTypes[] | null;
+}
+
+interface OwnerProfileProps {
+  owner: OwnerTypes | null;
+  isLoading: boolean;
+  companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
+}
+
+interface ProProfileProps {
+  pro: ProTypes | null;
+  isLoading: boolean;
+  companies: CompanyTypes[] | null;
+  activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
+}
+
+interface EmployeeProfileProps {
+  employee: EmployeeTypes | null;
+  isLoading: boolean;
+  activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
+}
+
+interface CustomerProfileProps {
+  customer: CustomerTypes | null;
+  isLoading: boolean;
+  activities: ActivityTypes[] | null;
+  eChannel: EChannelTypes | null;
+  natwasal: NatwasalTypes | null;
+  tasheel: TasheelTypes | null;
+}
+
+interface CompanyProfileProps {
+  company: CompanyTypes | null;
+  isLoading: boolean;
+  activities: ActivityTypes[] | null;
+}
+
+interface TabPanelProps {
+  children?: ReactNode;
+  index: number;
+  value: number;
+}
+
+interface PrimaryTabTypes {
+  variant: EntityType;
+  tabsTitles: string[];
+  children: ReactNode;
+}
+
+export type {
+  CompanyProfileProps,
+  CustomerProfileProps,
+  EmployeeProfileProps,
+  OwnerProfileProps,
+  PrimaryTabTypes,
+  ProProfileProps,
+  TabPanelProps,
+  UserProfileProps,
+};
