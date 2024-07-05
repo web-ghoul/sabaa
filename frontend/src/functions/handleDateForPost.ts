@@ -1,21 +1,27 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 export const handleDateForPost = (date?: Date): string => {
   if (!(date && new Date(date))) {
     return "";
   }
-  const year = new Date(date).toLocaleDateString().split("/")[2];
-  const month = new Date(date).toLocaleDateString().split("/")[0];
-  const day = new Date(date).toLocaleDateString().split("/")[1];
-  const hour = new Date(date).getHours();
-  const minute = new Date(date).getMinutes();
-  const second = new Date(date).getSeconds();
-  const curDay = new Date().toLocaleDateString().split("/")[1];
-  const curMonth = new Date().toLocaleDateString().split("/")[0];
-  const curYear = new Date().toLocaleDateString().split("/")[2];
-  const curHour = new Date().getHours();
-  const curMinute = new Date().getMinutes();
-  const curSecond = new Date().getSeconds();
+
+  const timeZone = "Asia/Dubai";
+  const postDate = moment(date).tz(timeZone);
+  const now = moment().tz(timeZone);
+
+  const year = postDate.year();
+  const month = postDate.month() + 1;
+  const day = postDate.date();
+  const hour = postDate.hour();
+  const minute = postDate.minute();
+  const second = postDate.second();
+
+  const curYear = now.year();
+  const curMonth = now.month() + 1;
+  const curDay = now.date();
+  const curHour = now.hour();
+  const curMinute = now.minute();
+  const curSecond = now.second();
 
   return year === curYear && month === curMonth
     ? curDay === day

@@ -1,11 +1,15 @@
 import {
+  AddBoxRounded,
+  AppRegistrationRounded,
   AssessmentRounded,
   AutoAwesomeMotionRounded,
+  BorderAllRounded,
   CallToActionRounded,
   EmailRounded,
   GridViewRounded,
   ListAltRounded,
   PendingActionsRounded,
+  PublishedWithChangesRounded,
   SettingsRounded,
 } from "@mui/icons-material";
 import { Box, useMediaQuery } from "@mui/material";
@@ -33,7 +37,7 @@ const Items = () => {
     <Box
       className={`${
         mdScreen ? mdClasses : lgClasses
-      } grid overflow-auto items-center h-full`}
+      } grid overflow-auto justify-stretch items-center h-full`}
     >
       <Item
         icon={<GridViewRounded />}
@@ -94,7 +98,29 @@ const Items = () => {
         icon={<TransactionsIcon />}
         title="Transactions"
         url={`${import.meta.env.VITE_TRANSACTIONS_ROUTE}`}
-      />
+        sub
+      >
+        <Item
+          icon={<BorderAllRounded />}
+          title="All"
+          url={`${import.meta.env.VITE_TRANSACTIONS_ALL_ROUTE}`}
+        />
+        <Item
+          icon={<AppRegistrationRounded />}
+          title="Pre Approval Work Permit"
+          url={`${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`}
+        />
+        <Item
+          icon={<AddBoxRounded />}
+          title="New Work Permit"
+          url={`${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`}
+        />
+        <Item
+          icon={<PublishedWithChangesRounded />}
+          title="Renew Work Permit"
+          url={`${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`}
+        />
+      </Item>
       <Item
         icon={<EmailRounded />}
         title="Mails"

@@ -2,7 +2,7 @@ import UnderDevelopment from "../components/UnderDevelopment/UnderDevelopment";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 
-const Transactions = () => {
+const NewTransactions = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer>
@@ -12,4 +12,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default NewTransactions;

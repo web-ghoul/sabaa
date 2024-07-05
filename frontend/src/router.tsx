@@ -31,7 +31,7 @@ import ResetPassword from "./pages/ResetPassword.tsx";
 import Settings from "./pages/Settings.tsx";
 import Tasheels from "./pages/Tasheels.tsx";
 import TodoList from "./pages/TodoList.tsx";
-import Transactions from "./pages/Transactions.tsx";
+import Transactions from "./pages/AllTransactions.tsx";
 import UploadCompanies from "./pages/UploadCompanies.tsx";
 import UploadCustomers from "./pages/UploadCustomers.tsx";
 import UploadEmployees from "./pages/UploadEmployees.tsx";

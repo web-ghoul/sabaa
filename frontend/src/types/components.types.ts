@@ -54,6 +54,8 @@ interface SidebarItemTypes {
   title: string;
   icon: ReactNode;
   url: string;
+  sub?: boolean;
+  children?: ReactNode;
 }
 
 interface InputTypes {
