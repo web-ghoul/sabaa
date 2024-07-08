@@ -159,6 +159,13 @@ interface UploadStatusTypes {
   text: string;
 }
 
+interface ExcelButtonsTypes {
+  variant: EntitiesType;
+  addBtn?: string;
+  upload?: boolean;
+  all?: boolean;
+}
+
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
@@ -176,4 +183,5 @@ export type {
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,
+  ExcelButtonsTypes,
 };

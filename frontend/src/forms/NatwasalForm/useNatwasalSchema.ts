@@ -21,7 +21,7 @@ const useNatwasalSchema = () => {
     searchForPerson: yup.string(),
   });
 
-  const NatwasalInitailValues = {
+  const NatwasalInitialValues = {
     username: editableNatwasalData?.username || "",
     password: editableNatwasalData?.password || "",
     name: editableNatwasalData?.name || "",
@@ -36,7 +36,7 @@ const useNatwasalSchema = () => {
     searchForPerson: "",
   };
 
-  return { NatwasalSchema, NatwasalInitailValues };
+  return { NatwasalSchema, NatwasalInitialValues };
 };
 
 export default useNatwasalSchema;

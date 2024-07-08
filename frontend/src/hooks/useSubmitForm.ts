@@ -28,46 +28,49 @@ import useUserSchema from "../forms/UserForm/useUserSchema";
 import useUsersOptionsSchema from "../forms/UsersOptionsForm/useUsersOptionsSchema";
 import { AllFormsTypes } from "../types/forms.types";
 import useSubmitFunction from "./useSubmitFunction";
+import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
-  const { LoginSchema, LoginInitailValues } = useLoginSchema();
-  const { ForgotPasswordSchema, ForgotPasswordInitailValues } =
+  const { LoginSchema, LoginInitialValues } = useLoginSchema();
+  const { ForgotPasswordSchema, ForgotPasswordInitialValues } =
     useForgotPasswordSchema();
-  const { OTPSchema, OTPInitailValues } = useOTPSchema();
-  const { ResetPasswordSchema, ResetPasswordInitailValues } =
+  const { OTPSchema, OTPInitialValues } = useOTPSchema();
+  const { ResetPasswordSchema, ResetPasswordInitialValues } =
     useResetPasswordSchema();
-  const { DeleteSchema, DeleteInitailValues } = useDeleteSchema();
-  const { CustomerSchema, CustomerInitailValues } = useCustomerSchema();
-  const { CustomersOptionsSchema, CustomersOptionsInitailValues } =
+  const { DeleteSchema, DeleteInitialValues } = useDeleteSchema();
+  const { CustomerSchema, CustomerInitialValues } = useCustomerSchema();
+  const { CustomersOptionsSchema, CustomersOptionsInitialValues } =
     useCustomersOptionsSchema();
-  const { OwnerSchema, OwnerInitailValues } = useOwnerSchema();
-  const { OwnersOptionsSchema, OwnersOptionsInitailValues } =
+  const { OwnerSchema, OwnerInitialValues } = useOwnerSchema();
+  const { OwnersOptionsSchema, OwnersOptionsInitialValues } =
     useOwnersOptionsSchema();
-  const { UserSchema, UserInitailValues } = useUserSchema();
-  const { UsersOptionsSchema, UsersOptionsInitailValues } =
+  const { UserSchema, UserInitialValues } = useUserSchema();
+  const { UsersOptionsSchema, UsersOptionsInitialValues } =
     useUsersOptionsSchema();
-  const { ProSchema, ProInitailValues } = useProSchema();
-  const { ProsOptionsSchema, ProsOptionsInitailValues } =
+  const { ProSchema, ProInitialValues } = useProSchema();
+  const { ProsOptionsSchema, ProsOptionsInitialValues } =
     useProsOptionsSchema();
-  const { SponsorSchema, SponsorInitailValues } = useSponsorSchema();
-  const { EmployeeSchema, EmployeeInitailValues } = useEmployeeSchema();
-  const { EmployeesOptionsSchema, EmployeesOptionsInitailValues } =
+  const { SponsorSchema, SponsorInitialValues } = useSponsorSchema();
+  const { EmployeeSchema, EmployeeInitialValues } = useEmployeeSchema();
+  const { EmployeesOptionsSchema, EmployeesOptionsInitialValues } =
     useEmployeesOptionsSchema();
-  const { CompanySchema, CompanyInitailValues } = useCompanySchema();
-  const { CompaniesOptionsSchema, CompaniesOptionsInitailValues } =
+  const { CompanySchema, CompanyInitialValues } = useCompanySchema();
+  const { CompaniesOptionsSchema, CompaniesOptionsInitialValues } =
     useCompaniesOptionsSchema();
-  const { EChannelSchema, EChannelInitailValues } = useEChannelSchema();
-  const { EChannelsOptionsSchema, EChannelsOptionsInitailValues } =
+  const { EChannelSchema, EChannelInitialValues } = useEChannelSchema();
+  const { EChannelsOptionsSchema, EChannelsOptionsInitialValues } =
     useEChannelsOptionsSchema();
-  const { TasheelSchema, TasheelInitailValues } = useTasheelSchema();
-  const { TasheelsOptionsSchema, TasheelsOptionsInitailValues } =
+  const { TasheelSchema, TasheelInitialValues } = useTasheelSchema();
+  const { TasheelsOptionsSchema, TasheelsOptionsInitialValues } =
     useTasheelsOptionsSchema();
-  const { NatwasalSchema, NatwasalInitailValues } = useNatwasalSchema();
-  const { LinkToCompanySchema, LinkToCompanyInitailValues } =
+  const { NatwasalSchema, NatwasalInitialValues } = useNatwasalSchema();
+  const { LinkToCompanySchema, LinkToCompanyInitialValues } =
     useLinkToCompanySchema();
-  const { NatwasalsOptionsSchema, NatwasalsOptionsInitailValues } =
+  const { NatwasalsOptionsSchema, NatwasalsOptionsInitialValues } =
     useNatwasalsOptionsSchema();
+  const { DownloadExcelInitialValues, DownloadExcelSchema } =
+    useDownloadExcelSchema();
 
   const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
     login: LoginSchema,
@@ -106,45 +109,47 @@ const useSubmitForm = (type: string) => {
     addNatwasal: NatwasalSchema,
     editNatwasal: NatwasalSchema,
     natwasalsOptions: NatwasalsOptionsSchema,
+    downloadExcel: DownloadExcelSchema,
   };
 
   const initialValues: { [key: string]: AllFormsTypes } = {
-    login: LoginInitailValues,
-    otp: OTPInitailValues,
-    forgotPassword: ForgotPasswordInitailValues,
-    resetPassword: ResetPasswordInitailValues,
-    delete: DeleteInitailValues,
-    linkOwner: LinkToCompanyInitailValues,
-    linkPro: LinkToCompanyInitailValues,
-    addCustomer: CustomerInitailValues,
-    editCustomer: CustomerInitailValues,
-    customersOptions: CustomersOptionsInitailValues,
-    addOwner: OwnerInitailValues,
-    editOwner: OwnerInitailValues,
-    ownersOptions: OwnersOptionsInitailValues,
-    addUser: UserInitailValues,
-    editUser: UserInitailValues,
-    usersOptions: UsersOptionsInitailValues,
-    addPro: ProInitailValues,
-    editPro: ProInitailValues,
-    prosOptions: ProsOptionsInitailValues,
-    addSponsor: SponsorInitailValues,
-    editSponsor: SponsorInitailValues,
-    addEmployee: EmployeeInitailValues,
-    editEmployee: EmployeeInitailValues,
-    employeesOptions: EmployeesOptionsInitailValues,
-    addCompany: CompanyInitailValues,
-    editCompany: CompanyInitailValues,
-    companiesOptions: CompaniesOptionsInitailValues,
-    addEChannel: EChannelInitailValues,
-    editEChannel: EChannelInitailValues,
-    eChannelsOptions: EChannelsOptionsInitailValues,
-    addTasheel: TasheelInitailValues,
-    editTasheel: TasheelInitailValues,
-    tasheelsOptions: TasheelsOptionsInitailValues,
-    addNatwasal: NatwasalInitailValues,
-    editNatwasal: NatwasalInitailValues,
-    natwasalsOptions: NatwasalsOptionsInitailValues,
+    login: LoginInitialValues,
+    otp: OTPInitialValues,
+    forgotPassword: ForgotPasswordInitialValues,
+    resetPassword: ResetPasswordInitialValues,
+    delete: DeleteInitialValues,
+    linkOwner: LinkToCompanyInitialValues,
+    linkPro: LinkToCompanyInitialValues,
+    addCustomer: CustomerInitialValues,
+    editCustomer: CustomerInitialValues,
+    customersOptions: CustomersOptionsInitialValues,
+    addOwner: OwnerInitialValues,
+    editOwner: OwnerInitialValues,
+    ownersOptions: OwnersOptionsInitialValues,
+    addUser: UserInitialValues,
+    editUser: UserInitialValues,
+    usersOptions: UsersOptionsInitialValues,
+    addPro: ProInitialValues,
+    editPro: ProInitialValues,
+    prosOptions: ProsOptionsInitialValues,
+    addSponsor: SponsorInitialValues,
+    editSponsor: SponsorInitialValues,
+    addEmployee: EmployeeInitialValues,
+    editEmployee: EmployeeInitialValues,
+    employeesOptions: EmployeesOptionsInitialValues,
+    addCompany: CompanyInitialValues,
+    editCompany: CompanyInitialValues,
+    companiesOptions: CompaniesOptionsInitialValues,
+    addEChannel: EChannelInitialValues,
+    editEChannel: EChannelInitialValues,
+    eChannelsOptions: EChannelsOptionsInitialValues,
+    addTasheel: TasheelInitialValues,
+    editTasheel: TasheelInitialValues,
+    tasheelsOptions: TasheelsOptionsInitialValues,
+    addNatwasal: NatwasalInitialValues,
+    editNatwasal: NatwasalInitialValues,
+    natwasalsOptions: NatwasalsOptionsInitialValues,
+    downloadExcel: DownloadExcelInitialValues,
   };
 
   const chosenSchema = schemas[type];

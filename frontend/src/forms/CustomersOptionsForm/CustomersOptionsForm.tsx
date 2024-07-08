@@ -1,18 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCustomers } from "../../store/customersSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -24,8 +19,6 @@ const CustomersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchForCustomers, setSearchForCustomers } =
     useContext(FormsContext);
-  const { handleOpenDownloadExcelModal, handleOpenCustomerModal } =
-    useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -69,14 +62,6 @@ const CustomersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getCustomers({ ...queries, search: searchForCustomers }));
-  };
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "customers");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "customers");
   };
 
   const handleResetAll = () => {
@@ -126,35 +111,7 @@ const CustomersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button
-            title={"Add Customer"}
-            icon={<AddRounded />}
-            handling={() => handleOpenCustomerModal("addCustomer")}
-          />
-          <Button
-            title={"Upload Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`)
-            }
-          />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Customer"} variant="customers" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

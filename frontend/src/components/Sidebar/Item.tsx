@@ -87,7 +87,7 @@ const Item = ({ icon, title, url, sub, children }: SidebarItemTypes) => {
           </Box>
 
           {openSidebar &&
-            (openSub ? <ExpandMoreRounded /> : <ExpandLessRounded />)}
+            (openSub ? <ExpandLessRounded /> : <ExpandMoreRounded />)}
         </IconButton>
       </BootstrapTooltip>
 

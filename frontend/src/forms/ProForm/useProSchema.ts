@@ -30,7 +30,7 @@ const useProSchema = () => {
     remarks: yup.string(),
   });
 
-  const ProInitailValues = {
+  const ProInitialValues = {
     name: editableProData?.name || "",
     personCode: editableProData?.personCode || "",
     nameAr: editableProData?.nameAr || "",
@@ -68,7 +68,7 @@ const useProSchema = () => {
     }
   }, [editableProData, setProImage]);
 
-  return { ProSchema, ProInitailValues };
+  return { ProSchema, ProInitialValues };
 };
 
 export default useProSchema;

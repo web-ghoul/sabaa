@@ -13,11 +13,11 @@ const useResetPasswordSchema = () => {
       .oneOf([yup.ref("password")], "Passwords must match"),
   });
 
-  const ResetPasswordInitailValues = {
+  const ResetPasswordInitialValues = {
     password: "",
     confirmPassword: "",
   };
-  return { ResetPasswordSchema, ResetPasswordInitailValues };
+  return { ResetPasswordSchema, ResetPasswordInitialValues };
 };
 
 export default useResetPasswordSchema;

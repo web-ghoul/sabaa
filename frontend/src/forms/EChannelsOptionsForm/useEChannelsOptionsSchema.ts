@@ -12,14 +12,14 @@ const useEChannelsOptionsSchema = () => {
     status: yup.string(),
   });
 
-  const EChannelsOptionsInitailValues = {
+  const EChannelsOptionsInitialValues = {
     search: "",
     type: allParams.type || "",
     gender: allParams.gender || "",
     status: allParams.status || "",
   };
 
-  return { EChannelsOptionsSchema, EChannelsOptionsInitailValues };
+  return { EChannelsOptionsSchema, EChannelsOptionsInitialValues };
 };
 
 export default useEChannelsOptionsSchema;

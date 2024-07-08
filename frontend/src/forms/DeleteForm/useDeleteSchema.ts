@@ -10,11 +10,11 @@ const useDeleteSchema = () => {
     type: yup.string(),
   });
 
-  const DeleteInitailValues = {
+  const DeleteInitialValues = {
     type: formType,
   };
 
-  return { DeleteSchema, DeleteInitailValues };
+  return { DeleteSchema, DeleteInitialValues };
 };
 
 export default useDeleteSchema;

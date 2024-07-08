@@ -16,7 +16,7 @@ const useOwnersOptionsSchema = () => {
     state: yup.string(),
   });
 
-  const OwnersOptionsInitailValues = {
+  const OwnersOptionsInitialValues = {
     search: "",
     dobFrom: allParams.dobFrom || "",
     dobTo: allParams.dobTo || "",
@@ -27,7 +27,7 @@ const useOwnersOptionsSchema = () => {
     state: allParams.state || "",
   };
 
-  return { OwnersOptionsInitailValues, OwnersOptionsSchema };
+  return { OwnersOptionsInitialValues, OwnersOptionsSchema };
 };
 
 export default useOwnersOptionsSchema;

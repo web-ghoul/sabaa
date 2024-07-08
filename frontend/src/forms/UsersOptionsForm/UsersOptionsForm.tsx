@@ -1,18 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { ModalsContext } from "../../contexts/ModalsContext";
 import { AppDispatch } from "../../store/store";
 import { getUsers } from "../../store/usersSlice";
 import { FormiksTypes } from "../../types/forms.types";
@@ -21,8 +16,6 @@ const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
   const { searchForUsers, setSearchForUsers } = useContext(FormsContext);
-  const { handleOpenUserModal, handleOpenDownloadExcelModal } =
-    useContext(ModalsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -43,14 +36,6 @@ const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getUsers({ ...queries, search: searchForUsers }));
-  };
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "users");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "users");
   };
 
   const handleResetAll = () => {
@@ -78,27 +63,7 @@ const UsersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2`}
-        >
-          <Button
-            handling={() => handleOpenUserModal("addUser")}
-            icon={<AddRounded />}
-            title={"Add User"}
-          />
-          <Button
-            handling={handleDownloadExcel}
-            icon={<RiFileExcel2Fill />}
-            title={"Excel"}
-            bg={"excel"}
-          />
-          <Button
-            handling={handleDownloadExcelAll}
-            icon={<RiFileExcel2Fill />}
-            title={"Excel All"}
-            bg={"excel"}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add User"} variant="users" upload={false} />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

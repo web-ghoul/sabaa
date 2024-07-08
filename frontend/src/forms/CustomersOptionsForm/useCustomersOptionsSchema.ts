@@ -16,7 +16,7 @@ const useCustomersOptionsSchema = () => {
     state: yup.string(),
   });
 
-  const CustomersOptionsInitailValues = {
+  const CustomersOptionsInitialValues = {
     search: "",
     dobFrom: allParams.dobFrom || "",
     dobTo: allParams.dobTo || "",
@@ -27,7 +27,7 @@ const useCustomersOptionsSchema = () => {
     state: allParams.state || "",
   };
 
-  return { CustomersOptionsSchema, CustomersOptionsInitailValues };
+  return { CustomersOptionsSchema, CustomersOptionsInitialValues };
 };
 
 export default useCustomersOptionsSchema;

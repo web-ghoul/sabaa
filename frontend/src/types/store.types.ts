@@ -8,6 +8,8 @@ interface AuthValuesTypes {
   isLoading: boolean;
 }
 
+//Activities
+
 interface ActivityTypes {
   type: EntityType;
   userName: string;
@@ -48,6 +50,7 @@ interface RecentActivitiesValuesTypes {
 interface RecentActivitiesArgsTypes {
   limit?: number;
 }
+//Activities
 
 //User
 
@@ -96,6 +99,7 @@ interface UserValuesTypes {
   user: UserTypes | null;
   activities: ActivityTypes[] | null;
 }
+//User
 
 //Owner
 
@@ -169,6 +173,7 @@ interface OwnersCounterValuesTypes {
   isLoading: boolean;
   ownersCounter: number;
 }
+//Owner
 
 //PRO
 
@@ -213,6 +218,7 @@ interface ProsCounterValuesTypes {
   isLoading: boolean;
   prosCounter: number;
 }
+//PRO
 
 //Customer
 
@@ -258,6 +264,7 @@ interface CustomersCounterValuesTypes {
   isLoading: boolean;
   customersCounter: number;
 }
+//Customer
 
 //Sponsor
 
@@ -269,6 +276,7 @@ interface SponsorsValuesTypes {
   isLoading: boolean;
   sponsors: SponsorTypes[] | null;
 }
+//Sponsor
 
 //Employee
 
@@ -352,6 +360,7 @@ interface EmployeesCounterValuesTypes {
   isLoading: boolean;
   employeesCounter: number;
 }
+//Employee
 
 //E-Channel
 
@@ -394,6 +403,7 @@ interface EChannelsCounterValuesTypes {
   isLoading: boolean;
   eChannelsCounter: number;
 }
+//E-Channel
 
 //Tasheel
 
@@ -440,6 +450,8 @@ interface TasheelsCounterValuesTypes {
 
 //Tasheel
 
+//Natwasal
+
 interface NatwasalTypes extends TasheelTypes {}
 
 interface NatwasalsValuesTypes {
@@ -461,6 +473,7 @@ interface NatwasalsCounterValuesTypes {
   isLoading: boolean;
   natwasalsCounter: number;
 }
+//Natwasal
 
 //Company
 interface CompanyTypes {
@@ -549,6 +562,7 @@ interface RecentCompaniesValuesTypes {
 interface RecentCompaniesArgsTypes {
   limit?: number;
 }
+//Company
 
 //Job
 
@@ -586,6 +600,7 @@ interface JobTypes {
   jobTitle: string;
   user?: string;
 }
+//Job
 
 //Nationality
 
@@ -613,6 +628,12 @@ interface RecentNationalitiesArgsTypes {
 interface RecentNationalitiesValuesTypes {
   isLoading: boolean;
   recentNationalities: NationalityTypes[] | null;
+}
+
+//Nationality
+
+interface TransactionTypes{
+
 }
 
 interface NationalityTypes {
@@ -697,5 +718,5 @@ export type {
   UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
-  UsersValuesTypes,
+  UsersValuesTypes,TransactionTypes
 };

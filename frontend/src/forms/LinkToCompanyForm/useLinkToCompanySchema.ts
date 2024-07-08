@@ -5,11 +5,11 @@ const useLinkToCompanySchema = () => {
     companyId: yup.array().required("Company is required"),
   });
 
-  const LinkToCompanyInitailValues = {
+  const LinkToCompanyInitialValues = {
     companyId: [],
   };
 
-  return { LinkToCompanyInitailValues, LinkToCompanySchema };
+  return { LinkToCompanyInitialValues, LinkToCompanySchema };
 };
 
 export default useLinkToCompanySchema;

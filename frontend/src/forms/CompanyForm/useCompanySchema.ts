@@ -56,7 +56,7 @@ const useCompanySchema = () => {
     remarks: yup.string(),
   });
 
-  const CompanyInitailValues = {
+  const CompanyInitialValues = {
     name: editableCompanyData?.name || "",
     nameAr: editableCompanyData?.nameAr || "",
     status: editableCompanyData?.status || "",
@@ -123,7 +123,7 @@ const useCompanySchema = () => {
     noqodiNPass: editableCompanyData?.noqodiNPass || "",
   };
 
-  return { CompanyInitailValues, CompanySchema };
+  return { CompanyInitialValues, CompanySchema };
 };
 
 export default useCompanySchema;

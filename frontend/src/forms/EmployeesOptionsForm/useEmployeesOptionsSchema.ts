@@ -13,7 +13,7 @@ const useEmployeesOptionsSchema = () => {
     status: yup.string(),
   });
 
-  const EmployeesOptionsInitailValues = {
+  const EmployeesOptionsInitialValues = {
     search: "",
     nationality: allParams.nationality || "",
     gender: allParams.gender || "",
@@ -21,7 +21,7 @@ const useEmployeesOptionsSchema = () => {
     status: allParams.status || "",
   };
 
-  return { EmployeesOptionsSchema, EmployeesOptionsInitailValues };
+  return { EmployeesOptionsSchema, EmployeesOptionsInitialValues };
 };
 
 export default useEmployeesOptionsSchema;

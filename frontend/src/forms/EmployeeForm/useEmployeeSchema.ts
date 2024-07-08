@@ -40,7 +40,7 @@ const useEmployeeSchema = () => {
     lcExpireDate: yup.string(),
   });
 
-  const EmployeeInitailValues = {
+  const EmployeeInitialValues = {
     avatar: editableEmployeeData?.avatar || "",
     name: editableEmployeeData?.name || "",
     nameAr: editableEmployeeData?.nameAr || "",
@@ -109,7 +109,7 @@ const useEmployeeSchema = () => {
     }
   }, [editableEmployeeData, setEmployeeImage]);
 
-  return { EmployeeSchema, EmployeeInitailValues };
+  return { EmployeeSchema, EmployeeInitialValues };
 };
 
 export default useEmployeeSchema;

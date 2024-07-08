@@ -11,13 +11,13 @@ const useUsersOptionsSchema = () => {
     status: yup.string(),
   });
 
-  const UsersOptionsInitailValues = {
+  const UsersOptionsInitialValues = {
     search: "",
     role: allParams.role || "",
     status: allParams.status || "",
   };
 
-  return { UsersOptionsSchema, UsersOptionsInitailValues };
+  return { UsersOptionsSchema, UsersOptionsInitialValues };
 };
 
 export default useUsersOptionsSchema;

@@ -13,6 +13,7 @@ import {
   ProTypes,
   SponsorTypes,
   TasheelTypes,
+  TransactionTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -85,6 +86,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableTasheelData: () => {},
   editableNatwasalData: null,
   setEditableNatwasalData: () => {},
+  editableTransactionData: null,
+  setEditableTransactionData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -195,6 +198,10 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableNatwasalData, setEditableNatwasalData] =
     useState<TasheelTypes | null>(null);
 
+  //Editable Transaction Data
+  const [editableTransactionData, setEditableTransactionData] =
+    useState<TransactionTypes | null>(null);
+
   useEffect(() => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
@@ -297,6 +304,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForTasheel,
     searchForNatwasal,
     setSearchForNatwasal,
+    editableTransactionData,
+    setEditableTransactionData,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

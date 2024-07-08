@@ -62,6 +62,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openNatwasalModal: false,
   handleOpenNatwasalModal: () => {},
   handleCloseNatwasalModal: () => {},
+  openTransactionModal: false,
+  handleOpenTransactionModal: () => {},
+  handleCloseTransactionModal: () => {},
 });
 
 const ModalsProvider = ({ children }: { children: ReactNode }) => {
@@ -79,6 +82,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setEditableUserData,
     setEditableCompanyData,
     setEditableNationalityData,
+    setEditableTransactionData
   } = useContext(FormsContext);
 
   const { setExcelType } = useContext(ExcelsContext);
@@ -94,8 +98,9 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   const handleOpenUploadEmployeesModal = () => {
     setOpenUploadEmployeesModal(true);
   };
+  //Upload Employees
 
-  //Downalod Excel
+  //Download Excel
   const [openDownloadExcelModal, setOpenDownloadExcelModal] = useState(false);
 
   const handleCloseDownloadExcelModal = () => {
@@ -110,6 +115,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setOpenDownloadExcelModal(true);
     setExcelType({ type: type, entity: entity, ent: ent });
   };
+  //Download Excel
 
   //Link Company
   const [openLinkToCompanyModal, setOpenLinkToCompanyModal] = useState(false);
@@ -122,6 +128,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenLinkToCompanyModal(true);
   };
+  //Link Company
 
   //Delete
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -134,6 +141,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenDeleteModal(true);
   };
+  //Delete
 
   //Forgot Password
   const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false);
@@ -145,6 +153,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   const handleOpenForgotPasswordModal = () => {
     setOpenForgotPasswordModal(true);
   };
+  //Forgot Password
 
   //Job Modal
   const [openJobModal, setOpenJobModal] = useState(false);
@@ -160,6 +169,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenJobModal(true);
   };
+  //Job Modal
 
   //Owner Modal
   const [openOwnerModal, setOpenOwnerModal] = useState(false);
@@ -175,6 +185,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenOwnerModal(true);
   };
+  //Owner Modal
 
   //Employee Modal
   const [openEmployeeModal, setOpenEmployeeModal] = useState(false);
@@ -190,6 +201,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenEmployeeModal(true);
   };
+  //Employee Modal
 
   //Customer Modal
   const [openCustomerModal, setOpenCustomerModal] = useState(false);
@@ -205,6 +217,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenCustomerModal(true);
   };
+  //Customer Modal
 
   //Convert Modal
   const [openConvertCustomerModal, setOpenConvertCustomerModal] =
@@ -217,6 +230,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   const handleOpenConvertCustomerModal = () => {
     setOpenConvertCustomerModal(true);
   };
+  //Convert Modal
 
   //Sponsor Modal
   const [openSponsorModal, setOpenSponsorModal] = useState(false);
@@ -232,6 +246,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenSponsorModal(true);
   };
+  //Sponsor Modal
 
   //View Sponsor Modal
   const [openViewSponsorModal, setOpenViewSponsorModal] = useState(false);
@@ -243,6 +258,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   const handleOpenViewSponsorModal = () => {
     setOpenViewSponsorModal(true);
   };
+  //View Sponsor Modal
 
   //Pro Modal
   const [openProModal, setOpenProModal] = useState(false);
@@ -258,6 +274,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenProModal(true);
   };
+  //Pro Modal
 
   //E-Channel Modal
   const [openEChannelModal, setOpenEChannelModal] = useState(false);
@@ -273,6 +290,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenEChannelModal(true);
   };
+  //E-Channel Modal
 
   //Tasheel Modal
   const [openTasheelModal, setOpenTasheelModal] = useState(false);
@@ -288,6 +306,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenTasheelModal(true);
   };
+  //Tasheel Modal
 
   //Natwasal Modal
   const [openNatwasalModal, setOpenNatwasalModal] = useState(false);
@@ -303,6 +322,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenNatwasalModal(true);
   };
+  //Natwasal Modal
 
   //User Modal
   const [openUserModal, setOpenUserModal] = useState(false);
@@ -318,6 +338,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenUserModal(true);
   };
+  //User Modal
 
   //Company Modal
   const [openCompanyModal, setOpenCompanyModal] = useState(false);
@@ -333,6 +354,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenCompanyModal(true);
   };
+  //Company Modal
 
   //Nationality Modal
   const [openNationalityModal, setOpenNationalityModal] = useState(false);
@@ -348,6 +370,23 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setFormType(type);
     setOpenNationalityModal(true);
   };
+  //Nationality Modal
+
+    //Transaction Modal
+    const [openTransactionModal, setOpenTransactionModal] = useState(false);
+
+    const handleCloseTransactionModal = () => {
+      setOpenTransactionModal(false);
+    };
+  
+    const handleOpenTransactionModal = (type: string) => {
+      if (type.startsWith("add")) {
+        setEditableTransactionData(null);
+      }
+      setFormType(type);
+      setOpenTransactionModal(true);
+    };
+    //Transaction Modal
 
   const values = {
     openForgotPasswordModal,
@@ -406,7 +445,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     handleOpenNatwasalModal,
     openViewSponsorModal,
     handleCloseViewSponsorModal,
-    handleOpenViewSponsorModal,
+    handleOpenViewSponsorModal,openTransactionModal,handleCloseTransactionModal,handleOpenTransactionModal
   };
   return (
     <ModalsContext.Provider value={values}>{children}</ModalsContext.Provider>

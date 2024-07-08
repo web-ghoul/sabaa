@@ -66,7 +66,8 @@ type EntitiesType =
   | "tasheels"
   | "natwasals"
   | "eChannels"
-  | "persons";
+  | "persons"
+  | "activities";
 
 type EntityType =
   | "company"

@@ -1,10 +1,10 @@
 import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -79,22 +79,7 @@ const ActivitiesOptionsForm = ({
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
-        >
-          <Button
-            icon={<RiFileExcel2Fill />}
-            variant={"under development"}
-            bg={"excel"}
-            title={"Excel"}
-          />
-          <Button
-            icon={<RiFileExcel2Fill />}
-            variant={"under development"}
-            bg={"excel"}
-            title={"Excel All"}
-          />
-        </Box>
+        <ExcelButtons variant="activities" upload={false} />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

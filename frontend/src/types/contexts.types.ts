@@ -11,6 +11,7 @@ import {
   ProTypes,
   SponsorTypes,
   TasheelTypes,
+  TransactionTypes,
   UserTypes,
 } from "./store.types";
 
@@ -182,6 +183,8 @@ interface FormsContextTypes {
   setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
   editableNatwasalData: TasheelTypes | null;
   setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
+  editableTransactionData: TransactionTypes | null;
+  setEditableTransactionData: (transaction: TransactionTypes | null) => void;
 }
 
 interface ModalsContextTypes {
@@ -246,6 +249,9 @@ interface ModalsContextTypes {
   openNatwasalModal: boolean;
   handleOpenNatwasalModal: (string: string) => void;
   handleCloseNatwasalModal: () => void;
+  openTransactionModal: boolean;
+  handleOpenTransactionModal: (string: string) => void;
+  handleCloseTransactionModal: () => void;
 }
 
 interface TabsContextProps {

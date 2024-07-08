@@ -10,12 +10,12 @@ const useNationalitiesOptionsSchema = () => {
     limit: yup.string(),
   });
 
-  const NationalitiesOptionsInitailValues = {
+  const NationalitiesOptionsInitialValues = {
     search: "",
     limit: allParams.limit || "",
   };
 
-  return { NationalitiesOptionsInitailValues, NationalitiesOptionsSchema };
+  return { NationalitiesOptionsInitialValues, NationalitiesOptionsSchema };
 };
 
 export default useNationalitiesOptionsSchema;

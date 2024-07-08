@@ -10,11 +10,11 @@ const useDownloadExcelSchema = () => {
     fileName: yup.string().required("File Name is Required"),
   });
 
-  const DownloadExcelInitailValues = {
+  const DownloadExcelInitialValues = {
     fileName: excelType.entity.toUpperCase(),
   };
 
-  return { DownloadExcelSchema, DownloadExcelInitailValues };
+  return { DownloadExcelSchema, DownloadExcelInitialValues };
 };
 
 export default useDownloadExcelSchema;

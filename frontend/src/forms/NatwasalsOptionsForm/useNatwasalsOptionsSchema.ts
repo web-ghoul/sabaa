@@ -10,12 +10,12 @@ const useNatwasalsOptionsSchema = () => {
     type: yup.string(),
   });
 
-  const NatwasalsOptionsInitailValues = {
+  const NatwasalsOptionsInitialValues = {
     search: "",
     type: allParams.type || "",
   };
 
-  return { NatwasalsOptionsSchema, NatwasalsOptionsInitailValues };
+  return { NatwasalsOptionsSchema, NatwasalsOptionsInitialValues };
 };
 
 export default useNatwasalsOptionsSchema;

@@ -18,7 +18,7 @@ const useCompaniesOptionsSchema = () => {
     licenseTo: yup.string(),
   });
 
-  const CompaniesOptionsInitailValues = {
+  const CompaniesOptionsInitialValues = {
     search: "",
     state: allParams.state || "",
     status: allParams.status || "",
@@ -30,7 +30,7 @@ const useCompaniesOptionsSchema = () => {
     licenseTo: allParams.licenseTo || "",
   };
 
-  return { CompaniesOptionsSchema, CompaniesOptionsInitailValues };
+  return { CompaniesOptionsSchema, CompaniesOptionsInitialValues };
 };
 
 export default useCompaniesOptionsSchema;

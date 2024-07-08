@@ -38,7 +38,7 @@ const useOwnerSchema = () => {
     remarks: yup.string(),
   });
 
-  const OwnerInitailValues = {
+  const OwnerInitialValues = {
     name: editableOwnerData?.name || "",
     personCode: editableOwnerData?.personCode || "",
     nameAr: editableOwnerData?.nameAr || "",
@@ -76,7 +76,7 @@ const useOwnerSchema = () => {
     }
   }, [editableOwnerData, setOwnerImage]);
 
-  return { OwnerSchema, OwnerInitailValues };
+  return { OwnerSchema, OwnerInitialValues };
 };
 
 export default useOwnerSchema;
