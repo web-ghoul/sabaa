@@ -16,6 +16,7 @@ import {
   ProTypes,
   SponsorTypes,
   TasheelTypes,
+  TransactionTypes,
   UserTypes,
 } from "./store.types";
 
@@ -132,6 +133,15 @@ interface EmployeesOptionsFormTypes {
   gender: string;
 }
 
+//Transaction
+interface TransactionFormTypes extends TransactionTypes {}
+
+interface TransactionsOptionsFormTypes {
+  search: string;
+  status: string;
+  gender: string;
+}
+
 //Sponsor
 interface SponsorFormTypes extends SponsorTypes {}
 
@@ -224,7 +234,9 @@ type AllFormsTypes =
   | TasheelFormTypes
   | TasheelsOptionsFormTypes
   | NatwasalFormTypes
-  | NatwasalsOptionsFormTypes;
+  | NatwasalsOptionsFormTypes
+  | TransactionFormTypes
+  | TransactionsOptionsFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -279,4 +291,6 @@ export type {
   TasheelsOptionsFormTypes,
   UserFormTypes,
   UsersOptionsFormTypes,
+  TransactionFormTypes,
+  TransactionsOptionsFormTypes,
 };

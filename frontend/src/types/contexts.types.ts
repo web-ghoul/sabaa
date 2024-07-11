@@ -97,6 +97,13 @@ interface ExcelsContextProps {
   handleRemoveCompaniesSheet: (fileIndex: number) => void;
   handleEditCompanyInSheet: (value: CompanyTypes) => void;
   handleDeleteCompanyFromSheet: () => void;
+  transactionsSheets: TransactionsSheetTypes[];
+  transactionIndex: { fileIndex: number; index: number };
+  setTransactionIndex: (value: { fileIndex: number; index: number }) => void;
+  handleAddTransactionsSheet: (companiesSheet: CompaniesSheetTypes) => void;
+  handleRemoveTransactionsSheet: (fileIndex: number) => void;
+  handleEditTransactionInSheet: (value: CompanyTypes) => void;
+  handleDeleteTransactionFromSheet: () => void;
   jobsSheets: JobsSheetTypes[];
   jobIndex: { fileIndex: number; index: number };
   setJobIndex: (value: { fileIndex: number; index: number }) => void;
@@ -252,6 +259,9 @@ interface ModalsContextTypes {
   openTransactionModal: boolean;
   handleOpenTransactionModal: (string: string) => void;
   handleCloseTransactionModal: () => void;
+  openApprovalWorkPermitModal: boolean;
+  handleOpenApprovalWorkPermitModal: () => void;
+  handleCloseApprovalWorkPermitModal: () => void;
 }
 
 interface TabsContextProps {
@@ -294,6 +304,11 @@ interface CompaniesSheetTypes {
   data: Array<CompanyTypes>;
 }
 
+interface TransactionsSheetTypes {
+  fileName: string;
+  data: Array<TransactionTypes>;
+}
+
 interface UsersSheetTypes {
   fileName: string;
   data: Array<UserTypes>;
@@ -324,4 +339,5 @@ export type {
   SidebarsContextProps,
   TabsContextProps,
   UsersSheetTypes,
+  TransactionsSheetTypes,
 };

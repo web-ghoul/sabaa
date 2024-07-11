@@ -65,6 +65,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openTransactionModal: false,
   handleOpenTransactionModal: () => {},
   handleCloseTransactionModal: () => {},
+  openApprovalWorkPermitModal: false,
+  handleOpenApprovalWorkPermitModal: () => {},
+  handleCloseApprovalWorkPermitModal: () => {},
 });
 
 const ModalsProvider = ({ children }: { children: ReactNode }) => {
@@ -82,7 +85,7 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     setEditableUserData,
     setEditableCompanyData,
     setEditableNationalityData,
-    setEditableTransactionData
+    setEditableTransactionData,
   } = useContext(FormsContext);
 
   const { setExcelType } = useContext(ExcelsContext);
@@ -372,21 +375,34 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   };
   //Nationality Modal
 
-    //Transaction Modal
-    const [openTransactionModal, setOpenTransactionModal] = useState(false);
+  //Transaction Modal
+  const [openTransactionModal, setOpenTransactionModal] = useState(false);
 
-    const handleCloseTransactionModal = () => {
-      setOpenTransactionModal(false);
-    };
-  
-    const handleOpenTransactionModal = (type: string) => {
-      if (type.startsWith("add")) {
-        setEditableTransactionData(null);
-      }
-      setFormType(type);
-      setOpenTransactionModal(true);
-    };
-    //Transaction Modal
+  const handleCloseTransactionModal = () => {
+    setOpenTransactionModal(false);
+  };
+
+  const handleOpenTransactionModal = (type: string) => {
+    if (type.startsWith("add")) {
+      setEditableTransactionData(null);
+    }
+    setFormType(type);
+    setOpenTransactionModal(true);
+  };
+  //Transaction Modal
+
+  //Transaction Modal
+  const [openApprovalWorkPermitModal, setOpenApprovalWorkPermitModal] =
+    useState(false);
+
+  const handleCloseApprovalWorkPermitModal = () => {
+    setOpenApprovalWorkPermitModal(false);
+  };
+
+  const handleOpenApprovalWorkPermitModal = () => {
+    setOpenApprovalWorkPermitModal(true);
+  };
+  //Transaction Modal
 
   const values = {
     openForgotPasswordModal,
@@ -445,7 +461,13 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     handleOpenNatwasalModal,
     openViewSponsorModal,
     handleCloseViewSponsorModal,
-    handleOpenViewSponsorModal,openTransactionModal,handleCloseTransactionModal,handleOpenTransactionModal
+    handleOpenViewSponsorModal,
+    openTransactionModal,
+    handleCloseTransactionModal,
+    handleOpenTransactionModal,
+    openApprovalWorkPermitModal,
+    handleCloseApprovalWorkPermitModal,
+    handleOpenApprovalWorkPermitModal,
   };
   return (
     <ModalsContext.Provider value={values}>{children}</ModalsContext.Provider>

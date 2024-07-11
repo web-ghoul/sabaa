@@ -564,6 +564,77 @@ interface RecentCompaniesArgsTypes {
 }
 //Company
 
+
+//Transaction
+interface TransactionTypes {
+  transactionNo: string;
+  employeeId: string;
+  serialNo: string;
+  companyCode: string;
+  companyId: string;
+  companyName: string;
+  employeeName: string;
+  dob: Date;
+  gender: string;
+  nationalityId: string;
+  nationality: string;
+  passportNumber: string;
+  passportExpiry: Date;
+  job: string;
+  personCode: string;
+  uid: string;
+  emiratesNo: string;
+  workPermit: string;
+  lcNo: string;
+  lcExpiryDate: Date;
+  workPermitExpiryDate: Date;
+  visitExpiryDate: Date;
+  tawjeehDate: Date;
+  medicalDate: Date;
+  changeStatusDate: Date;
+  status: string;
+  wpStatus: string;
+  statusDate: Date;
+  cardType: string;
+  salary: number;
+  remarks: string;
+  residenceExpiryDate: Date;
+}
+
+interface TransactionValuesTypes {
+  isLoading: boolean;
+  transaction: TransactionTypes | null;
+  activities: ActivityTypes[] | null;
+}
+
+interface TransactionsCounterValuesTypes {
+  isLoading: boolean;
+  transactionsCounter: number;
+}
+
+interface TransactionsValuesTypes {
+  isLoading: boolean;
+  transactions: TransactionTypes[] | null;
+}
+
+interface TransactionsArgsTypes {
+  page?: number;
+  id?: string;
+  search?: string;
+  sort?: string;
+  limit?: number;
+}
+
+interface RecentTransactionsValuesTypes {
+  isLoading: boolean;
+  recentTransactions: TransactionTypes[] | null;
+}
+
+interface RecentTransactionsArgsTypes {
+  limit?: number;
+}
+//Transaction
+
 //Job
 
 interface JobsValuesTypes {
@@ -603,6 +674,12 @@ interface JobTypes {
 //Job
 
 //Nationality
+interface NationalityTypes {
+  _id?: string;
+  id: string;
+  nationality: string;
+  user?: string;
+}
 
 interface NationalitiesCounterValuesTypes {
   isLoading: boolean;
@@ -631,17 +708,6 @@ interface RecentNationalitiesValuesTypes {
 }
 
 //Nationality
-
-interface TransactionTypes{
-
-}
-
-interface NationalityTypes {
-  _id?: string;
-  id: string;
-  nationality: string;
-  user?: string;
-}
 
 export type {
   ActivitiesArgsTypes,
@@ -718,5 +784,5 @@ export type {
   UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
-  UsersValuesTypes,TransactionTypes
+  UsersValuesTypes,TransactionTypes,TransactionValuesTypes,TransactionsCounterValuesTypes,TransactionsValuesTypes,TransactionsArgsTypes,RecentTransactionsValuesTypes,RecentTransactionsArgsTypes
 };

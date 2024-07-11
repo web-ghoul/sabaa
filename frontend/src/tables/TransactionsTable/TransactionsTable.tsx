@@ -6,21 +6,19 @@ import {
   TableRow,
   useMediaQuery,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
-import NationalityBox from "../../components/NationalityBox/NationalityBox";
-import UserBox from "../../components/UserBox/UserBox";
+import { useLocation, useSearchParams } from "react-router-dom";
+import StatusBox from "../../components/StatusBox/StatusBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { handleAlert } from "../../functions/handleAlert";
+import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { getOwnersCounter } from "../../store/ownersCounterSlice";
 import { getOwners, reverseOwners } from "../../store/ownersSlice";
 import { AppDispatch } from "../../store/store";
-import { OwnersTableTypes } from "../../types/tables.types";
+import { getTransactionsCounter } from "../../store/transactionsCounterSlice";
+import { TransactionsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
 import { PrimaryTableRow } from "../PrimaryTableRow";
@@ -37,11 +35,12 @@ const TransactionsTable = ({
   sort = true,
   actions = true,
   recent,
-}: OwnersTableTypes) => {
+  type,
+}: TransactionsTableTypes) => {
   const { handleOpenTableMenu, handleAddQuery, queries } =
     useContext(AppContext);
-  const { setOwnerIndex } = useContext(ExcelsContext);
-  const { setEditableOwnerData } = useContext(FormsContext);
+  const { setTransactionIndex } = useContext(ExcelsContext);
+  const { setEditableTransactionData } = useContext(FormsContext);
   const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
   const lgScreen = useMediaQuery("(max-width:1200px)");
@@ -50,7 +49,7 @@ const TransactionsTable = ({
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSortByName = () => {
+  const handleSortByWorkPermitExpiry = () => {
     if (searchParams.get("sort") === "name_asc") {
       handleAddQuery({ sort: "name_desc" });
       dispatch(reverseOwners());
@@ -76,25 +75,25 @@ const TransactionsTable = ({
     }
   };
 
-  const handleView = () => {
-    if (sheet) {
-      handleAlert({ msg: "Under Development" });
-    }
-  };
+  // const handleView = () => {
+  //   if (sheet) {
+  //     handleAlert({ msg: "Under Development" });
+  //   }
+  // };
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
     index: number
   ) => {
     if (data) {
-      setEditableOwnerData(data[index]);
+      setEditableTransactionData(data[index]);
     }
-    setOwnerIndex({ fileIndex: fileIndex || 0, index });
+    setTransactionIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
 
   useEffect(() => {
-    if (pathname === `${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`) {
+    if (pathname === `${import.meta.env.VITE_UPLOAD_TRANSACTIONS_ROUTE}`) {
       setSheet(true);
     } else {
       setSheet(false);
@@ -102,113 +101,101 @@ const TransactionsTable = ({
   }, [pathname, sheet]);
 
   useEffect(() => {
-    dispatch(getOwnersCounter());
+    dispatch(getTransactionsCounter());
   }, [dispatch]);
 
   return (
     <PrimaryTable count={count} variant={"owners"} noPagination={noPagination}>
       <TableHead>
-        <TableRow>
-          <PrimaryTableCell className={`!flex gap-2`}>
-            {sheet || !sort ? (
-              "Name"
-            ) : (
-              <SortBox
-                title={"Name"}
-                handling={handleSortByName}
-                asc={searchParams.get("sort") === "name_asc"}
-                desc={searchParams.get("sort") === "name_desc"}
-              />
+        {type === "pre" && (
+          <TableRow>
+            <PrimaryTableCell className={`!flex gap-2`}>
+              Transaction Number
+            </PrimaryTableCell>
+            {!mdScreen && !recent && (
+              <PrimaryTableCell align="center">Company</PrimaryTableCell>
             )}
-          </PrimaryTableCell>
-          {!mdScreen && !recent && (
-            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
-          )}
-          <PrimaryTableCell align="center">
-            {sheet || !sort ? (
-              "Person Code"
-            ) : (
-              <SortBox
-                title={mdScreen ? "Code" : "Person Code"}
-                handling={handleSortByCode}
-                asc={searchParams.get("sort") === "code_asc"}
-                desc={searchParams.get("sort") === "code_desc"}
-                jc="center"
-              />
+            <PrimaryTableCell align="center">
+              {sheet || !sort ? (
+                "Employee Name"
+              ) : (
+                <SortBox
+                  title={mdScreen ? "Code" : "Person Code"}
+                  handling={handleSortByCode}
+                  asc={searchParams.get("sort") === "code_asc"}
+                  desc={searchParams.get("sort") === "code_desc"}
+                  jc="center"
+                />
+              )}
+            </PrimaryTableCell>
+            {!smScreen && (
+              <PrimaryTableCell align="center">Status</PrimaryTableCell>
             )}
-          </PrimaryTableCell>
-          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
-          {!lgScreen && (
-            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
-          )}
-          {!recent && (
-            <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
-          )}
-          {actions && (
-            <PrimaryTableCell align="right">Actions</PrimaryTableCell>
-          )}
-        </TableRow>
+            {!smScreen && (
+              <PrimaryTableCell align="center">Status Date</PrimaryTableCell>
+            )}
+            {!lgScreen && (
+              <PrimaryTableCell align="center">
+                {sheet || !sort ? (
+                  "Work Permit Expiry"
+                ) : (
+                  <SortBox
+                    title={"Work Permit Expiry"}
+                    handling={handleSortByWorkPermitExpiry}
+                    asc={searchParams.get("sort") === "name_asc"}
+                    desc={searchParams.get("sort") === "name_desc"}
+                  />
+                )}
+              </PrimaryTableCell>
+            )}
+            {actions && (
+              <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+            )}
+          </TableRow>
+        )}
       </TableHead>
       <TableBody>
         {!isLoading
           ? data &&
             data.map((row, i) => {
               return (
-                <PrimaryTableRow key={i}>
-                  <PrimaryTableCell onClick={() => handleView()}>
-                    {sheet ? (
-                      <UserBox
-                        username={row.name}
-                        head={"subtitle1"}
-                        size={"small"}
-                        avatar={row.avatar}
-                      />
-                    ) : (
-                      <Link
-                        to={`${import.meta.env.VITE_OWNERS_ROUTE}/${row._id}`}
-                      >
-                        <UserBox
-                          username={row.name}
-                          head={"subtitle1"}
-                          size={"small"}
-                          avatar={row.avatar}
-                        />
-                      </Link>
+                type === "pre" && (
+                  <PrimaryTableRow key={i}>
+                    <PrimaryTableCell align="left">
+                      {row.transactionNo}
+                    </PrimaryTableCell>
+                    {!mdScreen && !recent && (
+                      <PrimaryTableCell align="center">
+                        {row.companyName}
+                      </PrimaryTableCell>
                     )}
-                  </PrimaryTableCell>
-                  {!mdScreen && !recent && (
                     <PrimaryTableCell align="center">
-                      {row.phone}
+                      {row.employeeName}
                     </PrimaryTableCell>
-                  )}
-                  <PrimaryTableCell align="center">
-                    {row.personCode}
-                  </PrimaryTableCell>
-                  {!smScreen && (
-                    <PrimaryTableCell align="center">
-                      {row.uid}
-                    </PrimaryTableCell>
-                  )}
-                  {!lgScreen && (
-                    <PrimaryTableCell align="center">
-                      <Box className={`flex justify-center items-center`}>
-                        <NationalityBox nationality={row.nationality} />
-                      </Box>
-                    </PrimaryTableCell>
-                  )}
-                  {!recent && (
-                    <PrimaryTableCell align="center">
-                      {row.emiratesId}
-                    </PrimaryTableCell>
-                  )}
-                  {actions && (
-                    <PrimaryTableCell align="right">
-                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
-                        <MoreVertRounded />
-                      </IconButton>
-                    </PrimaryTableCell>
-                  )}
-                </PrimaryTableRow>
+                    {!smScreen && (
+                      <PrimaryTableCell align="center">
+                        <StatusBox status={row.status} />
+                      </PrimaryTableCell>
+                    )}
+                    {!lgScreen && (
+                      <PrimaryTableCell align="center">
+                        {handleDate(row.statusDate)}
+                      </PrimaryTableCell>
+                    )}
+                    {!lgScreen && (
+                      <PrimaryTableCell align="center">
+                        {handleDate(row.workPermitExpiryDate)}
+                      </PrimaryTableCell>
+                    )}
+                    {actions && (
+                      <PrimaryTableCell align="right">
+                        <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                          <MoreVertRounded />
+                        </IconButton>
+                      </PrimaryTableCell>
+                    )}
+                  </PrimaryTableRow>
+                )
               );
             })
           : new Array(handleRandomNumber())

@@ -38,6 +38,8 @@ import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
+import ApprovalWorkPermitForm from "./TransactionsForm/ApprovalWorkPermitForm";
+import TransactionForm from "./TransactionsForm/TransactionForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
@@ -71,6 +73,26 @@ const Forms = ({ type, index }: FormsTypes) => {
         />
       )}
       {/* User */}
+
+      {/* Transaction */}
+      {type === "approval" && (
+        <ApprovalWorkPermitForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+        />
+      )}
+      {(type === "addPreTransaction" || type === "editPreTransaction") && (
+        <TransactionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Transaction */}
 
       {/* Owner */}
       {type === "ownersOptions" && (

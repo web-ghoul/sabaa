@@ -10,6 +10,7 @@ import {
   SponsorTypes,
   TasheelTypes,
   UserTypes,
+  TransactionTypes,
 } from "./store.types";
 
 interface JobsTableTypes {
@@ -33,6 +34,18 @@ interface CompaniesTableTypes {
   sort?: boolean;
   actions?: boolean;
   recent?: boolean;
+}
+
+interface TransactionsTableTypes {
+  data: TransactionTypes[] | null;
+  count: number;
+  isLoading?: boolean;
+  fileIndex?: number;
+  noPagination?: boolean;
+  sort?: boolean;
+  actions?: boolean;
+  recent?: boolean;
+  type: "all" | "pre" | "new" | "renew";
 }
 
 interface OwnersTableTypes {
@@ -173,4 +186,5 @@ export type {
   SponsorsTableTypes,
   TasheelsTableTypes,
   UsersTableTypes,
+  TransactionsTableTypes,
 };

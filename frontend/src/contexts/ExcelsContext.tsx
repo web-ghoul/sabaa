@@ -10,6 +10,7 @@ import {
   NationalitiesSheetTypes,
   OwnersSheetTypes,
   ProsSheetTypes,
+  TransactionsSheetTypes,
 } from "../types/contexts.types";
 import {
   CompanyTypes,
@@ -59,6 +60,13 @@ export const ExcelsContext = createContext<ExcelsContextProps>({
   handleRemoveCompaniesSheet: () => {},
   handleEditCompanyInSheet: () => {},
   handleDeleteCompanyFromSheet: () => {},
+  transactionsSheets: [],
+  transactionIndex: { fileIndex: 0, index: 0 },
+  setTransactionIndex: () => {},
+  handleAddTransactionsSheet: () => {},
+  handleRemoveTransactionsSheet: () => {},
+  handleEditTransactionInSheet: () => {},
+  handleDeleteTransactionFromSheet: () => {},
   jobsSheets: [],
   jobIndex: { fileIndex: 0, index: 0 },
   setJobIndex: () => {},
@@ -113,6 +121,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Owners Sheets
 
   //Pros Sheets
   const [prosSheets, setProsSheets] = useState<ProsSheetTypes[]>([]);
@@ -144,6 +153,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Pros Sheets
 
   //Employees Sheets
   const [employeesSheets, setEmployeesSheets] = useState<EmployeesSheetTypes[]>(
@@ -181,6 +191,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Employees Sheets
 
   //Customers Sheets
   const [customersSheets, setCustomersSheets] = useState<CustomersSheetTypes[]>(
@@ -218,6 +229,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Customers Sheets
 
   //Companies Sheets
   const [companiesSheets, setCompaniesSheets] = useState<CompaniesSheetTypes[]>(
@@ -252,6 +264,47 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Companies Sheets
+
+  //Transactions Sheets
+  const [transactionsSheets, setTransactionsSheets] = useState<
+    TransactionsSheetTypes[]
+  >([]);
+
+  const [transactionIndex, setTransactionIndex] = useState({
+    fileIndex: 0,
+    index: 0,
+  });
+
+  const handleAddTransactionsSheet = (companiesSheet: CompaniesSheetTypes) => {
+    setTransactionsSheets([...transactionsSheets, companiesSheet]);
+  };
+
+  const handleRemoveTransactionsSheet = (fileIndex: number) => {
+    setTransactionsSheets(transactionsSheets.filter((_, i) => i !== fileIndex));
+  };
+
+  const handleDeleteTransactionFromSheet = () => {
+    const updatedTransactionsSheets = [...transactionsSheets];
+    updatedTransactionsSheets[transactionIndex.fileIndex].data =
+      transactionsSheets[transactionIndex.fileIndex].data.filter(
+        (_, i) => i !== transactionIndex.index
+      );
+    setTransactionsSheets(updatedTransactionsSheets);
+  };
+
+  const handleEditTransactionInSheet = (company: CompanyTypes) => {
+    if (transactionIndex) {
+      const newTransactionsSheets = [...transactionsSheets];
+      newTransactionsSheets[transactionIndex.fileIndex].data[
+        transactionIndex.index
+      ] = company;
+      setTransactionsSheets(newTransactionsSheets);
+    } else {
+      handleAlert({ msg: "Error Occurs", status: "error" });
+    }
+  };
+  //Transactions Sheets
 
   //Jobs Sheets
   const [jobsSheets, setJobsSheets] = useState<JobsSheetTypes[]>([]);
@@ -283,6 +336,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Jobs Sheets
 
   //Nationalities Sheets
   const [nationalitiesSheets, setNationalitiesSheets] = useState<
@@ -326,6 +380,7 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
       handleAlert({ msg: "Error Occurs", status: "error" });
     }
   };
+  //Nationalities Sheets
 
   const values = {
     excelType,
@@ -358,6 +413,13 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
     handleAddCompaniesSheet,
     handleDeleteCompanyFromSheet,
     handleRemoveCompaniesSheet,
+    transactionsSheets,
+    transactionIndex,
+    setTransactionIndex,
+    handleAddTransactionsSheet,
+    handleRemoveTransactionsSheet,
+    handleDeleteTransactionFromSheet,
+    handleEditTransactionInSheet,
     jobsSheets,
     jobIndex,
     setJobIndex,

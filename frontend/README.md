@@ -251,7 +251,7 @@ Notes (() form Required , <> For View on Table , [] For Options of Select , {} f
       10- Passport Expire Date (*) <>
       11- Job (*) <>
       12- UID Number () <>
-      13- Emirats ID Number () <>
+      13- Emirates ID Number () <>
       14- Status [inProcess , Approved , Rejected , Nawakes] {Set Automatice When Add New Work Permit Waiting Labour Card} () <.>
       15- Status Date  () <>
       16- Remarks
