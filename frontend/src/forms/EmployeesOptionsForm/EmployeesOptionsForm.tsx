@@ -1,34 +1,24 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getEmployees } from "../../store/employeesSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  EmployeesOptionsFormikTypes,
-  FormiksTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import { NationalityTypes } from "../../types/store.types";
 
-const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
+const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForEmployees,
-    setSearchForEmployees,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForEmployees, setSearchForEmployees } =
+    useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -62,32 +52,20 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
     dispatch(getEmployees({ ...queries, search: searchForEmployees }));
   };
 
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "employees");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "employees");
-  };
-
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_EMPLOYEES_ROUTE}`);
     dispatch(getEmployees({}));
     setQueries({});
+    setValue("search", "");
+    setValue("nationality", "");
+    setValue("gender", "");
+    setValue("cardType", "");
+    setValue("status", "");
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
-
-  (formik as unknown as EmployeesOptionsFormikTypes).values.cardType =
-    queries.cardType || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.gender =
-    queries.gender || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.status =
-    queries.status || "";
-  (formik as unknown as EmployeesOptionsFormikTypes).values.nationality =
-    queries.nationality || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -113,35 +91,12 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button title={"Add Employee"} icon={<AddRounded />} />
-          <Button
-            title={"Upload Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`)
-            }
-          />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Employee"} variant="employees" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
@@ -167,7 +122,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Nationality"}
             name={"nationality"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByNationality}
             options={handledNationalities}
             select
@@ -175,7 +131,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
             options={["active", "cancel", "complaint", "abscond"]}
             select
@@ -183,7 +140,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Gender"}
             name={"gender"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByGender}
             options={["male", "female"]}
             select
@@ -191,7 +149,8 @@ const EmployeesOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Card Type"}
             name={"cardType"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByCardType}
             options={[
               "PRE APPROVAL FOR WORK PERMIT",

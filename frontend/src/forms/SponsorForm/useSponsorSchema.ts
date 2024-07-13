@@ -22,13 +22,13 @@ const useSponsorSchema = () => {
     address: yup.string(),
     gender: yup.string(),
     relativeRelation: yup.string().required("Relative Relation is required"),
-    residenceExpiryDate: yup.date(),
+    residenceExpiryDate: yup.string(),
     fileImmgNo: yup.string(),
     status: yup.string(),
     remarks: yup.string(),
   });
 
-  const SponsorInitailValues = {
+  const SponsorInitialValues = {
     name: editableSponsorData?.name || "",
     nameAr: editableSponsorData?.nameAr || "",
     avatar: editableSponsorData?.avatar || "",
@@ -64,7 +64,7 @@ const useSponsorSchema = () => {
     }
   }, [editableSponsorData, setSponsorImage]);
 
-  return { SponsorSchema, SponsorInitailValues };
+  return { SponsorSchema, SponsorInitialValues };
 };
 
 export default useSponsorSchema;

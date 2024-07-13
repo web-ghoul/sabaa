@@ -1,7 +1,13 @@
-import { FormikProps } from "formik";
 import { ReactNode } from "react";
+import {
+  FieldErrors,
+  Path,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { EntitiesType, EntityType, HeadsType } from "./app.types";
-import { AllFormiksTypes } from "./forms.types";
+import { AllFormsTypes } from "./forms.types";
 import {
   CompanyTypes,
   CustomerTypes,
@@ -12,6 +18,7 @@ import {
   NatwasalTypes,
   OwnerTypes,
   ProTypes,
+  SponsorTypes,
   TasheelTypes,
   UserTypes,
 } from "./store.types";
@@ -47,17 +54,20 @@ interface SidebarItemTypes {
   title: string;
   icon: ReactNode;
   url: string;
+  sub?: boolean;
+  children?: ReactNode;
 }
 
 interface InputTypes {
-  name: string;
+  register: UseFormRegister<AllFormsTypes>;
+  name: Path<AllFormsTypes>;
+  errors: FieldErrors<AllFormsTypes>;
   label?: string;
   type?: string;
   select?: boolean;
   options?: Array<string>;
   ac?: string;
   textarea?: boolean;
-  variant?: string;
   disabled?: boolean;
   change?: (value: string) => void;
 }
@@ -113,9 +123,12 @@ interface AutoCompleteSearchTypes {
     | JobTypes[]
     | ProTypes[]
     | CustomerTypes[];
-  name: string;
+  register: UseFormRegister<AllFormsTypes>;
+  name: Path<AllFormsTypes>;
+  errors: FieldErrors<AllFormsTypes>;
+  setValue: UseFormSetValue<AllFormsTypes>;
+  getValues: UseFormGetValues<AllFormsTypes>;
   variant?: EntityType;
-  formik: FormikProps<AllFormiksTypes>;
 }
 
 interface ProfileDetailsTypes {
@@ -127,7 +140,8 @@ interface ProfileDetailsTypes {
     | CompanyTypes
     | ProTypes
     | EmployeeTypes
-    | CustomerTypes;
+    | CustomerTypes
+    | SponsorTypes;
   eChannel?: EChannelTypes;
   tasheel?: TasheelTypes;
   natwasal?: NatwasalTypes;
@@ -143,6 +157,13 @@ interface DataBoxTypes {
 interface UploadStatusTypes {
   icon: ReactNode;
   text: string;
+}
+
+interface ExcelButtonsTypes {
+  variant: EntitiesType;
+  addBtn?: string;
+  upload?: boolean;
+  all?: boolean;
 }
 
 export type {
@@ -162,4 +183,5 @@ export type {
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,
+  ExcelButtonsTypes,
 };

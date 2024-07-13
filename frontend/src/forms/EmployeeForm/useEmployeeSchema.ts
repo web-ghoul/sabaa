@@ -15,7 +15,7 @@ const useEmployeeSchema = () => {
     gender: yup.string().required("Gender is required"),
     personCode: yup.string(),
     companyId: yup.array(),
-    dob: yup.date(),
+    dob: yup.string(),
     idNationality: yup.string(),
     status: yup.string(),
     email: yup.string(),
@@ -26,21 +26,21 @@ const useEmployeeSchema = () => {
     remarks: yup.string(),
     iLOEInsuranceCompany: yup.string(),
     iLOEPolicyNo: yup.string(),
-    iLOEExpireDate: yup.date(),
+    iLOEExpireDate: yup.string(),
     medicalInsuranceCompany: yup.string(),
     medicalPolicyNo: yup.string(),
-    medicalExpireDate: yup.date(),
+    medicalExpireDate: yup.string(),
     visaFileNumber: yup.string(),
     fileImmgNo: yup.string(),
     emiratesId: yup.string(),
     workPermitNumber: yup.string(),
     passportNumber: yup.string(),
-    passportExpiry: yup.date(),
-    residenceExpireDate: yup.date(),
-    lcExpireDate: yup.date(),
+    passportExpiry: yup.string(),
+    residenceExpireDate: yup.string(),
+    lcExpireDate: yup.string(),
   });
 
-  const EmployeeInitailValues = {
+  const EmployeeInitialValues = {
     avatar: editableEmployeeData?.avatar || "",
     name: editableEmployeeData?.name || "",
     nameAr: editableEmployeeData?.nameAr || "",
@@ -109,7 +109,7 @@ const useEmployeeSchema = () => {
     }
   }, [editableEmployeeData, setEmployeeImage]);
 
-  return { EmployeeSchema, EmployeeInitailValues };
+  return { EmployeeSchema, EmployeeInitialValues };
 };
 
 export default useEmployeeSchema;

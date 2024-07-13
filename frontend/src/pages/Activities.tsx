@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
 import { AppContext } from "../contexts/AppContext";
 import Forms from "../forms/Forms";
+import useQueries from "../hooks/useQueries";
 import { PrimaryBox } from "../mui/boxes&containers/PrimaryBox";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import ActivitiesSection from "../sections/ActivitiesSection";
@@ -15,17 +15,15 @@ const Activities = () => {
   const { activities, isLoading } = useSelector(
     (state: RootState) => state.activities
   );
-  const dispatch = useDispatch<AppDispatch>();
   const { pageContainerClasses } = useContext(AppContext);
-  const [searchParams] = useSearchParams();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { handleGetQueries } = useQueries();
 
   useEffect(() => {
-    const allParams: { [key: string]: string } = {};
-    for (const [key, value] of searchParams.entries()) {
-      allParams[key] = value;
-    }
-    dispatch(getActivities(allParams));
+    dispatch(getActivities(handleGetQueries()));
   }, [dispatch]);
+
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>

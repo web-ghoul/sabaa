@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 import AppProvider from "./contexts/AppContext.tsx";
 import ExcelsProvider from "./contexts/ExcelsContext.tsx";
 import FormsProvider from "./contexts/FormsContext.tsx";
+import ModalsProvider from "./contexts/ModalsContext.tsx";
 import SidebarProvider from "./contexts/SidebarsContext.tsx";
 import TabsProvider from "./contexts/TabsContext.tsx";
 import "./index.css";
@@ -27,11 +28,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ExcelsProvider>
           <TabsProvider>
             <FormsProvider>
-              <SidebarProvider>
-                <AppProvider>
-                  <RouterProvider router={router} />
-                </AppProvider>
-              </SidebarProvider>
+              <ModalsProvider>
+                <SidebarProvider>
+                  <AppProvider>
+                    <RouterProvider router={router} />
+                  </AppProvider>
+                </SidebarProvider>
+              </ModalsProvider>
             </FormsProvider>
           </TabsProvider>
         </ExcelsProvider>

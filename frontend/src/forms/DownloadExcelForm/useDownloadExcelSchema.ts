@@ -1,20 +1,20 @@
 import * as yup from "yup";
 
 import { useContext } from "react";
-import { FormsContext } from "../../contexts/FormsContext";
+import { ExcelsContext } from "../../contexts/ExcelsContext";
 
 const useDownloadExcelSchema = () => {
-  const { excelType } = useContext(FormsContext);
+  const { excelType } = useContext(ExcelsContext);
 
   const DownloadExcelSchema = yup.object({
     fileName: yup.string().required("File Name is Required"),
   });
 
-  const DownloadExcelInitailValues = {
+  const DownloadExcelInitialValues = {
     fileName: excelType.entity.toUpperCase(),
   };
 
-  return { DownloadExcelSchema, DownloadExcelInitailValues };
+  return { DownloadExcelSchema, DownloadExcelInitialValues };
 };
 
 export default useDownloadExcelSchema;

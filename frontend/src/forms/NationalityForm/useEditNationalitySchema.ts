@@ -10,12 +10,12 @@ const useNationalitySchema = () => {
     nationality: yup.string().required("Nationality is required"),
   });
 
-  const NationalityInitailValues = {
+  const NationalityInitialValues = {
     id: editableNationalityData?.id || "",
     nationality: editableNationalityData?.nationality || "",
   };
 
-  return { NationalitySchema, NationalityInitailValues };
+  return { NationalitySchema, NationalityInitialValues };
 };
 
 export default useNationalitySchema;

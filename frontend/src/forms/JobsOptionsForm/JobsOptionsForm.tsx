@@ -1,10 +1,7 @@
-import { AddRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -12,17 +9,10 @@ import { getJobs } from "../../store/jobsSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const JobsOptionsForm = ({ formik }: FormiksTypes) => {
-  const navigate = useNavigate();
+const JobsOptionsForm = ({ register, errors }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { handleOpenJobModal, setSearchForJobs, handleOpenDownloadExcelModal } =
-    useContext(FormsContext);
+  const { setSearchForJobs } = useContext(FormsContext);
   const { queries } = useContext(AppContext);
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "jobs");
-  };
-
   const handleSearch = (value: string) => {
     setSearchForJobs(value);
     dispatch(getJobs({ ...queries, search: value }));
@@ -40,39 +30,12 @@ const JobsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, MOHRE..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2`}
-        >
-          <Button
-            icon={<AddRounded />}
-            handling={() => handleOpenJobModal("addJob")}
-            title={"Add Job"}
-          />
-          <Button
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_JOBS_ROUTE}`)
-            }
-            title={"Upload Excel"}
-          />
-          <Button
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-            title={"Excel"}
-          />
-          {/* <Button
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            variant="under development"
-            title={"Excel All"}
-          /> */}
-        </Box>
+        <ExcelButtons addBtn={"Add Job"} variant="jobs" all={false} />
       </Box>
     </Paper>
   );

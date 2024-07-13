@@ -22,6 +22,9 @@ export const PrimaryTextField = styled(TextField)(({ theme }) => ({
   "& svg": {
     fontSize: "20px",
   },
+  "& input:not(:placeholder-shown)": {
+    fontWeight: "600",
+  },
   [theme.breakpoints.down("lg")]: {
     "& input , & select": {
       padding: "9px !important",

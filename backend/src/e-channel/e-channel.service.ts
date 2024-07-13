@@ -93,7 +93,7 @@ export class EChannelService {
 
   async findOne(id: string) {
     const echannel = await this.eChannelModel
-      .findOne({ $or: [{ uid: id }, { emiratesId: id }] ,  deleted: false })
+      .findOne({ $or: [{ uid: id }, { emiratesId: id }], deleted: false })
       .populate([
         { path: 'employee', model: 'Employee' },
         { path: 'owner', model: 'Owner' },
@@ -102,8 +102,14 @@ export class EChannelService {
       return echannel;
     } else {
       const [emp, owner] = await Promise.all([
-        this.employeeModel.findOne({ $or: [{ uid: id }, { emiratesId: id }] ,  deleted: false}),
-        this.ownerModel.findOne({ $or: [{ uid: id }, { emiratesId: id }],  deleted: false }),
+        this.employeeModel.findOne({
+          $or: [{ uid: id }, { emiratesId: id }],
+          deleted: false,
+        }),
+        this.ownerModel.findOne({
+          $or: [{ uid: id }, { emiratesId: id }],
+          deleted: false,
+        }),
       ]);
 
       return emp || owner || {};

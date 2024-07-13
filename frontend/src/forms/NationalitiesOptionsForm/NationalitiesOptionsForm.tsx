@@ -8,18 +8,18 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
-const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
+const NationalitiesOptionsForm = ({ register, errors }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    handleOpenNationalityModal,
-    setSearchForNationalities,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { setSearchForNationalities } = useContext(FormsContext);
+  const { handleOpenNationalityModal, handleOpenDownloadExcelModal } =
+    useContext(ModalsContext);
+
   const { queries } = useContext(AppContext);
 
   const handleDownloadExcel = () => {
@@ -43,7 +43,8 @@ const NationalitiesOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Nationality, ID..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>

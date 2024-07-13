@@ -30,7 +30,7 @@ const useCustomerSchema = () => {
     remarks: yup.string(),
   });
 
-  const CustomerInitailValues = {
+  const CustomerInitialValues = {
     name: editableCustomerData?.name || "",
     personCode: editableCustomerData?.personCode || "",
     nameAr: editableCustomerData?.nameAr || "",
@@ -68,7 +68,7 @@ const useCustomerSchema = () => {
     }
   }, [editableCustomerData, setCustomerImage]);
 
-  return { CustomerSchema, CustomerInitailValues };
+  return { CustomerSchema, CustomerInitialValues };
 };
 
 export default useCustomerSchema;

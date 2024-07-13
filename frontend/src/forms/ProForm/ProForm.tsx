@@ -8,14 +8,21 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { FormiksTypes, ProFormikTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const ProForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseProModal, setProImage } =
-    useContext(FormsContext);
+const ProForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
+  const { formsLoading, setProImage } = useContext(FormsContext);
+  const { handleCloseProModal } = useContext(ModalsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
@@ -25,9 +32,9 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
     const checked = event.target.checked;
     setChecked(checked);
     if (checked) {
-      (formik as unknown as ProFormikTypes).values.type = "owner&pro";
+      setValue("type", "owner&pro");
     } else {
-      (formik as unknown as ProFormikTypes).values.type = "pro";
+      setValue("type", "pro");
     }
   };
   const dispatch = useDispatch<AppDispatch>();
@@ -80,33 +87,56 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
       />
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-        <Input formik={formik} label={"English Name"} name={"name"} />
-        <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
+          label={"English Name"}
+          name={"name"}
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Arabic Name"}
+          name={"nameAr"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           label={"Person Code"}
           name={"personCode"}
           type={"text"}
-          variant={"numeric"}
         />
 
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
+          label={"Email"}
+          name={"email"}
+          type={"email"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           label={"Phone"}
           type={"text"}
-          variant={"numeric"}
           name={"phone"}
         />
-        <Input formik={formik} label={"Address"} name={"address"} />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
+          label={"Address"}
+          name={"address"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           type={"date"}
           name={"dob"}
           label={"Date of Birth"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"State"}
           name={"state"}
           select
@@ -116,7 +146,10 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
           <AutoCompleteSearch
             label={"Nationality"}
             options={nationalities}
-            formik={formik}
+            setValue={setValue}
+            getValues={getValues}
+            register={register}
+            errors={errors}
             name={"nationality"}
           />
         )}
@@ -124,51 +157,69 @@ const ProForm = ({ formik, type }: FormiksTypes) => {
           <AutoCompleteSearch
             label={"Job"}
             options={jobs}
-            formik={formik}
+            setValue={setValue}
+            getValues={getValues}
+            register={register}
+            errors={errors}
             name={"job"}
           />
         )}
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Gender"}
           name={"gender"}
           select
           options={["Male", "Female"]}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Emirates ID"}
           name={"emiratesId"}
           type={"text"}
-          variant={"numeric"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"UID Number"}
           name={"uid"}
           type={"text"}
-          variant={"numeric"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           type={"date"}
           name={"residenceExpiryDate"}
           label={"Residence Expire Date"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"File Immgiration Number"}
           name={"fileImmgNo"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Status"}
           name={"status"}
           select
           options={["Active", "Inactive"]}
         />
-        <Input formik={formik} label={"Sponsor"} name={"sponsor"} />
-        <Input formik={formik} label={"Remarks"} name={"remarks"} textarea />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Sponsor"}
+          name={"sponsor"}
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Remarks"}
+          name={"remarks"}
+          textarea
+        />
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

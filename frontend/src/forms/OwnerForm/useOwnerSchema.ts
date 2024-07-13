@@ -19,7 +19,8 @@ const useOwnerSchema = () => {
         "is-adult",
         "You must be at least 18 years old",
         (value) => value && isAdult(value)
-      ),
+      )
+      .required("Date of Birth is required"),
     idNationality: yup.string(),
     nationality: yup.string().required("Nationality is required"),
     phone: yup.string(),
@@ -27,7 +28,7 @@ const useOwnerSchema = () => {
     email: yup.string().email("Email is inValid"),
     state: yup.string(),
     address: yup.string(),
-    residenceExpiryDate: yup.date(),
+    residenceExpiryDate: yup.string(),
     fileImmgNo: yup.string(),
     status: yup.string(),
     gender: yup.string(),
@@ -37,7 +38,7 @@ const useOwnerSchema = () => {
     remarks: yup.string(),
   });
 
-  const OwnerInitailValues = {
+  const OwnerInitialValues = {
     name: editableOwnerData?.name || "",
     personCode: editableOwnerData?.personCode || "",
     nameAr: editableOwnerData?.nameAr || "",
@@ -75,7 +76,7 @@ const useOwnerSchema = () => {
     }
   }, [editableOwnerData, setOwnerImage]);
 
-  return { OwnerSchema, OwnerInitailValues };
+  return { OwnerSchema, OwnerInitialValues };
 };
 
 export default useOwnerSchema;

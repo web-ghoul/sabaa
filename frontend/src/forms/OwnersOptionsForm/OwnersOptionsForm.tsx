@@ -1,35 +1,23 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getOwners } from "../../store/ownersSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  FormiksTypes,
-  OwnersOptionsFormikTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 import { NationalityTypes } from "../../types/store.types";
 
-const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
+const OwnersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    handleOpenOwnerModal,
-    searchForOwners,
-    setSearchForOwners,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForOwners, setSearchForOwners } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -75,38 +63,23 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
     dispatch(getOwners({ ...queries, search: searchForOwners }));
   };
 
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "owners");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "owners");
-  };
-
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_OWNERS_ROUTE}`);
     dispatch(getOwners({}));
     setQueries({});
+    setValue("search", "");
+    setValue("dobFrom", "");
+    setValue("dobTo", "");
+    setValue("residenceFrom", "");
+    setValue("residenceTo", "");
+    setValue("status", "");
+    setValue("nationality", "");
+    setValue("state", "");
   };
 
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
-
-  (formik as unknown as OwnersOptionsFormikTypes).values.dobFrom =
-    queries.dobFrom || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.dobTo =
-    queries.dobTo || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.residenceFrom =
-    queries.residenceFrom || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.residenceTo =
-    queries.residenceTo || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.state =
-    queries.status || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.state =
-    queries.state || "";
-  (formik as unknown as OwnersOptionsFormikTypes).values.nationality =
-    queries.nationality || "";
 
   useEffect(() => {
     if (nationalities) {
@@ -132,39 +105,12 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button
-            title={"Add Owner"}
-            icon={<AddRounded />}
-            handling={() => handleOpenOwnerModal("addOwner")}
-          />
-          <Button
-            title={"Upload Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_OWNERS_ROUTE}`)
-            }
-          />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Owner"} variant="owners" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
@@ -190,7 +136,8 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Nationality"}
             name={"nationality"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByNationality}
             options={handledNationalities}
             select
@@ -198,7 +145,8 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By State"}
             name={"state"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByState}
             options={["dubai"]}
             select
@@ -206,9 +154,10 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By Status"}
             name={"status"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByStatus}
-            options={["active", "inactive"]}
+            options={["Active", "Inactive"]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
@@ -220,14 +169,16 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
                 name={"dobFrom"}
                 label={"From"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateOfBirthFrom}
               />
               <Input
                 name={"dobTo"}
                 label={"To"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByDateOfBirthTo}
               />
             </Box>
@@ -243,14 +194,16 @@ const OwnersOptionsForm = ({ formik }: FormiksTypes) => {
                 name={"residenceFrom"}
                 label={"From"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByResidenceFrom}
               />
               <Input
                 name={"residenceTo"}
                 label={"To"}
                 type={"date"}
-                formik={formik}
+                register={register}
+                errors={errors}
                 change={handleFilterByResidenceTo}
               />
             </Box>

@@ -8,6 +8,8 @@ interface AuthValuesTypes {
   isLoading: boolean;
 }
 
+//Activities
+
 interface ActivityTypes {
   type: EntityType;
   userName: string;
@@ -48,6 +50,7 @@ interface RecentActivitiesValuesTypes {
 interface RecentActivitiesArgsTypes {
   limit?: number;
 }
+//Activities
 
 //User
 
@@ -96,6 +99,7 @@ interface UserValuesTypes {
   user: UserTypes | null;
   activities: ActivityTypes[] | null;
 }
+//User
 
 //Owner
 
@@ -149,7 +153,10 @@ interface OwnersArgsTypes {
   limit?: number;
   dobTo?: string;
   dobFrom?: string;
+  residenceTo?: string;
+  residenceFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -166,6 +173,7 @@ interface OwnersCounterValuesTypes {
   isLoading: boolean;
   ownersCounter: number;
 }
+//Owner
 
 //PRO
 
@@ -210,6 +218,7 @@ interface ProsCounterValuesTypes {
   isLoading: boolean;
   prosCounter: number;
 }
+//PRO
 
 //Customer
 
@@ -255,6 +264,7 @@ interface CustomersCounterValuesTypes {
   isLoading: boolean;
   customersCounter: number;
 }
+//Customer
 
 //Sponsor
 
@@ -266,6 +276,7 @@ interface SponsorsValuesTypes {
   isLoading: boolean;
   sponsors: SponsorTypes[] | null;
 }
+//Sponsor
 
 //Employee
 
@@ -349,6 +360,7 @@ interface EmployeesCounterValuesTypes {
   isLoading: boolean;
   employeesCounter: number;
 }
+//Employee
 
 //E-Channel
 
@@ -369,6 +381,7 @@ interface EChannelTypes {
   employee?: string | EmployeeTypes;
   user?: string;
   createdAt?: Date;
+  searchForPerson: string;
 }
 
 interface EChannelsValuesTypes {
@@ -390,6 +403,7 @@ interface EChannelsCounterValuesTypes {
   isLoading: boolean;
   eChannelsCounter: number;
 }
+//E-Channel
 
 //Tasheel
 
@@ -411,6 +425,7 @@ interface TasheelTypes {
   employee?: string | EmployeeTypes;
   user?: string;
   createdAt?: Date;
+  searchForPerson: string;
 }
 
 interface TasheelsValuesTypes {
@@ -435,6 +450,8 @@ interface TasheelsCounterValuesTypes {
 
 //Tasheel
 
+//Natwasal
+
 interface NatwasalTypes extends TasheelTypes {}
 
 interface NatwasalsValuesTypes {
@@ -456,6 +473,7 @@ interface NatwasalsCounterValuesTypes {
   isLoading: boolean;
   natwasalsCounter: number;
 }
+//Natwasal
 
 //Company
 interface CompanyTypes {
@@ -544,6 +562,78 @@ interface RecentCompaniesValuesTypes {
 interface RecentCompaniesArgsTypes {
   limit?: number;
 }
+//Company
+
+
+//Transaction
+interface TransactionTypes {
+  transactionNo: string;
+  employeeId: string;
+  serialNo: string;
+  companyCode: string;
+  companyId: string;
+  companyName: string;
+  employeeName: string;
+  dob: Date;
+  gender: string;
+  nationalityId: string;
+  nationality: string;
+  passportNumber: string;
+  passportExpiry: Date;
+  job: string;
+  personCode: string;
+  uid: string;
+  emiratesNo: string;
+  workPermit: string;
+  lcNo: string;
+  lcExpiryDate: Date;
+  workPermitExpiryDate: Date;
+  visitExpiryDate: Date;
+  tawjeehDate: Date;
+  medicalDate: Date;
+  changeStatusDate: Date;
+  status: string;
+  wpStatus: string;
+  statusDate: Date;
+  cardType: string;
+  salary: number;
+  remarks: string;
+  residenceExpiryDate: Date;
+}
+
+interface TransactionValuesTypes {
+  isLoading: boolean;
+  transaction: TransactionTypes | null;
+  activities: ActivityTypes[] | null;
+}
+
+interface TransactionsCounterValuesTypes {
+  isLoading: boolean;
+  transactionsCounter: number;
+}
+
+interface TransactionsValuesTypes {
+  isLoading: boolean;
+  transactions: TransactionTypes[] | null;
+}
+
+interface TransactionsArgsTypes {
+  page?: number;
+  id?: string;
+  search?: string;
+  sort?: string;
+  limit?: number;
+}
+
+interface RecentTransactionsValuesTypes {
+  isLoading: boolean;
+  recentTransactions: TransactionTypes[] | null;
+}
+
+interface RecentTransactionsArgsTypes {
+  limit?: number;
+}
+//Transaction
 
 //Job
 
@@ -581,8 +671,15 @@ interface JobTypes {
   jobTitle: string;
   user?: string;
 }
+//Job
 
 //Nationality
+interface NationalityTypes {
+  _id?: string;
+  id: string;
+  nationality: string;
+  user?: string;
+}
 
 interface NationalitiesCounterValuesTypes {
   isLoading: boolean;
@@ -610,12 +707,7 @@ interface RecentNationalitiesValuesTypes {
   recentNationalities: NationalityTypes[] | null;
 }
 
-interface NationalityTypes {
-  _id?: string;
-  id: string;
-  nationality: string;
-  user?: string;
-}
+//Nationality
 
 export type {
   ActivitiesArgsTypes,
@@ -692,5 +784,5 @@ export type {
   UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
-  UsersValuesTypes,
+  UsersValuesTypes,TransactionTypes,TransactionValuesTypes,TransactionsCounterValuesTypes,TransactionsValuesTypes,TransactionsArgsTypes,RecentTransactionsValuesTypes,RecentTransactionsArgsTypes
 };

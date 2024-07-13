@@ -4,15 +4,16 @@ import OTPInput from "../../components/Input/OTPInput";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
-import { FormiksTypes, OTPFormTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const OTPForm = ({ formik }: FormiksTypes) => {
+const OTPForm = ({ setValue }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   const [otp, setOtp] = useState("");
-
   useEffect(() => {
-    (formik.values as unknown as OTPFormTypes).otp = otp;
-  }, [formik.values, otp]);
+    if (setValue) {
+      setValue("otp", otp);
+    }
+  }, [setValue, otp]);
 
   return (
     <Box

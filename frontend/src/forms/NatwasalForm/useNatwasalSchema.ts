@@ -18,9 +18,10 @@ const useNatwasalSchema = () => {
     mobile: yup.string(),
     type: yup.string(),
     notes: yup.string(),
+    searchForPerson: yup.string(),
   });
 
-  const NatwasalInitailValues = {
+  const NatwasalInitialValues = {
     username: editableNatwasalData?.username || "",
     password: editableNatwasalData?.password || "",
     name: editableNatwasalData?.name || "",
@@ -32,9 +33,10 @@ const useNatwasalSchema = () => {
     mobile: editableNatwasalData?.mobile || "",
     notes: editableNatwasalData?.notes || "",
     type: editableNatwasalData?.type,
+    searchForPerson: "",
   };
 
-  return { NatwasalSchema, NatwasalInitailValues };
+  return { NatwasalSchema, NatwasalInitialValues };
 };
 
 export default useNatwasalSchema;

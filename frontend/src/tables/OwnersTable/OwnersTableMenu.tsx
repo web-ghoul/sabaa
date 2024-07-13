@@ -10,6 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const OwnersTableMenu = () => {
@@ -17,12 +18,12 @@ const OwnersTableMenu = () => {
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { editableOwnerData } = useContext(FormsContext);
   const {
     handleOpenOwnerModal,
     handleOpenDeleteModal,
     handleOpenLinkToCompanyModal,
-    editableOwnerData,
-  } = useContext(FormsContext);
+  } = useContext(ModalsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {

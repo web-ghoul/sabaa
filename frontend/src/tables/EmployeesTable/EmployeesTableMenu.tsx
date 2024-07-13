@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const EmployeesTableMenu = () => {
@@ -16,11 +17,9 @@ const EmployeesTableMenu = () => {
   const navigate = useNavigate();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-  const {
-    handleOpenDeleteModal,
-    editableEmployeeData,
-    handleOpenEmployeeModal,
-  } = useContext(FormsContext);
+  const { editableEmployeeData } = useContext(FormsContext);
+  const { handleOpenDeleteModal, handleOpenEmployeeModal } =
+    useContext(ModalsContext);
   const { handleDeleteEmployeeFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {

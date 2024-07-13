@@ -6,11 +6,12 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const UserForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseUserModal, setUserImage } =
-    useContext(FormsContext);
+const UserForm = ({ register, errors, type }: FormiksTypes) => {
+  const { formsLoading, setUserImage } = useContext(FormsContext);
+  const { handleCloseUserModal } = useContext(ModalsContext);
 
   useEffect(() => {
     if (type?.startsWith("add")) {
@@ -35,29 +36,37 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Username"}
           name={"name"}
           ac={"username"}
-          variant="username"
         />
-        <Input formik={formik} label={"Email"} name={"email"} type={"email"} />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
+          label={"Email"}
+          name={"email"}
+          type={"email"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           label={"Phone"}
           type={"text"}
-          variant={"numeric"}
           name={"phone"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Role"}
           select={true}
           options={["User", "Admin"]}
           name={"role"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Status"}
           name={"status"}
           select={true}
@@ -65,7 +74,8 @@ const UserForm = ({ formik, type }: FormiksTypes) => {
         />
         {type?.startsWith("add") && (
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Password"}
             type={"password"}
             name={"password"}

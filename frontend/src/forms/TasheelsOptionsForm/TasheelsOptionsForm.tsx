@@ -1,32 +1,21 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { AppDispatch } from "../../store/store";
 import { getTasheels } from "../../store/tasheelsSlice";
-import {
-  FormiksTypes,
-  TasheelsOptionsFormikTypes,
-} from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
+const TasheelsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    searchForTasheel,
-    setSearchForTasheel,
-    handleOpenDownloadExcelModal,
-  } = useContext(FormsContext);
+  const { searchForTasheel, setSearchForTasheel } = useContext(FormsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -45,22 +34,13 @@ const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
     dispatch(getTasheels({ ...queries, search: searchForTasheel }));
   };
 
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "tasheels");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "tasheels");
-  };
-
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_TASHEELS_ROUTE}`);
     dispatch(getTasheels({}));
     setQueries({});
+    setValue("search", "");
+    setValue("type", "");
   };
-
-  (formik as unknown as TasheelsOptionsFormikTypes).values.type =
-    queries.type || "";
 
   return (
     <Paper
@@ -74,27 +54,12 @@ const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
             label={"Search Name, Person Code..."}
             name={"search"}
             type={"search"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button title={"Add Tasheel"} icon={<AddRounded />} />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Tasheel"} variant="tasheels" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
@@ -120,7 +85,8 @@ const TasheelsOptionsForm = ({ formik }: FormiksTypes) => {
           <Input
             label={"Filter By User Type"}
             name={"type"}
-            formik={formik}
+            register={register}
+            errors={errors}
             change={handleFilterByType}
             options={["owner", "officer", "customer", "employee"]}
             select

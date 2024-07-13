@@ -5,7 +5,7 @@ import { RiFileExcel2Fill } from "react-icons/ri";
 import Button from "../../components/Button/Button";
 import ProfileDetails from "../../components/ProfileDetails/ProfileDetails";
 import UnderDevelopment from "../../components/UnderDevelopment/UnderDevelopment";
-import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { TabsContext } from "../../contexts/TabsContext";
 import ActivitiesSection from "../../sections/ActivitiesSection";
 import EmployeesTable from "../../tables/EmployeesTable/EmployeesTable";
@@ -31,7 +31,7 @@ const CompanyProfile = ({
     handleOpenUploadEmployeesModal,
     handleOpenOwnerModal,
     handleOpenProModal,
-  } = useContext(FormsContext);
+  } = useContext(ModalsContext);
 
   return (
     <PrimaryTab

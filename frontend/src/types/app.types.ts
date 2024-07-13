@@ -16,6 +16,11 @@ interface ImportMetaEnv {
   VITE_EMPLOYEES_ROUTE: string;
   VITE_ADD_EMPLOYEE_ROUTE: string;
   VITE_TRANSACTIONS_ROUTE: string;
+  VITE_TRANSACTIONS_ALL_ROUTE: string;
+  VITE_TRANSACTIONS_PRE_ROUTE: string;
+  VITE_TRANSACTIONS_NEW_ROUTE: string;
+  VITE_TRANSACTIONS_RENEW_ROUTE: string;
+  VITE_UPLOAD_TRANSACTIONS_ROUTE: string;
   VITE_NATIONALITIES_ROUTE: string;
   VITE_LIMIT_PAGES: string;
   VITE_RECENT_LIMIT_PAGES: string;
@@ -62,7 +67,8 @@ type EntitiesType =
   | "tasheels"
   | "natwasals"
   | "eChannels"
-  | "persons";
+  | "persons"
+  | "activities";
 
 type EntityType =
   | "company"

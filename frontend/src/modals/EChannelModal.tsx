@@ -1,11 +1,13 @@
 import { Box, Modal } from "@mui/material";
 import { useContext } from "react";
 import { FormsContext } from "../contexts/FormsContext";
+import { ModalsContext } from "../contexts/ModalsContext";
 import Forms from "../forms/Forms";
 
 const EChannelModal = () => {
-  const { openEChannelModal, handleCloseEChannelModal, formType } =
-    useContext(FormsContext);
+  const { openEChannelModal, handleCloseEChannelModal } =
+    useContext(ModalsContext);
+  const { formType } = useContext(FormsContext);
   return (
     <Modal
       open={openEChannelModal}

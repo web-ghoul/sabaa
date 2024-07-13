@@ -21,7 +21,7 @@ const useUserSchema = () => {
           .required("Password is required"),
   });
 
-  const UserInitailValues = {
+  const UserInitialValues = {
     name: editableUserData?.name || "",
     email: editableUserData?.email || "",
     role: editableUserData?.role || "",
@@ -37,7 +37,7 @@ const useUserSchema = () => {
     }
   }, [editableUserData, setUserImage]);
 
-  return { UserSchema, UserInitailValues };
+  return { UserSchema, UserInitialValues };
 };
 
 export default useUserSchema;

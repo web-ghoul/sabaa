@@ -15,8 +15,6 @@ export const getEmployee = createAsyncThunk(
         },
       }
     );
-    console.log(res.data);
-
     return res.data;
   }
 );

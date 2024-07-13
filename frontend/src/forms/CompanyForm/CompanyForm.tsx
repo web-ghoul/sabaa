@@ -9,14 +9,21 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getOwners } from "../../store/ownersSlice";
 import { getPros } from "../../store/prosSlice";
 import { AppDispatch, RootState } from "../../store/store";
-import { CompanyFormTypes, FormiksTypes } from "../../types/forms.types";
+import { FormiksTypes } from "../../types/forms.types";
 
-const CompanyForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseCompanyModal, setCompanyImage } =
-    useContext(FormsContext);
+const CompanyForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
+  const { formsLoading, setCompanyImage } = useContext(FormsContext);
+  const { handleCloseCompanyModal } = useContext(ModalsContext);
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
   const { pros } = useSelector((state: RootState) => state.pros);
@@ -64,76 +71,94 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         <Box
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
-          <Input formik={formik} label={"English Name"} name={"name"} />
-          <Input formik={formik} label={"Arabic Name"} name={"nameAr"} />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
+            label={"English Name"}
+            name={"name"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Arabic Name"}
+            name={"nameAr"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             label={"MOL Code"}
             name={"molCode"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             select={true}
             name={"molCategory"}
             label={"MOL Category"}
             options={["cat1", "cat2", "cat3"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Establishment Type"}
             name={"establishmentType"}
             select
             options={["type 1", "type 2", "type 3"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"License Number"}
             name={"licenseNo"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"licenseExpiryDate"}
             label={"License Expire Date"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"License Issue Place"}
             name={"licenseIssuePlace"}
             select
             options={["place 1", "place 2", "place 3"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"licenseIssueDate"}
             label={"License Issue Date"}
           />
 
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Immg Card Number"}
             name={"immgCardNo"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"immgCardExpiry"}
             label={"IMMG Card Expire Date"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Tenancy Contract Value"}
             name={"tenancyContractValue"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             type={"date"}
             name={"tenancyContractExp"}
             label={"Tenancy Contract Expire Date"}
@@ -149,61 +174,79 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
         >
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Email"}
             name={"email"}
             type={"email"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Phone"}
             name={"phone"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Mobile Number"}
             name={"mobileNo"}
             type={"text"}
-            variant={"numeric"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"WhatsApp Number"}
             name={"whatsAppNo"}
             type={"text"}
-            variant={"numeric"}
           />
-          <Input formik={formik} label={"Address"} name={"address"} />
-          <Input formik={formik} label={"Country"} name={"country"} />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
+            label={"Address"}
+            name={"address"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Country"}
+            name={"country"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             select={true}
             name={"state"}
             label={"State"}
             options={["dubai", "abozabi"]}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Website"}
             name={"website"}
-            variant={"url"}
           />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             select={true}
             name={"status"}
             label={"Status"}
             options={["Active", "Inactive"]}
           />
-          <Input formik={formik} label={"TRN"} name={"trn"} variant="numeric" />
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
+            label={"TRN"}
+            name={"trn"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             label={"Zip Code"}
             name={"zipCode"}
             type={"text"}
-            variant={"numeric"}
           />
         </Box>
         <Box
@@ -213,7 +256,10 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             <AutoCompleteSearch
               label={"Owners"}
               options={owners}
-              formik={formik}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
               name={"ownerId"}
               multiple={true}
             />
@@ -222,13 +268,17 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             <AutoCompleteSearch
               label={"Officers"}
               options={pros}
-              formik={formik}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
               name={"proCode"}
               multiple={true}
             />
           )}
           <Input
-            formik={formik}
+            register={register}
+            errors={errors}
             label={"Remarks"}
             name={"remarks"}
             textarea={true}
@@ -236,8 +286,7 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
         </Box>
       </Box>
       <Divider />
-      {(formik.values as unknown as CompanyFormTypes).state.toLowerCase() !==
-      "dubai" ? (
+      {getValues("state").toLowerCase() !== "dubai" ? (
         <Box className={`grid justify-stretch items-center gap-4`}>
           <Typography variant="h4" className={`!font-[700]`}>
             E-Channel Details
@@ -246,25 +295,29 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
             className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
           >
             <Input
-              formik={formik}
+              register={register}
+              errors={errors}
               type={"date"}
               name={"echannelExpiryDate"}
               label={"E-Channel Expire Date"}
             />
             <Input
-              formik={formik}
+              register={register}
+              errors={errors}
               label={"Username"}
               name={"userName"}
               type={"text"}
             />
             <Input
-              formik={formik}
+              register={register}
+              errors={errors}
               label={"Password"}
               type={"password"}
               name={"password"}
             />
             <Input
-              formik={formik}
+              register={register}
+              errors={errors}
               label={"E-Channel Remarks"}
               type={"text"}
               name={"echannelRemarks"}
@@ -283,13 +336,15 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
             >
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Username"}
                 name={"userName"}
                 type={"text"}
               />
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Password"}
                 type={"password"}
                 name={"password"}
@@ -299,19 +354,22 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
             >
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Noqodi Wallet"}
                 name={"noqodiWalet"}
                 type={"text"}
               />
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Noqodi Pass"}
                 name={"noqodiPass"}
                 type={"text"}
               />
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Pin Token"}
                 name={"pinToken"}
                 type={"text"}
@@ -321,19 +379,22 @@ const CompanyForm = ({ formik, type }: FormiksTypes) => {
               className={`grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-stretch items-start gap-6 md:gap-5 sm:!gap-4`}
             >
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Noqodi New"}
                 name={"noqodiNew"}
                 type={"text"}
               />
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Noqodi Reg"}
                 name={"noqodiReg"}
                 type={"text"}
               />
               <Input
-                formik={formik}
+                register={register}
+                errors={errors}
                 label={"Noqodi NPass"}
                 name={"noqodiNPass"}
                 type={"text"}

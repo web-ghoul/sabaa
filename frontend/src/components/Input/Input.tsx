@@ -1,13 +1,25 @@
 import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
-import { MouseEvent, useMemo, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { FieldErrors, FieldValues, Path } from "react-hook-form";
 import { PrimaryTextField } from "../../mui/fields/PrimaryTextField";
 import { InputTypes } from "../../types/components.types";
-import { AllFormiksTypes, FormiksTypes } from "../../types/forms.types";
+
+function getError<T extends FieldValues>(
+  errors: FieldErrors<T>,
+  name: Path<T>
+): string | undefined {
+  const error = errors[name];
+  if (error && typeof error === "object" && "message" in error) {
+    return (error as { message?: string }).message;
+  }
+  return undefined;
+}
 
 const Input = ({
-  formik,
+  register,
   name,
+  errors,
   label,
   type,
   select,
@@ -15,191 +27,137 @@ const Input = ({
   change,
   ac,
   textarea,
-  variant,
   disabled,
-}: InputTypes & FormiksTypes) => {
+}: InputTypes) => {
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+  const error = Boolean(getError(errors, name));
+  const helperText = getError(errors, name);
 
-  const error =
-    formik.touched[name as keyof AllFormiksTypes] &&
-    Boolean(formik.errors[name as keyof AllFormiksTypes]);
-  const helperText = error
-    ? (formik.errors[name as keyof AllFormiksTypes] as string)
-    : undefined;
-
-  return useMemo(
-    () => (
-      <Box
-        className={`grid justify-stretch w-full items-center gap-2 md:gap-1`}
-      >
-        <Typography variant="h6" className={`!font-[400]`}>
-          {type === "search" ? "Search" : label}
-        </Typography>
-        {select ? (
-          <PrimaryTextField
-            disabled={disabled}
-            fullWidth
-            id={name}
-            name={name}
-            select
-            SelectProps={{
-              native: true,
-              "aria-label": label,
-            }}
-            sx={{
-              "& input , & select": {
-                textFillColor: (theme) =>
-                  `${
-                    disabled && formik.values[name as keyof AllFormiksTypes]
-                      ? theme.palette.primary.main
-                      : "#333"
-                  } !important`,
-              },
-            }}
-            value={formik.values[name as keyof AllFormiksTypes]}
-            onChange={(e) => {
-              if (change) {
-                change(e.target.value);
-              }
-              formik.handleChange(e);
-            }}
-            onBlur={formik.handleBlur}
-            error={error}
-            helperText={helperText}
-          >
-            <option value={""}>{`Select ${label}`}</option>
-            {options &&
-              options.map((option: string, i: number) => (
-                <option value={option} key={i}>
-                  {option}
-                </option>
-              ))}
-          </PrimaryTextField>
-        ) : textarea ? (
-          <Box
-            component={"textarea"}
-            sx={{
-              padding: "8px !important",
-              fontSize: "15px",
-              minWidth: "300px !important",
-              minHeight: "40px !important",
-              transition: "ease-in-out all 0.3",
-              backgroundColor: (theme) => theme.palette.common.white,
-              boxShadow: (theme) => theme.shadows["2"],
-              borderRadius: "4px",
-              border: "1px solid #ddd",
-              "&:placeholder": {
-                fontSize: "16px",
-                lineHeight: "1 !important",
-                backgroundColor: "transparent !important",
-              },
-            }}
-            id={name}
-            name={name}
-            defaultValue={
-              formik.values[name as keyof AllFormiksTypes] as string
+  return (
+    <Box className={`grid justify-stretch w-full items-center gap-2 md:gap-1`}>
+      <Typography variant="h6" className={`!font-[400]`}>
+        {type === "search" ? "Search" : label}
+      </Typography>
+      {select ? (
+        <PrimaryTextField
+          disabled={disabled}
+          fullWidth
+          select
+          SelectProps={{
+            native: true,
+            "aria-label": label,
+          }}
+          {...register(name)}
+          onChange={(
+            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => {
+            if (change) {
+              change(e.target.value);
             }
-            onChange={(e) => {
-              const val = (e.target as HTMLTextAreaElement).value;
-              if (change) {
-                change(val);
-              }
-              formik.handleChange(e);
-            }}
-            placeholder={`Enter ${label}`}
-          />
-        ) : (
-          <PrimaryTextField
-            disabled={disabled}
-            fullWidth
-            id={name}
-            sx={{
-              "& input , & select": {
-                textFillColor: (theme) =>
-                  `${
-                    disabled && formik.values[name as keyof AllFormiksTypes]
-                      ? theme.palette.primary.main
-                      : "#333"
-                  } !important`,
-              },
-            }}
-            type={
-              type
-                ? type === "password"
-                  ? showPassword
-                    ? "text"
-                    : "password"
-                  : type
-                : "text"
+          }}
+          error={error}
+          helperText={helperText}
+        >
+          <option value={""}>{`Select ${label}`}</option>
+          {options &&
+            options.map((option: string, i: number) => (
+              <option value={option} key={i}>
+                {option}
+              </option>
+            ))}
+        </PrimaryTextField>
+      ) : textarea ? (
+        <Box
+          component={"textarea"}
+          sx={{
+            padding: "8px !important",
+            fontSize: "15px",
+            minWidth: "300px !important",
+            minHeight: "40px !important",
+            transition: "ease-in-out all 0.3",
+            backgroundColor: (theme) => theme.palette.common.white,
+            boxShadow: (theme) => theme.shadows["2"],
+            borderRadius: "4px",
+            border: "1px solid #ddd",
+            "&:placeholder": {
+              fontSize: "16px",
+              lineHeight: "1 !important",
+              backgroundColor: "transparent !important",
+            },
+            "&:not(:placeholder-shown)": {
+              fontWeight: "600",
+            },
+          }}
+          {...register(name)}
+          onChange={(
+            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => {
+            if (change) {
+              change(e.target.value);
             }
-            name={name}
-            InputProps={
-              type === "password"
-                ? {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? (
-                            <VisibilityOffRounded />
-                          ) : (
-                            <VisibilityRounded />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }
-                : {}
+          }}
+          placeholder={`Enter ${label}`}
+        />
+      ) : (
+        <PrimaryTextField
+          disabled={disabled}
+          fullWidth
+          {...register(name)}
+          type={
+            type
+              ? type === "password"
+                ? showPassword
+                  ? "text"
+                  : "password"
+                : type
+              : "text"
+          }
+          InputProps={
+            type === "password"
+              ? {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <VisibilityOffRounded />
+                        ) : (
+                          <VisibilityRounded />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }
+              : {}
+          }
+          placeholder={
+            type !== "date"
+              ? type === "search"
+                ? label
+                : `Enter ${label}`
+              : ""
+          }
+          onChange={(
+            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+          ) => {
+            if (change) {
+              change(e.target.value);
             }
-            placeholder={
-              type !== "date"
-                ? type === "search"
-                  ? label
-                  : `Enter ${label}`
-                : ""
-            }
-            value={formik.values[name as keyof AllFormiksTypes]}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (change) {
-                change(val);
-              }
-              formik.handleChange(e);
-            }}
-            onBlur={formik.handleBlur}
-            error={error}
-            helperText={helperText}
-            autoComplete={ac}
-          />
-        )}
-      </Box>
-    ),
-    [
-      ac,
-      change,
-      disabled,
-      error,
-      formik,
-      helperText,
-      label,
-      name,
-      options,
-      select,
-      showPassword,
-      textarea,
-      type,
-      variant,
-    ]
+          }}
+          error={error}
+          helperText={helperText}
+          autoComplete={ac}
+        />
+      )}
+    </Box>
   );
 };
 

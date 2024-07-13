@@ -251,7 +251,7 @@ Notes (() form Required , <> For View on Table , [] For Options of Select , {} f
       10- Passport Expire Date (*) <>
       11- Job (*) <>
       12- UID Number () <>
-      13- Emirats ID Number () <>
+      13- Emirates ID Number () <>
       14- Status [inProcess , Approved , Rejected , Nawakes] {Set Automatice When Add New Work Permit Waiting Labour Card} () <.>
       15- Status Date  () <>
       16- Remarks
@@ -520,3 +520,82 @@ Meeting Track:
 1- Handle all Sample Files
 2- Talk about Convert input to text label
 3- 
+
+
+
+business deve
+plans
+marketing
+consultant
+مستحضرات تجميل
+
+
+header
+hero
+about us
+services
+vision
+products
+partners
+footer
+
+blogs (Open Modal)
+
+https://www.bigmove.agency/
+
+
+
+
+Reports :
+1- Employee List
+  1- Search By (Company Name and Mol Code [Auto Complete]) , 
+  in View of Employee Show Modal Include info of 
+  
+  2- PDF For Work Permit Expire , Cancel , Active
+
+2- Owner Company
+  1- Search By Owner Name , Person Code , Emirates Id , UI Number
+
+  2- PDF for Company Details , Companies list
+
+3- Company Transaction
+  1- Search By Company Name , Mol Code
+
+  2- PDF for All Data
+
+4- Employee details
+  1 - Search By Employee Name , Emirates Id, Person Code , UId Number
+
+  2- PDF for Employee For Details  , PDF for all transaction for employee
+
+
+settings : 
+
+1- Customize 
+  1- Company name 
+  2- Logo
+  3- Mobile
+  4- Website Link
+  5- Official Email
+
+2- Alert 
+  1- Passport Exp
+  2- WP Exp
+  3- Visit Visa Exp
+  4- CS Date
+  5- Twajeeh 
+  6- LC Exp
+  7- Residence Exp
+
+
+3- Permissions
+
+4- Select 
+  1- Mol Category
+  2- Establishment Type
+  3- State
+  4- License Issue Place
+  5- Status of Employee
+ 
+
+  

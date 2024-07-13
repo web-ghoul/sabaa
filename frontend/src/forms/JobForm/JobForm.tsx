@@ -5,10 +5,12 @@ import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const JobForm = ({ formik, type }: FormiksTypes) => {
-  const { formsLoading, handleCloseJobModal } = useContext(FormsContext);
+const JobForm = ({ register, errors, type }: FormiksTypes) => {
+  const { formsLoading } = useContext(FormsContext);
+  const { handleCloseJobModal } = useContext(ModalsContext);
   return (
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4`}
@@ -22,22 +24,22 @@ const JobForm = ({ formik, type }: FormiksTypes) => {
       )}
       <Box className={`grid justify-stretch items-start gap-6 grid-cols-3`}>
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"Job Title"}
           name={"jobTitle"}
-          variant={"english"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           label={"ENSCO Code"}
           name={"ENSCOCode"}
           type={"text"}
-          variant={"numeric"}
         />
         <Input
-          formik={formik}
+          register={register}
+          errors={errors}
           type={"text"}
-          variant={"numeric"}
           label={"MOHRE Code"}
           name={"MOHRE"}
         />

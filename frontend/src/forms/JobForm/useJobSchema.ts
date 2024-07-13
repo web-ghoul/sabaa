@@ -12,12 +12,12 @@ const useJobSchema = () => {
     MOHRE: yup.string().required("MOHRE Code is required"),
   });
 
-  const JobInitailValues = {
+  const JobInitialValues = {
     jobTitle: editableJobData?.jobTitle || "",
     ENSCOCode: editableJobData?.ENSCOCode || "",
     MOHRE: editableJobData?.MOHRE || "",
   };
-  return { JobSchema, JobInitailValues };
+  return { JobSchema, JobInitialValues };
 };
 
 export default useJobSchema;

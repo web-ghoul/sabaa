@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
-import { CreateTasheelDto } from './dto/create-tasheel.dto';
-import { UpdateTasheelDto } from './dto/update-tasheel.dto';
-import { Model } from 'mongoose';
-import { Tasaheel } from 'schemas/tasaheel.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Employee } from 'schemas/employee.schema';
-import { Owner } from 'schemas/owner.schema';
-import { Company } from 'schemas/company.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { Model } from 'mongoose';
+import { Company } from 'schemas/company.schema';
+import { Employee } from 'schemas/employee.schema';
+import { Owner } from 'schemas/owner.schema';
+import { Tasaheel } from 'schemas/tasaheel.schema';
+import { CreateTasheelDto } from './dto/create-tasheel.dto';
+import { UpdateTasheelDto } from './dto/update-tasheel.dto';
 
 @Injectable()
 export class TasheelsService {
