@@ -11,10 +11,11 @@ import { CreateOtpDto, resetOtpDto, resetPasswordDto } from './dtos/createOtp.dt
 import { MailsService } from 'src/mails/mails.service';
 import { ResetOtp } from 'schemas/resetOtp.schema';
 import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
+import { Permission } from 'schemas/permissions.schema';
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectModel (User.name) private userModel: Model<User>, private jwtService: JwtService,
+    constructor(@InjectModel (User.name) private userModel: Model<User>,@InjectModel (Permission.name) private permissionModel: Model<Permission>, private jwtService: JwtService,
     private mailService: MailsService,
     @InjectModel (ResetOtp.name) private resetOtpModel: Model<ResetOtp>,
     private verificationCodeGenerator: VerificationCodeGenerator
@@ -28,12 +29,14 @@ export class AuthService {
           const isPasswordValid = await bcrypt.compare(loginData.password, user.password);
           if (isPasswordValid) {
             // Passwords match, return user without password
+            const permissionData = await this.permissionModel.findOne({name: user.role})
             const payload = { id: user._id, name: user.name, role: user.role };
             return {
                 message : "login successfully",
                 token: await this.jwtService.signAsync(payload),
                 userId: user._id,
-                image: user.avatar
+                image: user.avatar,
+                permission: permissionData.permissions
             };
           }
         }

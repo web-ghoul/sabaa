@@ -29,6 +29,7 @@
     "@nestjs/mapped-types": "^2.0.5",
     "@nestjs/mongoose": "^10.0.4",
     "@nestjs/platform-express": "^10.3.4",
+    "@nestjs/schedule": "^4.1.0",
     "@nestjs/swagger": "^7.3.0",
     "@nestjs/throttler": "^5.1.2",
     "@types/mongoose-delete": "^1.0.4",

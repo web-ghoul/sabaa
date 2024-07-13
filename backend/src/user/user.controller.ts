@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Res, UploadedFile, UseGuards, UseInterceptors, ValidationPipe} from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Res, UploadedFile, UseInterceptors, ValidationPipe} from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserService } from './user.service';
 import { ObjectId } from 'mongoose';
-import { AuthGuard } from 'src/auth/auth.guard';
+
 import { Express } from 'express'
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from 'src/auth/roles.decorator';
@@ -31,7 +31,7 @@ export class UserController {
     return this.userService.listUsers(limit, page, search,sort,status,role,deleted);
   }
 
-  @UseGuards(AuthGuard)
+
   @Post()
   @UseInterceptors(LogInterceptor)
   @ActivityLog({action: "create"})
@@ -44,7 +44,7 @@ export class UserController {
     return this.userService.createUser(userData,file,user);
   }
 
-  @UseGuards(AuthGuard)
+
   @Put(":id")
   @UseInterceptors(LogInterceptor)
   @ActivityLog({action: "update"})
@@ -54,7 +54,7 @@ export class UserController {
     return this.userService.updateUser(userData,file,id);
   }
 
-  @UseGuards(AuthGuard)
+
   @Get("counters")
   userCounters(){
     return this.userService.userCounters();
@@ -66,13 +66,13 @@ export class UserController {
   }
 
   @Roles(Role.Admin)
-  @UseGuards(AuthGuard)
+
   @Get(":id")
   displayUser(@Param("id") id: ObjectId){
     return this.userService.displayUser(id);
   }
 
-  @UseGuards(AuthGuard)
+
   @Delete(":id")
   @UseInterceptors(LogInterceptor)
   @ActivityLog({action: "delete"})

@@ -128,12 +128,8 @@ export class TransactionsService {
   }
 
   update(id: string, updateTransactionDto: UpdateTransactionDto) {
-    //not handeled yet
-    /*
-    1- WPStatus change when changing to lc 
-    2- 
-    */
-    return `This action updates a #${id} transaction`;
+    return this.transactionModel.updateOne({ _id: id }, updateTransactionDto);
+    
   }
 
   async remove(id: string) {

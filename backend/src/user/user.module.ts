@@ -3,14 +3,14 @@ import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'schemas/user.schema';
 import { UserService } from './user.service';
-import { AuthModule } from 'src/auth/auth.module';
+
 import { JwtModule } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
 @Module({
-  imports: [AuthModule,MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]) ,JwtModule.registerAsync({
+  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]) ,JwtModule.registerAsync({
     useFactory: async () => ({
       secret: process.env.Secret_Password,
       signOptions: { expiresIn: '1d' },

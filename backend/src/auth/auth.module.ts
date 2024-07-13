@@ -9,18 +9,21 @@ import * as dotenv from 'dotenv';
 import { MailsService } from 'src/mails/mails.service';
 import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
 import { ResetOtp, ResetOtpSchema } from 'schemas/resetOtp.schema';
+import { Permission, PermissionSchema } from 'schemas/permissions.schema';
+import { PermissionModule } from 'src/permission/permission.module';
+import { PermissionService } from 'src/permission/permission.service';
 
 dotenv.config();
 @Module({
-  imports:[MongooseModule.forFeature([{name:User.name,schema:UserSchema},{name:ResetOtp.name,schema:ResetOtpSchema}]),
+  imports:[MongooseModule.forFeature([{name:User.name,schema:UserSchema},{name:Permission.name,schema:PermissionSchema},{name:ResetOtp.name,schema:ResetOtpSchema}]),
   JwtModule.register({
     global: true,
     secret : process.env.Secret_Password,
     signOptions: { expiresIn: '1d' },
-  })
+  }), PermissionModule
 ],
   controllers: [AuthController],
-  providers: [AuthService,AuthGuard,MailsService,VerificationCodeGenerator],
+  providers: [AuthService,AuthGuard,MailsService,VerificationCodeGenerator,PermissionService],
   exports:[AuthGuard]
 })
 export class AuthModule {}

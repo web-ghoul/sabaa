@@ -10,7 +10,7 @@ import * as path from 'path';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { ActivityLogSchema } from 'schemas/activityLog.schema';
-import { EmployeePdfGenerator } from 'src/utils/PdfMaker/EmployeePdfMaker';
+import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { EChannelSchema } from 'schemas/eChannel.schema';
 import { Tasaheel, TasaheelSchema } from 'schemas/tasaheel.schema';
 import { Natwasal, NatwasalSchema } from 'schemas/natwasal.schema';
