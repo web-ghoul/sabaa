@@ -28,6 +28,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { AlertsModule } from './alerts/alerts.module';
 import { ReportsModule } from './reports/reports.module';
 import { PermissionModule } from './permission/permission.module';
+import { DynamicSelectsModule } from './dynamic-selects/dynamic-selects.module';
 
 dotenv.config();
 @Module({
@@ -37,7 +38,7 @@ dotenv.config();
   },
   
 ]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule, TransactionsModule, AlertsModule, ReportsModule, PermissionModule],
+MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule, TransactionsModule, AlertsModule, ReportsModule, PermissionModule, DynamicSelectsModule],
   controllers: [AppController],
   providers: [AppService,
     {
