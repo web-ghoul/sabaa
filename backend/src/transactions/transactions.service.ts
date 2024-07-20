@@ -18,20 +18,20 @@ export class TransactionsService {
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     try {
-      const empData = await this.employeeModel.findById(createTransactionDto.employeeId);
+      if(createTransactionDto.employeeId)
+      {
+        return await this.transactionModel.create(createTransactionDto);
+      }
 
-      if(!empData)
-        {
-          const newObj = {
-            name: createTransactionDto.employeeName,
-            nationality : createTransactionDto.nationality,
-            dob : createTransactionDto.dob,
-            gender: createTransactionDto.gender
-          }
-          const newEmp = await this.employeeModel.create(newObj);
-          createTransactionDto.employeeId = newEmp._id as any;
-        }
-      return await this.transactionModel.create(createTransactionDto);
+      const newObj = {
+        name: createTransactionDto.employeeName,
+        nationality : createTransactionDto.nationality,
+        dob : createTransactionDto.dob,
+        gender: createTransactionDto.gender
+      }
+      const newEmp = await this.employeeModel.create(newObj);
+      createTransactionDto.employeeId = newEmp._id as any;
+        
 
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -108,15 +108,17 @@ export class TransactionsService {
       }
     }
 
-    const skip = (page - 1) * limit;
+    
 
     const fieldsToSelect = selectFields && selectFields.length ? selectFields.join(' ') : '';
+
+   
 
     const sortBy = {};
 
     return this.transactionModel
       .find(query)
-      .skip(skip)
+      .skip(page*limit)
       .limit(limit)
       .select(fieldsToSelect)
       .sort(sortBy)
@@ -216,7 +218,6 @@ export class TransactionsService {
         medicalDate: transaction.medicalDate,
         changeStatusDate: transaction.changeStatusDate,
         status: transaction.status,
-        wpStatus: transaction.wpStatus,
         statusDate: transaction.statusDate,
         cardType: transaction.cardType,
         salary: transaction.salary,

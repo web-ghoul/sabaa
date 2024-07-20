@@ -14,7 +14,7 @@ import { Response } from 'express';
 
 ApiTags('owner')
 
-@Controller('owner')
+@Controller(['owner', 'pro', 'customer'])
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
