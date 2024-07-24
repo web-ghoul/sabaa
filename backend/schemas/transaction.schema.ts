@@ -1,10 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {HydratedDocument } from 'mongoose';
+import {HydratedDocument, ObjectId } from 'mongoose';
 
 export type TransactionDocument = HydratedDocument<Transaction>;
 
 @Schema({ timestamps: true })
 export class Transaction{
+
+  _id: ObjectId;
 
   @Prop({ type: String })
   transactionNo: string;
@@ -90,9 +92,6 @@ export class Transaction{
 
   @Prop({default: "In Process"})
   status: string;
-
-  @Prop()
-  wpStatus: string;
 
   @Prop({ type: Date })
   statusDate: Date;

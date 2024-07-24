@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsString, IsDate, IsBoolean, IsOptional, IsNumber, IsMongoId } from 'class-validator';
 import { ObjectId } from 'mongoose';
 
@@ -47,6 +48,7 @@ export class CreateTransactionDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   passportExpiry?: Date;
 
   @IsOptional()

@@ -10,7 +10,7 @@ import { Response } from 'express';
 
 ApiTags('transactions')
 
-@Controller('transaction')
+@Controller(['work-permit', 'approved-work-permit', 'new-lc', 'renew-lc', 'transaction'])
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
@@ -18,7 +18,7 @@ export class TransactionsController {
   @UseInterceptors(LogInterceptor)
   @ActivityLog({action: "create"})
   @ApiBody({ type: CreateTransactionDto })
-  create(@Body() createTransactionDto: CreateTransactionDto) {
+  create(@Body() createTransactionDto: any) {
     return this.transactionsService.create(createTransactionDto);
   }
 

@@ -5,6 +5,7 @@ export type PermissionDocument = HydratedDocument<Permission>;
 
 @Schema()
 class PermissionsObject {
+  
   @Prop({ type: Boolean, default: false })
   read: boolean;
 
@@ -16,6 +17,7 @@ class PermissionsObject {
 
   @Prop({ type: Boolean, default: false })
   delete: boolean;
+
 }
 
 const PermissionsObjectSchema = SchemaFactory.createForClass(PermissionsObject);

@@ -80,6 +80,7 @@ export class EmployeesService {
     deleted: boolean = false,
   ) {
     try {
+      
       const projection: any = {};
       if (fields && fields.length > 0) {
         fields.forEach((field) => {
@@ -103,6 +104,7 @@ export class EmployeesService {
           { name: { $regex: new RegExp(search, 'i') } },
           { companyName: { $in: [new RegExp(search, 'i')] } },
           { workPermitNumber: { $regex: new RegExp(search, 'i') } },
+          { personCode: { $regex: new RegExp(search, 'i') } },
         ],
       };
 
@@ -115,7 +117,9 @@ export class EmployeesService {
       gender != '' ? (query['gender'] = gender) : undefined;
 
       // console.log(query);
+      
 
+      
       return this.employeeModel
         .find(query)
         .select(projection)
