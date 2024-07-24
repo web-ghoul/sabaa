@@ -35,15 +35,17 @@ import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
 import ProForm from "./ProForm/ProForm";
 import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import RoleForm from "./RoleForm/RoleForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
 import ApprovalWorkPermitForm from "./TransactionsForm/ApprovalWorkPermitForm";
 import TransactionForm from "./TransactionsForm/TransactionForm";
+import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
-const Forms = ({ type, index }: FormsTypes) => {
+const Forms = ({ type, index ,tType}: FormsTypes) => {
   const { register, handleSubmitForm, errors, setValue, getValues } =
     useSubmitForm(type);
 
@@ -74,22 +76,46 @@ const Forms = ({ type, index }: FormsTypes) => {
       )}
       {/* User */}
 
-      {/* Transaction */}
-      {type === "approval" && (
-        <ApprovalWorkPermitForm
+      {/* Role */}
+      {(type === "addRole" || type === "editRole") && (
+        <RoleForm
           register={register}
           errors={errors}
           setValue={setValue}
           getValues={getValues}
+          type={type}
         />
       )}
-      {(type === "addPreTransaction" || type === "editPreTransaction") && (
+      {/* Role */}
+
+      {/* Transaction */}
+      {type === "transactionsOptions" && (
+        <TransactionsOptionsForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          tType={tType}
+        />
+      )}
+      {(type === "addPreTransaction" ||
+        type === "editPreTransaction" ||
+        type === "newTransaction" ||
+        type === "renewTransaction") && (
         <TransactionForm
           register={register}
           errors={errors}
           setValue={setValue}
           getValues={getValues}
           type={type}
+        />
+      )}
+      {type === "approvalTransaction" && (
+        <ApprovalWorkPermitForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
         />
       )}
       {/* Transaction */}

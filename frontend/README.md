@@ -289,14 +289,14 @@ Notes (() form Required , <> For View on Table , [] For Options of Select , {} f
     3- (ReNew LC) Search By ( Transaction Number , Employee Name , Company Name )
 
   3- Sort 
-    1- (Work Permit) Sort By ( Work Permit Expire Date , Status Date)
+    1- (Work Permit) Sort By ( Work Permit Expire Date , Change Status Date)
     2- (New LC) Sort By ( LC Expire Date , Residence Expire Date , Change Status Date)
     3- (ReNew LC) Sort By ( LC Expire Date , Residence Expire Date , Change Status Date)
 
   4- Filter
     1- (Work Permit) Filter By ( Transaction Status , Work Permit Expire Date )
-    2- (New LC) Filter By ( Transaction Status , Expire Date , Resdence Date )
-    3- (ReNew LC) Filter By ( Transaction Status , Expire Date , Resdence Date )
+    2- (New LC) Filter By ( Transaction Status , Expire Date , Residence Date )
+    3- (ReNew LC) Filter By ( Transaction Status , Expire Date , Residence Date )
 
 2- PRO (Same Of Owner)
 
@@ -327,7 +327,7 @@ Notes (() form Required , <> For View on Table , [] For Options of Select , {} f
 
   2- Search By (Employee Name , Company Name , UID , Work Permit Number)
 
-  3- Sort By (LC Expie Date , Resdence Expire Date)
+  3- Sort By (LC Expire Date , Residence Expire Date)
 
   4- Filter By (nationality , Card Type , Status , Gender)
 
@@ -586,7 +586,6 @@ settings :
   5- Twajeeh 
   6- LC Exp
   7- Residence Exp
-
 
 3- Permissions
 

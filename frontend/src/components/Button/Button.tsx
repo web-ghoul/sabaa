@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
@@ -8,7 +8,15 @@ import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { PrimaryIconButton } from "../../mui/buttons/PrimaryIconButton";
 import { ButtonTypes } from "../../types/components.types";
 
-const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
+const Button = ({
+  title,
+  icon,
+  bg,
+  variant,
+  handling,
+  type,
+  loading,
+}: ButtonTypes) => {
   const classes = `${
     bg === "excel"
       ? `!bg-excel hover:!bg-green-950`
@@ -21,6 +29,7 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     setEditableEChannelData,
     setEditableTasheelData,
     setEditableNatwasalData,
+    setEditableTransactionData,
   } = useContext(FormsContext);
   const {
     handleOpenUserModal,
@@ -31,6 +40,7 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     handleOpenEChannelModal,
     handleOpenTasheelModal,
     handleOpenNatwasalModal,
+    handleOpenTransactionModal,
   } = useContext(ModalsContext);
   const navigate = useNavigate();
 
@@ -65,6 +75,9 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     } else if (newTitle === "add natwasal") {
       setEditableNatwasalData(null);
       handleOpenNatwasalModal("addNatwasal");
+    } else if (newTitle === "add transaction") {
+      setEditableTransactionData(null);
+      handleOpenTransactionModal("addPreTransaction");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");
@@ -78,17 +91,30 @@ const Button = ({ title, icon, bg, variant, handling, type }: ButtonTypes) => {
     }
   };
 
+  const loadingIcon = (
+    <CircularProgress sx={{ color: (theme) => theme.palette.common.white }} />
+  );
+
   return title ? (
     <PrimaryButton
       type={type || "button"}
       onClick={handling || handleClick}
       className={classes}
+      loadingPosition={"center"}
+      loading={loading}
+      loadingIndicator={loadingIcon}
     >
       {icon}
       <Typography variant="button">{title}</Typography>
     </PrimaryButton>
   ) : (
-    <PrimaryIconButton onClick={handling} className={classes}>
+    <PrimaryIconButton
+      onClick={handling}
+      loadingPosition={"center"}
+      loading={loading}
+      loadingIndicator={loadingIcon}
+      className={classes}
+    >
       {icon}
     </PrimaryIconButton>
   );

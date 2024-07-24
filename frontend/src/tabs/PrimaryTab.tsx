@@ -36,6 +36,8 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
     setProTabsValue,
     setEmployeeTabsValue,
     setCustomerTabsValue,
+    setSettingsTabsValue,
+    settingsTabsValue,
   } = useContext(TabsContext);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -51,6 +53,8 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
       setEmployeeTabsValue(newValue);
     } else if (variant === "customer") {
       setCustomerTabsValue(newValue);
+    } else if (variant === "settings") {
+      setSettingsTabsValue(newValue);
     }
   };
 
@@ -74,7 +78,9 @@ const PrimaryTab = ({ variant, tabsTitles, children }: PrimaryTabTypes) => {
               ? proTabsValue
               : variant === "employee"
               ? employeeTabsValue
-              : variant === "customer" && customerTabsValue
+              : variant === "customer"
+              ? customerTabsValue
+              : variant === "settings" && settingsTabsValue
           }
           orientation={"vertical"}
           onChange={handleChange}

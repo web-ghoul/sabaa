@@ -92,6 +92,7 @@ const NationalitiesTable = ({
       count={count}
       variant={"nationalities"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

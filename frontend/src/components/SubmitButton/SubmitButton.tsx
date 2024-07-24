@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { SubmitButtonTypes } from "../../types/components.types";
 
-const SubmitButton = ({ loading, children }: SubmitButtonTypes) => {
+const SubmitButton = ({ loading, children ,handling}: SubmitButtonTypes) => {
   const loadingIcon = (
     <CircularProgress sx={{ color: (theme) => theme.palette.common.white }} />
   );
@@ -15,6 +15,7 @@ const SubmitButton = ({ loading, children }: SubmitButtonTypes) => {
       loadingIndicator={loadingIcon}
       type={"submit"}
       sx={{ width: "fit-content" }}
+      onClick={handling}
     >
       {children}
     </PrimaryButton>

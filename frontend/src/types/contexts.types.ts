@@ -9,6 +9,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  RoleTypes,
   SponsorTypes,
   TasheelTypes,
   TransactionTypes,
@@ -192,6 +193,8 @@ interface FormsContextTypes {
   setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
   editableTransactionData: TransactionTypes | null;
   setEditableTransactionData: (transaction: TransactionTypes | null) => void;
+  editableRoleData: RoleTypes | null;
+  setEditableRoleData: (role: RoleTypes | null) => void;
 }
 
 interface ModalsContextTypes {
@@ -262,6 +265,9 @@ interface ModalsContextTypes {
   openApprovalWorkPermitModal: boolean;
   handleOpenApprovalWorkPermitModal: () => void;
   handleCloseApprovalWorkPermitModal: () => void;
+  openRoleModal: boolean;
+  handleOpenRoleModal: (string: string) => void;
+  handleCloseRoleModal: () => void;
 }
 
 interface TabsContextProps {
@@ -277,6 +283,8 @@ interface TabsContextProps {
   setCustomerTabsValue: (value: number) => void;
   companyTabsValue: number;
   setCompanyTabsValue: (value: number) => void;
+  settingsTabsValue: number;
+  setSettingsTabsValue: (value: number) => void;
 }
 
 interface OwnersSheetTypes {

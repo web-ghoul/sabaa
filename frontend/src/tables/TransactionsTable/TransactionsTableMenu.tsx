@@ -13,7 +13,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const TransactionsTableMenu = () => {
+const TransactionsTableMenu = ({ type }: { type: string }) => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -70,31 +70,105 @@ const TransactionsTableMenu = () => {
         horizontal: "right",
       }}
     >
-      {!sheet && (
-        <TableMenuItem
-          icon={<VisibilityRounded />}
-          title={"View"}
-          handling={handleView}
-        />
-      )}
-      {!sheet && (
-        <TableMenuItem
-          icon={<JoinFullRounded />}
-          title={"Link"}
-          handling={handleLink}
-        />
+      {type === "all" && (
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+          <TableMenuItem
+            icon={<EditRounded />}
+            title={"Edit"}
+            handling={handleEdit}
+          />
+          <TableMenuItem
+            icon={<DeleteRounded />}
+            title={"Delete"}
+            handling={handleDelete}
+          />
+        </>
       )}
 
-      <TableMenuItem
-        icon={<EditRounded />}
-        title={"Edit"}
-        handling={handleEdit}
-      />
-      <TableMenuItem
-        icon={<DeleteRounded />}
-        title={"Delete"}
-        handling={handleDelete}
-      />
+      {type === "pre" && (
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+          <TableMenuItem
+            icon={<EditRounded />}
+            title={"Edit"}
+            handling={handleEdit}
+          />
+          <TableMenuItem
+            icon={<DeleteRounded />}
+            title={"Delete"}
+            handling={handleDelete}
+          />
+        </>
+      )}
+
+      {type === "new" && (
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+          <TableMenuItem
+            icon={<EditRounded />}
+            title={"Edit"}
+            handling={handleEdit}
+          />
+          <TableMenuItem
+            icon={<DeleteRounded />}
+            title={"Delete"}
+            handling={handleDelete}
+          />
+        </>
+      )}
+
+      {type === "renew" && (
+        <>
+          <TableMenuItem
+            icon={<VisibilityRounded />}
+            title={"View"}
+            handling={handleView}
+          />
+          <TableMenuItem
+            icon={<JoinFullRounded />}
+            title={"Link"}
+            handling={handleLink}
+          />
+          <TableMenuItem
+            icon={<EditRounded />}
+            title={"Edit"}
+            handling={handleEdit}
+          />
+          <TableMenuItem
+            icon={<DeleteRounded />}
+            title={"Delete"}
+            handling={handleDelete}
+          />
+        </>
+      )}
     </Menu>
   );
 };

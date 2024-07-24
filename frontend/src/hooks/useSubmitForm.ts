@@ -29,6 +29,14 @@ import useUsersOptionsSchema from "../forms/UsersOptionsForm/useUsersOptionsSche
 import { AllFormsTypes } from "../types/forms.types";
 import useSubmitFunction from "./useSubmitFunction";
 import useDownloadExcelSchema from "../forms/DownloadExcelForm/useDownloadExcelSchema";
+import useTransactionsOptionsSchema from "../forms/TransactionsOptionsForm/useTransactionsOptionsSchema";
+import useTransactionSchema from "../forms/TransactionsForm/useTransactionSchema";
+import useCreateEmployeesSheetSchema from "../forms/CreateEmployeesSheetForm/useCreateEmployeesSheetSchema";
+import useCreateNationalitiesSheetSchema from "../forms/CreateNationalitiesSheetForm/useCreateNationalitiesSheetSchema";
+import useCreateJobsSheetSchema from "../forms/CreateJobsSheetForm/useCreateJobsSheetSchema";
+import useCreateCustomersSheetSchema from "../forms/CreateCustomersSheetForm/useCreateCustomersSheetSchema";
+import useCreateProsSheetSchema from "../forms/CreateProsSheetForm/useCreateProsSheetSchema";
+import useRoleSchema from "../forms/RoleForm/useRoleSchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
@@ -55,6 +63,8 @@ const useSubmitForm = (type: string) => {
   const { EmployeeSchema, EmployeeInitialValues } = useEmployeeSchema();
   const { EmployeesOptionsSchema, EmployeesOptionsInitialValues } =
     useEmployeesOptionsSchema();
+  const { createEmployeesSheetInitialValues, createEmployeesSheetSchema } =
+    useCreateEmployeesSheetSchema();
   const { CompanySchema, CompanyInitialValues } = useCompanySchema();
   const { CompaniesOptionsSchema, CompaniesOptionsInitialValues } =
     useCompaniesOptionsSchema();
@@ -71,6 +81,28 @@ const useSubmitForm = (type: string) => {
     useNatwasalsOptionsSchema();
   const { DownloadExcelInitialValues, DownloadExcelSchema } =
     useDownloadExcelSchema();
+  const { TransactionsOptionsInitialValues, TransactionsOptionsSchema } =
+    useTransactionsOptionsSchema();
+  const {
+    PreTransactionInitialValues,
+    PreTransactionSchema,
+    ApprovedTransactionInitialValues,
+    ApprovedTransactionSchema,
+    NewTransactionInitialValues,
+    NewTransactionSchema,
+    RenewTransactionSchema,
+    RenewTransactionInitialValues,
+  } = useTransactionSchema();
+  const {
+    createNationalitiesSheetInitialValues,
+    createNationalitiesSheetSchema,
+  } = useCreateNationalitiesSheetSchema();
+  const { createJobsSheetInitialValues, createJobsSheetSchema } =
+    useCreateJobsSheetSchema();
+  const { createCustomersSheetInitialValues, createCustomersSheetSchema } =
+    useCreateCustomersSheetSchema();
+  const { createProsSheetSchema } = useCreateProsSheetSchema();
+  const { RoleInitialValues, RoleSchema } = useRoleSchema();
 
   const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
     login: LoginSchema,
@@ -88,10 +120,17 @@ const useSubmitForm = (type: string) => {
     ownersOptions: OwnersOptionsSchema,
     addUser: UserSchema,
     editUser: UserSchema,
+    addRole: RoleSchema,
+    editRole: RoleSchema,
     usersOptions: UsersOptionsSchema,
     addEmployee: EmployeeSchema,
     editEmployee: EmployeeSchema,
     employeesOptions: EmployeesOptionsSchema,
+    createEmployeesSheet: createEmployeesSheetSchema,
+    createNationalitiesSheet: createNationalitiesSheetSchema,
+    createJobsSheet: createJobsSheetSchema,
+    createCustomersSheet: createCustomersSheetSchema,
+    createProsSheet: createProsSheetSchema,
     addPro: ProSchema,
     editPro: ProSchema,
     prosOptions: ProsOptionsSchema,
@@ -110,6 +149,12 @@ const useSubmitForm = (type: string) => {
     editNatwasal: NatwasalSchema,
     natwasalsOptions: NatwasalsOptionsSchema,
     downloadExcel: DownloadExcelSchema,
+    transactionsOptions: TransactionsOptionsSchema,
+    addPreTransaction: PreTransactionSchema,
+    editPreTransaction: PreTransactionSchema,
+    approvalTransaction: ApprovedTransactionSchema,
+    newTransaction: NewTransactionSchema,
+    renewTransaction: RenewTransactionSchema,
   };
 
   const initialValues: { [key: string]: AllFormsTypes } = {
@@ -128,6 +173,8 @@ const useSubmitForm = (type: string) => {
     ownersOptions: OwnersOptionsInitialValues,
     addUser: UserInitialValues,
     editUser: UserInitialValues,
+    addRole: RoleInitialValues,
+    editRole: RoleInitialValues,
     usersOptions: UsersOptionsInitialValues,
     addPro: ProInitialValues,
     editPro: ProInitialValues,
@@ -137,6 +184,10 @@ const useSubmitForm = (type: string) => {
     addEmployee: EmployeeInitialValues,
     editEmployee: EmployeeInitialValues,
     employeesOptions: EmployeesOptionsInitialValues,
+    createEmployeesSheet: createEmployeesSheetInitialValues,
+    createNationalitiesSheet: createNationalitiesSheetInitialValues,
+    createJobsSheet: createJobsSheetInitialValues,
+    createCustomersSheet: createCustomersSheetInitialValues,
     addCompany: CompanyInitialValues,
     editCompany: CompanyInitialValues,
     companiesOptions: CompaniesOptionsInitialValues,
@@ -150,6 +201,12 @@ const useSubmitForm = (type: string) => {
     editNatwasal: NatwasalInitialValues,
     natwasalsOptions: NatwasalsOptionsInitialValues,
     downloadExcel: DownloadExcelInitialValues,
+    transactionsOptions: TransactionsOptionsInitialValues,
+    addPreTransaction: PreTransactionInitialValues,
+    editPreTransaction: PreTransactionInitialValues,
+    approvalTransaction: ApprovedTransactionInitialValues,
+    newTransaction: NewTransactionInitialValues,
+    renewTransaction: RenewTransactionInitialValues,
   };
 
   const chosenSchema = schemas[type];

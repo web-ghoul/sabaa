@@ -52,6 +52,17 @@ interface RecentActivitiesArgsTypes {
 }
 //Activities
 
+//Roles
+interface RoleTypes {
+  _id: string;
+  name: string;
+}
+interface RolesValuesTypes {
+  roles: RoleTypes[] | null;
+  isLoading: boolean;
+}
+//Roles
+
 //User
 
 interface UserTypes {
@@ -564,7 +575,6 @@ interface RecentCompaniesArgsTypes {
 }
 //Company
 
-
 //Transaction
 interface TransactionTypes {
   transactionNo: string;
@@ -619,10 +629,17 @@ interface TransactionsValuesTypes {
 
 interface TransactionsArgsTypes {
   page?: number;
-  id?: string;
   search?: string;
   sort?: string;
   limit?: number;
+  expireWorkPermitFrom?: string;
+  expireWorkPermitTo?: string;
+  residenceFrom?: string;
+  residenceTo?: string;
+  changeStatusDateFrom?: string;
+  changeStatusDateTo?: string;
+  status?: string;
+  type?: string;
 }
 
 interface RecentTransactionsValuesTypes {
@@ -784,5 +801,14 @@ export type {
   UserValuesTypes,
   UsersArgsTypes,
   UsersCounterValuesTypes,
-  UsersValuesTypes,TransactionTypes,TransactionValuesTypes,TransactionsCounterValuesTypes,TransactionsValuesTypes,TransactionsArgsTypes,RecentTransactionsValuesTypes,RecentTransactionsArgsTypes
+  UsersValuesTypes,
+  TransactionTypes,
+  TransactionValuesTypes,
+  TransactionsCounterValuesTypes,
+  TransactionsValuesTypes,
+  TransactionsArgsTypes,
+  RecentTransactionsValuesTypes,
+  RecentTransactionsArgsTypes,
+  RolesValuesTypes,
+  RoleTypes
 };

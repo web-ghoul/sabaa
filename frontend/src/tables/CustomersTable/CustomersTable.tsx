@@ -111,6 +111,7 @@ const CustomersTable = ({
       count={count}
       variant={"customers"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

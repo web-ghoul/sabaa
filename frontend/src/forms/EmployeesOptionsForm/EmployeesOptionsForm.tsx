@@ -96,7 +96,7 @@ const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <ExcelButtons addBtn={"Add Employee"} variant="employees" />
+        <ExcelButtons addBtn={"Add Employee"} variant="employees" upload all />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

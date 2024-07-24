@@ -33,7 +33,7 @@ const PersonsTable = ({
   };
 
   return (
-    <PrimaryTable count={count} variant={'persons'} noPagination={noPagination}>
+    <PrimaryTable count={count} variant={"persons"} noPagination={noPagination}>
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>Name</PrimaryTableCell>
@@ -52,8 +52,8 @@ const PersonsTable = ({
                 <PrimaryTableCell>
                   <UserBox
                     username={row.name}
-                    head={'subtitle1'}
-                    size={'small'}
+                    head={"subtitle1"}
+                    size={"small"}
                   />
                 </PrimaryTableCell>
                 <PrimaryTableCell align="center">
@@ -61,7 +61,7 @@ const PersonsTable = ({
                 </PrimaryTableCell>
                 {!mdScreen && (
                   <PrimaryTableCell align="center">
-                    {row.type || 'employee'}
+                    {row.type || "employee"}
                   </PrimaryTableCell>
                 )}
                 <PrimaryTableCell align="right">

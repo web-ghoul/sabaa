@@ -48,7 +48,12 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
   };
 
   return (
-    <PrimaryTable count={count} variant={"customers"} noPagination={true}>
+    <PrimaryTable
+      count={count}
+      variant={"customers"}
+      noPagination={true}
+      loading={isLoading}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>Name</PrimaryTableCell>

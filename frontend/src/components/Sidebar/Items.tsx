@@ -1,5 +1,6 @@
 import {
   AddBoxRounded,
+  AlarmAddRounded,
   AppRegistrationRounded,
   AssessmentRounded,
   AutoAwesomeMotionRounded,
@@ -112,12 +113,12 @@ const Items = () => {
         />
         <Item
           icon={<AddBoxRounded />}
-          title="New Work Permit"
+          title="New Labour Card"
           url={`${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`}
         />
         <Item
           icon={<PublishedWithChangesRounded />}
-          title="Renew Work Permit"
+          title="Renew Labour Card"
           url={`${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`}
         />
       </Item>
@@ -130,6 +131,11 @@ const Items = () => {
         icon={<PendingActionsRounded />}
         title="Activities"
         url={`${import.meta.env.VITE_ACTIVITIES_ROUTE}`}
+      />
+      <Item
+        icon={<AlarmAddRounded />}
+        title="Alerts"
+        url={`${import.meta.env.VITE_ALERTS_ROUTE}`}
       />
       <Item
         icon={<AssessmentRounded />}

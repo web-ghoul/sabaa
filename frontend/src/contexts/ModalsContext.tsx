@@ -68,6 +68,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openApprovalWorkPermitModal: false,
   handleOpenApprovalWorkPermitModal: () => {},
   handleCloseApprovalWorkPermitModal: () => {},
+  openRoleModal: false,
+  handleOpenRoleModal: () => {},
+  handleCloseRoleModal: () => {},
 });
 
 const ModalsProvider = ({ children }: { children: ReactNode }) => {
@@ -404,6 +407,19 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   };
   //Transaction Modal
 
+  //Permission Modal
+  const [openRoleModal, setOpenRoleModal] = useState(false);
+
+  const handleCloseRoleModal = () => {
+    setOpenRoleModal(false);
+  };
+
+  const handleOpenRoleModal = (type: string) => {
+    setOpenRoleModal(true);
+    setFormType(type);
+  };
+  //Permission Modal
+
   const values = {
     openForgotPasswordModal,
     handleOpenForgotPasswordModal,
@@ -468,6 +484,9 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     openApprovalWorkPermitModal,
     handleCloseApprovalWorkPermitModal,
     handleOpenApprovalWorkPermitModal,
+    openRoleModal,
+    handleOpenRoleModal,
+    handleCloseRoleModal,
   };
   return (
     <ModalsContext.Provider value={values}>{children}</ModalsContext.Provider>

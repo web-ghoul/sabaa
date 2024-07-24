@@ -35,7 +35,6 @@ export const transactionsCounterSlice = createSlice({
     builder.addCase(getTransactionsCounter.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.transactionsCounter = payload;
-      console.log(payload);
     });
     builder.addCase(getTransactionsCounter.rejected, (_, action) => {
       if (action.payload) {

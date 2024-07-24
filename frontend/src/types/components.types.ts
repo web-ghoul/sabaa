@@ -79,12 +79,14 @@ interface ButtonTypes {
   variant?: string;
   type?: "button" | "submit";
   handling?: () => void;
+  loading?: boolean;
 }
 
 interface SubmitButtonTypes {
   loading: boolean;
   children: ReactNode;
   variant?: string;
+  handling?: () => void;
 }
 
 interface TitleTypes {

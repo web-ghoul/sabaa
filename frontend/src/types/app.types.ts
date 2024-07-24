@@ -28,6 +28,7 @@ interface ImportMetaEnv {
   VITE_TODO_LIST_ROUTE: string;
   VITE_REPORTS_ROUTE: string;
   VITE_MAILS_ROUTE: string;
+  VITE_ALERTS_ROUTE: string;
   VITE_ACTIVITIES_ROUTE: string;
   VITE_COMPANIES_ROUTE: string;
   VITE_ADD_COMPANY_ROUTE: string;

@@ -11,6 +11,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  RoleTypes,
   SponsorTypes,
   TasheelTypes,
   TransactionTypes,
@@ -88,6 +89,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableNatwasalData: () => {},
   editableTransactionData: null,
   setEditableTransactionData: () => {},
+  editableRoleData: null,
+  setEditableRoleData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -202,6 +205,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableTransactionData, setEditableTransactionData] =
     useState<TransactionTypes | null>(null);
 
+  //Editable Role Data
+  const [editableRoleData, setEditableRoleData] = useState<RoleTypes | null>(
+    null
+  );
+
   useEffect(() => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
@@ -306,6 +314,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForNatwasal,
     editableTransactionData,
     setEditableTransactionData,
+    editableRoleData,
+    setEditableRoleData,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

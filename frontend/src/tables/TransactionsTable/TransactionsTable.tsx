@@ -32,7 +32,6 @@ const TransactionsTable = ({
   noPagination,
   isLoading,
   fileIndex,
-  sort = true,
   actions = true,
   recent,
   type,
@@ -41,9 +40,9 @@ const TransactionsTable = ({
     useContext(AppContext);
   const { setTransactionIndex } = useContext(ExcelsContext);
   const { setEditableTransactionData } = useContext(FormsContext);
-  const smScreen = useMediaQuery("(max-width:768px)");
+  // const smScreen = useMediaQuery("(max-width:768px)");
   const mdScreen = useMediaQuery("(max-width:992px)");
-  const lgScreen = useMediaQuery("(max-width:1200px)");
+  // const lgScreen = useMediaQuery("(max-width:1200px)");
   const dispatch = useDispatch<AppDispatch>();
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -62,7 +61,7 @@ const TransactionsTable = ({
     }
   };
 
-  const handleSortByCode = () => {
+  const handleSortByResidenceExpiry = () => {
     if (searchParams.get("sort") === "code_asc") {
       handleAddQuery({ sort: "code_desc" });
       dispatch(reverseOwners());
@@ -75,11 +74,31 @@ const TransactionsTable = ({
     }
   };
 
-  // const handleView = () => {
-  //   if (sheet) {
-  //     handleAlert({ msg: "Under Development" });
-  //   }
-  // };
+  const handleSortByCSDate = () => {
+    if (searchParams.get("sort") === "code_asc") {
+      handleAddQuery({ sort: "code_desc" });
+      dispatch(reverseOwners());
+      setSearchParams({ ...queries, sort: "code_desc" });
+    } else {
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getOwners(all));
+      setSearchParams(all);
+    }
+  };
+
+  const handleSortByLCExpiry = () => {
+    if (searchParams.get("sort") === "code_asc") {
+      handleAddQuery({ sort: "code_desc" });
+      dispatch(reverseOwners());
+      setSearchParams({ ...queries, sort: "code_desc" });
+    } else {
+      handleAddQuery({ sort: "code_asc" });
+      const all = { ...queries, sort: "code_asc" };
+      dispatch(getOwners(all));
+      setSearchParams(all);
+    }
+  };
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
@@ -105,49 +124,132 @@ const TransactionsTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"owners"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"owners"}
+      noPagination={noPagination}
+      loading={isLoading}
+    >
       <TableHead>
+        {type === "all" && (
+          <TableRow>
+            <PrimaryTableCell className={`!flex gap-2`}>
+              Transaction Number
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "WP Expiry" : "Work Permit Expiry"}
+                handling={handleSortByWorkPermitExpiry}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
+                handling={handleSortByResidenceExpiry}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "CS Date" : "Change Status Date"}
+                handling={handleSortByCSDate}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "LC Expiry" : "LC Expire Date"}
+                handling={handleSortByLCExpiry}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            {actions && (
+              <PrimaryTableCell align="right">Actions</PrimaryTableCell>
+            )}
+          </TableRow>
+        )}
         {type === "pre" && (
           <TableRow>
             <PrimaryTableCell className={`!flex gap-2`}>
               Transaction Number
             </PrimaryTableCell>
-            {!mdScreen && !recent && (
-              <PrimaryTableCell align="center">Company</PrimaryTableCell>
-            )}
+            <PrimaryTableCell align="center">Company</PrimaryTableCell>
+            <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
             <PrimaryTableCell align="center">
-              {sheet || !sort ? (
-                "Employee Name"
-              ) : (
-                <SortBox
-                  title={mdScreen ? "Code" : "Person Code"}
-                  handling={handleSortByCode}
-                  asc={searchParams.get("sort") === "code_asc"}
-                  desc={searchParams.get("sort") === "code_desc"}
-                  jc="center"
-                />
-              )}
+              <SortBox
+                title={"Work Permit Expiry"}
+                handling={handleSortByWorkPermitExpiry}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
             </PrimaryTableCell>
-            {!smScreen && (
-              <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "CS Date" : "Change Status Date"}
+                handling={handleSortByCSDate}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            {actions && (
+              <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
-            {!smScreen && (
-              <PrimaryTableCell align="center">Status Date</PrimaryTableCell>
-            )}
-            {!lgScreen && (
-              <PrimaryTableCell align="center">
-                {sheet || !sort ? (
-                  "Work Permit Expiry"
-                ) : (
-                  <SortBox
-                    title={"Work Permit Expiry"}
-                    handling={handleSortByWorkPermitExpiry}
-                    asc={searchParams.get("sort") === "name_asc"}
-                    desc={searchParams.get("sort") === "name_desc"}
-                  />
-                )}
-              </PrimaryTableCell>
-            )}
+          </TableRow>
+        )}
+        {(type === "new" || type === "renew") && (
+          <TableRow>
+            <PrimaryTableCell className={`!flex gap-2`}>
+              Transaction Number
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "WP Expiry" : "Work Permit Expiry"}
+                handling={handleSortByWorkPermitExpiry}
+                asc={searchParams.get("sort") === "name_asc"}
+                desc={searchParams.get("sort") === "name_desc"}
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
+                handling={handleSortByResidenceExpiry}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "CS Date" : "Change Status Date"}
+                handling={handleSortByCSDate}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "LC Expiry" : "LC Expire Date"}
+                handling={handleSortByLCExpiry}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -158,35 +260,83 @@ const TransactionsTable = ({
         {!isLoading
           ? data &&
             data.map((row, i) => {
-              return (
-                type === "pre" && (
+              return type === "all" ? (
+                <PrimaryTableRow key={i}>
+                  <PrimaryTableCell align="left">
+                    {row.transactionNo}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {row.companyName}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {row.employeeName}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.statusDate)}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.workPermitExpiryDate)}
+                  </PrimaryTableCell>
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
+                </PrimaryTableRow>
+              ) : type === "pre" ? (
+                <PrimaryTableRow key={i}>
+                  <PrimaryTableCell align="left">
+                    {row.transactionNo}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {row.companyName}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {row.employeeName}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.statusDate)}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.workPermitExpiryDate)}
+                  </PrimaryTableCell>
+                  {actions && (
+                    <PrimaryTableCell align="right">
+                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
+                        <MoreVertRounded />
+                      </IconButton>
+                    </PrimaryTableCell>
+                  )}
+                </PrimaryTableRow>
+              ) : (
+                (type === "new" || type === "renew") && (
                   <PrimaryTableRow key={i}>
                     <PrimaryTableCell align="left">
                       {row.transactionNo}
                     </PrimaryTableCell>
-                    {!mdScreen && !recent && (
-                      <PrimaryTableCell align="center">
-                        {row.companyName}
-                      </PrimaryTableCell>
-                    )}
+                    <PrimaryTableCell align="center">
+                      {row.companyName}
+                    </PrimaryTableCell>
                     <PrimaryTableCell align="center">
                       {row.employeeName}
                     </PrimaryTableCell>
-                    {!smScreen && (
-                      <PrimaryTableCell align="center">
-                        <StatusBox status={row.status} />
-                      </PrimaryTableCell>
-                    )}
-                    {!lgScreen && (
-                      <PrimaryTableCell align="center">
-                        {handleDate(row.statusDate)}
-                      </PrimaryTableCell>
-                    )}
-                    {!lgScreen && (
-                      <PrimaryTableCell align="center">
-                        {handleDate(row.workPermitExpiryDate)}
-                      </PrimaryTableCell>
-                    )}
+                    <PrimaryTableCell align="center">
+                      <StatusBox status={row.status} />
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.statusDate)}
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.workPermitExpiryDate)}
+                    </PrimaryTableCell>
                     {actions && (
                       <PrimaryTableCell align="right">
                         <IconButton onClick={(e) => handleOpenMenu(e, i)}>
@@ -202,12 +352,13 @@ const TransactionsTable = ({
               .fill(0)
               .map((_, i) => (
                 <LoadingTransactionsRow
+                  type={type}
                   actions={actions}
                   recent={recent}
                   key={i}
                 />
               ))}
-        <TransactionsTableMenu />
+        <TransactionsTableMenu type={type} />
       </TableBody>
     </PrimaryTable>
   );

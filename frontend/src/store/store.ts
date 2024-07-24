@@ -40,6 +40,8 @@ import usersCounterReducers from "./usersCounterSlice.ts";
 import userReducers from "./userSlice.ts";
 import usersReducers from "./usersSlice.ts";
 import transactionsCounterReducer from "./transactionsCounterSlice.ts";
+import transactionsReducer from "./transactionsSlice.ts";
+import rolesReducers from "./rolesSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -68,6 +70,7 @@ export const store = configureStore({
     customer: customerReducers,
     customers: customersReducers,
     recentCustomers: recentCustomersReducers,
+    roles: rolesReducers,
     pro: proReducers,
     pros: prosReducers,
     prosCounter: prosCounterReducers,
@@ -83,7 +86,7 @@ export const store = configureStore({
     tasheelsCounter: tasheelsCounterReducer,
     natwasals: natwasalsReducer,
     natwasalsCounter: natwasalsCounterReducer,
-    // transactions: transactionsReducer,
+    transactions: transactionsReducer,
     transactionsCounter: transactionsCounterReducer,
   },
   middleware: (getDefaultMiddleware) =>

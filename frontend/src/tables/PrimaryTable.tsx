@@ -9,23 +9,26 @@ const PrimaryTable = ({
   count,
   variant,
   noPagination,
+  loading,
 }: {
   children: ReactNode;
   count: number;
   variant: EntitiesType;
   noPagination?: boolean;
+  loading?: boolean;
 }) => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="customized table">{children}</Table>
-      {count === 0 ? (
-        <NoDataFound />
-      ) : (
-        !noPagination &&
-        count >= 10 && (
-          <PrimaryTablePagination count={count} variant={variant} />
-        )
-      )}
+      {!loading &&
+        (count === 0 ? (
+          <NoDataFound />
+        ) : (
+          !noPagination &&
+          count >= 10 && (
+            <PrimaryTablePagination count={count} variant={variant} />
+          )
+        ))}
     </TableContainer>
   );
 };
