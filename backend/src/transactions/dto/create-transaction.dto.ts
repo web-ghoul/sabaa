@@ -28,6 +28,10 @@ export class CreateTransactionDto {
   employeeName?: string;
 
   @IsOptional()
+  @IsString()
+  employeeNameAr?: string;
+
+  @IsOptional()
   @IsDate()
   dob?: Date;
 
