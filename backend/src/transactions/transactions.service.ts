@@ -178,7 +178,7 @@ export class TransactionsService {
       { header: 'Employee Name', key: 'employeeName', width: 20 },
       { header: 'Date of Birth', key: 'dob', width: 20 },
       { header: 'Gender', key: 'gender', width: 20 },
-      { header: 'Nationality ID', key: 'nationalityId', width: 20 },
+      { header: 'Nationality ID', key: 'idNationality', width: 20 },
       { header: 'Nationality', key: 'nationality', width: 20 },
       { header: 'Passport Number', key: 'passportNumber', width: 20 },
       { header: 'Passport Expiry', key: 'passportExpiry', width: 20 },
@@ -189,7 +189,11 @@ export class TransactionsService {
       { header: 'Work Permit', key: 'workPermit', width: 20 },
       { header: 'LC No', key: 'lcNo', width: 20 },
       { header: 'LC Expiry Date', key: 'lcExpiryDate', width: 20 },
-      { header: 'Work Permit Expiry Date', key: 'workPermitExpiryDate', width: 20 },
+      {
+        header: 'Work Permit Expiry Date',
+        key: 'workPermitExpiryDate',
+        width: 20,
+      },
       { header: 'Visit Expiry Date', key: 'visitExpiryDate', width: 20 },
       { header: 'Tawjeeh Date', key: 'tawjeehDate', width: 20 },
       { header: 'Medical Date', key: 'medicalDate', width: 20 },
@@ -200,11 +204,15 @@ export class TransactionsService {
       { header: 'Card Type', key: 'cardType', width: 20 },
       { header: 'Salary', key: 'salary', width: 20 },
       { header: 'Remarks', key: 'remarks', width: 20 },
-      { header: 'Residence Expiry Date', key: 'residenceExpiryDate', width: 20 },
+      {
+        header: 'Residence Expiry Date',
+        key: 'residenceExpiryDate',
+        width: 20,
+      },
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
       worksheet.addRow({
         transactionNo: transaction.transactionNo,
         employeeId: transaction.employeeId,
@@ -215,7 +223,7 @@ export class TransactionsService {
         employeeName: transaction.employeeName,
         dob: transaction.dob,
         gender: transaction.gender,
-        nationalityId: transaction.nationalityId,
+        idNationality: transaction.idNationality,
         nationality: transaction.nationality,
         passportNumber: transaction.passportNumber,
         passportExpiry: transaction.passportExpiry,

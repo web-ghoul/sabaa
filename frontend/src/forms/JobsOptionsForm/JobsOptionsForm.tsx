@@ -35,7 +35,7 @@ const JobsOptionsForm = ({ register, errors }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <ExcelButtons addBtn={"Add Job"} variant="jobs" all={false} />
+        <ExcelButtons addBtn={"Add Job"} upload variant="jobs" all={false} />
       </Box>
     </Paper>
   );

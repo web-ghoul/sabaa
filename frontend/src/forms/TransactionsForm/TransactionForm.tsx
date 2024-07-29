@@ -8,6 +8,8 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
+import { handleAlert } from "../../functions/handleAlert";
+import { handleDate } from "../../functions/handleDate";
 import useAxios from "../../hooks/useAxios";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
@@ -29,6 +31,7 @@ const TransactionForm = ({
   const [IMMG, setIMMG] = useState(false);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
   const handleTawjeehChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setTawjeeh(checked);
@@ -47,10 +50,24 @@ const TransactionForm = ({
   const handleSearch = async (value: string) => {
     setLoading(true);
     await server.get(`/Employee?search=${value}`).then((res) => {
-      const employees:EmployeeTypes[] = res.data
-      if(employees.length > 0){
-        const employee = employees[0]
-        setValue("gender",employee.gender)
+      const employees: EmployeeTypes[] = res.data;
+      if (employees.length > 0) {
+        const employee = employees[0];
+        setValue("gender", employee.gender);
+        setValue("companyName", employee.companyName[0] || "");
+        setValue("employeeId", employee.personCode);
+        setValue("employeeName", employee.name);
+        setValue("name", employee.name);
+        setValue("nameAr", employee.nameAr);
+        setValue("dob", handleDate(employee.dob));
+        setValue("idNationality", employee.idNationality);
+        setValue("nationality", employee.nationality);
+        setValue("emiratesNo", employee.emiratesId);
+        setValue("uid", employee.uid);
+        setValue("salary", employee.salary);
+        setValue("cardType", employee.cardType);
+      } else {
+        handleAlert({ msg: "No Employees Found", status: "error" });
       }
     });
     setLoading(false);
@@ -87,6 +104,12 @@ const TransactionForm = ({
             <Input
               register={register}
               errors={errors}
+              label={"Serial Number"}
+              name={"serialNo"}
+            />
+            <Input
+              register={register}
+              errors={errors}
               label={"Transaction Number"}
               name={"transactionNo"}
             />
@@ -107,14 +130,21 @@ const TransactionForm = ({
             <Input
               register={register}
               errors={errors}
-              label={"Employee Name"}
+              label={"Employee English Name"}
               name={"employeeName"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Employee Arabic Name"}
+              name={"nameAr"}
             />
             <Input
               register={register}
               errors={errors}
               label={"Date of Birth"}
               name={"dob"}
+              type={"date"}
             />
             {nationalities && nationalities.length > 0 && (
               <AutoCompleteSearch
@@ -203,6 +233,7 @@ const TransactionForm = ({
                   options={["InProcess", "Approved", "Rejected", "Nawakes"]}
                   name={"wpStatus"}
                   select
+                  change={(val) => setStatus(val)}
                 />
                 <Input
                   label={"Status Date"}
@@ -214,6 +245,51 @@ const TransactionForm = ({
               </>
             )}
           </Box>
+          {status.toLowerCase() === "approved" && (
+            <>
+              <Divider />
+              <Box
+                className={`grid justify-stretch items-center gap-8 md:gap-6 sm:!gap-5`}
+              >
+                <Title
+                  head={"h5"}
+                  align={"left"}
+                  title={"Approval Work Permit"}
+                />
+
+                <Box
+                  className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+                >
+                  <Input
+                    register={register}
+                    errors={errors}
+                    label={"Personal Number"}
+                    name={"personCode"}
+                  />
+                  <Input
+                    register={register}
+                    errors={errors}
+                    label={"Work Permit Number"}
+                    name={"workPermit"}
+                  />
+                  <Input
+                    register={register}
+                    errors={errors}
+                    label={"Work Permit Expire Date"}
+                    name={"workPermitExpiryDate"}
+                    type={"date"}
+                  />
+                  <Input
+                    register={register}
+                    errors={errors}
+                    label={"Visit Visa Expire Date"}
+                    name={"visitExpiryDate"}
+                    type={"date"}
+                  />
+                </Box>
+              </Box>
+            </>
+          )}
         </>
       )}
       {type === "newTransaction" ||

@@ -83,7 +83,9 @@ export default function AutoCompleteSearch({
       if (variant === "employee") {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
+        const names = companies.map((company: CompanyTypes) => company.name);
         setValue(name, (IDs as string[]).slice(IDs.length - 1));
+        setValue("companyName", (names as string[]).slice(IDs.length - 1));
       } else {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
@@ -169,7 +171,7 @@ export default function AutoCompleteSearch({
 
   useEffect(() => {
     handleVal();
-  }, []);
+  }, [setValue]);
 
   return (
     <Box className={`grid justify-stretch items-center gap-2`}>

@@ -4,8 +4,7 @@ import {HydratedDocument, ObjectId } from 'mongoose';
 export type TransactionDocument = HydratedDocument<Transaction>;
 
 @Schema({ timestamps: true })
-export class Transaction{
-
+export class Transaction {
   _id: ObjectId;
 
   @Prop({ type: String })
@@ -17,16 +16,11 @@ export class Transaction{
   @Prop({ type: String })
   serialNo: string;
 
-
-
   @Prop({ type: String, required: true })
   companyCode: string;
 
-
   @Prop({ type: String, ref: 'Company', required: true })
   companyId: string;
-
-
 
   @Prop()
   companyName: string;
@@ -41,7 +35,7 @@ export class Transaction{
   gender: string;
 
   @Prop({ type: String, ref: 'Nationality', required: true })
-  nationalityId: string;
+  idNationality: string;
 
   @Prop()
   nationality: string;
@@ -55,7 +49,7 @@ export class Transaction{
   @Prop()
   job: string;
 
-  @Prop({type: String, required: true })
+  @Prop({ type: String, required: true })
   personCode: string;
 
   @Prop()
@@ -66,7 +60,6 @@ export class Transaction{
 
   @Prop()
   workPermit: string;
-
 
   @Prop()
   lcNo: string;
@@ -83,14 +76,13 @@ export class Transaction{
   @Prop({ type: Date })
   tawjeehDate: Date;
 
-
   @Prop({ type: Date })
   medicalDate: Date;
 
   @Prop({ type: Date })
   changeStatusDate: Date;
 
-  @Prop({default: "In Process"})
+  @Prop({ default: 'In Process' })
   status: string;
 
   @Prop({ type: Date })
@@ -108,7 +100,7 @@ export class Transaction{
   @Prop({ type: Date })
   residenceExpiryDate: Date;
 
-  @Prop({default: false})
+  @Prop({ default: false })
   deleted: boolean;
 }
 

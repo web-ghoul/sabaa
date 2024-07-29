@@ -299,6 +299,7 @@ interface EmployeeTypes {
   dob?: Date;
   personCode: string;
   companyId: CompanyTypes[] | string[];
+  companyName: string[];
   sponsors: SponsorTypes[];
   idNationality: string;
   nationality: string;
@@ -584,9 +585,9 @@ interface TransactionTypes {
   companyId: string;
   companyName: string;
   employeeName: string;
-  dob: Date;
+  dob: string;
   gender: string;
-  nationalityId: string;
+  idNationality: string;
   nationality: string;
   passportNumber: string;
   passportExpiry: Date;

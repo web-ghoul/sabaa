@@ -36,7 +36,7 @@ export class CreateTransactionDto {
   gender?: string;
 
   @IsString()
-  nationalityId: string;
+  idNationality: string;
 
   @IsOptional()
   @IsString()

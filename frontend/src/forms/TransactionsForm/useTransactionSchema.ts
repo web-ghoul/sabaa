@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import * as yup from "yup";
+import { FormsContext } from "../../contexts/FormsContext";
 
 const useTransactionSchema = () => {
+  const { editableTransactionData } = useContext(FormsContext);
+
   const PreTransactionSchema = yup.object({
     transactionNo: yup.string().required("Transaction number is required"),
     serialNo: yup.string().required("Serial number is required"),
@@ -9,52 +13,56 @@ const useTransactionSchema = () => {
     companyId: yup.string(),
     companyName: yup.string().required("Company is required"),
     employeeId: yup.string(),
-    employeeName: yup.string().required("Employee is required"),
-    dob: yup.string(),
-    nationalityId: yup.string().required("Email is required"),
+    employeeName: yup.string().required("English Name is required"),
+    nameAr: yup.string().required("Arabic Name is required"),
+    dob: yup.string().required("Employee is required"),
+    idNationality: yup.string().required("Email is required"),
     nationality: yup.string().required("Email is required"),
     passportNumber: yup.string().required("Passport Number is required"),
     passportExpiry: yup.string().required("Passport Expire Date is required"),
     job: yup.string().required("Job is required"),
-    uid: yup.string(),
+    uid: yup.string().required("Job is required"),
     emiratesNo: yup.string(),
     cardType: yup.string().required("Email is required"),
     salary: yup.string(),
-    remarks: yup.string().required("remarks is required"),
+    remarks: yup.string(),
     statusDate: yup.string(),
-    wpStatus: yup.string().required("Email is required"),
+    wpStatus: yup.string(),
+    personCode: yup.string(),
+    workPermit: yup.string(),
+    workPermitExpiryDate: yup.string(),
+    visitExpiryDate: yup.string(),
   });
 
   const PreTransactionInitialValues = {
-    transactionNo: "",
-    serialNo: "",
-    gender: "",
-    companyCode: "",
-    companyId: "",
-    companyName: "",
-    employeeId: "",
-    employeeName: "",
-    dob: "",
-    nationalityId: "",
-    nationality: "",
-    passportNumber: "",
-    passportExpiry: "",
-    job: "",
-    uid: "",
-    emiratesNo: "",
-    cardType: "",
-    salary: "",
-    remarks: "",
+    transactionNo: editableTransactionData?.transactionNo || "",
+    serialNo: editableTransactionData?.serialNo || "",
+    gender: editableTransactionData?.gender || "",
+    companyCode: editableTransactionData?.companyCode || "",
+    companyId: editableTransactionData?.companyId || "",
+    companyName: editableTransactionData?.companyName || "",
+    employeeId: editableTransactionData?.employeeId || "",
+
+    dob: editableTransactionData?.dob || "",
+    idNationality: editableTransactionData?.idNationality || "",
+    nationality: editableTransactionData?.nationality || "",
+    passportNumber: editableTransactionData?.passportNumber || "",
+    passportExpiry: editableTransactionData?.passportExpiry || "",
+    job: editableTransactionData?.job || "",
+    uid: editableTransactionData?.uid || "",
+    emiratesNo: editableTransactionData?.emiratesNo || "",
+    cardType: editableTransactionData?.cardType || "",
+    salary: editableTransactionData?.salary || "",
+    remarks: editableTransactionData?.remarks || "",
     statusDate: "",
     wpStatus: "",
+    personCode: "",
+    workPermit: "",
+    workPermitExpiryDate: "",
+    visitExpiryDate: "",
   };
 
-  const ApprovedTransactionSchema = yup.object({
-    personCode: yup.string().required("Person Code is required"),
-    workPermit: yup.string().required("Work Permit Number is required"),
-    workPermitExpiryDate: yup.string().required("Work Permit Expire Date"),
-    visitExpiryDate: yup.string(),
-  });
+  const ApprovedTransactionSchema = yup.object({});
 
   const ApprovedTransactionInitialValues = {
     personCode: "",

@@ -44,6 +44,11 @@ const useEmployeeSubmit = () => {
         formData.append("companyId[]", company as string);
       });
     }
+    if (values.companyName.length > 0) {
+      values.companyName.map((company) => {
+        formData.append("companyName[]", company as string);
+      });
+    }
     if (values.emiratesId) {
       formData.append("emiratesId", values.emiratesId.trim());
     }

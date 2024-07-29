@@ -14,7 +14,7 @@ const useTransactionSubmit = () => {
   const addPreTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transaction`, values)
+      .post(`/transaction`, { values, dob: new Date(values.dob) })
       .then(() => {
         handleAlert({
           msg: "Work Permit is created successfully",

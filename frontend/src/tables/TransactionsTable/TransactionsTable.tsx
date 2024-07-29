@@ -203,6 +203,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
+
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -275,10 +276,13 @@ const TransactionsTable = ({
                     <StatusBox status={row.status} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {handleDate(row.statusDate)}
+                    {handleDate(row.residenceExpiryDate)}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {handleDate(row.workPermitExpiryDate)}
+                    {handleDate(row.changeStatusDate)}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.lcExpiryDate)}
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
