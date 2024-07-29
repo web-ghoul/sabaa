@@ -9,8 +9,9 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
-import { handleDate } from "../../functions/handleDate";
+import { handleDateForInput } from "../../functions/handleDateForInput";
 import useAxios from "../../hooks/useAxios";
+import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -45,6 +46,7 @@ const TransactionForm = ({
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
+  const { companies } = useSelector((state: RootState) => state.companies);
   const { jobs } = useSelector((state: RootState) => state.jobs);
 
   const handleSearch = async (value: string) => {
@@ -54,17 +56,20 @@ const TransactionForm = ({
       if (employees.length > 0) {
         const employee = employees[0];
         setValue("gender", employee.gender);
+        setValue("personCode", employee.personCode);
+        setValue("companyId", (employee.companyId[0] as string) || "");
         setValue("companyName", employee.companyName[0] || "");
         setValue("employeeId", employee.personCode);
         setValue("employeeName", employee.name);
         setValue("name", employee.name);
         setValue("nameAr", employee.nameAr);
-        setValue("dob", handleDate(employee.dob));
+        setValue("dob", handleDateForInput(employee.dob));
         setValue("idNationality", employee.idNationality);
         setValue("nationality", employee.nationality);
         setValue("emiratesNo", employee.emiratesId);
         setValue("uid", employee.uid);
         setValue("salary", employee.salary);
+        setValue("job", employee.job);
         setValue("cardType", employee.cardType);
       } else {
         handleAlert({ msg: "No Employees Found", status: "error" });
@@ -74,6 +79,7 @@ const TransactionForm = ({
   };
 
   useEffect(() => {
+    dispatch(getCompanies({ limit: -1 }));
     dispatch(getNationalities({ limit: -1 }));
     dispatch(getJobs({ limit: -1 }));
   }, [dispatch]);
@@ -116,17 +122,30 @@ const TransactionForm = ({
             <Input
               register={register}
               errors={errors}
+              label={"Person Code"}
+              name={"personCode"}
+            />
+            <Input
+              register={register}
+              errors={errors}
               label={"Gender"}
               select
               options={["Male", "Female"]}
               name={"gender"}
             />
-            <Input
-              register={register}
-              errors={errors}
-              label={"Company Name"}
-              name={"companyName"}
-            />
+            {companies && companies.length > 0 && (
+              <AutoCompleteSearch
+                label={"Company"}
+                options={companies}
+                register={register}
+                setValue={setValue}
+                getValues={getValues}
+                errors={errors}
+                name={"companyId"}
+                variant={"transaction"}
+                flag={loading}
+              />
+            )}
             <Input
               register={register}
               errors={errors}
@@ -155,6 +174,7 @@ const TransactionForm = ({
                 setValue={setValue}
                 getValues={getValues}
                 name={"nationality"}
+                flag={loading}
               />
             )}
             <Input
@@ -179,6 +199,7 @@ const TransactionForm = ({
                 setValue={setValue}
                 getValues={getValues}
                 name={"job"}
+                flag={loading}
               />
             )}
             <Input
@@ -230,8 +251,8 @@ const TransactionForm = ({
                   label={"Status"}
                   register={register}
                   errors={errors}
-                  options={["InProcess", "Approved", "Rejected", "Nawakes"]}
-                  name={"wpStatus"}
+                  options={["In Process", "Approved", "Rejected", "Nawakes"]}
+                  name={"status"}
                   select
                   change={(val) => setStatus(val)}
                 />
@@ -260,12 +281,6 @@ const TransactionForm = ({
                 <Box
                   className={`grid grid-cols-3 justify-stretch items-start gap-6`}
                 >
-                  <Input
-                    register={register}
-                    errors={errors}
-                    label={"Personal Number"}
-                    name={"personCode"}
-                  />
                   <Input
                     register={register}
                     errors={errors}

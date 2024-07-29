@@ -43,7 +43,7 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
     if (sheet) {
       handleDeleteOwnerFromSheet();
     } else {
-      handleOpenDeleteModal("owner");
+      handleOpenDeleteModal("transaction");
     }
   };
 

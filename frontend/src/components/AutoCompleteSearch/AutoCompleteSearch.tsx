@@ -33,6 +33,7 @@ export default function AutoCompleteSearch({
   setValue,
   getValues,
   variant,
+  flag,
 }: AutoCompleteSearchTypes) {
   const style = {
     "& > div > div": {
@@ -51,6 +52,7 @@ export default function AutoCompleteSearch({
   const [val, setVal] = useState<
     | JobTypes
     | NationalityTypes
+    | CompanyTypes
     | (CompanyTypes | OwnerTypes | ProTypes | CustomerTypes)[]
     | null
   >(
@@ -86,6 +88,11 @@ export default function AutoCompleteSearch({
         const names = companies.map((company: CompanyTypes) => company.name);
         setValue(name, (IDs as string[]).slice(IDs.length - 1));
         setValue("companyName", (names as string[]).slice(IDs.length - 1));
+      } else if (variant === "transaction") {
+        const company = newValue as CompanyTypes;
+        setValue(name, company._id || "");
+        setValue("companyName", company.name);
+        setValue("companyCode", company.molCode);
       } else {
         const companies = newValue as CompanyTypes[];
         const IDs = companies.map((company: CompanyTypes) => company._id);
@@ -128,7 +135,7 @@ export default function AutoCompleteSearch({
         (option as CompanyTypes).molCode
       } )`;
     } else if (name === "job") {
-      return `${(option as unknown as JobTypes).jobTitle} ( ${
+      return `${(option as JobTypes).jobTitle} ( ${
         (option as JobTypes).MOHRE
       } )`;
     }
@@ -157,10 +164,20 @@ export default function AutoCompleteSearch({
       );
       setVal(customers || null);
     } else if (name === "companyId") {
-      const companies = (options as CompanyTypes[]).filter((option) =>
-        (getValues("companyId") as string[]).includes(option._id || "")
-      );
-      setVal(companies || null);
+      if (variant === "transaction") {
+        const company = (options as CompanyTypes[]).find(
+          (option) => option._id === getValues(name)
+        );
+        setValue(name, company?._id || "");
+        setValue("companyName", company?.name || "");
+        setValue("companyCode", company?.molCode || "");
+        setVal(company || null);
+      } else {
+        const companies = (options as CompanyTypes[]).filter((option) =>
+          (getValues("companyId") as string[]).includes(option._id || "")
+        );
+        setVal(companies || null);
+      }
     } else if (name === "job") {
       const job = (options as JobTypes[]).find(
         (option) => option.jobTitle === getValues("job")
@@ -171,7 +188,7 @@ export default function AutoCompleteSearch({
 
   useEffect(() => {
     handleVal();
-  }, [setValue]);
+  }, [setValue, flag]);
 
   return (
     <Box className={`grid justify-stretch items-center gap-2`}>

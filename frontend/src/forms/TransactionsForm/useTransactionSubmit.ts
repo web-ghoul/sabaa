@@ -4,22 +4,36 @@ import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
 import { TransactionFormTypes } from "../../types/forms.types";
+import { getTransactions } from "../../store/transactionsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { ModalsContext } from "../../contexts/ModalsContext";
 
 const useTransactionSubmit = () => {
   const { server } = useAxios();
-  const { handleOpenFormsLoading, handleCloseFormsLoading } =
-    useContext(FormsContext);
+  const {
+    handleOpenFormsLoading,
+    handleCloseFormsLoading,
+    editableTransactionData,
+  } = useContext(FormsContext);
+  const { handleCloseTransactionModal } = useContext(ModalsContext);
+  const dispatch = useDispatch<AppDispatch>();
   const id = "";
 
   const addPreTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transaction`, { values, dob: new Date(values.dob) })
+      .post(`/transaction`, {
+        ...values,
+        dob: new Date(values.dob),
+      })
       .then(() => {
         handleAlert({
           msg: "Work Permit is created successfully",
           status: "success",
         });
+        handleCloseTransactionModal();
+        dispatch(getTransactions({}));
       })
       .catch((err) => {
         handleCatchError(err);
@@ -30,12 +44,14 @@ const useTransactionSubmit = () => {
   const editPreTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transaction`, values)
+      .patch(`/transaction/${editableTransactionData?._id}`, values)
       .then(() => {
         handleAlert({
-          msg: "Work Permit is created successfully",
+          msg: "Work Permit is updated successfully",
           status: "success",
         });
+        handleCloseTransactionModal();
+        dispatch(getTransactions({}));
       })
       .catch((err) => {
         handleCatchError(err);

@@ -578,13 +578,15 @@ interface RecentCompaniesArgsTypes {
 
 //Transaction
 interface TransactionTypes {
+  _id: string;
   transactionNo: string;
-  employeeId: string;
   serialNo: string;
+  employeeId: string;
   companyCode: string;
   companyId: string;
   companyName: string;
   employeeName: string;
+  nameAr: string;
   dob: string;
   gender: string;
   idNationality: string;
@@ -604,7 +606,6 @@ interface TransactionTypes {
   medicalDate: Date;
   changeStatusDate: Date;
   status: string;
-  wpStatus: string;
   statusDate: Date;
   cardType: string;
   salary: number;

@@ -131,6 +131,7 @@ interface AutoCompleteSearchTypes {
   setValue: UseFormSetValue<AllFormsTypes>;
   getValues: UseFormGetValues<AllFormsTypes>;
   variant?: EntityType;
+  flag?: boolean;
 }
 
 interface ProfileDetailsTypes {
