@@ -28,6 +28,9 @@ export class Transaction {
   @Prop()
   employeeName: string;
 
+  @Prop()
+  employeeNameAr: string;
+
   @Prop({ type: Date })
   dob: Date;
 

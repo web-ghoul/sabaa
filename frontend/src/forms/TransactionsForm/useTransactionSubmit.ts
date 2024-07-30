@@ -54,7 +54,7 @@ const useTransactionSubmit = () => {
           status: "success",
         });
         handleCloseTransactionModal();
-        dispatch(getTransactions({}));
+        // dispatch(getTransactions({type:"all"}));
       })
       .catch((err) => {
         handleCatchError(err);
