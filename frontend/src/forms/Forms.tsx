@@ -39,13 +39,13 @@ import RoleForm from "./RoleForm/RoleForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
-import ApprovalWorkPermitForm from "./TransactionsForm/ApprovalWorkPermitForm";
+import NewLCForm from "./TransactionsForm/NewLCForm";
 import TransactionForm from "./TransactionsForm/TransactionForm";
 import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
-const Forms = ({ type, index ,tType}: FormsTypes) => {
+const Forms = ({ type, index, tType }: FormsTypes) => {
   const { register, handleSubmitForm, errors, setValue, getValues } =
     useSubmitForm(type);
 
@@ -98,10 +98,7 @@ const Forms = ({ type, index ,tType}: FormsTypes) => {
           tType={tType}
         />
       )}
-      {(type === "addPreTransaction" ||
-        type === "editPreTransaction" ||
-        type === "newTransaction" ||
-        type === "renewTransaction") && (
+      {(type === "addTransaction" || type === "editTransaction") && (
         <TransactionForm
           register={register}
           errors={errors}
@@ -110,12 +107,13 @@ const Forms = ({ type, index ,tType}: FormsTypes) => {
           type={type}
         />
       )}
-      {type === "approvalTransaction" && (
-        <ApprovalWorkPermitForm
+      {type === "newLC" && (
+        <NewLCForm
           register={register}
           errors={errors}
           setValue={setValue}
           getValues={getValues}
+          type={type}
         />
       )}
       {/* Transaction */}

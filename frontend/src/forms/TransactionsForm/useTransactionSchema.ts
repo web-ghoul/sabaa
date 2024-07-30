@@ -5,24 +5,24 @@ import { FormsContext } from "../../contexts/FormsContext";
 const useTransactionSchema = () => {
   const { editableTransactionData } = useContext(FormsContext);
 
-  const PreTransactionSchema = yup.object({
+  const TransactionSchema = yup.object({
     transactionNo: yup.string().required("Transaction number is required"),
     serialNo: yup.string().required("Serial number is required"),
     gender: yup.string().required("Gender is required"),
     personCode: yup.string().required("Person Code is required"),
     companyCode: yup.string(),
-    companyId: yup.string(),
-    companyName: yup.string().required("Company is required"),
+    companyId: yup.string().required("Company Id is required"),
+    companyName: yup.string().required("Company Name is required"),
     employeeId: yup.string(),
     employeeName: yup.string().required("English Name is required"),
-    nameAr: yup.string().required("Arabic Name is required"),
-    dob: yup.string().required("Employee is required"),
-    idNationality: yup.string().required("Email is required"),
-    nationality: yup.string().required("Email is required"),
+    employeeNameAr: yup.string().required("Arabic Name is required"),
+    dob: yup.string().required("Date of Birth is required"),
+    idNationality: yup.string().required("Nationality Id is required"),
+    nationality: yup.string().required("Nationality is required"),
     passportNumber: yup.string().required("Passport Number is required"),
     passportExpiry: yup.string().required("Passport Expire Date is required"),
     job: yup.string().required("Job is required"),
-    uid: yup.string().required("Job is required"),
+    uid: yup.string().required("UID Number is required"),
     emiratesNo: yup.string(),
     cardType: yup.string().required("Email is required"),
     salary: yup.string(),
@@ -34,7 +34,7 @@ const useTransactionSchema = () => {
     visitExpiryDate: yup.string(),
   });
 
-  const PreTransactionInitialValues = {
+  const TransactionInitialValues = {
     transactionNo: editableTransactionData?.transactionNo || "",
     serialNo: editableTransactionData?.serialNo || "",
     personCode: editableTransactionData?.personCode || "",
@@ -44,7 +44,7 @@ const useTransactionSchema = () => {
     companyName: editableTransactionData?.companyName || "",
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
-    nameAr: "",
+    employeeNameAr: editableTransactionData?.employeeNameAr || "",
     dob: editableTransactionData?.dob || "",
     idNationality: editableTransactionData?.idNationality || "",
     nationality: editableTransactionData?.nationality || "",
@@ -63,16 +63,7 @@ const useTransactionSchema = () => {
     visitExpiryDate: editableTransactionData?.visitExpiryDate || "",
   };
 
-  const ApprovedTransactionSchema = yup.object({});
-
-  const ApprovedTransactionInitialValues = {
-    personCode: "",
-    workPermit: "",
-    workPermitExpiryDate: "",
-    visitExpiryDate: "",
-  };
-
-  const NewTransactionSchema = yup.object({
+  const NewLCSchema = yup.object({
     lcNo: yup.string().required("Labour Card Number is required"),
     lcExpiryDate: yup.string().required("Labour Card Expire Date is required"),
     tawjeehDate: yup.string(),
@@ -81,25 +72,7 @@ const useTransactionSchema = () => {
     residenceExpiryDate: yup.string(),
   });
 
-  const NewTransactionInitialValues = {
-    lcNo: "",
-    lcExpiryDate: "",
-    tawjeehDate: "",
-    changeStatusDate: "",
-    medicalDate: "",
-    residenceExpiryDate: "",
-  };
-
-  const RenewTransactionSchema = yup.object({
-    lcNo: yup.string().required("Labour Card Number is required"),
-    lcExpiryDate: yup.string().required("Labour Card Expire Date is required"),
-    tawjeehDate: yup.string(),
-    changeStatusDate: yup.string(),
-    medicalDate: yup.string(),
-    residenceExpiryDate: yup.string(),
-  });
-
-  const RenewTransactionInitialValues = {
+  const NewLCInitialValues = {
     lcNo: "",
     lcExpiryDate: "",
     tawjeehDate: "",
@@ -109,14 +82,10 @@ const useTransactionSchema = () => {
   };
 
   return {
-    PreTransactionSchema,
-    PreTransactionInitialValues,
-    NewTransactionSchema,
-    NewTransactionInitialValues,
-    RenewTransactionSchema,
-    RenewTransactionInitialValues,
-    ApprovedTransactionInitialValues,
-    ApprovedTransactionSchema,
+    TransactionSchema,
+    TransactionInitialValues,
+    NewLCSchema,
+    NewLCInitialValues,
   };
 };
 

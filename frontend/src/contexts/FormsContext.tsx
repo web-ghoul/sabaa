@@ -49,6 +49,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForActivities: () => {},
   searchForNationalities: "",
   setSearchForNationalities: () => {},
+  searchForTransactions: "",
+  setSearchForTransactions: () => {},
   companyImage: "",
   setCompanyImage: () => {},
   ownerImage: "",
@@ -123,6 +125,7 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
+  const [searchForTransactions, setSearchForTransactions] = useState("");
 
   //Company Image
   const [companyImage, setCompanyImage] = useState<File | string>(
@@ -316,6 +319,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setEditableTransactionData,
     editableRoleData,
     setEditableRoleData,
+    searchForTransactions,
+    setSearchForTransactions,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

@@ -153,6 +153,8 @@ interface FormsContextTypes {
   setSearchForJobs: (search: string) => void;
   searchForNationalities: string;
   setSearchForNationalities: (search: string) => void;
+  searchForTransactions: string;
+  setSearchForTransactions: (search: string) => void;
   companyImage: File | string;
   setCompanyImage: (image: File | string) => void;
   ownerImage: File | string;
@@ -262,9 +264,9 @@ interface ModalsContextTypes {
   openTransactionModal: boolean;
   handleOpenTransactionModal: (string: string) => void;
   handleCloseTransactionModal: () => void;
-  openApprovalWorkPermitModal: boolean;
-  handleOpenApprovalWorkPermitModal: () => void;
-  handleCloseApprovalWorkPermitModal: () => void;
+  openNewLCModal: boolean;
+  handleOpenNewLCModal: () => void;
+  handleCloseNewLCModal: () => void;
   openRoleModal: boolean;
   handleOpenRoleModal: (string: string) => void;
   handleCloseRoleModal: () => void;

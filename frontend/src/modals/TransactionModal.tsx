@@ -8,6 +8,7 @@ const TransactionModal = () => {
   const { openTransactionModal, handleCloseTransactionModal } =
     useContext(ModalsContext);
   const { formType } = useContext(FormsContext);
+
   return (
     <Modal
       open={openTransactionModal}

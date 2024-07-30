@@ -65,9 +65,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openTransactionModal: false,
   handleOpenTransactionModal: () => {},
   handleCloseTransactionModal: () => {},
-  openApprovalWorkPermitModal: false,
-  handleOpenApprovalWorkPermitModal: () => {},
-  handleCloseApprovalWorkPermitModal: () => {},
+  openNewLCModal: false,
+  handleOpenNewLCModal: () => {},
+  handleCloseNewLCModal: () => {},
   openRoleModal: false,
   handleOpenRoleModal: () => {},
   handleCloseRoleModal: () => {},
@@ -394,18 +394,17 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   };
   //Transaction Modal
 
-  //Transaction Modal
-  const [openApprovalWorkPermitModal, setOpenApprovalWorkPermitModal] =
-    useState(false);
+  //New Labour Card Modal
+  const [openNewLCModal, setOpenNewLCModal] = useState(false);
 
-  const handleCloseApprovalWorkPermitModal = () => {
-    setOpenApprovalWorkPermitModal(false);
+  const handleCloseNewLCModal = () => {
+    setOpenNewLCModal(false);
   };
 
-  const handleOpenApprovalWorkPermitModal = () => {
-    setOpenApprovalWorkPermitModal(true);
+  const handleOpenNewLCModal = () => {
+    setOpenNewLCModal(true);
   };
-  //Transaction Modal
+  //New Labour Card Modal
 
   //Permission Modal
   const [openRoleModal, setOpenRoleModal] = useState(false);
@@ -481,9 +480,9 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     openTransactionModal,
     handleCloseTransactionModal,
     handleOpenTransactionModal,
-    openApprovalWorkPermitModal,
-    handleCloseApprovalWorkPermitModal,
-    handleOpenApprovalWorkPermitModal,
+    openNewLCModal,
+    handleCloseNewLCModal,
+    handleOpenNewLCModal,
     openRoleModal,
     handleOpenRoleModal,
     handleCloseRoleModal,

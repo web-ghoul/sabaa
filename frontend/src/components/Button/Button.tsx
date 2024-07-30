@@ -77,7 +77,7 @@ const Button = ({
       handleOpenNatwasalModal("addNatwasal");
     } else if (newTitle === "add transaction") {
       setEditableTransactionData(null);
-      handleOpenTransactionModal("addPreTransaction");
+      handleOpenTransactionModal("addTransaction");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");

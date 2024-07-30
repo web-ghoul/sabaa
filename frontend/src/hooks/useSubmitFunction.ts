@@ -41,6 +41,7 @@ import {
   LoginFormTypes,
   NationalityFormTypes,
   NatwasalFormTypes,
+  NewLabourCardFormTypes,
   OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
@@ -80,7 +81,7 @@ const useSubmitFunction = (type: string) => {
   const { createEmployeesSheet } = useCreateEmployeesSheetSubmit();
   const { convertCustomer } = useConvertCustomerSubmit();
   const { handleDownloadExcelSubmit } = useDownloadExcelSubmit();
-  const { addPreTransaction, editPreTransaction } = useTransactionSubmit();
+  const { addTransaction, editTransaction, newLC } = useTransactionSubmit();
   const { addRole, editRole } = useRoleSubmit();
 
   const submitFunction = (values: AllFormsTypes | unknown) => {
@@ -203,11 +204,14 @@ const useSubmitFunction = (type: string) => {
       case "editNatwasal":
         editNatwasal(values as NatwasalFormTypes);
         break;
-      case "addPreTransaction":
-        addPreTransaction(values as TransactionFormTypes);
+      case "addTransaction":
+        addTransaction(values as TransactionFormTypes);
         break;
-      case "editPreTransaction":
-        editPreTransaction(values as TransactionFormTypes);
+      case "editTransaction":
+        editTransaction(values as TransactionFormTypes);
+        break;
+      case "newLC":
+        newLC(values as NewLabourCardFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

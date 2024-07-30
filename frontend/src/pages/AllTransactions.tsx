@@ -24,7 +24,7 @@ const AllTransactions = () => {
   const { handleGetQueries } = useQueries();
 
   useEffect(() => {
-    dispatch(getTransactions(handleGetQueries()));
+    dispatch(getTransactions({...handleGetQueries(),type:"all"}));
   }, [dispatch]);
 
   return (

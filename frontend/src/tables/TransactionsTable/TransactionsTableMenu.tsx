@@ -1,7 +1,7 @@
 import {
+  AddCardRounded,
   DeleteRounded,
   EditRounded,
-  JoinFullRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
+import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
@@ -17,26 +18,22 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   // const navigate = useNavigate();
-  // const { editableTransactionData } = useContext(FormsContext);
+  const { editableTransactionData } = useContext(FormsContext);
   const {
     handleOpenTransactionModal,
     handleOpenDeleteModal,
-    handleOpenLinkToCompanyModal,
+    handleOpenNewLCModal,
   } = useContext(ModalsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {};
 
-  const handleLink = () => {
-    handleOpenLinkToCompanyModal("linkOwner");
-  };
-
-  const handleEditAll = () => {
-    handleOpenTransactionModal("editPreTransaction");
-  };
-
   const handleEdit = () => {
-    // handleOpenTransactionModal("editOwner");
+    handleOpenTransactionModal("editTransaction");
+  };
+
+  const handleNewLc = () => {
+    handleOpenNewLCModal();
   };
 
   const handleDelete = () => {
@@ -52,158 +49,47 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
   }, [pathname, sheet]);
 
   return (
-    <>
-      {type === "all" && (
-        <Menu
-          className={`grid justify-stretch items-center gap-0`}
-          open={Boolean(openTableMenu)}
-          elevation={3}
-          onClose={handleCloseTableMenu}
-          anchorEl={openTableMenu}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <TableMenuItem
-            icon={<VisibilityRounded />}
-            title={"View"}
-            handling={handleView}
-          />
-          <TableMenuItem
-            icon={<EditRounded />}
-            title={"Edit"}
-            handling={handleEditAll}
-          />
-          <TableMenuItem
-            icon={<DeleteRounded />}
-            title={"Delete"}
-            handling={handleDelete}
-          />
-        </Menu>
+    <Menu
+      className={`grid justify-stretch items-center gap-0`}
+      open={Boolean(openTableMenu)}
+      elevation={3}
+      onClose={handleCloseTableMenu}
+      anchorEl={openTableMenu}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+    >
+      <TableMenuItem
+        icon={<VisibilityRounded />}
+        title={"View"}
+        handling={handleView}
+      />
+      <TableMenuItem
+        icon={<EditRounded />}
+        title={"Edit"}
+        handling={handleEdit}
+      />
+      {(type === "pre" ||
+        type === "new" ||
+        (editableTransactionData &&
+          editableTransactionData.status.toLowerCase() === "approved")) && (
+        <TableMenuItem
+          icon={<AddCardRounded />}
+          title={"New Labour Card"}
+          handling={handleNewLc}
+        />
       )}
-
-      {type === "pre" && (
-        <Menu
-          className={`grid justify-stretch items-center gap-0`}
-          open={Boolean(openTableMenu)}
-          elevation={3}
-          onClose={handleCloseTableMenu}
-          anchorEl={openTableMenu}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <TableMenuItem
-            icon={<VisibilityRounded />}
-            title={"View"}
-            handling={handleView}
-          />
-          <TableMenuItem
-            icon={<JoinFullRounded />}
-            title={"Link"}
-            handling={handleLink}
-          />
-          <TableMenuItem
-            icon={<EditRounded />}
-            title={"Edit"}
-            handling={handleEdit}
-          />
-          <TableMenuItem
-            icon={<DeleteRounded />}
-            title={"Delete"}
-            handling={handleDelete}
-          />
-        </Menu>
-      )}
-
-      {type === "new" && (
-        <Menu
-          className={`grid justify-stretch items-center gap-0`}
-          open={Boolean(openTableMenu)}
-          elevation={3}
-          onClose={handleCloseTableMenu}
-          anchorEl={openTableMenu}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <TableMenuItem
-            icon={<VisibilityRounded />}
-            title={"View"}
-            handling={handleView}
-          />
-          <TableMenuItem
-            icon={<JoinFullRounded />}
-            title={"Link"}
-            handling={handleLink}
-          />
-          <TableMenuItem
-            icon={<EditRounded />}
-            title={"Edit"}
-            handling={handleEdit}
-          />
-          <TableMenuItem
-            icon={<DeleteRounded />}
-            title={"Delete"}
-            handling={handleDelete}
-          />
-        </Menu>
-      )}
-
-      {type === "renew" && (
-        <Menu
-          className={`grid justify-stretch items-center gap-0`}
-          open={Boolean(openTableMenu)}
-          elevation={3}
-          onClose={handleCloseTableMenu}
-          anchorEl={openTableMenu}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <TableMenuItem
-            icon={<VisibilityRounded />}
-            title={"View"}
-            handling={handleView}
-          />
-          <TableMenuItem
-            icon={<JoinFullRounded />}
-            title={"Link"}
-            handling={handleLink}
-          />
-          <TableMenuItem
-            icon={<EditRounded />}
-            title={"Edit"}
-            handling={handleEdit}
-          />
-          <TableMenuItem
-            icon={<DeleteRounded />}
-            title={"Delete"}
-            handling={handleDelete}
-          />
-        </Menu>
-      )}
-    </>
+      <TableMenuItem
+        icon={<DeleteRounded />}
+        title={"Delete"}
+        handling={handleDelete}
+      />
+    </Menu>
   );
 };
 

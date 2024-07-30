@@ -84,12 +84,11 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if (type == "pre_approved") {
-      query.status = "approved";
-    }else if (type == "new") {
-      query.lcNo = {$exists: true};
-    }else if (type == "all") {
-      
+    if (type == 'pre') {
+      query.status = 'Approved';
+    } else if (type == 'new') {
+      query.lcNo = { $exists: true };
+    } else if (type == 'all') {
     }
 
     if (residenceFrom || residenceTo) {
@@ -112,23 +111,17 @@ export class TransactionsService {
       }
     }
 
-    
-
-    const fieldsToSelect = selectFields && selectFields.length ? selectFields.join(' ') : '';
-
-   
+    const fieldsToSelect =
+      selectFields && selectFields.length ? selectFields.join(' ') : '';
 
     const sortBy = {};
 
     if (sort) {
       sortBy[sort] = -1;
-      
-    }else{
-      sortBy['createdAt'] = -1
-      sortBy['status'] = -1 ; 
+    } else {
+      sortBy['createdAt'] = -1;
+      sortBy['status'] = -1;
     }
-
-    
 
     return this.transactionModel
       .find(query)
