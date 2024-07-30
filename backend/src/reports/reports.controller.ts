@@ -1,15 +1,23 @@
-import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Delete, Res } from '@nestjs/common';
 import { ReportsService } from './reports.service';
-
+import { Response } from 'express';
 import { UpdateReportDto } from './dto/update-report.dto';
 
 @Controller('reports')
 export class ReportsController {
   constructor(private readonly reportsService: ReportsService) {}
 
-  @Get('EmployeePdf/:id')
-  EmployeePdf(@Param('id') id: string) {
-    return this.reportsService.generateEmployeePdf(id);
+  @Get('EmployeeDetail/:id')
+  async EmployeePdf(@Param('id') id: string,@Res()  res: Response) {
+    const pdfDoc: any = await this.reportsService.generateEmployeePdf(id);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=employeeDetail.pdf',
+    );
+
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   }
 
   @Get()

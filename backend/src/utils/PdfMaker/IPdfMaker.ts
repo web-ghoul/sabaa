@@ -7,7 +7,7 @@ export class PdfGenerator {
     this.printer = new PdfPrinter(fonts);
   }
 
-  generatePdf(docDefinition : object) {
+  generatePdf(docDefinition : any) {
     
     try{
       const pdfDoc = this.printer.createPdfKitDocument(docDefinition as any);
