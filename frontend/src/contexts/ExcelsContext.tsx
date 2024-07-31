@@ -20,6 +20,7 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  TransactionTypes,
 } from "../types/store.types";
 
 export const ExcelsContext = createContext<ExcelsContextProps>({
@@ -276,8 +277,10 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
     index: 0,
   });
 
-  const handleAddTransactionsSheet = (companiesSheet: CompaniesSheetTypes) => {
-    setTransactionsSheets([...transactionsSheets, companiesSheet]);
+  const handleAddTransactionsSheet = (
+    transactionsSheet: TransactionsSheetTypes
+  ) => {
+    setTransactionsSheets([...transactionsSheets, transactionsSheet]);
   };
 
   const handleRemoveTransactionsSheet = (fileIndex: number) => {
@@ -293,12 +296,12 @@ const ExcelsProvider = ({ children }: { children: React.ReactNode }) => {
     setTransactionsSheets(updatedTransactionsSheets);
   };
 
-  const handleEditTransactionInSheet = (company: CompanyTypes) => {
+  const handleEditTransactionInSheet = (transaction: TransactionTypes) => {
     if (transactionIndex) {
       const newTransactionsSheets = [...transactionsSheets];
       newTransactionsSheets[transactionIndex.fileIndex].data[
         transactionIndex.index
-      ] = company;
+      ] = transaction;
       setTransactionsSheets(newTransactionsSheets);
     } else {
       handleAlert({ msg: "Error Occurs", status: "error" });

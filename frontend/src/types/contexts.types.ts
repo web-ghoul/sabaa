@@ -101,9 +101,9 @@ interface ExcelsContextProps {
   transactionsSheets: TransactionsSheetTypes[];
   transactionIndex: { fileIndex: number; index: number };
   setTransactionIndex: (value: { fileIndex: number; index: number }) => void;
-  handleAddTransactionsSheet: (companiesSheet: CompaniesSheetTypes) => void;
+  handleAddTransactionsSheet: (companiesSheet: TransactionsSheetTypes) => void;
   handleRemoveTransactionsSheet: (fileIndex: number) => void;
-  handleEditTransactionInSheet: (value: CompanyTypes) => void;
+  handleEditTransactionInSheet: (value: TransactionTypes) => void;
   handleDeleteTransactionFromSheet: () => void;
   jobsSheets: JobsSheetTypes[];
   jobIndex: { fileIndex: number; index: number };

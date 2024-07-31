@@ -340,6 +340,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
           expireDate: new Date(),
         },
         fileImmgNo: "",
+        companyName: [],
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;
