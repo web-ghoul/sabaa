@@ -34,6 +34,7 @@ import { getTasheels } from "../../store/tasheelsSlice";
 import { getUsersCounter } from "../../store/usersCounterSlice";
 import { getUsers } from "../../store/usersSlice";
 import { getTransactions } from "../../store/transactionsSlice";
+import { getRoles } from "../../store/rolesSlice";
 
 const useDeleteSubmit = () => {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -54,6 +55,7 @@ const useDeleteSubmit = () => {
     editableNationalityData,
     editableUserData,
     editableTransactionData,
+    editableRoleData,
     formType,
   } = useContext(FormsContext);
   const { handleCloseDeleteModal, handleCloseViewSponsorModal } =
@@ -327,6 +329,20 @@ const useDeleteSubmit = () => {
             status: "success",
           });
           dispatch(getTransactions({}));
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else if (formType === "role") {
+      await server
+        .delete(`/permission/${editableRoleData && editableRoleData._id}`)
+        .then(() => {
+          handleAlert({
+            msg: "Role is deleted Successfully",
+            status: "success",
+          });
+          dispatch(getRoles());
           handleCloseDeleteModal();
         })
         .catch((err) => {

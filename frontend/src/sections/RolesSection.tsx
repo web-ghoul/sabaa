@@ -1,10 +1,9 @@
 import { AddRounded } from "@mui/icons-material";
 import { Box } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button/Button";
 import RoleCard from "../components/RoleCard/RoleCard";
-import { ModalsContext } from "../contexts/ModalsContext";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getRoles } from "../store/rolesSlice";
 import { AppDispatch, RootState } from "../store/store";
@@ -12,12 +11,6 @@ import { AppDispatch, RootState } from "../store/store";
 const RolesSection = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { roles, isLoading } = useSelector((state: RootState) => state.roles);
-  const { handleOpenRoleModal } = useContext(ModalsContext);
-
-  const handleAddRole = () => {
-    handleOpenRoleModal("addRole");
-  };
-
   useEffect(() => {
     dispatch(getRoles());
   }, [dispatch]);
@@ -25,13 +18,9 @@ const RolesSection = () => {
   return (
     <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
       <Box className={`flex justify-end items-center`}>
-        <Button
-          icon={<AddRounded />}
-          handling={handleAddRole}
-          title={"Add Role"}
-        />
+        <Button icon={<AddRounded />} title={"Add Role"} />
       </Box>
-      <Box>
+      <Box className={`grid justify-stretch items-center grid-cols-4 gap-8`}>
         {!isLoading && roles
           ? roles.map((role, i) => <RoleCard role={role} key={i} />)
           : ""}

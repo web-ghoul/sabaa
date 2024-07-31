@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -34,20 +34,18 @@ const Owner = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
-        <Box className={`flex justify-between items-center gap-4`}>
-          <BreadCrumbs>
-            <Link
-              to={`${import.meta.env.VITE_OWNERS_ROUTE}`}
-              className={`text-black !font-[600] hover:text-primary`}
-              key={1}
-            >
-              <Typography variant="h6">Owners</Typography>
-            </Link>
-            <Typography variant="h6" key="2">
-              {owner && owner.name}
-            </Typography>
-          </BreadCrumbs>
-        </Box>
+        <BreadCrumbs>
+          <Link
+            to={`${import.meta.env.VITE_OWNERS_ROUTE}`}
+            className={`text-black !font-[600] hover:text-primary`}
+            key={1}
+          >
+            <Typography variant="h6">Owners</Typography>
+          </Link>
+          <Typography variant="h6" key="2">
+            {owner && owner.name}
+          </Typography>
+        </BreadCrumbs>
         <OwnerProfile
           companies={companies}
           owner={owner}

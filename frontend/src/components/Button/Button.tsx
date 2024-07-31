@@ -30,6 +30,7 @@ const Button = ({
     setEditableTasheelData,
     setEditableNatwasalData,
     setEditableTransactionData,
+    setEditableRoleData,
   } = useContext(FormsContext);
   const {
     handleOpenUserModal,
@@ -41,13 +42,15 @@ const Button = ({
     handleOpenTasheelModal,
     handleOpenNatwasalModal,
     handleOpenTransactionModal,
+    handleOpenRoleModal,
   } = useContext(ModalsContext);
   const navigate = useNavigate();
+
 
   const handleClick = () => {
     const newTitle = title?.toLowerCase();
     const newVar = variant?.toLowerCase();
-    if (newVar === "under development") {
+  if (newVar === "under development") {
       handleAlert({ msg: "Under Development..." });
     } else if (newTitle === "add owner") {
       handleOpenOwnerModal("addOwner");
@@ -78,6 +81,9 @@ const Button = ({
     } else if (newTitle === "add transaction") {
       setEditableTransactionData(null);
       handleOpenTransactionModal("addTransaction");
+    }else if (newTitle === "add role") {
+      setEditableRoleData(null);
+      handleOpenRoleModal("addRole");
     } else if (newTitle === "edit") {
       if (newVar === "owner") {
         handleOpenOwnerModal("editOwner");

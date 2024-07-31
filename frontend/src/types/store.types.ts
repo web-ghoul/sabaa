@@ -56,9 +56,14 @@ interface RecentActivitiesArgsTypes {
 interface RoleTypes {
   _id: string;
   name: string;
+  permissions:{[key:string]:{[key:string]:boolean}}
 }
 interface RolesValuesTypes {
   roles: RoleTypes[] | null;
+  isLoading: boolean;
+}
+interface RoleValuesTypes {
+  role: RoleTypes | null;
   isLoading: boolean;
 }
 //Roles
@@ -812,5 +817,6 @@ export type {
   RecentTransactionsValuesTypes,
   RecentTransactionsArgsTypes,
   RolesValuesTypes,
-  RoleTypes
+  RoleTypes,
+  RoleValuesTypes,
 };

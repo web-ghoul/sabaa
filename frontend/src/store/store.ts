@@ -42,6 +42,7 @@ import usersReducers from "./usersSlice.ts";
 import transactionsCounterReducer from "./transactionsCounterSlice.ts";
 import transactionsReducer from "./transactionsSlice.ts";
 import rolesReducers from "./rolesSlice.ts";
+import roleReducers from "./roleSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -71,6 +72,7 @@ export const store = configureStore({
     customers: customersReducers,
     recentCustomers: recentCustomersReducers,
     roles: rolesReducers,
+    role: roleReducers,
     pro: proReducers,
     pros: prosReducers,
     prosCounter: prosCounterReducers,

@@ -10,6 +10,7 @@ interface ImportMetaEnv {
   VITE_RESET_PASSWORD_ROUTE: string;
   VITE_DASHBOARD_ROUTE: string;
   VITE_SETTINGS_ROUTE: string;
+  VITE_EDIT_PERMISSION_ROUTE: string;
   VITE_OWNERS_ROUTE: string;
   VITE_PROS_ROUTE: string;
   VITE_CUSTOMERS_ROUTE: string;

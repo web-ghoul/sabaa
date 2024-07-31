@@ -1,12 +1,14 @@
 import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { RoleFormTypes } from "../../types/forms.types";
+import { getRoles } from "../../store/rolesSlice";
+import { useNavigate } from "react-router-dom";
 
 const useRoleSubmit = () => {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -14,6 +16,8 @@ const useRoleSubmit = () => {
   const { handleOpenFormsLoading, handleCloseFormsLoading, editableRoleData } =
     useContext(FormsContext);
   const { handleCloseRoleModal } = useContext(ModalsContext);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const addRole = async (values: RoleFormTypes) => {
     handleOpenFormsLoading();
@@ -24,6 +28,7 @@ const useRoleSubmit = () => {
           msg: "Role is Created Successfully",
           status: "success",
         });
+        dispatch(getRoles());
         handleCloseRoleModal();
       })
       .catch((err) => {
@@ -41,7 +46,7 @@ const useRoleSubmit = () => {
           msg: "Role is Updated Successfully",
           status: "success",
         });
-        handleCloseRoleModal();
+        navigate(`${import.meta.env.VITE_SETTINGS_ROUTE}`);
       })
       .catch((err) => {
         handleCatchError(err);

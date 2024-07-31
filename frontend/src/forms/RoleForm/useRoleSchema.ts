@@ -7,10 +7,12 @@ const useRoleSchema = () => {
 
   const RoleSchema = yup.object({
     name: yup.string().required("Role Name is required"),
+    permissions: yup.object(),
   });
 
   const RoleInitialValues = {
     name: editableRoleData?.name || "",
+    permissions: {},
   };
 
   return { RoleSchema, RoleInitialValues };

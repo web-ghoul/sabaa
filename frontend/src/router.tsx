@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import EChannels from "./pages/EChannels.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
+import EditPermission from "./pages/EditPermission.tsx";
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
@@ -189,6 +190,10 @@ export const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/settings/permission/:id",
+        element: <EditPermission />,
       },
       {
         path: "/fileManager",
