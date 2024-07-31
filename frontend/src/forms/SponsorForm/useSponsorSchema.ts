@@ -28,7 +28,7 @@ const useSponsorSchema = () => {
     remarks: yup.string(),
   });
 
-  const SponsorInitailValues = {
+  const SponsorInitialValues = {
     name: editableSponsorData?.name || "",
     nameAr: editableSponsorData?.nameAr || "",
     avatar: editableSponsorData?.avatar || "",
@@ -64,7 +64,7 @@ const useSponsorSchema = () => {
     }
   }, [editableSponsorData, setSponsorImage]);
 
-  return { SponsorSchema, SponsorInitailValues };
+  return { SponsorSchema, SponsorInitialValues };
 };
 
 export default useSponsorSchema;

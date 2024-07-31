@@ -25,7 +25,7 @@ const useActivitiesOptionsSchema = () => {
     to: yup.string(),
   });
 
-  const ActivitiesOptionsInitailValues = {
+  const ActivitiesOptionsInitialValues = {
     search: "",
     type: "",
     operation: "",
@@ -37,7 +37,7 @@ const useActivitiesOptionsSchema = () => {
     dispatch(getActivities(allParams));
   }, [dispatch, allParams]);
 
-  return { ActivitiesOptionsSchema, ActivitiesOptionsInitailValues };
+  return { ActivitiesOptionsSchema, ActivitiesOptionsInitialValues };
 };
 
 export default useActivitiesOptionsSchema;

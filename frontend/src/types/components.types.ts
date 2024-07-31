@@ -54,6 +54,8 @@ interface SidebarItemTypes {
   title: string;
   icon: ReactNode;
   url: string;
+  sub?: boolean;
+  children?: ReactNode;
 }
 
 interface InputTypes {
@@ -77,12 +79,14 @@ interface ButtonTypes {
   variant?: string;
   type?: "button" | "submit";
   handling?: () => void;
+  loading?: boolean;
 }
 
 interface SubmitButtonTypes {
   loading: boolean;
   children: ReactNode;
   variant?: string;
+  handling?: () => void;
 }
 
 interface TitleTypes {
@@ -127,6 +131,7 @@ interface AutoCompleteSearchTypes {
   setValue: UseFormSetValue<AllFormsTypes>;
   getValues: UseFormGetValues<AllFormsTypes>;
   variant?: EntityType;
+  flag?: boolean;
 }
 
 interface ProfileDetailsTypes {
@@ -157,6 +162,13 @@ interface UploadStatusTypes {
   text: string;
 }
 
+interface ExcelButtonsTypes {
+  variant: EntitiesType;
+  addBtn?: string;
+  upload?: boolean;
+  all?: boolean;
+}
+
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
@@ -174,4 +186,5 @@ export type {
   UploadImageTypes,
   UploadStatusTypes,
   UserBoxTypes,
+  ExcelButtonsTypes,
 };

@@ -74,7 +74,12 @@ const UsersTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"users"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"users"}
+      noPagination={noPagination}
+      loading={isLoading}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

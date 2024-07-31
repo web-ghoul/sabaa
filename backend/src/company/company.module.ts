@@ -25,6 +25,6 @@ import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
  
   controllers: [CompanyController],
   providers: [CompanyService,LogInterceptor],
-  exports: [CompanyService]
+  exports: [CompanyService,MongooseModule.forFeature([{ name: 'Company', schema: CompanySchema }, { name: ActivityLog.name, schema: ActivityLogSchema }])]
 })
 export class CompanyModule {}

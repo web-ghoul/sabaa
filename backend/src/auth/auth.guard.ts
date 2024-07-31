@@ -9,10 +9,12 @@ import { Reflector } from '@nestjs/core';
   import { JwtService } from '@nestjs/jwt';
   import { Request } from 'express';
 import { Role } from 'src/enum/role.enum';
+import { PermissionService } from 'src/permission/permission.service';
+
   
   @Injectable()
   export class AuthGuard implements CanActivate {
-    constructor(private jwtService: JwtService , private reflector: Reflector) {}
+    constructor(private jwtService: JwtService, private reflector: Reflector, private permissionService: PermissionService) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
 
@@ -41,6 +43,17 @@ import { Role } from 'src/enum/role.enum';
           }
        
         request['user'] = payload;
+        const permission = await this.permissionService.findOneByName(payload.role);
+        const path = request.route.path.split('/')[2] ;
+        let method : string = request.method;
+        if(method === 'GET'){
+          method = "read"
+        }
+        
+        // if(permission.permissions.get(path)[method.toLowerCase()] == false){
+        //   throw new UnauthorizedException();
+        // }
+
         const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
             context.getHandler(),
             context.getClass(),

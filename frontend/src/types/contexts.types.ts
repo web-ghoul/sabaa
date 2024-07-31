@@ -9,8 +9,10 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  RoleTypes,
   SponsorTypes,
   TasheelTypes,
+  TransactionTypes,
   UserTypes,
 } from "./store.types";
 
@@ -96,6 +98,13 @@ interface ExcelsContextProps {
   handleRemoveCompaniesSheet: (fileIndex: number) => void;
   handleEditCompanyInSheet: (value: CompanyTypes) => void;
   handleDeleteCompanyFromSheet: () => void;
+  transactionsSheets: TransactionsSheetTypes[];
+  transactionIndex: { fileIndex: number; index: number };
+  setTransactionIndex: (value: { fileIndex: number; index: number }) => void;
+  handleAddTransactionsSheet: (companiesSheet: TransactionsSheetTypes) => void;
+  handleRemoveTransactionsSheet: (fileIndex: number) => void;
+  handleEditTransactionInSheet: (value: TransactionTypes) => void;
+  handleDeleteTransactionFromSheet: () => void;
   jobsSheets: JobsSheetTypes[];
   jobIndex: { fileIndex: number; index: number };
   setJobIndex: (value: { fileIndex: number; index: number }) => void;
@@ -144,6 +153,8 @@ interface FormsContextTypes {
   setSearchForJobs: (search: string) => void;
   searchForNationalities: string;
   setSearchForNationalities: (search: string) => void;
+  searchForTransactions: string;
+  setSearchForTransactions: (search: string) => void;
   companyImage: File | string;
   setCompanyImage: (image: File | string) => void;
   ownerImage: File | string;
@@ -182,6 +193,10 @@ interface FormsContextTypes {
   setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
   editableNatwasalData: TasheelTypes | null;
   setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
+  editableTransactionData: TransactionTypes | null;
+  setEditableTransactionData: (transaction: TransactionTypes | null) => void;
+  editableRoleData: RoleTypes | null;
+  setEditableRoleData: (role: RoleTypes | null) => void;
 }
 
 interface ModalsContextTypes {
@@ -246,6 +261,15 @@ interface ModalsContextTypes {
   openNatwasalModal: boolean;
   handleOpenNatwasalModal: (string: string) => void;
   handleCloseNatwasalModal: () => void;
+  openTransactionModal: boolean;
+  handleOpenTransactionModal: (string: string) => void;
+  handleCloseTransactionModal: () => void;
+  openNewLCModal: boolean;
+  handleOpenNewLCModal: () => void;
+  handleCloseNewLCModal: () => void;
+  openRoleModal: boolean;
+  handleOpenRoleModal: (string: string) => void;
+  handleCloseRoleModal: () => void;
 }
 
 interface TabsContextProps {
@@ -261,6 +285,8 @@ interface TabsContextProps {
   setCustomerTabsValue: (value: number) => void;
   companyTabsValue: number;
   setCompanyTabsValue: (value: number) => void;
+  settingsTabsValue: number;
+  setSettingsTabsValue: (value: number) => void;
 }
 
 interface OwnersSheetTypes {
@@ -286,6 +312,11 @@ interface CustomersSheetTypes {
 interface CompaniesSheetTypes {
   fileName: string;
   data: Array<CompanyTypes>;
+}
+
+interface TransactionsSheetTypes {
+  fileName: string;
+  data: Array<TransactionTypes>;
 }
 
 interface UsersSheetTypes {
@@ -318,4 +349,5 @@ export type {
   SidebarsContextProps,
   TabsContextProps,
   UsersSheetTypes,
+  TransactionsSheetTypes,
 };

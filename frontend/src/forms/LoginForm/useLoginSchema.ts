@@ -9,12 +9,12 @@ const useLoginSchema = () => {
       .required("Password is required"),
   });
 
-  const LoginInitailValues = {
+  const LoginInitialValues = {
     email: "",
     password: "",
   };
 
-  return { LoginSchema, LoginInitailValues };
+  return { LoginSchema, LoginInitialValues };
 };
 
 export default useLoginSchema;

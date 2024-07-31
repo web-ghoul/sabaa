@@ -1,18 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { ModalsContext } from "../../contexts/ModalsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -25,8 +20,6 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const { searchForCompanies, setSearchForCompanies } =
     useContext(FormsContext);
-
-  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
 
   const handleSearch = (value: string) => {
     setSearchForCompanies(value);
@@ -63,14 +56,6 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
 
   const handleFilterByLicenseExpireDateTo = (value: string) => {
     handleAddQuery({ licenseTo: value });
-  };
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "companies");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "companies");
   };
 
   const handleFilter = () => {
@@ -110,31 +95,7 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4  md:gap-3 sm:!gap-2 flex-wrap`}
-        >
-          <Button icon={<AddRounded />} title={"Add Company"} />
-          <Button
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`)
-            }
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            title={"Upload Excel"}
-          />
-          <Button
-            icon={<RiFileExcel2Fill />}
-            handling={handleDownloadExcel}
-            bg={"excel"}
-            title={"Excel"}
-          />
-          <Button
-            icon={<RiFileExcel2Fill />}
-            handling={handleDownloadExcelAll}
-            bg={"excel"}
-            title={"Excel All"}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Company"} variant="companies"  />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

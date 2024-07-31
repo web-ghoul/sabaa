@@ -10,12 +10,12 @@ const useJobsOptionsSchema = () => {
     limit: yup.string(),
   });
 
-  const JobsOptionsInitailValues = {
+  const JobsOptionsInitialValues = {
     search: "",
     limit: allParams.limit || "",
   };
 
-  return { JobsOptionsSchema, JobsOptionsInitailValues };
+  return { JobsOptionsSchema, JobsOptionsInitialValues };
 };
 
 export default useJobsOptionsSchema;

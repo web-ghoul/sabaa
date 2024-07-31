@@ -9,7 +9,7 @@ import { EChannel } from 'schemas/eChannel.schema';
 import { Employee } from 'schemas/employee.schema';
 import { Natwasal } from 'schemas/natwasal.schema';
 import { Tasaheel } from 'schemas/tasaheel.schema';
-import { EmployeePdfGenerator } from '../utils/PdfMaker/EmployeePdfMaker';
+import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
@@ -80,6 +80,7 @@ export class EmployeesService {
     deleted: boolean = false,
   ) {
     try {
+      
       const projection: any = {};
       if (fields && fields.length > 0) {
         fields.forEach((field) => {
@@ -103,6 +104,7 @@ export class EmployeesService {
           { name: { $regex: new RegExp(search, 'i') } },
           { companyName: { $in: [new RegExp(search, 'i')] } },
           { workPermitNumber: { $regex: new RegExp(search, 'i') } },
+          { personCode: { $regex: new RegExp(search, 'i') } },
         ],
       };
 
@@ -115,7 +117,9 @@ export class EmployeesService {
       gender != '' ? (query['gender'] = gender) : undefined;
 
       // console.log(query);
+      
 
+      
       return this.employeeModel
         .find(query)
         .select(projection)
@@ -246,7 +250,7 @@ export class EmployeesService {
     // const final = [...employees, ...employees2, ...employees4];
     // // console.log(employees);
 
-    const pdfDoc = this.employeePdfGenerator.generateReport(employees);
+    const pdfDoc = this.employeePdfGenerator.generatePdf(employees);
     // console.log(pdfDoc);
 
     res.setHeader('Content-Type', 'application/pdf');
@@ -257,6 +261,22 @@ export class EmployeesService {
 
     pdfDoc.pipe(res);
     pdfDoc.end();
+  }
+
+  async employeePdf(id : string,res: Response){
+    const employeeData = await this.employeeModel.findById(id);
+    const pdfDoc =  this.employeePdfGenerator.employeePdf(employeeData);
+    // console.log(pdfDoc);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=employee_report.pdf',
+    );
+
+    pdfDoc.pipe(res);
+    pdfDoc.end();
+    
   }
 
   async export(res: Response, fileName: string) {

@@ -1,16 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, MaxFileSizeValidator, ParseFilePipe, FileTypeValidator } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, MaxFileSizeValidator, ParseFilePipe, FileTypeValidator } from '@nestjs/common';
 import { SponsorsService } from './sponsors.service';
 import { CreateSponsorDto } from './dto/create-sponsor.dto';
 import { UpdateSponsorDto } from './dto/update-sponsor.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/utils/decorators/User.decorator';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 
 ApiTags('sponsor')
-@UseGuards(AuthGuard)
+
 @Controller('sponsor')
 export class SponsorsController {
   constructor(private readonly sponsorsService: SponsorsService) {}

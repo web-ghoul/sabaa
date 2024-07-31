@@ -16,7 +16,7 @@ const useProsOptionsSchema = () => {
     state: yup.string(),
   });
 
-  const ProsOptionsInitailValues = {
+  const ProsOptionsInitialValues = {
     search: "",
     dobFrom: allParams.dobFrom || "",
     dobTo: allParams.dobTo || "",
@@ -27,7 +27,7 @@ const useProsOptionsSchema = () => {
     state: allParams.state || "",
   };
 
-  return { ProsOptionsInitailValues, ProsOptionsSchema };
+  return { ProsOptionsInitialValues, ProsOptionsSchema };
 };
 
 export default useProsOptionsSchema;

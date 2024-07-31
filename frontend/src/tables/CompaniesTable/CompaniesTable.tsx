@@ -111,6 +111,7 @@ const CompaniesTable = ({
       count={count}
       variant={"companies"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

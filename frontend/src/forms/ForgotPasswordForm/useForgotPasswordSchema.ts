@@ -5,11 +5,11 @@ const useForgotPasswordSchema = () => {
     email: yup.string().required("Email is required"),
   });
 
-  const ForgotPasswordInitailValues = {
+  const ForgotPasswordInitialValues = {
     email: "",
   };
 
-  return { ForgotPasswordInitailValues, ForgotPasswordSchema };
+  return { ForgotPasswordInitialValues, ForgotPasswordSchema };
 };
 
 export default useForgotPasswordSchema;

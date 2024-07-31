@@ -110,6 +110,7 @@ const ProsTable = ({
       count={count}
       variant={"officers"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

@@ -35,13 +35,17 @@ import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
 import ProForm from "./ProForm/ProForm";
 import ProsOptionsForm from "./ProsOptionsForm/ProsOptionsForm";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import RoleForm from "./RoleForm/RoleForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
+import NewLCForm from "./TransactionsForm/NewLCForm";
+import TransactionForm from "./TransactionsForm/TransactionForm";
+import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
 import UsersOptionsForm from "./UsersOptionsForm/UsersOptionsForm";
 
-const Forms = ({ type, index }: FormsTypes) => {
+const Forms = ({ type, index, tType }: FormsTypes) => {
   const { register, handleSubmitForm, errors, setValue, getValues } =
     useSubmitForm(type);
 
@@ -71,6 +75,48 @@ const Forms = ({ type, index }: FormsTypes) => {
         />
       )}
       {/* User */}
+
+      {/* Role */}
+      {(type === "addRole" || type === "editRole") && (
+        <RoleForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Role */}
+
+      {/* Transaction */}
+      {type === "transactionsOptions" && (
+        <TransactionsOptionsForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          tType={tType}
+        />
+      )}
+      {(type === "addTransaction" || type === "editTransaction") && (
+        <TransactionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {type === "newLC" && (
+        <NewLCForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Transaction */}
 
       {/* Owner */}
       {type === "ownersOptions" && (

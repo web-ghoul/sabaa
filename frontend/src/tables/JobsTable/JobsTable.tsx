@@ -92,7 +92,12 @@ const JobsTable = ({
   }, [pathname, sheet]);
 
   return (
-    <PrimaryTable count={count} variant={"jobs"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"jobs"}
+      noPagination={noPagination}
+      loading={isLoading}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>

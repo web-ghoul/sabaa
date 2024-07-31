@@ -18,20 +18,20 @@ export class TransactionsService {
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     try {
-      const empData = await this.employeeModel.findById(createTransactionDto.employeeId);
+      if(createTransactionDto.employeeId)
+      {
+        return await this.transactionModel.create(createTransactionDto);
+      }
 
-      if(!empData)
-        {
-          const newObj = {
-            name: createTransactionDto.employeeName,
-            nationality : createTransactionDto.nationality,
-            dob : createTransactionDto.dob,
-            gender: createTransactionDto.gender
-          }
-          const newEmp = await this.employeeModel.create(newObj);
-          createTransactionDto.employeeId = newEmp._id as any;
-        }
-      return await this.transactionModel.create(createTransactionDto);
+      const newObj = {
+        name: createTransactionDto.employeeName,
+        nationality : createTransactionDto.nationality,
+        dob : createTransactionDto.dob,
+        gender: createTransactionDto.gender
+      }
+      const newEmp = await this.employeeModel.create(newObj);
+      createTransactionDto.employeeId = newEmp._id as any;
+        
 
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -84,8 +84,11 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if (type) {
-      query.type = type;
+    if (type == 'pre') {
+      query.status = 'Approved';
+    } else if (type == 'new') {
+      query.lcNo = { $exists: true };
+    } else if (type == 'all') {
     }
 
     if (residenceFrom || residenceTo) {
@@ -108,15 +111,21 @@ export class TransactionsService {
       }
     }
 
-    const skip = (page - 1) * limit;
-
-    const fieldsToSelect = selectFields && selectFields.length ? selectFields.join(' ') : '';
+    const fieldsToSelect =
+      selectFields && selectFields.length ? selectFields.join(' ') : '';
 
     const sortBy = {};
 
+    if (sort) {
+      sortBy[sort] = -1;
+    } else {
+      sortBy['createdAt'] = -1;
+      sortBy['status'] = -1;
+    }
+
     return this.transactionModel
       .find(query)
-      .skip(skip)
+      .skip(page*limit)
       .limit(limit)
       .select(fieldsToSelect)
       .sort(sortBy)
@@ -128,12 +137,8 @@ export class TransactionsService {
   }
 
   update(id: string, updateTransactionDto: UpdateTransactionDto) {
-    //not handeled yet
-    /*
-    1- WPStatus change when changing to lc 
-    2- 
-    */
-    return `This action updates a #${id} transaction`;
+    return this.transactionModel.updateOne({ _id: id }, updateTransactionDto);
+    
   }
 
   async remove(id: string) {
@@ -166,7 +171,7 @@ export class TransactionsService {
       { header: 'Employee Name', key: 'employeeName', width: 20 },
       { header: 'Date of Birth', key: 'dob', width: 20 },
       { header: 'Gender', key: 'gender', width: 20 },
-      { header: 'Nationality ID', key: 'nationalityId', width: 20 },
+      { header: 'Nationality ID', key: 'idNationality', width: 20 },
       { header: 'Nationality', key: 'nationality', width: 20 },
       { header: 'Passport Number', key: 'passportNumber', width: 20 },
       { header: 'Passport Expiry', key: 'passportExpiry', width: 20 },
@@ -177,7 +182,11 @@ export class TransactionsService {
       { header: 'Work Permit', key: 'workPermit', width: 20 },
       { header: 'LC No', key: 'lcNo', width: 20 },
       { header: 'LC Expiry Date', key: 'lcExpiryDate', width: 20 },
-      { header: 'Work Permit Expiry Date', key: 'workPermitExpiryDate', width: 20 },
+      {
+        header: 'Work Permit Expiry Date',
+        key: 'workPermitExpiryDate',
+        width: 20,
+      },
       { header: 'Visit Expiry Date', key: 'visitExpiryDate', width: 20 },
       { header: 'Tawjeeh Date', key: 'tawjeehDate', width: 20 },
       { header: 'Medical Date', key: 'medicalDate', width: 20 },
@@ -188,11 +197,15 @@ export class TransactionsService {
       { header: 'Card Type', key: 'cardType', width: 20 },
       { header: 'Salary', key: 'salary', width: 20 },
       { header: 'Remarks', key: 'remarks', width: 20 },
-      { header: 'Residence Expiry Date', key: 'residenceExpiryDate', width: 20 },
+      {
+        header: 'Residence Expiry Date',
+        key: 'residenceExpiryDate',
+        width: 20,
+      },
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
       worksheet.addRow({
         transactionNo: transaction.transactionNo,
         employeeId: transaction.employeeId,
@@ -203,7 +216,7 @@ export class TransactionsService {
         employeeName: transaction.employeeName,
         dob: transaction.dob,
         gender: transaction.gender,
-        nationalityId: transaction.nationalityId,
+        idNationality: transaction.idNationality,
         nationality: transaction.nationality,
         passportNumber: transaction.passportNumber,
         passportExpiry: transaction.passportExpiry,
@@ -220,7 +233,6 @@ export class TransactionsService {
         medicalDate: transaction.medicalDate,
         changeStatusDate: transaction.changeStatusDate,
         status: transaction.status,
-        wpStatus: transaction.wpStatus,
         statusDate: transaction.statusDate,
         cardType: transaction.cardType,
         salary: transaction.salary,

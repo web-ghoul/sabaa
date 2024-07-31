@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -29,19 +29,17 @@ const Company = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
-        <Box className={`flex justify-between items-center gap-4`}>
-          <BreadCrumbs>
-            <Link
-              to={`${import.meta.env.VITE_COMPANIES_ROUTE}`}
-              className={`text-black !font-[600] hover:text-primary`}
-            >
-              <Typography variant="h6">Companies</Typography>
-            </Link>
-            <Typography variant="h6" key="2">
-              {company && company.name}
-            </Typography>
-          </BreadCrumbs>
-        </Box>
+        <BreadCrumbs>
+          <Link
+            to={`${import.meta.env.VITE_COMPANIES_ROUTE}`}
+            className={`text-black !font-[600] hover:text-primary`}
+          >
+            <Typography variant="h6">Companies</Typography>
+          </Link>
+          <Typography variant="h6" key="2">
+            {company && company.name}
+          </Typography>
+        </BreadCrumbs>
         <CompanyProfile
           company={company}
           isLoading={isLoading}

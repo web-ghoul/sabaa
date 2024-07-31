@@ -8,5 +8,6 @@ import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
   imports: [MongooseModule.forFeature([{ name: ActivityLog.name, schema: ActivityLogSchema }])],
   controllers: [ActivitiesController],
   providers: [ActivitiesService],
+  exports: [ActivitiesService,MongooseModule.forFeature([{ name: ActivityLog.name, schema: ActivityLogSchema }])],
 })
 export class ActivitiesModule {}

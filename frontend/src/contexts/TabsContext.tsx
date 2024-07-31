@@ -14,6 +14,8 @@ export const TabsContext = createContext<TabsContextProps>({
   setCustomerTabsValue: () => {},
   companyTabsValue: 0,
   setCompanyTabsValue: () => {},
+  settingsTabsValue: 0,
+  setSettingsTabsValue: () => {},
 });
 
 const TabsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -35,6 +37,9 @@ const TabsProvider = ({ children }: { children: React.ReactNode }) => {
   //Companies Tabs
   const [companyTabsValue, setCompanyTabsValue] = useState<number>(0);
 
+    //Companies Tabs
+    const [settingsTabsValue, setSettingsTabsValue] = useState<number>(0);
+
   const values = {
     userTabsValue,
     setUserTabsValue,
@@ -47,7 +52,7 @@ const TabsProvider = ({ children }: { children: React.ReactNode }) => {
     customerTabsValue,
     setCustomerTabsValue,
     proTabsValue,
-    setProTabsValue,
+    setProTabsValue,settingsTabsValue, setSettingsTabsValue
   };
   return <TabsContext.Provider value={values}>{children}</TabsContext.Provider>;
 };

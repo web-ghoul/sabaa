@@ -21,7 +21,7 @@ const useTasheelSchema = () => {
     notes: yup.string(),
   });
 
-  const TasheelInitailValues = {
+  const TasheelInitialValues = {
     username: editableTasheelData?.username || "",
     password: editableTasheelData?.password || "",
     name: editableTasheelData?.name || "",
@@ -36,7 +36,7 @@ const useTasheelSchema = () => {
     type: editableTasheelData?.type,
   };
 
-  return { TasheelSchema, TasheelInitailValues };
+  return { TasheelSchema, TasheelInitialValues };
 };
 
 export default useTasheelSchema;

@@ -106,7 +106,12 @@ const OwnersTable = ({
   }, [dispatch]);
 
   return (
-    <PrimaryTable count={count} variant={"owners"} noPagination={noPagination}>
+    <PrimaryTable
+      count={count}
+      variant={"owners"}
+      noPagination={noPagination}
+      loading={isLoading}
+    >
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>

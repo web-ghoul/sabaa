@@ -92,17 +92,18 @@ const EChannelsTable = ({
   return (
     <PrimaryTable
       count={count}
-      variant={'employees'}
+      variant={"employees"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>
           <PrimaryTableCell>
             <SortBox
-              title={'Name'}
+              title={"Name"}
               handling={handleSortByName}
-              asc={searchParams.get('sort') === 'name_asc'}
-              desc={searchParams.get('sort') === 'name_desc'}
+              asc={searchParams.get("sort") === "name_asc"}
+              desc={searchParams.get("sort") === "name_desc"}
             />
           </PrimaryTableCell>
           <PrimaryTableCell align="center">Username</PrimaryTableCell>
@@ -137,29 +138,29 @@ const EChannelsTable = ({
                   >
                     <Link
                       to={
-                        type === 'owner'
+                        type === "owner"
                           ? `${import.meta.env.VITE_OWNERS_ROUTE}/${
                               (row.owner as OwnerTypes)._id
                             }`
-                          : type === 'officer'
+                          : type === "officer"
                           ? `${import.meta.env.VITE_PROS_ROUTE}/${
                               (row.owner as OwnerTypes)._id
                             }`
-                          : type === 'customer'
+                          : type === "customer"
                           ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
                               (row.owner as OwnerTypes)._id
                             }`
-                          : type === 'employee'
+                          : type === "employee"
                           ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
                               (row.employee as EmployeeTypes)._id
                             }`
-                          : ''
+                          : ""
                       }
                     >
                       <UserBox
                         username={row.name}
-                        head={'subtitle1'}
-                        size={'small'}
+                        head={"subtitle1"}
+                        size={"small"}
                         avatar={
                           row.owner
                             ? (row.owner as OwnerTypes).avatar
@@ -178,7 +179,7 @@ const EChannelsTable = ({
                   )}
                   {!smScreen && (
                     <PrimaryTableCell align="center">
-                      {row.type || 'employee'}
+                      {row.type || "employee"}
                     </PrimaryTableCell>
                   )}
                   <PrimaryTableCell align="center">
@@ -196,7 +197,7 @@ const EChannelsTable = ({
                   )}
                   {actions && (
                     <PrimaryTableCell align="right">
-                      <IconButton onClick={e => handleOpenMenu(e, i)}>
+                      <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                         <MoreVertRounded />
                       </IconButton>
                     </PrimaryTableCell>

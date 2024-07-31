@@ -13,7 +13,8 @@ import { Natwasal, NatwasalSchema } from 'schemas/natwasal.schema';
 import { Tasaheel, TasaheelSchema } from 'schemas/tasaheel.schema';
 import { Company, CompanySchema } from 'schemas/company.schema';
 import { EmployeesModule } from 'src/employees/employees.module';
-import { EmployeePdfGenerator } from 'src/utils/PdfMaker/EmployeePdfMaker';
+import { EmployeePdfGenerator } from 'src/employees/pdfGenerators/EmployeePdfMaker';
+
 
 @Module({
   imports: [EmployeesModule,

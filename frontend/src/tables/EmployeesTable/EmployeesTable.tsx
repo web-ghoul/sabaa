@@ -112,6 +112,7 @@ const EmployeesTable = ({
       count={count}
       variant={"employees"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

@@ -10,12 +10,12 @@ const useTasheelsOptionsSchema = () => {
     type: yup.string(),
   });
 
-  const TasheelsOptionsInitailValues = {
+  const TasheelsOptionsInitialValues = {
     search: "",
     type: allParams.type || "",
   };
 
-  return { TasheelsOptionsSchema, TasheelsOptionsInitailValues };
+  return { TasheelsOptionsSchema, TasheelsOptionsInitialValues };
 };
 
 export default useTasheelsOptionsSchema;

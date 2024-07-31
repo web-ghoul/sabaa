@@ -5,11 +5,11 @@ const useOTPSchema = () => {
     otp: yup.string().required("OTP is required"),
   });
 
-  const OTPInitailValues = {
+  const OTPInitialValues = {
     otp: "",
   };
 
-  return { OTPSchema, OTPInitailValues };
+  return { OTPSchema, OTPInitialValues };
 };
 
 export default useOTPSchema;

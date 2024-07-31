@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, Query, Res } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from 'src/utils/decorators/User.decorator';
@@ -11,7 +11,7 @@ import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { Response } from 'express';
 
 ApiTags('employee')
-@UseGuards(AuthGuard)
+
 @Controller('employee')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
@@ -29,6 +29,8 @@ export class EmployeesController {
 
   @Get()
   findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('nationality')nationality:string,@Query('cardType')cardType:string,@Query('status')status:string,@Query('gender')gender:string,@Query('deleted')deleted:boolean ) {
+    console.log(page);
+    console.log(limit);
     return this.employeesService.findAll(limit,page,search,selectFields,sort,nationality,cardType,status,gender,deleted);
   }
 
@@ -50,6 +52,11 @@ export class EmployeesController {
   @Get("report")
   report(@Res()  res: Response) {
     return this.employeesService.report(res);  
+  }
+
+  @Get("employeePdf/:id")
+  employeePdf(@Param('id') id: string,@Res()  res: Response) {
+    return this.employeesService.employeePdf(id,res);  
   }
 
   @Get(':id')

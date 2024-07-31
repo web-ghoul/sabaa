@@ -93,6 +93,7 @@ const NatwasalsTable = ({
       count={count}
       variant={"employees"}
       noPagination={noPagination}
+      loading={isLoading}
     >
       <TableHead>
         <TableRow>

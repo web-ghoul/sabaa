@@ -15,6 +15,7 @@ const useEmployeeSchema = () => {
     gender: yup.string().required("Gender is required"),
     personCode: yup.string(),
     companyId: yup.array(),
+    companyName: yup.array(),
     dob: yup.string(),
     idNationality: yup.string(),
     status: yup.string(),
@@ -40,7 +41,7 @@ const useEmployeeSchema = () => {
     lcExpireDate: yup.string(),
   });
 
-  const EmployeeInitailValues = {
+  const EmployeeInitialValues = {
     avatar: editableEmployeeData?.avatar || "",
     name: editableEmployeeData?.name || "",
     nameAr: editableEmployeeData?.nameAr || "",
@@ -49,6 +50,7 @@ const useEmployeeSchema = () => {
     gender: editableEmployeeData?.gender || "",
     personCode: editableEmployeeData?.personCode || "",
     companyId: editableEmployeeData?.companyId || [],
+    companyName: editableEmployeeData?.companyName || [],
     dob:
       (editableEmployeeData?.dob &&
         new Date(editableEmployeeData?.dob).toISOString().split("T")[0]) ||
@@ -109,7 +111,7 @@ const useEmployeeSchema = () => {
     }
   }, [editableEmployeeData, setEmployeeImage]);
 
-  return { EmployeeSchema, EmployeeInitailValues };
+  return { EmployeeSchema, EmployeeInitialValues };
 };
 
 export default useEmployeeSchema;

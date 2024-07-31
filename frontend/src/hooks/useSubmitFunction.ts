@@ -22,8 +22,10 @@ import useOTPSubmit from "../forms/OTPForm/useOTPSubmit";
 import useOwnerSubmit from "../forms/OwnerForm/useOwnerSubmit";
 import useProSubmit from "../forms/ProForm/useProSubmit";
 import useResetPasswordSubmit from "../forms/ResetPasswordForm/useResetPasswordSubmit";
+import useRoleSubmit from "../forms/RoleForm/useRoleSubmit";
 import useSponsorSubmit from "../forms/SponsorForm/useSponsorSubmit";
 import useTasheelSubmit from "../forms/TasheelForm/useTasheelSubmit";
+import useTransactionSubmit from "../forms/TransactionsForm/useTransactionSubmit";
 import useUserSubmit from "../forms/UserForm/useUserSubmit";
 import {
   AllFormsTypes,
@@ -39,12 +41,15 @@ import {
   LoginFormTypes,
   NationalityFormTypes,
   NatwasalFormTypes,
+  NewLabourCardFormTypes,
   OTPFormTypes,
   OwnerFormTypes,
   ProFormTypes,
   ResetPasswordFormTypes,
+  RoleFormTypes,
   SponsorFormTypes,
   TasheelFormTypes,
+  TransactionFormTypes,
   UserFormTypes,
 } from "../types/forms.types";
 
@@ -76,6 +81,8 @@ const useSubmitFunction = (type: string) => {
   const { createEmployeesSheet } = useCreateEmployeesSheetSubmit();
   const { convertCustomer } = useConvertCustomerSubmit();
   const { handleDownloadExcelSubmit } = useDownloadExcelSubmit();
+  const { addTransaction, editTransaction, newLC } = useTransactionSubmit();
+  const { addRole, editRole } = useRoleSubmit();
 
   const submitFunction = (values: AllFormsTypes | unknown) => {
     switch (type) {
@@ -96,6 +103,12 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editJob":
         editJob(values as JobFormTypes);
+        break;
+      case "addRole":
+        addRole(values as RoleFormTypes);
+        break;
+      case "editRole":
+        editRole(values as RoleFormTypes);
         break;
       case "createJobsSheet":
         createJobsSheet(values as unknown);
@@ -190,6 +203,15 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editNatwasal":
         editNatwasal(values as NatwasalFormTypes);
+        break;
+      case "addTransaction":
+        addTransaction(values as TransactionFormTypes);
+        break;
+      case "editTransaction":
+        editTransaction(values as TransactionFormTypes);
+        break;
+      case "newLC":
+        newLC(values as NewLabourCardFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

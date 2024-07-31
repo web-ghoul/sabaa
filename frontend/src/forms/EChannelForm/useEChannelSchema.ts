@@ -21,7 +21,7 @@ const useEChannelSchema = () => {
     notes: yup.string(),
   });
 
-  const EChannelInitailValues = {
+  const EChannelInitialValues = {
     searchForPerson: "",
     username: editableEChannelData?.username || "",
     password: editableEChannelData?.password || "",
@@ -36,7 +36,7 @@ const useEChannelSchema = () => {
     eChannelNotes: editableEChannelData?.eChannelNotes || "",
   };
 
-  return { EChannelSchema, EChannelInitailValues };
+  return { EChannelSchema, EChannelInitialValues };
 };
 
 export default useEChannelSchema;

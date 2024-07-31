@@ -10,12 +10,18 @@ interface ImportMetaEnv {
   VITE_RESET_PASSWORD_ROUTE: string;
   VITE_DASHBOARD_ROUTE: string;
   VITE_SETTINGS_ROUTE: string;
+  VITE_EDIT_PERMISSION_ROUTE: string;
   VITE_OWNERS_ROUTE: string;
   VITE_PROS_ROUTE: string;
   VITE_CUSTOMERS_ROUTE: string;
   VITE_EMPLOYEES_ROUTE: string;
   VITE_ADD_EMPLOYEE_ROUTE: string;
   VITE_TRANSACTIONS_ROUTE: string;
+  VITE_TRANSACTIONS_ALL_ROUTE: string;
+  VITE_TRANSACTIONS_PRE_ROUTE: string;
+  VITE_TRANSACTIONS_NEW_ROUTE: string;
+  VITE_TRANSACTIONS_RENEW_ROUTE: string;
+  VITE_UPLOAD_TRANSACTIONS_ROUTE: string;
   VITE_NATIONALITIES_ROUTE: string;
   VITE_LIMIT_PAGES: string;
   VITE_RECENT_LIMIT_PAGES: string;
@@ -23,6 +29,7 @@ interface ImportMetaEnv {
   VITE_TODO_LIST_ROUTE: string;
   VITE_REPORTS_ROUTE: string;
   VITE_MAILS_ROUTE: string;
+  VITE_ALERTS_ROUTE: string;
   VITE_ACTIVITIES_ROUTE: string;
   VITE_COMPANIES_ROUTE: string;
   VITE_ADD_COMPANY_ROUTE: string;
@@ -62,7 +69,8 @@ type EntitiesType =
   | "tasheels"
   | "natwasals"
   | "eChannels"
-  | "persons";
+  | "persons"
+  | "activities";
 
 type EntityType =
   | "company"

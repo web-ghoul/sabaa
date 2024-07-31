@@ -11,8 +11,10 @@ import {
   NationalityTypes,
   OwnerTypes,
   ProTypes,
+  RoleTypes,
   SponsorTypes,
   TasheelTypes,
+  TransactionTypes,
   UserTypes,
 } from "../types/store.types";
 import { AppContext } from "./AppContext";
@@ -47,6 +49,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setSearchForActivities: () => {},
   searchForNationalities: "",
   setSearchForNationalities: () => {},
+  searchForTransactions: "",
+  setSearchForTransactions: () => {},
   companyImage: "",
   setCompanyImage: () => {},
   ownerImage: "",
@@ -85,6 +89,10 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableTasheelData: () => {},
   editableNatwasalData: null,
   setEditableNatwasalData: () => {},
+  editableTransactionData: null,
+  setEditableTransactionData: () => {},
+  editableRoleData: null,
+  setEditableRoleData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -117,6 +125,7 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchForUsers, setSearchForUsers] = useState("");
   const [searchForJobs, setSearchForJobs] = useState("");
   const [searchForNationalities, setSearchForNationalities] = useState("");
+  const [searchForTransactions, setSearchForTransactions] = useState("");
 
   //Company Image
   const [companyImage, setCompanyImage] = useState<File | string>(
@@ -194,6 +203,15 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   //Editable E-Channel Data
   const [editableNatwasalData, setEditableNatwasalData] =
     useState<TasheelTypes | null>(null);
+
+  //Editable Transaction Data
+  const [editableTransactionData, setEditableTransactionData] =
+    useState<TransactionTypes | null>(null);
+
+  //Editable Role Data
+  const [editableRoleData, setEditableRoleData] = useState<RoleTypes | null>(
+    null
+  );
 
   useEffect(() => {
     if (editableOwnerData) {
@@ -297,6 +315,12 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForTasheel,
     searchForNatwasal,
     setSearchForNatwasal,
+    editableTransactionData,
+    setEditableTransactionData,
+    editableRoleData,
+    setEditableRoleData,
+    searchForTransactions,
+    setSearchForTransactions,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

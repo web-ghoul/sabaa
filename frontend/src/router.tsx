@@ -3,6 +3,7 @@ import App from "./App.tsx";
 import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
 import AddEmployee from "./pages/AddEmployee.tsx";
+import AllTransactions from "./pages/AllTransactions.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
 import Customer from "./pages/Customer.tsx";
@@ -11,6 +12,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import EChannels from "./pages/EChannels.tsx";
 import EditCompany from "./pages/EditCompany.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
+import EditPermission from "./pages/EditPermission.tsx";
 import Employee from "./pages/Employee.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
@@ -20,18 +22,20 @@ import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
 import Nationalities from "./pages/Nationalities.tsx";
 import Natwasals from "./pages/Natwasals.tsx";
+import NewTransactions from "./pages/NewTransactions.tsx";
 import OTP from "./pages/OTP.tsx";
 import Owner from "./pages/Owner.tsx";
 import Owners from "./pages/Owners.tsx";
+import PreTransactions from "./pages/PreTransactions.tsx";
 import Pro from "./pages/Pro.tsx";
 import Profile from "./pages/Profile.tsx";
 import Pros from "./pages/Pros.tsx";
+import RenewTransactions from "./pages/RenewTransactions.tsx";
 import Reports from "./pages/Reports.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Settings from "./pages/Settings.tsx";
 import Tasheels from "./pages/Tasheels.tsx";
 import TodoList from "./pages/TodoList.tsx";
-import Transactions from "./pages/Transactions.tsx";
 import UploadCompanies from "./pages/UploadCompanies.tsx";
 import UploadCustomers from "./pages/UploadCustomers.tsx";
 import UploadEmployees from "./pages/UploadEmployees.tsx";
@@ -152,8 +156,20 @@ export const router = createBrowserRouter([
         element: <Natwasals />,
       },
       {
-        path: "/transactions",
-        element: <Transactions />,
+        path: "/transactions/all",
+        element: <AllTransactions />,
+      },
+      {
+        path: "/transactions/pre",
+        element: <PreTransactions />,
+      },
+      {
+        path: "/transactions/new",
+        element: <NewTransactions />,
+      },
+      {
+        path: "/transactions/renew",
+        element: <RenewTransactions />,
       },
       {
         path: "/mails",
@@ -174,6 +190,10 @@ export const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/settings/permission/:id",
+        element: <EditPermission />,
       },
       {
         path: "/fileManager",

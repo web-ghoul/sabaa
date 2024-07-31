@@ -1,11 +1,21 @@
 import PdfPrinter from 'pdfmake';
 
-export abstract class PdfGenerator {
+export class PdfGenerator {
   protected printer: PdfPrinter;
 
   constructor(fonts: any) {
     this.printer = new PdfPrinter(fonts);
   }
 
-  abstract generateReport(data: any[]): any;
+  generatePdf(docDefinition : any) {
+    
+    try{
+      const pdfDoc = this.printer.createPdfKitDocument(docDefinition as any);
+      return pdfDoc;
+    }catch(err)
+    {
+      console.log(err);
+    }
+    
+  }
 }

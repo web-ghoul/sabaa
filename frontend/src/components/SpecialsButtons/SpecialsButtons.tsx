@@ -11,13 +11,7 @@ const SpecialsButtons = () => {
     <Box className={`flex justify-start items-center gap-2`}>
       {!lgScreen && <Button title={"Add Owner"} icon={<AddRounded />} />}
       {!mdScreen && <Button title={"Add Company"} icon={<AddRounded />} />}
-      {!smScreen && (
-        <Button
-          title={"Add Transaction"}
-          icon={<AddRounded />}
-          variant={"under development"}
-        />
-      )}
+      {!smScreen && <Button title={"Add Transaction"} icon={<AddRounded />} />}
     </Box>
   );
 };

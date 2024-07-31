@@ -70,7 +70,7 @@ interface TabPanelProps {
 }
 
 interface PrimaryTabTypes {
-  variant: EntityType;
+  variant: EntityType | "settings";
   tabsTitles: string[];
   children: ReactNode;
 }

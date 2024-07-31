@@ -1,18 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
 import { useContext, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { ModalsContext } from "../../contexts/ModalsContext";
 import { getEChannels } from "../../store/eChannelsSlice";
 import { AppDispatch } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
@@ -22,7 +17,6 @@ const EChannelsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const { searchForEChannels, setSearchForEChannels } =
     useContext(FormsContext);
-  const { handleOpenDownloadExcelModal } = useContext(ModalsContext);
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [showFilters, setShowFilters] = useState(false);
@@ -47,14 +41,6 @@ const EChannelsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const handleFilter = () => {
     setSearchParams(queries);
     dispatch(getEChannels({ ...queries, search: searchForEChannels }));
-  };
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "eChannels");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "eChannels");
   };
 
   const handleResetAll = () => {
@@ -84,23 +70,11 @@ const EChannelsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button title={"Add E-Channel"} icon={<AddRounded />} />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons
+          addBtn={"Add E-Channel"}
+          variant="eChannels"
+          upload={false}
+        />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

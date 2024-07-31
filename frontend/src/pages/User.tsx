@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -28,20 +28,18 @@ const User = () => {
   return (
     <PrimaryBox>
       <PrimaryContainer className={pageContainerClasses}>
-        <Box className={`flex justify-between items-center gap-4`}>
-          <BreadCrumbs>
-            <Link
-              to={`${import.meta.env.VITE_USERS_ROUTE}`}
-              className={`text-black !font-[600] hover:text-primary`}
-              key={1}
-            >
-              <Typography variant="h6">Users</Typography>
-            </Link>
-            <Typography variant="h6" key="2">
-              {user && user.name}
-            </Typography>
-          </BreadCrumbs>
-        </Box>
+        <BreadCrumbs>
+          <Link
+            to={`${import.meta.env.VITE_USERS_ROUTE}`}
+            className={`text-black !font-[600] hover:text-primary`}
+            key={1}
+          >
+            <Typography variant="h6">Users</Typography>
+          </Link>
+          <Typography variant="h6" key="2">
+            {user && user.name}
+          </Typography>
+        </BreadCrumbs>
         <UserProfile
           user={user}
           isLoading={isLoading}

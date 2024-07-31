@@ -1,18 +1,13 @@
-import {
-  AddRounded,
-  FilterAltRounded,
-  FilterListRounded,
-} from "@mui/icons-material";
+import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { ModalsContext } from "../../contexts/ModalsContext";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { getPros } from "../../store/prosSlice";
 import { AppDispatch, RootState } from "../../store/store";
@@ -23,8 +18,6 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { searchForPros, setSearchForPros } = useContext(FormsContext);
-  const { handleOpenDownloadExcelModal, handleOpenProModal } =
-    useContext(ModalsContext);
 
   const [, setSearchParams] = useSearchParams();
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
@@ -70,15 +63,6 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
     setSearchParams(queries);
     dispatch(getPros({ ...queries, search: searchForPros }));
   };
-
-  const handleDownloadExcel = () => {
-    handleOpenDownloadExcelModal("excel", "officers");
-  };
-
-  const handleDownloadExcelAll = () => {
-    handleOpenDownloadExcelModal("all", "officers");
-  };
-
   const handleResetAll = () => {
     navigate(`${import.meta.env.VITE_PROS_ROUTE}`);
     dispatch(getPros({}));
@@ -126,35 +110,7 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <Box
-          className={`flex justify-end items-center gap-4 flex-wrap md:gap-3 sm:!gap-2 lg:!order-first`}
-        >
-          <Button
-            title={"Add Officer"}
-            icon={<AddRounded />}
-            handling={() => handleOpenProModal("addPro")}
-          />
-          <Button
-            title={"Upload Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={() =>
-              navigate(`${import.meta.env.VITE_UPLOAD_PROS_ROUTE}`)
-            }
-          />
-          <Button
-            title={"Excel"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcel}
-          />
-          <Button
-            title={"Excel All"}
-            icon={<RiFileExcel2Fill />}
-            bg={"excel"}
-            handling={handleDownloadExcelAll}
-          />
-        </Box>
+        <ExcelButtons addBtn={"Add Officer"} variant="officers" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
