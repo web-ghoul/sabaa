@@ -3,7 +3,10 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
-import { TransactionFormTypes } from "../../types/forms.types";
+import {
+  TransactionFormTypes,
+  NewLabourCardFormTypes,
+} from "../../types/forms.types";
 import { getTransactions } from "../../store/transactionsSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
@@ -16,11 +19,11 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading,
     editableTransactionData,
   } = useContext(FormsContext);
-  const { handleCloseTransactionModal } = useContext(ModalsContext);
+  const { handleCloseTransactionModal, handleCloseNewLCModal } =
+    useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
-  const id = "";
 
-  const addPreTransaction = async (values: TransactionFormTypes) => {
+  const addTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
       .post(`/transaction`, {
@@ -41,7 +44,7 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const editPreTransaction = async (values: TransactionFormTypes) => {
+  const editTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
       .patch(`/transaction/${editableTransactionData?._id}`, values)
@@ -51,6 +54,24 @@ const useTransactionSubmit = () => {
           status: "success",
         });
         handleCloseTransactionModal();
+        // dispatch(getTransactions({type:"all"}));
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const newLC = async (values: NewLabourCardFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(`/transaction/${editableTransactionData?._id}`, values)
+      .then(() => {
+        handleAlert({
+          msg: "New Labour Card is created successfully",
+          status: "success",
+        });
+        handleCloseNewLCModal();
         dispatch(getTransactions({}));
       })
       .catch((err) => {
@@ -59,43 +80,10 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const newTransaction = async (values: TransactionFormTypes) => {
-    handleOpenFormsLoading();
-    await server
-      .patch(`/transaction/${id}`, values)
-      .then(() => {
-        handleAlert({
-          msg: "New Labour Card is created successfully",
-          status: "success",
-        });
-      })
-      .catch((err) => {
-        handleCatchError(err);
-      });
-    handleCloseFormsLoading();
-  };
-
-  const renewTransaction = async (values: TransactionFormTypes) => {
-    handleOpenFormsLoading();
-    await server
-      .patch(`/transaction/${id}`, values)
-      .then(() => {
-        handleAlert({
-          msg: "Labour Card is updated successfully",
-          status: "success",
-        });
-      })
-      .catch((err) => {
-        handleCatchError(err);
-      });
-    handleCloseFormsLoading();
-  };
-
   return {
-    addPreTransaction,
-    editPreTransaction,
-    newTransaction,
-    renewTransaction,
+    addTransaction,
+    editTransaction,
+    newLC,
   };
 };
 

@@ -24,7 +24,7 @@ const RenewTransactions = () => {
   const { handleGetQueries } = useQueries();
 
   useEffect(() => {
-    dispatch(getTransactions(handleGetQueries()));
+    dispatch(getTransactions({ ...handleGetQueries(), type: "renew" }));
   }, [dispatch]);
 
   return (

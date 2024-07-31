@@ -84,14 +84,10 @@ const useSubmitForm = (type: string) => {
   const { TransactionsOptionsInitialValues, TransactionsOptionsSchema } =
     useTransactionsOptionsSchema();
   const {
-    PreTransactionInitialValues,
-    PreTransactionSchema,
-    ApprovedTransactionInitialValues,
-    ApprovedTransactionSchema,
-    NewTransactionInitialValues,
-    NewTransactionSchema,
-    RenewTransactionSchema,
-    RenewTransactionInitialValues,
+    TransactionInitialValues,
+    TransactionSchema,
+    NewLCSchema,
+    NewLCInitialValues,
   } = useTransactionSchema();
   const {
     createNationalitiesSheetInitialValues,
@@ -150,11 +146,9 @@ const useSubmitForm = (type: string) => {
     natwasalsOptions: NatwasalsOptionsSchema,
     downloadExcel: DownloadExcelSchema,
     transactionsOptions: TransactionsOptionsSchema,
-    addPreTransaction: PreTransactionSchema,
-    editPreTransaction: PreTransactionSchema,
-    approvalTransaction: ApprovedTransactionSchema,
-    newTransaction: NewTransactionSchema,
-    renewTransaction: RenewTransactionSchema,
+    addTransaction: TransactionSchema,
+    editTransaction: TransactionSchema,
+    newLC: NewLCSchema,
   };
 
   const initialValues: { [key: string]: AllFormsTypes } = {
@@ -202,11 +196,9 @@ const useSubmitForm = (type: string) => {
     natwasalsOptions: NatwasalsOptionsInitialValues,
     downloadExcel: DownloadExcelInitialValues,
     transactionsOptions: TransactionsOptionsInitialValues,
-    addPreTransaction: PreTransactionInitialValues,
-    editPreTransaction: PreTransactionInitialValues,
-    approvalTransaction: ApprovedTransactionInitialValues,
-    newTransaction: NewTransactionInitialValues,
-    renewTransaction: RenewTransactionInitialValues,
+    addTransaction: TransactionInitialValues,
+    editTransaction: TransactionInitialValues,
+    newLC: NewLCInitialValues,
   };
 
   const chosenSchema = schemas[type];

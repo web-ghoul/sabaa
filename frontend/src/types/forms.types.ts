@@ -24,7 +24,7 @@ import {
 interface FormsTypes {
   type: string;
   index?: number;
-  tType?:string
+  tType?: string;
 }
 
 //Login
@@ -147,7 +147,16 @@ interface EmployeesOptionsFormTypes {
 
 //Transaction
 interface TransactionFormTypes extends TransactionTypes {
-  searchForEmployee:string
+  searchForEmployee: string;
+}
+
+interface NewLabourCardFormTypes {
+  lcNo: string;
+  lcExpiryDate: Date;
+  tawjeehDate: Date;
+  changeStatusDate: Date;
+  medicalDate: Date;
+  residenceExpiryDate: Date;
 }
 
 interface TransactionsOptionsFormTypes {
@@ -200,9 +209,7 @@ interface UsersOptionsFormTypes {
 //User
 
 //Role
-interface RoleFormTypes extends RoleTypes{
-
-}
+interface RoleFormTypes extends RoleTypes {}
 //Role
 
 //E-Channels
@@ -276,7 +283,8 @@ type AllFormsTypes =
   | NatwasalFormTypes
   | NatwasalsOptionsFormTypes
   | TransactionFormTypes
-  | TransactionsOptionsFormTypes|RoleFormTypes;
+  | TransactionsOptionsFormTypes
+  | RoleFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -284,7 +292,7 @@ interface FormiksTypes {
   setValue: UseFormSetValue<AllFormsTypes>;
   getValues: UseFormGetValues<AllFormsTypes>;
   type?: string;
-  tType?:string
+  tType?: string;
 }
 
 interface CatchErrorTypes {
@@ -333,5 +341,7 @@ export type {
   UserFormTypes,
   UsersOptionsFormTypes,
   TransactionFormTypes,
-  TransactionsOptionsFormTypes,RoleFormTypes
+  TransactionsOptionsFormTypes,
+  RoleFormTypes,
+  NewLabourCardFormTypes,
 };

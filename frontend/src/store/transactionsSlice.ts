@@ -19,7 +19,15 @@ export const getTransactions = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }&page=${args?.page || 0}`,
+      }&page=${args?.page || 0}&type=${args?.type || ""}&status=${
+        args?.status || ""
+      }&expireWorkPermitTo=${
+        args?.expireWorkPermitTo || ""
+      }&expireWorkPermitFrom=${args?.expireWorkPermitFrom || ""}&residenceTo=${
+        args?.residenceTo || ""
+      }&residenceFrom=${args?.residenceFrom || ""}&changeStatusDateTo=${
+        args?.changeStatusDateTo || ""
+      }&changeStatusDateFrom=${args?.changeStatusDateFrom || ""}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

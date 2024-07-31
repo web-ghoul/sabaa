@@ -22,7 +22,7 @@ const PreTransactions = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { handleGetQueries } = useQueries();
   useEffect(() => {
-    dispatch(getTransactions(handleGetQueries()));
+    dispatch(getTransactions({ ...handleGetQueries(), type: "pre" }));
   }, [dispatch]);
 
   return (

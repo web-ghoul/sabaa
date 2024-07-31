@@ -20,9 +20,10 @@ import JobModal from "./modals/JobModal.tsx";
 import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import NatwasalModal from "./modals/NatwasalModal.jsx";
+import NewLCModal from "./modals/NewLCModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
-import RoleModal from "./modals/RoleModal.tsx";
 import ProModal from "./modals/ProModal.tsx";
+import RoleModal from "./modals/RoleModal.tsx";
 import SponsorModal from "./modals/SponsorModal.tsx";
 import TasheelModal from "./modals/TasheelModal.tsx";
 import TransactionModal from "./modals/TransactionModal.tsx";
@@ -72,6 +73,7 @@ const App = () => {
       <NationalityModal />
       <DownloadExcelModal />
       <TransactionModal />
+      <NewLCModal />
       <RoleModal />
       <DeleteModal />
       {/* Modals */}

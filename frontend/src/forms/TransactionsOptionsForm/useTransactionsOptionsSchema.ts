@@ -9,6 +9,14 @@ const useTransactionsOptionsSchema = () => {
     search: yup.string(),
     role: yup.string(),
     status: yup.string(),
+    sort: yup.string(),
+    expireWorkPermitFrom: yup.string(),
+    expireWorkPermitTo: yup.string(),
+    residenceFrom: yup.string(),
+    residenceTo: yup.string(),
+    changeStatusDateFrom: yup.string(),
+    changeStatusDateTo: yup.string(),
+    type: yup.string(),
   });
 
   const TransactionsOptionsInitialValues = {

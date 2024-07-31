@@ -8,16 +8,19 @@ import {
 } from "@mui/material";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import StatusBox from "../../components/StatusBox/StatusBox";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
-import { getOwners, reverseOwners } from "../../store/ownersSlice";
 import { AppDispatch } from "../../store/store";
 import { getTransactionsCounter } from "../../store/transactionsCounterSlice";
+import {
+  getTransactions,
+  reverseTransactions,
+} from "../../store/transactionsSlice";
 import { TransactionsTableTypes } from "../../types/tables.types";
 import PrimaryTable from "../PrimaryTable";
 import { PrimaryTableCell } from "../PrimaryTableCell";
@@ -49,53 +52,53 @@ const TransactionsTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSortByWorkPermitExpiry = () => {
-    if (searchParams.get("sort") === "name_asc") {
-      handleAddQuery({ sort: "name_desc" });
-      dispatch(reverseOwners());
-      setSearchParams({ ...queries, sort: "name_desc" });
+    if (searchParams.get("sort") === "workPermitExpiryDate") {
+      handleAddQuery({ sort: "workPermitExpiryDate_desc" });
+      dispatch(reverseTransactions());
+      setSearchParams({ ...queries, sort: "workPermitExpiryDate_desc" });
     } else {
-      handleAddQuery({ sort: "name_asc" });
-      const all = { ...queries, sort: "name_asc" };
-      dispatch(getOwners(all));
+      handleAddQuery({ sort: "workPermitExpiryDate" });
+      const all = { ...queries, sort: "workPermitExpiryDate" };
+      dispatch(getTransactions(all));
       setSearchParams(all);
     }
   };
 
   const handleSortByResidenceExpiry = () => {
-    if (searchParams.get("sort") === "code_asc") {
-      handleAddQuery({ sort: "code_desc" });
-      dispatch(reverseOwners());
-      setSearchParams({ ...queries, sort: "code_desc" });
+    if (searchParams.get("sort") === "residenceExpiryDate") {
+      handleAddQuery({ sort: "residenceExpiryDate_desc" });
+      dispatch(reverseTransactions());
+      setSearchParams({ ...queries, sort: "residenceExpiryDate_desc" });
     } else {
-      handleAddQuery({ sort: "code_asc" });
-      const all = { ...queries, sort: "code_asc" };
-      dispatch(getOwners(all));
+      handleAddQuery({ sort: "residenceExpiryDate" });
+      const all = { ...queries, sort: "residenceExpiryDate" };
+      dispatch(getTransactions(all));
       setSearchParams(all);
     }
   };
 
   const handleSortByCSDate = () => {
-    if (searchParams.get("sort") === "code_asc") {
-      handleAddQuery({ sort: "code_desc" });
-      dispatch(reverseOwners());
-      setSearchParams({ ...queries, sort: "code_desc" });
+    if (searchParams.get("sort") === "changeStatusDate") {
+      handleAddQuery({ sort: "changeStatusDate_desc" });
+      dispatch(reverseTransactions());
+      setSearchParams({ ...queries, sort: "changeStatusDate_desc" });
     } else {
-      handleAddQuery({ sort: "code_asc" });
-      const all = { ...queries, sort: "code_asc" };
-      dispatch(getOwners(all));
+      handleAddQuery({ sort: "changeStatusDate" });
+      const all = { ...queries, sort: "changeStatusDate" };
+      dispatch(getTransactions(all));
       setSearchParams(all);
     }
   };
 
   const handleSortByLCExpiry = () => {
-    if (searchParams.get("sort") === "code_asc") {
-      handleAddQuery({ sort: "code_desc" });
-      dispatch(reverseOwners());
-      setSearchParams({ ...queries, sort: "code_desc" });
+    if (searchParams.get("sort") === "lcExpiryDate") {
+      handleAddQuery({ sort: "lcExpiryDate_desc" });
+      dispatch(reverseTransactions());
+      setSearchParams({ ...queries, sort: "lcExpiryDate_desc" });
     } else {
-      handleAddQuery({ sort: "code_asc" });
-      const all = { ...queries, sort: "code_asc" };
-      dispatch(getOwners(all));
+      handleAddQuery({ sort: "lcExpiryDate" });
+      const all = { ...queries, sort: "lcExpiryDate" };
+      dispatch(getTransactions(all));
       setSearchParams(all);
     }
   };
@@ -194,16 +197,7 @@ const TransactionsTable = ({
               />
             </PrimaryTableCell>
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
-            <PrimaryTableCell align="center">
-              <SortBox
-                title={mdScreen ? "CS Date" : "Change Status Date"}
-                handling={handleSortByCSDate}
-                asc={searchParams.get("sort") === "code_asc"}
-                desc={searchParams.get("sort") === "code_desc"}
-                jc="center"
-              />
-            </PrimaryTableCell>
-
+            <PrimaryTableCell align="center">Passport Expiry</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -263,14 +257,20 @@ const TransactionsTable = ({
             data.map((row, i) => {
               return type === "all" ? (
                 <PrimaryTableRow key={i}>
-                  <PrimaryTableCell align="left">
+                  <PrimaryTableCell align="left" component="th" scope="row">
                     {row.transactionNo}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {row.companyName}
+                    <Link
+                      to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                        row.employeeId
+                      }`}
+                    >
+                      {row.employeeName}
+                    </Link>
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {row.employeeName}
+                    {handleDate(row.workPermitExpiryDate)}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     <StatusBox status={row.status} />
@@ -294,23 +294,35 @@ const TransactionsTable = ({
                 </PrimaryTableRow>
               ) : type === "pre" ? (
                 <PrimaryTableRow key={i}>
-                  <PrimaryTableCell align="left">
+                  <PrimaryTableCell align="left" component="th" scope="row">
                     {row.transactionNo}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {row.companyName}
+                    <Link
+                      to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${
+                        row.companyId
+                      }`}
+                    >
+                      {row.companyName}
+                    </Link>
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {row.employeeName}
+                    <Link
+                      to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                        row.employeeId
+                      }`}
+                    >
+                      {row.employeeName}
+                    </Link>
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={handleDate(row.workPermitExpiryDate)} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     <StatusBox status={row.status} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {handleDate(row.statusDate)}
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="center">
-                    {handleDate(row.workPermitExpiryDate)}
+                    {handleDate(row.passportExpiry)}
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
@@ -323,14 +335,26 @@ const TransactionsTable = ({
               ) : (
                 (type === "new" || type === "renew") && (
                   <PrimaryTableRow key={i}>
-                    <PrimaryTableCell align="left">
+                    <PrimaryTableCell align="left" component="th" scope="row">
                       {row.transactionNo}
                     </PrimaryTableCell>
+                    <Link
+                      to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${
+                        row.companyId
+                      }`}
+                    >
+                      <PrimaryTableCell align="center">
+                        {row.companyName}
+                      </PrimaryTableCell>
+                    </Link>
                     <PrimaryTableCell align="center">
-                      {row.companyName}
-                    </PrimaryTableCell>
-                    <PrimaryTableCell align="center">
-                      {row.employeeName}
+                      <Link
+                        to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                          row.employeeId
+                        }`}
+                      >
+                        {row.employeeName}
+                      </Link>
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
                       <StatusBox status={row.status} />

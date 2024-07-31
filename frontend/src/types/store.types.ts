@@ -586,7 +586,7 @@ interface TransactionTypes {
   companyId: string;
   companyName: string;
   employeeName: string;
-  nameAr: string;
+  employeeNameAr: string;
   dob: string;
   gender: string;
   idNationality: string;

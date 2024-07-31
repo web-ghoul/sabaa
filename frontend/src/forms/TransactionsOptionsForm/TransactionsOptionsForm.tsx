@@ -9,7 +9,7 @@ import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { AppDispatch } from "../../store/store";
-import { getUsers } from "../../store/usersSlice";
+import { getTransactions } from "../../store/transactionsSlice";
 import { FormiksTypes } from "../../types/forms.types";
 
 const TransactionsOptionsForm = ({
@@ -20,14 +20,15 @@ const TransactionsOptionsForm = ({
 }: FormiksTypes) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showFilters, setShowFilters] = useState(false);
-  const { searchForUsers, setSearchForUsers } = useContext(FormsContext);
+  const { searchForTransactions, setSearchForTransactions } =
+    useContext(FormsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const handleSearch = (value: string) => {
-    setSearchForUsers(value);
-    dispatch(getUsers({ ...queries, search: value }));
+    setSearchForTransactions(value);
+    dispatch(getTransactions({ ...queries, search: value }));
   };
 
   const handleFilterByWorkPermitExpiryFrom = (value: string) => {
@@ -46,21 +47,46 @@ const TransactionsOptionsForm = ({
     handleAddQuery({ residenceTo: value });
   };
 
+  const handleFilterByChangeStatusDateFrom = (value: string) => {
+    handleAddQuery({ changeStatusDateFrom: value });
+  };
+
+  const handleFilterByChangeStatusDateTo = (value: string) => {
+    handleAddQuery({ changeStatusDateTo: value });
+  };
+
   const handleFilterByStatus = (value: string) => {
     handleAddQuery({ status: value });
   };
 
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getUsers({ ...queries, search: searchForUsers }));
+    dispatch(getTransactions({ ...queries, search: searchForTransactions }));
   };
 
   const handleResetAll = () => {
-    navigate(`${import.meta.env.VITE_USERS_ROUTE}`);
-    dispatch(getUsers({}));
+    if (tType === "all") {
+      navigate(`${import.meta.env.VITE_TRANSACTIONS_ALL_ROUTE}`);
+    } else if (tType === "pre") {
+      navigate(`${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`);
+    } else if (tType === "new") {
+      navigate(`${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`);
+    } else if (tType === "renew") {
+      navigate(`${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`);
+    }
+    dispatch(getTransactions({ type: tType }));
     setQueries({});
+    setValue("search", "");
     setValue("status", "");
     setValue("role", "");
+    setValue("sort", "");
+    setValue("expireWorkPermitFrom", "");
+    setValue("expireWorkPermitTo", "");
+    setValue("residenceFrom", "");
+    setValue("residenceTo", "");
+    setValue("changeStatusDateFrom", "");
+    setValue("changeStatusDateTo", "");
+    setValue("type", "");
   };
 
   return (
@@ -162,6 +188,31 @@ const TransactionsOptionsForm = ({
                   register={register}
                   errors={errors}
                   change={handleFilterByResidenceDateTo}
+                />
+              </Box>
+            </Box>
+          )}
+          {tType === "all" && (
+            <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>
+              <Typography variant="h6">Filter By Change Status Date</Typography>
+              <Box
+                className={`flex justify-stretch gap-4 md:gap-3 sm:!gap-2 md:flex-wrap`}
+              >
+                <Input
+                  name={"changeStatusDateFrom"}
+                  label={"From"}
+                  type={"date"}
+                  register={register}
+                  errors={errors}
+                  change={handleFilterByChangeStatusDateFrom}
+                />
+                <Input
+                  name={"changeStatusDateTo"}
+                  label={"To"}
+                  type={"date"}
+                  register={register}
+                  errors={errors}
+                  change={handleFilterByChangeStatusDateTo}
                 />
               </Box>
             </Box>

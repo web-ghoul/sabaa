@@ -26,6 +26,8 @@ const ExcelButtons = ({ variant, addBtn, upload, all }: ExcelButtonsTypes) => {
       return `${import.meta.env.VITE_UPLOAD_CUSTOMERS_ROUTE}`;
     }else if (variant === "employees") {
       return `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`;
+    }else if (variant === "transactions") {
+      return `${import.meta.env.VITE_UPLOAD_TRANSACTIONS_ROUTE}`;
     }
     return "";
   };
