@@ -46,7 +46,11 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
   };
 
   const handleChoosePermission = (type: string) => {
-    const c = { ...chosenPermissions };
+    const c: { [key: string]: { [key: string]: boolean } } = {};
+    const keys = Object.keys(chosenPermissions);
+    keys.map((key) => {
+      c[`${key}`] = { ...chosenPermissions[key] };
+    });
     if (c[currentPermission]) {
       c[currentPermission][`${type}`] = !c[currentPermission][`${type}`];
     } else {
@@ -67,7 +71,8 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
       setEditableRoleData(role);
       setValue("name", role.name);
       setValue("permissions", role.permissions);
-      setChosenPermissions(role.permissions);
+      const roles = { ...role.permissions };
+      setChosenPermissions(roles);
     }
   }, [id, role, setEditableRoleData, setValue]);
 
