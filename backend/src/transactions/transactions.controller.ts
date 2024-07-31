@@ -9,7 +9,6 @@ import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { Response } from 'express';
 
 ApiTags('transactions')
-
 @Controller(['work-permit', 'approved-work-permit', 'new-lc', 'renew-lc', 'transaction'])
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}

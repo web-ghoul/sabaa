@@ -123,19 +123,19 @@ export class ReportsService extends PdfGenerator {
     
   }
 
-  findAll() {
+  employeeAllTrancactions() {
     return `This action returns all reports`;
   }
 
-  findOne(id: number) {
+  companyTransactions(id: number) {
     return `This action returns a #${id} report`;
   }
 
-  update(id: number, updateReportDto: UpdateReportDto) {
+  companyDetails(id: number, updateReportDto: UpdateReportDto) {
     return `This action updates a #${id} report`;
   }
 
-  remove(id: number) {
+  owenrCompany(id: number) {
     return `This action removes a #${id} report`;
   }
 }
