@@ -26,15 +26,16 @@ import { User } from 'src/utils/decorators/User.decorator';
 import { Response } from 'express';
 
 @ApiTags('Company')
-@Controller('company')
+@Controller(['company', 'companies'])
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('logo'))
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "create"})
-  create(@User("id") user,
+  @ActivityLog({ action: 'create' })
+  create(
+    @User('id') user,
     @Body() createCompanyDto: CreateCompanyDto,
     @UploadedFile(
       new ParseFilePipe({
@@ -90,9 +91,9 @@ export class CompanyController {
     return this.companyService.getCounters();
   }
 
-  @Get("export")
-  export(@Res()  res: Response,@Query('fileName') fileName: string) {
-    return this.companyService.export(res,fileName);  
+  @Get('export')
+  export(@Res() res: Response, @Query('fileName') fileName: string) {
+    return this.companyService.export(res, fileName);
   }
 
   @Get(':id')
@@ -103,7 +104,7 @@ export class CompanyController {
   @Patch(':id')
   @UseInterceptors(FileInterceptor('logo'))
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "update"})
+  @ActivityLog({ action: 'update' })
   update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
@@ -123,7 +124,7 @@ export class CompanyController {
 
   @Delete(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  @ActivityLog({ action: 'delete' })
   remove(@Param('id') id: string) {
     return this.companyService.remove(id);
   }

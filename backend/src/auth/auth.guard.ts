@@ -50,7 +50,7 @@ import { PermissionService } from 'src/permission/permission.service';
           method = "read"
         }
         
-        if(permission.permissions.get(path)[method.toLowerCase()] == false){
+        if (permission.permissions.get(path)[method.toLowerCase()] == false) {
           throw new UnauthorizedException();
         }
 

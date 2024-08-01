@@ -35,10 +35,10 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
     "customers",
     "jobs",
     "nationalities",
-    "E-Channels",
+    "e-channels",
     "tasheels",
     "natwasals",
-    "transaction",
+    "transactions",
   ];
 
   const handleChangeTab = (per: string) => {

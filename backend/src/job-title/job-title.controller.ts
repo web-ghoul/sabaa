@@ -9,28 +9,40 @@ import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { User } from 'src/utils/decorators/User.decorator';
 
 @ApiTags('Job-Title')
-@Controller('job-title')
+@Controller(['job-title', 'jobs'])
 export class JobTitleController {
   constructor(private readonly jobTitleService: JobTitleService) {}
 
-  
   @Post()
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "create"})
-  create(@User("id") user,@Body() createJobTitleDto: CreateJobTitleDto) {
-    return this.jobTitleService.create(createJobTitleDto,user);
+  @ActivityLog({ action: 'create' })
+  create(@User('id') user, @Body() createJobTitleDto: CreateJobTitleDto) {
+    return this.jobTitleService.create(createJobTitleDto, user);
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string, @Query('select') selectFields: string[], @Query('sort') sort: string,@Query('deleted') deleted: boolean):Promise<JobTitle[]>{
-    return this.jobTitleService.findAll(limit,page,search,selectFields,sort,deleted);
+  findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+    @Query('search') search: string,
+    @Query('select') selectFields: string[],
+    @Query('sort') sort: string,
+    @Query('deleted') deleted: boolean,
+  ): Promise<JobTitle[]> {
+    return this.jobTitleService.findAll(
+      limit,
+      page,
+      search,
+      selectFields,
+      sort,
+      deleted,
+    );
   }
 
-  @Get("counters")
-  getCounters(){
+  @Get('counters')
+  getCounters() {
     return this.jobTitleService.getCounters();
   }
-
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -39,14 +51,17 @@ export class JobTitleController {
 
   @Patch(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "update"})
-  update(@Param('id') id: string, @Body() updateJobTitleDto: UpdateJobTitleDto) {
+  @ActivityLog({ action: 'update' })
+  update(
+    @Param('id') id: string,
+    @Body() updateJobTitleDto: UpdateJobTitleDto,
+  ) {
     return this.jobTitleService.update(id, updateJobTitleDto);
   }
 
   @Delete(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  @ActivityLog({ action: 'delete' })
   remove(@Param('id') id: string) {
     return this.jobTitleService.remove(id);
   }

@@ -18,15 +18,15 @@ import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { User } from 'src/utils/decorators/User.decorator';
 @ApiTags('Nationality')
-@Controller('nationality')
+@Controller(['nationality', 'nationalities'])
 export class NationalityController {
   constructor(private readonly nationalityService: NationalityService) {}
 
   @Post()
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "create"})
-  create(@User("id") user,@Body() createNationalityDto: CreateNationalityDto) {
-    return this.nationalityService.create(createNationalityDto,user);
+  @ActivityLog({ action: 'create' })
+  create(@User('id') user, @Body() createNationalityDto: CreateNationalityDto) {
+    return this.nationalityService.create(createNationalityDto, user);
   }
 
   @Get()
@@ -60,7 +60,7 @@ export class NationalityController {
 
   @Patch(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "update"})
+  @ActivityLog({ action: 'update' })
   update(
     @Param('id') id: string,
     @Body() updateNationalityDto: UpdateNationalityDto,
@@ -70,7 +70,7 @@ export class NationalityController {
 
   @Delete(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  @ActivityLog({ action: 'delete' })
   remove(@Param('id') id: string) {
     return this.nationalityService.remove(id);
   }
