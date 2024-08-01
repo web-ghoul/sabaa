@@ -17,7 +17,7 @@ import { User as UserDecorator }  from 'src/utils/decorators/User.decorator';
 
 // import { Request } from 'express';
 @ApiTags('User')
-@Controller('user')
+@Controller(['user',"users"])
 export class UserController {
   constructor(
     private readonly userService: UserService,
