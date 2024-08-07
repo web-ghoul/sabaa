@@ -11,7 +11,7 @@ export const getRecentCustomers = createAsyncThunk(
   async (args: RecentCustomersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/customers?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0&type=customer`,
       {

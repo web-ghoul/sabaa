@@ -56,7 +56,7 @@ interface RecentActivitiesArgsTypes {
 interface RoleTypes {
   _id: string;
   name: string;
-  permissions:{[key:string]:{[key:string]:boolean}}
+  permissions: { [key: string]: { [key: string]: boolean } };
 }
 interface RolesValuesTypes {
   roles: RoleTypes[] | null;
@@ -733,6 +733,13 @@ interface RecentNationalitiesValuesTypes {
 
 //Nationality
 
+//Alerts
+interface AlertsValuesTypes {
+  isLoading: boolean;
+  alerts: { [key: string]: string } | null;
+}
+//Alerts
+
 export type {
   ActivitiesArgsTypes,
   ActivitiesCounterValuesTypes,
@@ -819,4 +826,5 @@ export type {
   RolesValuesTypes,
   RoleTypes,
   RoleValuesTypes,
+  AlertsValuesTypes,
 };

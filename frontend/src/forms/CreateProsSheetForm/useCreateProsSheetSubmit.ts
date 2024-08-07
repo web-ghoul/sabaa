@@ -22,7 +22,7 @@ const useCreateProsSheetSubmit = () => {
     handleOpenFormsLoading();
     values = prosSheets[proIndex.fileIndex].data;
     await server
-      .post(`/owner`, values, {
+      .post(`/officers`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

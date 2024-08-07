@@ -11,7 +11,7 @@ export const getCompanies = createAsyncThunk(
   async (args: CompaniesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/company?search=${
+      `${import.meta.env.VITE_SERVER_URL}/companies?search=${
         (args && args.search) || ""
       }&id=${args?.id || ""}&sort=${args?.sort || ""}&limit=${
         args?.limit

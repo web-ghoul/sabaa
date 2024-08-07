@@ -8,7 +8,7 @@ export const getEmployee = createAsyncThunk(
   async (args: { id: string }) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/Employee/${args.id}`,
+      `${import.meta.env.VITE_SERVER_URL}/employees/${args.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -32,11 +32,11 @@ export class AuthService {
             const permissionData = await this.permissionModel.findOne({name: user.role})
             const payload = { id: user._id, name: user.name, role: user.role };
             return {
-                message : "login successfully",
-                token: await this.jwtService.signAsync(payload),
-                userId: user._id,
-                image: user.avatar,
-                permission: permissionData.permissions
+              message: 'login successfully',
+              token: await this.jwtService.signAsync(payload),
+              userId: user._id,
+              image: user.avatar,
+              permission: permissionData?.permissions,
             };
           }
         }

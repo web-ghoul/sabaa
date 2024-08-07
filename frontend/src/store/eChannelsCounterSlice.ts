@@ -8,7 +8,7 @@ export const getEChannelsCounter = createAsyncThunk(
   async () => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/e-channel/counters`,
+      `${import.meta.env.VITE_SERVER_URL}/e-channels/counters`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

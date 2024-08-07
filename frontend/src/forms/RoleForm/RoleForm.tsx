@@ -28,6 +28,7 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
 
   const permissions = [
     "dashboard",
+    "users",
     "companies",
     "owners",
     "employees",
@@ -39,6 +40,8 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
     "tasheels",
     "natwasals",
     "transactions",
+    "activities",
+    "permissions",
   ];
 
   const handleChangeTab = (per: string) => {

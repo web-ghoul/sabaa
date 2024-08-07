@@ -11,7 +11,7 @@ export const getRecentNationalities = createAsyncThunk(
   async (args: RecentNationalitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/nationality?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/nationalities?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0`,
       {

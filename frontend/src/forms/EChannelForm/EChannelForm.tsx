@@ -28,7 +28,7 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
   const handleSearch = async () => {
     setLoading(true);
     await axios
-      .get(`${import.meta.env.VITE_SERVER_URL}/e-channel/${search}`, {
+      .get(`${import.meta.env.VITE_SERVER_URL}/e-channels/${search}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

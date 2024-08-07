@@ -22,7 +22,7 @@ const useCreateJobsSheetSubmit = () => {
     handleOpenFormsLoading();
     values = jobsSheets[jobIndex.fileIndex].data;
     await server
-      .post(`/job-title`, values, {
+      .post(`/jobs`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

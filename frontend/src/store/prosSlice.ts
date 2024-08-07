@@ -8,7 +8,7 @@ export const getPros = createAsyncThunk(
   async (args: ProsArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner?search=${
+      `${import.meta.env.VITE_SERVER_URL}/officers?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit

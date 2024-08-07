@@ -8,7 +8,7 @@ export const getOwner = createAsyncThunk(
   async (args: { id: string }) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner/${args.id}`,
+      `${import.meta.env.VITE_SERVER_URL}/owners/${args.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

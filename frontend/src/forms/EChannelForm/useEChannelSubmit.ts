@@ -24,7 +24,7 @@ const useEChannelSubmit = () => {
   const addEChannel = async (values: EChannelFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/e-channel`, values)
+      .post(`/e-channels`, values)
       .then(() => {
         handleAlert({
           msg: "E-Channel is Created Successfully",
@@ -44,7 +44,7 @@ const useEChannelSubmit = () => {
     handleOpenFormsLoading();
     await server
       .patch(
-        `/e-channel/${editableEChannelData && editableEChannelData._id}`,
+        `/e-channels/${editableEChannelData && editableEChannelData._id}`,
         values
       )
       .then(() => {

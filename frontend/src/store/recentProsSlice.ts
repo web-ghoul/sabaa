@@ -11,7 +11,7 @@ export const getRecentPros = createAsyncThunk(
   async (args: RecentProsArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/officers?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0&type=pro`,
       {

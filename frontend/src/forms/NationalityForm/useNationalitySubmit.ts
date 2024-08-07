@@ -28,7 +28,7 @@ const useNationalitySubmit = () => {
   const addNationality = async (values: NationalityFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/nationality`, values, {
+      .post(`/nationalities`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +60,7 @@ const useNationalitySubmit = () => {
     } else {
       await server
         .patch(
-          `/nationality/${
+          `/nationalities/${
             editableNationalityData && editableNationalityData._id
           }`,
           values,

@@ -251,6 +251,12 @@ interface DownloadExcelFormTypes {
 interface DeleteFormTypes {}
 //Delete
 
+//Company Info
+interface CompanyInfoFormTypes{
+
+}
+//Company Info
+
 type AllFormsTypes =
   | LoginFormTypes
   | ResetPasswordFormTypes
@@ -284,7 +290,7 @@ type AllFormsTypes =
   | NatwasalsOptionsFormTypes
   | TransactionFormTypes
   | TransactionsOptionsFormTypes
-  | RoleFormTypes;
+  | RoleFormTypes|CompanyInfoFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -343,5 +349,5 @@ export type {
   TransactionFormTypes,
   TransactionsOptionsFormTypes,
   RoleFormTypes,
-  NewLabourCardFormTypes,
+  NewLabourCardFormTypes,CompanyInfoFormTypes
 };

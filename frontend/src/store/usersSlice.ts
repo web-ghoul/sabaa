@@ -8,7 +8,7 @@ export const getUsers = createAsyncThunk(
   async (args: UsersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/user?search=${
+      `${import.meta.env.VITE_SERVER_URL}/users?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit

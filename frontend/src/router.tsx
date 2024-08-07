@@ -3,9 +3,11 @@ import App from "./App.tsx";
 import Activities from "./pages/Activities.tsx";
 import AddCompany from "./pages/AddCompany.tsx";
 import AddEmployee from "./pages/AddEmployee.tsx";
+import Alerts from "./pages/Alerts.tsx";
 import AllTransactions from "./pages/AllTransactions.tsx";
 import Companies from "./pages/Companies.tsx";
 import Company from "./pages/Company.tsx";
+import CompanyTransaction from "./pages/CompanyTransaction.tsx";
 import Customer from "./pages/Customer.tsx";
 import Customers from "./pages/Customers.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
@@ -14,9 +16,10 @@ import EditCompany from "./pages/EditCompany.tsx";
 import EditEmployee from "./pages/EditEmployee.tsx";
 import EditPermission from "./pages/EditPermission.tsx";
 import Employee from "./pages/Employee.tsx";
+import EmployeeDetails from "./pages/EmployeeDetails.tsx";
+import EmployeeList from "./pages/EmployeeList.tsx";
 import Employees from "./pages/Employees.tsx";
 import Error from "./pages/Error.tsx";
-import FileManager from "./pages/FileManager.tsx";
 import Jobs from "./pages/Jobs.tsx";
 import Login from "./pages/Login.tsx";
 import Mails from "./pages/Mails.tsx";
@@ -25,6 +28,7 @@ import Natwasals from "./pages/Natwasals.tsx";
 import NewTransactions from "./pages/NewTransactions.tsx";
 import OTP from "./pages/OTP.tsx";
 import Owner from "./pages/Owner.tsx";
+import OwnerCompany from "./pages/OwnerCompany.tsx";
 import Owners from "./pages/Owners.tsx";
 import PreTransactions from "./pages/PreTransactions.tsx";
 import Pro from "./pages/Pro.tsx";
@@ -172,32 +176,24 @@ export const router = createBrowserRouter([
         element: <RenewTransactions />,
       },
       {
-        path: "/mails",
-        element: <Mails />,
-      },
-      {
         path: "/activities",
         element: <Activities />,
       },
       {
-        path: "/reports",
-        element: <Reports />,
+        path: "/employeeList",
+        element: <EmployeeList />,
       },
       {
-        path: "/todoList",
-        element: <TodoList />,
+        path: "/ownerCompany",
+        element: <OwnerCompany />,
       },
       {
-        path: "/settings",
-        element: <Settings />,
+        path: "/companyTransaction",
+        element: <CompanyTransaction />,
       },
       {
-        path: "/settings/permission/:id",
-        element: <EditPermission />,
-      },
-      {
-        path: "/fileManager",
-        element: <FileManager />,
+        path: "/employeeDetails",
+        element: <EmployeeDetails />,
       },
       {
         path: "/nationalities",
@@ -226,6 +222,30 @@ export const router = createBrowserRouter([
       {
         path: "/officers/upload",
         element: <UploadPros />,
+      },
+      {
+        path: "/mails",
+        element: <Mails />,
+      },
+      {
+        path: "/reports",
+        element: <Reports />,
+      },
+      {
+        path: "/todoList",
+        element: <TodoList />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
+      },
+      {
+        path: "/settings/permission/:id",
+        element: <EditPermission />,
+      },
+      {
+        path: "/alerts",
+        element: <Alerts />,
       },
       {
         path: "*",

@@ -70,7 +70,7 @@ const useDeleteSubmit = () => {
     handleOpenFormsLoading();
     if (formType === "owner") {
       await server
-        .delete(`/owner/${editableOwnerData && editableOwnerData._id}`)
+        .delete(`/owners/${editableOwnerData && editableOwnerData._id}`)
         .then(() => {
           handleAlert({
             msg: "Owner is Deleted Successfully",
@@ -86,7 +86,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "pro") {
       await server
-        .delete(`/owner/${editableProData && editableProData._id}`)
+        .delete(`/officers/${editableProData && editableProData._id}`)
         .then(() => {
           handleAlert({
             msg: "Officer is Deleted Successfully",
@@ -102,7 +102,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "customer") {
       await server
-        .delete(`/owner/${editableCustomerData && editableCustomerData._id}`)
+        .delete(`/customers/${editableCustomerData && editableCustomerData._id}`)
         .then(() => {
           handleAlert({
             msg: "Customer is Deleted Successfully",
@@ -144,7 +144,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "employee") {
       await server
-        .delete(`/Employee/${editableEmployeeData && editableEmployeeData._id}`)
+        .delete(`/employees/${editableEmployeeData && editableEmployeeData._id}`)
         .then(() => {
           handleAlert({
             msg: "Employee is Deleted Successfully",
@@ -160,7 +160,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "job") {
       await server
-        .delete(`/job-title/${editableJobData && editableJobData._id}`)
+        .delete(`/jobs/${editableJobData && editableJobData._id}`)
         .then(() => {
           handleAlert({
             msg: "Job is Deleted Successfully",
@@ -177,7 +177,7 @@ const useDeleteSubmit = () => {
     } else if (formType === "nationality") {
       await server
         .delete(
-          `/nationality/${
+          `nationalities/${
             editableNationalityData && editableNationalityData._id
           }`
         )
@@ -196,7 +196,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "user") {
       await server
-        .delete(`/user/${editableUserData && editableUserData._id}`)
+        .delete(`/users/${editableUserData && editableUserData._id}`)
         .then(() => {
           handleAlert({
             msg: "User is Deleted Successfully",
@@ -229,7 +229,7 @@ const useDeleteSubmit = () => {
     } else if (formType === "eChannel") {
       await server
         .delete(
-          `/e-channel/${editableEChannelData && editableEChannelData._id}`
+          `/e-channels/${editableEChannelData && editableEChannelData._id}`
         )
         .then(() => {
           handleAlert({

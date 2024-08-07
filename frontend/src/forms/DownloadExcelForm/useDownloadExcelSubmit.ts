@@ -37,7 +37,7 @@ const useDownloadExcelSubmit = () => {
         handleCloseDownloadExcelModal();
       } else {
         await server
-          .get(`/owner/export?type=owner&fileName=${values.fileName}`, {
+          .get(`/owners/export?type=owner&fileName=${values.fileName}`, {
             responseType: "blob",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ const useDownloadExcelSubmit = () => {
         handleCloseDownloadExcelModal();
       } else {
         await server
-          .get(`/owner/export?type=pro&fileName=${values.fileName}`, {
+          .get(`/officers/export?type=pro&fileName=${values.fileName}`, {
             responseType: "blob",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ const useDownloadExcelSubmit = () => {
         handleCloseDownloadExcelModal();
       } else {
         await server
-          .get(`/owner/export?type=customer&fileName=${values.fileName}`, {
+          .get(`/customers/export?type=customer&fileName=${values.fileName}`, {
             responseType: "blob",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -133,7 +133,7 @@ const useDownloadExcelSubmit = () => {
         handleCloseDownloadExcelModal();
       } else {
         await server
-          .get(`/Employee/export?fileName=${values.fileName}`, {
+          .get(`/employees/export?fileName=${values.fileName}`, {
             responseType: "blob",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -173,7 +173,7 @@ const useDownloadExcelSubmit = () => {
         handleCloseDownloadExcelModal();
       } else {
         await server
-          .get(`/user/export?fileName=${values.fileName}`, {
+          .get(`/users/export?fileName=${values.fileName}`, {
             responseType: "blob",
             headers: {
               Authorization: `Bearer ${token}`,

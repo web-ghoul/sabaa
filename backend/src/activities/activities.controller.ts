@@ -3,7 +3,7 @@ import { ActivitiesService } from './activities.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 
-@Controller('activity')
+@Controller(['activity', 'activities'])
 export class ActivitiesController {
   constructor(private readonly activitiesService: ActivitiesService) {}
 
@@ -13,19 +13,29 @@ export class ActivitiesController {
   }
 
   @Get()
-  findAll(@Query('limit') limit: number,
-  @Query('page') page: number,
-  @Query('search') search: string,
-  @Query('to') to: string,
-  @Query('from') from: string,
-  @Query('operation') operation: string,
-  @Query('type') route: string,
-  @Query('userId') userId: string,
-) {
-    return this.activitiesService.findAll(limit,page,search,operation,from,to,route,userId);
+  findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+    @Query('search') search: string,
+    @Query('to') to: string,
+    @Query('from') from: string,
+    @Query('operation') operation: string,
+    @Query('type') route: string,
+    @Query('userId') userId: string,
+  ) {
+    return this.activitiesService.findAll(
+      limit,
+      page,
+      search,
+      operation,
+      from,
+      to,
+      route,
+      userId,
+    );
   }
 
-  @Get("counters")
+  @Get('counters')
   getCounters() {
     return this.activitiesService.getCounters();
   }
@@ -36,7 +46,10 @@ export class ActivitiesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateActivityDto: UpdateActivityDto,
+  ) {
     return this.activitiesService.update(+id, updateActivityDto);
   }
 

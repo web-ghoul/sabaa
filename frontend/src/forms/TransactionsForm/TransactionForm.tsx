@@ -41,7 +41,7 @@ const TransactionForm = ({
 
   const handleSearch = async (value: string) => {
     setLoading(true);
-    await server.get(`/Employee?search=${value}`).then((res) => {
+    await server.get(`/employees?search=${value}`).then((res) => {
       const employees: EmployeeTypes[] = res.data;
       if (employees.length > 0) {
         const employee = employees[0];

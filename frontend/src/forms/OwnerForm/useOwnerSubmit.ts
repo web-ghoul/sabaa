@@ -80,7 +80,7 @@ const useOwnerSubmit = () => {
   const addOwner = async (values: OwnerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handlePersonFormData(values), {
+      .post(`/owners`, handlePersonFormData(values), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -140,7 +140,7 @@ const useOwnerSubmit = () => {
     } else {
       await server
         .patch(
-          `/owner/${editableOwnerData && editableOwnerData._id}`,
+          `/owners/${editableOwnerData && editableOwnerData._id}`,
           handlePersonFormData(values),
           {
             headers: {

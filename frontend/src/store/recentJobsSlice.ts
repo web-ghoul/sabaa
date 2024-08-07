@@ -11,7 +11,7 @@ export const getRecentJobs = createAsyncThunk(
   async (args: RecentJobsArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/job-title?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/jobs?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0`,
       {

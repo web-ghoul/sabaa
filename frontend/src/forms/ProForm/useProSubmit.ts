@@ -81,7 +81,7 @@ const useProSubmit = () => {
   const addPro = async (values: ProFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handlePersonFormData(values))
+      .post(`/officers`, handlePersonFormData(values))
       .then(async (res) => {
         handleAlert({
           msg: "Officer is Created Successfully",
@@ -132,7 +132,7 @@ const useProSubmit = () => {
     } else {
       await server
         .patch(
-          `/owner/${editableProData && editableProData._id}`,
+          `/officers/${editableProData && editableProData._id}`,
           handlePersonFormData(values)
         )
         .then(() => {

@@ -1,4 +1,5 @@
 import useCompanySubmit from "../forms/CompanyForm/useCompanySubmit";
+import useCompanyInfoSubmit from "../forms/CompanyInfoForm/useCompanyInfoSubmit";
 import useConvertCustomerSubmit from "../forms/ConvertCustomerForm/useConvertCustomerSubmit";
 import useCreateCompaniesSheetSubmit from "../forms/CreateCompaniesSheetForm/useCreateCompaniesSheetSubmit";
 import useCreateCustomersSheetSubmit from "../forms/CreateCustomersSheetForm/useCreateCustomersSheetSubmit";
@@ -30,6 +31,7 @@ import useUserSubmit from "../forms/UserForm/useUserSubmit";
 import {
   AllFormsTypes,
   CompanyFormTypes,
+  CompanyInfoFormTypes,
   ConvertCustomerFormTypes,
   CustomerFormTypes,
   DownloadExcelFormTypes,
@@ -83,6 +85,7 @@ const useSubmitFunction = (type: string) => {
   const { handleDownloadExcelSubmit } = useDownloadExcelSubmit();
   const { addTransaction, editTransaction, newLC } = useTransactionSubmit();
   const { addRole, editRole } = useRoleSubmit();
+  const { editCompanyInfo } = useCompanyInfoSubmit();
 
   const submitFunction = (values: AllFormsTypes | unknown) => {
     switch (type) {
@@ -215,6 +218,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);
+        break;
+      case "editCompanyInfo":
+        editCompanyInfo(values as CompanyInfoFormTypes);
         break;
       case "delete":
         handleDelete();

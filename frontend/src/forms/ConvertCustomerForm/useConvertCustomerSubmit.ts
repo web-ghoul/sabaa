@@ -26,7 +26,7 @@ const useConvertCustomerSubmit = () => {
     handleOpenFormsLoading();
     await server
       .patch(
-        `/owner/${editableCustomerData && editableCustomerData._id}`,
+        `/customers/${editableCustomerData && editableCustomerData._id}`,
         { type: values.type === "Owner" ? "owner" : "pro" },
         {
           headers: {

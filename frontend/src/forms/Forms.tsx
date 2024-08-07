@@ -4,6 +4,7 @@ import { FormsTypes } from "../types/forms.types";
 import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
+import CompanyInfoForm from "./CompanyInfoForm/CompanyInfoForm";
 import ConvertCustomerForm from "./ConvertCustomerForm/ConvertCustomerForm";
 import CreateCompaniesSheetForm from "./CreateCompaniesSheetForm/CreateCompaniesSheetForm";
 import CreateCustomersSheetForm from "./CreateCustomersSheetForm/CreateCustomersSheetForm";
@@ -438,6 +439,18 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
           type={type}
         />
       )}
+
+      {/*  Company Info  */}
+      {type === "editCompanyInfo" && (
+        <CompanyInfoForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Company Info */}
     </Box>
   );
 };

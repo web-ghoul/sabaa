@@ -8,7 +8,7 @@ export const getJobs = createAsyncThunk(
   async (args: JobsArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/job-title?search=${
+      `${import.meta.env.VITE_SERVER_URL}/jobs?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit

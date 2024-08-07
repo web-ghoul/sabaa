@@ -11,7 +11,7 @@ export const getRecentCompanies = createAsyncThunk(
   async (args: RecentCompaniesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/company?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/companies?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0&search=&sort=&state=&status=&molCategory=&establishmentType=&IMMGFrom=&IMMGTo=&licenseFrom=&licenseTo=`,
       {

@@ -26,7 +26,7 @@ const useCreateEmployeesSheetSubmit = () => {
     handleOpenFormsLoading();
     values = employeesSheets[employeeIndex.fileIndex].data;
     await server
-      .post(`/Employee`, values, {
+      .post(`/employees`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

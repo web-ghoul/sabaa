@@ -18,7 +18,7 @@ const PermissionTab = ({
     >
       <Typography
         variant="button"
-        className={`${current && "!text-white !font-[700]"}`}
+        className={`${current && "!text-white !font-[700]"} capitalize`}
       >
         {title}
       </Typography>

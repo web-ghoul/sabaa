@@ -11,7 +11,7 @@ export const getRecentActivities = createAsyncThunk(
   async (args: RecentActivitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/activity?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/activities?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0`,
       {

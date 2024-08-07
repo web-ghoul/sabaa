@@ -8,7 +8,7 @@ export const getRole = createAsyncThunk(
   async (args: { id: string }) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/permission/${args.id}`,
+      `${import.meta.env.VITE_SERVER_URL}/permissions/${args.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

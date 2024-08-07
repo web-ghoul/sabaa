@@ -8,7 +8,7 @@ export const getTransactionsCounter = createAsyncThunk(
   async () => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/transaction/counters`,
+      `${import.meta.env.VITE_SERVER_URL}/transactions/counters`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

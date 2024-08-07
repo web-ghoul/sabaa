@@ -11,7 +11,7 @@ export const getRecentOwners = createAsyncThunk(
   async (args: RecentOwnersArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/owner?limit=${
+      `${import.meta.env.VITE_SERVER_URL}/owners?limit=${
         args?.limit || import.meta.env.VITE_RECENT_LIMIT_PAGES
       }&page=0&type=owner`,
       {

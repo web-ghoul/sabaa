@@ -2,7 +2,6 @@ import {
   AddBoxRounded,
   AlarmAddRounded,
   AppRegistrationRounded,
-  AssessmentRounded,
   AutoAwesomeMotionRounded,
   BorderAllRounded,
   CallToActionRounded,
@@ -138,10 +137,32 @@ const Items = () => {
         url={`${import.meta.env.VITE_ALERTS_ROUTE}`}
       />
       <Item
-        icon={<AssessmentRounded />}
+        icon={<TransactionsIcon />}
         title="Reports"
         url={`${import.meta.env.VITE_REPORTS_ROUTE}`}
-      />
+        sub
+      >
+        <Item
+          icon={<BorderAllRounded />}
+          title="Employee List"
+          url={`${import.meta.env.VITE_EMPLOYEE_LIST_ROUTE}`}
+        />
+        <Item
+          icon={<AppRegistrationRounded />}
+          title="Owner Company"
+          url={`${import.meta.env.VITE_OWNER_COMPANY_ROUTE}`}
+        />
+        <Item
+          icon={<AddBoxRounded />}
+          title="Company Transaction"
+          url={`${import.meta.env.VITE_COMPANY_TRANSACTION_ROUTE}`}
+        />
+        <Item
+          icon={<PublishedWithChangesRounded />}
+          title="Employee details"
+          url={`${import.meta.env.VITE_EMPLOYEE_DETAILS_ROUTE}`}
+        />
+      </Item>
       <Item
         icon={<ListAltRounded />}
         title="Todo List"

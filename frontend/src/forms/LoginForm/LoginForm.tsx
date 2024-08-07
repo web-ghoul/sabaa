@@ -15,7 +15,7 @@ const LoginForm = ({ register, errors }: FormiksTypes) => {
     <Box
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 sm:justify-center`}
     >
-      <Title title={"Login to Dasboard"} />
+      <Title title={"Login to Dashboard"} />
       <Box
         className={`grid flex-wrap justify-stretch items-start grid-cols-2 gap-6 sm:flex sm:flex-wrap sm:justify-center`}
       >

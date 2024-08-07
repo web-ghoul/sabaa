@@ -11,7 +11,7 @@ export const getActivities = createAsyncThunk(
   async (args?: ActivitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/activity?page=${
+      `${import.meta.env.VITE_SERVER_URL}/activities?page=${
         args?.page || 0
       }&limit=${
         args?.limit

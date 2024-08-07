@@ -46,7 +46,7 @@ const useUserSubmit = () => {
   const addUser = async (values: UserFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/user`, handleUserFormData(values))
+      .post(`/users`, handleUserFormData(values))
       .then(() => {
         handleAlert({ msg: "User is Created Successfully", status: "success" });
         dispatch(getUsers({}));
@@ -64,7 +64,7 @@ const useUserSubmit = () => {
     handleOpenFormsLoading();
     await server
       .put(
-        `/user/${editableUserData && editableUserData._id}`,
+        `/users/${editableUserData && editableUserData._id}`,
         handleUserFormData(values)
       )
       .then(() => {

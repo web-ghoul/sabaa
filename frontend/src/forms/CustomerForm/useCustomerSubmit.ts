@@ -78,7 +78,7 @@ const useCustomerSubmit = () => {
   const addCustomer = async (values: CustomerFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/owner`, handlePersonFormData(values))
+      .post(`/customers`, handlePersonFormData(values))
       .then(() => {
         handleAlert({
           msg: "Customer is Created Successfully",
@@ -107,7 +107,7 @@ const useCustomerSubmit = () => {
     } else {
       await server
         .patch(
-          `/owner/${editableCustomerData && editableCustomerData._id}`,
+          `/customers/${editableCustomerData && editableCustomerData._id}`,
           handlePersonFormData(values)
         )
         .then(() => {

@@ -120,7 +120,7 @@ const useEmployeeSubmit = () => {
   const addEmployee = async (values: EmployeeFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/Employee`, handleEmployeeFormData(values))
+      .post(`/employees`, handleEmployeeFormData(values))
       .then(() => {
         handleAlert({
           msg: "Employee is Created Successfully",
@@ -149,7 +149,7 @@ const useEmployeeSubmit = () => {
     } else {
       await server
         .patch(
-          `/Employee/${editableEmployeeData && editableEmployeeData._id}`,
+          `/employees/${editableEmployeeData && editableEmployeeData._id}`,
           handleEmployeeFormData(values)
         )
         .then(() => {

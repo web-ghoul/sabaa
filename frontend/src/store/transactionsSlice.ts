@@ -11,7 +11,7 @@ export const getTransactions = createAsyncThunk(
   async (args: TransactionsArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/transaction?search=${
+      `${import.meta.env.VITE_SERVER_URL}/transactions?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit

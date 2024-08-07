@@ -7,7 +7,7 @@ export const getProfile = createAsyncThunk("/auth/getProfile", async () => {
   const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
   const userId = Cookies.get(`${import.meta.env.VITE_USER_ID_TITLE}`);
   const res = await axios.get(
-    `${import.meta.env.VITE_SERVER_URL}/user/${userId}`,
+    `${import.meta.env.VITE_SERVER_URL}/users/${userId}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

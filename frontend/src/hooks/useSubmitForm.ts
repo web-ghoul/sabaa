@@ -37,6 +37,8 @@ import useCreateJobsSheetSchema from "../forms/CreateJobsSheetForm/useCreateJobs
 import useCreateCustomersSheetSchema from "../forms/CreateCustomersSheetForm/useCreateCustomersSheetSchema";
 import useCreateProsSheetSchema from "../forms/CreateProsSheetForm/useCreateProsSheetSchema";
 import useRoleSchema from "../forms/RoleForm/useRoleSchema";
+import useConvertCustomerSchema from "../forms/ConvertCustomerForm/useConvertCustomerSchema";
+import useCompanyInfoSchema from "../forms/CompanyInfoForm/useCompanyInfoSchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
@@ -99,106 +101,206 @@ const useSubmitForm = (type: string) => {
     useCreateCustomersSheetSchema();
   const { createProsSheetSchema } = useCreateProsSheetSchema();
   const { RoleInitialValues, RoleSchema } = useRoleSchema();
+  const { CompanyInfoInitialValues, CompanyInfoSchema } =
+    useCompanyInfoSchema();
+  const { ConvertCustomerInitialValues, ConvertCustomerSchema } =
+    useConvertCustomerSchema();
 
   const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
+    //Authentication
     login: LoginSchema,
     otp: OTPSchema,
     forgotPassword: ForgotPasswordSchema,
     resetPassword: ResetPasswordSchema,
+    //Authentication
+
     delete: DeleteSchema,
+
     linkOwner: LinkToCompanySchema,
     linkPro: LinkToCompanySchema,
+
+    //Customer
     addCustomer: CustomerSchema,
     editCustomer: CustomerSchema,
     customersOptions: CustomersOptionsSchema,
+    convertCustomer: ConvertCustomerSchema,
+    //Customer
+
+    //Owner
     addOwner: OwnerSchema,
     editOwner: OwnerSchema,
     ownersOptions: OwnersOptionsSchema,
+    //Owner
+
+    //User
     addUser: UserSchema,
     editUser: UserSchema,
+    usersOptions: UsersOptionsSchema,
+    //User
+
+    //Role
     addRole: RoleSchema,
     editRole: RoleSchema,
-    usersOptions: UsersOptionsSchema,
+    //Role
+
+    //Employee
     addEmployee: EmployeeSchema,
     editEmployee: EmployeeSchema,
     employeesOptions: EmployeesOptionsSchema,
+    //Employee
+
+    //Pro
+    addPro: ProSchema,
+    editPro: ProSchema,
+    prosOptions: ProsOptionsSchema,
+    //Pro
+
+    //Sponsor
+    addSponsor: SponsorSchema,
+    editSponsor: SponsorSchema,
+    //Sponsor
+
+    //Company
+    addCompany: CompanySchema,
+    editCompany: CompanySchema,
+    companiesOptions: CompaniesOptionsSchema,
+    //Company
+
+    //E-Channel
+    addEChannel: EChannelSchema,
+    editEChannel: EChannelSchema,
+    eChannelsOptions: EChannelsOptionsSchema,
+    //E-Channel
+
+    //Tasheel
+    addTasheel: TasheelSchema,
+    editTasheel: TasheelSchema,
+    tasheelsOptions: TasheelsOptionsSchema,
+    //Tasheel
+
+    //Natwasal
+    addNatwasal: NatwasalSchema,
+    editNatwasal: NatwasalSchema,
+    natwasalsOptions: NatwasalsOptionsSchema,
+    //Natwasal
+
+    //Excel
     createEmployeesSheet: createEmployeesSheetSchema,
     createNationalitiesSheet: createNationalitiesSheetSchema,
     createJobsSheet: createJobsSheetSchema,
     createCustomersSheet: createCustomersSheetSchema,
     createProsSheet: createProsSheetSchema,
-    addPro: ProSchema,
-    editPro: ProSchema,
-    prosOptions: ProsOptionsSchema,
-    addSponsor: SponsorSchema,
-    editSponsor: SponsorSchema,
-    addCompany: CompanySchema,
-    editCompany: CompanySchema,
-    companiesOptions: CompaniesOptionsSchema,
-    addEChannel: EChannelSchema,
-    editEChannel: EChannelSchema,
-    eChannelsOptions: EChannelsOptionsSchema,
-    addTasheel: TasheelSchema,
-    editTasheel: TasheelSchema,
-    tasheelsOptions: TasheelsOptionsSchema,
-    addNatwasal: NatwasalSchema,
-    editNatwasal: NatwasalSchema,
-    natwasalsOptions: NatwasalsOptionsSchema,
     downloadExcel: DownloadExcelSchema,
+    //Excel
+
+    //Transactions
     transactionsOptions: TransactionsOptionsSchema,
     addTransaction: TransactionSchema,
     editTransaction: TransactionSchema,
     newLC: NewLCSchema,
+    //Transactions
+
+    //Company Info
+    editCompanyInfo: CompanyInfoSchema,
+    //Company Info
   };
 
   const initialValues: { [key: string]: AllFormsTypes } = {
+    //Authentication
     login: LoginInitialValues,
     otp: OTPInitialValues,
     forgotPassword: ForgotPasswordInitialValues,
     resetPassword: ResetPasswordInitialValues,
+    //Authentication
+
     delete: DeleteInitialValues,
+
     linkOwner: LinkToCompanyInitialValues,
     linkPro: LinkToCompanyInitialValues,
+
+    //Customer
     addCustomer: CustomerInitialValues,
     editCustomer: CustomerInitialValues,
     customersOptions: CustomersOptionsInitialValues,
+    ConvertCustomer: ConvertCustomerInitialValues,
+    //Customer
+
+    //Owner
     addOwner: OwnerInitialValues,
     editOwner: OwnerInitialValues,
     ownersOptions: OwnersOptionsInitialValues,
+    //Owner
+
+    //User
     addUser: UserInitialValues,
     editUser: UserInitialValues,
+    usersOptions: UsersOptionsInitialValues,
+    //User
+
+    //Role
     addRole: RoleInitialValues,
     editRole: RoleInitialValues,
-    usersOptions: UsersOptionsInitialValues,
+    //Role
+
+    //Pro
     addPro: ProInitialValues,
     editPro: ProInitialValues,
     prosOptions: ProsOptionsInitialValues,
+    //Pro
+
+    //Sponsor
     addSponsor: SponsorInitialValues,
     editSponsor: SponsorInitialValues,
+    //Sponsor
+
+    //Employee
     addEmployee: EmployeeInitialValues,
     editEmployee: EmployeeInitialValues,
     employeesOptions: EmployeesOptionsInitialValues,
+    //Employee
+
+    //Company
+    addCompany: CompanyInitialValues,
+    editCompany: CompanyInitialValues,
+    companiesOptions: CompaniesOptionsInitialValues,
+    //Company
+
+    //E-Channel
+    addEChannel: EChannelInitialValues,
+    editEChannel: EChannelInitialValues,
+    eChannelsOptions: EChannelsOptionsInitialValues,
+    //E-Channel
+
+    //Tasheel
+    addTasheel: TasheelInitialValues,
+    editTasheel: TasheelInitialValues,
+    tasheelsOptions: TasheelsOptionsInitialValues,
+    //Tasheel
+
+    //Natwasal
+    addNatwasal: NatwasalInitialValues,
+    editNatwasal: NatwasalInitialValues,
+    natwasalsOptions: NatwasalsOptionsInitialValues,
+    //Natwasal
+
+    //Excel
     createEmployeesSheet: createEmployeesSheetInitialValues,
     createNationalitiesSheet: createNationalitiesSheetInitialValues,
     createJobsSheet: createJobsSheetInitialValues,
     createCustomersSheet: createCustomersSheetInitialValues,
-    addCompany: CompanyInitialValues,
-    editCompany: CompanyInitialValues,
-    companiesOptions: CompaniesOptionsInitialValues,
-    addEChannel: EChannelInitialValues,
-    editEChannel: EChannelInitialValues,
-    eChannelsOptions: EChannelsOptionsInitialValues,
-    addTasheel: TasheelInitialValues,
-    editTasheel: TasheelInitialValues,
-    tasheelsOptions: TasheelsOptionsInitialValues,
-    addNatwasal: NatwasalInitialValues,
-    editNatwasal: NatwasalInitialValues,
-    natwasalsOptions: NatwasalsOptionsInitialValues,
     downloadExcel: DownloadExcelInitialValues,
+    //Excel
+
+    //Transactions
     transactionsOptions: TransactionsOptionsInitialValues,
     addTransaction: TransactionInitialValues,
     editTransaction: TransactionInitialValues,
     newLC: NewLCInitialValues,
+    //Transactions
+
+    //Company Info
+    editCompanyInfo: CompanyInfoInitialValues,
+    //Company Info
   };
 
   const chosenSchema = schemas[type];

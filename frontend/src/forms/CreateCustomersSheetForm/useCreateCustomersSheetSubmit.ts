@@ -22,7 +22,7 @@ const useCreateCustomersSheetSubmit = () => {
     handleOpenFormsLoading();
     values = customersSheets[customerIndex.fileIndex].data;
     await server
-      .post(`/owner`, values, {
+      .post(`/customers`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -29,7 +29,7 @@ const useJobSubmit = () => {
   const addJob = async (values: JobFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/job-title`, values)
+      .post(`/jobs`, values)
       .then(() => {
         handleAlert({ msg: "Job is Created Successfully", status: "success" });
         handleCloseJobModal();
@@ -53,7 +53,7 @@ const useJobSubmit = () => {
       });
     } else {
       await server
-        .patch(`/job-title/${editableJobData && editableJobData._id}`, values)
+        .patch(`/jobs/${editableJobData && editableJobData._id}`, values)
         .then(() => {
           handleAlert({
             msg: "Job is Updated Successfully",

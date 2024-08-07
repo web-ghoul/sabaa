@@ -11,7 +11,7 @@ export const getNationalities = createAsyncThunk(
   async (args: NationalitiesArgsTypes) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/nationality?search=${
+      `${import.meta.env.VITE_SERVER_URL}/nationalities?search=${
         (args && args.search) || ""
       }&sort=${args?.sort || ""}&limit=${
         args?.limit

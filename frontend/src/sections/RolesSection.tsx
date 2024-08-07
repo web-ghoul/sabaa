@@ -20,7 +20,9 @@ const RolesSection = () => {
       <Box className={`flex justify-end items-center`}>
         <Button icon={<AddRounded />} title={"Add Role"} />
       </Box>
-      <Box className={`grid justify-stretch items-center grid-cols-4 gap-8`}>
+      <Box
+        className={`grid justify-stretch items-center grid-cols-4 gap-8 md:grid-cols-2 sm:!grid-cols-1 md:gap-6 sm:!gap-4`}
+      >
         {!isLoading && roles
           ? roles.map((role, i) => <RoleCard role={role} key={i} />)
           : ""}

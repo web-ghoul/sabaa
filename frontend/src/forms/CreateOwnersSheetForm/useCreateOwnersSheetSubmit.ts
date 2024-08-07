@@ -22,7 +22,7 @@ const useCreateOwnersSheetSubmit = () => {
     handleOpenFormsLoading();
     values = ownersSheets[ownerIndex.fileIndex].data;
     await server
-      .post(`/owner`, values, {
+      .post(`/owners`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

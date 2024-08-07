@@ -43,6 +43,7 @@ import transactionsCounterReducer from "./transactionsCounterSlice.ts";
 import transactionsReducer from "./transactionsSlice.ts";
 import rolesReducers from "./rolesSlice.ts";
 import roleReducers from "./roleSlice.ts";
+import alertsReducer from "./alertsSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -90,6 +91,7 @@ export const store = configureStore({
     natwasalsCounter: natwasalsCounterReducer,
     transactions: transactionsReducer,
     transactionsCounter: transactionsCounterReducer,
+    alerts: alertsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
