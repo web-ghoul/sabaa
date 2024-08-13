@@ -2,13 +2,18 @@ import {
   AddBoxRounded,
   AlarmAddRounded,
   AppRegistrationRounded,
+  AssessmentRounded,
   AutoAwesomeMotionRounded,
   BorderAllRounded,
   CallToActionRounded,
+  Diversity3Rounded,
   EmailRounded,
+  EmojiTransportationRounded,
   GridViewRounded,
   ListAltRounded,
+  LocalConvenienceStoreRounded,
   PendingActionsRounded,
+  PersonPinRounded,
   PublishedWithChangesRounded,
   SettingsRounded,
 } from "@mui/icons-material";
@@ -137,28 +142,28 @@ const Items = () => {
         url={`${import.meta.env.VITE_ALERTS_ROUTE}`}
       />
       <Item
-        icon={<TransactionsIcon />}
+        icon={<AssessmentRounded />}
         title="Reports"
         url={`${import.meta.env.VITE_REPORTS_ROUTE}`}
         sub
       >
         <Item
-          icon={<BorderAllRounded />}
+          icon={<Diversity3Rounded />}
           title="Employee List"
           url={`${import.meta.env.VITE_EMPLOYEE_LIST_ROUTE}`}
         />
         <Item
-          icon={<AppRegistrationRounded />}
+          icon={<EmojiTransportationRounded />}
           title="Owner Company"
           url={`${import.meta.env.VITE_OWNER_COMPANY_ROUTE}`}
         />
         <Item
-          icon={<AddBoxRounded />}
+          icon={<LocalConvenienceStoreRounded />}
           title="Company Transaction"
           url={`${import.meta.env.VITE_COMPANY_TRANSACTION_ROUTE}`}
         />
         <Item
-          icon={<PublishedWithChangesRounded />}
+          icon={<PersonPinRounded />}
           title="Employee details"
           url={`${import.meta.env.VITE_EMPLOYEE_DETAILS_ROUTE}`}
         />

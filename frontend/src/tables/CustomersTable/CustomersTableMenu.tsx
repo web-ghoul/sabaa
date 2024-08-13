@@ -1,7 +1,10 @@
 import {
+  CancelRounded,
   ChangeCircleRounded,
   DeleteRounded,
   EditRounded,
+  HistoryRounded,
+  PersonAddRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -41,6 +44,12 @@ const CustomersTableMenu = () => {
   const handleConvert = () => {
     handleOpenConvertCustomerModal();
   };
+
+  const handleAddSponsoredPerson = () => {};
+
+  const handleCancelResidence = () => {};
+
+  const handleRenewResidence = () => {};
 
   const handleDelete = () => {
     if (sheet) {
@@ -86,6 +95,21 @@ const CustomersTableMenu = () => {
         icon={<ChangeCircleRounded />}
         title={"Convert"}
         handling={handleConvert}
+      />
+      <TableMenuItem
+        icon={<PersonAddRounded />}
+        title={"Add Sponsored Persons"}
+        handling={handleAddSponsoredPerson}
+      />
+      <TableMenuItem
+        icon={<HistoryRounded />}
+        title={"Renew Residence"}
+        handling={handleRenewResidence}
+      />
+      <TableMenuItem
+        icon={<CancelRounded />}
+        title={"Cancel Residence"}
+        handling={handleCancelResidence}
       />
       <TableMenuItem
         icon={<DeleteRounded />}

@@ -79,7 +79,7 @@ const useSponsorSubmit = () => {
   const addSponsor = async (values: SponsorFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/sponsor`, handleSponsorFormData(values))
+      .post(`/sponsors`, handleSponsorFormData(values))
       .then(() => {
         handleAlert({
           msg: "Sponsor is Created Successfully",
@@ -111,7 +111,7 @@ const useSponsorSubmit = () => {
     handleOpenFormsLoading();
     await server
       .patch(
-        `/sponsor/${editableSponsorData && editableSponsorData._id}`,
+        `/sponsors/${editableSponsorData && editableSponsorData._id}`,
         handleSponsorFormData(values)
       )
       .then(() => {

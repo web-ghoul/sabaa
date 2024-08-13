@@ -595,6 +595,29 @@ settings :
   3- State
   4- License Issue Place
   5- Status of Employee
+  6- Card Types
  
 
   
+
+notes:
+  1- Rename brumcrub with same sublink in transactions
+  2- remove serial number in work permit form
+  3- Show Card Types only for its types
+  4- make person code is not requires in work permit transactions
+  5- make passport number and passport expire date fetch when search on employee with person code in work permit form
+  6- show transactions in sublinks according to card Types
+  7-  card number is same of work permit number and labour card number (Unique the name for Labour card number)
+  8- Check filled data when edit
+  9- in each of transaction type add button showing specific form such as new lc 
+  when  clicked on add transaction open new lc form and searching on transaction with labour card number
+  10- Make Validation on Card Type of transaction
+  11- Set Card Type Field In Top of From
+  12- Add 2 New Fields When Card Type is National
+  13-  4- Select 
+        1- Mol Category
+        2- Establishment Type
+        3- State
+        4- License Issue Place
+        5- Status of Employee
+        6- Card Types

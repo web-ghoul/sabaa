@@ -26,7 +26,7 @@ const SponsorsSection = ({
     >
       <Box className={`flex justify-end items-center gap-4 md:gap-2`}>
         <Button
-          title={"Add Sponsor"}
+          title={"Add New Sponsored Persons"}
           icon={<AddRounded />}
           handling={() => handleOpenSponsorModal("addSponsor")}
         />

@@ -130,31 +130,16 @@ const CustomersTable = ({
           {!mdScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
-          <PrimaryTableCell align="center">
-            {/* {sheet || !sort ? (
-              mdScreen ? (
-                "Code"
-              ) : (
-                "Person Code"
-              )
-            ) : (
-              <SortBox
-                title={mdScreen ? "Code" : "Person Code"}
-                handling={handleSortByCode}
-                asc={searchParams.get("sort") === "code_asc"}
-                desc={searchParams.get("sort") === "code_desc"}
-                jc="center"
-              />
-            )} */}
-            Residence Expire Date
-          </PrimaryTableCell>
-          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!lgScreen && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
           )}
+          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!recent && (
             <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
           )}
+          <PrimaryTableCell align="center">
+            Residence Expire Date
+          </PrimaryTableCell>
           {actions && (
             <PrimaryTableCell align="right">Actions</PrimaryTableCell>
           )}
@@ -194,14 +179,6 @@ const CustomersTable = ({
                       {row.phone}
                     </PrimaryTableCell>
                   )}
-                  <PrimaryTableCell align="center">
-                    {handleDate(row.residenceExpiryDate)}
-                  </PrimaryTableCell>
-                  {!smScreen && (
-                    <PrimaryTableCell align="center">
-                      {row.uid}
-                    </PrimaryTableCell>
-                  )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
                       <Box className={`flex justify-center items-center`}>
@@ -209,11 +186,19 @@ const CustomersTable = ({
                       </Box>
                     </PrimaryTableCell>
                   )}
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.uid}
+                    </PrimaryTableCell>
+                  )}
                   {!recent && (
                     <PrimaryTableCell align="center">
                       {row.emiratesId}
                     </PrimaryTableCell>
                   )}
+                  <PrimaryTableCell align="center">
+                    {handleDate(row.residenceExpiryDate)}
+                  </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
                       <IconButton onClick={(e) => handleOpenMenu(e, i)}>

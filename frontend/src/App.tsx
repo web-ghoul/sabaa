@@ -11,7 +11,7 @@ import useSecureRoute from "./hooks/useSecureRoute.ts";
 import CompanyModal from "./modals/CompanyModal.tsx";
 import ConvertCustomerModal from "./modals/ConvertCustomerModal.tsx";
 import CustomerModal from "./modals/CustomerModal.tsx";
-import DeleteModal from "./modals/DeleteModa.tsx";
+import DeleteModal from "./modals/DeleteModal.tsx";
 import DownloadExcelModal from "./modals/DownloadExcelModal.tsx";
 import EChannelModal from "./modals/EChannelModal.tsx";
 import EmployeeModal from "./modals/EmployeeModal.tsx";

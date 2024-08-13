@@ -26,6 +26,12 @@ const TableMenuItem = ({ icon, title, color, handling }: MenuItemTypes) => {
           ? "!text-purple-500"
           : t === "link"
           ? "!text-zinc-500"
+          : t === "add sponsored persons"
+          ? "!text-orange-700"
+          : t === "renew residence"
+          ? "!text-green-900"
+          : t === "cancel residence"
+          ? "!text-blue-900"
           : t === "new labour card" && "!text-amber-700"
       } !${color}`}
       sx={{ "& >svg": { fontSize: "18px" } }}

@@ -1,7 +1,10 @@
 import {
+  CancelRounded,
   DeleteRounded,
   EditRounded,
+  HistoryRounded,
   JoinFullRounded,
+  PersonAddRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -41,6 +44,12 @@ const ProsTableMenu = () => {
   const handleEdit = () => {
     handleOpenProModal("editPro");
   };
+
+  const handleAddSponsoredPerson = () => {};
+
+  const handleCancelResidence = () => {};
+
+  const handleRenewResidence = () => {};
 
   const handleDelete = () => {
     if (sheet) {
@@ -84,11 +93,25 @@ const ProsTableMenu = () => {
           handling={handleLink}
         />
       )}
-
       <TableMenuItem
         icon={<EditRounded />}
         title={"Edit"}
         handling={handleEdit}
+      />
+      <TableMenuItem
+        icon={<PersonAddRounded />}
+        title={"Add Sponsored Persons"}
+        handling={handleAddSponsoredPerson}
+      />
+      <TableMenuItem
+        icon={<HistoryRounded />}
+        title={"Renew Residence"}
+        handling={handleRenewResidence}
+      />
+      <TableMenuItem
+        icon={<CancelRounded />}
+        title={"Cancel Residence"}
+        handling={handleCancelResidence}
       />
       <TableMenuItem
         icon={<DeleteRounded />}

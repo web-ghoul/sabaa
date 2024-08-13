@@ -37,6 +37,8 @@ const useCustomerSubmit = () => {
     formData.append("uid", values?.uid);
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
+    } else {
+      formData.append("personCode", "");
     }
     formData.append("avatar", avatar);
     formData.append("name", values.name.trim());
@@ -55,6 +57,8 @@ const useCustomerSubmit = () => {
     formData.append("remarks", values.remarks.trim());
     if (values.emiratesId) {
       formData.append("emiratesId", values.emiratesId.trim());
+    } else {
+      formData.append("emiratesId", "");
     }
     formData.append("state", values.state.trim());
     formData.append("status", values.status.trim());
@@ -68,6 +72,8 @@ const useCustomerSubmit = () => {
     }
     if (values.dob) {
       formData.append("dob", values.dob.toString().trim());
+    } else {
+      formData.append("dob", "");
     }
     if (type) {
       formData.append("type", type);

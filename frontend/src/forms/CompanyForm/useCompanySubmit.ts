@@ -100,7 +100,7 @@ const useCompanySubmit = () => {
   const addCompany = async (values: CompanyFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/company`, handleCompanyFormData(values))
+      .post(`/companies`, handleCompanyFormData(values))
       .then(() => {
         handleAlert({
           msg: "Company is Created Successfully",
@@ -129,7 +129,7 @@ const useCompanySubmit = () => {
     } else {
       await server
         .patch(
-          `/company/${editableCompanyData && editableCompanyData._id}`,
+          `/companies/${editableCompanyData && editableCompanyData._id}`,
           handleCompanyFormData(values)
         )
         .then(() => {

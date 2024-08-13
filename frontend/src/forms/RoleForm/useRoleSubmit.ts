@@ -22,7 +22,7 @@ const useRoleSubmit = () => {
   const addRole = async (values: RoleFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/permission`, values)
+      .post(`/permissions`, values)
       .then(() => {
         handleAlert({
           msg: "Role is Created Successfully",
@@ -40,7 +40,7 @@ const useRoleSubmit = () => {
   const editRole = async (values: RoleFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .patch(`/permission/${editableRoleData && editableRoleData._id}`, values)
+      .patch(`/permissions/${editableRoleData && editableRoleData._id}`, values)
       .then(() => {
         handleAlert({
           msg: "Role is Updated Successfully",

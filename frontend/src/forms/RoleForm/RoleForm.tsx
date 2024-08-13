@@ -34,6 +34,7 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
     "employees",
     "officers",
     "customers",
+    "sponsors",
     "jobs",
     "nationalities",
     "e-channels",

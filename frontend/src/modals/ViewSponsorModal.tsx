@@ -18,7 +18,7 @@ const ViewSponsorModal = () => {
     >
       <Box className={`modal`}>
         <ProfileDetails
-          title={"Sponsor Details"}
+          title={"Sponsored Person Details"}
           variant="sponsor"
           data={editableSponsorData || ({} as SponsorTypes)}
           isLoading={editableSponsorData ? false : true}

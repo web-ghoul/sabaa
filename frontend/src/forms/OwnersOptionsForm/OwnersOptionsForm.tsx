@@ -110,7 +110,7 @@ const OwnersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <ExcelButtons addBtn={"Add Owner"} variant="owners" />
+        <ExcelButtons addBtn={"Add Owner"} variant="owners" all />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

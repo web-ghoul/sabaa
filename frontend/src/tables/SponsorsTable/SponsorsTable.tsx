@@ -57,16 +57,16 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
       <TableHead>
         <TableRow>
           <PrimaryTableCell className={`!flex gap-2`}>Name</PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
+          <PrimaryTableCell align="center">Relative Relation</PrimaryTableCell>
+          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!mdScreen && (
             <PrimaryTableCell align="center">
               Residence Expire Date
             </PrimaryTableCell>
           )}
-          {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
-          {!lgScreen && (
-            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
-          )}
-          <PrimaryTableCell align="center">Relative Relation</PrimaryTableCell>
           <PrimaryTableCell align="right">Actions</PrimaryTableCell>
         </TableRow>
       </TableHead>
@@ -84,16 +84,6 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
                       avatar={row.avatar}
                     />
                   </PrimaryTableCell>
-                  {!mdScreen && (
-                    <PrimaryTableCell align="center">
-                      {handleDate(row.residenceExpiryDate)}
-                    </PrimaryTableCell>
-                  )}
-                  {!smScreen && (
-                    <PrimaryTableCell align="center">
-                      {row.uid}
-                    </PrimaryTableCell>
-                  )}
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
                       <Box className={`flex justify-center items-center`}>
@@ -104,6 +94,16 @@ const SponsorsTable = ({ data, count, isLoading }: SponsorsTableTypes) => {
                   <PrimaryTableCell align="center">
                     {row.relativeRelation}
                   </PrimaryTableCell>
+                  {!smScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.uid}
+                    </PrimaryTableCell>
+                  )}
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.residenceExpiryDate)}
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="right">
                     <IconButton onClick={(e) => handleOpenMenu(e, i)}>
                       <MoreVertRounded />

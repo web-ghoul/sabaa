@@ -8,11 +8,11 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
-import { ModalsContext } from "../../contexts/ModalsContext";
 
 const SponsorForm = ({
   register,
@@ -45,10 +45,10 @@ const SponsorForm = ({
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
       {type === "addSponsor" ? (
-        <Title head={"h4"} align={"left"} title={"Add New Sponsor"} />
+        <Title head={"h4"} align={"left"} title={"Add New Sponsored Person"} />
       ) : (
         type === "editSponsor" && (
-          <Title head={"h4"} align={"left"} title={"Edit Sponsor"} />
+          <Title head={"h4"} align={"left"} title={"Edit Sponsored Person"} />
         )
       )}
 

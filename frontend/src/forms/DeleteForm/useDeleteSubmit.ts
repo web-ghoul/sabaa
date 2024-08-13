@@ -118,7 +118,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "sponsor") {
       await server
-        .delete(`/sponsor/${editableSponsorData && editableSponsorData._id}`)
+        .delete(`/sponsors/${editableSponsorData && editableSponsorData._id}`)
         .then(() => {
           handleAlert({
             msg: "Sponsor is Deleted Successfully",
@@ -212,7 +212,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "company") {
       await server
-        .delete(`/company/${editableCompanyData && editableCompanyData._id}`)
+        .delete(`/companies/${editableCompanyData && editableCompanyData._id}`)
         .then(() => {
           handleAlert({
             msg: "Company is Deleted Successfully",
@@ -244,7 +244,6 @@ const useDeleteSubmit = () => {
           handleCatchError(err);
         });
     } else if (formType === "tasheel") {
-      console.log(editableTasheelData);
       await server
         .delete(`/tasheels/${editableTasheelData && editableTasheelData._id}`)
         .then(() => {
@@ -336,7 +335,7 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "role") {
       await server
-        .delete(`/permission/${editableRoleData && editableRoleData._id}`)
+        .delete(`/permissions/${editableRoleData && editableRoleData._id}`)
         .then(() => {
           handleAlert({
             msg: "Role is deleted Successfully",

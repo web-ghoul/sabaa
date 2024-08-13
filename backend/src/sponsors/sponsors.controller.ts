@@ -11,18 +11,30 @@ import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor
 
 ApiTags('sponsor')
 
-@Controller('sponsor')
+@Controller(['sponsor', 'sponsors'])
 export class SponsorsController {
   constructor(private readonly sponsorsService: SponsorsService) {}
 
   @Post()
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "create"})
+  @ActivityLog({ action: 'create' })
   @ApiBody({ type: CreateSponsorDto })
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@User("id") user,@Body() createSponsorDto: CreateSponsorDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
-    new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
-    return this.sponsorsService.create(createSponsorDto, file,user);
+  create(
+    @User('id') user,
+    @Body() createSponsorDto: CreateSponsorDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'image' }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.sponsorsService.create(createSponsorDto, file, user);
   }
 
   // @Get()
@@ -37,15 +49,27 @@ export class SponsorsController {
   @Patch(':id')
   @UseInterceptors(FileInterceptor('avatar'))
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "update"})
-  update(@Param('id') id: string, @Body() updateSponsorDto: UpdateSponsorDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
-    new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
+  @ActivityLog({ action: 'update' })
+  update(
+    @Param('id') id: string,
+    @Body() updateSponsorDto: UpdateSponsorDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'image' }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
     return this.sponsorsService.update(id, updateSponsorDto, file);
   }
 
   @Delete(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  @ActivityLog({ action: 'delete' })
   remove(@Param('id') id: string) {
     return this.sponsorsService.remove(id);
   }
