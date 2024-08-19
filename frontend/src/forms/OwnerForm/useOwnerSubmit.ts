@@ -39,6 +39,8 @@ const useOwnerSubmit = () => {
     formData.append("uid", values?.uid);
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
+    } else {
+      formData.append("emiratesId", "");
     }
     formData.append("avatar", avatar);
     formData.append("name", values.name.trim());
@@ -57,6 +59,8 @@ const useOwnerSubmit = () => {
     formData.append("remarks", values.remarks.trim());
     if (values.emiratesId) {
       formData.append("emiratesId", values.emiratesId.trim());
+    } else {
+      formData.append("emiratesId", "");
     }
     formData.append("state", values.state.trim());
     formData.append("status", values.status.trim());

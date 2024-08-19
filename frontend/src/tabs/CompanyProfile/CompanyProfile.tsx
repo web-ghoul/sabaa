@@ -38,7 +38,7 @@ const CompanyProfile = ({
       tabsTitles={[
         "Profile Info",
         "Owners",
-        "Officers",
+        "Public Relation Officers",
         "Employees",
         "Transactions",
         "Activities",

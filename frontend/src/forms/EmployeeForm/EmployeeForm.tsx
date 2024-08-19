@@ -175,7 +175,7 @@ const EmployeeForm = ({
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
-          Business Details
+          Employee Details
         </Typography>
         <Box
           className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
@@ -197,10 +197,30 @@ const EmployeeForm = ({
           <Input
             register={register}
             errors={errors}
-            type={"number"}
-            name={"visaFileNumber"}
-            label={"Visa File Number"}
+            label={"File Immgration Number"}
+            type={"text"}
+            name={"fileImmgNo"}
           />
+          <Input
+            register={register}
+            errors={errors}
+            type={"date"}
+            name={"residenceExpireDate"}
+            label={"Residence Expire Date"}
+          />
+          {companies && companies.length > 0 && (
+            <AutoCompleteSearch
+              label={"Company"}
+              options={companies}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
+              name={"companyId"}
+              variant={"employee"}
+              multiple={true}
+            />
+          )}
           <Input
             label={"Card Type"}
             name={"cardType"}
@@ -229,16 +249,16 @@ const EmployeeForm = ({
           <Input
             register={register}
             errors={errors}
-            label={"File Immgration Number"}
-            type={"text"}
-            name={"fileImmgNo"}
+            type={"date"}
+            name={"lcNumber"}
+            label={"Labour Card Number"}
           />
           <Input
             register={register}
             errors={errors}
             type={"date"}
-            name={"residenceExpireDate"}
-            label={"Residence Expire Date"}
+            name={"lcExpireDate"}
+            label={"Labour Card Expire Date"}
           />
           <Input
             register={register}
@@ -248,26 +268,6 @@ const EmployeeForm = ({
             select
             options={["Active", "Cancel", "Abscond", "Complaint"]}
           />
-          <Input
-            register={register}
-            errors={errors}
-            type={"date"}
-            name={"lcExpireDate"}
-            label={"Labour Card Expire Date"}
-          />
-          {companies && companies.length > 0 && (
-            <AutoCompleteSearch
-              label={"Company"}
-              options={companies}
-              register={register}
-              setValue={setValue}
-              getValues={getValues}
-              errors={errors}
-              name={"companyId"}
-              variant={"employee"}
-              multiple={true}
-            />
-          )}
         </Box>
       </Box>
 

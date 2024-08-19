@@ -157,7 +157,7 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             register={register}
             errors={errors}
             change={handleFilterByStatus}
-            options={["active", "inactive"]}
+            options={["Active", "Inactive"]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>

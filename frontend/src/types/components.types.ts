@@ -169,6 +169,11 @@ interface ExcelButtonsTypes {
   all?: boolean;
 }
 
+interface SelectorViewTypes {
+  selector: string;
+  options: string[];
+}
+
 export type {
   AutoCompleteSearchTypes,
   BadgeNotificationTypes,
@@ -187,4 +192,5 @@ export type {
   UploadStatusTypes,
   UserBoxTypes,
   ExcelButtonsTypes,
+  SelectorViewTypes,
 };

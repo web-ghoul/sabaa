@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 
 @Injectable()
 export class DynamicSelectsService {
-  private baseFilePath = __dirname + `../../../../data/`;
+  private baseFilePath = __dirname + `../../../../src/data/`;
   async create(createAlertDto: object, selector: string) {
     try {
       // Convert the object to a JSON string

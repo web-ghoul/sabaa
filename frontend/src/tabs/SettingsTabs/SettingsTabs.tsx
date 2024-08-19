@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { TabsContext } from "../../contexts/TabsContext";
+import Forms from "../../forms/Forms";
 import RolesSection from "../../sections/RolesSection";
+import SelectorsSection from "../../sections/SelectorsSection";
 import CustomTabPanel from "../CustomTabPanel";
 import PrimaryTab from "../PrimaryTab";
-import Forms from "../../forms/Forms";
 
 const SettingsTabs = () => {
   const { settingsTabsValue } = useContext(TabsContext);
@@ -15,7 +16,9 @@ const SettingsTabs = () => {
       <CustomTabPanel value={settingsTabsValue} index={0}>
         <Forms type={"editCompanyInfo"} />
       </CustomTabPanel>
-      <CustomTabPanel value={settingsTabsValue} index={1}></CustomTabPanel>
+      <CustomTabPanel value={settingsTabsValue} index={1}>
+        <SelectorsSection />
+      </CustomTabPanel>
       <CustomTabPanel value={settingsTabsValue} index={2}>
         <RolesSection />
       </CustomTabPanel>

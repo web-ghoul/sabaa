@@ -93,6 +93,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableTransactionData: () => {},
   editableRoleData: null,
   setEditableRoleData: () => {},
+  editableSelectorData: { selector: "", options: [] },
+  setEditableSelectorData: () => {},
 });
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
@@ -213,6 +215,15 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
 
+  //Editable Selector Data
+  const [editableSelectorData, setEditableSelectorData] = useState<{
+    selector: string;
+    options: string[];
+  }>({
+    selector: "",
+    options: [],
+  });
+
   useEffect(() => {
     if (editableOwnerData) {
       setOwnerImage(editableOwnerData.avatar);
@@ -321,6 +332,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setEditableRoleData,
     searchForTransactions,
     setSearchForTransactions,
+    editableSelectorData,
+    setEditableSelectorData,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

@@ -68,6 +68,17 @@ interface RoleValuesTypes {
 }
 //Roles
 
+//Selectors
+interface SelectorTypes {
+  _id: string;
+  data: string[];
+}
+interface SelectorsValuesTypes {
+  selectors: SelectorTypes | null;
+  isLoading: boolean;
+}
+//Selectors
+
 //User
 
 interface UserTypes {
@@ -218,6 +229,7 @@ interface ProsArgsTypes {
   dobTo?: string;
   dobFrom?: string;
   state?: string;
+  status?: string;
   nationality?: string;
 }
 
@@ -322,7 +334,7 @@ interface EmployeeTypes {
   passportExpiry?: Date;
   residenceExpireDate?: Date;
   lcExpireDate?: Date;
-  workPermitNumber: string;
+  lcNumber: string;
   medicalInsuranceCompany: string;
   medicalPolicyNo: string;
   medicalExpireDate?: Date;
@@ -585,7 +597,6 @@ interface RecentCompaniesArgsTypes {
 interface TransactionTypes {
   _id: string;
   transactionNo: string;
-  serialNo: string;
   employeeId: string;
   companyCode: string;
   companyId: string;
@@ -826,5 +837,5 @@ export type {
   RolesValuesTypes,
   RoleTypes,
   RoleValuesTypes,
-  AlertsValuesTypes,
+  AlertsValuesTypes,SelectorTypes,SelectorsValuesTypes
 };

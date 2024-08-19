@@ -88,7 +88,9 @@ const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
       >
         <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
           <Input
-            label={"Search Name, Person Code..."}
+            label={
+              "Search Name, Person Code , UID , Emirates ID , Card Number , Phone , Passport Number..."
+            }
             name={"search"}
             type={"search"}
             register={register}
@@ -134,7 +136,7 @@ const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             register={register}
             errors={errors}
             change={handleFilterByStatus}
-            options={["active", "cancel", "complaint", "abscond"]}
+            options={["Active", "Cancel", "Abscond", "Complaint"]}
             select
           />
           <Input
@@ -143,7 +145,7 @@ const EmployeesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             register={register}
             errors={errors}
             change={handleFilterByGender}
-            options={["male", "female"]}
+            options={["Male", "Female"]}
             select
           />
           <Input

@@ -128,9 +128,11 @@ const EmployeesTable = ({
               />
             )}
           </PrimaryTableCell>
-          <PrimaryTableCell align="center">Person Code</PrimaryTableCell>
           {!lgScreen && !recent && (
             <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
+          {(!mdScreen || !recent) && (
+            <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
           )}
           {!recent && (
             <PrimaryTableCell align="center">
@@ -150,9 +152,6 @@ const EmployeesTable = ({
                 />
               )}
             </PrimaryTableCell>
-          )}
-          {!smScreen && (
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           {!recent && (
             <PrimaryTableCell align="center">
@@ -175,8 +174,9 @@ const EmployeesTable = ({
               )}
             </PrimaryTableCell>
           )}
-          {(!mdScreen || !recent) && (
-            <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
+          <PrimaryTableCell align="center">Person Code</PrimaryTableCell>
+          {!smScreen && (
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           {actions && (
             <PrimaryTableCell align="right">Actions</PrimaryTableCell>
@@ -214,9 +214,6 @@ const EmployeesTable = ({
                     </Link>
                   )}
                 </PrimaryTableCell>
-                <PrimaryTableCell align="center">
-                  {row.personCode}
-                </PrimaryTableCell>
                 {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
                     <Box className={`flex justify-center items-center`}>
@@ -224,14 +221,14 @@ const EmployeesTable = ({
                     </Box>
                   </PrimaryTableCell>
                 )}
+                {(!mdScreen || !recent) && (
+                  <PrimaryTableCell align="center">
+                    {row.cardType}
+                  </PrimaryTableCell>
+                )}
                 {!recent && (
                   <PrimaryTableCell align="center">
                     {handleDate(row.lcExpireDate)}
-                  </PrimaryTableCell>
-                )}
-                {!smScreen && (
-                  <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                 )}
                 {!recent && (
@@ -239,9 +236,12 @@ const EmployeesTable = ({
                     {handleDate(row.residenceExpireDate)}
                   </PrimaryTableCell>
                 )}
-                {(!mdScreen || !recent) && (
+                <PrimaryTableCell align="center">
+                  {row.personCode}
+                </PrimaryTableCell>
+                {!smScreen && (
                   <PrimaryTableCell align="center">
-                    {row.cardType}
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                 )}
                 {actions && (

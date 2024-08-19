@@ -52,7 +52,7 @@ const OwnerProfile = ({
       tabsTitles={[
         "Personal Info",
         "Companies",
-        "Officers",
+        "Public Relation Officers",
         "Transactions",
         "Activities",
         "Documents",

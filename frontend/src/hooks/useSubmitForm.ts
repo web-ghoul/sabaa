@@ -39,6 +39,10 @@ import useCreateProsSheetSchema from "../forms/CreateProsSheetForm/useCreatePros
 import useRoleSchema from "../forms/RoleForm/useRoleSchema";
 import useConvertCustomerSchema from "../forms/ConvertCustomerForm/useConvertCustomerSchema";
 import useCompanyInfoSchema from "../forms/CompanyInfoForm/useCompanyInfoSchema";
+import useJobSchema from "../forms/JobForm/useJobSchema";
+import useJobsOptionsSchema from "../forms/JobsOptionsForm/useJobsOptionsSchema";
+import useNationalitiesOptionsSchema from "../forms/NationalitiesOptionsForm/useNationalitiesOptionsSchema";
+import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
@@ -59,6 +63,13 @@ const useSubmitForm = (type: string) => {
   const { UsersOptionsSchema, UsersOptionsInitialValues } =
     useUsersOptionsSchema();
   const { ProSchema, ProInitialValues } = useProSchema();
+  const { JobSchema, JobInitialValues } = useJobSchema();
+  const { JobsOptionsSchema, JobsOptionsInitialValues } =
+    useJobsOptionsSchema();
+  const { NationalitySchema, NationalityInitialValues } =
+    useNationalitySchema();
+  const { NationalitiesOptionsSchema, NationalitiesOptionsInitialValues } =
+    useNationalitiesOptionsSchema();
   const { ProsOptionsSchema, ProsOptionsInitialValues } =
     useProsOptionsSchema();
   const { SponsorSchema, SponsorInitialValues } = useSponsorSchema();
@@ -118,6 +129,18 @@ const useSubmitForm = (type: string) => {
 
     linkOwner: LinkToCompanySchema,
     linkPro: LinkToCompanySchema,
+
+    //Job
+    addJob: JobSchema,
+    editJob: JobSchema,
+    jobsOptions: JobsOptionsSchema,
+    //Job
+
+    //Nationalities
+    addNationality: NationalitySchema,
+    editNationality: NationalitySchema,
+    nationalitiesOptions: NationalitiesOptionsSchema,
+    //Nationalities
 
     //Customer
     addCustomer: CustomerSchema,
@@ -217,6 +240,18 @@ const useSubmitForm = (type: string) => {
 
     linkOwner: LinkToCompanyInitialValues,
     linkPro: LinkToCompanyInitialValues,
+
+    //Job
+    addJob: JobInitialValues,
+    editJob: JobInitialValues,
+    jobsOptions: JobsOptionsInitialValues,
+    //Job
+
+    //Nationalities
+    addNationality: NationalityInitialValues,
+    editNationality: NationalityInitialValues,
+    nationalitiesOptions: NationalitiesOptionsInitialValues,
+    //Nationalities
 
     //Customer
     addCustomer: CustomerInitialValues,

@@ -42,6 +42,7 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
     "natwasals",
     "transactions",
     "activities",
+    "selectors",
     "permissions",
   ];
 

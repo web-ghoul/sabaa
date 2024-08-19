@@ -621,3 +621,12 @@ notes:
         4- License Issue Place
         5- Status of Employee
         6- Card Types
+
+
+
+
+
+Notes For Amr : 
+1- حقل Person Code + Emirates ID فى  فورم Edit Owner عند عمل حذف لبيانات الحقل وعمل حفظ  وعند عمل view  لم يتم حذف بيانات هذا الحقل
+
+2- 

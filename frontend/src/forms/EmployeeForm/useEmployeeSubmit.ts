@@ -84,9 +84,6 @@ const useEmployeeSubmit = () => {
       formData.append("lcExpireDate", values.lcExpireDate.toString().trim());
     }
     formData.append("job", values.job.trim());
-    if (values.visaFileNumber) {
-      formData.append("visaFileNumber", values.visaFileNumber);
-    }
     if (values.fileImmgNo) {
       formData.append("fileImmgNo", values.fileImmgNo);
     }

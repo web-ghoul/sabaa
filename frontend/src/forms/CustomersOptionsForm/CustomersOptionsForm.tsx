@@ -103,7 +103,7 @@ const CustomersOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
       >
         <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
           <Input
-            label={"Search Name, Person Code..."}
+            label={"Search Name, Person Code , UID, Emirates ID..."}
             name={"search"}
             type={"search"}
             register={register}

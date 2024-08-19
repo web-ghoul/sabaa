@@ -7,7 +7,6 @@ const useTransactionSchema = () => {
 
   const TransactionSchema = yup.object({
     transactionNo: yup.string().required("Transaction number is required"),
-    serialNo: yup.string().required("Serial number is required"),
     gender: yup.string().required("Gender is required"),
     personCode: yup.string().required("Person Code is required"),
     companyCode: yup.string(),
@@ -29,14 +28,13 @@ const useTransactionSchema = () => {
     remarks: yup.string(),
     statusDate: yup.string(),
     status: yup.string(),
-    workPermit: yup.string(),
-    workPermitExpiryDate: yup.string(),
+    lcNumber: yup.string(),
+    lcExpiryDate: yup.string(),
     visitExpiryDate: yup.string(),
   });
 
   const TransactionInitialValues = {
     transactionNo: editableTransactionData?.transactionNo || "",
-    serialNo: editableTransactionData?.serialNo || "",
     personCode: editableTransactionData?.personCode || "",
     gender: editableTransactionData?.gender || "",
     companyCode: editableTransactionData?.companyCode || "",

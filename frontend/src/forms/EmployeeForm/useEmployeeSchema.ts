@@ -31,14 +31,13 @@ const useEmployeeSchema = () => {
     medicalInsuranceCompany: yup.string(),
     medicalPolicyNo: yup.string(),
     medicalExpireDate: yup.string(),
-    visaFileNumber: yup.string(),
     fileImmgNo: yup.string(),
     emiratesId: yup.string(),
-    workPermitNumber: yup.string(),
+    lcNumber: yup.string(),
+    lcExpireDate: yup.string(),
     passportNumber: yup.string(),
     passportExpiry: yup.string(),
     residenceExpireDate: yup.string(),
-    lcExpireDate: yup.string(),
   });
 
   const EmployeeInitialValues = {
@@ -80,10 +79,9 @@ const useEmployeeSchema = () => {
           .toISOString()
           .split("T")[0]) ||
       "",
-    visaFileNumber: editableEmployeeData?.visaFileNumber || "",
     fileImmgNo: editableEmployeeData?.fileImmgNo || "",
     emiratesId: editableEmployeeData?.emiratesId || "",
-    workPermitNumber: editableEmployeeData?.workPermitNumber || "",
+    lcNumber: editableEmployeeData?.lcNumber || "",
     passportNumber: editableEmployeeData?.passportNumber || "",
     passportExpiry:
       (editableEmployeeData?.passportExpiry &&

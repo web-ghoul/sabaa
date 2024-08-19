@@ -53,6 +53,8 @@ const EmployeeDetails = ({
     setEditableEmployeeData(employee);
   };
 
+  console.log(data);
+
   return (
     <Paper className={classes.profileClasses} elevation={11}>
       <Title align={"left"} head={"h4"} title={title} />
@@ -116,7 +118,6 @@ const EmployeeDetails = ({
             title={"Emirates Id"}
             value={(data as EmployeeTypes).emiratesId}
           />
-
           <DataBox title={"Remarks"} value={(data as EmployeeTypes).remarks} />
           <DataBox
             title={"Created At"}
@@ -139,8 +140,20 @@ const EmployeeDetails = ({
             value={handleDate((data as EmployeeTypes).passportExpiry)}
           />
           <DataBox
-            title={"Visa File Number"}
-            value={(data as EmployeeTypes).visaFileNumber}
+            title={"File Immgration Number"}
+            value={(data as EmployeeTypes).fileImmgNo}
+          />
+          <DataBox
+            title={"Residence Expire Date"}
+            value={handleDate((data as EmployeeTypes).residenceExpireDate)}
+          />
+          <DataBox
+            title={"Company"}
+            value={
+              (data as EmployeeTypes).companyName?.length > 0
+                ? (data as EmployeeTypes).companyName[0]
+                : ""
+            }
           />
           <DataBox
             title={"Card Type"}
@@ -151,20 +164,12 @@ const EmployeeDetails = ({
             value={(data as EmployeeTypes).cardNumber}
           />
           <DataBox
-            title={"File Immgration Number"}
-            value={(data as EmployeeTypes).fileImmgNo}
-          />
-          <DataBox
-            title={"Residence Expire Date"}
-            value={handleDate((data as EmployeeTypes).residenceExpireDate)}
+            title={"Labour Card Expire Date"}
+            value={handleDate((data as EmployeeTypes).lcExpireDate)}
           />
           <DataBox
             title={"Status"}
             value={<StatusBox status={(data as EmployeeTypes).status} />}
-          />
-          <DataBox
-            title={"Labour Card Expire Date"}
-            value={handleDate((data as EmployeeTypes).lcExpireDate)}
           />
         </Box>
       </Box>

@@ -16,7 +16,7 @@ const RolesSection = () => {
   }, [dispatch]);
 
   return (
-    <PrimaryContainer className={`grid justify-stretch items-center gap-8`}>
+    <PrimaryContainer className={`!grid justify-stretch items-center gap-8`}>
       <Box className={`flex justify-end items-center`}>
         <Button icon={<AddRounded />} title={"Add Role"} />
       </Box>

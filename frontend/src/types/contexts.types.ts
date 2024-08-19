@@ -197,6 +197,11 @@ interface FormsContextTypes {
   setEditableTransactionData: (transaction: TransactionTypes | null) => void;
   editableRoleData: RoleTypes | null;
   setEditableRoleData: (role: RoleTypes | null) => void;
+  editableSelectorData: { selector: string; options: string[] };
+  setEditableSelectorData: (options: {
+    selector: string;
+    options: string[];
+  }) => void;
 }
 
 interface ModalsContextTypes {

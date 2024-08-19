@@ -129,6 +129,9 @@ const OwnersTable = ({
           {!mdScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             {sheet || !sort ? (
               "Person Code"
@@ -143,9 +146,6 @@ const OwnersTable = ({
             )}
           </PrimaryTableCell>
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
-          {!lgScreen && (
-            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
-          )}
           {!recent && (
             <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
           )}
@@ -186,19 +186,19 @@ const OwnersTable = ({
                       {row.phone}
                     </PrimaryTableCell>
                   )}
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
                     {row.personCode}
                   </PrimaryTableCell>
                   {!smScreen && (
                     <PrimaryTableCell align="center">
                       {row.uid}
-                    </PrimaryTableCell>
-                  )}
-                  {!lgScreen && (
-                    <PrimaryTableCell align="center">
-                      <Box className={`flex justify-center items-center`}>
-                        <NationalityBox nationality={row.nationality} />
-                      </Box>
                     </PrimaryTableCell>
                   )}
                   {!recent && (

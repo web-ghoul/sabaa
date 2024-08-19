@@ -43,6 +43,7 @@ const Button = ({
     handleOpenNatwasalModal,
     handleOpenTransactionModal,
     handleOpenRoleModal,
+    handleOpenProModal,
   } = useContext(ModalsContext);
   const navigate = useNavigate();
 
@@ -54,7 +55,9 @@ const Button = ({
       handleAlert({ msg: "Under Development..." });
     } else if (newTitle === "add owner") {
       handleOpenOwnerModal("addOwner");
-    } else if (newTitle === "add user") {
+    }  else if (newTitle === "add officer") {
+      handleOpenProModal("addPro");
+    }else if (newTitle === "add user") {
       handleOpenUserModal("addUser");
     } else if (newTitle === "add job") {
       handleOpenJobModal("addJob");

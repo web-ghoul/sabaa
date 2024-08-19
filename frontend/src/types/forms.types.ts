@@ -241,6 +241,13 @@ interface NatwasalsOptionsFormTypes {
 }
 //Natwasal
 
+
+//Selector
+interface SelectorFormTypes  {
+  option:string
+}
+//Selector
+
 //Download Excel
 interface DownloadExcelFormTypes {
   fileName: string;
@@ -290,7 +297,7 @@ type AllFormsTypes =
   | NatwasalsOptionsFormTypes
   | TransactionFormTypes
   | TransactionsOptionsFormTypes
-  | RoleFormTypes|CompanyInfoFormTypes;
+  | RoleFormTypes|CompanyInfoFormTypes|SelectorFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -349,5 +356,5 @@ export type {
   TransactionFormTypes,
   TransactionsOptionsFormTypes,
   RoleFormTypes,
-  NewLabourCardFormTypes,CompanyInfoFormTypes
+  NewLabourCardFormTypes,CompanyInfoFormTypes,SelectorFormTypes
 };
