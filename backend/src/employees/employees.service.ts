@@ -49,7 +49,7 @@ export class EmployeesService {
         ]);
         return data;
       } else {
-        console.log(createEmployeeDto.companyId);
+        // console.log(createEmployeeDto.companyId);
 
         const data = await this.employeeModel.create(createEmployeeDto);
         const companies = await this.companyModel.updateMany(
@@ -57,7 +57,7 @@ export class EmployeesService {
           { $push: { employees: data._id } },
         );
 
-        console.log(companies);
+        // console.log(companies);
         return data;
       }
 
@@ -88,6 +88,8 @@ export class EmployeesService {
         });
       }
       const sort: any = {};
+      sort['status'] = 1;
+      sort['lcExpireDate'] = 1 ;
       sort['createdAt'] = -1;
       if (sortType == 'lc_expire_date') {
         sort['lcExpireDate'] = 1;
@@ -102,9 +104,15 @@ export class EmployeesService {
       const query = {
         $or: [
           { name: { $regex: new RegExp(search, 'i') } },
+          { nameAr: { $regex: new RegExp(search, 'i') } },
           { companyName: { $in: [new RegExp(search, 'i')] } },
           { workPermitNumber: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
+          { phone: { $regex: new RegExp(search, 'i') } },
+          { uid: { $regex: new RegExp(search, 'i') } },
+          { cardNumber: { $regex: new RegExp(search, 'i') } },
+          { passportNumber: { $regex: new RegExp(search, 'i') } },
+          { emiratesId: { $regex: new RegExp(search, 'i') } },
         ],
       };
 

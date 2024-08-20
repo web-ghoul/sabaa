@@ -18,22 +18,28 @@ export class LogInterceptor implements NestInterceptor {
         const res = httpContext.getResponse();
         const statusCode = res.statusCode;
         // console.log(res);
-        
-        if (statusCode === HttpStatus.OK || statusCode === HttpStatus.CREATED) {
-          const activity: any = this.reflector.get<string>(
-                'logActivity',
-                context.getHandler(),
-              ) || '';
-        // console.log(activity);
-        activity.route = request.route.path.split('/')[2]
-        activity.id = response._id
-        activity.route == "owner" ? activity.ownerType = response.type : undefined  
-        activity.userName = request.user.name
-        activity.userId = request.user.id
-
-        // console.log(activity);
-            await this.activityLogModel.create(activity)
+        try{
+          if (statusCode === HttpStatus.OK || statusCode === HttpStatus.CREATED) {
+            const activity: any = this.reflector.get<string>(
+                  'logActivity',
+                  context.getHandler(),
+                ) || '';
+          // console.log(activity);
+          activity.route = request.route.path.split('/')[2]
+          activity.id = response._id
+          activity.route == "owner" ? activity.ownerType = response.type : undefined  
+          activity.userName = request?.user?.name
+          activity.userId = request?.user?.id
+          
+          // console.log(activity);
+              await this.activityLogModel.create(activity)
+          }
+        }catch(err){
+          console.log(err);
         }
+
+        
+        
       }),
     );
   }

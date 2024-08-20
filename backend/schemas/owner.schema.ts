@@ -95,11 +95,11 @@ export const OwnerSchema = SchemaFactory.createForClass(Owner);
 
 OwnerSchema.index(
   { emiratesId: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true , $ne: ""} } }
 );
 OwnerSchema.index(
   { personCode: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true , $ne: ""} } }
 );
 
 OwnerSchema.index(

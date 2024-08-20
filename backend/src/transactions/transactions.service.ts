@@ -44,9 +44,9 @@ export class TransactionsService {
     search: string,
     selectFields: string[],
     sort: string,
-    expireWorkPermitFrom: string,
+    lcExpiryDateFrom: string,
     status: string,
-    expireWorkPermitTo: string,
+    lcExpiryDateTo: string,
     deleted: boolean,
     type: string,
     residenceTo: string,
@@ -64,13 +64,13 @@ export class TransactionsService {
       ];
     }
 
-    if (expireWorkPermitFrom || expireWorkPermitTo) {
-      query.workPermitExpiryDate = {};
-      if (expireWorkPermitFrom) {
-        query.workPermitExpiryDate.$gte = new Date(expireWorkPermitFrom);
+    if (lcExpiryDateFrom || lcExpiryDateTo) {
+      query.lcExpiryDate = {};
+      if (lcExpiryDateFrom) {
+        query.lcExpiryDate.$gte = new Date(lcExpiryDateFrom);
       }
-      if (expireWorkPermitTo) {
-        query.workPermitExpiryDate.$lte = new Date(expireWorkPermitTo);
+      if (lcExpiryDateTo) {
+        query.lcExpiryDate.$lte = new Date(lcExpiryDateTo);
       }
     }
 
@@ -84,11 +84,8 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if (type == 'pre') {
-      query.status = 'Approved';
-    } else if (type == 'new') {
-      query.lcNo = { $exists: true };
-    } else if (type == 'all') {
+    if(type){
+      query.type = type ; 
     }
 
     if (residenceFrom || residenceTo) {
@@ -209,7 +206,6 @@ export class TransactionsService {
       worksheet.addRow({
         transactionNo: transaction.transactionNo,
         employeeId: transaction.employeeId,
-        serialNo: transaction.serialNo,
         companyCode: transaction.companyCode,
         companyId: transaction.companyId,
         companyName: transaction.companyName,
@@ -227,7 +223,6 @@ export class TransactionsService {
         workPermit: transaction.workPermit,
         lcNo: transaction.lcNo,
         lcExpiryDate: transaction.lcExpiryDate,
-        workPermitExpiryDate: transaction.workPermitExpiryDate,
         visitExpiryDate: transaction.visitExpiryDate,
         tawjeehDate: transaction.tawjeehDate,
         medicalDate: transaction.medicalDate,

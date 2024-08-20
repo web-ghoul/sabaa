@@ -72,6 +72,8 @@ export class OwnerService {
         });
       }
       const sort: any = {};
+      sort['status'] = 1;
+      sort['residenceExpiryDate'] = 1 ;
       sort['createdAt'] = -1;
       if (sortType == 'name_asc') {
         sort['name'] = 1;
@@ -93,6 +95,7 @@ export class OwnerService {
       const query: any = {
         $and: [{$or: [
           { name: { $regex: new RegExp(search, 'i') } },
+          { nameAr: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
           { phone: { $regex: new RegExp(search, 'i') } },
           { uid: { $regex: new RegExp(search, 'i') } },
@@ -135,6 +138,7 @@ export class OwnerService {
         .skip(page * limit)
         .sort(sort);
     } catch (err) {
+      console.log(err);
       throw new HttpException(
         'Error while getting owners',
         HttpStatus.FORBIDDEN,

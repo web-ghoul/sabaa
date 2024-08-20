@@ -32,16 +32,20 @@ export class AppService implements OnApplicationBootstrap {
 
   private async seedUsers() {
     const usersCount = await this.userModel.countDocuments();
+    
     if (usersCount === 0) {
       // If users collection is empty, seed users
        // Assuming you have a JSON file with user data
       try {
-        await this.userModel.create(userData);
+        await Promise.all([this.userModel.create(userData[0]),
+        this.userModel.create(userData[1]),
+        this.userModel.create(userData[2])])
         console.log('Users seeded successfully!');
       } catch (error) {
         console.error('Error seeding users:', error);
       }
     } else {
+
       console.log('Users collection is not empty. Skipping seeding.');
     }
   }

@@ -13,7 +13,7 @@ export class AlertsService {
     @InjectModel('Transaction') private transactionModel: Model<Transaction>,
     @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
   ) {}
-  private filePath = __dirname + "../../../../data/alerts.json";
+  private filePath = __dirname + "/../data/alerts.json";
   async create(createAlertDto: object) {
     try {
       // Convert the object to a JSON string
@@ -30,13 +30,27 @@ export class AlertsService {
   }
 
   async findAll() {
-    const fileContent = await fs.readFile(this.filePath, 'utf-8');
+    try{
+      const fileContent = await fs.readFile(this.filePath, 'utf-8');
 
-    // Parse the JSON string into an object
-    const data = JSON.parse(fileContent);
-
-    // console.log('Object read from file successfully:', data);
-    return data;
+      // Parse the JSON string into an object
+      const data = JSON.parse(fileContent);
+  
+      // console.log('Object read from file successfully:', data);
+      return data;
+    }catch(err)
+    {
+      await this.create({
+        "passportExpiry": 50,
+        "workPermitExpiryDate": 50,
+        "visitExpiryDate": 50,
+        "changeStatusDate": 50,
+        "tawjeehDate": 50,
+        "lcExpiryDate": 50,
+        "residenceExpiryDate": 50
+      })   
+    }
+    
   }
 
   async checkExpiry(field: string, duration: Date) {

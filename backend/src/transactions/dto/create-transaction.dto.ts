@@ -32,6 +32,10 @@ export class CreateTransactionDto {
   employeeNameAr?: string;
 
   @IsOptional()
+  @IsString()
+  type?: string;
+
+  @IsOptional()
   @IsDate()
   dob?: Date;
 
@@ -81,10 +85,6 @@ export class CreateTransactionDto {
   @IsOptional()
   @IsDate()
   lcExpiryDate?: Date;
-
-  @IsOptional()
-  @IsDate()
-  workPermitExpiryDate?: Date;
 
   @IsOptional()
   @IsDate()

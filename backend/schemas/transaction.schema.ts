@@ -12,10 +12,7 @@ export class Transaction {
 
   @Prop({ type: String, ref: 'Employee', required: true })
   employeeId: string;
-
-  @Prop({ type: String })
-  serialNo: string;
-
+  
   @Prop({ type: String, required: true })
   companyCode: string;
 
@@ -67,11 +64,11 @@ export class Transaction {
   @Prop()
   lcNo: string;
 
-  @Prop({ type: Date })
-  lcExpiryDate: Date;
+  @Prop()
+  type: string;
 
   @Prop({ type: Date })
-  workPermitExpiryDate: Date;
+  lcExpiryDate: Date;
 
   @Prop({ type: Date })
   visitExpiryDate: Date;

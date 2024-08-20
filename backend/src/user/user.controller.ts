@@ -74,8 +74,8 @@ export class UserController {
 
 
   @Delete(":id")
-  @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  // @UseInterceptors(LogInterceptor)
+  // @ActivityLog({action: "delete"})
   deleteUser(@Param("id") id : ObjectId){
     return this.userService.deleteUser(id);
   }
