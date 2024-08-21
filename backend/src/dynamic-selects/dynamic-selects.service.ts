@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 
 @Injectable()
 export class DynamicSelectsService {
-  private baseFilePath = __dirname + `../../../../src/data/`;
+  private baseFilePath = __dirname + `/../data/`;
   async create(createAlertDto: object, selector: string) {
     try {
       // Convert the object to a JSON string
@@ -21,13 +21,35 @@ export class DynamicSelectsService {
   }
 
   async findAll(selector: string) {
+    if(selector == "all")
+    {
+      const fields = [
+        "cardTypes",
+        "establishmentType",
+        "licenseIssuePlace",
+        "molCategory",
+        "state",
+        "statusofEmployee"
+      ];
+      
+      return await Promise.all(fields.map(async (field) => {
+        return {[field]: await this.extractDataFromFile(field)} ; 
+      }
+      ))
+    }else{
+      return await this.extractDataFromFile(selector);
+    }
+    
+  }
+
+  async extractDataFromFile(selector: string) {
     const filePath = this.baseFilePath + selector + '.json';
-    const fileContent = await fs.readFile(filePath, 'utf-8');
-
-    // Parse the JSON string into an object
-    const data = JSON.parse(fileContent);
-
-    // console.log('Object read from file successfully:', data);
-    return data;
+      const fileContent = await fs.readFile(filePath, 'utf-8');
+  
+      // Parse the JSON string into an object
+      const data = JSON.parse(fileContent);
+  
+      // console.log('Object read from file successfully:', data);
+      return data;
   }
 }

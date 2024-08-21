@@ -11,7 +11,7 @@ export class DynamicSelectsController {
   }
 
   @Get()
-  findAll(@Query('selector') selector: string) {
+  find(@Query('selector') selector: string) {
     return this.dynamicSelectsService.findAll(selector);
   }
 }
