@@ -25,9 +25,12 @@ export class TransactionsService {
 
       const newObj = {
         name: createTransactionDto.employeeName,
+        nameAr: createTransactionDto.employeeNameAr,
         nationality : createTransactionDto.nationality,
         dob : createTransactionDto.dob,
-        gender: createTransactionDto.gender
+        gender: createTransactionDto.gender,
+        companyId: createTransactionDto.companyId,
+
       }
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;
