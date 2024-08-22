@@ -76,7 +76,7 @@ export class CreateTransactionDto {
 
   @IsOptional()
   @IsString()
-  workPermit?: string;
+  lcNumber?: string;
 
   @IsOptional()
   @IsString()

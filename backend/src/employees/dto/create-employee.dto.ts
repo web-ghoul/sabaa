@@ -53,6 +53,10 @@ export class CreateEmployeeDto {
   visaFileNumber: string;
 
   @IsOptional()
+  @IsString()
+  lcNumber: string;
+
+  @IsOptional()
   @IsNumber()
   salary: number;
 

@@ -176,7 +176,7 @@ export class TransactionsService {
       { header: 'Person Code', key: 'personCode', width: 20 },
       { header: 'UID', key: 'uid', width: 20 },
       { header: 'Emirates No', key: 'emiratesNo', width: 20 },
-      { header: 'Work Permit', key: 'workPermit', width: 20 },
+      { header: 'lcNumber', key: 'lcNumber', width: 20 },
       { header: 'LC No', key: 'lcNo', width: 20 },
       { header: 'LC Expiry Date', key: 'lcExpiryDate', width: 20 },
       {
@@ -220,7 +220,7 @@ export class TransactionsService {
         personCode: transaction.personCode,
         uid: transaction.uid,
         emiratesNo: transaction.emiratesNo,
-        workPermit: transaction.workPermit,
+        lcNumber: transaction.lcNumber,
         lcNo: transaction.lcNo,
         lcExpiryDate: transaction.lcExpiryDate,
         visitExpiryDate: transaction.visitExpiryDate,

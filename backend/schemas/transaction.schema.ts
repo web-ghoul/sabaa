@@ -59,7 +59,7 @@ export class Transaction {
   emiratesNo: string;
 
   @Prop()
-  workPermit: string;
+  lcNumber: string;
 
   @Prop()
   lcNo: string;

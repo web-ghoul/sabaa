@@ -37,7 +37,7 @@ export class Employee {
     cardType: string
 
     @Prop()
-    cardNumber: string;
+    lcNumber: string;
 
     @Prop()
     job: string
