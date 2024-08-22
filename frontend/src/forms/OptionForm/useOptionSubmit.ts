@@ -43,7 +43,7 @@ const useOptionSubmit = () => {
     handleOpenFormsLoading();
     await server
       .post(`/selectors?status=${editableSelectorData.selector}`, {
-        data: values,
+        data: [...editableSelectorData.options, values.option],
       })
       .then(() => {
         handleAlert({

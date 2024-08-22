@@ -17,8 +17,9 @@ import Button from "../Button/Button";
 const SelectorView = ({ selector, options }: SelectorViewTypes) => {
   const { handleOpenOptionModal, handleOpenDeleteModal } =
     useContext(ModalsContext);
-  const { setEditableSelectorData } = useContext(FormsContext);
-
+  const { editableSelectorData, setEditableSelectorData } =
+    useContext(FormsContext);
+  console.log(editableSelectorData);
   return (
     <Accordion>
       <AccordionSummary
@@ -52,7 +53,11 @@ const SelectorView = ({ selector, options }: SelectorViewTypes) => {
                     className={`!bg-green-100`}
                     onClick={() => {
                       handleOpenOptionModal("editOption");
-                      setEditableSelectorData({ selector, options, option });
+                      setEditableSelectorData({
+                        selector,
+                        options: [...options].filter((opt) => opt !== option),
+                        option,
+                      });
                     }}
                   >
                     <EditRounded className={`!text-green-400`} />
@@ -63,7 +68,7 @@ const SelectorView = ({ selector, options }: SelectorViewTypes) => {
                       handleOpenDeleteModal("option");
                       setEditableSelectorData({
                         selector,
-                        options: [...options].splice(0, i),
+                        options: [...options].filter((opt) => opt !== option),
                         option: "",
                       });
                     }}
