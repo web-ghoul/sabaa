@@ -160,8 +160,8 @@ const EmployeeDetails = ({
             value={(data as EmployeeTypes).cardType}
           />
           <DataBox
-            title={"Card Number"}
-            value={(data as EmployeeTypes).cardNumber}
+            title={"Labour Card Number"}
+            value={(data as EmployeeTypes).lcNumber}
           />
           <DataBox
             title={"Labour Card Expire Date"}

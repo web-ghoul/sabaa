@@ -32,7 +32,7 @@ const RenewTransactions = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
-            Renew LC Transactions
+            Renew Labour Card
           </Typography>
         </BreadCrumbs>
         <Forms type={"transactionsOptions"} tType={"renew"} />

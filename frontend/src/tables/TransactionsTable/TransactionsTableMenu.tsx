@@ -1,5 +1,4 @@
 import {
-  AddCardRounded,
   DeleteRounded,
   EditRounded,
   VisibilityRounded,
@@ -9,31 +8,21 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
-import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const TransactionsTableMenu = ({ type }: { type: string }) => {
+const TransactionsTableMenu = () => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
-  // const navigate = useNavigate();
-  const { editableTransactionData } = useContext(FormsContext);
-  const {
-    handleOpenTransactionModal,
-    handleOpenDeleteModal,
-    handleOpenNewLCModal,
-  } = useContext(ModalsContext);
+  const { handleOpenTransactionModal, handleOpenDeleteModal } =
+    useContext(ModalsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
 
   const handleView = () => {};
 
   const handleEdit = () => {
-    handleOpenTransactionModal("editTransaction");
-  };
-
-  const handleNewLc = () => {
-    handleOpenNewLCModal();
+    handleOpenTransactionModal("editWorkPermit");
   };
 
   const handleDelete = () => {
@@ -74,16 +63,6 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
         title={"Edit"}
         handling={handleEdit}
       />
-      {(type === "pre" ||
-        type === "new" ||
-        (editableTransactionData &&
-          editableTransactionData.status.toLowerCase() === "approved")) && (
-        <TableMenuItem
-          icon={<AddCardRounded />}
-          title={"New Labour Card"}
-          handling={handleNewLc}
-        />
-      )}
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}

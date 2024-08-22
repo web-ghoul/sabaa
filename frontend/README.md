@@ -630,3 +630,11 @@ Notes For Amr :
 1- حقل Person Code + Emirates ID فى  فورم Edit Owner عند عمل حذف لبيانات الحقل وعمل حفظ  وعند عمل view  لم يتم حذف بيانات هذا الحقل
 
 2- 
+
+
+
+1- remove add button in all
+2- remove national card type in pre form
+3- Make status in last of table
+4 -default status "in process"
+5- when change status no card tytpe change set old card type

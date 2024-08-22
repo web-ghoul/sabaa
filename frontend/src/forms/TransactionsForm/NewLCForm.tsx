@@ -55,7 +55,7 @@ const NewLCForm = ({ register, errors }: FormiksTypes) => {
           register={register}
           errors={errors}
           label={"Labour Card Number"}
-          name={"lcNo"}
+          name={"lcNumber"}
         />
         <Input
           register={register}

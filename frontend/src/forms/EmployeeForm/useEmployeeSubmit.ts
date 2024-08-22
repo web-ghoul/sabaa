@@ -87,8 +87,8 @@ const useEmployeeSubmit = () => {
     if (values.fileImmgNo) {
       formData.append("fileImmgNo", values.fileImmgNo);
     }
-    if (values.cardNumber) {
-      formData.append("cardNumber", values.cardNumber);
+    if (values.lcNumber) {
+      formData.append("lcNumber", values.lcNumber);
     }
     formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
     if (values.medicalPolicyNo) {

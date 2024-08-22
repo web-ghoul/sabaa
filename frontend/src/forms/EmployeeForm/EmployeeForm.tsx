@@ -228,30 +228,17 @@ const EmployeeForm = ({
             errors={errors}
             options={[
               "PRE APPROVAL FOR WORK PERMIT",
-              "NEW ELECTRONIC WORK PERMIT",
-              "RENEW ELECTRONIC WORK PERMIT",
               "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-              "NEW ON HUSBAND/FATHER SPONSORSHIP",
-              "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-              "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
               "PART TIME PRE APPROVAL FOR WORK PERMIT",
-              "ELECTRONIC WORK PERMIT FOR PART TIME",
             ]}
             select
           />
           <Input
             register={register}
             errors={errors}
-            label={"Card Number"}
-            type={"number"}
-            name={"cardNumber"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            type={"date"}
-            name={"lcNumber"}
             label={"Labour Card Number"}
+            type={"number"}
+            name={"lcNumber"}
           />
           <Input
             register={register}

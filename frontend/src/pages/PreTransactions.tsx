@@ -30,7 +30,7 @@ const PreTransactions = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
-            Approved Work Permit Transactions
+            Pre Approval Work Permit Transactions
           </Typography>
         </BreadCrumbs>
         <Forms type={"transactionsOptions"} tType={"pre"} />

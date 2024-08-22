@@ -93,7 +93,7 @@ export const FormsContext = createContext<FormsContextTypes>({
   setEditableTransactionData: () => {},
   editableRoleData: null,
   setEditableRoleData: () => {},
-  editableSelectorData: { selector: "", options: [] },
+  editableSelectorData: { selector: "", options: [], option: "" },
   setEditableSelectorData: () => {},
 });
 
@@ -219,9 +219,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const [editableSelectorData, setEditableSelectorData] = useState<{
     selector: string;
     options: string[];
+    option: string;
   }>({
     selector: "",
     options: [],
+    option: "",
   });
 
   useEffect(() => {

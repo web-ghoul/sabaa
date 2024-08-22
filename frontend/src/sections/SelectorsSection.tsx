@@ -10,21 +10,25 @@ const SelectorsSection = () => {
   const { selectors, isLoading } = useSelector(
     (state: RootState) => state.selectors
   );
-  console.log(selectors, isLoading);
   useEffect(() => {
-    dispatch(getSelectors({ status: "status" }));
+    dispatch(getSelectors({ selector: "all" }));
   }, [dispatch]);
   return (
     <PrimaryContainer
-      className={`!grid justify-stretch items-center gap-8 grid-cols-3 md:grid-cols-2 sm:!grid-cols-1`}
+      className={`!grid justify-stretch items-start gap-8 grid-cols-3 md:grid-cols-2 sm:!grid-cols-1`}
     >
-      {/* {
-            !isLoading && selectors && selectors.map((selector,i)=><SelectorView selector={selector.selector} options={selector.options} key={i} />)
-        } */}
-      <SelectorView
-        selector={"status"}
-        options={selectors ? selectors.data : []}
-      />
+      {!isLoading &&
+        selectors &&
+        selectors.map((selector, i) => {
+          const select = Object.keys(selector)[0];
+          return (
+            <SelectorView
+              selector={select}
+              options={selector[select].data}
+              key={i}
+            />
+          );
+        })}
     </PrimaryContainer>
   );
 };

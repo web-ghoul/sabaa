@@ -43,6 +43,7 @@ import useJobSchema from "../forms/JobForm/useJobSchema";
 import useJobsOptionsSchema from "../forms/JobsOptionsForm/useJobsOptionsSchema";
 import useNationalitiesOptionsSchema from "../forms/NationalitiesOptionsForm/useNationalitiesOptionsSchema";
 import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
+import useOptionSchema from "../forms/OptionForm/useOptionSchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
@@ -96,12 +97,8 @@ const useSubmitForm = (type: string) => {
     useDownloadExcelSchema();
   const { TransactionsOptionsInitialValues, TransactionsOptionsSchema } =
     useTransactionsOptionsSchema();
-  const {
-    TransactionInitialValues,
-    TransactionSchema,
-    NewLCSchema,
-    NewLCInitialValues,
-  } = useTransactionSchema();
+  const { TransactionInitialValues, TransactionSchema } =
+    useTransactionSchema();
   const {
     createNationalitiesSheetInitialValues,
     createNationalitiesSheetSchema,
@@ -116,6 +113,7 @@ const useSubmitForm = (type: string) => {
     useCompanyInfoSchema();
   const { ConvertCustomerInitialValues, ConvertCustomerSchema } =
     useConvertCustomerSchema();
+  const { OptionSchema, OptionInitialValues } = useOptionSchema();
 
   const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
     //Authentication
@@ -165,6 +163,11 @@ const useSubmitForm = (type: string) => {
     addRole: RoleSchema,
     editRole: RoleSchema,
     //Role
+
+    //Option
+    addOption: OptionSchema,
+    editOption: OptionSchema,
+    //Option
 
     //Employee
     addEmployee: EmployeeSchema,
@@ -218,9 +221,10 @@ const useSubmitForm = (type: string) => {
 
     //Transactions
     transactionsOptions: TransactionsOptionsSchema,
-    addTransaction: TransactionSchema,
-    editTransaction: TransactionSchema,
-    newLC: NewLCSchema,
+    addWorkPermit: TransactionSchema,
+    editWorkPermit: TransactionSchema,
+    newLC: TransactionSchema,
+    renewLC: TransactionSchema,
     //Transactions
 
     //Company Info
@@ -277,6 +281,11 @@ const useSubmitForm = (type: string) => {
     editRole: RoleInitialValues,
     //Role
 
+    //Option
+    addOption: OptionInitialValues,
+    editOption: OptionInitialValues,
+    //Option
+
     //Pro
     addPro: ProInitialValues,
     editPro: ProInitialValues,
@@ -328,9 +337,10 @@ const useSubmitForm = (type: string) => {
 
     //Transactions
     transactionsOptions: TransactionsOptionsInitialValues,
-    addTransaction: TransactionInitialValues,
-    editTransaction: TransactionInitialValues,
-    newLC: NewLCInitialValues,
+    addWorkPermit: TransactionInitialValues,
+    editWorkPermit: TransactionInitialValues,
+    renewLC: TransactionInitialValues,
+    newLC: TransactionInitialValues,
     //Transactions
 
     //Company Info

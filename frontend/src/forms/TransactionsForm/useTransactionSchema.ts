@@ -8,13 +8,15 @@ const useTransactionSchema = () => {
   const TransactionSchema = yup.object({
     transactionNo: yup.string().required("Transaction number is required"),
     gender: yup.string().required("Gender is required"),
-    personCode: yup.string().required("Person Code is required"),
+    personCode: yup.string(),
     companyCode: yup.string(),
     companyId: yup.string().required("Company Id is required"),
     companyName: yup.string().required("Company Name is required"),
     employeeId: yup.string(),
     employeeName: yup.string().required("English Name is required"),
     employeeNameAr: yup.string().required("Arabic Name is required"),
+    name: yup.string(),
+    nameAr: yup.string(),
     dob: yup.string().required("Date of Birth is required"),
     idNationality: yup.string().required("Nationality Id is required"),
     nationality: yup.string().required("Nationality is required"),
@@ -31,10 +33,14 @@ const useTransactionSchema = () => {
     lcNumber: yup.string(),
     lcExpiryDate: yup.string(),
     visitExpiryDate: yup.string(),
+    tawjeehDate: yup.string(),
+    changeStatusDate: yup.string(),
+    medicalDate: yup.string(),
+    residenceExpiryDate: yup.string(),
   });
 
   const TransactionInitialValues = {
-    transactionNo: editableTransactionData?.transactionNo || "",
+    transactionNo: "",
     personCode: editableTransactionData?.personCode || "",
     gender: editableTransactionData?.gender || "",
     companyCode: editableTransactionData?.companyCode || "",
@@ -43,6 +49,8 @@ const useTransactionSchema = () => {
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
+    name: editableTransactionData?.name || "",
+    nameAr: editableTransactionData?.nameAr || "",
     dob: editableTransactionData?.dob || "",
     idNationality: editableTransactionData?.idNationality || "",
     nationality: editableTransactionData?.nationality || "",
@@ -56,34 +64,18 @@ const useTransactionSchema = () => {
     remarks: editableTransactionData?.remarks || "",
     statusDate: editableTransactionData?.statusDate || "",
     status: editableTransactionData?.status || "",
-    workPermit: editableTransactionData?.workPermit || "",
-    workPermitExpiryDate: editableTransactionData?.workPermitExpiryDate || "",
+    lcNumber: editableTransactionData?.lcNumber || "",
+    lcExpiryDate: editableTransactionData?.lcExpiryDate || "",
     visitExpiryDate: editableTransactionData?.visitExpiryDate || "",
-  };
-
-  const NewLCSchema = yup.object({
-    lcNo: yup.string().required("Labour Card Number is required"),
-    lcExpiryDate: yup.string().required("Labour Card Expire Date is required"),
-    tawjeehDate: yup.string(),
-    changeStatusDate: yup.string(),
-    medicalDate: yup.string(),
-    residenceExpiryDate: yup.string(),
-  });
-
-  const NewLCInitialValues = {
-    lcNo: "",
-    lcExpiryDate: "",
-    tawjeehDate: "",
-    changeStatusDate: "",
-    medicalDate: "",
-    residenceExpiryDate: "",
+    tawjeehDate: editableTransactionData?.tawjeehDate || "",
+    changeStatusDate: editableTransactionData?.changeStatusDate || "",
+    medicalDate: editableTransactionData?.medicalDate || "",
+    residenceExpiryDate: editableTransactionData?.residenceExpiryDate || "",
   };
 
   return {
     TransactionSchema,
     TransactionInitialValues,
-    NewLCSchema,
-    NewLCInitialValues,
   };
 };
 

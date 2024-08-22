@@ -71,6 +71,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openRoleModal: false,
   handleOpenRoleModal: () => {},
   handleCloseRoleModal: () => {},
+  openOptionModal: false,
+  handleOpenOptionModal: () => {},
+  handleCloseOptionModal: () => {},
 });
 
 const ModalsProvider = ({ children }: { children: ReactNode }) => {
@@ -419,7 +422,23 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   };
   //Permission Modal
 
+  //Selectors Modal
+  const [openOptionModal, setOpenOptionModal] = useState(false);
+
+  const handleCloseOptionModal = () => {
+    setOpenOptionModal(false);
+  };
+
+  const handleOpenOptionModal = (type: string) => {
+    setOpenOptionModal(true);
+    setFormType(type);
+  };
+  //Selectors Modal
+
   const values = {
+    openOptionModal,
+    handleOpenOptionModal,
+    handleCloseOptionModal,
     openForgotPasswordModal,
     handleOpenForgotPasswordModal,
     handleCloseForgotPasswordModal,

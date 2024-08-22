@@ -1,5 +1,5 @@
-import { Box, Divider, Paper } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Box, Checkbox, Divider, FormControlLabel, Paper } from "@mui/material";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Button from "../../components/Button/Button";
@@ -31,6 +31,8 @@ const TransactionForm = ({
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const [name, setName] = useState("");
+  const [nameAr, setNameAr] = useState("");
   const { handleCloseTransactionModal } = useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { nationalities } = useSelector(
@@ -38,6 +40,43 @@ const TransactionForm = ({
   );
   const { companies } = useSelector((state: RootState) => state.companies);
   const { jobs } = useSelector((state: RootState) => state.jobs);
+  const [tawjeeh, setTawjeeh] = useState(false);
+  const [IMMG, setIMMG] = useState(false);
+
+  const handleTawjeehChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setTawjeeh(checked);
+  };
+  const handleIMMGChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setIMMG(checked);
+  };
+
+  const handleGetCardTypes = () => {
+    if (type === "addWorkPermit") {
+      return [
+        "PRE APPROVAL FOR WORK PERMIT",
+        "RELATIVE PRE APPROVAL FOR WORK PERMIT",
+        "PART TIME PRE APPROVAL FOR WORK PERMIT",
+      ];
+    }
+    if (type === "editWorkPermit") {
+      return [getValues("cardType")];
+    }
+    if (type === "newLc") {
+      return [
+        "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+        "NEW ELECTRONIC WORK PERMIT",
+        "RENEW ELECTRONIC WORK PERMIT",
+        "NEW ON HUSBAND/FATHER SPONSORSHIP",
+        "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+        "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+        "ELECTRONIC WORK PERMIT FOR PART TIME",
+      ];
+    }
+  };
+
+  const cardTypes = handleGetCardTypes();
 
   const handleSearch = async (value: string) => {
     setLoading(true);
@@ -45,6 +84,7 @@ const TransactionForm = ({
       const employees: EmployeeTypes[] = res.data;
       if (employees.length > 0) {
         const employee = employees[0];
+        const cardTypes = handleGetCardTypes();
         setValue("gender", employee.gender);
         setValue("personCode", employee.personCode);
         setValue("companyId", (employee.companyId[0] as string) || "");
@@ -52,6 +92,8 @@ const TransactionForm = ({
         setValue("employeeId", employee?._id || "");
         setValue("employeeName", employee.name);
         setValue("employeeNameAr", employee.nameAr);
+        setValue("name", employee.name);
+        setValue("nameAr", employee.nameAr);
         setValue("dob", handleDateForInput(employee.dob));
         setValue("idNationality", employee.idNationality);
         setValue("nationality", employee.nationality);
@@ -59,7 +101,12 @@ const TransactionForm = ({
         setValue("uid", employee.uid);
         setValue("salary", employee.salary);
         setValue("job", employee.job);
-        setValue("cardType", employee.cardType);
+        setValue(
+          "cardType",
+          cardTypes?.includes(employee.cardType) ? employee.cardType : ""
+        );
+        // setValue("passportExpiry", handleDateForInput(employee.passportExpiry));
+        setValue("passportNumber", employee.passportNumber);
       } else {
         handleAlert({ msg: "No Employees Found", status: "error" });
       }
@@ -75,7 +122,14 @@ const TransactionForm = ({
 
   useEffect(() => {
     setStatus(getValues("status"));
+    setName(getValues("name"));
+    setNameAr(getValues("nameAr"));
   }, []);
+
+  useEffect(() => {
+    setValue("name", name);
+    setValue("nameAr", nameAr);
+  }, [name, nameAr]);
 
   return (
     <Paper
@@ -85,17 +139,27 @@ const TransactionForm = ({
         head={"h4"}
         align={"left"}
         title={
-          type === "addTransaction" ? "New Work Permit" : "Edit Work Permit"
+          type === "addWorkPermit"
+            ? "New Work Permit"
+            : type === "editWorkPermit"
+            ? "Edit Work Permit"
+            : type === "newLC"
+            ? "New Labour Card"
+            : "Renew Labour Card"
         }
       />
 
-      {type === "addTransaction" && (
+      {(type === "addWorkPermit" || type === "newLC" || type === "renewLC") && (
         <Box className={`flex justify-start items-end  gap-4`}>
           <Input
             register={register}
             errors={errors}
             type={"search"}
-            label={"Search By Person Code"}
+            label={
+              type === "addWorkPermit"
+                ? "Search By Person Code"
+                : "Search By Card Number , UID"
+            }
             name={"searchForEmployee"}
             change={(value: string) => setSearch(value)}
           />
@@ -107,150 +171,180 @@ const TransactionForm = ({
         </Box>
       )}
 
-      {(type === "addTransaction" || type === "editTransaction") && (
-        <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+      {(type === "newLC" || type === "renewLC") && (
+        <Box className={`flex justify-start items-center gap-4`}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={tawjeeh}
+                onChange={handleTawjeehChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+            label={"Tawjeeh"}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={IMMG}
+                onChange={handleIMMGChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+            label={"IMMG Details"}
+          />
+        </Box>
+      )}
+
+      <Box
+        className={`grid justify-stretch items-end grid-cols-3 md:grid-cols-2 sm:!grid-cols-1 gap-6`}
+      >
+        <Input
+          register={register}
+          errors={errors}
+          label={"Transaction Number"}
+          name={"transactionNo"}
+        />
+        {type === "editWorkPermit" ? (
           <Input
+            label={"Card Type"}
+            name={"cardType"}
+            value={cardTypes && cardTypes.length > 0 ? cardTypes[0] : ""}
             register={register}
             errors={errors}
-            label={"Serial Number"}
-            name={"serialNo"}
+            disabled
           />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Transaction Number"}
-            name={"transactionNo"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Person Code"}
-            name={"personCode"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Gender"}
-            select
-            options={["Male", "Female"]}
-            name={"gender"}
-          />
-          {companies && companies.length > 0 && (
-            <AutoCompleteSearch
-              label={"Company"}
-              options={companies}
-              register={register}
-              setValue={setValue}
-              getValues={getValues}
-              errors={errors}
-              name={"companyId"}
-              variant={"transaction"}
-              flag={loading}
-            />
-          )}
-          <Input
-            register={register}
-            errors={errors}
-            label={"Employee English Name"}
-            name={"employeeName"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Employee Arabic Name"}
-            name={"employeeNameAr"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Date of Birth"}
-            name={"dob"}
-            type={"date"}
-          />
-          {nationalities && nationalities.length > 0 && (
-            <AutoCompleteSearch
-              label={"Nationality"}
-              options={nationalities}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              getValues={getValues}
-              name={"nationality"}
-              flag={loading}
-            />
-          )}
-          <Input
-            register={register}
-            errors={errors}
-            label={"Passport Number"}
-            name={"passportNumber"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Passport Expire Date"}
-            name={"passportExpiry"}
-            type={"date"}
-          />
-          {jobs && jobs.length > 0 && (
-            <AutoCompleteSearch
-              label={"Job"}
-              options={jobs}
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              getValues={getValues}
-              name={"job"}
-              flag={loading}
-            />
-          )}
-          <Input
-            register={register}
-            errors={errors}
-            label={"UID Number"}
-            name={"uid"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Emirates Id Number"}
-            name={"emiratesNo"}
-          />
+        ) : (
           <Input
             label={"Card Type"}
             name={"cardType"}
             register={register}
             errors={errors}
-            options={[
-              "PRE APPROVAL FOR WORK PERMIT",
-              "NEW ELECTRONIC WORK PERMIT",
-              "RENEW ELECTRONIC WORK PERMIT",
-              "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-              "NEW ON HUSBAND/FATHER SPONSORSHIP",
-              "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-              "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-              "PART TIME PRE APPROVAL FOR WORK PERMIT",
-              "ELECTRONIC WORK PERMIT FOR PART TIME",
-            ]}
+            options={handleGetCardTypes()}
             select
           />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Salary"}
-            name={"salary"}
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Remarks"}
-            name={"remarks"}
-            textarea
-          />
-        </Box>
-      )}
+        )}
+      </Box>
 
-      {type === "editTransaction" && (
+      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+        {companies && companies.length > 0 && (
+          <AutoCompleteSearch
+            label={"Company"}
+            options={companies}
+            register={register}
+            setValue={setValue}
+            getValues={getValues}
+            errors={errors}
+            name={"companyId"}
+            variant={"transaction"}
+            flag={loading}
+          />
+        )}
+        <Input
+          register={register}
+          errors={errors}
+          label={"Employee English Name"}
+          name={"employeeName"}
+          change={(val) => setName(val)}
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Employee Arabic Name"}
+          name={"employeeNameAr"}
+          change={(val) => setNameAr(val)}
+        />
+        {!(type === "newLC" || type === "renewLC") && (
+          <>
+            <Input
+              register={register}
+              errors={errors}
+              label={"Person Code"}
+              name={"personCode"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Gender"}
+              select
+              options={["Male", "Female"]}
+              name={"gender"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Date of Birth"}
+              name={"dob"}
+              type={"date"}
+            />
+            {nationalities && nationalities.length > 0 && (
+              <AutoCompleteSearch
+                label={"Nationality"}
+                options={nationalities}
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+                name={"nationality"}
+                flag={loading}
+              />
+            )}
+            <Input
+              register={register}
+              errors={errors}
+              label={"Passport Number"}
+              name={"passportNumber"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Passport Expire Date"}
+              name={"passportExpiry"}
+              type={"date"}
+            />
+            {jobs && jobs.length > 0 && (
+              <AutoCompleteSearch
+                label={"Job"}
+                options={jobs}
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+                name={"job"}
+                flag={loading}
+              />
+            )}
+            <Input
+              register={register}
+              errors={errors}
+              label={"UID Number"}
+              name={"uid"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Emirates Id Number"}
+              name={"emiratesNo"}
+            />
+
+            <Input
+              register={register}
+              errors={errors}
+              label={"Salary"}
+              name={"salary"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Remarks"}
+              name={"remarks"}
+              textarea
+            />
+          </>
+        )}
+      </Box>
+
+      {type === "editWorkPermit" && (
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
           <Input
             label={"Status"}
@@ -271,13 +365,79 @@ const TransactionForm = ({
         </Box>
       )}
 
-      {status.toLowerCase() === "approved" && (
+      {(type === "newLC" || type === "renewLC") && (
+        <Box className={`grid justify-stretch items-center gap-4`}>
+          <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+            <Input
+              register={register}
+              errors={errors}
+              label={"Labour Card Number"}
+              name={"lcNumber"}
+            />
+            <Input
+              register={register}
+              errors={errors}
+              label={"Labour Card Expire Date"}
+              type={"date"}
+              name={"lcExpiryDate"}
+            />
+          </Box>
+          {tawjeeh && (
+            <>
+              <Divider />
+              <Box
+                className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+              >
+                <Input
+                  register={register}
+                  errors={errors}
+                  label={"Tawjeeh Date"}
+                  type={"date"}
+                  name={"tawjeehDate"}
+                />
+              </Box>
+            </>
+          )}
+          {IMMG && (
+            <>
+              <Divider />
+              <Box
+                className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+              >
+                <Input
+                  register={register}
+                  errors={errors}
+                  label={"Change Status Date"}
+                  type={"date"}
+                  name={"changeStatusDate"}
+                />
+                <Input
+                  register={register}
+                  errors={errors}
+                  label={"Medical Date"}
+                  type={"date"}
+                  name={"medicalDate"}
+                />
+                <Input
+                  register={register}
+                  errors={errors}
+                  label={"Residence Expire Date"}
+                  name={"residenceExpiryDate"}
+                  type={"date"}
+                />
+              </Box>
+            </>
+          )}
+        </Box>
+      )}
+
+      {(status.toLowerCase() === "approved" || type === "lc") && (
         <>
           <Divider />
           <Box
             className={`grid justify-stretch items-center gap-8 md:gap-6 sm:!gap-5`}
           >
-            <Title head={"h5"} align={"left"} title={"Approval Work Permit"} />
+            <Title head={"h5"} align={"left"} title={"Approval"} />
 
             <Box
               className={`grid grid-cols-3 justify-stretch items-start gap-6`}
@@ -285,14 +445,14 @@ const TransactionForm = ({
               <Input
                 register={register}
                 errors={errors}
-                label={"Work Permit Number"}
-                name={"workPermit"}
+                label={"Labour Card Number"}
+                name={"lcNumber"}
               />
               <Input
                 register={register}
                 errors={errors}
-                label={"Work Permit Expire Date"}
-                name={"workPermitExpiryDate"}
+                label={"Labour Card Expire Date"}
+                name={"lcExpiryDate"}
                 type={"date"}
               />
               <Input

@@ -8,9 +8,17 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { useContext } from "react";
+import { FormsContext } from "../../contexts/FormsContext";
+import { ModalsContext } from "../../contexts/ModalsContext";
 import { SelectorViewTypes } from "../../types/components.types";
+import Button from "../Button/Button";
 
 const SelectorView = ({ selector, options }: SelectorViewTypes) => {
+  const { handleOpenOptionModal, handleOpenDeleteModal } =
+    useContext(ModalsContext);
+  const { setEditableSelectorData } = useContext(FormsContext);
+
   return (
     <Accordion>
       <AccordionSummary
@@ -24,23 +32,52 @@ const SelectorView = ({ selector, options }: SelectorViewTypes) => {
       </AccordionSummary>
       <AccordionDetails>
         <Box className={`grid justify-stretch items-center gap-4`}>
-          {options.map((option, i) => (
-            <Paper
-              elevation={1}
-              className={`flex justify-between items-center gap-3 flex-wrap p-2 !rounded-md`}
-              key={i}
-            >
-              <Typography variant={"h6"}>{option}</Typography>
-              <Box className={`flex justify-end items-center gap-2`}>
-                <IconButton className={`!bg-green-100`}>
-                  <EditRounded className={`!text-green-400`} />
-                </IconButton>
-                <IconButton className={`!bg-red-100`}>
-                  <DeleteRounded className={`!text-red-400`} />
-                </IconButton>
-              </Box>
-            </Paper>
-          ))}
+          <Button
+            title={"Add New Option"}
+            handling={() => {
+              handleOpenOptionModal("addOption");
+              setEditableSelectorData({ selector, options, option: "" });
+            }}
+          />
+          {options.length > 0 ? (
+            options.map((option, i) => (
+              <Paper
+                elevation={1}
+                className={`flex justify-between items-center gap-3 flex-wrap p-2 !rounded-md`}
+                key={i}
+              >
+                <Typography variant={"h6"}>{option}</Typography>
+                <Box className={`flex justify-end items-center gap-2`}>
+                  <IconButton
+                    className={`!bg-green-100`}
+                    onClick={() => {
+                      handleOpenOptionModal("editOption");
+                      setEditableSelectorData({ selector, options, option });
+                    }}
+                  >
+                    <EditRounded className={`!text-green-400`} />
+                  </IconButton>
+                  <IconButton
+                    className={`!bg-red-100`}
+                    onClick={() => {
+                      handleOpenDeleteModal("option");
+                      setEditableSelectorData({
+                        selector,
+                        options: [...options].splice(0, i),
+                        option: "",
+                      });
+                    }}
+                  >
+                    <DeleteRounded className={`!text-red-400`} />
+                  </IconButton>
+                </Box>
+              </Paper>
+            ))
+          ) : (
+            <Typography variant="h6" className={`text-center text-zinc-300`}>
+              No Options Yet...
+            </Typography>
+          )}
         </Box>
       </AccordionDetails>
     </Accordion>

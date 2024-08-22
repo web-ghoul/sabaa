@@ -197,10 +197,11 @@ interface FormsContextTypes {
   setEditableTransactionData: (transaction: TransactionTypes | null) => void;
   editableRoleData: RoleTypes | null;
   setEditableRoleData: (role: RoleTypes | null) => void;
-  editableSelectorData: { selector: string; options: string[] };
+  editableSelectorData: { selector: string; options: string[]; option: string };
   setEditableSelectorData: (options: {
     selector: string;
     options: string[];
+    option: string;
   }) => void;
 }
 
@@ -275,6 +276,9 @@ interface ModalsContextTypes {
   openRoleModal: boolean;
   handleOpenRoleModal: (string: string) => void;
   handleCloseRoleModal: () => void;
+  openOptionModal: boolean;
+  handleOpenOptionModal: (string: string) => void;
+  handleCloseOptionModal: () => void;
 }
 
 interface TabsContextProps {

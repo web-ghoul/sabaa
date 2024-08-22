@@ -51,19 +51,6 @@ const TransactionsTable = ({
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSortByWorkPermitExpiry = () => {
-    if (searchParams.get("sort") === "workPermitExpiryDate") {
-      handleAddQuery({ sort: "workPermitExpiryDate_desc" });
-      dispatch(reverseTransactions());
-      setSearchParams({ ...queries, sort: "workPermitExpiryDate_desc" });
-    } else {
-      handleAddQuery({ sort: "workPermitExpiryDate" });
-      const all = { ...queries, sort: "workPermitExpiryDate" };
-      dispatch(getTransactions(all));
-      setSearchParams(all);
-    }
-  };
-
   const handleSortByResidenceExpiry = () => {
     if (searchParams.get("sort") === "residenceExpiryDate") {
       handleAddQuery({ sort: "residenceExpiryDate_desc" });
@@ -142,15 +129,6 @@ const TransactionsTable = ({
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
-                title={mdScreen ? "WP Expiry" : "Work Permit Expiry"}
-                handling={handleSortByWorkPermitExpiry}
-                asc={searchParams.get("sort") === "name_asc"}
-                desc={searchParams.get("sort") === "name_desc"}
-              />
-            </PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
-            <PrimaryTableCell align="center">
-              <SortBox
                 title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
                 handling={handleSortByResidenceExpiry}
                 asc={searchParams.get("sort") === "code_asc"}
@@ -176,6 +154,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -188,16 +167,17 @@ const TransactionsTable = ({
             </PrimaryTableCell>
             <PrimaryTableCell align="center">Company</PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
+            <PrimaryTableCell align="center">LC Number</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
-                title={"Work Permit Expiry"}
-                handling={handleSortByWorkPermitExpiry}
+                title={"Lc Expiry Date"}
+                handling={handleSortByLCExpiry}
                 asc={searchParams.get("sort") === "name_asc"}
                 desc={searchParams.get("sort") === "name_desc"}
               />
             </PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">Passport Expiry</PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -209,14 +189,6 @@ const TransactionsTable = ({
               Transaction Number
             </PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
-            <PrimaryTableCell align="center">
-              <SortBox
-                title={mdScreen ? "WP Expiry" : "Work Permit Expiry"}
-                handling={handleSortByWorkPermitExpiry}
-                asc={searchParams.get("sort") === "name_asc"}
-                desc={searchParams.get("sort") === "name_desc"}
-              />
-            </PrimaryTableCell>
             <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
@@ -270,12 +242,6 @@ const TransactionsTable = ({
                     </Link>
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {handleDate(row.workPermitExpiryDate)}
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="center">
                     {handleDate(row.residenceExpiryDate)}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
@@ -283,6 +249,9 @@ const TransactionsTable = ({
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     {handleDate(row.lcExpiryDate)}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
@@ -316,13 +285,16 @@ const TransactionsTable = ({
                     </Link>
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    <StatusBox status={handleDate(row.workPermitExpiryDate)} />
+                    {row.lcNumber}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
+                    <StatusBox status={handleDate(row.lcExpiryDate)} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     {handleDate(row.passportExpiry)}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
@@ -362,9 +334,6 @@ const TransactionsTable = ({
                     <PrimaryTableCell align="center">
                       {handleDate(row.statusDate)}
                     </PrimaryTableCell>
-                    <PrimaryTableCell align="center">
-                      {handleDate(row.workPermitExpiryDate)}
-                    </PrimaryTableCell>
                     {actions && (
                       <PrimaryTableCell align="right">
                         <IconButton onClick={(e) => handleOpenMenu(e, i)}>
@@ -386,7 +355,7 @@ const TransactionsTable = ({
                   key={i}
                 />
               ))}
-        <TransactionsTableMenu type={type} />
+        <TransactionsTableMenu />
       </TableBody>
     </PrimaryTable>
   );

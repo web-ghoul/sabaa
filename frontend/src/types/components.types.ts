@@ -67,6 +67,7 @@ interface InputTypes {
   select?: boolean;
   options?: Array<string>;
   ac?: string;
+  value?: string;
   textarea?: boolean;
   disabled?: boolean;
   change?: (value: string) => void;

@@ -1,6 +1,6 @@
 import { CircularProgress, Typography } from "@mui/material";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
@@ -46,18 +46,18 @@ const Button = ({
     handleOpenProModal,
   } = useContext(ModalsContext);
   const navigate = useNavigate();
-
+  const { pathname } = useLocation();
 
   const handleClick = () => {
     const newTitle = title?.toLowerCase();
     const newVar = variant?.toLowerCase();
-  if (newVar === "under development") {
+    if (newVar === "under development") {
       handleAlert({ msg: "Under Development..." });
     } else if (newTitle === "add owner") {
       handleOpenOwnerModal("addOwner");
-    }  else if (newTitle === "add officer") {
+    } else if (newTitle === "add officer") {
       handleOpenProModal("addPro");
-    }else if (newTitle === "add user") {
+    } else if (newTitle === "add user") {
       handleOpenUserModal("addUser");
     } else if (newTitle === "add job") {
       handleOpenJobModal("addJob");
@@ -83,8 +83,18 @@ const Button = ({
       handleOpenNatwasalModal("addNatwasal");
     } else if (newTitle === "add transaction") {
       setEditableTransactionData(null);
-      handleOpenTransactionModal("addTransaction");
-    }else if (newTitle === "add role") {
+      if (pathname === `${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`) {
+        handleOpenTransactionModal("addWorkPermit");
+      } else if (
+        pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
+      ) {
+        handleOpenTransactionModal("newLC");
+      } else if (
+        pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
+      ) {
+        handleOpenTransactionModal("renewLC");
+      }
+    } else if (newTitle === "add role") {
       setEditableRoleData(null);
       handleOpenRoleModal("addRole");
     } else if (newTitle === "edit") {

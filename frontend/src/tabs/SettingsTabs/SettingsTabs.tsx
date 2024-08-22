@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { TabsContext } from "../../contexts/TabsContext";
 import Forms from "../../forms/Forms";
+import AlertsSection from "../../sections/AlertsSection";
 import RolesSection from "../../sections/RolesSection";
 import SelectorsSection from "../../sections/SelectorsSection";
 import CustomTabPanel from "../CustomTabPanel";
@@ -10,7 +11,12 @@ const SettingsTabs = () => {
   const { settingsTabsValue } = useContext(TabsContext);
   return (
     <PrimaryTab
-      tabsTitles={["Company Info", "Select Controller", "Permissions"]}
+      tabsTitles={[
+        "Company Info",
+        "Select Controller",
+        "Alert Controller",
+        "Permissions",
+      ]}
       variant={"settings"}
     >
       <CustomTabPanel value={settingsTabsValue} index={0}>
@@ -20,6 +26,9 @@ const SettingsTabs = () => {
         <SelectorsSection />
       </CustomTabPanel>
       <CustomTabPanel value={settingsTabsValue} index={2}>
+        <AlertsSection />
+      </CustomTabPanel>
+      <CustomTabPanel value={settingsTabsValue} index={3}>
         <RolesSection />
       </CustomTabPanel>
     </PrimaryTab>

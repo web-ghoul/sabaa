@@ -35,6 +35,7 @@ import { getUsersCounter } from "../../store/usersCounterSlice";
 import { getUsers } from "../../store/usersSlice";
 import { getTransactions } from "../../store/transactionsSlice";
 import { getRoles } from "../../store/rolesSlice";
+import { getSelectors } from "../../store/selectorsSlice";
 
 const useDeleteSubmit = () => {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -56,6 +57,7 @@ const useDeleteSubmit = () => {
     editableUserData,
     editableTransactionData,
     editableRoleData,
+    editableSelectorData,
     formType,
   } = useContext(FormsContext);
   const { handleCloseDeleteModal, handleCloseViewSponsorModal } =
@@ -84,6 +86,27 @@ const useDeleteSubmit = () => {
         .catch((err) => {
           handleCatchError(err);
         });
+    } else if (formType === "option") {
+      await server
+        .post(
+          `/selectors?selector=${
+            editableSelectorData && editableSelectorData.selector
+          }`,
+          {
+            data: [editableSelectorData.options],
+          }
+        )
+        .then(() => {
+          handleAlert({
+            msg: "Option is Deleted Successfully",
+            status: "success",
+          });
+          dispatch(getSelectors({ selector: "all" }));
+          handleCloseDeleteModal();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
     } else if (formType === "pro") {
       await server
         .delete(`/officers/${editableProData && editableProData._id}`)
@@ -102,7 +125,9 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "customer") {
       await server
-        .delete(`/customers/${editableCustomerData && editableCustomerData._id}`)
+        .delete(
+          `/customers/${editableCustomerData && editableCustomerData._id}`
+        )
         .then(() => {
           handleAlert({
             msg: "Customer is Deleted Successfully",
@@ -144,7 +169,9 @@ const useDeleteSubmit = () => {
         });
     } else if (formType === "employee") {
       await server
-        .delete(`/employees/${editableEmployeeData && editableEmployeeData._id}`)
+        .delete(
+          `/employees/${editableEmployeeData && editableEmployeeData._id}`
+        )
         .then(() => {
           handleAlert({
             msg: "Employee is Deleted Successfully",

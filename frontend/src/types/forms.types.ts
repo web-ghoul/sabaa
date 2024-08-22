@@ -150,15 +150,6 @@ interface TransactionFormTypes extends TransactionTypes {
   searchForEmployee: string;
 }
 
-interface NewLabourCardFormTypes {
-  lcNo: string;
-  lcExpiryDate: Date;
-  tawjeehDate: Date;
-  changeStatusDate: Date;
-  medicalDate: Date;
-  residenceExpiryDate: Date;
-}
-
 interface TransactionsOptionsFormTypes {
   page: number;
   search: string;
@@ -243,8 +234,8 @@ interface NatwasalsOptionsFormTypes {
 
 
 //Selector
-interface SelectorFormTypes  {
-  option:string
+interface OptionFormTypes {
+  option: string;
 }
 //Selector
 
@@ -259,9 +250,7 @@ interface DeleteFormTypes {}
 //Delete
 
 //Company Info
-interface CompanyInfoFormTypes{
-
-}
+interface CompanyInfoFormTypes {}
 //Company Info
 
 type AllFormsTypes =
@@ -297,7 +286,9 @@ type AllFormsTypes =
   | NatwasalsOptionsFormTypes
   | TransactionFormTypes
   | TransactionsOptionsFormTypes
-  | RoleFormTypes|CompanyInfoFormTypes|SelectorFormTypes;
+  | RoleFormTypes
+  | CompanyInfoFormTypes
+  | OptionFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -356,5 +347,6 @@ export type {
   TransactionFormTypes,
   TransactionsOptionsFormTypes,
   RoleFormTypes,
-  NewLabourCardFormTypes,CompanyInfoFormTypes,SelectorFormTypes
+  CompanyInfoFormTypes,
+  OptionFormTypes,
 };

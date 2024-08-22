@@ -3,15 +3,13 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
-import {
-  TransactionFormTypes,
-  NewLabourCardFormTypes,
-} from "../../types/forms.types";
+import { TransactionFormTypes } from "../../types/forms.types";
 import { getTransactions } from "../../store/transactionsSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { useLocation } from "react-router-dom";
+import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 
 const useTransactionSubmit = () => {
   const { server } = useAxios();
@@ -39,12 +37,13 @@ const useTransactionSubmit = () => {
     }
   };
 
-  const addTransaction = async (values: TransactionFormTypes) => {
+  const addWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transaction`, {
+      .post(`/transactions`, {
         ...values,
         dob: new Date(values.dob),
+        type: "pre",
       })
       .then(() => {
         handleAlert({
@@ -60,10 +59,13 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const editTransaction = async (values: TransactionFormTypes) => {
+  const editWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .patch(`/transaction/${editableTransactionData?._id}`, values)
+      .patch(`/transactions/${editableTransactionData?._id}`, {
+        ...values,
+        type: "pre",
+      })
       .then(() => {
         handleAlert({
           msg: "Work Permit is updated successfully",
@@ -78,10 +80,44 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const newLC = async (values: NewLabourCardFormTypes) => {
+  const newLC = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
+    let cardType = values.cardType;
+    if (values.status === "Approved") {
+      cardType = handleGetNextCardType(cardType);
+    }
     await server
-      .patch(`/transaction/${editableTransactionData?._id}`, values)
+      .patch(`/transactions/${editableTransactionData?._id}`, {
+        ...values,
+        type: "new",
+        cardType,
+      })
+      .then(() => {
+        handleAlert({
+          msg: "New Labour Card is created successfully",
+          status: "success",
+        });
+        handleCloseNewLCModal();
+        getData();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const renewLC = async (values: TransactionFormTypes) => {
+    handleOpenFormsLoading();
+    let cardType = values.cardType;
+    if (values.status === "Approved") {
+      cardType = handleGetNextCardType(cardType);
+    }
+    await server
+      .patch(`/transactions/${editableTransactionData?._id}`, {
+        ...values,
+        type: "renew",
+        cardType,
+      })
       .then(() => {
         handleAlert({
           msg: "New Labour Card is created successfully",
@@ -97,9 +133,10 @@ const useTransactionSubmit = () => {
   };
 
   return {
-    addTransaction,
-    editTransaction,
+    addWorkPermit,
+    editWorkPermit,
     newLC,
+    renewLC,
   };
 };
 

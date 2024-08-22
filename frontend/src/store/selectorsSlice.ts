@@ -5,10 +5,10 @@ import { SelectorsValuesTypes } from "../types/store.types.ts";
 
 export const getSelectors = createAsyncThunk(
   "/selectors/getSelectors",
-  async (args: { status: string }) => {
+  async (args: { selector: string }) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/selectors?selector=${args.status}`,
+      `${import.meta.env.VITE_SERVER_URL}/selectors?selector=${args.selector}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

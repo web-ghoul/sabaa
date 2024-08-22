@@ -21,6 +21,7 @@ import LinkToCompanyModal from "./modals/LinkToCompanyModal.tsx";
 import NationalityModal from "./modals/NationalityModal.tsx";
 import NatwasalModal from "./modals/NatwasalModal.jsx";
 import NewLCModal from "./modals/NewLCModal.tsx";
+import OptionModal from "./modals/OptionModal.tsx";
 import OwnerModal from "./modals/OwnerModal.tsx";
 import ProModal from "./modals/ProModal.tsx";
 import RoleModal from "./modals/RoleModal.tsx";
@@ -75,6 +76,7 @@ const App = () => {
       <TransactionModal />
       <NewLCModal />
       <RoleModal />
+      <OptionModal />
       <DeleteModal />
       {/* Modals */}
       <Toaster />

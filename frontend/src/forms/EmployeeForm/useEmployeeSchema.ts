@@ -60,7 +60,6 @@ const useEmployeeSchema = () => {
     salary: editableEmployeeData?.salary || "",
     mobileNumber: editableEmployeeData?.mobileNumber || "",
     cardType: editableEmployeeData?.cardType || "",
-    cardNumber: editableEmployeeData?.cardNumber || "",
     job: editableEmployeeData?.job || "",
     remarks: editableEmployeeData?.remarks || "",
     iLOEInsuranceCompany: editableEmployeeData?.iLOE.insurance || "",

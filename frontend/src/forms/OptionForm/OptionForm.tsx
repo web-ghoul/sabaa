@@ -6,7 +6,7 @@ import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const SelectorForm = ({ register, errors }: FormiksTypes) => {
+const OptionForm = ({ register, errors }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
 
   return (
@@ -21,10 +21,10 @@ const SelectorForm = ({ register, errors }: FormiksTypes) => {
         name={"option"}
       />
       <Box className={`m-auto`}>
-        <SubmitButton loading={formsLoading}>Save</SubmitButton>
+        <SubmitButton loading={formsLoading}>Edit</SubmitButton>
       </Box>
     </Box>
   );
 };
 
-export default SelectorForm;
+export default OptionForm;

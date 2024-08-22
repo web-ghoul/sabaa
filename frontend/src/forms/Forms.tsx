@@ -30,6 +30,7 @@ import NationalitiesOptionsForm from "./NationalitiesOptionsForm/NationalitiesOp
 import NationalityForm from "./NationalityForm/NationalityForm";
 import NatwasalForm from "./NatwasalForm/NatwasalForm";
 import NatwasalsOptionsForm from "./NatwasalsOptionsForm/NatwasalsOptionsForm";
+import OptionForm from "./OptionForm/OptionForm";
 import OTPForm from "./OTPForm/OTPForm";
 import OwnerForm from "./OwnerForm/OwnerForm";
 import OwnersOptionsForm from "./OwnersOptionsForm/OwnersOptionsForm";
@@ -40,7 +41,6 @@ import RoleForm from "./RoleForm/RoleForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
-import NewLCForm from "./TransactionsForm/NewLCForm";
 import TransactionForm from "./TransactionsForm/TransactionForm";
 import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
@@ -99,17 +99,11 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
           tType={tType}
         />
       )}
-      {(type === "addTransaction" || type === "editTransaction") && (
+      {(type === "newLC" ||
+        type === "renewLC" ||
+        type === "addWorkPermit" ||
+        type === "editWorkPermit") && (
         <TransactionForm
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          getValues={getValues}
-          type={type}
-        />
-      )}
-      {type === "newLC" && (
-        <NewLCForm
           register={register}
           errors={errors}
           setValue={setValue}
@@ -275,6 +269,18 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
         />
       )}
       {/* Job */}
+
+      {/* Selectors */}
+      {(type === "editOption" || type === "addOption") && (
+        <OptionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Selectors */}
 
       {/* Nationaliy */}
       {(type === "editNationality" || type === "addNationality") && (

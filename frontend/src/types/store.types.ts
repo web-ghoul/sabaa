@@ -74,13 +74,12 @@ interface SelectorTypes {
   data: string[];
 }
 interface SelectorsValuesTypes {
-  selectors: SelectorTypes | null;
+  selectors: { [key: string]: SelectorTypes }[] | null;
   isLoading: boolean;
 }
 //Selectors
 
 //User
-
 interface UserTypes {
   _id: string;
   name: string;
@@ -129,7 +128,6 @@ interface UserValuesTypes {
 //User
 
 //Owner
-
 interface OwnerTypes {
   _id?: string;
   uid: string;
@@ -203,7 +201,6 @@ interface OwnersCounterValuesTypes {
 //Owner
 
 //PRO
-
 interface ProTypes extends OwnerTypes {}
 
 interface ProValuesTypes {
@@ -249,7 +246,6 @@ interface ProsCounterValuesTypes {
 //PRO
 
 //Customer
-
 interface CustomerTypes extends OwnerTypes {}
 
 interface CustomerValuesTypes {
@@ -295,7 +291,6 @@ interface CustomersCounterValuesTypes {
 //Customer
 
 //Sponsor
-
 interface SponsorTypes extends CustomerTypes {
   relativeRelation: string;
 }
@@ -307,7 +302,6 @@ interface SponsorsValuesTypes {
 //Sponsor
 
 //Employee
-
 interface EmployeeTypes {
   _id?: string;
   avatar: string;
@@ -326,7 +320,6 @@ interface EmployeeTypes {
   mobileNumber: string;
   salary: string;
   cardType: string;
-  cardNumber: string;
   status: string;
   visaFileNumber: string;
   fileImmgNo: string;
@@ -392,7 +385,6 @@ interface EmployeesCounterValuesTypes {
 //Employee
 
 //E-Channel
-
 interface EChannelTypes {
   _id?: string;
   name: string;
@@ -435,7 +427,6 @@ interface EChannelsCounterValuesTypes {
 //E-Channel
 
 //Tasheel
-
 interface TasheelTypes {
   _id?: string;
   name: string;
@@ -480,7 +471,6 @@ interface TasheelsCounterValuesTypes {
 //Tasheel
 
 //Natwasal
-
 interface NatwasalTypes extends TasheelTypes {}
 
 interface NatwasalsValuesTypes {
@@ -603,6 +593,8 @@ interface TransactionTypes {
   companyName: string;
   employeeName: string;
   employeeNameAr: string;
+  name: string;
+  nameAr: string;
   dob: string;
   gender: string;
   idNationality: string;
@@ -613,8 +605,7 @@ interface TransactionTypes {
   personCode: string;
   uid: string;
   emiratesNo: string;
-  workPermit: string;
-  lcNo: string;
+  lcNumber: string;
   lcExpiryDate: Date;
   workPermitExpiryDate: Date;
   visitExpiryDate: Date;
@@ -625,8 +616,8 @@ interface TransactionTypes {
   statusDate: Date;
   cardType: string;
   salary: number;
-  remarks: string;
   residenceExpiryDate: Date;
+  remarks: string;
 }
 
 interface TransactionValuesTypes {

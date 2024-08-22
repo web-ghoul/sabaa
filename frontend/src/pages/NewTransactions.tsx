@@ -32,7 +32,7 @@ const NewTransactions = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Typography variant="h6" key="2">
-            New LC Transactions
+            New Labour Card
           </Typography>
         </BreadCrumbs>
         <Forms type={"transactionsOptions"} tType={"new"} />
@@ -40,7 +40,7 @@ const NewTransactions = () => {
           count={transactionsCounter}
           data={transactions}
           isLoading={isLoading}
-          type={"all"}
+          type={"new"}
         />
       </PrimaryContainer>
     </PrimaryBox>

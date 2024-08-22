@@ -318,11 +318,10 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         mobileNumber: "",
         salary: "",
         cardType: "",
-        cardNumber: "",
+        lcNumber: "",
         status: "",
         visaFileNumber: "",
         passportNumber: "",
-        workPermitNumber: "",
         medicalInsuranceCompany: "",
         medicalPolicyNo: "",
         iLOEInsuranceCompany: "",
@@ -348,7 +347,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
       employee["job"] = `${data[i][2]}`;
       employee["passportNumber"] = `${data[i][3]}`;
       employee["nationality"] = `${data[i][4]}`;
-      employee["workPermitNumber"] = `${data[i][5]}`;
+      employee["lcNumber"] = `${data[i][5]}`;
       employee["cardType"] = `${data[i][6]}`;
       employee["lcExpireDate"] = new Date(`${data[i][7]}`);
       employee["gender"] = `${data[i][8]}`;

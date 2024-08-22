@@ -107,7 +107,7 @@ const TransactionsOptionsForm = ({
           />
         </Box>
         <ExcelButtons
-          addBtn={"Add Transaction"}
+          addBtn={tType === "all" ? "" : "Add Transaction"}
           variant="transactions"
           upload
         />
