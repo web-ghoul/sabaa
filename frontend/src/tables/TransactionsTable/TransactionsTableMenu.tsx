@@ -11,7 +11,7 @@ import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
-const TransactionsTableMenu = () => {
+const TransactionsTableMenu = ({ type }: { type: string }) => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
@@ -58,11 +58,13 @@ const TransactionsTableMenu = () => {
         title={"View"}
         handling={handleView}
       />
-      <TableMenuItem
-        icon={<EditRounded />}
-        title={"Edit"}
-        handling={handleEdit}
-      />
+      {(type === "pre" || type === "approved") && (
+        <TableMenuItem
+          icon={<EditRounded />}
+          title={"Edit"}
+          handling={handleEdit}
+        />
+      )}
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}

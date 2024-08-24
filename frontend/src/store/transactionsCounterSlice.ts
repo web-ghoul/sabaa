@@ -15,7 +15,6 @@ export const getTransactionsCounter = createAsyncThunk(
         },
       }
     );
-    console.log(res.data);
     return res.data.count;
   }
 );

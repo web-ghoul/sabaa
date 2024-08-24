@@ -188,8 +188,8 @@ const TransactionsTable = ({
             <PrimaryTableCell className={`!flex gap-2`}>
               Transaction Number
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">Company Name</PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
                 title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
@@ -208,6 +208,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">Lc Number</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
                 title={mdScreen ? "LC Expiry" : "LC Expire Date"}
@@ -217,6 +218,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -310,15 +312,15 @@ const TransactionsTable = ({
                     <PrimaryTableCell align="left" component="th" scope="row">
                       {row.transactionNo}
                     </PrimaryTableCell>
-                    <Link
-                      to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${
-                        row.companyId
-                      }`}
-                    >
-                      <PrimaryTableCell align="center">
+                    <PrimaryTableCell align="center">
+                      <Link
+                        to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${
+                          row.companyId
+                        }`}
+                      >
                         {row.companyName}
-                      </PrimaryTableCell>
-                    </Link>
+                      </Link>
+                    </PrimaryTableCell>
                     <PrimaryTableCell align="center">
                       <Link
                         to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
@@ -329,10 +331,19 @@ const TransactionsTable = ({
                       </Link>
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      <StatusBox status={row.status} />
+                      <StatusBox status={handleDate(row.residenceExpiryDate)} />
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      {handleDate(row.statusDate)}
+                      <StatusBox status={handleDate(row.changeStatusDate)} />
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      <StatusBox status={row.lcNumber} />
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      <StatusBox status={handleDate(row.lcExpiryDate)} />
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      <StatusBox status={row.status} />
                     </PrimaryTableCell>
                     {actions && (
                       <PrimaryTableCell align="right">
@@ -355,7 +366,7 @@ const TransactionsTable = ({
                   key={i}
                 />
               ))}
-        <TransactionsTableMenu />
+        <TransactionsTableMenu type={type} />
       </TableBody>
     </PrimaryTable>
   );

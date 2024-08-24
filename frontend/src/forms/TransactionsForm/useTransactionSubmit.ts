@@ -9,14 +9,12 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { useLocation } from "react-router-dom";
-import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 
 const useTransactionSubmit = () => {
   const { server } = useAxios();
   const { handleOpenFormsLoading, handleCloseFormsLoading } =
     useContext(FormsContext);
-  const { handleCloseTransactionModal, handleCloseNewLCModal } =
-    useContext(ModalsContext);
+  const { handleCloseTransactionModal } = useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
 
@@ -43,17 +41,12 @@ const useTransactionSubmit = () => {
         name: values.employeeName,
         nationality: values.nationality,
       })
-      .then((res) => {
-        handleAlert({
-          msg: res.data.message,
-          status: "success",
-        });
-      })
-      .catch(async () => {
+      .then(async (res) => {
         await server
           .post(`/transactions`, {
             ...values,
             dob: new Date(values.dob),
+            employeeId: res.data._id,
             type: "pre",
           })
           .then(() => {
@@ -67,6 +60,9 @@ const useTransactionSubmit = () => {
           .catch((err) => {
             handleCatchError(err);
           });
+      })
+      .catch((err) => {
+        handleCatchError(err);
       });
     handleCloseFormsLoading();
   };
@@ -109,22 +105,17 @@ const useTransactionSubmit = () => {
 
   const newLC = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    let cardType = values.cardType;
-    if (values.status === "Approved") {
-      cardType = handleGetNextCardType(cardType);
-    }
     await server
       .post(`/transactions`, {
         ...values,
         type: "new",
-        cardType,
       })
       .then(() => {
         handleAlert({
           msg: "New Labour Card is created successfully",
           status: "success",
         });
-        handleCloseNewLCModal();
+        handleCloseTransactionModal();
         getData();
       })
       .catch((err) => {
@@ -135,22 +126,17 @@ const useTransactionSubmit = () => {
 
   const renewLC = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    let cardType = values.cardType;
-    if (values.status === "Approved") {
-      cardType = handleGetNextCardType(cardType);
-    }
     await server
       .post(`/transactions`, {
         ...values,
         type: "renew",
-        cardType,
       })
       .then(() => {
         handleAlert({
           msg: "New Labour Card is created successfully",
           status: "success",
         });
-        handleCloseNewLCModal();
+        handleCloseTransactionModal();
         getData();
       })
       .catch((err) => {

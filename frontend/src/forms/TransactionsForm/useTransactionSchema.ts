@@ -25,7 +25,7 @@ const useTransactionSchema = () => {
     job: yup.string().required("Job is required"),
     uid: yup.string().required("UID Number is required"),
     emiratesNo: yup.string(),
-    cardType: yup.string().required("Email is required"),
+    cardType: yup.string().required("Card Type is required"),
     salary: yup.string(),
     remarks: yup.string(),
     statusDate: yup.string(),
@@ -56,26 +56,61 @@ const useTransactionSchema = () => {
     nationality: editableTransactionData?.nationality || "",
     passportNumber: editableTransactionData?.passportNumber || "",
     passportExpiry:
-    (editableTransactionData?.passportExpiry &&
-      new Date(editableTransactionData?.passportExpiry)
-        .toISOString()
-        .split("T")[0]) ||
-    "",
+      (editableTransactionData?.passportExpiry &&
+        new Date(editableTransactionData?.passportExpiry)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
     job: editableTransactionData?.job || "",
     uid: editableTransactionData?.uid || "",
     emiratesNo: editableTransactionData?.emiratesNo || "",
     cardType: editableTransactionData?.cardType || "",
     salary: editableTransactionData?.salary || "",
     remarks: editableTransactionData?.remarks || "",
-    statusDate: editableTransactionData?.statusDate || "",
+    statusDate:
+      (editableTransactionData?.statusDate &&
+        new Date(editableTransactionData?.statusDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
     status: editableTransactionData?.status || "",
     lcNumber: editableTransactionData?.lcNumber || "",
-    lcExpiryDate: editableTransactionData?.lcExpiryDate || "",
-    visitExpiryDate: editableTransactionData?.visitExpiryDate || "",
-    tawjeehDate: editableTransactionData?.tawjeehDate || "",
-    changeStatusDate: editableTransactionData?.changeStatusDate || "",
-    medicalDate: editableTransactionData?.medicalDate || "",
-    residenceExpiryDate: editableTransactionData?.residenceExpiryDate || "",
+    lcExpiryDate:
+      (editableTransactionData?.lcExpiryDate &&
+        new Date(editableTransactionData?.lcExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    visitExpiryDate:
+      (editableTransactionData?.visitExpiryDate &&
+        new Date(editableTransactionData?.visitExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    tawjeehDate:
+      (editableTransactionData?.tawjeehDate &&
+        new Date(editableTransactionData?.tawjeehDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    changeStatusDate:
+      (editableTransactionData?.changeStatusDate &&
+        new Date(editableTransactionData?.changeStatusDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    medicalDate:
+      (editableTransactionData?.medicalDate &&
+        new Date(editableTransactionData?.medicalDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    residenceExpiryDate:
+      (editableTransactionData?.residenceExpiryDate &&
+        new Date(editableTransactionData?.residenceExpiryDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
   };
 
   return {

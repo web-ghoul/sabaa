@@ -353,7 +353,6 @@ export class EmployeesService {
         passportExpiry: employee.passportExpiry,
         uid: employee.uid,
         residenceExpireDate: employee.residenceExpireDate,
-        workPermitNumber: employee.workPermitNumber,
         lcExpireDate: employee.lcExpireDate,
         mobileNumber: employee.mobileNumber,
         email: employee.email,

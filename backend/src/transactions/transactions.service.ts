@@ -18,38 +18,41 @@ export class TransactionsService {
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     try {
-      console.log(createTransactionDto);
-      if(createTransactionDto.employeeId)
-      {
+      if (createTransactionDto.employeeId) {
         const newObj = {
-          companyName: createTransactionDto.companyId,
-          companyCode: createTransactionDto.companyId,
+          companyName: createTransactionDto.companyName,
           companyId: createTransactionDto.companyId,
           lcNumber: createTransactionDto.lcNumber,
           lcExpiryDate: createTransactionDto.lcExpiryDate,
           cardType: createTransactionDto.cardType,
-        }
-        await this.employeeModel.findByIdAndUpdate(createTransactionDto.employeeId, newObj);
+        };
+        await this.employeeModel.findByIdAndUpdate(
+          createTransactionDto.employeeId,
+          newObj,
+        );
         return await this.transactionModel.create(createTransactionDto);
       }
-
 
       const newObj = {
         name: createTransactionDto.employeeName,
         nameAr: createTransactionDto.employeeNameAr,
-        nationality : createTransactionDto.nationality,
-        dob : createTransactionDto.dob,
+        nationality: createTransactionDto.nationality,
+        idNationality: createTransactionDto.idNationality,
+        passportExpiry: createTransactionDto.passportExpiry,
+        passportNumber: createTransactionDto.passportNumber,
+        uid: createTransactionDto.uid,
+        dob: createTransactionDto.dob,
         gender: createTransactionDto.gender,
-        companyId: createTransactionDto.companyId,
+        job: createTransactionDto.job,
+        companyId: createTransactionDto.companyName,
         companyName: createTransactionDto.companyId,
-        companyCode: createTransactionDto.companyId,
         lcNumber: createTransactionDto.lcNumber,
         lcExpiryDate: createTransactionDto.lcExpiryDate,
         cardType: createTransactionDto.cardType,
-      }
+      };
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;
-        
+
       return await this.transactionModel.create(createTransactionDto);
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
