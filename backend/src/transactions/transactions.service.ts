@@ -21,6 +21,8 @@ export class TransactionsService {
       if(createTransactionDto.employeeId)
       {
         const newObj = {
+          companyName: createTransactionDto.companyId,
+          companyCode: createTransactionDto.companyId,
           companyId: createTransactionDto.companyId,
           lcNumber: createTransactionDto.lcNumber,
           lcExpiryDate: createTransactionDto.lcExpiryDate,
@@ -37,6 +39,8 @@ export class TransactionsService {
         dob : createTransactionDto.dob,
         gender: createTransactionDto.gender,
         companyId: createTransactionDto.companyId,
+        companyName: createTransactionDto.companyId,
+        companyCode: createTransactionDto.companyId,
         lcNumber: createTransactionDto.lcNumber,
         lcExpiryDate: createTransactionDto.lcExpiryDate,
         cardType: createTransactionDto.cardType,
