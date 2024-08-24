@@ -35,31 +35,18 @@ const useTransactionSubmit = () => {
   const addWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/employees/checkExistance`, {
-        gender: values.gender,
-        dob: values.dob,
-        name: values.employeeName,
-        nationality: values.nationality,
+      .post(`/transactions`, {
+        ...values,
+        dob: new Date(values.dob),
+        type: "pre",
       })
-      .then(async (res) => {
-        await server
-          .post(`/transactions`, {
-            ...values,
-            dob: new Date(values.dob),
-            employeeId: res.data._id,
-            type: "pre",
-          })
-          .then(() => {
-            handleAlert({
-              msg: "Work Permit is created successfully",
-              status: "success",
-            });
-            handleCloseTransactionModal();
-            getData();
-          })
-          .catch((err) => {
-            handleCatchError(err);
-          });
+      .then(() => {
+        handleAlert({
+          msg: "Work Permit is created successfully",
+          status: "success",
+        });
+        handleCloseTransactionModal();
+        getData();
       })
       .catch((err) => {
         handleCatchError(err);
