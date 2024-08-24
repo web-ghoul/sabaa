@@ -22,7 +22,7 @@ const useOptionSubmit = () => {
   const addOption = async (values: OptionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/selectors?status=${editableSelectorData.selector}`, {
+      .post(`/selectors?selector=${editableSelectorData.selector}`, {
         data: [...editableSelectorData.options, values.option],
       })
       .then(() => {
@@ -42,7 +42,7 @@ const useOptionSubmit = () => {
   const editOption = async (values: OptionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/selectors?status=${editableSelectorData.selector}`, {
+      .post(`/selectors?selector=${editableSelectorData.selector}`, {
         data: [...editableSelectorData.options, values.option],
       })
       .then(() => {

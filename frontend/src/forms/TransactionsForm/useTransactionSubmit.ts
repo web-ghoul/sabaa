@@ -13,11 +13,8 @@ import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 
 const useTransactionSubmit = () => {
   const { server } = useAxios();
-  const {
-    handleOpenFormsLoading,
-    handleCloseFormsLoading,
-    editableTransactionData,
-  } = useContext(FormsContext);
+  const { handleOpenFormsLoading, handleCloseFormsLoading } =
+    useContext(FormsContext);
   const { handleCloseTransactionModal, handleCloseNewLCModal } =
     useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
@@ -40,20 +37,36 @@ const useTransactionSubmit = () => {
   const addWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transactions`, {
-        ...values,
-        dob: new Date(values.dob),
-        type: "pre",
+      .post(`/employees/checkExistance`, {
+        gender: values.gender,
+        dob: values.dob,
+        name: values.employeeName,
+        nationality: values.nationality,
       })
-      .then(() => {
+      .then(async (res) => {
         handleAlert({
-          msg: "Work Permit is created successfully",
+          msg: res.data.message,
           status: "success",
         });
-        handleCloseTransactionModal();
-        getData();
       })
-      .catch((err) => {
+      .catch(async (err) => {
+        await server
+          .post(`/transactions`, {
+            ...values,
+            dob: new Date(values.dob),
+            type: "pre",
+          })
+          .then(() => {
+            handleAlert({
+              msg: "Work Permit is created successfully",
+              status: "success",
+            });
+            handleCloseTransactionModal();
+            getData();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
         handleCatchError(err);
       });
     handleCloseFormsLoading();
@@ -62,9 +75,9 @@ const useTransactionSubmit = () => {
   const editWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .patch(`/transactions/${editableTransactionData?._id}`, {
+      .post(`/transactions`, {
         ...values,
-        type: "pre",
+        type: values.status === "approved" ? "approved" : "pre",
       })
       .then(() => {
         handleAlert({
@@ -87,7 +100,7 @@ const useTransactionSubmit = () => {
       cardType = handleGetNextCardType(cardType);
     }
     await server
-      .patch(`/transactions/${editableTransactionData?._id}`, {
+      .post(`/transactions`, {
         ...values,
         type: "new",
         cardType,
@@ -113,7 +126,7 @@ const useTransactionSubmit = () => {
       cardType = handleGetNextCardType(cardType);
     }
     await server
-      .patch(`/transactions/${editableTransactionData?._id}`, {
+      .post(`/transactions`, {
         ...values,
         type: "renew",
         cardType,

@@ -12,7 +12,7 @@ export class Transaction {
 
   @Prop({ type: String, ref: 'Employee', required: true })
   employeeId: string;
-  
+
   @Prop({ type: String, required: true })
   companyCode: string;
 
@@ -49,7 +49,7 @@ export class Transaction {
   @Prop()
   job: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   personCode: string;
 
   @Prop()
