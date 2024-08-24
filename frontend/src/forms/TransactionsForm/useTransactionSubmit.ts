@@ -49,7 +49,7 @@ const useTransactionSubmit = () => {
           status: "success",
         });
       })
-      .catch(async (err) => {
+      .catch(async () => {
         await server
           .post(`/transactions`, {
             ...values,
@@ -67,7 +67,6 @@ const useTransactionSubmit = () => {
           .catch((err) => {
             handleCatchError(err);
           });
-        handleCatchError(err);
       });
     handleCloseFormsLoading();
   };
@@ -77,7 +76,7 @@ const useTransactionSubmit = () => {
     await server
       .post(`/transactions`, {
         ...values,
-        type: values.status === "approved" ? "approved" : "pre",
+        type: values.status === "Approved" ? "approved" : "pre",
       })
       .then(() => {
         handleAlert({
