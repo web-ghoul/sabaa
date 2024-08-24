@@ -49,9 +49,9 @@ import { PermissionService } from 'src/permission/permission.service';
           method = 'read';
         }
 
-        // if (permission.permissions.get(path)[method.toLowerCase()] == false) {
-        //   throw new UnauthorizedException();
-        // }
+        if (permission.permissions.get(path)[method.toLowerCase()] == false) {
+          throw new UnauthorizedException();
+        }
 
         const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
           ROLES_KEY,
