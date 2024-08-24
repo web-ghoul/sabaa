@@ -11,6 +11,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
+import { getSelector } from "../../store/selectorSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
@@ -27,11 +28,13 @@ const CustomerForm = ({
     (state: RootState) => state.nationalities
   );
   const { jobs } = useSelector((state: RootState) => state.jobs);
+  const { selector } = useSelector((state: RootState) => state.selector);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
     dispatch(getJobs({ limit: -1 }));
+    dispatch(getSelector({ selector: "state" }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -110,7 +113,7 @@ const CustomerForm = ({
           label={"State"}
           name={"state"}
           select
-          options={["dubai"]}
+          options={selector ? selector.data : ["Loading..."]}
         />
         {nationalities && nationalities.length > 0 && (
           <AutoCompleteSearch

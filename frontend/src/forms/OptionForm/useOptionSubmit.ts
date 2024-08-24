@@ -22,7 +22,7 @@ const useOptionSubmit = () => {
   const addOption = async (values: OptionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/selectors?status=${editableSelectorData.selector}`, {
+      .post(`/selectors?selector=${editableSelectorData.selector}`, {
         data: [...editableSelectorData.options, values.option],
       })
       .then(() => {
@@ -30,7 +30,7 @@ const useOptionSubmit = () => {
           msg: "Option is created successfully",
           status: "success",
         });
-        dispatch(getSelectors({ selector: "all" }));
+        dispatch(getSelectors());
         handleCloseOptionModal();
       })
       .catch((err) => {
@@ -42,7 +42,7 @@ const useOptionSubmit = () => {
   const editOption = async (values: OptionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/selectors?status=${editableSelectorData.selector}`, {
+      .post(`/selectors?selector=${editableSelectorData.selector}`, {
         data: [...editableSelectorData.options, values.option],
       })
       .then(() => {
@@ -50,7 +50,7 @@ const useOptionSubmit = () => {
           msg: "Option is updated successfully",
           status: "success",
         });
-        dispatch(getSelectors({ selector: "all" }));
+        dispatch(getSelectors());
         handleCloseOptionModal();
       })
       .catch((err) => {

@@ -10,6 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDateForInput } from "../../functions/handleDateForInput";
+import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 import useAxios from "../../hooks/useAxios";
 import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
@@ -63,15 +64,18 @@ const TransactionForm = ({
     if (type === "editWorkPermit") {
       return [getValues("cardType")];
     }
-    if (type === "newLc") {
+    if (type === "newLC") {
       return [
-        "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
         "NEW ELECTRONIC WORK PERMIT",
-        "RENEW ELECTRONIC WORK PERMIT",
-        "NEW ON HUSBAND/FATHER SPONSORSHIP",
         "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-        "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
         "ELECTRONIC WORK PERMIT FOR PART TIME",
+        "NEW ON HUSBAND/FATHER SPONSORSHIP",
+      ];
+    }
+    if (type === "renewLC") {
+      return [
+        "RENEW ELECTRONIC WORK PERMIT",
+        "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
       ];
     }
   };
@@ -84,7 +88,6 @@ const TransactionForm = ({
       const employees: EmployeeTypes[] = res.data;
       if (employees.length > 0) {
         const employee = employees[0];
-        const cardTypes = handleGetCardTypes();
         setValue("gender", employee.gender);
         setValue("personCode", employee.personCode);
         setValue("companyId", (employee.companyId[0] as string) || "");
@@ -101,11 +104,17 @@ const TransactionForm = ({
         setValue("uid", employee.uid);
         setValue("salary", employee.salary);
         setValue("job", employee.job);
-        setValue(
-          "cardType",
-          cardTypes?.includes(employee.cardType) ? employee.cardType : ""
-        );
-        // setValue("passportExpiry", handleDateForInput(employee.passportExpiry));
+        if (type === "addWorkPermit" || type === "editWorkPermit") {
+          const cardTypes = handleGetCardTypes();
+          setValue(
+            "cardType",
+            cardTypes?.includes(employee.cardType) ? employee.cardType : ""
+          );
+        } else if (type === "newLC" || type === "renewLC") {
+          const nextType = handleGetNextCardType(employee.cardType);
+          setValue("cardType", nextType ? nextType : employee.cardType);
+        }
+        setValue("passportExpiry", employee.passportExpiry);
         setValue("passportNumber", employee.passportNumber);
       } else {
         handleAlert({ msg: "No Employees Found", status: "error" });

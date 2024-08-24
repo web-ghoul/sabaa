@@ -4,7 +4,6 @@ import { FormsContext } from "../../contexts/FormsContext";
 
 const useOptionSchema = () => {
   const { editableSelectorData } = useContext(FormsContext);
-  console.log(editableSelectorData);
 
   const OptionSchema = yup.object({
     option: yup.string().required("Option is required"),

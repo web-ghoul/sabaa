@@ -21,9 +21,9 @@ export class AlertsService {
       const jsonString = JSON.stringify(createAlertDto, null, 2);
   
       // Write the JSON string to the file
-      const res = await fs.writeFile(this.filePath, jsonString, 'utf-8');
+      await fs.writeFile(this.filePath, jsonString, 'utf-8');
       
-      return res ; 
+      return createAlertDto ; 
     } catch (error) {
       console.error('Error writing to file', error);
     }

@@ -1,5 +1,5 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
@@ -12,8 +12,10 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { getOwners } from "../../store/ownersSlice";
 import { getPros } from "../../store/prosSlice";
+import { getSelectors } from "../../store/selectorsSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
+import { selectorsKeysTypes } from "../../types/store.types";
 
 const CompanyForm = ({
   register,
@@ -27,8 +29,15 @@ const CompanyForm = ({
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
   const { pros } = useSelector((state: RootState) => state.pros);
+  const { selectors } = useSelector((state: RootState) => state.selectors);
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const [states, setStates] = useState<string[]>(["loading..."]);
+  const [molCategories, setMolCategories] = useState<string[]>(["loading..."]);
+  const [licenseIssuePlaces, setLicenseIssuePlaces] = useState<string[]>(["loading..."]);
+  const [establishmentTypes, setEstablishmentTypes] = useState<string[]>([
+    "loading...",
+  ]);
 
   const handleCancel = () => {
     if (pathname === `${import.meta.env.VITE_UPLOAD_COMPANIES_ROUTE}`) {
@@ -41,6 +50,7 @@ const CompanyForm = ({
   useEffect(() => {
     dispatch(getOwners({ limit: -1 }));
     dispatch(getPros({ limit: -1 }));
+    dispatch(getSelectors());
   }, [dispatch]);
 
   useEffect(() => {
@@ -48,6 +58,34 @@ const CompanyForm = ({
       setCompanyImage("");
     }
   }, [setCompanyImage, type]);
+
+  useEffect(() => {
+    if (selectors) {
+      selectors.map((selector) => {
+        const sKeys = Object.keys(selector);
+        if (sKeys.length > 0) {
+          if (sKeys[0] === "state") {
+            setStates(selector[sKeys[0] as selectorsKeysTypes].data);
+          }
+          if (sKeys[0] === "establishmentType") {
+            setEstablishmentTypes(
+              selector[sKeys[0] as selectorsKeysTypes].data
+            );
+          }
+          if (sKeys[0] === "molCategory") {
+            setMolCategories(
+              selector[sKeys[0] as selectorsKeysTypes].data
+            );
+          }
+          if (sKeys[0] === "licenseIssuePlace") {
+            setLicenseIssuePlaces(
+              selector[sKeys[0] as selectorsKeysTypes].data
+            );
+          }
+        }
+      });
+    }
+  }, [selectors]);
 
   return (
     <Paper
@@ -96,7 +134,7 @@ const CompanyForm = ({
             select={true}
             name={"molCategory"}
             label={"MOL Category"}
-            options={["cat1", "cat2", "cat3"]}
+            options={molCategories}
           />
           <Input
             register={register}
@@ -104,7 +142,7 @@ const CompanyForm = ({
             label={"Establishment Type"}
             name={"establishmentType"}
             select
-            options={["type 1", "type 2", "type 3"]}
+            options={establishmentTypes}
           />
           <Input
             register={register}
@@ -126,7 +164,7 @@ const CompanyForm = ({
             label={"License Issue Place"}
             name={"licenseIssuePlace"}
             select
-            options={["place 1", "place 2", "place 3"]}
+            options={licenseIssuePlaces}
           />
           <Input
             register={register}
@@ -219,7 +257,7 @@ const CompanyForm = ({
             select={true}
             name={"state"}
             label={"State"}
-            options={["dubai", "abozabi"]}
+            options={states}
           />
           <Input
             register={register}

@@ -93,7 +93,7 @@ const useDeleteSubmit = () => {
             editableSelectorData && editableSelectorData.selector
           }`,
           {
-            data: [editableSelectorData.options],
+            data: editableSelectorData.options,
           }
         )
         .then(() => {

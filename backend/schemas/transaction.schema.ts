@@ -12,7 +12,7 @@ export class Transaction {
 
   @Prop({ type: String, ref: 'Employee', required: true })
   employeeId: string;
-  
+
   @Prop({ type: String, required: true })
   companyCode: string;
 
@@ -49,7 +49,7 @@ export class Transaction {
   @Prop()
   job: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   personCode: string;
 
   @Prop()
@@ -108,11 +108,11 @@ export const TransactionSchema = SchemaFactory.createForClass(Transaction);
 
 
 TransactionSchema.index(
-  { uid: 1, deleted: 1 },
+  { uid: 1, deleted: 1, type: 1},
   { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
 );
 
 TransactionSchema.index(
-  { emiratesNo: 1, deleted: 1 },
+  { emiratesNo: 1, deleted: 1, type: 1 },
   { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
 );
