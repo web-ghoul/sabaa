@@ -87,7 +87,9 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if(type){
+    if(type == "approved"){
+      query.type = {$or: ["approved","pre"]} ; 
+    }else{
       query.type = type ; 
     }
 
