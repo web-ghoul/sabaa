@@ -20,6 +20,13 @@ export class TransactionsService {
     try {
       if(createTransactionDto.employeeId)
       {
+        const newObj = {
+          companyId: createTransactionDto.companyId,
+          lcNumber: createTransactionDto.lcNumber,
+          lcExpiryDate: createTransactionDto.lcExpiryDate,
+          cardType: createTransactionDto.cardType,
+        }
+        await this.employeeModel.findByIdAndUpdate(createTransactionDto.employeeId, newObj);
         return await this.transactionModel.create(createTransactionDto);
       }
 
@@ -30,7 +37,9 @@ export class TransactionsService {
         dob : createTransactionDto.dob,
         gender: createTransactionDto.gender,
         companyId: createTransactionDto.companyId,
-
+        lcNumber: createTransactionDto.lcNumber,
+        lcExpiryDate: createTransactionDto.lcExpiryDate,
+        cardType: createTransactionDto.cardType,
       }
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;
@@ -87,8 +96,8 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if(type == "approved"){
-      query.type = {$or: ["approved","pre"]} ; 
+    if(type == "pre"){
+      query.type = {$in: ["approved","pre"]} ; 
     }else{
       query.type = type ; 
     }
