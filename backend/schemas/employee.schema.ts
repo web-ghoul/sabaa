@@ -83,9 +83,6 @@ export class Employee {
     residenceExpireDate: Date
 
     @Prop()
-    workPermitNumber: string //ref it 
-
-    @Prop()
     lcExpireDate: Date
 
     @Prop()

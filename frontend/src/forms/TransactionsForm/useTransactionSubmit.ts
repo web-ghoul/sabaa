@@ -43,7 +43,7 @@ const useTransactionSubmit = () => {
         name: values.employeeName,
         nationality: values.nationality,
       })
-      .then(async (res) => {
+      .then((res) => {
         handleAlert({
           msg: res.data.message,
           status: "success",
@@ -74,21 +74,36 @@ const useTransactionSubmit = () => {
   const editWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transactions`, {
-        ...values,
-        type: values.status === "Approved" ? "approved" : "pre",
+      .post(`/employees/checkExistance`, {
+        gender: values.gender,
+        dob: values.dob,
+        name: values.employeeName,
+        nationality: values.nationality,
       })
-      .then(() => {
-        handleAlert({
-          msg: "Work Permit is updated successfully",
-          status: "success",
-        });
-        handleCloseTransactionModal();
-        getData();
+      .then(async (res) => {
+        const id = res.data._id;
+        await server
+          .post(`/transactions`, {
+            ...values,
+            employeeId: id,
+            type: values.status === "Approved" ? "approved" : "pre",
+          })
+          .then(() => {
+            handleAlert({
+              msg: "Work Permit is updated successfully",
+              status: "success",
+            });
+            handleCloseTransactionModal();
+            getData();
+          })
+          .catch((err) => {
+            handleCatchError(err);
+          });
       })
-      .catch((err) => {
+      .catch(async (err) => {
         handleCatchError(err);
       });
+
     handleCloseFormsLoading();
   };
 

@@ -18,10 +18,21 @@ export class TransactionsService {
   ) {}
   async create(createTransactionDto: CreateTransactionDto) {
     try {
+      console.log(createTransactionDto);
       if(createTransactionDto.employeeId)
       {
+        const newObj = {
+          companyName: createTransactionDto.companyId,
+          companyCode: createTransactionDto.companyId,
+          companyId: createTransactionDto.companyId,
+          lcNumber: createTransactionDto.lcNumber,
+          lcExpiryDate: createTransactionDto.lcExpiryDate,
+          cardType: createTransactionDto.cardType,
+        }
+        await this.employeeModel.findByIdAndUpdate(createTransactionDto.employeeId, newObj);
         return await this.transactionModel.create(createTransactionDto);
       }
+
 
       const newObj = {
         name: createTransactionDto.employeeName,
@@ -30,7 +41,11 @@ export class TransactionsService {
         dob : createTransactionDto.dob,
         gender: createTransactionDto.gender,
         companyId: createTransactionDto.companyId,
-
+        companyName: createTransactionDto.companyId,
+        companyCode: createTransactionDto.companyId,
+        lcNumber: createTransactionDto.lcNumber,
+        lcExpiryDate: createTransactionDto.lcExpiryDate,
+        cardType: createTransactionDto.cardType,
       }
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;

@@ -106,7 +106,6 @@ export class EmployeesService {
           { name: { $regex: new RegExp(search, 'i') } },
           { nameAr: { $regex: new RegExp(search, 'i') } },
           { companyName: { $in: [new RegExp(search, 'i')] } },
-          { workPermitNumber: { $regex: new RegExp(search, 'i') } },
           { personCode: { $regex: new RegExp(search, 'i') } },
           { phone: { $regex: new RegExp(search, 'i') } },
           { uid: { $regex: new RegExp(search, 'i') } },

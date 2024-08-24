@@ -55,7 +55,12 @@ const useTransactionSchema = () => {
     idNationality: editableTransactionData?.idNationality || "",
     nationality: editableTransactionData?.nationality || "",
     passportNumber: editableTransactionData?.passportNumber || "",
-    passportExpiry: editableTransactionData?.passportExpiry || "",
+    passportExpiry:
+    (editableTransactionData?.passportExpiry &&
+      new Date(editableTransactionData?.passportExpiry)
+        .toISOString()
+        .split("T")[0]) ||
+    "",
     job: editableTransactionData?.job || "",
     uid: editableTransactionData?.uid || "",
     emiratesNo: editableTransactionData?.emiratesNo || "",

@@ -30,7 +30,7 @@ const useOptionSubmit = () => {
           msg: "Option is created successfully",
           status: "success",
         });
-        dispatch(getSelectors({ selector: "all" }));
+        dispatch(getSelectors());
         handleCloseOptionModal();
       })
       .catch((err) => {
@@ -50,7 +50,7 @@ const useOptionSubmit = () => {
           msg: "Option is updated successfully",
           status: "success",
         });
-        dispatch(getSelectors({ selector: "all" }));
+        dispatch(getSelectors());
         handleCloseOptionModal();
       })
       .catch((err) => {
