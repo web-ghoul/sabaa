@@ -73,8 +73,26 @@ interface SelectorTypes {
   _id: string;
   data: string[];
 }
+
+interface SelectorValuesTypes {
+  selector: { data: string[] } | null;
+  isLoading: boolean;
+}
+
+type selectorsKeysTypes =
+  | "state"
+  | "establishmentType"
+  | "molCategory"
+  | "licenseIssuePlace"
+  | "statusofEmployee"
+  | "cardTypes";
+
 interface SelectorsValuesTypes {
-  selectors: { [key: string]: SelectorTypes }[] | null;
+  selectors:
+    | {
+        [key in selectorsKeysTypes]: SelectorTypes;
+      }[]
+    | null;
   isLoading: boolean;
 }
 //Selectors
@@ -743,6 +761,7 @@ interface AlertsValuesTypes {
 //Alerts
 
 export type {
+  SelectorValuesTypes,
   ActivitiesArgsTypes,
   ActivitiesCounterValuesTypes,
   ActivitiesValuesTypes,
@@ -828,5 +847,7 @@ export type {
   RolesValuesTypes,
   RoleTypes,
   RoleValuesTypes,
-  AlertsValuesTypes,SelectorTypes,SelectorsValuesTypes
+  AlertsValuesTypes,
+  SelectorTypes,
+  SelectorsValuesTypes,selectorsKeysTypes
 };

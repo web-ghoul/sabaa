@@ -12,6 +12,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
+import { getSelector } from "../../store/selectorSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
@@ -28,6 +29,7 @@ const EmployeeForm = ({
   );
   const { companies } = useSelector((state: RootState) => state.companies);
   const { jobs } = useSelector((state: RootState) => state.jobs);
+  const { selector } = useSelector((state: RootState) => state.selector);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ const EmployeeForm = ({
     dispatch(getNationalities({ limit: -1 }));
     dispatch(getJobs({ limit: -1 }));
     dispatch(getCompanies({ limit: -1 }));
+    dispatch(getSelector({ selector: "statusofEmployee" }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -253,7 +256,7 @@ const EmployeeForm = ({
             label={"Status"}
             name={"status"}
             select
-            options={["Active", "Cancel", "Abscond", "Complaint"]}
+            options={selector ? selector.data : ["Loading..."]}
           />
         </Box>
       </Box>

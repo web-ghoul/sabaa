@@ -45,6 +45,7 @@ import rolesReducers from "./rolesSlice.ts";
 import roleReducers from "./roleSlice.ts";
 import alertsReducer from "./alertsSlice.ts";
 import selectorsReducer from "./selectorsSlice.ts";
+import selectorReducer from "./selectorSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -93,6 +94,7 @@ export const store = configureStore({
     transactions: transactionsReducer,
     transactionsCounter: transactionsCounterReducer,
     selectors: selectorsReducer,
+    selector: selectorReducer,
     alerts: alertsReducer,
   },
   middleware: (getDefaultMiddleware) =>

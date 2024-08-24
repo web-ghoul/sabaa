@@ -87,9 +87,13 @@ export class TransactionsService {
       query.deleted = false
     }
 
-    if(type){
-      query.type = type ; 
+    if (type == 'pre') {
+      query.type = { $in: ['approved', 'pre'] };
+    } else {
+      query.type = type;
     }
+
+    console.log(query);
 
     if (residenceFrom || residenceTo) {
       query.residenceExpiryDate = {};

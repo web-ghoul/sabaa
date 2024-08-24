@@ -176,46 +176,54 @@ const EmployeeDetails = ({
       {eChannelBox}
       {tasheelBox}
       {natwasalBox}
-      <Divider />
-      <Box className={classes.sectionClasses}>
-        <Typography variant="h4" className={`!font-[700]`}>
-          Medical Insurance
-        </Typography>
-        <Box className={classes.profileInfoClasses}>
-          <DataBox
-            title={"Insurance Company"}
-            value={(data as EmployeeTypes).medical.insurance}
-          />
-          <DataBox
-            title={"Policy Number"}
-            value={(data as EmployeeTypes).medicalPolicyNo}
-          />
-          <DataBox
-            title={"Expire Date"}
-            value={handleDate((data as EmployeeTypes).medical.expireDate)}
-          />
-        </Box>
-      </Box>
-      <Divider />
-      <Box className={classes.sectionClasses}>
-        <Typography variant="h4" className={`!font-[700]`}>
-          Involuntary Loss Of Employment (ILOE)
-        </Typography>
-        <Box className={classes.profileInfoClasses}>
-          <DataBox
-            title={"Insurance Company"}
-            value={(data as EmployeeTypes).iLOE.insurance}
-          />
-          <DataBox
-            title={"Policy Number"}
-            value={(data as EmployeeTypes).iLOEPolicyNo}
-          />
-          <DataBox
-            title={"Expire Date"}
-            value={handleDate((data as EmployeeTypes).iLOE.expireDate)}
-          />
-        </Box>
-      </Box>
+      {(data as EmployeeTypes)?.medical && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Medical Insurance
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as EmployeeTypes)?.medical?.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as EmployeeTypes)?.medicalPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as EmployeeTypes)?.medical?.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
+      {(data as EmployeeTypes).iLOE && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Involuntary Loss Of Employment (ILOE)
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as EmployeeTypes).iLOE.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as EmployeeTypes).iLOEPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as EmployeeTypes).iLOE.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };

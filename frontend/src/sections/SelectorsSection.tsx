@@ -11,7 +11,7 @@ const SelectorsSection = () => {
     (state: RootState) => state.selectors
   );
   useEffect(() => {
-    dispatch(getSelectors({ selector: "all" }));
+    dispatch(getSelectors());
   }, [dispatch]);
   return (
     <PrimaryContainer

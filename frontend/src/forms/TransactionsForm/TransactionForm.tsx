@@ -63,20 +63,23 @@ const TransactionForm = ({
     if (type === "editWorkPermit") {
       return [getValues("cardType")];
     }
-    if (type === "newLc") {
+    if (type === "newLC") {
       return [
-        "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
         "NEW ELECTRONIC WORK PERMIT",
-        "RENEW ELECTRONIC WORK PERMIT",
-        "NEW ON HUSBAND/FATHER SPONSORSHIP",
         "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
-        "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
         "ELECTRONIC WORK PERMIT FOR PART TIME",
+        "NEW ON HUSBAND/FATHER SPONSORSHIP",
+      ];
+    }
+    if (type === "renewLC") {
+      return [
+        "RENEW ELECTRONIC WORK PERMIT",
+        "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
       ];
     }
   };
 
-  const cardTypes = handleGetCardTypes();
+  const [cardTypes,setCardTypes] = useState(handleGetCardTypes())
 
   const handleSearch = async (value: string) => {
     setLoading(true);

@@ -225,7 +225,7 @@ const useSubmitFunction = (type: string) => {
       case "newLC":
         newLC(values as TransactionFormTypes);
         break;
-      case "rennewLC":
+      case "renewLC":
         renewLC(values as TransactionFormTypes);
         break;
       case "downloadExcel":

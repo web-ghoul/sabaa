@@ -11,6 +11,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
+import { getSelector } from "../../store/selectorSlice";
 import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
@@ -27,6 +28,7 @@ const OwnerForm = ({
     (state: RootState) => state.nationalities
   );
   const { jobs } = useSelector((state: RootState) => state.jobs);
+  const { selector } = useSelector((state: RootState) => state.selector);
   const [checked, setChecked] = useState(false);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -42,6 +44,7 @@ const OwnerForm = ({
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
     dispatch(getJobs({ limit: -1 }));
+    dispatch(getSelector({ selector: "state" }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -131,7 +134,7 @@ const OwnerForm = ({
           label={"State"}
           name={"state"}
           select
-          options={["dubai"]}
+          options={selector ? selector.data : ["loading..."]}
         />
         {nationalities && nationalities.length > 0 && (
           <AutoCompleteSearch
