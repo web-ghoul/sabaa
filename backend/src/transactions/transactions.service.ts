@@ -35,7 +35,7 @@ export class TransactionsService {
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;
         
-
+      return await this.transactionModel.create(createTransactionDto);
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
     }
