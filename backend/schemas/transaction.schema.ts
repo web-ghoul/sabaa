@@ -113,6 +113,11 @@ TransactionSchema.index(
 );
 
 TransactionSchema.index(
+  { transactionNo: 1, deleted: 1, type: 1},
+  { unique: true, partialFilterExpression: { deleted: false, transactionNo: { $exists: true } } }
+);
+
+TransactionSchema.index(
   { emiratesNo: 1, deleted: 1, type: 1 },
   { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
 );
