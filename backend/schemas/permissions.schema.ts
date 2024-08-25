@@ -30,6 +30,9 @@ export class Permission {
   @Prop({ required: true })
   name: string;
 
+  @Prop()
+  all: string;
+
   @Prop({ type: Map, of: PermissionsObjectSchema })
   permissions: Map<string, PermissionsObject>;
 }
