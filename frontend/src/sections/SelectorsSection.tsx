@@ -4,6 +4,7 @@ import SelectorView from "../components/Selectors/SelectorView";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getSelectors } from "../store/selectorsSlice";
 import { AppDispatch, RootState } from "../store/store";
+import { selectorsKeysTypes } from "../types/store.types";
 
 const SelectorsSection = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +25,7 @@ const SelectorsSection = () => {
           return (
             <SelectorView
               selector={select}
-              options={selector[select].data}
+              options={selector[select as selectorsKeysTypes].data}
               key={i}
             />
           );

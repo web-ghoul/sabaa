@@ -101,7 +101,7 @@ const useDeleteSubmit = () => {
             msg: "Option is Deleted Successfully",
             status: "success",
           });
-          dispatch(getSelectors({ selector: "all" }));
+          dispatch(getSelectors());
           handleCloseDeleteModal();
         })
         .catch((err) => {
