@@ -107,11 +107,10 @@ export class TransactionsService {
 
     if (type == 'pre') {
       query.type = { $in: ['approved', 'pre'] };
-    } else {
+    } else if(type) {
       query.type = type;
     }
 
-    console.log(query);
 
     if (residenceFrom || residenceTo) {
       query.residenceExpiryDate = {};
