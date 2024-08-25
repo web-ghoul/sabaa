@@ -1,0 +1,143 @@
+[{
+  "_id": {
+    "$oid": "66955577b6c06ba20d8b715e"
+  },
+  "name": "Admin",
+  "permissions": {
+    "owners": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aac3cda9eb314ba8e43c37"
+      }
+    },
+    "officers": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aac3cea9eb314ba8e43c38"
+      }
+    },
+    "jobs": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aac3cea9eb314ba8e43c39"
+      }
+    },
+    "companies": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dcc"
+      }
+    },
+    "employees": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dcd"
+      }
+    },
+    "customers": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dce"
+      }
+    },
+    "nationalities": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dcf"
+      }
+    },
+    "E-Channels": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dd0"
+      }
+    },
+    "tasheels": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dd1"
+      }
+    },
+    "natwasals": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dd2"
+      }
+    },
+    "transaction": {
+      "read": true,
+      "post": true,
+      "patch": true,
+      "delete": true,
+      "_id": {
+        "$oid": "66aacef3a9eb314ba8e43dd3"
+      }
+    }
+  },
+  "updatedAt": {
+    "$date": "2024-07-31T23:55:31.163Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66aac483a9eb314ba8e43c5e"
+  },
+  "name": "super",
+  "permissions": {
+    "employees": {
+      "read": false,
+      "post": false,
+      "patch": true,
+      "delete": false,
+      "_id": {
+        "$oid": "66aac488a9eb314ba8e43c6a"
+      }
+    },
+    "customers": {
+      "read": false,
+      "post": false,
+      "patch": false,
+      "delete": true,
+      "_id": {
+        "$oid": "66aac495a9eb314ba8e43c7c"
+      }
+    }
+  },
+  "createdAt": {
+    "$date": "2024-07-31T23:10:59.783Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-31T23:11:46.024Z"
+  },
+  "__v": 0
+}]
