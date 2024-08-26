@@ -108,16 +108,16 @@ export const TransactionSchema = SchemaFactory.createForClass(Transaction);
 
 
 TransactionSchema.index(
-  { uid: 1, deleted: 1, type: 1},
+  { uid: 1, deleted: 1, transactionNo: 1},
   { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
 );
 
 TransactionSchema.index(
-  { transactionNo: 1, deleted: 1, type: 1},
+  { transactionNo: 1, deleted: 1},
   { unique: true, partialFilterExpression: { deleted: false, transactionNo: { $exists: true } } }
 );
 
 TransactionSchema.index(
-  { emiratesNo: 1, deleted: 1, type: 1 },
+  { emiratesNo: 1, deleted: 1, transactionNo: 1 },
   { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
 );
