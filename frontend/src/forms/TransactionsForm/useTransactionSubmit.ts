@@ -34,6 +34,9 @@ const useTransactionSubmit = () => {
 
   const addWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
+    if (!values.status) {
+      values.status = "In Process";
+    }
     await server
       .post(`/transactions`, {
         ...values,
