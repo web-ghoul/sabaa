@@ -1,6 +1,5 @@
 import {
   AddBoxRounded,
-  AlarmAddRounded,
   AppRegistrationRounded,
   AssessmentRounded,
   AutoAwesomeMotionRounded,
@@ -31,7 +30,6 @@ import ProsIcon from "../Icons/ProsIcon";
 import TransactionsIcon from "../Icons/TransactionsIcon";
 import UsersIcon from "../Icons/UsersIcon";
 import Item from "./Item";
-
 const Items = () => {
   const { openSidebar } = useContext(SidebarContext);
   const lgClasses = ` ${openSidebar ? "justify-stretch" : "justify-center"}`;
@@ -135,11 +133,6 @@ const Items = () => {
         icon={<PendingActionsRounded />}
         title="Activities"
         url={`${import.meta.env.VITE_ACTIVITIES_ROUTE}`}
-      />
-      <Item
-        icon={<AlarmAddRounded />}
-        title="Alerts"
-        url={`${import.meta.env.VITE_ALERTS_ROUTE}`}
       />
       <Item
         icon={<AssessmentRounded />}

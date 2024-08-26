@@ -550,22 +550,18 @@ Reports :
 1- Employee List
   1- Search By (Company Name and Mol Code [Auto Complete]) , 
   in View of Employee Show Modal Include info of 
-  
   2- PDF For Work Permit Expire , Cancel , Active
 
 2- Owner Company
   1- Search By Owner Name , Person Code , Emirates Id , UI Number
-
   2- PDF for Company Details , Companies list
 
 3- Company Transaction
   1- Search By Company Name , Mol Code
-
   2- PDF for All Data
 
 4- Employee details
-  1 - Search By Employee Name , Emirates Id, Person Code , UId Number
-
+  1 - Search By Employee Name  , Emirates Id, Person Code , UId Number
   2- PDF for Employee For Details  , PDF for all transaction for employee
 
 
