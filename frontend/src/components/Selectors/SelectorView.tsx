@@ -21,7 +21,7 @@ const SelectorView = ({ selector, options }: SelectorViewTypes) => {
     useContext(FormsContext);
   console.log(editableSelectorData);
   return (
-    <Accordion>
+    <Accordion sx={{ "&:before": { opacity: "0" } }}>
       <AccordionSummary
         expandIcon={<ExpandMore />}
         aria-controls="panel1-content"

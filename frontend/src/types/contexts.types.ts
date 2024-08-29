@@ -21,6 +21,7 @@ interface AppContextProps {
   pageContainerClasses: string;
   defaultAvatar: string;
   defaultCompany: string;
+  defaultLogo: string;
   openUserMenu: null | HTMLElement;
   ownersPage: number;
   setOwnersPage: (page: number) => void;
@@ -169,6 +170,8 @@ interface FormsContextTypes {
   setProImage: (image: File | string) => void;
   userImage: File | string;
   setUserImage: (image: File | string) => void;
+  companyInfoLogo: File | string;
+  setCompanyInfoLogo: (image: File | string) => void;
   editableJobData: JobTypes | null;
   setEditableJobData: (job: JobTypes | null) => void;
   editableOwnerData: OwnerTypes | null;

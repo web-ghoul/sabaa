@@ -66,7 +66,7 @@ const Input = ({
           <option value={""}>{`Select ${label}`}</option>
           {options &&
             options.map((option: string, i: number) => (
-              <option value={option} key={i} defaultValue={value || ""}>
+              <option value={option} key={i} selected={option === value}>
                 {option}
               </option>
             ))}

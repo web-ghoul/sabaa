@@ -1,4 +1,5 @@
 import {
+  ApprovalRounded,
   DeleteRounded,
   EditRounded,
   VisibilityRounded,
@@ -23,6 +24,10 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
 
   const handleEdit = () => {
     handleOpenTransactionModal("editWorkPermit");
+  };
+
+  const handleApprovedStatus = () => {
+    handleOpenTransactionModal("approvedStatus");
   };
 
   const handleDelete = () => {
@@ -63,6 +68,13 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
           icon={<EditRounded />}
           title={"Edit"}
           handling={handleEdit}
+        />
+      )}
+      {type === "pre" && (
+        <TableMenuItem
+          icon={<ApprovalRounded />}
+          title={"Approved Status"}
+          handling={handleApprovedStatus}
         />
       )}
       <TableMenuItem

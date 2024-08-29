@@ -15,9 +15,11 @@ const TableMenuItem = ({ icon, title, color, handling }: MenuItemTypes) => {
   return (
     <MenuItem
       onClick={handleClick}
-      className={`flex justify-start items-start gap-2 ${
+      className={`flex justify-start items-start gap-2  ${
         t === "view"
           ? "!text-green-500"
+          : t === "approved status"
+          ? "!text-teal-500"
           : t === "edit"
           ? "!text-blue-500"
           : t === "delete"

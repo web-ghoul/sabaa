@@ -46,6 +46,7 @@ import roleReducers from "./roleSlice.ts";
 import alertsReducer from "./alertsSlice.ts";
 import selectorsReducer from "./selectorsSlice.ts";
 import selectorReducer from "./selectorSlice.ts";
+import customizesReducer from "./customizesSlice.ts";
 
 export const store = configureStore({
   reducer: {
@@ -96,6 +97,7 @@ export const store = configureStore({
     selectors: selectorsReducer,
     selector: selectorReducer,
     alerts: alertsReducer,
+    customizes: customizesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

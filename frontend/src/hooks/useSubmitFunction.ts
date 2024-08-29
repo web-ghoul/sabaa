@@ -84,7 +84,7 @@ const useSubmitFunction = (type: string) => {
   const { createEmployeesSheet } = useCreateEmployeesSheetSubmit();
   const { convertCustomer } = useConvertCustomerSubmit();
   const { handleDownloadExcelSubmit } = useDownloadExcelSubmit();
-  const { addWorkPermit, editWorkPermit, newLC, renewLC } =
+  const { addWorkPermit, editWorkPermit, approvedStatus, newLC, renewLC } =
     useTransactionSubmit();
   const { addRole, editRole } = useRoleSubmit();
   const { editCompanyInfo } = useCompanyInfoSubmit();
@@ -221,6 +221,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editWorkPermit":
         editWorkPermit(values as TransactionFormTypes);
+        break;
+      case "approvedStatus":
+        approvedStatus(values as TransactionFormTypes);
         break;
       case "newLC":
         newLC(values as TransactionFormTypes);

@@ -1,40 +1,37 @@
 import { useContext } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
-import useSecureRoute from "../../hooks/useSecureRoute";
-import { login as loginAction } from "../../store/auth";
-import { AppDispatch } from "../../store/store";
 import { CompanyInfoFormTypes } from "../../types/forms.types";
 
 const useCompanyInfoSubmit = () => {
   const { server } = useAxios();
-  const { handleOpenFormsLoading, handleCloseFormsLoading } =
+  const { handleOpenFormsLoading, handleCloseFormsLoading, companyInfoLogo } =
     useContext(FormsContext);
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { handleSecureRoute } = useSecureRoute();
 
   const editCompanyInfo = async (values: CompanyInfoFormTypes) => {
     handleOpenFormsLoading();
+    const formData = new FormData();
+    formData.append("logo", companyInfoLogo);
+    formData.append("companyName", values.companyName);
+    formData.append("mobile", values.mobile);
+    formData.append("officialEmail", values.officialEmail);
+    formData.append("websiteLink", values.websiteLink);
     await server
-      .post(`/login`, values)
-      .then((res) => {
-        handleAlert({ msg: "Login Successfully", status: "success" });
-        navigate(`${import.meta.env.VITE_DASHBOARD_ROUTE}`);
-        dispatch(
-          loginAction({ token: res.data.token, userId: res.data.userId })
-        );
-        handleSecureRoute();
+      .post(`/customize`, formData)
+      .then(() => {
+        handleAlert({
+          msg: "Company Info is Updated Successfully",
+          status: "success",
+        });
       })
       .catch((err) => {
         handleCatchError(err);
       });
     handleCloseFormsLoading();
   };
+
   return { editCompanyInfo };
 };
 

@@ -12,6 +12,7 @@ export const AppContext = createContext<AppContextProps>({
   handleOpenTableMenu: () => {},
   defaultAvatar: "",
   defaultCompany: "",
+  defaultLogo: "",
   ownersPage: 1,
   setOwnersPage: () => {},
   prosPage: 1,
@@ -44,6 +45,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const defaultAvatar = "/images/default_avatar.png";
 
   const defaultCompany = "/images/default_company.png";
+
+  const defaultLogo = "/images/icon_fit.png";
 
   const pageContainerClasses = `grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3`;
 
@@ -123,6 +126,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setEmployeesPage,
     customersPage,
     setCustomersPage,
+    defaultLogo,
   };
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };

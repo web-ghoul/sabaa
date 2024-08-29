@@ -42,6 +42,8 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
     "natwasals",
     "transactions",
     "activities",
+    "customize",
+    "alert",
     "selectors",
     "permissions",
   ];
@@ -120,9 +122,7 @@ const RoleForm = ({ register, errors, type, setValue }: FormiksTypes) => {
             <Typography variant="h5">{role && role.name}</Typography>
           </Box>
           <Box className={`grid justify-stretch items-center gap-6`}>
-            <Box
-              className={`flex flex-wrap justify-between items-center gap-4`}
-            >
+            <Box className={`flex flex-wrap justify-start items-center gap-4`}>
               {permissions.map((per, i) => (
                 <PermissionTab
                   title={per}

@@ -6,7 +6,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { UploadImageTypes } from "../../types/components.types";
 
 const UploadImage = ({ variant, title }: UploadImageTypes) => {
-  const { defaultAvatar, defaultCompany } = useContext(AppContext);
+  const { defaultAvatar, defaultCompany, defaultLogo } = useContext(AppContext);
   const {
     companyImage,
     setCompanyImage,
@@ -22,10 +22,14 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     setUserImage,
     employeeImage,
     setEmployeeImage,
+    companyInfoLogo,
+    setCompanyInfoLogo,
   } = useContext(FormsContext);
 
   const [chosenImage, setChosenImage] = useState(
-    variant === "addCompany" || variant === "editCompany"
+    variant === "editCompanyInfo"
+      ? companyInfoLogo || defaultLogo
+      : variant === "addCompany" || variant === "editCompany"
       ? companyImage || defaultCompany
       : variant === "addOwner" || variant === "editOwner"
       ? ownerImage || defaultAvatar
@@ -46,7 +50,9 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       const image = files[0];
-      if (variant === "addCompany" || variant === "editCompany") {
+      if (variant === "editCompanyInfo") {
+        setCompanyInfoLogo(image);
+      } else if (variant === "addCompany" || variant === "editCompany") {
         setCompanyImage(image);
       } else if (variant === "addOwner" || variant === "editOwner") {
         setOwnerImage(image);
@@ -67,7 +73,9 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
 
   useEffect(() => {
     setChosenImage(
-      variant === "addCompany" || variant === "editCompany"
+      variant === "editCompanyInfo"
+        ? companyInfoLogo || defaultLogo
+        : variant === "addCompany" || variant === "editCompany"
         ? companyImage || defaultCompany
         : variant === "addOwner" || variant === "editOwner"
         ? ownerImage || defaultAvatar
@@ -85,9 +93,11 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     );
   }, [
     companyImage,
+    companyInfoLogo,
     customerImage,
     defaultAvatar,
     defaultCompany,
+    defaultLogo,
     employeeImage,
     ownerImage,
     proImage,

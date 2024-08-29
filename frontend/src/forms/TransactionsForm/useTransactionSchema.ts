@@ -51,7 +51,10 @@ const useTransactionSchema = () => {
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
     name: editableTransactionData?.name || "",
     nameAr: editableTransactionData?.nameAr || "",
-    dob: editableTransactionData?.dob || "",
+    dob:
+      (editableTransactionData?.dob &&
+        new Date(editableTransactionData?.dob).toISOString().split("T")[0]) ||
+      "",
     idNationality: editableTransactionData?.idNationality || "",
     nationality: editableTransactionData?.nationality || "",
     passportNumber: editableTransactionData?.passportNumber || "",

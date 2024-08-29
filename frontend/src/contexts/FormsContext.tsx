@@ -65,6 +65,8 @@ export const FormsContext = createContext<FormsContextTypes>({
   setProImage: () => {},
   userImage: "",
   setUserImage: () => {},
+  companyInfoLogo: "",
+  setCompanyInfoLogo: () => {},
   editableJobData: null,
   setEditableJobData: () => {},
   editableOwnerData: null,
@@ -99,7 +101,7 @@ export const FormsContext = createContext<FormsContextTypes>({
 
 const FormsProvider = ({ children }: { children: React.ReactNode }) => {
   const { company } = useSelector((state: RootState) => state.company);
-  const { defaultAvatar, defaultCompany } = useContext(AppContext);
+  const { defaultAvatar, defaultCompany, defaultLogo } = useContext(AppContext);
 
   //Loading Form
   const [formsLoading, setFormsLoading] = useState(false);
@@ -157,6 +159,11 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
 
   //User Image
   const [userImage, setUserImage] = useState<File | string>(defaultAvatar);
+
+  //Company Info Logo
+  const [companyInfoLogo, setCompanyInfoLogo] = useState<File | string>(
+    defaultLogo
+  );
 
   //Editable Job Data
   const [editableJobData, setEditableJobData] = useState<JobTypes | null>(null);
@@ -336,6 +343,8 @@ const FormsProvider = ({ children }: { children: React.ReactNode }) => {
     setSearchForTransactions,
     editableSelectorData,
     setEditableSelectorData,
+    companyInfoLogo,
+    setCompanyInfoLogo,
   };
   return (
     <FormsContext.Provider value={values}>{children}</FormsContext.Provider>

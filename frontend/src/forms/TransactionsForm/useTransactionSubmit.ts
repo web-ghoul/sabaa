@@ -12,8 +12,11 @@ import { useLocation } from "react-router-dom";
 
 const useTransactionSubmit = () => {
   const { server } = useAxios();
-  const { handleOpenFormsLoading, handleCloseFormsLoading } =
-    useContext(FormsContext);
+  const {
+    handleOpenFormsLoading,
+    handleCloseFormsLoading,
+    editableTransactionData,
+  } = useContext(FormsContext);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
@@ -60,6 +63,35 @@ const useTransactionSubmit = () => {
   const editWorkPermit = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
+      .patch(`/transactions/${editableTransactionData?._id}`, {
+        ...values,
+        type: "pre",
+      })
+      .then(() => {
+        handleAlert({
+          msg: "Transaction is updated successfully",
+          status: "success",
+        });
+        handleCloseTransactionModal();
+        getData();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
+  const approvedStatus = async (values: TransactionFormTypes) => {
+    handleOpenFormsLoading();
+    if (!values.status || !values.lcNumber) {
+      handleAlert({
+        msg: "Please Enter Status and Labour Card Number",
+        status: "error",
+      });
+      handleCloseFormsLoading();
+      return;
+    }
+    await server
       .post(`/employees/checkExistance`, {
         gender: values.gender,
         dob: values.dob,
@@ -72,11 +104,11 @@ const useTransactionSubmit = () => {
           .post(`/transactions`, {
             ...values,
             employeeId: id,
-            type: values.status === "Approved" ? "approved" : "pre",
+            type: "approved",
           })
           .then(() => {
             handleAlert({
-              msg: "Work Permit is updated successfully",
+              msg: "Transaction is Approved successfully",
               status: "success",
             });
             handleCloseTransactionModal();
@@ -89,12 +121,19 @@ const useTransactionSubmit = () => {
       .catch(async (err) => {
         handleCatchError(err);
       });
-
     handleCloseFormsLoading();
   };
 
   const newLC = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
+    if (!values.lcNumber) {
+      handleAlert({
+        msg: "Please Enter Labour Card Number",
+        status: "error",
+      });
+      handleCloseFormsLoading();
+      return;
+    }
     await server
       .post(`/transactions`, {
         ...values,
@@ -116,6 +155,14 @@ const useTransactionSubmit = () => {
 
   const renewLC = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
+    if (!values.lcNumber) {
+      handleAlert({
+        msg: "Please Enter Labour Card Number",
+        status: "error",
+      });
+      handleCloseFormsLoading();
+      return;
+    }
     await server
       .post(`/transactions`, {
         ...values,
@@ -140,6 +187,7 @@ const useTransactionSubmit = () => {
     editWorkPermit,
     newLC,
     renewLC,
+    approvedStatus,
   };
 };
 

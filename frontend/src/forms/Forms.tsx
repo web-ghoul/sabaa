@@ -102,7 +102,8 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
       {(type === "newLC" ||
         type === "renewLC" ||
         type === "addWorkPermit" ||
-        type === "editWorkPermit") && (
+        type === "editWorkPermit" ||
+        type === "approvedStatus") && (
         <TransactionForm
           register={register}
           errors={errors}

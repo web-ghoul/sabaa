@@ -223,6 +223,7 @@ const useSubmitForm = (type: string) => {
     transactionsOptions: TransactionsOptionsSchema,
     addWorkPermit: TransactionSchema,
     editWorkPermit: TransactionSchema,
+    approvedStatus: TransactionSchema,
     newLC: TransactionSchema,
     renewLC: TransactionSchema,
     //Transactions
@@ -339,6 +340,7 @@ const useSubmitForm = (type: string) => {
     transactionsOptions: TransactionsOptionsInitialValues,
     addWorkPermit: TransactionInitialValues,
     editWorkPermit: TransactionInitialValues,
+    approvedStatus: TransactionInitialValues,
     renewLC: TransactionInitialValues,
     newLC: TransactionInitialValues,
     //Transactions

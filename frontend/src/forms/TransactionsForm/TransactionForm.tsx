@@ -28,10 +28,9 @@ const TransactionForm = ({
 }: FormiksTypes) => {
   const { token } = useSelector((state: RootState) => state.auth);
   const { server } = useAxios(token || "");
-  const { formsLoading } = useContext(FormsContext);
+  const { formsLoading, editableTransactionData } = useContext(FormsContext);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
   const [name, setName] = useState("");
   const [nameAr, setNameAr] = useState("");
   const { handleCloseTransactionModal } = useContext(ModalsContext);
@@ -61,8 +60,8 @@ const TransactionForm = ({
         "PART TIME PRE APPROVAL FOR WORK PERMIT",
       ];
     }
-    if (type === "editWorkPermit") {
-      return [getValues("cardType")];
+    if (type === "editWorkPermit" || type === "approvedStatus") {
+      return editableTransactionData ? [editableTransactionData.cardType]:[]
     }
     if (type === "newLC") {
       return [
@@ -130,7 +129,6 @@ const TransactionForm = ({
   }, [dispatch]);
 
   useEffect(() => {
-    setStatus(getValues("status"));
     setName(getValues("name"));
     setNameAr(getValues("nameAr"));
   }, []);
@@ -139,6 +137,14 @@ const TransactionForm = ({
     setValue("name", name);
     setValue("nameAr", nameAr);
   }, [name, nameAr]);
+
+  useEffect(() => {
+    if (editableTransactionData) {
+      if (type === "editWorkPermit") {
+        setValue("transactionNo", editableTransactionData.transactionNo);
+      }
+    }
+  }, [editableTransactionData, type]);
 
   return (
     <Paper
@@ -152,6 +158,8 @@ const TransactionForm = ({
             ? "New Work Permit"
             : type === "editWorkPermit"
             ? "Edit Work Permit"
+            : type === "approvedStatus"
+            ? "Approval Transaction"
             : type === "newLC"
             ? "New Labour Card"
             : "Renew Labour Card"
@@ -208,13 +216,25 @@ const TransactionForm = ({
       <Box
         className={`grid justify-stretch items-end grid-cols-3 md:grid-cols-2 sm:!grid-cols-1 gap-6`}
       >
-        <Input
-          register={register}
-          errors={errors}
-          label={"Transaction Number"}
-          name={"transactionNo"}
-        />
         {type === "editWorkPermit" ? (
+          <Input
+            register={register}
+            errors={errors}
+            label={"Transaction Number"}
+            name={"transactionNo"}
+            value={editableTransactionData?.transactionNo}
+            disabled
+          />
+        ) : (
+          <Input
+            register={register}
+            errors={errors}
+            label={"Transaction Number"}
+            name={"transactionNo"}
+          />
+        )}
+
+        {type === "editWorkPermit" || type === "approvedStatus" ? (
           <Input
             label={"Card Type"}
             name={"cardType"}
@@ -236,19 +256,6 @@ const TransactionForm = ({
       </Box>
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-        {companies && companies.length > 0 && (
-          <AutoCompleteSearch
-            label={"Company"}
-            options={companies}
-            register={register}
-            setValue={setValue}
-            getValues={getValues}
-            errors={errors}
-            name={"companyId"}
-            variant={"transaction"}
-            flag={loading}
-          />
-        )}
         <Input
           register={register}
           errors={errors}
@@ -263,7 +270,24 @@ const TransactionForm = ({
           name={"employeeNameAr"}
           change={(val) => setNameAr(val)}
         />
-        {!(type === "newLC" || type === "renewLC") && (
+        {companies && companies.length > 0 && (
+          <AutoCompleteSearch
+            label={"Company"}
+            options={companies}
+            register={register}
+            setValue={setValue}
+            getValues={getValues}
+            errors={errors}
+            name={"companyId"}
+            variant={"transaction"}
+            flag={loading}
+          />
+        )}
+        {!(
+          type === "newLC" ||
+          type === "renewLC" ||
+          type === "approvedStatus"
+        ) && (
           <>
             <Input
               register={register}
@@ -353,26 +377,38 @@ const TransactionForm = ({
         )}
       </Box>
 
-      {type === "editWorkPermit" && (
-        <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+        {type === "editWorkPermit" && (
           <Input
             label={"Status"}
             register={register}
             errors={errors}
-            options={["In Process", "Approved", "Rejected", "Nawakes"]}
+            options={["In Process", "Rejected", "Nawakes"]}
             name={"status"}
             select
-            change={(val) => setStatus(val)}
           />
-          <Input
-            label={"Status Date"}
-            register={register}
-            errors={errors}
-            type={"date"}
-            name={"statusDate"}
-          />
-        </Box>
-      )}
+        )}
+        {type === "approvedStatus" && (
+          <>
+            <Input
+              label={"Status"}
+              register={register}
+              errors={errors}
+              options={["Approved"]}
+              name={"status"}
+              select
+              value="Approved"
+            />
+            <Input
+              label={"Status Date"}
+              register={register}
+              errors={errors}
+              type={"date"}
+              name={"statusDate"}
+            />
+          </>
+        )}
+      </Box>
 
       {(type === "newLC" || type === "renewLC") && (
         <Box className={`grid justify-stretch items-center gap-4`}>
@@ -440,7 +476,7 @@ const TransactionForm = ({
         </Box>
       )}
 
-      {(status.toLowerCase() === "approved" || type === "lc") && (
+      {type === "approvedStatus" && (
         <>
           <Divider />
           <Box

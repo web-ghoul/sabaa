@@ -2,11 +2,22 @@ import * as yup from "yup";
 
 const useCompanyInfoSchema = () => {
   const CompanyInfoSchema = yup.object({
-    email: yup.string().email("Email is InValid").required("Email is required"),
+    logo: yup.string(),
+    officialEmail: yup
+      .string()
+      .email("Email is InValid")
+      .required("Official Email is required"),
+    companyName: yup.string().required("Company Name is required"),
+    mobile: yup.string().required("Mobile Number is required"),
+    websiteLink: yup.string().required("Website URL is required"),
   });
 
   const CompanyInfoInitialValues = {
-    email: "",
+    logo: "",
+    officialEmail: "",
+    mobile: "",
+    companyName: "",
+    websiteLink: "",
   };
 
   return { CompanyInfoSchema, CompanyInfoInitialValues };

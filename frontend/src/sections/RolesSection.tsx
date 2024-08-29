@@ -3,7 +3,9 @@ import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button/Button";
+import LoadingRoleCard from "../components/RoleCard/LoadingRoleCard";
 import RoleCard from "../components/RoleCard/RoleCard";
+import { handleRandomNumber } from "../functions/handleRandomNumber";
 import { PrimaryContainer } from "../mui/boxes&containers/PrimaryContainer";
 import { getRoles } from "../store/rolesSlice";
 import { AppDispatch, RootState } from "../store/store";
@@ -25,7 +27,9 @@ const RolesSection = () => {
       >
         {!isLoading && roles
           ? roles.map((role, i) => <RoleCard role={role} key={i} />)
-          : ""}
+          : Array.from({ length: handleRandomNumber(5, 10) }).map((_, i) => (
+              <LoadingRoleCard key={i} />
+            ))}
       </Box>
     </PrimaryContainer>
   );

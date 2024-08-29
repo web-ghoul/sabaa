@@ -753,6 +753,19 @@ interface RecentNationalitiesValuesTypes {
 
 //Nationality
 
+//Customizes
+interface CustomizesValuesTypes {
+  isLoading: boolean;
+  customizes?: {
+    companyName: string;
+    logo: string;
+    mobile: string;
+    officialEmail: string;
+    websiteLink: string;
+  };
+}
+//Customizes
+
 //Alerts
 interface AlertsValuesTypes {
   isLoading: boolean;
@@ -849,5 +862,7 @@ export type {
   RoleValuesTypes,
   AlertsValuesTypes,
   SelectorTypes,
-  SelectorsValuesTypes,selectorsKeysTypes
+  SelectorsValuesTypes,
+  selectorsKeysTypes,
+  CustomizesValuesTypes,
 };

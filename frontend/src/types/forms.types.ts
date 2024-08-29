@@ -232,7 +232,6 @@ interface NatwasalsOptionsFormTypes {
 }
 //Natwasal
 
-
 //Selector
 interface OptionFormTypes {
   option: string;
@@ -250,7 +249,13 @@ interface DeleteFormTypes {}
 //Delete
 
 //Company Info
-interface CompanyInfoFormTypes {}
+interface CompanyInfoFormTypes {
+  logo: string;
+  companyName: string;
+  mobile: string;
+  officialEmail: string;
+  websiteLink: string;
+}
 //Company Info
 
 type AllFormsTypes =
