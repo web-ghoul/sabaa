@@ -634,3 +634,36 @@ Notes For Amr :
 3- Make status in last of table
 4 -default status "in process"
 5- when change status no card tytpe change set old card type
+
+
+
+
+
+
+
+
+Tasks For Finish :
+1- Handle Activities Table (Pagination)
+2- Finish Alert (Done)
+3- Solve Card Type Selector Problem
+4- Finish Report
+5- Finish Transaction
+6- Finish Emirates IDs
+7- Finish Permission
+8- Finish Responsive
+9- Finish Customization Data
+10- Complete Edits
+11- Solve Upload Excel
+12- Handle Roles in User Form (Done)
+
+
+
+
+
+
+
+questions for meeting :
+1- Updates in Transaction
+2- Card Type Problem
+3- Emirates IDs
+4- Questions for all excels samples sheets

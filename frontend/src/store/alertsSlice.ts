@@ -15,7 +15,7 @@ export const getAlerts = createAsyncThunk("/alerts/getAlerts", async () => {
 
 const initialState: AlertsValuesTypes = {
   isLoading: true,
-  alerts: null,
+  alerts: undefined,
 };
 
 export const alertsSlice = createSlice({
@@ -28,7 +28,7 @@ export const alertsSlice = createSlice({
     });
     builder.addCase(getAlerts.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.alerts = payload.data;
+      state.alerts = payload;
     });
     builder.addCase(getAlerts.rejected, (_, action) => {
       if (action.payload) {

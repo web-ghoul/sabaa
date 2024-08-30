@@ -64,19 +64,6 @@ const CustomersTable = ({
     }
   };
 
-  // const handleSortByCode = () => {
-  //   if (searchParams.get("sort") === "code_asc") {
-  //     handleAddQuery({ sort: "code_desc" });
-  //     dispatch(reverseCustomers());
-  //     setSearchParams({ ...queries, sort: "code_desc" });
-  //   } else {
-  //     handleAddQuery({ sort: "code_asc" });
-  //     const all = { ...queries, sort: "code_asc" };
-  //     dispatch(getCustomers(all));
-  //     setSearchParams(all);
-  //   }
-  // };
-
   const handleView = () => {
     if (sheet) {
       handleAlert({ msg: "Under Development" });

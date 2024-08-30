@@ -1,6 +1,7 @@
 import { Box, CssBaseline, useMediaQuery } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import Footer from "./components/Footer/Footer.tsx";
 import Header from "./components/Header/Header.tsx";
@@ -31,10 +32,13 @@ import TransactionModal from "./modals/TransactionModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
 import ViewSponsorModal from "./modals/ViewSponsorModal.tsx";
+import { getCustomizes } from "./store/customizesSlice.ts";
+import { AppDispatch } from "./store/store.ts";
 
 const App = () => {
   const { pathname } = useLocation();
   const [signed, setSigned] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
   const mdScreen = useMediaQuery("(max-width:992px)");
   const { setQueries, AuthRoutes } = useContext(AppContext);
   const [searchParams] = useSearchParams();
@@ -43,6 +47,10 @@ const App = () => {
   useEffect(() => {
     setSigned(handleSecureRoute());
   }, [handleSecureRoute]);
+
+  useEffect(() => {
+    dispatch(getCustomizes());
+  }, [dispatch]);
 
   useEffect(() => {
     const allParams: { [key: string]: string } = {};

@@ -5,6 +5,7 @@ import {
   UseFormSetValue,
 } from "react-hook-form";
 import {
+  AlertsTypes,
   CompanyTypes,
   CustomerTypes,
   EChannelTypes,
@@ -248,6 +249,12 @@ interface DownloadExcelFormTypes {
 interface DeleteFormTypes {}
 //Delete
 
+//Alerts
+interface AlertFormTypes extends AlertsTypes {
+
+}
+//Alerts
+
 //Company Info
 interface CompanyInfoFormTypes {
   logo: string;
@@ -257,6 +264,7 @@ interface CompanyInfoFormTypes {
   websiteLink: string;
 }
 //Company Info
+
 
 type AllFormsTypes =
   | LoginFormTypes
@@ -293,7 +301,7 @@ type AllFormsTypes =
   | TransactionsOptionsFormTypes
   | RoleFormTypes
   | CompanyInfoFormTypes
-  | OptionFormTypes;
+  | OptionFormTypes|AlertFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -353,5 +361,5 @@ export type {
   TransactionsOptionsFormTypes,
   RoleFormTypes,
   CompanyInfoFormTypes,
-  OptionFormTypes,
+  OptionFormTypes,AlertFormTypes
 };

@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import useSubmitForm from "../hooks/useSubmitForm";
 import { FormsTypes } from "../types/forms.types";
 import ActivitiesOptionsForm from "./ActivitiesOptionsForm/ActivitiesOptionsForm";
+import AlertForm from "./AlertForm/AlertForm";
 import CompaniesOptionsForm from "./CompaniesOptionsForm/CompaniesOptionsForm";
 import CompanyForm from "./CompanyForm/CompanyForm";
 import CompanyInfoForm from "./CompanyInfoForm/CompanyInfoForm";
@@ -318,6 +319,18 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
         />
       )}
       {/* Activity */}
+
+      {/* Edit Alerts */}
+      {type === "editAlerts" && (
+        <AlertForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {/* Edit Alerts */}
 
       {/* Link Company */}
       {(type === "linkOwner" || type === "linkPro") && (

@@ -1,8 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 import { LogoTypes } from "../../types/components.types";
 
 const Logo = ({ color, noTitle, handling }: LogoTypes) => {
+  const { customizes } = useSelector((state: RootState) => state.customizes);
   const navigate = useNavigate();
 
   const handleClicked = () => {
@@ -20,10 +23,14 @@ const Logo = ({ color, noTitle, handling }: LogoTypes) => {
     >
       <Box
         className={`rounded-full overflow-hidden w-[40px] h-[40px] md:w-[35px] md:h-[35px] sm:!w-[35px] sm:!h-[35px] bg-no-repeat bg-cover bg-center`}
-        sx={{ backgroundImage: `url(/images/icon_fit.png)` }}
-      >
-        {/* <LazyLoadImage src="/images/icon_fit.png" alt="Logo" /> */}
-      </Box>
+        sx={{
+          backgroundImage: `url(${
+            customizes &&
+            (`${import.meta.env.VITE_SERVER_URL}/${customizes?.logo}` ||
+              "/images/icon_fit.png")
+          })`,
+        }}
+      />
       {!noTitle && (
         <Typography
           variant="h5"
@@ -31,7 +38,7 @@ const Logo = ({ color, noTitle, handling }: LogoTypes) => {
             color === "light" ? "text-white" : "text-secondary"
           }`}
         >
-          SABAA
+          {customizes && (customizes.companyName || "SABAA")}
         </Typography>
       )}
     </Button>

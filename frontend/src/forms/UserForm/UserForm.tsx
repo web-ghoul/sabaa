@@ -1,5 +1,6 @@
 import { Box, Paper } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -7,17 +8,25 @@ import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
+import { getRoles } from "../../store/rolesSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
 const UserForm = ({ register, errors, type }: FormiksTypes) => {
   const { formsLoading, setUserImage } = useContext(FormsContext);
   const { handleCloseUserModal } = useContext(ModalsContext);
+  const dispatch = useDispatch<AppDispatch>();
+  const { roles } = useSelector((state: RootState) => state.roles);
 
   useEffect(() => {
     if (type?.startsWith("add")) {
       setUserImage("");
     }
   }, [setUserImage, type]);
+
+  useEffect(() => {
+    dispatch(getRoles());
+  }, [dispatch]);
 
   return (
     <Paper
@@ -61,7 +70,7 @@ const UserForm = ({ register, errors, type }: FormiksTypes) => {
           errors={errors}
           label={"Role"}
           select={true}
-          options={["User", "Admin"]}
+          options={roles ? roles.map((role) => role.name) : ["loading..."]}
           name={"role"}
         />
         <Input

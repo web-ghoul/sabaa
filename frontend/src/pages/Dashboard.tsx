@@ -34,6 +34,7 @@ const sectionClasses = `grid justify-stretch items-start gap-4 md:grid-cols-1 md
 
 const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { token } = useSelector((state: RootState) => state.auth);
   const recentOwners = useSelector((state: RootState) => state.recentOwners);
   const recentCompanies = useSelector(
     (state: RootState) => state.recentCompanies
@@ -66,22 +67,24 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    dispatch(getRecentActivities({}));
-    dispatch(getRecentOwners({}));
-    dispatch(getRecentCustomers({}));
-    dispatch(getRecentEmployees({}));
-    dispatch(getRecentUsers({}));
-    dispatch(getRecentCompanies({}));
-    dispatch(getRecentPros({}));
-    dispatch(getOwnersCounter());
-    dispatch(getProsCounter());
-    dispatch(getCustomersCounter());
-    dispatch(getJobsCounter());
-    dispatch(getCompaniesCounter());
-    dispatch(getUsersCounter());
-    dispatch(getNationalitiesCounter());
-    dispatch(getEmployeesCounter());
-  }, [dispatch]);
+    if (token) {
+      dispatch(getRecentActivities({}));
+      dispatch(getRecentOwners({}));
+      dispatch(getRecentCustomers({}));
+      dispatch(getRecentEmployees({}));
+      dispatch(getRecentUsers({}));
+      dispatch(getRecentCompanies({}));
+      dispatch(getRecentPros({}));
+      dispatch(getOwnersCounter());
+      dispatch(getProsCounter());
+      dispatch(getCustomersCounter());
+      dispatch(getJobsCounter());
+      dispatch(getCompaniesCounter());
+      dispatch(getUsersCounter());
+      dispatch(getNationalitiesCounter());
+      dispatch(getEmployeesCounter());
+    }
+  }, [dispatch, token]);
 
   return (
     <PrimaryBox>

@@ -15,7 +15,7 @@ const EditPermission = () => {
       <PrimaryContainer className={pageContainerClasses}>
         <BreadCrumbs>
           <Link
-            to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}`}
+            to={`${import.meta.env.VITE_SETTINGS_ROUTE}`}
             className={`text-black !font-[600] hover:text-primary`}
             key={1}
           >

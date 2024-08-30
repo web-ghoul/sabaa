@@ -44,6 +44,7 @@ import useJobsOptionsSchema from "../forms/JobsOptionsForm/useJobsOptionsSchema"
 import useNationalitiesOptionsSchema from "../forms/NationalitiesOptionsForm/useNationalitiesOptionsSchema";
 import useNationalitySchema from "../forms/NationalityForm/useEditNationalitySchema";
 import useOptionSchema from "../forms/OptionForm/useOptionSchema";
+import useAlertSchema from "../forms/AlertForm/useAlertSchema";
 
 const useSubmitForm = (type: string) => {
   const { submitFunction } = useSubmitFunction(type);
@@ -114,6 +115,7 @@ const useSubmitForm = (type: string) => {
   const { ConvertCustomerInitialValues, ConvertCustomerSchema } =
     useConvertCustomerSchema();
   const { OptionSchema, OptionInitialValues } = useOptionSchema();
+  const { AlertSchema, AlertInitialValues } = useAlertSchema();
 
   const schemas: { [key: string]: ObjectSchema<AllFormsTypes> } = {
     //Authentication
@@ -231,6 +233,10 @@ const useSubmitForm = (type: string) => {
     //Company Info
     editCompanyInfo: CompanyInfoSchema,
     //Company Info
+
+    //Alerts
+    editAlerts: AlertSchema,
+    //Alerts
   };
 
   const initialValues: { [key: string]: AllFormsTypes } = {
@@ -348,6 +354,10 @@ const useSubmitForm = (type: string) => {
     //Company Info
     editCompanyInfo: CompanyInfoInitialValues,
     //Company Info
+
+    //Alerts
+    editAlerts: AlertInitialValues,
+    //Alerts
   };
 
   const chosenSchema = schemas[type];

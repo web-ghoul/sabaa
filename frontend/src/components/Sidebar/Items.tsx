@@ -6,10 +6,8 @@ import {
   BorderAllRounded,
   CallToActionRounded,
   Diversity3Rounded,
-  EmailRounded,
   EmojiTransportationRounded,
   GridViewRounded,
-  ListAltRounded,
   LocalConvenienceStoreRounded,
   PendingActionsRounded,
   PersonPinRounded,
@@ -124,11 +122,11 @@ const Items = () => {
           url={`${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`}
         />
       </Item>
-      <Item
+      {/* <Item
         icon={<EmailRounded />}
         title="Mails"
         url={`${import.meta.env.VITE_MAILS_ROUTE}`}
-      />
+      /> */}
       <Item
         icon={<PendingActionsRounded />}
         title="Activities"
@@ -161,11 +159,11 @@ const Items = () => {
           url={`${import.meta.env.VITE_EMPLOYEE_DETAILS_ROUTE}`}
         />
       </Item>
-      <Item
+      {/* <Item
         icon={<ListAltRounded />}
         title="Todo List"
         url={`${import.meta.env.VITE_TODO_LIST_ROUTE}`}
-      />
+      /> */}
       <Item
         icon={<UsersIcon />}
         title="Users"

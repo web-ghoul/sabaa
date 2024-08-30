@@ -767,9 +767,19 @@ interface CustomizesValuesTypes {
 //Customizes
 
 //Alerts
+interface AlertsTypes {
+  passportExpiry: number;
+  workPermitExpiryDate: number;
+  visitExpiryDate: number;
+  changeStatusDate: number;
+  tawjeehDate: number;
+  lcExpiryDate: number;
+  residenceExpiryDate: number;
+}
+
 interface AlertsValuesTypes {
   isLoading: boolean;
-  alerts: { [key: string]: string } | null;
+  alerts?: AlertsTypes;
 }
 //Alerts
 
@@ -865,4 +875,5 @@ export type {
   SelectorsValuesTypes,
   selectorsKeysTypes,
   CustomizesValuesTypes,
+  AlertsTypes,
 };

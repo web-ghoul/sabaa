@@ -3,6 +3,7 @@ import { Renderable, ToastPosition } from "react-hot-toast";
 interface ImportMetaEnv {
   VITE_USERS_ROUTE: string;
   VITE_SERVER_URL: string;
+  VITE_BACKEND_URL: string;
   VITE_TOKEN_TITLE: string;
   VITE_USER_ID_TITLE: string;
   VITE_LOGIN_ROUTE: string;

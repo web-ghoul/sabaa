@@ -27,7 +27,7 @@ const RoleCard = ({ role }: { role: RoleTypes }) => {
 
   return (
     <Card
-      className={`!rounded-lg p-4 md:p-3 sm:!p-2 grid justify-stretch items-center w-full gap-14 !shadow-none`}
+      className={`!rounded-lg p-4 md:p-3 sm:!p-2 grid justify-stretch items-center w-full gap-14 !shadow-current`}
     >
       <Box className={`flex justify-between items-center gap-10`}>
         <VerifiedUserRounded className={`text-primary`} />

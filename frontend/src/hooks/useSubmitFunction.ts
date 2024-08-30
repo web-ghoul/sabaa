@@ -1,3 +1,4 @@
+import useAlertSubmit from "../forms/AlertForm/useAlertSubmit";
 import useCompanySubmit from "../forms/CompanyForm/useCompanySubmit";
 import useCompanyInfoSubmit from "../forms/CompanyInfoForm/useCompanyInfoSubmit";
 import useConvertCustomerSubmit from "../forms/ConvertCustomerForm/useConvertCustomerSubmit";
@@ -30,6 +31,7 @@ import useTasheelSubmit from "../forms/TasheelForm/useTasheelSubmit";
 import useTransactionSubmit from "../forms/TransactionsForm/useTransactionSubmit";
 import useUserSubmit from "../forms/UserForm/useUserSubmit";
 import {
+  AlertFormTypes,
   AllFormsTypes,
   CompanyFormTypes,
   CompanyInfoFormTypes,
@@ -89,6 +91,7 @@ const useSubmitFunction = (type: string) => {
   const { addRole, editRole } = useRoleSubmit();
   const { editCompanyInfo } = useCompanyInfoSubmit();
   const { addOption, editOption } = useOptionSubmit();
+  const { editAlert } = useAlertSubmit();
 
   const submitFunction = (values: AllFormsTypes | unknown) => {
     switch (type) {
@@ -236,6 +239,9 @@ const useSubmitFunction = (type: string) => {
         break;
       case "editCompanyInfo":
         editCompanyInfo(values as CompanyInfoFormTypes);
+        break;
+      case "editAlerts":
+        editAlert(values as AlertFormTypes);
         break;
       case "delete":
         handleDelete();
