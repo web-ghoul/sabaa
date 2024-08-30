@@ -665,5 +665,5 @@ Tasks For Finish :
 questions for meeting :
 1- Updates in Transaction
 2- Card Type Problem
-3- Emirates IDs
+3- Emirates IDs and Residence (Done )
 4- Questions for all excels samples sheets
