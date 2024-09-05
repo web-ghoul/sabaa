@@ -109,6 +109,9 @@ export class Employee {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: string;
 
+    @Prop()
+    transactionNo: string;
+
 
     @Prop({default : false})
     deleted: boolean;

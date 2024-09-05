@@ -7,6 +7,8 @@ import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { Response } from 'express';
+import { UserLoggedIn } from 'src/utils/userLoggedIn.decorator';
+import mongoose from 'mongoose';
 
 ApiTags('transactions')
 @Controller([
@@ -24,8 +26,8 @@ export class TransactionsController {
   @UseInterceptors(LogInterceptor)
   @ActivityLog({ action: 'create' })
   @ApiBody({ type: CreateTransactionDto })
-  create(@Body() createTransactionDto: any) {
-    return this.transactionsService.create(createTransactionDto);
+  create(@UserLoggedIn('id') id: mongoose.Types.ObjectId ,  @Body() createTransactionDto: any) {
+    return this.transactionsService.create(createTransactionDto,id);
   }
 
   @Get()
@@ -44,10 +46,12 @@ export class TransactionsController {
     @Query('residenceFrom') residenceFrom: string,
     @Query('changeStatusDateFrom') changeStatusDateFrom: string,
     @Query('changeStatusDateTo') changeStatusDateTo: string,
+    @Query('userId') userId: mongoose.Types.ObjectId,
+
   ) {
     return this.transactionsService.findAll(
-      limit,
-      page,
+      +limit,
+      +page,
       search,
       selectFields,
       sort,
@@ -60,6 +64,7 @@ export class TransactionsController {
       residenceFrom,
       changeStatusDateFrom,
       changeStatusDateTo,
+      userId
     );
   }
 

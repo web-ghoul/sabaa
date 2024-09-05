@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ActivityLog } from 'schemas/activityLog.schema';
 import { Employee } from 'schemas/employee.schema';
@@ -16,8 +16,9 @@ export class TransactionsService {
     @InjectModel('Transaction') private transactionModel: Model<Transaction>,
     @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
   ) {}
-  async create(createTransactionDto: CreateTransactionDto) {
+  async create(createTransactionDto: CreateTransactionDto, id: mongoose.Types.ObjectId) {
     try {
+      createTransactionDto.userId = id;
       if (createTransactionDto.employeeId) {
         const newObj = {
           companyName: createTransactionDto.companyName,
@@ -25,6 +26,7 @@ export class TransactionsService {
           lcNumber: createTransactionDto.lcNumber,
           lcExpiryDate: createTransactionDto.lcExpiryDate,
           cardType: createTransactionDto.cardType,
+          transactionNo: createTransactionDto.transactionNo,
         };
         await this.employeeModel.findByIdAndUpdate(
           createTransactionDto.employeeId,
@@ -49,6 +51,7 @@ export class TransactionsService {
         lcNumber: createTransactionDto.lcNumber,
         lcExpiryDate: createTransactionDto.lcExpiryDate,
         cardType: createTransactionDto.cardType,
+        transactionNo: createTransactionDto.transactionNo,
       };
       const newEmp = await this.employeeModel.create(newObj);
       createTransactionDto.employeeId = newEmp._id as any;
@@ -74,9 +77,10 @@ export class TransactionsService {
     residenceFrom: string,
     changeStatusDateFrom: string,
     changeStatusDateTo: string,
+    userId: mongoose.Types.ObjectId,
   ): Promise<Transaction[]> {
     const query: any = {};
-
+  
     if (search) {
       query.$or = [
         { transactionNo: { $regex: search, $options: 'i' } },
@@ -84,7 +88,7 @@ export class TransactionsService {
         { companyName: { $regex: search, $options: 'i' } },
       ];
     }
-
+  
     if (lcExpiryDateFrom || lcExpiryDateTo) {
       query.lcExpiryDate = {};
       if (lcExpiryDateFrom) {
@@ -94,24 +98,27 @@ export class TransactionsService {
         query.lcExpiryDate.$lte = new Date(lcExpiryDateTo);
       }
     }
-
+  
     if (status) {
       query.status = status;
     }
 
+    if (userId) {
+      query.userId = new mongoose.Types.ObjectId(userId);
+    }
+  
     if (typeof deleted !== 'undefined') {
       query.deleted = deleted;
-    }else{
-      query.deleted = false
+    } else {
+      query.deleted = false;
     }
-
+  
     if (type == 'pre') {
       query.type = { $in: ['approved', 'pre'] };
-    } else if(type) {
+    } else if (type) {
       query.type = type;
     }
-
-
+  
     if (residenceFrom || residenceTo) {
       query.residenceExpiryDate = {};
       if (residenceFrom) {
@@ -121,7 +128,7 @@ export class TransactionsService {
         query.residenceExpiryDate.$lte = new Date(residenceTo);
       }
     }
-
+  
     if (changeStatusDateFrom || changeStatusDateTo) {
       query.changeStatusDate = {};
       if (changeStatusDateFrom) {
@@ -131,34 +138,56 @@ export class TransactionsService {
         query.changeStatusDate.$lte = new Date(changeStatusDateTo);
       }
     }
-
+  
     const fieldsToSelect =
       selectFields && selectFields.length ? selectFields.join(' ') : '';
-
+  
     const sortBy = {};
-
-    if (sort) {
-      sortBy[sort] = -1;
-    } else {
+  
+    // Default sort by createdAt and status if no other sort option is provided
+    if (!sort) {
       sortBy['createdAt'] = -1;
-      sortBy['status'] = -1;
     }
-
+  
+   
+  
     return this.transactionModel
-      .find(query)
-      .skip(page*limit)
-      .limit(limit)
-      .select(fieldsToSelect)
-      .sort(sortBy)
-      .exec();
+  .aggregate([
+    { $match: query },
+    // Add a custom field `statusSort` to represent the sort order
+    {
+      $addFields: {
+        statusSort: {
+          $switch: {
+            branches: [
+              { case: { $eq: ['$status', 'Nawakas'] }, then: 1 },
+              { case: { $eq: ['$status', 'In Process'] }, then: 2 },
+              { case: { $eq: ['$status', 'Approved'] }, then: 3 },
+              { case: { $eq: ['$status', 'Rejected'] }, then: 4 },
+            ],
+            default: 5, // Fallback sorting for other statuses
+          },
+        },
+      },
+    },
+    // Sort by custom status order and createdAt
+    { $sort: { statusSort: 1, createdAt: -1 } },
+    { $skip: page * limit },
+    { $limit: limit },
+    // Only include $project if fieldsToSelect is not empty
+    ...(fieldsToSelect ? [{ $project: fieldsToSelect.split(' ').reduce((acc, field) => ({ ...acc, [field]: 1 }), {}) }] : []),
+  ])
+  .exec();
+
   }
+  
 
   findOne(id: string) {
     return this.transactionModel.findById(id);
   }
 
   update(id: string, updateTransactionDto: UpdateTransactionDto) {
-    return this.transactionModel.updateOne({ _id: id }, updateTransactionDto);
+    return this.transactionModel.findByIdAndUpdate({ _id: id }, updateTransactionDto, {new: true});
     
   }
 
