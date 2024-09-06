@@ -664,6 +664,78 @@ Tasks For Finish :
 
 questions for meeting :
 1- Updates in Transaction
-2- Card Type Problem
-3- Emirates IDs and Residence (Done )
-4- Questions for all excels samples sheets
+    notes :
+      1- Return Logs in transactions and record every edits on transaction
+      2- Add Status Date in edit work permit form
+      3- Add Created At Field in every Transaction Forms
+      4- All Employee Date in Approved Form is Disabled
+      5- Set Same of Transaction Number in Approved Form
+      6- Add Validations on Status Date and Labour Card Expire Date 
+      7- Remove Approved Status Action When Status is Approved
+      8- Add Labour Card Status (Active , Cancel)
+      9- Add New LC Action in Pre Work permit Table
+      10- Add Renew LC Action In New LC Table
+      10- Transaction Status Will be In Process in case Labour card is empty else it will be Approved
+      11- Cancel Transaction Status of Any Old Transaction
+      12- Any Employee Info is not set to employee table of Transaction has Status "Not Approved" 
+      13- Set Labour Card Expire Date to employee Info of transaction
+      14- Add Edit Action to New LC and Renew LC Tables
+      15- Add Person Number to Approved Form
+      16- Validation Of Date of birth in pre will be > 18
+      17- Passport Expire Date will be > 6  months
+      18- Filter By Users
+      19- Default Sort Of Transaction table nawakas , in process, approved, rejected  
+      20- Add Transaction Number to Employee Form
+      21- Show All Employee info in New LC Form when Choose National Card Type
+2- Emirates IDs and Residence (Done)
+  Notes:
+  1- Add Status of Delivery
+  2- Add Received By (Default Office , Person) according to delivery by office checkbox
+3- Questions for all excels samples sheets
+4- Questions Company Info
+
+E-Channel = > E-Channel Person
+Passport Expire About to be Expired Alerts
+
+
+
+
+
+
+customers: 3
+owners :
+12 , 15 
+employee:
+جديد , 4 , 6 , 8 , 13
+
+companies:
+4 , 6 , 7 , 12 , 14 , 17
+
+PROs:
+3 , 5 , 7 , 17 ,
+
+jobs:
+2
+
+nationality:
+1
+
+E-Channel
+1 , 4 , 5 , 
+
+Tasheel
+2 , 12 , 
+
+what is other section
+
+dashboard
+1,2,3,4
+
+users:
+1 , 2 , 4 , 5
+
+settings:
+1,2,3,4,5,7,8,9,10
+
+
+

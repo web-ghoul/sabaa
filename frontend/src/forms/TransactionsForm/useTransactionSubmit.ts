@@ -35,20 +35,17 @@ const useTransactionSubmit = () => {
     }
   };
 
-  const addWorkPermit = async (values: TransactionFormTypes) => {
+  const addTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    if (!values.status) {
-      values.status = "In Process";
-    }
     await server
       .post(`/transactions`, {
         ...values,
-        dob: new Date(values.dob),
+        status: "In Process",
         type: "pre",
       })
       .then(() => {
         handleAlert({
-          msg: "Work Permit is created successfully",
+          msg: "Transaction is created successfully",
           status: "success",
         });
         handleCloseTransactionModal();
@@ -60,13 +57,10 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const editWorkPermit = async (values: TransactionFormTypes) => {
+  const editTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .patch(`/transactions/${editableTransactionData?._id}`, {
-        ...values,
-        type: "pre",
-      })
+      .patch(`/transactions/${editableTransactionData?._id}`, values)
       .then(() => {
         handleAlert({
           msg: "Transaction is updated successfully",
@@ -81,59 +75,30 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const approvedStatus = async (values: TransactionFormTypes) => {
+  const approvedTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    if (!values.status || !values.lcNumber) {
-      handleAlert({
-        msg: "Please Enter Status and Labour Card Number",
-        status: "error",
-      });
-      handleCloseFormsLoading();
-      return;
-    }
     await server
-      .post(`/employees/checkExistance`, {
-        gender: values.gender,
-        dob: values.dob,
-        name: values.employeeName,
-        nationality: values.nationality,
+      .post(`/transactions`, {
+        ...values,
+        employeeId: editableTransactionData?.employeeId,
+        type: "approved",
       })
-      .then(async (res) => {
-        const id = res.data._id;
-        await server
-          .post(`/transactions`, {
-            ...values,
-            employeeId: id,
-            type: "approved",
-          })
-          .then(() => {
-            handleAlert({
-              msg: "Transaction is Approved successfully",
-              status: "success",
-            });
-            handleCloseTransactionModal();
-            getData();
-          })
-          .catch((err) => {
-            handleCatchError(err);
-          });
+      .then(() => {
+        handleAlert({
+          msg: "Transaction is Approved successfully",
+          status: "success",
+        });
+        handleCloseTransactionModal();
+        getData();
       })
-      .catch(async (err) => {
+      .catch((err) => {
         handleCatchError(err);
       });
     handleCloseFormsLoading();
   };
 
-  const newLC = async (values: TransactionFormTypes) => {
+  const newLCTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    if (!values.lcNumber) {
-      handleAlert({
-        msg: "Please Enter Labour Card Number",
-        status: "error",
-      });
-      handleCloseFormsLoading();
-      return;
-    }
     await server
       .post(`/transactions`, {
         ...values,
@@ -153,16 +118,8 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
-  const renewLC = async (values: TransactionFormTypes) => {
+  const renewLCTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    if (!values.lcNumber) {
-      handleAlert({
-        msg: "Please Enter Labour Card Number",
-        status: "error",
-      });
-      handleCloseFormsLoading();
-      return;
-    }
     await server
       .post(`/transactions`, {
         ...values,
@@ -183,11 +140,11 @@ const useTransactionSubmit = () => {
   };
 
   return {
-    addWorkPermit,
-    editWorkPermit,
-    newLC,
-    renewLC,
-    approvedStatus,
+    addTransaction,
+    editTransaction,
+    newLCTransaction,
+    renewLCTransaction,
+    approvedTransaction,
   };
 };
 

@@ -98,8 +98,16 @@ const useSubmitForm = (type: string) => {
     useDownloadExcelSchema();
   const { TransactionsOptionsInitialValues, TransactionsOptionsSchema } =
     useTransactionsOptionsSchema();
-  const { TransactionInitialValues, TransactionSchema } =
-    useTransactionSchema();
+  const {
+    TransactionInitialValues,
+    TransactionSchema,
+    ApprovedInitialValues,
+    ApprovedSchema,
+    NewLCTransactionInitialValues,
+    NewLCTransactionSchema,
+    RenewLCTransactionSchema,
+    RenewLCTransactionInitialValues,
+  } = useTransactionSchema();
   const {
     createNationalitiesSheetInitialValues,
     createNationalitiesSheetSchema,
@@ -223,11 +231,11 @@ const useSubmitForm = (type: string) => {
 
     //Transactions
     transactionsOptions: TransactionsOptionsSchema,
-    addWorkPermit: TransactionSchema,
-    editWorkPermit: TransactionSchema,
-    approvedStatus: TransactionSchema,
-    newLC: TransactionSchema,
-    renewLC: TransactionSchema,
+    addTransaction: TransactionSchema,
+    editTransaction: TransactionSchema,
+    approvedTransaction: ApprovedSchema,
+    newLCTransaction: NewLCTransactionSchema,
+    renewLCTransaction: RenewLCTransactionSchema,
     //Transactions
 
     //Company Info
@@ -344,11 +352,11 @@ const useSubmitForm = (type: string) => {
 
     //Transactions
     transactionsOptions: TransactionsOptionsInitialValues,
-    addWorkPermit: TransactionInitialValues,
-    editWorkPermit: TransactionInitialValues,
-    approvedStatus: TransactionInitialValues,
-    renewLC: TransactionInitialValues,
-    newLC: TransactionInitialValues,
+    addTransaction: TransactionInitialValues,
+    editTransaction: TransactionInitialValues,
+    approvedTransaction: ApprovedInitialValues,
+    newLCTransaction: NewLCTransactionInitialValues,
+    renewLCTransaction: RenewLCTransactionInitialValues,
     //Transactions
 
     //Company Info

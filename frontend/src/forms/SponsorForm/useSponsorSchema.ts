@@ -28,6 +28,12 @@ const useSponsorSchema = () => {
     fileImmgNo: yup.string(),
     status: yup.string(),
     remarks: yup.string(),
+    iLOEInsuranceCompany: yup.string(),
+    iLOEPolicyNo: yup.string(),
+    iLOEExpireDate: yup.string(),
+    medicalInsuranceCompany: yup.string(),
+    medicalPolicyNo: yup.string(),
+    medicalExpireDate: yup.string(),
   });
 
   const SponsorInitialValues = {
@@ -58,6 +64,22 @@ const useSponsorSchema = () => {
     status: editableSponsorData?.status || "",
     uid: editableSponsorData?.uid || "",
     remarks: editableSponsorData?.remarks || "",
+    iLOEInsuranceCompany: editableSponsorData?.iLOE?.insurance || "",
+    iLOEPolicyNo: editableSponsorData?.iLOEPolicyNo || "",
+    iLOEExpireDate:
+      (editableSponsorData?.iLOE?.expireDate &&
+        new Date(editableSponsorData?.iLOE?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    medicalInsuranceCompany: editableSponsorData?.medical?.insurance || "",
+    medicalPolicyNo: editableSponsorData?.medicalPolicyNo || "",
+    medicalExpireDate:
+      (editableSponsorData?.medical?.expireDate &&
+        new Date(editableSponsorData?.medical?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
   };
 
   useEffect(() => {

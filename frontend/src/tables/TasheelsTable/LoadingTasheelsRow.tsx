@@ -17,6 +17,11 @@ const LoadingTasheelsRow = ({ actions }: { actions: boolean }) => {
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
+      {!mdScreen && (
+        <PrimaryTableCell align="center">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>

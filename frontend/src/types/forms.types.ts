@@ -150,7 +150,6 @@ interface EmployeesOptionsFormTypes {
 interface TransactionFormTypes extends TransactionTypes {
   searchForEmployee: string;
 }
-
 interface TransactionsOptionsFormTypes {
   page: number;
   search: string;
@@ -250,9 +249,7 @@ interface DeleteFormTypes {}
 //Delete
 
 //Alerts
-interface AlertFormTypes extends AlertsTypes {
-
-}
+interface AlertFormTypes extends AlertsTypes {}
 //Alerts
 
 //Company Info
@@ -264,7 +261,6 @@ interface CompanyInfoFormTypes {
   websiteLink: string;
 }
 //Company Info
-
 
 type AllFormsTypes =
   | LoginFormTypes
@@ -301,7 +297,8 @@ type AllFormsTypes =
   | TransactionsOptionsFormTypes
   | RoleFormTypes
   | CompanyInfoFormTypes
-  | OptionFormTypes|AlertFormTypes;
+  | OptionFormTypes
+  | AlertFormTypes;
 
 interface FormiksTypes {
   register: UseFormRegister<AllFormsTypes>;
@@ -361,5 +358,6 @@ export type {
   TransactionsOptionsFormTypes,
   RoleFormTypes,
   CompanyInfoFormTypes,
-  OptionFormTypes,AlertFormTypes
+  OptionFormTypes,
+  AlertFormTypes,
 };

@@ -55,7 +55,7 @@ const Button = ({
       handleAlert({ msg: "Under Development..." });
     } else if (newTitle === "add owner") {
       handleOpenOwnerModal("addOwner");
-    } else if (newTitle === "add officer") {
+    } else if (newTitle === "add pro") {
       handleOpenProModal("addPro");
     } else if (newTitle === "add user") {
       handleOpenUserModal("addUser");
@@ -84,7 +84,7 @@ const Button = ({
     } else if (newTitle === "add transaction") {
       setEditableTransactionData(null);
       if (pathname === `${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`) {
-        handleOpenTransactionModal("addWorkPermit");
+        handleOpenTransactionModal("addTransaction");
       } else if (
         pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
       ) {

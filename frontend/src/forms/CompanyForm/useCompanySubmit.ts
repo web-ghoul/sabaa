@@ -40,11 +40,15 @@ const useCompanySubmit = () => {
       values.ownerId.map((owner) => {
         formData.append("ownerId[]", owner as string);
       });
+    } else {
+      formData.append("ownerId[]", "");
     }
     if (values.proCode.length > 0) {
       values.proCode.map((pro) => {
         formData.append("proCode[]", pro as string);
       });
+    } else {
+      formData.append("proCode[]", "");
     }
     if (values.customerId.length > 0) {
       values.customerId.map((customer) => {

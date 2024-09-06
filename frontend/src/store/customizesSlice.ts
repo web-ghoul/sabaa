@@ -15,7 +15,6 @@ export const getCustomizes = createAsyncThunk(
         },
       }
     );
-    console.log(res.data);
     return res.data;
   }
 );

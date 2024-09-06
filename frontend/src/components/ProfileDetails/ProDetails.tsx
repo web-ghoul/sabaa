@@ -128,6 +128,54 @@ const ProDetails = ({
       {eChannelBox}
       {tasheelBox}
       {natwasalBox}
+      {(data as ProTypes)?.medical && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Medical Insurance
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as ProTypes)?.medical?.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as ProTypes)?.medicalPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as ProTypes)?.medical?.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
+      {(data as ProTypes).iLOE && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Involuntary Loss Of Employment (ILOE)
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as ProTypes).iLOE.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as ProTypes).iLOEPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as ProTypes).iLOE.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };

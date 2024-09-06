@@ -42,6 +42,7 @@ import RoleForm from "./RoleForm/RoleForm";
 import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
+import ApprovedTransactionForm from "./TransactionsForm/ApprovedTransactionForm";
 import TransactionForm from "./TransactionsForm/TransactionForm";
 import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
@@ -100,12 +101,35 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
           tType={tType}
         />
       )}
-      {(type === "newLC" ||
-        type === "renewLC" ||
-        type === "addWorkPermit" ||
-        type === "editWorkPermit" ||
-        type === "approvedStatus") && (
+      {(type === "addTransaction" || type === "editTransaction") && (
         <TransactionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {type === "approvedTransaction" && (
+        <ApprovedTransactionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {type === "newLCTransaction" && (
+        <ApprovedTransactionForm
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          getValues={getValues}
+          type={type}
+        />
+      )}
+      {type === "renewLCTransaction" && (
+        <ApprovedTransactionForm
           register={register}
           errors={errors}
           setValue={setValue}

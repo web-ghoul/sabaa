@@ -8,6 +8,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
+import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
@@ -18,7 +19,13 @@ import {
   OwnerTypes,
 } from "../../types/store.types";
 
-const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
+const EChannelForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
   const { formsLoading, setEditableEChannelData } = useContext(FormsContext);
   const { handleCloseEChannelModal } = useContext(ModalsContext);
   const [loading, setLoading] = useState(false);
@@ -33,6 +40,16 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
       })
       .then((res) => {
         const data: EChannelTypes = res.data;
+        if (!data.name) {
+          handleAlert({ msg: "No Person Found", status: "error" });
+          setValue("uid", "");
+          setValue("personCode", "");
+          setValue("gender", "");
+          setValue("emiratesId", "");
+          setValue("phone", "");
+          setValue("type", "");
+          return;
+        }
         setEditableEChannelData(data);
         setValue("uid", data.uid);
         setValue("personCode", data.personCode);
@@ -43,7 +60,13 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           "type",
           data.type && data.type.toLowerCase() === "pro"
             ? "officer"
-            : data.type || "employee"
+            : data.type === "customer"
+            ? "customer"
+            : data.type === "owner"
+            ? "owner"
+            : data.type === "employee"
+            ? "employee"
+            : ""
         );
         if (data.owner) {
           setValue("owner", (data.owner as OwnerTypes)._id);
@@ -77,7 +100,6 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           <Title head={"h4"} align={"left"} title={"Edit E-Channel"} />
         )
       )}
-
       {type === "addEChannel" && (
         <Box className={`flex justify-start items-end gap-4`}>
           <Input
@@ -93,7 +115,6 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           </PrimaryButton>
         </Box>
       )}
-
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
           E-Channel Details
@@ -129,9 +150,7 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           />
         </Box>
       </Box>
-
       <Divider />
-
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Typography variant="h4" className={`!font-[700]`}>
           Person Information
@@ -150,53 +169,45 @@ const EChannelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
             errors={errors}
             label={"English Name"}
             name={"name"}
-            disabled
+            labeled={getValues("name") || "-"}
           />
           <Input
             register={register}
             errors={errors}
             label={"UID Number"}
             name={"uid"}
-            type={"text"}
-            disabled
+            labeled={getValues("uid") || "-"}
           />
           <Input
             register={register}
             errors={errors}
             label={"Gender"}
             name={"gender"}
-            select
-            options={["Male", "Female"]}
-            disabled
+            labeled={getValues("gender") || "-"}
           />
           <Input
             register={register}
             errors={errors}
             label={"Emirates ID"}
             name={"emiratesId"}
-            type={"text"}
-            disabled
+            labeled={getValues("emiratesId") || "-"}
           />
           <Input
             register={register}
             errors={errors}
             label={"Phone"}
-            type={"text"}
             name={"phone"}
-            disabled
+            labeled={getValues("phone") || "-"}
           />
           <Input
             register={register}
             errors={errors}
             label={"type"}
             name={"type"}
-            select
-            options={["owner", "customer", "officer", "employee"]}
-            disabled
+            labeled={getValues("type") || "-"}
           />
         </Box>
       </Box>
-
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>
           {type?.startsWith("add") ? "Add" : "Edit"}

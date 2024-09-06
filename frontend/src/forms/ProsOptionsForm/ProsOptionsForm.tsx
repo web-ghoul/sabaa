@@ -102,7 +102,7 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
       >
         <Box className={`w-[50%] md:w-[75%] sm:w-full`}>
           <Input
-            label={"Search Name, Person Code..."}
+            label={"Search Name, Person Code , UID , Emirates ID , Phone..."}
             name={"search"}
             type={"search"}
             register={register}
@@ -110,7 +110,7 @@ const ProsOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <ExcelButtons addBtn={"Add Officer"} variant="officers" />
+        <ExcelButtons addBtn={"Add PRO"} variant="officers" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box

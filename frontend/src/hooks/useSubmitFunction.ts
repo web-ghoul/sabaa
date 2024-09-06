@@ -86,8 +86,13 @@ const useSubmitFunction = (type: string) => {
   const { createEmployeesSheet } = useCreateEmployeesSheetSubmit();
   const { convertCustomer } = useConvertCustomerSubmit();
   const { handleDownloadExcelSubmit } = useDownloadExcelSubmit();
-  const { addWorkPermit, editWorkPermit, approvedStatus, newLC, renewLC } =
-    useTransactionSubmit();
+  const {
+    addTransaction,
+    editTransaction,
+    approvedTransaction,
+    newLCTransaction,
+    renewLCTransaction,
+  } = useTransactionSubmit();
   const { addRole, editRole } = useRoleSubmit();
   const { editCompanyInfo } = useCompanyInfoSubmit();
   const { addOption, editOption } = useOptionSubmit();
@@ -219,20 +224,20 @@ const useSubmitFunction = (type: string) => {
       case "editNatwasal":
         editNatwasal(values as NatwasalFormTypes);
         break;
-      case "addWorkPermit":
-        addWorkPermit(values as TransactionFormTypes);
+      case "addTransaction":
+        addTransaction(values as TransactionFormTypes);
         break;
-      case "editWorkPermit":
-        editWorkPermit(values as TransactionFormTypes);
+      case "editTransaction":
+        editTransaction(values as TransactionFormTypes);
         break;
-      case "approvedStatus":
-        approvedStatus(values as TransactionFormTypes);
+      case "approvedTransaction":
+        approvedTransaction(values as TransactionFormTypes);
         break;
-      case "newLC":
-        newLC(values as TransactionFormTypes);
+      case "newLCTransaction":
+        newLCTransaction(values as TransactionFormTypes);
         break;
-      case "renewLC":
-        renewLC(values as TransactionFormTypes);
+      case "renewLCTransaction":
+        renewLCTransaction(values as TransactionFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

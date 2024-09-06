@@ -17,9 +17,7 @@ import Button from "../Button/Button";
 const SelectorView = ({ selector, options }: SelectorViewTypes) => {
   const { handleOpenOptionModal, handleOpenDeleteModal } =
     useContext(ModalsContext);
-  const { editableSelectorData, setEditableSelectorData } =
-    useContext(FormsContext);
-  console.log(editableSelectorData);
+  const { setEditableSelectorData } = useContext(FormsContext);
   return (
     <Accordion sx={{ "&:before": { opacity: "0" } }}>
       <AccordionSummary

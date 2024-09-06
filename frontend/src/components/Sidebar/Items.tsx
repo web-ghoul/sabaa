@@ -82,7 +82,7 @@ const Items = () => {
       />
       <Item
         icon={<EChannelsIcon />}
-        title="E-Channels"
+        title="E-Channels Person"
         url={`${import.meta.env.VITE_ECHANNELS_ROUTE}`}
       />
       <Item

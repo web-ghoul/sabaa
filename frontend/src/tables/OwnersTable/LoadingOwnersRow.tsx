@@ -27,6 +27,11 @@ const LoadingOwnersRow = ({
           <Skeleton variant="rounded" />
         </PrimaryTableCell>
       )}
+      {!lgScreen && (
+        <PrimaryTableCell align="center">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
       {!smScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />

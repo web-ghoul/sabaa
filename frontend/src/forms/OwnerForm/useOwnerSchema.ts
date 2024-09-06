@@ -36,6 +36,12 @@ const useOwnerSchema = () => {
     type: yup.string(),
     sponsor: yup.string(),
     remarks: yup.string(),
+    iLOEInsuranceCompany: yup.string(),
+    iLOEPolicyNo: yup.string(),
+    iLOEExpireDate: yup.string(),
+    medicalInsuranceCompany: yup.string(),
+    medicalPolicyNo: yup.string(),
+    medicalExpireDate: yup.string(),
   });
 
   const OwnerInitialValues = {
@@ -68,6 +74,22 @@ const useOwnerSchema = () => {
     sponsor: editableOwnerData?.sponsor || "",
     type: "owner",
     remarks: editableOwnerData?.remarks || "",
+    iLOEInsuranceCompany: editableOwnerData?.iLOE?.insurance || "",
+    iLOEPolicyNo: editableOwnerData?.iLOEPolicyNo || "",
+    iLOEExpireDate:
+      (editableOwnerData?.iLOE?.expireDate &&
+        new Date(editableOwnerData?.iLOE?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    medicalInsuranceCompany: editableOwnerData?.medical?.insurance || "",
+    medicalPolicyNo: editableOwnerData?.medicalPolicyNo || "",
+    medicalExpireDate:
+      (editableOwnerData?.medical?.expireDate &&
+        new Date(editableOwnerData?.medical?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
   };
 
   useEffect(() => {

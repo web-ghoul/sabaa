@@ -19,7 +19,9 @@ export const getCustomers = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&state=${
+      }&dobTo=${args?.dobTo || ""}&dobFrom=${args?.dobFrom || ""}&residenceTo=${
+        args?.residenceTo || ""
+      }&residenceFrom=${args?.residenceFrom || ""}&state=${
         args?.state || ""
       }&status=${args?.status || ""}&nationality=${
         args?.nationality || ""

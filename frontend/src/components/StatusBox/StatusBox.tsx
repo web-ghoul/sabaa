@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
 const StatusBox = ({ status }: { status: string }) => {
-  const s = status.toLowerCase();
+  const s = status?.toLowerCase();
   return (
     status && (
       <Box

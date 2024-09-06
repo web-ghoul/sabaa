@@ -68,6 +68,9 @@ export const ModalsContext = createContext<ModalsContextTypes>({
   openNewLCModal: false,
   handleOpenNewLCModal: () => {},
   handleCloseNewLCModal: () => {},
+  openViewLogsModal: false,
+  handleOpenViewLogsModal: () => {},
+  handleCloseViewLogsModal: () => {},
   openRoleModal: false,
   handleOpenRoleModal: () => {},
   handleCloseRoleModal: () => {},
@@ -397,6 +400,18 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
   };
   //Transaction Modal
 
+  //View Logs Modal
+  const [openViewLogsModal, setOpenViewLogsModal] = useState(false);
+
+  const handleCloseViewLogsModal = () => {
+    setOpenViewLogsModal(false);
+  };
+
+  const handleOpenViewLogsModal = () => {
+    setOpenViewLogsModal(true);
+  };
+  //View Logs Modal
+
   //New Labour Card Modal
   const [openNewLCModal, setOpenNewLCModal] = useState(false);
 
@@ -499,6 +514,9 @@ const ModalsProvider = ({ children }: { children: ReactNode }) => {
     openTransactionModal,
     handleCloseTransactionModal,
     handleOpenTransactionModal,
+    openViewLogsModal,
+    handleOpenViewLogsModal,
+    handleCloseViewLogsModal,
     openNewLCModal,
     handleCloseNewLCModal,
     handleOpenNewLCModal,

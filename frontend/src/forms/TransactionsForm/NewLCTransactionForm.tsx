@@ -1,5 +1,5 @@
-import { Box, Paper } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Box, Checkbox, Divider, FormControlLabel, Paper } from "@mui/material";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
 import Button from "../../components/Button/Button";
@@ -10,6 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDateForInput } from "../../functions/handleDateForInput";
+import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 import useAxios from "../../hooks/useAxios";
 import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
@@ -18,16 +19,15 @@ import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 import { EmployeeTypes } from "../../types/store.types";
 
-const TransactionForm = ({
+const NewLCTransactionForm = ({
   register,
   errors,
-  type,
   setValue,
   getValues,
 }: FormiksTypes) => {
   const { token } = useSelector((state: RootState) => state.auth);
   const { server } = useAxios(token || "");
-  const { formsLoading, editableTransactionData } = useContext(FormsContext);
+  const { formsLoading } = useContext(FormsContext);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
@@ -37,6 +37,17 @@ const TransactionForm = ({
   );
   const { companies } = useSelector((state: RootState) => state.companies);
   const { jobs } = useSelector((state: RootState) => state.jobs);
+  const [tawjeeh, setTawjeeh] = useState(false);
+  const [IMMG, setIMMG] = useState(false);
+
+  const handleTawjeehChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setTawjeeh(checked);
+  };
+  const handleIMMGChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setIMMG(checked);
+  };
 
   const handleSearch = async (value: string) => {
     setLoading(true);
@@ -60,6 +71,8 @@ const TransactionForm = ({
         setValue("uid", employee.uid);
         setValue("salary", employee.salary);
         setValue("job", employee.job);
+        const nextType = handleGetNextCardType(employee.cardType);
+        setValue("cardType", nextType ? nextType : employee.cardType);
         setValue("passportExpiry", handleDateForInput(employee.passportExpiry));
         setValue("passportNumber", employee.passportNumber);
       } else {
@@ -79,35 +92,46 @@ const TransactionForm = ({
     <Paper
       className={`grid justify-stretch items-center gap-8 md:gap-6 sm:gap-4 p-6 !rounded-xl`}
     >
-      <Title
-        head={"h4"}
-        align={"left"}
-        title={
-          type === "addTransaction"
-            ? "New Transaction"
-            : type === "editTransaction"
-            ? "Edit Transaction"
-            : ""
-        }
-      />
+      <Title head={"h4"} align={"left"} title={"New Labour Card"} />
 
-      {type === "addTransaction" && (
-        <Box className={`flex justify-start items-end  gap-4`}>
-          <Input
-            register={register}
-            errors={errors}
-            type={"search"}
-            label={"Search By Person Code"}
-            name={"searchForEmployee"}
-            change={(value: string) => setSearch(value)}
-          />
-          <Button
-            title="Search"
-            handling={() => handleSearch(search)}
-            loading={loading}
-          />
-        </Box>
-      )}
+      <Box className={`flex justify-start items-end  gap-4`}>
+        <Input
+          register={register}
+          errors={errors}
+          type={"search"}
+          label={"Search By Card Number , UID"}
+          name={"searchForEmployee"}
+          change={(value: string) => setSearch(value)}
+        />
+        <Button
+          title="Search"
+          handling={() => handleSearch(search)}
+          loading={loading}
+        />
+      </Box>
+
+      <Box className={`flex justify-start items-center gap-4`}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={tawjeeh}
+              onChange={handleTawjeehChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          }
+          label={"Tawjeeh"}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={IMMG}
+              onChange={handleIMMGChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          }
+          label={"IMMG Details"}
+        />
+      </Box>
 
       <Box
         className={`grid justify-stretch items-end grid-cols-3 md:grid-cols-2 sm:!grid-cols-1 gap-6`}
@@ -115,51 +139,17 @@ const TransactionForm = ({
         <Input
           register={register}
           errors={errors}
-          label={"Transaction Date"}
-          name={"createdAt"}
-          type={"date"}
+          label={"Transaction Number"}
+          name={"transactionNo"}
         />
-        {type === "editTransaction" ? (
-          <>
-            <Input
-              register={register}
-              errors={errors}
-              label={"Transaction Number"}
-              name={"transactionNo"}
-              value={editableTransactionData?.transactionNo}
-              disabled
-            />
-            <Input
-              label={"Card Type"}
-              name={"cardType"}
-              register={register}
-              errors={errors}
-              value={editableTransactionData?.cardType}
-              disabled
-            />
-          </>
-        ) : (
-          <>
-            <Input
-              register={register}
-              errors={errors}
-              label={"Transaction Number"}
-              name={"transactionNo"}
-            />
-            <Input
-              label={"Card Type"}
-              name={"cardType"}
-              register={register}
-              errors={errors}
-              options={[
-                "PRE APPROVAL FOR WORK PERMIT",
-                "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-                "PART TIME PRE APPROVAL FOR WORK PERMIT",
-              ]}
-              select
-            />
-          </>
-        )}
+        <Input
+          label={"Card Type"}
+          name={"cardType"}
+          register={register}
+          errors={errors}
+          options={[]}
+          select
+        />
       </Box>
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
@@ -188,6 +178,7 @@ const TransactionForm = ({
             flag={loading}
           />
         )}
+
         <Input
           register={register}
           errors={errors}
@@ -258,7 +249,6 @@ const TransactionForm = ({
           label={"Emirates Id Number"}
           name={"emiratesNo"}
         />
-
         <Input
           register={register}
           errors={errors}
@@ -274,25 +264,69 @@ const TransactionForm = ({
         />
       </Box>
 
-      {type === "editTransaction" && (
+      <Box className={`grid justify-stretch items-center gap-4`}>
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
           <Input
-            label={"Status"}
             register={register}
             errors={errors}
-            options={["In Process", "Rejected", "Nawakes"]}
-            name={"status"}
-            select
+            label={"Labour Card Number"}
+            name={"lcNumber"}
           />
           <Input
-            label={"Status Date"}
             register={register}
             errors={errors}
+            label={"Labour Card Expire Date"}
             type={"date"}
-            name={"statusDate"}
+            name={"lcExpiryDate"}
           />
         </Box>
-      )}
+        {tawjeeh && (
+          <>
+            <Divider />
+            <Box
+              className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+            >
+              <Input
+                register={register}
+                errors={errors}
+                label={"Tawjeeh Date"}
+                type={"date"}
+                name={"tawjeehDate"}
+              />
+            </Box>
+          </>
+        )}
+        {IMMG && (
+          <>
+            <Divider />
+            <Box
+              className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+            >
+              <Input
+                register={register}
+                errors={errors}
+                label={"Change Status Date"}
+                type={"date"}
+                name={"changeStatusDate"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Medical Date"}
+                type={"date"}
+                name={"medicalDate"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Residence Expire Date"}
+                name={"residenceExpiryDate"}
+                type={"date"}
+              />
+            </Box>
+          </>
+        )}
+      </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>Submit</SubmitButton>
@@ -306,4 +340,4 @@ const TransactionForm = ({
   );
 };
 
-export default TransactionForm;
+export default NewLCTransactionForm;

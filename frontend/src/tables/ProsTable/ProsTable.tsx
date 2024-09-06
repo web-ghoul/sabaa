@@ -16,6 +16,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
+import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getProsCounter } from "../../store/prosCounterSlice";
 import { getPros, reversePros } from "../../store/prosSlice";
@@ -129,6 +130,9 @@ const ProsTable = ({
           {!mdScreen && !recent && (
             <PrimaryTableCell align="center">Phone</PrimaryTableCell>
           )}
+          {!lgScreen && (
+            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">
             {sheet || !sort ? (
               mdScreen ? (
@@ -147,11 +151,13 @@ const ProsTable = ({
             )}
           </PrimaryTableCell>
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
-          {!lgScreen && (
-            <PrimaryTableCell align="center">Nationality</PrimaryTableCell>
-          )}
           {!recent && (
             <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
+          )}
+          {!lgScreen && (
+            <PrimaryTableCell align="center">
+              Residence Expire Date
+            </PrimaryTableCell>
           )}
           {actions && (
             <PrimaryTableCell align="right">Actions</PrimaryTableCell>
@@ -190,6 +196,13 @@ const ProsTable = ({
                       {row.phone}
                     </PrimaryTableCell>
                   )}
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      <Box className={`flex justify-center items-center`}>
+                        <NationalityBox nationality={row.nationality} />
+                      </Box>
+                    </PrimaryTableCell>
+                  )}
                   <PrimaryTableCell align="center">
                     {row.personCode}
                   </PrimaryTableCell>
@@ -198,16 +211,14 @@ const ProsTable = ({
                       {row.uid}
                     </PrimaryTableCell>
                   )}
-                  {!lgScreen && (
-                    <PrimaryTableCell align="center">
-                      <Box className={`flex justify-center items-center`}>
-                        <NationalityBox nationality={row.nationality} />
-                      </Box>
-                    </PrimaryTableCell>
-                  )}
                   {!recent && (
                     <PrimaryTableCell align="center">
                       {row.emiratesId}
+                    </PrimaryTableCell>
+                  )}
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.residenceExpiryDate)}
                     </PrimaryTableCell>
                   )}
                   {actions && (

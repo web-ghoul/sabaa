@@ -29,6 +29,7 @@ const Input = ({
   textarea,
   disabled,
   value,
+  labeled
 }: InputTypes) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -103,7 +104,9 @@ const Input = ({
           }}
           placeholder={`Enter ${label}`}
         />
-      ) : (
+      ) :labeled ? (
+        <Typography variant="h6" className={`!text-primary`} >{labeled}</Typography>
+      ): (
         <PrimaryTextField
           disabled={disabled}
           fullWidth

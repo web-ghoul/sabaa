@@ -73,6 +73,26 @@ const useSponsorSubmit = () => {
         formData.append("owner", id);
       }
     }
+    formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
+    if (values.medicalPolicyNo) {
+      formData.append("medicalPolicyNo", values.medicalPolicyNo);
+    }
+    if (values.medicalExpireDate) {
+      formData.append(
+        "medical.expireDate",
+        values.medicalExpireDate.toString().trim()
+      );
+    }
+    formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
+    if (values.iLOEPolicyNo) {
+      formData.append("iLOEPolicyNo", values.iLOEPolicyNo);
+    }
+    if (values.iLOEExpireDate) {
+      formData.append(
+        "iLOE.expireDate",
+        values.iLOEExpireDate.toString().trim()
+      );
+    }
     return formData;
   };
 

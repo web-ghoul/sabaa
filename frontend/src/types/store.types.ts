@@ -172,6 +172,14 @@ interface OwnerTypes {
   residenceExpiryDate?: Date;
   createdAt?: Date;
   user?: string;
+  medicalInsuranceCompany: string;
+  medicalPolicyNo: string;
+  medicalExpireDate?: Date;
+  medical: { insurance: string; expireDate: Date };
+  iLOEInsuranceCompany: string;
+  iLOEPolicyNo: string;
+  iLOEExpireDate?: Date;
+  iLOE: { insurance: string; expireDate: Date };
 }
 
 interface OwnerValuesTypes {
@@ -243,6 +251,8 @@ interface ProsArgsTypes {
   limit?: number;
   dobTo?: string;
   dobFrom?: string;
+  residenceTo?:string
+  residenceFrom?:string
   state?: string;
   status?: string;
   nationality?: string;
@@ -288,6 +298,8 @@ interface CustomersArgsTypes {
   limit?: number;
   dobTo?: string;
   dobFrom?: string;
+  residenceTo?: string;
+  residenceFrom?: string;
   state?: string;
   status?: string;
   nationality?: string;
@@ -605,6 +617,7 @@ interface RecentCompaniesArgsTypes {
 interface TransactionTypes {
   _id: string;
   transactionNo: string;
+  cardType: string;
   employeeId: string;
   companyCode: string;
   companyId: string;
@@ -618,24 +631,24 @@ interface TransactionTypes {
   idNationality: string;
   nationality: string;
   passportNumber: string;
-  passportExpiry: Date;
+  passportExpiry: string;
   job: string;
   personCode: string;
   uid: string;
   emiratesNo: string;
   lcNumber: string;
   lcExpiryDate: Date;
-  workPermitExpiryDate: Date;
   visitExpiryDate: Date;
+  workPermitExpiryDate: Date;
   tawjeehDate: Date;
   medicalDate: Date;
   changeStatusDate: Date;
+  residenceExpiryDate: Date;
   status: string;
   statusDate: Date;
-  cardType: string;
   salary: number;
-  residenceExpiryDate: Date;
   remarks: string;
+  createdAt: Date;
 }
 
 interface TransactionValuesTypes {

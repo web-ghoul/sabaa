@@ -1,4 +1,11 @@
-import { Box, Checkbox, FormControlLabel, Paper } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
@@ -22,14 +29,17 @@ const OwnerForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const { formsLoading, setOwnerImage } = useContext(FormsContext);
+  const { formsLoading, setOwnerImage, editableOwnerData } =
+    useContext(FormsContext);
   const { handleCloseOwnerModal } = useContext(ModalsContext);
   const { nationalities } = useSelector(
     (state: RootState) => state.nationalities
   );
   const { jobs } = useSelector((state: RootState) => state.jobs);
   const { selector } = useSelector((state: RootState) => state.selector);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(
+    editableOwnerData ? editableOwnerData?.type === "owner&pro" : false
+  );
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setChecked(checked);
@@ -214,6 +224,68 @@ const OwnerForm = ({
           name={"remarks"}
           textarea
         />
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Medical Insurance
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            register={register}
+            errors={errors}
+            label={"Medical Insurance Company"}
+            name={"medicalInsuranceCompany"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            name={"medicalPolicyNo"}
+            label={"Medical Policy Number"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            type={"date"}
+            name={"medicalExpireDate"}
+            label={"Medical Expire Date"}
+          />
+        </Box>
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Involuntary Loss Of Employment (ILOE)
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            register={register}
+            errors={errors}
+            label={"IOLE Insurance Company"}
+            name={"iLOEInsuranceCompany"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            name={"iLOEPolicyNo"}
+            label={"IOLE Policy Number"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            type={"date"}
+            name={"iLOEExpireDate"}
+            label={"IOLE Expire Date"}
+          />
+        </Box>
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

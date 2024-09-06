@@ -22,6 +22,8 @@ const TableMenuItem = ({ icon, title, color, handling }: MenuItemTypes) => {
           ? "!text-teal-500"
           : t === "edit"
           ? "!text-blue-500"
+          : t === "logs"
+          ? "!text-sky-500"
           : t === "delete"
           ? "!text-red-500"
           : t === "convert"

@@ -273,6 +273,9 @@ interface ModalsContextTypes {
   openTransactionModal: boolean;
   handleOpenTransactionModal: (string: string) => void;
   handleCloseTransactionModal: () => void;
+  openViewLogsModal: boolean;
+  handleOpenViewLogsModal: () => void;
+  handleCloseViewLogsModal: () => void;
   openNewLCModal: boolean;
   handleOpenNewLCModal: () => void;
   handleCloseNewLCModal: () => void;

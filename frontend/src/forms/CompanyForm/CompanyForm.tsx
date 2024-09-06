@@ -24,7 +24,8 @@ const CompanyForm = ({
   getValues,
   type,
 }: FormiksTypes) => {
-  const { formsLoading, setCompanyImage } = useContext(FormsContext);
+  const { formsLoading, setCompanyImage, editableCompanyData } =
+    useContext(FormsContext);
   const { handleCloseCompanyModal } = useContext(ModalsContext);
   const navigate = useNavigate();
   const { owners } = useSelector((state: RootState) => state.owners);
@@ -32,9 +33,12 @@ const CompanyForm = ({
   const { selectors } = useSelector((state: RootState) => state.selectors);
   const { pathname } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const [state, setState] = useState("");
   const [states, setStates] = useState<string[]>(["loading..."]);
   const [molCategories, setMolCategories] = useState<string[]>(["loading..."]);
-  const [licenseIssuePlaces, setLicenseIssuePlaces] = useState<string[]>(["loading..."]);
+  const [licenseIssuePlaces, setLicenseIssuePlaces] = useState<string[]>([
+    "loading...",
+  ]);
   const [establishmentTypes, setEstablishmentTypes] = useState<string[]>([
     "loading...",
   ]);
@@ -73,9 +77,7 @@ const CompanyForm = ({
             );
           }
           if (sKeys[0] === "molCategory") {
-            setMolCategories(
-              selector[sKeys[0] as selectorsKeysTypes].data
-            );
+            setMolCategories(selector[sKeys[0] as selectorsKeysTypes].data);
           }
           if (sKeys[0] === "licenseIssuePlace") {
             setLicenseIssuePlaces(
@@ -86,6 +88,23 @@ const CompanyForm = ({
       });
     }
   }, [selectors]);
+
+  useEffect(() => {
+    if (editableCompanyData) {
+      if (states) {
+        setValue("state", editableCompanyData.state);
+      }
+      if (molCategories) {
+        setValue("molCategory", editableCompanyData.molCategory);
+      }
+      if (establishmentTypes) {
+        setValue("establishmentType", editableCompanyData.establishmentType);
+      }
+      if (licenseIssuePlaces) {
+        setValue("licenseIssuePlace", editableCompanyData.licenseIssuePlace);
+      }
+    }
+  }, [editableCompanyData, establishmentTypes, molCategories]);
 
   return (
     <Paper
@@ -258,6 +277,7 @@ const CompanyForm = ({
             name={"state"}
             label={"State"}
             options={states}
+            change={setState}
           />
           <Input
             register={register}
@@ -324,7 +344,7 @@ const CompanyForm = ({
         </Box>
       </Box>
       <Divider />
-      {getValues("state").toLowerCase() !== "dubai" ? (
+      {state.toLowerCase() !== "dubai" ? (
         <Box className={`grid justify-stretch items-center gap-4`}>
           <Typography variant="h4" className={`!font-[700]`}>
             E-Channel Details
