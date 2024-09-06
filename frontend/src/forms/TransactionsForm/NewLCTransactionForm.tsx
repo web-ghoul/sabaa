@@ -10,6 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDateForInput } from "../../functions/handleDateForInput";
+import { handleGetCardTypes } from "../../functions/handleGetCardTypes";
 import { handleGetNextCardType } from "../../functions/handleGetNextCardType";
 import useAxios from "../../hooks/useAxios";
 import { getCompanies } from "../../store/companiesSlice";
@@ -20,14 +21,16 @@ import { FormiksTypes } from "../../types/forms.types";
 import { EmployeeTypes } from "../../types/store.types";
 
 const NewLCTransactionForm = ({
+  type,
   register,
   errors,
   setValue,
   getValues,
 }: FormiksTypes) => {
+  console.log(errors);
   const { token } = useSelector((state: RootState) => state.auth);
   const { server } = useAxios(token || "");
-  const { formsLoading } = useContext(FormsContext);
+  const { formsLoading, editableTransactionData } = useContext(FormsContext);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
@@ -39,6 +42,8 @@ const NewLCTransactionForm = ({
   const { jobs } = useSelector((state: RootState) => state.jobs);
   const [tawjeeh, setTawjeeh] = useState(false);
   const [IMMG, setIMMG] = useState(false);
+  const [cardType, setCardType] = useState("");
+  const [addBySearch, setAddBySearch] = useState(false);
 
   const handleTawjeehChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -57,6 +62,7 @@ const NewLCTransactionForm = ({
         const employee = employees[0];
         setValue("gender", employee.gender);
         setValue("personCode", employee.personCode);
+        setValue("companyCode", (employee.companyId[0] as string) || "");
         setValue("companyId", (employee.companyId[0] as string) || "");
         setValue("companyName", employee.companyName[0] || "");
         setValue("employeeId", employee?._id || "");
@@ -75,6 +81,8 @@ const NewLCTransactionForm = ({
         setValue("cardType", nextType ? nextType : employee.cardType);
         setValue("passportExpiry", handleDateForInput(employee.passportExpiry));
         setValue("passportNumber", employee.passportNumber);
+        setValue("status", employee.status);
+        setAddBySearch(true);
       } else {
         handleAlert({ msg: "No Employees Found", status: "error" });
       }
@@ -83,10 +91,34 @@ const NewLCTransactionForm = ({
   };
 
   useEffect(() => {
+    if (editableTransactionData && type === "newLCTransaction") {
+      setValue(
+        "cardType",
+        handleGetNextCardType(editableTransactionData.cardType)
+      );
+    }
+  }, [editableTransactionData]);
+
+  useEffect(() => {
     dispatch(getCompanies({ limit: -1 }));
     dispatch(getNationalities({ limit: -1 }));
     dispatch(getJobs({ limit: -1 }));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (type === "editNewLCTransaction" && editableTransactionData) {
+      if (editableTransactionData.tawjeehDate) {
+        setTawjeeh(true);
+      }
+      if (
+        editableTransactionData.changeStatusDate ||
+        editableTransactionData.medicalDate ||
+        editableTransactionData.residenceExpiryDate
+      ) {
+        setIMMG(true);
+      }
+    }
+  }, [editableTransactionData, type]);
 
   return (
     <Paper
@@ -94,21 +126,23 @@ const NewLCTransactionForm = ({
     >
       <Title head={"h4"} align={"left"} title={"New Labour Card"} />
 
-      <Box className={`flex justify-start items-end  gap-4`}>
-        <Input
-          register={register}
-          errors={errors}
-          type={"search"}
-          label={"Search By Card Number , UID"}
-          name={"searchForEmployee"}
-          change={(value: string) => setSearch(value)}
-        />
-        <Button
-          title="Search"
-          handling={() => handleSearch(search)}
-          loading={loading}
-        />
-      </Box>
+      {!editableTransactionData && (
+        <Box className={`flex justify-start items-end  gap-4`}>
+          <Input
+            register={register}
+            errors={errors}
+            type={"search"}
+            label={"Search By Card Number , UID"}
+            name={"searchForEmployee"}
+            change={(value: string) => setSearch(value)}
+          />
+          <Button
+            title="Search"
+            handling={() => handleSearch(search)}
+            loading={loading}
+          />
+        </Box>
+      )}
 
       <Box className={`flex justify-start items-center gap-4`}>
         <FormControlLabel
@@ -139,130 +173,162 @@ const NewLCTransactionForm = ({
         <Input
           register={register}
           errors={errors}
+          label={"Transaction Date"}
+          name={"createdAt"}
+          type={"date"}
+        />
+        <Input
+          register={register}
+          errors={errors}
           label={"Transaction Number"}
           name={"transactionNo"}
         />
-        <Input
-          label={"Card Type"}
-          name={"cardType"}
-          register={register}
-          errors={errors}
-          options={[]}
-          select
-        />
+        {editableTransactionData || addBySearch ? (
+          <Input
+            label={"Card Type"}
+            name={"cardType"}
+            register={register}
+            errors={errors}
+            disabled
+          />
+        ) : (
+          <Input
+            label={"Card Type"}
+            name={"cardType"}
+            register={register}
+            errors={errors}
+            options={handleGetCardTypes("newLC")}
+            select
+            change={(val) => setCardType(val)}
+          />
+        )}
       </Box>
 
-      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
-        <Input
-          register={register}
-          errors={errors}
-          label={"Employee English Name"}
-          name={"employeeName"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Employee Arabic Name"}
-          name={"employeeNameAr"}
-        />
-        {companies && companies.length > 0 && (
-          <AutoCompleteSearch
-            label={"Company"}
-            options={companies}
+      {(cardType === "NATIONAL AND GCC ELECTRONIC WORK PERMIT" ||
+        addBySearch) && (
+        <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+          <Input
             register={register}
-            setValue={setValue}
-            getValues={getValues}
             errors={errors}
-            name={"companyId"}
-            variant={"transaction"}
-            flag={loading}
+            label={"Employee English Name"}
+            name={"employeeName"}
+            disabled={addBySearch}
           />
-        )}
+          <Input
+            register={register}
+            errors={errors}
+            label={"Employee Arabic Name"}
+            name={"employeeNameAr"}
+            disabled={addBySearch}
+          />
+          {!addBySearch && companies && companies.length > 0 && (
+            <AutoCompleteSearch
+              label={"Company"}
+              options={companies}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              errors={errors}
+              name={"companyId"}
+              variant={"transaction"}
+              flag={loading}
+            />
+          )}
 
-        <Input
-          register={register}
-          errors={errors}
-          label={"Person Code"}
-          name={"personCode"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Gender"}
-          select
-          options={["Male", "Female"]}
-          name={"gender"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Date of Birth"}
-          name={"dob"}
-          type={"date"}
-        />
-        {nationalities && nationalities.length > 0 && (
-          <AutoCompleteSearch
-            label={"Nationality"}
-            options={nationalities}
+          <Input
             register={register}
             errors={errors}
-            setValue={setValue}
-            getValues={getValues}
-            name={"nationality"}
-            flag={loading}
+            label={"Person Code"}
+            name={"personCode"}
+            disabled={addBySearch}
           />
-        )}
-        <Input
-          register={register}
-          errors={errors}
-          label={"Passport Number"}
-          name={"passportNumber"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Passport Expire Date"}
-          name={"passportExpiry"}
-          type={"date"}
-        />
-        {jobs && jobs.length > 0 && (
-          <AutoCompleteSearch
-            label={"Job"}
-            options={jobs}
+          <Input
             register={register}
             errors={errors}
-            setValue={setValue}
-            getValues={getValues}
-            name={"job"}
-            flag={loading}
+            label={"Gender"}
+            select
+            options={["Male", "Female"]}
+            name={"gender"}
+            disabled={addBySearch}
           />
-        )}
-        <Input
-          register={register}
-          errors={errors}
-          label={"UID Number"}
-          name={"uid"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Emirates Id Number"}
-          name={"emiratesNo"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Salary"}
-          name={"salary"}
-        />
-        <Input
-          register={register}
-          errors={errors}
-          label={"Remarks"}
-          name={"remarks"}
-          textarea
-        />
-      </Box>
+          <Input
+            register={register}
+            errors={errors}
+            label={"Date of Birth"}
+            name={"dob"}
+            type={"date"}
+            disabled={addBySearch}
+          />
+          {!addBySearch && nationalities && nationalities.length > 0 && (
+            <AutoCompleteSearch
+              label={"Nationality"}
+              options={nationalities}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
+              name={"nationality"}
+              flag={loading}
+            />
+          )}
+          <Input
+            register={register}
+            errors={errors}
+            label={"Passport Number"}
+            name={"passportNumber"}
+            disabled={addBySearch}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Passport Expire Date"}
+            name={"passportExpiry"}
+            type={"date"}
+            disabled={addBySearch}
+          />
+          {!addBySearch && jobs && jobs.length > 0 && (
+            <AutoCompleteSearch
+              label={"Job"}
+              options={jobs}
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              getValues={getValues}
+              name={"job"}
+              flag={loading}
+            />
+          )}
+          <Input
+            register={register}
+            errors={errors}
+            label={"UID Number"}
+            name={"uid"}
+            disabled={addBySearch}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Emirates Id Number"}
+            name={"emiratesNo"}
+            disabled={addBySearch}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Salary"}
+            name={"salary"}
+            disabled={addBySearch}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Remarks"}
+            name={"remarks"}
+            textarea
+            disabled={addBySearch}
+          />
+        </Box>
+      )}
 
       <Box className={`grid justify-stretch items-center gap-4`}>
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
@@ -278,6 +344,14 @@ const NewLCTransactionForm = ({
             label={"Labour Card Expire Date"}
             type={"date"}
             name={"lcExpiryDate"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Labour Card Status"}
+            name={"lcStatus"}
+            options={["Active", "Cancel"]}
+            select
           />
         </Box>
         {tawjeeh && (

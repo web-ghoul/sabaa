@@ -186,6 +186,13 @@ const EmployeeForm = ({
           <Input
             register={register}
             errors={errors}
+            name={"transactionNo"}
+            label={"Transaction Number"}
+            type={"text"}
+          />
+          <Input
+            register={register}
+            errors={errors}
             name={"passportNumber"}
             label={"Passport Number"}
             type={"text"}

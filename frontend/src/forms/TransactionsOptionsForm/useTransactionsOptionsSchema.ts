@@ -17,6 +17,7 @@ const useTransactionsOptionsSchema = () => {
     changeStatusDateFrom: yup.string(),
     changeStatusDateTo: yup.string(),
     type: yup.string(),
+    userId: yup.string(),
   });
 
   const TransactionsOptionsInitialValues = {
@@ -31,6 +32,7 @@ const useTransactionsOptionsSchema = () => {
     changeStatusDateFrom: allParams.changeStatusDateFrom || "",
     changeStatusDateTo: allParams.changeStatusDateTo || "",
     type: allParams.type || "",
+    userId: allParams.userId || "",
   };
 
   return { TransactionsOptionsSchema, TransactionsOptionsInitialValues };

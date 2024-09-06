@@ -235,7 +235,9 @@ const useSubmitForm = (type: string) => {
     editTransaction: TransactionSchema,
     approvedTransaction: ApprovedSchema,
     newLCTransaction: NewLCTransactionSchema,
+    editNewLCTransaction: NewLCTransactionSchema,
     renewLCTransaction: RenewLCTransactionSchema,
+    editRenewLCTransaction: RenewLCTransactionSchema,
     //Transactions
 
     //Company Info
@@ -356,7 +358,9 @@ const useSubmitForm = (type: string) => {
     editTransaction: TransactionInitialValues,
     approvedTransaction: ApprovedInitialValues,
     newLCTransaction: NewLCTransactionInitialValues,
+    editNewLCTransaction: NewLCTransactionInitialValues,
     renewLCTransaction: RenewLCTransactionInitialValues,
+    editRenewLCTransaction: RenewLCTransactionInitialValues,
     //Transactions
 
     //Company Info

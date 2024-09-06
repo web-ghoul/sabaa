@@ -18,6 +18,7 @@ const useActivitiesOptionsSchema = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const ActivitiesOptionsSchema = yup.object({
+    userId: yup.string(),
     search: yup.string(),
     type: yup.string(),
     operation: yup.string(),
@@ -26,6 +27,7 @@ const useActivitiesOptionsSchema = () => {
   });
 
   const ActivitiesOptionsInitialValues = {
+    userId: "",
     search: "",
     type: "",
     operation: "",

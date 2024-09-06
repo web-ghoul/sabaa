@@ -1,15 +1,16 @@
 import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
 import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { getTransactions } from "../../store/transactionsSlice";
+import { getUsers } from "../../store/usersSlice";
 import { FormiksTypes } from "../../types/forms.types";
 
 const TransactionsOptionsForm = ({
@@ -23,6 +24,7 @@ const TransactionsOptionsForm = ({
   const { searchForTransactions, setSearchForTransactions } =
     useContext(FormsContext);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
+  const { users } = useSelector((state: RootState) => state.users);
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -59,9 +61,19 @@ const TransactionsOptionsForm = ({
     handleAddQuery({ status: value });
   };
 
+  const handleFilterByUser = (value: string) => {
+    handleAddQuery({ userId: value });
+  };
+
   const handleFilter = () => {
     setSearchParams(queries);
-    dispatch(getTransactions({ ...queries, search: searchForTransactions }));
+    dispatch(
+      getTransactions({
+        ...queries,
+        search: searchForTransactions,
+        type: tType,
+      })
+    );
   };
 
   const handleResetAll = () => {
@@ -87,7 +99,12 @@ const TransactionsOptionsForm = ({
     setValue("changeStatusDateFrom", "");
     setValue("changeStatusDateTo", "");
     setValue("type", "");
+    setValue("userId", "");
   };
+
+  useEffect(() => {
+    dispatch(getUsers({ limit: -1 }));
+  }, [dispatch]);
 
   return (
     <Paper
@@ -139,6 +156,16 @@ const TransactionsOptionsForm = ({
             errors={errors}
             change={handleFilterByStatus}
             options={["InProcess", "Approved", "Rejected", "Nawakes"]}
+            select
+          />
+          <Input
+            label={"Filter By User"}
+            name={"userId"}
+            register={register}
+            errors={errors}
+            change={handleFilterByUser}
+            options={users ? users.map((user) => user.name) : ["Loading..."]}
+            values={users ? users.map((user) => user._id) : ["Loading..."]}
             select
           />
           <Box className={`grid justify-stretch gap-4 md:gap-3 sm:!gap-2`}>

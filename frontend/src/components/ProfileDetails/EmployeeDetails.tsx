@@ -132,6 +132,10 @@ const EmployeeDetails = ({
         </Typography>
         <Box className={classes.profileInfoClasses}>
           <DataBox
+            title={"Transaction Number"}
+            value={(data as EmployeeTypes).transactionNo}
+          />
+          <DataBox
             title={"Passport Number"}
             value={(data as EmployeeTypes).passportNumber}
           />

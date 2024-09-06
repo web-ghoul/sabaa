@@ -91,7 +91,9 @@ const useSubmitFunction = (type: string) => {
     editTransaction,
     approvedTransaction,
     newLCTransaction,
+    editNewLCTransaction,
     renewLCTransaction,
+    editRenewLCTransaction,
   } = useTransactionSubmit();
   const { addRole, editRole } = useRoleSubmit();
   const { editCompanyInfo } = useCompanyInfoSubmit();
@@ -236,8 +238,14 @@ const useSubmitFunction = (type: string) => {
       case "newLCTransaction":
         newLCTransaction(values as TransactionFormTypes);
         break;
+      case "editNewLCTransaction":
+        editNewLCTransaction(values as TransactionFormTypes);
+        break;
       case "renewLCTransaction":
         renewLCTransaction(values as TransactionFormTypes);
+        break;
+      case "editRenewLCTransaction":
+        editRenewLCTransaction(values as TransactionFormTypes);
         break;
       case "downloadExcel":
         handleDownloadExcelSubmit(values as DownloadExcelFormTypes);

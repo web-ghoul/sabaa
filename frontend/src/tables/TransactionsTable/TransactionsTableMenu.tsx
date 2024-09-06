@@ -1,8 +1,10 @@
 import {
+  AddCircleOutlineRounded,
   ApprovalRounded,
   DeleteRounded,
   EditRounded,
   EventNoteRounded,
+  PublishedWithChangesRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -10,11 +12,13 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
+import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import TableMenuItem from "../TableMenuItem";
 
 const TransactionsTableMenu = ({ type }: { type: string }) => {
   const { openTableMenu, handleCloseTableMenu } = useContext(AppContext);
+  const { editableTransactionData } = useContext(FormsContext);
   const [sheet, setSheet] = useState(false);
   const { pathname } = useLocation();
   const { handleOpenTransactionModal, handleOpenDeleteModal } =
@@ -25,11 +29,27 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
   const handleView = () => {};
 
   const handleEdit = () => {
-    handleOpenTransactionModal("editTransaction");
+    if (pathname === `${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`) {
+      handleOpenTransactionModal("editTransaction");
+    } else if (pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`) {
+      handleOpenTransactionModal("editNewLCTransaction");
+    } else if (
+      pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
+    ) {
+      handleOpenTransactionModal("editRenewLCTransaction");
+    }
   };
 
   const handleApprovedStatus = () => {
     handleOpenTransactionModal("approvedTransaction");
+  };
+
+  const handleNewLC = () => {
+    handleOpenTransactionModal("newLCTransaction");
+  };
+
+  const handleRenewLC = () => {
+    handleOpenTransactionModal("renewLCTransaction");
   };
 
   const handleViewLogs = () => {
@@ -69,20 +89,34 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
         title={"View"}
         handling={handleView}
       />
-      {(type === "pre" || type === "approved") && (
-        <TableMenuItem
-          icon={<EditRounded />}
-          title={"Edit"}
-          handling={handleEdit}
-        />
-      )}
-      {type === "pre" && (
+      <TableMenuItem
+        icon={<EditRounded />}
+        title={"Edit"}
+        handling={handleEdit}
+      />
+      {type === "pre" && editableTransactionData?.status !== "Approved" && (
         <TableMenuItem
           icon={<ApprovalRounded />}
           title={"Approved Status"}
           handling={handleApprovedStatus}
         />
       )}
+      {type === "pre" && editableTransactionData?.status === "Approved" && (
+        <TableMenuItem
+          icon={<AddCircleOutlineRounded />}
+          title={"New LC"}
+          handling={handleNewLC}
+        />
+      )}
+      {type === "new" &&
+        editableTransactionData?.cardType !==
+          "ELECTRONIC WORK PERMIT FOR PART TIME" && (
+          <TableMenuItem
+            icon={<PublishedWithChangesRounded />}
+            title={"Renew LC"}
+            handling={handleRenewLC}
+          />
+        )}
       <TableMenuItem
         icon={<EventNoteRounded />}
         title={"Logs"}

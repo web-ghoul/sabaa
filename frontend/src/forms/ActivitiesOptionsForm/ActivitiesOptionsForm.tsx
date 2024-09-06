@@ -1,7 +1,7 @@
 import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper } from "@mui/material";
-import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
@@ -9,7 +9,8 @@ import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getActivities } from "../../store/activitiesSlice";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
+import { getUsers } from "../../store/usersSlice";
 import { FormiksTypes } from "../../types/forms.types";
 
 const ActivitiesOptionsForm = ({
@@ -21,6 +22,7 @@ const ActivitiesOptionsForm = ({
   const [showFilters, setShowFilters] = useState(false);
   const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+  const { users } = useSelector((state: RootState) => state.users);
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const { searchForActivities, setSearchForActivities } =
     useContext(FormsContext);
@@ -32,6 +34,10 @@ const ActivitiesOptionsForm = ({
 
   const handleFilterByType = (value: string) => {
     handleAddQuery({ type: value });
+  };
+
+  const handleFilterByUser = (value: string) => {
+    handleAddQuery({ userId: value });
   };
 
   const handleFilterByOperation = (value: string) => {
@@ -61,6 +67,10 @@ const ActivitiesOptionsForm = ({
     setValue("from", "");
     setValue("to", "");
   };
+
+  useEffect(() => {
+    dispatch(getUsers({ limit: -1 }));
+  }, [dispatch]);
 
   return (
     <Paper
@@ -119,6 +129,16 @@ const ActivitiesOptionsForm = ({
                 "job",
                 "nationality",
               ]}
+              select
+            />
+            <Input
+              label={"Filter By User"}
+              name={"userId"}
+              register={register}
+              errors={errors}
+              change={handleFilterByUser}
+              options={users ? users.map((user) => user.name) : ["loading..."]}
+              values={users ? users.map((user) => user._id) : ["loading..."]}
               select
             />
             <Input

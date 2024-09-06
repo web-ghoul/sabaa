@@ -24,12 +24,13 @@ const Input = ({
   type,
   select,
   options,
+  values,
   change,
   ac,
   textarea,
   disabled,
   value,
-  labeled
+  labeled,
 }: InputTypes) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -67,7 +68,11 @@ const Input = ({
           <option value={""}>{`Select ${label}`}</option>
           {options &&
             options.map((option: string, i: number) => (
-              <option value={option} key={i} selected={option === value}>
+              <option
+                value={values ? values[i] : option}
+                key={i}
+                selected={option === value}
+              >
                 {option}
               </option>
             ))}
@@ -104,9 +109,11 @@ const Input = ({
           }}
           placeholder={`Enter ${label}`}
         />
-      ) :labeled ? (
-        <Typography variant="h6" className={`!text-primary`} >{labeled}</Typography>
-      ): (
+      ) : labeled ? (
+        <Typography variant="h6" className={`!text-primary`}>
+          {labeled}
+        </Typography>
+      ) : (
         <PrimaryTextField
           disabled={disabled}
           fullWidth

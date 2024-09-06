@@ -58,6 +58,7 @@ interface OTPFormTypes {
 //Activities
 interface ActivitiesOptionsFormTypes {
   search: string;
+  userId: string;
   type: string;
   operation: string;
   from: string;

@@ -658,17 +658,13 @@ Tasks For Finish :
 
 
 
-
-
-
-
 questions for meeting :
 1- Updates in Transaction
     notes :
       1- Return Logs in transactions and record every edits on transaction
       2- Add Status Date in edit work permit form
       3- Add Created At Field in every Transaction Forms
-      4- All Employee Date in Approved Form is Disabled
+      4- All Employee Data in Approved Form is Disabled
       5- Set Same of Transaction Number in Approved Form
       6- Add Validations on Status Date and Labour Card Expire Date 
       7- Remove Approved Status Action When Status is Approved

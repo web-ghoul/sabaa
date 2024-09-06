@@ -126,7 +126,10 @@ const TransactionsTable = ({
             <PrimaryTableCell className={`!flex gap-2`}>
               Transaction Number
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">Company Name</PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
+            <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
                 title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
@@ -145,6 +148,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
+            <PrimaryTableCell align="center">LC Number</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
                 title={mdScreen ? "LC Expiry" : "LC Expire Date"}
@@ -154,7 +158,7 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">LC Status</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -165,8 +169,10 @@ const TransactionsTable = ({
             <PrimaryTableCell className={`!flex gap-2`}>
               Transaction Number
             </PrimaryTableCell>
-            <PrimaryTableCell align="center">Company</PrimaryTableCell>
+            <PrimaryTableCell align="center">Company Name</PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
+            <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">LC Number</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
@@ -176,8 +182,7 @@ const TransactionsTable = ({
                 desc={searchParams.get("sort") === "name_desc"}
               />
             </PrimaryTableCell>
-            <PrimaryTableCell align="center">Passport Expiry</PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">LC Status</PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -190,15 +195,8 @@ const TransactionsTable = ({
             </PrimaryTableCell>
             <PrimaryTableCell align="center">Company Name</PrimaryTableCell>
             <PrimaryTableCell align="center">Employee Name</PrimaryTableCell>
-            <PrimaryTableCell align="center">
-              <SortBox
-                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
-                handling={handleSortByResidenceExpiry}
-                asc={searchParams.get("sort") === "code_asc"}
-                desc={searchParams.get("sort") === "code_desc"}
-                jc="center"
-              />
-            </PrimaryTableCell>
+            <PrimaryTableCell align="center">Card Type</PrimaryTableCell>
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
             <PrimaryTableCell align="center">
               <SortBox
                 title={mdScreen ? "CS Date" : "Change Status Date"}
@@ -218,7 +216,16 @@ const TransactionsTable = ({
                 jc="center"
               />
             </PrimaryTableCell>
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">LC Status</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              <SortBox
+                title={mdScreen ? "Residence Expiry" : "Residence Expire Date"}
+                handling={handleSortByResidenceExpiry}
+                asc={searchParams.get("sort") === "code_asc"}
+                desc={searchParams.get("sort") === "code_desc"}
+                jc="center"
+              />
+            </PrimaryTableCell>
             {actions && (
               <PrimaryTableCell align="right">Actions</PrimaryTableCell>
             )}
@@ -236,12 +243,27 @@ const TransactionsTable = ({
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     <Link
+                      to={`${import.meta.env.VITE_COMPANIES_ROUTE}/${
+                        row.companyId
+                      }`}
+                    >
+                      {row.companyName}
+                    </Link>
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <Link
                       to={`${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
                         row.employeeId
                       }`}
                     >
                       {row.employeeName}
                     </Link>
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="left" component="th" scope="row">
+                    {row.cardType}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     {handleDate(row.residenceExpiryDate)}
@@ -250,10 +272,13 @@ const TransactionsTable = ({
                     {handleDate(row.changeStatusDate)}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
+                    {row.lcNumber}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
                     {handleDate(row.lcExpiryDate)}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
+                    <StatusBox status={row.lcStatus} />
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
@@ -287,16 +312,19 @@ const TransactionsTable = ({
                     </Link>
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
+                    {row.cardType}
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
+                  </PrimaryTableCell>
+                  <PrimaryTableCell align="center">
                     {row.lcNumber}
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
                     <StatusBox status={handleDate(row.lcExpiryDate)} />
                   </PrimaryTableCell>
                   <PrimaryTableCell align="center">
-                    {handleDate(row.passportExpiry)}
-                  </PrimaryTableCell>
-                  <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
+                    <StatusBox status={row.lcStatus} />
                   </PrimaryTableCell>
                   {actions && (
                     <PrimaryTableCell align="right">
@@ -331,19 +359,25 @@ const TransactionsTable = ({
                       </Link>
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      <StatusBox status={handleDate(row.residenceExpiryDate)} />
+                      {row.cardType}
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      <StatusBox status={handleDate(row.changeStatusDate)} />
+                      <StatusBox status={row.status} />
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      <StatusBox status={row.lcNumber} />
+                      {handleDate(row.changeStatusDate)}
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      {row.lcNumber}
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
                       <StatusBox status={handleDate(row.lcExpiryDate)} />
                     </PrimaryTableCell>
                     <PrimaryTableCell align="center">
-                      <StatusBox status={row.status} />
+                      <StatusBox status={row.lcStatus} />
+                    </PrimaryTableCell>
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.residenceExpiryDate)}
                     </PrimaryTableCell>
                     {actions && (
                       <PrimaryTableCell align="right">

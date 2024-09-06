@@ -354,7 +354,21 @@ const useDeleteSubmit = () => {
             msg: "Transaction is deleted  Successfully",
             status: "success",
           });
-          dispatch(getTransactions({}));
+          if (pathname === `${import.meta.env.VITE_TRANSACTIONS_ALL_ROUTE}`) {
+            dispatch(getTransactions({ type: "all" }));
+          } else if (
+            pathname === `${import.meta.env.VITE_TRANSACTIONS_PRE_ROUTE}`
+          ) {
+            dispatch(getTransactions({ type: "pre" }));
+          } else if (
+            pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
+          ) {
+            dispatch(getTransactions({ type: "new" }));
+          } else if (
+            pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
+          ) {
+            dispatch(getTransactions({ type: "renew" }));
+          }
           handleCloseDeleteModal();
         })
         .catch((err) => {

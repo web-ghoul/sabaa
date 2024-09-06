@@ -118,6 +118,24 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
+  const editNewLCTransaction = async (values: TransactionFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(`/transactions/${editableTransactionData?._id}`, values)
+      .then(() => {
+        handleAlert({
+          msg: "New Labour Card is updated successfully",
+          status: "success",
+        });
+        handleCloseTransactionModal();
+        getData();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   const renewLCTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
@@ -139,12 +157,32 @@ const useTransactionSubmit = () => {
     handleCloseFormsLoading();
   };
 
+  const editRenewLCTransaction = async (values: TransactionFormTypes) => {
+    handleOpenFormsLoading();
+    await server
+      .patch(`/transactions/${editableTransactionData?._id}`, values)
+      .then(() => {
+        handleAlert({
+          msg: "Renew Labour Card is updated successfully",
+          status: "success",
+        });
+        handleCloseTransactionModal();
+        getData();
+      })
+      .catch((err) => {
+        handleCatchError(err);
+      });
+    handleCloseFormsLoading();
+  };
+
   return {
     addTransaction,
     editTransaction,
     newLCTransaction,
     renewLCTransaction,
+    editNewLCTransaction,
     approvedTransaction,
+    editRenewLCTransaction,
   };
 };
 

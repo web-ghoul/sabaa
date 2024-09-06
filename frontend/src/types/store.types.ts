@@ -30,8 +30,10 @@ interface ActivitiesValuesTypes {
 interface ActivitiesArgsTypes {
   page?: number;
   limit?: number;
+  id?: string;
   search?: string;
   type?: string;
+  userId?: string;
   operation?: string;
   to?: string;
   from?: string;
@@ -251,8 +253,8 @@ interface ProsArgsTypes {
   limit?: number;
   dobTo?: string;
   dobFrom?: string;
-  residenceTo?:string
-  residenceFrom?:string
+  residenceTo?: string;
+  residenceFrom?: string;
   state?: string;
   status?: string;
   nationality?: string;
@@ -367,6 +369,7 @@ interface EmployeeTypes {
   iLOEExpireDate?: Date;
   iLOE: { insurance: string; expireDate: Date };
   uid: string;
+  transactionNo: string;
   emiratesId: string;
   remarks: string;
   user?: string;
@@ -638,13 +641,14 @@ interface TransactionTypes {
   uid: string;
   emiratesNo: string;
   lcNumber: string;
-  lcExpiryDate: Date;
+  lcExpiryDate?: Date;
   visitExpiryDate: Date;
   workPermitExpiryDate: Date;
   tawjeehDate: Date;
   medicalDate: Date;
   changeStatusDate: Date;
   residenceExpiryDate: Date;
+  lcStatus: string;
   status: string;
   statusDate: Date;
   salary: number;
@@ -681,6 +685,7 @@ interface TransactionsArgsTypes {
   changeStatusDateTo?: string;
   status?: string;
   type?: string;
+  userId?: string;
 }
 
 interface RecentTransactionsValuesTypes {

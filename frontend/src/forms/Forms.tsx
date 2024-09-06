@@ -43,6 +43,8 @@ import SponsorForm from "./SponsorForm/SponsorForm";
 import TasheelForm from "./TasheelForm/TasheelForm";
 import TasheelsOptionsForm from "./TasheelsOptionsForm/TasheelsOptionsForm";
 import ApprovedTransactionForm from "./TransactionsForm/ApprovedTransactionForm";
+import NewLCTransactionForm from "./TransactionsForm/NewLCTransactionForm";
+import RenewLCTransactionForm from "./TransactionsForm/RenewTransactionForm";
 import TransactionForm from "./TransactionsForm/TransactionForm";
 import TransactionsOptionsForm from "./TransactionsOptionsForm/TransactionsOptionsForm";
 import UserForm from "./UserForm/UserForm";
@@ -119,8 +121,8 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
           type={type}
         />
       )}
-      {type === "newLCTransaction" && (
-        <ApprovedTransactionForm
+      {(type === "newLCTransaction" || type === "editNewLCTransaction") && (
+        <NewLCTransactionForm
           register={register}
           errors={errors}
           setValue={setValue}
@@ -128,8 +130,8 @@ const Forms = ({ type, index, tType }: FormsTypes) => {
           type={type}
         />
       )}
-      {type === "renewLCTransaction" && (
-        <ApprovedTransactionForm
+      {(type === "renewLCTransaction" || type === "editRenewLCTransaction") && (
+        <RenewLCTransactionForm
           register={register}
           errors={errors}
           setValue={setValue}

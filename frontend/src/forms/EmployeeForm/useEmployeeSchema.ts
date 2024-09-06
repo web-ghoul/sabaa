@@ -38,6 +38,7 @@ const useEmployeeSchema = () => {
     passportNumber: yup.string(),
     passportExpiry: yup.string(),
     residenceExpireDate: yup.string(),
+    transactionNo: yup.string(),
   });
 
   const EmployeeInitialValues = {
@@ -81,6 +82,7 @@ const useEmployeeSchema = () => {
     fileImmgNo: editableEmployeeData?.fileImmgNo || "",
     emiratesId: editableEmployeeData?.emiratesId || "",
     lcNumber: editableEmployeeData?.lcNumber || "",
+    transactionNo: editableEmployeeData?.transactionNo || "",
     passportNumber: editableEmployeeData?.passportNumber || "",
     passportExpiry:
       (editableEmployeeData?.passportExpiry &&

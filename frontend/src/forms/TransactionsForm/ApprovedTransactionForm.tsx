@@ -1,5 +1,5 @@
 import { Box, Divider, Paper } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
@@ -8,9 +8,17 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { FormiksTypes } from "../../types/forms.types";
 
-const ApprovedTransactionForm = ({ register, errors }: FormiksTypes) => {
+const ApprovedTransactionForm = ({
+  register,
+  setValue,
+  errors,
+}: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
+
+  useEffect(() => {
+    setValue("status", "Approved");
+  }, []);
 
   return (
     <Paper
@@ -29,10 +37,10 @@ const ApprovedTransactionForm = ({ register, errors }: FormiksTypes) => {
           disabled
         />
         <Input
-          label={"Card Type"}
-          name={"cardType"}
           register={register}
           errors={errors}
+          label={"Card Type"}
+          name={"cardType"}
           disabled
         />
       </Box>
@@ -50,6 +58,13 @@ const ApprovedTransactionForm = ({ register, errors }: FormiksTypes) => {
           errors={errors}
           label={"Employee Arabic Name"}
           name={"employeeNameAr"}
+          disabled
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Person Number"}
+          name={"personCode"}
           disabled
         />
       </Box>
@@ -90,6 +105,14 @@ const ApprovedTransactionForm = ({ register, errors }: FormiksTypes) => {
             label={"Labour Card Expire Date"}
             name={"lcExpiryDate"}
             type={"date"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Labour Card Status"}
+            name={"lcStatus"}
+            options={["Active", "Cancel"]}
+            select
           />
           <Input
             register={register}

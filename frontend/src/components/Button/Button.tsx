@@ -88,11 +88,11 @@ const Button = ({
       } else if (
         pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
       ) {
-        handleOpenTransactionModal("newLC");
+        handleOpenTransactionModal("newLCTransaction");
       } else if (
         pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
       ) {
-        handleOpenTransactionModal("renewLC");
+        handleOpenTransactionModal("renewLCTransaction");
       }
     } else if (newTitle === "add role") {
       setEditableRoleData(null);

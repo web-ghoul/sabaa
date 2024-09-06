@@ -82,6 +82,9 @@ export class Transaction {
   @Prop({ type: Date })
   changeStatusDate: Date;
 
+  @Prop({ default: 'Cancel' })
+  lcStatus: string;
+
   @Prop({ default: 'In Process' })
   status: string;
 
@@ -109,18 +112,38 @@ export class Transaction {
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);
 
-
 TransactionSchema.index(
-  { uid: 1, deleted: 1, transactionNo: 1},
-  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+  { uid: 1, deleted: 1, transactionNo: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      type: { $ne: 'approved' },
+      uid: { $exists: true },
+    },
+  },
 );
 
 TransactionSchema.index(
-  { transactionNo: 1, deleted: 1},
-  { unique: true, partialFilterExpression: { deleted: false, transactionNo: { $exists: true } } }
+  { transactionNo: 1, deleted: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      type: { $ne: 'approved' },
+      transactionNo: { $exists: true },
+    },
+  },
 );
 
 TransactionSchema.index(
   { emiratesNo: 1, deleted: 1, transactionNo: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      type: { $ne: 'approved' },
+      emiratesNo: { $exists: true },
+    },
+  },
 );

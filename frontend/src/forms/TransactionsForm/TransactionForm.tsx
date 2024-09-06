@@ -10,6 +10,7 @@ import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
 import { handleAlert } from "../../functions/handleAlert";
 import { handleDateForInput } from "../../functions/handleDateForInput";
+import { handleGetCardTypes } from "../../functions/handleGetCardTypes";
 import useAxios from "../../hooks/useAxios";
 import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
@@ -27,7 +28,7 @@ const TransactionForm = ({
 }: FormiksTypes) => {
   const { token } = useSelector((state: RootState) => state.auth);
   const { server } = useAxios(token || "");
-  const { formsLoading, editableTransactionData } = useContext(FormsContext);
+  const { formsLoading } = useContext(FormsContext);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
@@ -119,47 +120,21 @@ const TransactionForm = ({
           name={"createdAt"}
           type={"date"}
         />
-        {type === "editTransaction" ? (
-          <>
-            <Input
-              register={register}
-              errors={errors}
-              label={"Transaction Number"}
-              name={"transactionNo"}
-              value={editableTransactionData?.transactionNo}
-              disabled
-            />
-            <Input
-              label={"Card Type"}
-              name={"cardType"}
-              register={register}
-              errors={errors}
-              value={editableTransactionData?.cardType}
-              disabled
-            />
-          </>
-        ) : (
-          <>
-            <Input
-              register={register}
-              errors={errors}
-              label={"Transaction Number"}
-              name={"transactionNo"}
-            />
-            <Input
-              label={"Card Type"}
-              name={"cardType"}
-              register={register}
-              errors={errors}
-              options={[
-                "PRE APPROVAL FOR WORK PERMIT",
-                "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-                "PART TIME PRE APPROVAL FOR WORK PERMIT",
-              ]}
-              select
-            />
-          </>
-        )}
+
+        <Input
+          register={register}
+          errors={errors}
+          label={"Transaction Number"}
+          name={"transactionNo"}
+        />
+        <Input
+          label={"Card Type"}
+          name={"cardType"}
+          register={register}
+          errors={errors}
+          options={handleGetCardTypes("pre")}
+          select
+        />
       </Box>
 
       <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>

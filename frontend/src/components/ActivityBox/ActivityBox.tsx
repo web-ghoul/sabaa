@@ -8,7 +8,7 @@ import { handleDateForPost } from "../../functions/handleDateForPost";
 import { ActivityTypes } from "../../types/store.types";
 
 const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
-  const { avatar, userName, userId, action, route, id, ownerType, createdAt } =
+  const { userName, userId, action, route, id, ownerType, createdAt } =
     activity;
   const { defaultAvatar } = useContext(AppContext);
 
@@ -22,8 +22,8 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
         <LazyLoadImage
           alt={"avatar"}
           src={
-            avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${avatar}`
+            userId?.avatar
+              ? `${import.meta.env.VITE_SERVER_URL}/${userId?.avatar}`
               : defaultAvatar
           }
         />

@@ -19,9 +19,11 @@ export const getActivities = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }&to=${args?.to || ""}&from=${args?.from || ""}&operation=${
-        args?.operation || ""
-      }&type=${args?.type || ""}&search=${args?.search || ""}`,
+      }&id=${args?.id || ""}&to=${args?.to || ""}&from=${
+        args?.from || ""
+      }&operation=${args?.operation || ""}&type=${args?.type || ""}&userId=${
+        args?.userId || ""
+      }&search=${args?.search || ""}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

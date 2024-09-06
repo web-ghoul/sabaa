@@ -19,9 +19,9 @@ export const getTransactions = createAsyncThunk(
             ? ""
             : args.limit
           : import.meta.env.VITE_LIMIT_PAGES
-      }&page=${args?.page || 0}&type=${args?.type || ""}&status=${
-        args?.status || ""
-      }&expireWorkPermitTo=${
+      }&page=${args?.page || 0}&userId=${args?.userId || ""}&type=${
+        args?.type || ""
+      }&status=${args?.status || ""}&expireWorkPermitTo=${
         args?.expireWorkPermitTo || ""
       }&expireWorkPermitFrom=${args?.expireWorkPermitFrom || ""}&residenceTo=${
         args?.residenceTo || ""
