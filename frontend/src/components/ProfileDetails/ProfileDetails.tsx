@@ -77,6 +77,7 @@ const ProfileDetails = ({
           Tasheel Information
         </Typography>
         <Box className={profileInfoClasses}>
+          <DataBox title={"Tasheel Email"} value={tasheel.email} />
           <DataBox title={"Username"} value={tasheel.username} />
           <DataBox
             title={"Password"}
@@ -103,6 +104,7 @@ const ProfileDetails = ({
           Natwasal Information
         </Typography>
         <Box className={profileInfoClasses}>
+          <DataBox title={"Natawasal Email"} value={natwasal.email} />
           <DataBox title={"Username"} value={natwasal.username} />
           <DataBox
             title={"Password"}

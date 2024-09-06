@@ -135,6 +135,54 @@ const CustomerDetails = ({
       {eChannelBox}
       {tasheelBox}
       {natwasalBox}
+      {(data as CustomerTypes)?.medical && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Medical Insurance
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as CustomerTypes)?.medical?.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as CustomerTypes)?.medicalPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as CustomerTypes)?.medical?.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
+      {(data as CustomerTypes).iLOE && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Involuntary Loss Of Employment (ILOE)
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as CustomerTypes).iLOE.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as CustomerTypes).iLOEPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as CustomerTypes).iLOE.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };

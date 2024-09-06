@@ -109,7 +109,6 @@ const TransactionsOptionsForm = ({
         <ExcelButtons
           addBtn={tType === "all" ? "" : "Add Transaction"}
           variant="transactions"
-          upload
         />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>

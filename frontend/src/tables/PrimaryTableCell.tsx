@@ -2,6 +2,7 @@ import { TableCell, styled, tableCellClasses } from "@mui/material";
 
 export const PrimaryTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: 14,
+  wordBreak: "keep-all",
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.action.hover,
     fontWeight: "700",

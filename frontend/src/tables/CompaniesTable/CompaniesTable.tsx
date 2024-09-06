@@ -128,7 +128,9 @@ const CompaniesTable = ({
             )}
           </PrimaryTableCell>
           {!lgScreen && !recent && (
-            <PrimaryTableCell align="center">Phone</PrimaryTableCell>
+            <PrimaryTableCell align="center">
+              License Expire Date
+            </PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">
             {sheet || !sort ? (
@@ -147,9 +149,6 @@ const CompaniesTable = ({
               />
             )}
           </PrimaryTableCell>
-          {!mdScreen && (
-            <PrimaryTableCell align="center">Status</PrimaryTableCell>
-          )}
           {!mdScreen && !recent && (
             <PrimaryTableCell align="center">
               {lgScreen ? "IMMG Card" : "IMMG Card Number"}
@@ -159,6 +158,9 @@ const CompaniesTable = ({
             <PrimaryTableCell align="center">
               {lgScreen ? "IMMG Expiry" : "IMMG Expire Date"}
             </PrimaryTableCell>
+          )}
+          {!mdScreen && (
+            <PrimaryTableCell align="center">Status</PrimaryTableCell>
           )}
           {actions && (
             <PrimaryTableCell align="right">Actions</PrimaryTableCell>
@@ -200,17 +202,12 @@ const CompaniesTable = ({
                 </PrimaryTableCell>
                 {!lgScreen && !recent && (
                   <PrimaryTableCell align="center">
-                    {row.phone}
+                    {handleDate(row.licenseExpiryDate)}
                   </PrimaryTableCell>
                 )}
                 <PrimaryTableCell align="center">
                   {row.molCode}
                 </PrimaryTableCell>
-                {!mdScreen && (
-                  <PrimaryTableCell align="center">
-                    <StatusBox status={row.status} />
-                  </PrimaryTableCell>
-                )}
                 {!mdScreen && !recent && (
                   <PrimaryTableCell align="center">
                     {row.immgCardNo}
@@ -219,6 +216,11 @@ const CompaniesTable = ({
                 {!smScreen && (
                   <PrimaryTableCell align="center">
                     {handleDate(row.immgCardExpiry)}
+                  </PrimaryTableCell>
+                )}
+                {!mdScreen && (
+                  <PrimaryTableCell align="center">
+                    <StatusBox status={row.status} />
                   </PrimaryTableCell>
                 )}
                 {actions && (

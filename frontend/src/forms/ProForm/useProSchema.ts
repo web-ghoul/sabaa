@@ -28,6 +28,12 @@ const useProSchema = () => {
     sponsor: yup.string(),
     type: yup.string(),
     remarks: yup.string(),
+    iLOEInsuranceCompany: yup.string(),
+    iLOEPolicyNo: yup.string(),
+    iLOEExpireDate: yup.string(),
+    medicalInsuranceCompany: yup.string(),
+    medicalPolicyNo: yup.string(),
+    medicalExpireDate: yup.string(),
   });
 
   const ProInitialValues = {
@@ -60,6 +66,22 @@ const useProSchema = () => {
     sponsor: editableProData?.sponsor || "",
     type: "pro",
     remarks: editableProData?.remarks || "",
+    iLOEInsuranceCompany: editableProData?.iLOE?.insurance || "",
+    iLOEPolicyNo: editableProData?.iLOEPolicyNo || "",
+    iLOEExpireDate:
+      (editableProData?.iLOE?.expireDate &&
+        new Date(editableProData?.iLOE?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    medicalInsuranceCompany: editableProData?.medical?.insurance || "",
+    medicalPolicyNo: editableProData?.medicalPolicyNo || "",
+    medicalExpireDate:
+      (editableProData?.medical?.expireDate &&
+        new Date(editableProData?.medical?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
   };
 
   useEffect(() => {

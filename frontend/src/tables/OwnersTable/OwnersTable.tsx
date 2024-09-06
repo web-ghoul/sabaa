@@ -16,6 +16,7 @@ import { AppContext } from "../../contexts/AppContext";
 import { ExcelsContext } from "../../contexts/ExcelsContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { handleAlert } from "../../functions/handleAlert";
+import { handleDate } from "../../functions/handleDate";
 import { handleRandomNumber } from "../../functions/handleRandomNumber";
 import { getOwnersCounter } from "../../store/ownersCounterSlice";
 import { getOwners, reverseOwners } from "../../store/ownersSlice";
@@ -145,6 +146,11 @@ const OwnersTable = ({
               />
             )}
           </PrimaryTableCell>
+          {!lgScreen && (
+            <PrimaryTableCell align="center">
+              Residence Expire Date
+            </PrimaryTableCell>
+          )}
           {!smScreen && <PrimaryTableCell align="center">UID</PrimaryTableCell>}
           {!recent && (
             <PrimaryTableCell align="center">Emirates ID</PrimaryTableCell>
@@ -196,6 +202,11 @@ const OwnersTable = ({
                   <PrimaryTableCell align="center">
                     {row.personCode}
                   </PrimaryTableCell>
+                  {!lgScreen && (
+                    <PrimaryTableCell align="center">
+                      {handleDate(row.residenceExpiryDate)}
+                    </PrimaryTableCell>
+                  )}
                   {!smScreen && (
                     <PrimaryTableCell align="center">
                       {row.uid}

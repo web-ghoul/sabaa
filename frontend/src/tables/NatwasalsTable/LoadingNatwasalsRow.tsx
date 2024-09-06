@@ -20,6 +20,11 @@ const LoadingNatwasalsRow = ({ actions }: { actions: boolean }) => {
       <PrimaryTableCell align="center">
         <Skeleton variant="rounded" />
       </PrimaryTableCell>
+      {!mdScreen && (
+        <PrimaryTableCell align="center">
+          <Skeleton variant="rounded" />
+        </PrimaryTableCell>
+      )}
       {!smScreen && (
         <PrimaryTableCell align="center">
           <Skeleton variant="rounded" />

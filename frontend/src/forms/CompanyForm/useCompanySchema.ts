@@ -14,7 +14,7 @@ const useCompanySchema = () => {
     address: yup.string(),
     phone: yup.string().required("Company Phone is required"),
     proCode: yup.array(),
-    ownerId: yup.array().required("Onwer is required"),
+    ownerId: yup.array().required("Owner is required"),
     customerId: yup.array(),
     licenseNo: yup.string().required("License Number is required"),
     immgCardNo: yup.string().required("Immg Card Number is required"),

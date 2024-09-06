@@ -44,7 +44,7 @@ const CompanyInfoForm = ({ register, errors, type,setValue }: FormiksTypes) => {
           <Input
             register={register}
             errors={errors}
-            label={"Company Number"}
+            label={"Company Name"}
             name={"companyName"}
           />
           <Input

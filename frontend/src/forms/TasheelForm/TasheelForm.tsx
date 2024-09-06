@@ -8,6 +8,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import { FormsContext } from "../../contexts/FormsContext";
 import { ModalsContext } from "../../contexts/ModalsContext";
+import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import { PrimaryButton } from "../../mui/buttons/PrimaryButton";
 import { RootState } from "../../store/store";
@@ -21,7 +22,13 @@ import {
   TasheelTypes,
 } from "../../types/store.types";
 
-const TasheelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
+const TasheelForm = ({
+  register,
+  errors,
+  setValue,
+  getValues,
+  type,
+}: FormiksTypes) => {
   const { formsLoading, setEditableTasheelData, editableTasheelData } =
     useContext(FormsContext);
   const { handleCloseTasheelModal } = useContext(ModalsContext);
@@ -42,16 +49,25 @@ const TasheelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
   const { token } = useSelector((state: RootState) => state.auth);
 
   const handleChangeValues = (d: TasheelTypes, reset?: boolean) => {
+    if (d?.password) {
+      handleAlert({ msg: "Person has already Tasheel Service" });
+    }
     setValue("name", d.name || "");
     setValue("nameAr", d.nameAr || "");
     setValue("personCode", d.personCode || "");
     setValue("emiratesId", d.emiratesId || "");
-    setValue("email", d.email || "");
+    setValue("personEmail", d.email || "");
     setValue(
       "type",
       d.type && d.type.toLowerCase() === "pro"
         ? "officer"
-        : d.type || "employee"
+        : d.type === "customer"
+        ? "customer"
+        : d.type === "owner"
+        ? "owner"
+        : d.type === "employee"
+        ? "employee"
+        : ""
     );
     if (d.owner) {
       setValue("owner", (d.owner as OwnerTypes)._id);
@@ -125,6 +141,16 @@ const TasheelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           });
           setPersons(p);
         } else {
+          if (!data.name) {
+            handleAlert({ msg: "No Data Found", status: "error" });
+            setValue("name", "");
+            setValue("nameAr", "");
+            setValue("personCode", "");
+            setValue("emiratesId", "");
+            setValue("personEmail", "");
+            setValue("type", "");
+            return;
+          }
           const d = data as TasheelTypes;
           setEditableTasheelData(d);
           handleChangeValues(d);
@@ -199,14 +225,14 @@ const TasheelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
           <Input
             register={register}
             errors={errors}
-            label={"Security 1"}
+            label={"Security Question 1"}
             name={"security1"}
             type={"text"}
           />
           <Input
             register={register}
             errors={errors}
-            label={"Security 2"}
+            label={"Security Question 2"}
             name={"security2"}
             type={"text"}
           />
@@ -234,68 +260,68 @@ const TasheelForm = ({ register, errors, setValue, type }: FormiksTypes) => {
         </Box>
       </Box>
 
-      <Divider />
-
-      <Box className={`grid justify-stretch items-center gap-4`}>
-        <Typography variant="h4" className={`!font-[700]`}>
-          Person Information
-        </Typography>
-        <Box
-          className={`grid grid-cols-3 justify-stretch items-start gap-6`}
-          sx={{
-            "& input , & select": {
-              textFillColor: (theme) =>
-                `${theme.palette.primary.main} !important`,
-            },
-          }}
-        >
-          <Input
-            register={register}
-            errors={errors}
-            label={"English Name"}
-            name={"name"}
-            disabled
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Arabic Name"}
-            name={"nameAr"}
-            disabled
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Person Code"}
-            name={"personCode"}
-            disabled
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Emirates Id"}
-            name={"emiratesId"}
-            disabled
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"Email"}
-            name={"email"}
-            type={"email"}
-            disabled
-          />
-          <Input
-            register={register}
-            errors={errors}
-            label={"type"}
-            name={"type"}
-            select
-            options={["owner", "customer", "officer", "employee"]}
-            disabled
-          />
-        </Box>
-      </Box>
+      {type === "addTasheel" && (
+        <>
+          <Divider />
+          <Box className={`grid justify-stretch items-center gap-4`}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Person Information
+            </Typography>
+            <Box
+              className={`grid grid-cols-3 justify-stretch items-start gap-6`}
+              sx={{
+                "& input , & select": {
+                  textFillColor: (theme) =>
+                    `${theme.palette.primary.main} !important`,
+                },
+              }}
+            >
+              <Input
+                register={register}
+                errors={errors}
+                label={"English Name"}
+                name={"name"}
+                labeled={getValues("name") || "-"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Arabic Name"}
+                name={"nameAr"}
+                labeled={getValues("nameAr") || "-"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Person Code"}
+                name={"personCode"}
+                labeled={getValues("personCode") || "-"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Emirates Id"}
+                name={"emiratesId"}
+                labeled={getValues("emiratesId") || "-"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"Person Email"}
+                name={"personEmail"}
+                labeled={getValues("personEmail") || "-"}
+              />
+              <Input
+                register={register}
+                errors={errors}
+                label={"type"}
+                name={"type"}
+                labeled={getValues("type") || "-"}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>
         <SubmitButton loading={formsLoading}>

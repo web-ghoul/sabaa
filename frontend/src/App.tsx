@@ -31,6 +31,7 @@ import TasheelModal from "./modals/TasheelModal.tsx";
 import TransactionModal from "./modals/TransactionModal.tsx";
 import UploadEmployeesModal from "./modals/UploadEmployeesModal.tsx";
 import UserModal from "./modals/UserModal.tsx";
+import ViewLogsModal from "./modals/ViewLogsModal.tsx";
 import ViewSponsorModal from "./modals/ViewSponsorModal.tsx";
 import { getCustomizes } from "./store/customizesSlice.ts";
 import { AppDispatch } from "./store/store.ts";
@@ -82,6 +83,7 @@ const App = () => {
       <NationalityModal />
       <DownloadExcelModal />
       <TransactionModal />
+      <ViewLogsModal />
       <NewLCModal />
       <RoleModal />
       <OptionModal />

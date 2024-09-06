@@ -111,6 +111,54 @@ const SponsorDetails = ({
           />
         </Box>
       </Box>
+      {(data as SponsorTypes)?.medical && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Medical Insurance
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as SponsorTypes)?.medical?.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as SponsorTypes)?.medicalPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as SponsorTypes)?.medical?.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
+      {(data as SponsorTypes).iLOE && (
+        <>
+          <Divider />
+          <Box className={classes.sectionClasses}>
+            <Typography variant="h4" className={`!font-[700]`}>
+              Involuntary Loss Of Employment (ILOE)
+            </Typography>
+            <Box className={classes.profileInfoClasses}>
+              <DataBox
+                title={"Insurance Company"}
+                value={(data as SponsorTypes).iLOE.insurance}
+              />
+              <DataBox
+                title={"Policy Number"}
+                value={(data as SponsorTypes).iLOEPolicyNo}
+              />
+              <DataBox
+                title={"Expire Date"}
+                value={handleDate((data as SponsorTypes).iLOE.expireDate)}
+              />
+            </Box>
+          </Box>
+        </>
+      )}
     </Paper>
   );
 };

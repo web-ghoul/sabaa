@@ -28,6 +28,12 @@ const useCustomerSchema = () => {
     type: yup.string(),
     sponsor: yup.string(),
     remarks: yup.string(),
+    iLOEInsuranceCompany: yup.string(),
+    iLOEPolicyNo: yup.string(),
+    iLOEExpireDate: yup.string(),
+    medicalInsuranceCompany: yup.string(),
+    medicalPolicyNo: yup.string(),
+    medicalExpireDate: yup.string(),
   });
 
   const CustomerInitialValues = {
@@ -60,6 +66,22 @@ const useCustomerSchema = () => {
     sponsor: editableCustomerData?.sponsor || "",
     type: "customer",
     remarks: editableCustomerData?.remarks || "",
+    iLOEInsuranceCompany: editableCustomerData?.iLOE?.insurance || "",
+    iLOEPolicyNo: editableCustomerData?.iLOEPolicyNo || "",
+    iLOEExpireDate:
+      (editableCustomerData?.iLOE?.expireDate &&
+        new Date(editableCustomerData?.iLOE?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
+    medicalInsuranceCompany: editableCustomerData?.medical?.insurance || "",
+    medicalPolicyNo: editableCustomerData?.medicalPolicyNo || "",
+    medicalExpireDate:
+      (editableCustomerData?.medical?.expireDate &&
+        new Date(editableCustomerData?.medical?.expireDate)
+          .toISOString()
+          .split("T")[0]) ||
+      "",
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AutoCompleteSearch from "../../components/AutoCompleteSearch/AutoCompleteSearch";
@@ -196,6 +196,68 @@ const SponsorForm = ({
           name={"remarks"}
           textarea
         />
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Medical Insurance
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            register={register}
+            errors={errors}
+            label={"Medical Insurance Company"}
+            name={"medicalInsuranceCompany"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            name={"medicalPolicyNo"}
+            label={"Medical Policy Number"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            type={"date"}
+            name={"medicalExpireDate"}
+            label={"Medical Expire Date"}
+          />
+        </Box>
+      </Box>
+
+      <Divider />
+
+      <Box className={`grid justify-stretch items-center gap-4`}>
+        <Typography variant="h4" className={`!font-[700]`}>
+          Involuntary Loss Of Employment (ILOE)
+        </Typography>
+        <Box
+          className={`grid grid-cols-4 justify-stretch items-start gap-6 md:grid-cols-3 sm:!grid-cols-2 xs:!grid-cols-1 md:gap-5 sm:!gap-4`}
+        >
+          <Input
+            register={register}
+            errors={errors}
+            label={"IOLE Insurance Company"}
+            name={"iLOEInsuranceCompany"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            name={"iLOEPolicyNo"}
+            label={"IOLE Policy Number"}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            type={"date"}
+            name={"iLOEExpireDate"}
+            label={"IOLE Expire Date"}
+          />
+        </Box>
       </Box>
 
       <Box className={`flex justify-stretch items-center gap-4 m-auto`}>

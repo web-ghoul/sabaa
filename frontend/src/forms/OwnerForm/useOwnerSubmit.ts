@@ -40,7 +40,7 @@ const useOwnerSubmit = () => {
     if (values.personCode) {
       formData.append("personCode", values.personCode.trim());
     } else {
-      formData.append("emiratesId", "");
+      formData.append("personCode", "");
     }
     formData.append("avatar", avatar);
     formData.append("name", values.name.trim());
@@ -77,6 +77,26 @@ const useOwnerSubmit = () => {
     }
     if (type) {
       formData.append("type", type);
+    }
+    formData.append("medical.insurance", values.medicalInsuranceCompany.trim());
+    if (values.medicalPolicyNo) {
+      formData.append("medicalPolicyNo", values.medicalPolicyNo);
+    }
+    if (values.medicalExpireDate) {
+      formData.append(
+        "medical.expireDate",
+        values.medicalExpireDate.toString().trim()
+      );
+    }
+    formData.append("iLOE.insurance", values.iLOEInsuranceCompany.trim());
+    if (values.iLOEPolicyNo) {
+      formData.append("iLOEPolicyNo", values.iLOEPolicyNo);
+    }
+    if (values.iLOEExpireDate) {
+      formData.append(
+        "iLOE.expireDate",
+        values.iLOEExpireDate.toString().trim()
+      );
     }
     return formData;
   };

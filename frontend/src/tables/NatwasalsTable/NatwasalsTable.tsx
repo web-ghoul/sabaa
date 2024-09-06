@@ -39,7 +39,6 @@ const NatwasalsTable = ({
   const { handleOpenTableMenu, queries, handleAddQuery } =
     useContext(AppContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  // const { setEChannelIndex } = useContext(ExcelsContext);
   const { setEditableNatwasalData } = useContext(FormsContext);
   const mdScreen = useMediaQuery("(max-width:992px)");
   const smScreen = useMediaQuery("(max-width:768px)");
@@ -59,12 +58,6 @@ const NatwasalsTable = ({
     }
   };
 
-  // const handleView = () => {
-  //   if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
-  //     handleAlert({ msg: "Under Development" });
-  //   }
-  // };
-
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
     index: number
@@ -72,17 +65,8 @@ const NatwasalsTable = ({
     if (data) {
       setEditableNatwasalData(data[index]);
     }
-    // setEChannelIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
-
-  // useEffect(() => {
-  //   if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
-  //     setSheet(true);
-  //   } else {
-  //     setSheet(false);
-  //   }
-  // }, [pathname, sheet]);
 
   useEffect(() => {
     dispatch(getNatwasalsCounter());
@@ -109,6 +93,9 @@ const NatwasalsTable = ({
             <PrimaryTableCell align="center">Arabic Name</PrimaryTableCell>
           )}
           <PrimaryTableCell align="center">Username</PrimaryTableCell>
+          {!mdScreen && (
+            <PrimaryTableCell align="center">User Type</PrimaryTableCell>
+          )}
           {!smScreen && (
             <PrimaryTableCell align="center">Password</PrimaryTableCell>
           )}
@@ -129,11 +116,7 @@ const NatwasalsTable = ({
               const type = (row as NatwasalTypes).type.toLowerCase();
               return (
                 <PrimaryTableRow key={i}>
-                  <PrimaryTableCell
-                    // onClick={() => handleView()}
-                    component="th"
-                    scope="row"
-                  >
+                  <PrimaryTableCell component="th" scope="row">
                     <Link
                       to={
                         type === "owner"
@@ -175,6 +158,11 @@ const NatwasalsTable = ({
                   <PrimaryTableCell align="center">
                     {row.username}
                   </PrimaryTableCell>
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.type}
+                    </PrimaryTableCell>
+                  )}
                   {!smScreen && (
                     <PrimaryTableCell align="center">
                       {row.password}

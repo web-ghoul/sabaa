@@ -7,6 +7,7 @@ import {
   EmployeeTypes,
   JobTypes,
   NationalityTypes,
+  NatwasalTypes,
   OwnerTypes,
   ProTypes,
   RoleTypes,
@@ -194,8 +195,8 @@ interface FormsContextTypes {
   setEditableEChannelData: (eChannel: EChannelTypes | null) => void;
   editableTasheelData: TasheelTypes | null;
   setEditableTasheelData: (tasheel: TasheelTypes | null) => void;
-  editableNatwasalData: TasheelTypes | null;
-  setEditableNatwasalData: (natwasal: TasheelTypes | null) => void;
+  editableNatwasalData: NatwasalTypes | null;
+  setEditableNatwasalData: (natwasal: NatwasalTypes | null) => void;
   editableTransactionData: TransactionTypes | null;
   setEditableTransactionData: (transaction: TransactionTypes | null) => void;
   editableRoleData: RoleTypes | null;
@@ -273,6 +274,9 @@ interface ModalsContextTypes {
   openTransactionModal: boolean;
   handleOpenTransactionModal: (string: string) => void;
   handleCloseTransactionModal: () => void;
+  openViewLogsModal: boolean;
+  handleOpenViewLogsModal: () => void;
+  handleCloseViewLogsModal: () => void;
   openNewLCModal: boolean;
   handleOpenNewLCModal: () => void;
   handleCloseNewLCModal: () => void;

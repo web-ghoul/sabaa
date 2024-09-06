@@ -1,7 +1,7 @@
 import { FilterAltRounded, FilterListRounded } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import ExcelButtons from "../../components/ExcelButtons/ExcelButtons";
@@ -9,8 +9,10 @@ import Input from "../../components/Input/Input";
 import { AppContext } from "../../contexts/AppContext";
 import { FormsContext } from "../../contexts/FormsContext";
 import { getCompanies } from "../../store/companiesSlice";
-import { AppDispatch } from "../../store/store";
+import { getSelectors } from "../../store/selectorsSlice";
+import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
+import { selectorsKeysTypes } from "../../types/store.types";
 
 const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const navigate = useNavigate();
@@ -20,6 +22,12 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
   const { queries, setQueries, handleAddQuery } = useContext(AppContext);
   const { searchForCompanies, setSearchForCompanies } =
     useContext(FormsContext);
+  const { selectors } = useSelector((state: RootState) => state.selectors);
+  const [states, setStates] = useState<string[]>(["loading..."]);
+  const [molCategories, setMolCategories] = useState<string[]>(["loading..."]);
+  const [establishmentTypes, setEstablishmentTypes] = useState<string[]>([
+    "loading...",
+  ]);
 
   const handleSearch = (value: string) => {
     setSearchForCompanies(value);
@@ -78,6 +86,31 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
     setValue("licenseTo", "");
   };
 
+  useEffect(() => {
+    dispatch(getSelectors());
+  });
+
+  useEffect(() => {
+    if (selectors) {
+      selectors.map((selector) => {
+        const sKeys = Object.keys(selector);
+        if (sKeys.length > 0) {
+          if (sKeys[0] === "state") {
+            setStates(selector[sKeys[0] as selectorsKeysTypes].data);
+          }
+          if (sKeys[0] === "establishmentType") {
+            setEstablishmentTypes(
+              selector[sKeys[0] as selectorsKeysTypes].data
+            );
+          }
+          if (sKeys[0] === "molCategory") {
+            setMolCategories(selector[sKeys[0] as selectorsKeysTypes].data);
+          }
+        }
+      });
+    }
+  }, [selectors]);
+
   return (
     <Paper
       className={`grid justify-stretch items-center gap-4  p-4 !rounded-lg md-p-3 sm:!p-2 md:gap-3`}
@@ -95,7 +128,7 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
             change={handleSearch}
           />
         </Box>
-        <ExcelButtons addBtn={"Add Company"} variant="companies"  />
+        <ExcelButtons addBtn={"Add Company"} variant="companies" />
       </Box>
       <Box className={`grid justify-stretch items-center gap-2`}>
         <Box
@@ -135,7 +168,7 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
               register={register}
               errors={errors}
               change={handleFilterByState}
-              options={["dubai"]}
+              options={states}
               select
             />
             <Input
@@ -144,7 +177,7 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
               register={register}
               errors={errors}
               change={handleFilterByMOLCategory}
-              options={[]}
+              options={molCategories}
               select
             />
             <Input
@@ -153,7 +186,7 @@ const CompaniesOptionsForm = ({ register, errors, setValue }: FormiksTypes) => {
               register={register}
               errors={errors}
               change={handleFilterByEstablishmentType}
-              options={[]}
+              options={establishmentTypes}
               select
             />
           </Box>

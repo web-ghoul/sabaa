@@ -2,6 +2,7 @@ import {
   ApprovalRounded,
   DeleteRounded,
   EditRounded,
+  EventNoteRounded,
   VisibilityRounded,
 } from "@mui/icons-material";
 import { Menu } from "@mui/material";
@@ -19,15 +20,20 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
   const { handleOpenTransactionModal, handleOpenDeleteModal } =
     useContext(ModalsContext);
   const { handleDeleteOwnerFromSheet } = useContext(ExcelsContext);
+  const { handleOpenViewLogsModal } = useContext(ModalsContext);
 
   const handleView = () => {};
 
   const handleEdit = () => {
-    handleOpenTransactionModal("editWorkPermit");
+    handleOpenTransactionModal("editTransaction");
   };
 
   const handleApprovedStatus = () => {
-    handleOpenTransactionModal("approvedStatus");
+    handleOpenTransactionModal("approvedTransaction");
+  };
+
+  const handleViewLogs = () => {
+    handleOpenViewLogsModal();
   };
 
   const handleDelete = () => {
@@ -77,6 +83,11 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
           handling={handleApprovedStatus}
         />
       )}
+      <TableMenuItem
+        icon={<EventNoteRounded />}
+        title={"Logs"}
+        handling={handleViewLogs}
+      />
       <TableMenuItem
         icon={<DeleteRounded />}
         title={"Delete"}

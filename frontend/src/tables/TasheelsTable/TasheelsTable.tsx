@@ -59,30 +59,15 @@ const TasheelsTable = ({
     }
   };
 
-  // const handleView = () => {
-  //   if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
-  //     handleAlert({ msg: "Under Development" });
-  //   }
-  // };
-
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
-    index: number,
+    index: number
   ) => {
     if (data) {
       setEditableTasheelData(data[index]);
     }
-    // setEChannelIndex({ fileIndex: fileIndex || 0, index });
     handleOpenTableMenu(event);
   };
-
-  // useEffect(() => {
-  //   if (pathname === `${import.meta.env.VITE_UPLOAD_EMPLOYEES_ROUTE}`) {
-  //     setSheet(true);
-  //   } else {
-  //     setSheet(false);
-  //   }
-  // }, [pathname, sheet]);
 
   useEffect(() => {
     dispatch(getTasheelsCounter());
@@ -108,6 +93,9 @@ const TasheelsTable = ({
           {!lgScreen && (
             <PrimaryTableCell align="center">Arabic Name</PrimaryTableCell>
           )}
+          {!mdScreen && (
+            <PrimaryTableCell align="center">User Type</PrimaryTableCell>
+          )}
           <PrimaryTableCell align="center">Username</PrimaryTableCell>
           {!smScreen && (
             <PrimaryTableCell align="center">Password</PrimaryTableCell>
@@ -129,11 +117,7 @@ const TasheelsTable = ({
               const type = (row as TasheelTypes).type.toLowerCase();
               return (
                 <PrimaryTableRow key={i}>
-                  <PrimaryTableCell
-                    // onClick={() => handleView()}
-                    component="th"
-                    scope="row"
-                  >
+                  <PrimaryTableCell component="th" scope="row">
                     <Link
                       to={
                         type === "owner"
@@ -170,6 +154,11 @@ const TasheelsTable = ({
                   {!lgScreen && (
                     <PrimaryTableCell align="center">
                       {row.nameAr}
+                    </PrimaryTableCell>
+                  )}
+                  {!mdScreen && (
+                    <PrimaryTableCell align="center">
+                      {row.type}
                     </PrimaryTableCell>
                   )}
                   <PrimaryTableCell align="center">
