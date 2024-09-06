@@ -136,6 +136,18 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         sponsors: [],
         gender: "",
         job: "",
+        medicalInsuranceCompany: "",
+        medicalPolicyNo: "",
+        medical: {
+          insurance: "",
+          expireDate: new Date(),
+        },
+        iLOEInsuranceCompany: "",
+        iLOEPolicyNo: "",
+        iLOE: {
+          insurance: "",
+          expireDate: new Date(),
+        },
       };
       owner["personCode"] = `${data[i][0]}`;
       owner["name"] = `${data[i][1]}`;
@@ -200,6 +212,18 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         sponsors: [],
         gender: "",
         job: "",
+        medicalInsuranceCompany: "",
+        medicalPolicyNo: "",
+        medical: {
+          insurance: "",
+          expireDate: new Date(),
+        },
+        iLOEInsuranceCompany: "",
+        iLOEPolicyNo: "",
+        iLOE: {
+          insurance: "",
+          expireDate: new Date(),
+        },
       };
       pro["personCode"] = `${data[i][0]}`;
       pro["name"] = `${data[i][1]}`;
@@ -264,6 +288,18 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         sponsors: [],
         gender: "",
         job: "",
+        medicalInsuranceCompany: "",
+        medicalPolicyNo: "",
+        medical: {
+          insurance: "",
+          expireDate: new Date(),
+        },
+        iLOEInsuranceCompany: "",
+        iLOEPolicyNo: "",
+        iLOE: {
+          insurance: "",
+          expireDate: new Date(),
+        },
       };
       customer["personCode"] = `${data[i][0]}`;
       customer["name"] = `${data[i][1]}`;
@@ -340,6 +376,7 @@ const UploadExcel = ({ variant }: { variant: EntitiesType }) => {
         },
         fileImmgNo: "",
         companyName: [],
+        transactionNo: "",
       };
       employee["personCode"] = `${data[i][0]}`;
       employee["name"] = `${data[i][1]}`;
