@@ -153,9 +153,21 @@ export class CompanyService {
       this.companyModel
       .findById(id)
       .populate([
-        { path: 'ownerId', model: 'Owner' },
-        { path: 'proCode', model: 'Owner' },
-        {path: 'employees', model: 'Employee'},
+        { 
+          path: 'ownerId', 
+          model: 'Owner',
+          match: { deleted: false } // Only include if deleted is false
+        },
+        { 
+          path: 'proCode', 
+          model: 'Owner',
+          match: { deleted: false } // Only include if deleted is false
+        },
+        { 
+          path: 'employees', 
+          model: 'Employee',
+          match: { deleted: false } // Only include if deleted is false
+        }
       ])
       .exec(),
       this.activityModel.find({id: id, route: "company"}).exec()

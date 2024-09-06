@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { ActivityLog } from 'schemas/activityLog.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ActivitiesService {
     return 'This action adds a new activity';
   }
 
-  findAll(limit: number, page: number, search: string = '', operation: string = '', from: string = '', to: string= '', route: string= '', userId: string = '') {
+  findAll(limit: number, page: number, search: string = '', operation: string = '', from: string = '', to: string= '', route: string= '', userId: string = '', id: string = '') {
 
     const query = {}  
 
@@ -29,6 +29,9 @@ export class ActivitiesService {
     operation  != '' ? (query['action'] = operation ) : undefined;
     route != '' ? (query['route'] = route) : undefined;
     userId != '' ? (query['userId'] = userId) : undefined;
+    id != '' ? (query['id'] = new mongoose.Types.ObjectId(id)) : undefined;
+    console.log(query);
+    
     // console.log(query);
     // console.log(operation);
     

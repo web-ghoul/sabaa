@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsString, IsDate, IsBoolean, IsOptional, IsNumber, IsMongoId } from 'class-validator';
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 export class CreateTransactionDto {
   @IsString()
@@ -126,6 +126,9 @@ export class CreateTransactionDto {
   @IsString()
   remarks?: string;
 
+  @IsOptional()
+  @IsMongoId()
+  userId?: mongoose.Types.ObjectId;
 
   @IsOptional()
   @IsDate()
