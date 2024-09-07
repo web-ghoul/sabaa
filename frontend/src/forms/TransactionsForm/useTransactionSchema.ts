@@ -121,15 +121,15 @@ const useTransactionSchema = () => {
     passportNumber: yup.string(),
     passportExpiry: yup.string(),
     job: yup.string(),
-    uid: yup.string().required("UID Number is required"),
-    emiratesNo: yup.string().required("Emirates ID is required"),
+    uid: yup.string(),
+    emiratesNo: yup.string(),
     salary: yup.string(),
     remarks: yup.string(),
 
     status: yup.string().required("Status is required"),
     statusDate: yup.string().required("Status Date Type is required"),
     lcNumber: yup.string().required("LC Number is required"),
-    lcExpiryDate: yup.string(),
+    lcExpiryDate: yup.string().required("LC Expire Date is required"),
     visitExpiryDate: yup.string(),
 
     tawjeehDate: yup.string(),
@@ -235,7 +235,7 @@ const useTransactionSchema = () => {
 
     lcNumber: yup.string().required("LC Number is required"),
     lcStatus: yup.string().required("LC Status is required"),
-    lcExpiryDate: yup.string(),
+    lcExpiryDate: yup.string().required("LC Expire Date is required"),
     visitExpiryDate: yup.string(),
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
@@ -389,7 +389,7 @@ const useTransactionSchema = () => {
 
     lcNumber: yup.string().required("LC Number is required"),
     lcStatus: yup.string().required("LC Status is required"),
-    lcExpiryDate: yup.string(),
+    lcExpiryDate: yup.string().required("LC Expire Date is required"),
     visitExpiryDate: yup.string(),
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
