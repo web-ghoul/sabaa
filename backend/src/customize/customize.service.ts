@@ -8,6 +8,11 @@ export class CustomizeService {
     try {
       // Convert the object to a JSON string
       createCustomizeDto["logo"] = logo ? logo.path : undefined;
+      if (createCustomizeDto["logo"] == undefined) {
+        delete createCustomizeDto["logo"];
+       const {logo} =  await this.findAll();
+       createCustomizeDto["logo"] = logo
+      }
       
       const jsonString = JSON.stringify(createCustomizeDto, null, 2);
   
