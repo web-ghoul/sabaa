@@ -18,7 +18,7 @@ const useCompanyInfoSubmit = () => {
     handleOpenFormsLoading();
     const formData = new FormData();
     formData.append("logo", companyInfoLogo);
-    formData.append("compan yName", values.companyName);
+    formData.append("company Name", values.companyName);
     formData.append("mobile", values.mobile);
     formData.append("officialEmail", values.officialEmail);
     formData.append("websiteLink", values.websiteLink);
