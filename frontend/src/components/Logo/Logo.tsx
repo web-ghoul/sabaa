@@ -28,7 +28,7 @@ const Logo = ({ color, noTitle, handling }: LogoTypes) => {
             customizes
               ? `${
                   import.meta.env.VITE_SERVER_URL
-                }/${customizes.logo.replaceAll("\\", "/")}`
+                }/${customizes?.logo?.replaceAll("\\", "/")}`
               : "/images/icon_fit.png"
           }")`,
         }}
