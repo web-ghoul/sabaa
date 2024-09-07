@@ -16,8 +16,11 @@ const useTransactionSchema = () => {
     transactionNo: yup.string().required("Transaction number is required"),
     cardType: yup.string().required("Card Type is required"),
     createdAt: yup.string().required("Current Date is required"),
+
     gender: yup.string().required("Gender is required"),
     personCode: yup.string(),
+    uid: yup.string(),
+    emiratesNo: yup.string(),
     companyCode: yup.string(),
     companyId: yup.string().required("Company Id is required"),
     companyName: yup.string().required("Company Name is required"),
@@ -45,8 +48,6 @@ const useTransactionSchema = () => {
         "Passport Expiry Date must be at least 6 months from today"
       ),
     job: yup.string().required("Job is required"),
-    uid: yup.string(),
-    emiratesNo: yup.string(),
     salary: yup.string(),
     remarks: yup.string(),
     lcStatus: yup.string(),
@@ -105,7 +106,7 @@ const useTransactionSchema = () => {
     cardType: yup.string().required("Card Type is required"),
 
     gender: yup.string(),
-    personCode: yup.string(),
+    personCode: yup.string().required("Person Code is required"),
     companyCode: yup.string(),
     companyId: yup.string(),
     companyName: yup.string(),
@@ -120,8 +121,8 @@ const useTransactionSchema = () => {
     passportNumber: yup.string(),
     passportExpiry: yup.string(),
     job: yup.string(),
-    uid: yup.string(),
-    emiratesNo: yup.string(),
+    uid: yup.string().required("UID Number is required"),
+    emiratesNo: yup.string().required("Emirates ID is required"),
     salary: yup.string(),
     remarks: yup.string(),
 

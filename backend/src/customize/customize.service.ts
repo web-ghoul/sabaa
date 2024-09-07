@@ -6,15 +6,18 @@ export class CustomizeService {
   private filePath = __dirname + "/../data/customize.json";
   async create(createCustomizeDto: object, logo?: Express.Multer.File) {
     try {
-      // Convert the object to a JSON string
-      createCustomizeDto["logo"] = logo ? logo.path : undefined;
-      
+      createCustomizeDto['logo'] = logo ? logo.path : undefined;
+      if (createCustomizeDto['logo'] == undefined) {
+        delete createCustomizeDto['logo'];
+        const { logo } = await this.findAll();
+        createCustomizeDto['logo'] = logo;
+      }
+
       const jsonString = JSON.stringify(createCustomizeDto, null, 2);
-  
-      // Write the JSON string to the file
+
       await fs.writeFile(this.filePath, jsonString, 'utf-8');
-      
-      return createCustomizeDto ; 
+
+      return createCustomizeDto;
     } catch (error) {
       console.error('Error writing to file', error);
     }

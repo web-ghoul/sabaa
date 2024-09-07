@@ -58,14 +58,12 @@ const ApprovedTransactionForm = ({
           errors={errors}
           label={"Employee Arabic Name"}
           name={"employeeNameAr"}
-          disabled
         />
         <Input
           register={register}
           errors={errors}
           label={"Person Number"}
           name={"personCode"}
-          disabled
         />
       </Box>
 

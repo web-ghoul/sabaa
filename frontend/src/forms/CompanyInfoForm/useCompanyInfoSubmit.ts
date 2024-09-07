@@ -18,12 +18,15 @@ const useCompanyInfoSubmit = () => {
     handleOpenFormsLoading();
     const formData = new FormData();
     formData.append("logo", companyInfoLogo);
-    formData.append("companyName", values.companyName);
+    formData.append("compan yName", values.companyName);
     formData.append("mobile", values.mobile);
     formData.append("officialEmail", values.officialEmail);
     formData.append("websiteLink", values.websiteLink);
     await server
-      .post(`/customize`, formData)
+      .post(
+        `/customize`,
+        typeof companyInfoLogo === "object" ? formData : values
+      )
       .then(() => {
         handleAlert({
           msg: "Company Info is Updated Successfully",

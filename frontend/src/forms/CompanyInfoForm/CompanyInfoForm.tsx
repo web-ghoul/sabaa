@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from "../../store/store";
 import { FormiksTypes } from "../../types/forms.types";
 
 const CompanyInfoForm = ({ register, errors, type,setValue }: FormiksTypes) => {
-  const { formsLoading,setCompanyInfoLogo } = useContext(FormsContext);
+  const { formsLoading, setCompanyInfoLogo } = useContext(FormsContext);
   const dispatch = useDispatch<AppDispatch>();
   const { customizes } = useSelector((state: RootState) => state.customizes);
 
@@ -19,16 +19,16 @@ const CompanyInfoForm = ({ register, errors, type,setValue }: FormiksTypes) => {
     dispatch(getCustomizes());
   }, [dispatch]);
 
-  useEffect(()=>{
-    if(customizes){
-      setCompanyInfoLogo(customizes.logo)
-      setValue("logo",customizes.logo) 
-      setValue("companyName",customizes.companyName) 
-      setValue("mobile",customizes.mobile) 
-      setValue("officialEmail",customizes.officialEmail) 
-      setValue("websiteLink",customizes.websiteLink) 
+  useEffect(() => {
+    if (customizes) {
+      setCompanyInfoLogo(customizes.logo);
+      setValue("logo", customizes.logo);
+      setValue("companyName", customizes.companyName);
+      setValue("mobile", customizes.mobile);
+      setValue("officialEmail", customizes.officialEmail);
+      setValue("websiteLink", customizes.websiteLink);
     }
-  },[customizes])
+  }, [customizes]);
 
   return (
     <Paper className={`paper`}>
