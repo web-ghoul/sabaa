@@ -82,7 +82,7 @@ export class Transaction {
   @Prop({ type: Date })
   changeStatusDate: Date;
 
-  @Prop({ default: 'Cancel' })
+  @Prop({ default: 'Active' })
   lcStatus: string;
 
   @Prop({ default: 'In Process' })

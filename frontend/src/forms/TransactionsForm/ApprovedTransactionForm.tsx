@@ -58,12 +58,25 @@ const ApprovedTransactionForm = ({
           errors={errors}
           label={"Employee Arabic Name"}
           name={"employeeNameAr"}
+          disabled
         />
         <Input
           register={register}
           errors={errors}
           label={"Person Number"}
           name={"personCode"}
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"Emirates ID"}
+          name={"emiratesNo"}
+        />
+        <Input
+          register={register}
+          errors={errors}
+          label={"UID Number"}
+          name={"uid"}
         />
       </Box>
 
@@ -111,6 +124,7 @@ const ApprovedTransactionForm = ({
             name={"lcStatus"}
             options={["Active", "Cancel"]}
             select
+            value="Active"
           />
           <Input
             register={register}

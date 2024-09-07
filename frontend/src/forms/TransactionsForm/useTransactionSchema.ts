@@ -129,8 +129,8 @@ const useTransactionSchema = () => {
     status: yup.string().required("Status is required"),
     statusDate: yup.string().required("Status Date Type is required"),
     lcNumber: yup.string().required("LC Number is required"),
-    lcExpiryDate: yup.string().required("LC Expire Date is required"),
-    visitExpiryDate: yup.string().required("Visit Expire Date is required"),
+    lcExpiryDate: yup.string(),
+    visitExpiryDate: yup.string(),
 
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
@@ -235,7 +235,7 @@ const useTransactionSchema = () => {
 
     lcNumber: yup.string().required("LC Number is required"),
     lcStatus: yup.string().required("LC Status is required"),
-    lcExpiryDate: yup.string().required("LC Expire Date is required"),
+    lcExpiryDate: yup.string(),
     visitExpiryDate: yup.string(),
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
@@ -389,7 +389,7 @@ const useTransactionSchema = () => {
 
     lcNumber: yup.string().required("LC Number is required"),
     lcStatus: yup.string().required("LC Status is required"),
-    lcExpiryDate: yup.string().required("LC Expire Date is required"),
+    lcExpiryDate: yup.string(),
     visitExpiryDate: yup.string(),
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
