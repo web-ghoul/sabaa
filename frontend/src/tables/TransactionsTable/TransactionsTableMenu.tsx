@@ -89,11 +89,13 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
         title={"View"}
         handling={handleView}
       />
-      <TableMenuItem
-        icon={<EditRounded />}
-        title={"Edit"}
-        handling={handleEdit}
-      />
+      {pathname !== `${import.meta.env.VITE_TRANSACTIONS_ALL_ROUTE}` && (
+        <TableMenuItem
+          icon={<EditRounded />}
+          title={"Edit"}
+          handling={handleEdit}
+        />
+      )}
       {type === "pre" && editableTransactionData?.status !== "Approved" && (
         <TableMenuItem
           icon={<ApprovalRounded />}
