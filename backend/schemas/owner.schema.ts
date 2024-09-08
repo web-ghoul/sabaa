@@ -5,90 +5,100 @@ export type OwnerDocument = HydratedDocument<Owner>;
 
 @Schema({ timestamps: true })
 export class Owner {
-  
-    @Prop({ required: true })
-    uid: string; //not unique 
+  @Prop({ required: true })
+  uid: string; //not unique
 
-    @Prop({ required: true })
-    name: string;
-    
-    @Prop({ required: true })
-    nameAr: string;
+  @Prop({ required: true })
+  name: string;
 
-    @Prop()
-    avatar: string;
+  @Prop({ required: true })
+  nameAr: string;
 
-    @Prop()
-    dob: Date;
+  @Prop()
+  avatar: string;
 
-    @Prop({ type: String, ref: 'Nationality', required: true })
-    idNationality: string;
-  
-    @Prop()
-    nationality: string;
+  @Prop()
+  dob: Date;
 
-    @Prop()
-    phone: string;
+  @Prop({ type: String, ref: 'Nationality', required: true })
+  idNationality: string;
 
-    @Prop()
-    email: string;
+  @Prop()
+  nationality: string;
 
-    @Prop()
-    remarks: string;
+  @Prop()
+  phone: string;
 
-    @Prop()
-    state: string;
+  @Prop()
+  email: string;
 
-    @Prop()
-    address: string;
-    @Prop()
-    sponsor: string;
+  @Prop()
+  remarks: string;
 
-    @Prop()
-    residenceExpiryDate: Date;
+  @Prop()
+  state: string;
 
-    @Prop()
-    fileImmgNo: string;
-    
-    @Prop({default: 'active'})
-    status: string;
+  @Prop()
+  address: string;
+  @Prop()
+  sponsor: string;
 
-    @Prop({ type: Array, default: [], ref: 'Sponsor' })
-    sponsors: string[];
+  @Prop()
+  residenceExpiryDate: Date;
 
-    // @Prop()
-    // cardNumber: string;
+  @Prop()
+  fileImmgNo: string;
 
-    @Prop()
-    type: string;
+  @Prop({ default: 'active' })
+  status: string;
 
-    // @Prop()
-    // proCode: string[]; //array of Pro
+  @Prop({ type: Array, default: [], ref: 'Sponsor' })
+  sponsors: string[];
 
-    // @Prop({default: false})
-    // isCustomer: boolean
+  // @Prop()
+  // cardNumber: string;
 
-    // @Prop({default: false})
-    // isPro: boolean;
+  @Prop()
+  type: string;
 
-    @Prop()
-    gender: string;
-  
-    @Prop()
-    job: string;
+  // @Prop()
+  // proCode: string[]; //array of Pro
 
-    @Prop({ type: String, trim: true, sparse: true })
-    emiratesId: string;
+  // @Prop({default: false})
+  // isCustomer: boolean
 
-    @Prop({ type: String, trim: true, sparse: true })
-    personCode: string;
+  // @Prop({default: false})
+  // isPro: boolean;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-    user: string;
+  @Prop({ type: Object })
+  medical: object;
 
-    @Prop({default : false})
-    deleted: boolean;
-  
+  @Prop({ type: String })
+  medicalPolicyNo: string;
+
+  @Prop({ type: Object })
+  iLOE: object;
+
+  @Prop({ type: String })
+  iLOEPolicyNo: string;
+
+  @Prop()
+  gender: string;
+
+  @Prop()
+  job: string;
+
+  @Prop({ type: String, trim: true, sparse: true })
+  emiratesId: string;
+
+  @Prop({ type: String, trim: true, sparse: true })
+  personCode: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: string;
+
+  @Prop({ default: false })
+  deleted: boolean;
 }
 
 export const OwnerSchema = SchemaFactory.createForClass(Owner);
