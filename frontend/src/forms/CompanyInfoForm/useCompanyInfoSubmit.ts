@@ -21,9 +21,7 @@ const useCompanyInfoSubmit = () => {
     formData.append("websiteLink", values.websiteLink);
     await server
       .post(
-        `/customize`,
-        typeof companyInfoLogo === "object" ? formData : values
-      )
+        `/customize`, formData)
       .then(() => {
         handleAlert({
           msg: "Company Info is Updated Successfully",
