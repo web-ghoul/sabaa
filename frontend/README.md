@@ -742,7 +742,7 @@ settings:
 
 
 New Edits : 
-1- Company Info Name
+1- Company Info Name (Done)
 2- Transaction Number will be unique (Backend)
 3- Approved is Updated Process
 4- Employee is Created After Approved Transaction  (Backend)

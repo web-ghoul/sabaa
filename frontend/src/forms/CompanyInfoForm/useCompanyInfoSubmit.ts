@@ -4,13 +4,9 @@ import { handleAlert } from "../../functions/handleAlert";
 import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
 import { CompanyInfoFormTypes } from "../../types/forms.types";
-import { getCustomizes } from "../../store/customizesSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
 
 const useCompanyInfoSubmit = () => {
   const { server } = useAxios();
-  const dispatch = useDispatch<AppDispatch>();
   const { handleOpenFormsLoading, handleCloseFormsLoading, companyInfoLogo } =
     useContext(FormsContext);
 
@@ -24,15 +20,12 @@ const useCompanyInfoSubmit = () => {
     formData.append("websiteLink", values.websiteLink);
     await server
       .post(
-        `/customize`,
-        typeof companyInfoLogo === "object" ? formData : values
-      )
+        `/customize`, formData)
       .then(() => {
         handleAlert({
           msg: "Company Info is Updated Successfully",
           status: "success",
         });
-        dispatch(getCustomizes());
       })
       .catch((err) => {
         handleCatchError(err);
