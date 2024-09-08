@@ -29,7 +29,6 @@ const useCompanyInfoSubmit = () => {
           msg: "Company Info is Updated Successfully",
           status: "success",
         });
-        dispatch(getCustomizes());
       })
       .catch((err) => {
         handleCatchError(err);
