@@ -352,6 +352,7 @@ const NewLCTransactionForm = ({
             name={"lcStatus"}
             options={["Active", "Cancel"]}
             select
+            value="Active"
           />
         </Box>
         {tawjeeh && (
