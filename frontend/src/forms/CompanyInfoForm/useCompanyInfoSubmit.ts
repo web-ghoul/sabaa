@@ -5,12 +5,9 @@ import { handleCatchError } from "../../functions/handleCatchError";
 import useAxios from "../../hooks/useAxios";
 import { CompanyInfoFormTypes } from "../../types/forms.types";
 import { getCustomizes } from "../../store/customizesSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
 
 const useCompanyInfoSubmit = () => {
   const { server } = useAxios();
-  const dispatch = useDispatch<AppDispatch>();
   const { handleOpenFormsLoading, handleCloseFormsLoading, companyInfoLogo } =
     useContext(FormsContext);
 
