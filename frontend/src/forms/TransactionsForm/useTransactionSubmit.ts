@@ -78,7 +78,7 @@ const useTransactionSubmit = () => {
   const approvedTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
     await server
-      .post(`/transactions`, {
+      .patch(`/transactions/${editableTransactionData?._id}`, {
         ...values,
         employeeId: editableTransactionData?.employeeId,
         type: "approved",
