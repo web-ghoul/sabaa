@@ -110,8 +110,8 @@ const TransactionsTable = ({
   }, [pathname, sheet]);
 
   useEffect(() => {
-    dispatch(getTransactionsCounter());
-  }, [dispatch]);
+    dispatch(getTransactionsCounter({ type }));
+  }, [dispatch, type]);
 
   return (
     <PrimaryTable

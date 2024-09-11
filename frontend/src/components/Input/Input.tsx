@@ -31,6 +31,7 @@ const Input = ({
   disabled,
   value,
   labeled,
+  labeledColor,
 }: InputTypes) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -40,79 +41,94 @@ const Input = ({
   const error = Boolean(getError(errors, name));
   const helperText = getError(errors, name);
 
+  const labeledBox = (
+    <Typography
+      variant="h6"
+      className={`${labeledColor || "!text-primary"} !font-[700]`}
+    >
+      {labeled}
+    </Typography>
+  );
+
   return (
     <Box className={`grid justify-stretch w-full items-center gap-2 md:gap-1`}>
       <Typography variant="h6" className={`!font-[400]`}>
         {type === "search" ? "Search" : label}
       </Typography>
       {select ? (
-        <PrimaryTextField
-          disabled={disabled}
-          fullWidth
-          select
-          SelectProps={{
-            native: true,
-            "aria-label": label,
-          }}
-          {...register(name)}
-          onChange={(
-            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-          ) => {
-            if (change) {
-              change(e.target.value);
-            }
-          }}
-          error={error}
-          helperText={helperText}
-        >
-          <option value={""}>{`Select ${label}`}</option>
-          {options &&
-            options.map((option: string, i: number) => (
-              <option
-                value={values ? values[i] : option}
-                key={i}
-                selected={option === value}
-              >
-                {option}
-              </option>
-            ))}
-        </PrimaryTextField>
+        labeled ? (
+          labeledBox
+        ) : (
+          <PrimaryTextField
+            disabled={disabled}
+            fullWidth
+            select
+            SelectProps={{
+              native: true,
+              "aria-label": label,
+            }}
+            {...register(name)}
+            onChange={(
+              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+            ) => {
+              if (change) {
+                change(e.target.value);
+              }
+            }}
+            error={error}
+            helperText={helperText}
+          >
+            <option value={""}>{`Select ${label}`}</option>
+            {options &&
+              options.map((option: string, i: number) => (
+                <option
+                  value={values ? values[i] : option}
+                  key={i}
+                  selected={option === value}
+                >
+                  {option}
+                </option>
+              ))}
+          </PrimaryTextField>
+        )
       ) : textarea ? (
-        <Box
-          component={"textarea"}
-          sx={{
-            padding: "8px !important",
-            fontSize: "15px",
-            minWidth: "300px !important",
-            minHeight: "40px !important",
-            transition: "ease-in-out all 0.3",
-            backgroundColor: (theme) => theme.palette.common.white,
-            boxShadow: (theme) => theme.shadows["2"],
-            borderRadius: "4px",
-            border: "1px solid #ddd",
-            "&:placeholder": {
-              fontSize: "16px",
-              lineHeight: "1 !important",
-              backgroundColor: "transparent !important",
-            },
-            "&:not(:placeholder-shown)": {
-              fontWeight: "600",
-            },
-          }}
-          {...register(name)}
-          onChange={(
-            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-          ) => {
-            if (change) {
-              change(e.target.value);
-            }
-          }}
-          placeholder={`Enter ${label}`}
-        />
+        labeled ? (
+          labeledBox
+        ) : (
+          <Box
+            component={"textarea"}
+            sx={{
+              padding: "8px !important",
+              fontSize: "15px",
+              minWidth: "300px !important",
+              minHeight: "40px !important",
+              transition: "ease-in-out all 0.3",
+              backgroundColor: (theme) => theme.palette.common.white,
+              boxShadow: (theme) => theme.shadows["2"],
+              borderRadius: "4px",
+              border: "1px solid #ddd",
+              "&:placeholder": {
+                fontSize: "16px",
+                lineHeight: "1 !important",
+                backgroundColor: "transparent !important",
+              },
+              "&:not(:placeholder-shown)": {
+                fontWeight: "600",
+              },
+            }}
+            {...register(name)}
+            onChange={(
+              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+            ) => {
+              if (change) {
+                change(e.target.value);
+              }
+            }}
+            placeholder={`Enter ${label}`}
+          />
+        )
       ) : labeled ? (
-        <Typography variant="h6" className={`!text-primary`}>
-          {labeled}
-        </Typography>
+        labeledBox
       ) : (
         <PrimaryTextField
           disabled={disabled}

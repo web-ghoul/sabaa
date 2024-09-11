@@ -27,8 +27,6 @@ const useTransactionSchema = () => {
     employeeId: yup.string(),
     employeeName: yup.string().required("English Name is required"),
     employeeNameAr: yup.string().required("Arabic Name is required"),
-    name: yup.string(),
-    nameAr: yup.string(),
     dob: yup
       .date()
       .test(
@@ -70,8 +68,6 @@ const useTransactionSchema = () => {
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
-    name: editableTransactionData?.name || "",
-    nameAr: editableTransactionData?.nameAr || "",
     dob:
       (editableTransactionData?.dob &&
         new Date(editableTransactionData?.dob).toISOString().split("T")[0]) ||
@@ -97,7 +93,7 @@ const useTransactionSchema = () => {
         new Date(editableTransactionData?.statusDate)
           .toISOString()
           .split("T")[0]) ||
-      "",
+      handleDateForInput(new Date()),
   };
 
   const ApprovedSchema = yup.object({
@@ -113,8 +109,6 @@ const useTransactionSchema = () => {
     employeeId: yup.string(),
     employeeName: yup.string(),
     employeeNameAr: yup.string(),
-    name: yup.string(),
-    nameAr: yup.string(),
     dob: yup.string(),
     idNationality: yup.string(),
     nationality: yup.string(),
@@ -129,6 +123,7 @@ const useTransactionSchema = () => {
     status: yup.string().required("Status is required"),
     statusDate: yup.string().required("Status Date Type is required"),
     lcNumber: yup.string().required("LC Number is required"),
+    lcStatus: yup.string().required("LC Status is required"),
     lcExpiryDate: yup.string().required("LC Expire Date is required"),
     visitExpiryDate: yup.string(),
 
@@ -151,8 +146,6 @@ const useTransactionSchema = () => {
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
-    name: editableTransactionData?.name || "",
-    nameAr: editableTransactionData?.nameAr || "",
     dob:
       (editableTransactionData?.dob &&
         new Date(editableTransactionData?.dob).toISOString().split("T")[0]) ||
@@ -178,8 +171,9 @@ const useTransactionSchema = () => {
         new Date(editableTransactionData?.statusDate)
           .toISOString()
           .split("T")[0]) ||
-      "",
+      handleDateForInput(new Date()),
     lcNumber: editableTransactionData?.lcNumber || "",
+    lcStatus: editableTransactionData?.lcStatus || "Active",
     lcExpiryDate:
       (editableTransactionData?.lcExpiryDate &&
         new Date(editableTransactionData?.lcExpiryDate)
@@ -211,8 +205,6 @@ const useTransactionSchema = () => {
     employeeId: yup.string(),
     employeeName: yup.string().required("English Name is required"),
     employeeNameAr: yup.string().required("Arabic Name is required"),
-    name: yup.string(),
-    nameAr: yup.string(),
     dob: yup
       .date()
       .test(
@@ -224,23 +216,30 @@ const useTransactionSchema = () => {
     idNationality: yup.string().required("Nationality Id is required"),
     nationality: yup.string().required("Nationality is required"),
     passportNumber: yup.string().required("Passport Number is required"),
-    passportExpiry: yup.string(),
+    passportExpiry: yup
+      .date()
+      .required("Passport Expiry Date is required")
+      .min(
+        sixMonthsFromNow,
+        "Passport Expiry Date must be at least 6 months from today"
+      ),
     job: yup.string().required("Job is required"),
-    uid: yup.string(),
+    uid: yup.string().required("UID is required"),
     emiratesNo: yup.string(),
     salary: yup.string(),
     remarks: yup.string(),
     status: yup.string(),
     statusDate: yup.string(),
 
-    lcNumber: yup.string().required("LC Number is required"),
-    lcStatus: yup.string().required("LC Status is required"),
-    lcExpiryDate: yup.string().required("LC Expire Date is required"),
+    lcNumber: yup.string(),
+    lcStatus: yup.string(),
+    lcExpiryDate: yup.string(),
     visitExpiryDate: yup.string(),
     tawjeehDate: yup.string(),
     changeStatusDate: yup.string(),
     medicalDate: yup.string(),
     residenceExpiryDate: yup.string(),
+    editable: yup.string(),
   });
 
   const NewLCTransactionInitialValues = {
@@ -253,13 +252,11 @@ const useTransactionSchema = () => {
         ? editableTransactionData?.cardType
         : "",
     createdAt:
-      pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
-        ? (editableTransactionData?.createdAt &&
-            new Date(editableTransactionData?.createdAt)
-              .toISOString()
-              .split("T")[0]) ||
-          ""
-        : handleDateForInput(new Date()),
+      (editableTransactionData?.createdAt &&
+        new Date(editableTransactionData?.createdAt)
+          .toISOString()
+          .split("T")[0]) ||
+      handleDateForInput(new Date()),
 
     personCode: editableTransactionData?.personCode || "",
     gender: editableTransactionData?.gender || "",
@@ -269,8 +266,6 @@ const useTransactionSchema = () => {
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
-    name: editableTransactionData?.name || "",
-    nameAr: editableTransactionData?.nameAr || "",
     dob:
       (editableTransactionData?.dob &&
         new Date(editableTransactionData?.dob).toISOString().split("T")[0]) ||
@@ -295,7 +290,7 @@ const useTransactionSchema = () => {
         new Date(editableTransactionData?.statusDate)
           .toISOString()
           .split("T")[0]) ||
-      "",
+      handleDateForInput(new Date()),
 
     lcNumber:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
@@ -304,7 +299,7 @@ const useTransactionSchema = () => {
     lcStatus:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
         ? editableTransactionData?.lcStatus
-        : "",
+        : "Active",
     lcExpiryDate:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_NEW_ROUTE}`
         ? (editableTransactionData?.lcExpiryDate &&
@@ -351,6 +346,7 @@ const useTransactionSchema = () => {
               .split("T")[0]) ||
           ""
         : "",
+    editable: "0",
   };
 
   const RenewLCTransactionSchema = yup.object({
@@ -365,8 +361,6 @@ const useTransactionSchema = () => {
     employeeId: yup.string(),
     employeeName: yup.string().required("English Name is required"),
     employeeNameAr: yup.string().required("Arabic Name is required"),
-    name: yup.string(),
-    nameAr: yup.string(),
     dob: yup
       .date()
       .test(
@@ -380,7 +374,7 @@ const useTransactionSchema = () => {
     passportNumber: yup.string().required("Passport Number is required"),
     passportExpiry: yup.string(),
     job: yup.string().required("Job is required"),
-    uid: yup.string(),
+    uid: yup.string().required("UID is required"),
     emiratesNo: yup.string(),
     salary: yup.string(),
     remarks: yup.string(),
@@ -407,13 +401,11 @@ const useTransactionSchema = () => {
         ? editableTransactionData?.cardType
         : "",
     createdAt:
-      pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
-        ? (editableTransactionData?.createdAt &&
-            new Date(editableTransactionData?.createdAt)
-              .toISOString()
-              .split("T")[0]) ||
-          ""
-        : handleDateForInput(new Date()),
+      (editableTransactionData?.createdAt &&
+        new Date(editableTransactionData?.createdAt)
+          .toISOString()
+          .split("T")[0]) ||
+      handleDateForInput(new Date()),
 
     personCode: editableTransactionData?.personCode || "",
     gender: editableTransactionData?.gender || "",
@@ -423,8 +415,6 @@ const useTransactionSchema = () => {
     employeeId: editableTransactionData?.employeeId || "",
     employeeName: editableTransactionData?.employeeName || "",
     employeeNameAr: editableTransactionData?.employeeNameAr || "",
-    name: editableTransactionData?.name || "",
-    nameAr: editableTransactionData?.nameAr || "",
     dob:
       (editableTransactionData?.dob &&
         new Date(editableTransactionData?.dob).toISOString().split("T")[0]) ||
@@ -443,13 +433,13 @@ const useTransactionSchema = () => {
     emiratesNo: editableTransactionData?.emiratesNo || "",
     salary: editableTransactionData?.salary || "",
     remarks: editableTransactionData?.remarks || "",
-    status: editableTransactionData?.status || "",
+    status: editableTransactionData?.status || "Active",
     statusDate:
       (editableTransactionData?.statusDate &&
         new Date(editableTransactionData?.statusDate)
           .toISOString()
           .split("T")[0]) ||
-      "",
+      handleDateForInput(new Date()),
 
     lcNumber:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
@@ -458,7 +448,7 @@ const useTransactionSchema = () => {
     lcStatus:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
         ? editableTransactionData?.lcStatus
-        : "",
+        : "Active",
     lcExpiryDate:
       pathname === `${import.meta.env.VITE_TRANSACTIONS_RENEW_ROUTE}`
         ? (editableTransactionData?.lcExpiryDate &&

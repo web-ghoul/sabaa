@@ -1,4 +1,4 @@
-export const handleGetCardTypes = (type: string) => {
+export const handleGetCardTypes = (type?: string) => {
   if (type === "pre") {
     return [
       "PRE APPROVAL FOR WORK PERMIT",
@@ -12,11 +12,21 @@ export const handleGetCardTypes = (type: string) => {
       "ELECTRONIC WORK PERMIT FOR PART TIME",
       "NEW ON HUSBAND/FATHER SPONSORSHIP",
     ];
-  } else if (type === "") {
+  } else if (type === "renewLC") {
     return [
       "RENEW ELECTRONIC WORK PERMIT",
       "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
     ];
   }
-  return [];
+  return [
+    "PRE APPROVAL FOR WORK PERMIT",
+    "RELATIVE PRE APPROVAL FOR WORK PERMIT",
+    "PART TIME PRE APPROVAL FOR WORK PERMIT",
+    "NEW ELECTRONIC WORK PERMIT",
+    "NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+    "ELECTRONIC WORK PERMIT FOR PART TIME",
+    "NEW ON HUSBAND/FATHER SPONSORSHIP",
+    "RENEW ELECTRONIC WORK PERMIT",
+    "RENEWAL NATIONAL AND GCC ELECTRONIC WORK PERMIT",
+  ];
 };

@@ -201,7 +201,7 @@ const RenewLCTransactionForm = ({
         )}
       </Box>
 
-      {addBySearch && (
+      {addBySearch ? (
         <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
           <Input
             register={register}
@@ -324,6 +324,30 @@ const RenewLCTransactionForm = ({
             disabled={addBySearch}
           />
         </Box>
+      ) : (
+        <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
+          <Input
+            register={register}
+            errors={errors}
+            label={"Company Name"}
+            name={"companyName"}
+            labeled={`${getValues("companyName")}`}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Employee English Name"}
+            name={"employeeName"}
+            labeled={getValues("employeeName")}
+          />
+          <Input
+            register={register}
+            errors={errors}
+            label={"Person Code"}
+            name={"personCode"}
+            labeled={getValues("personCode")}
+          />
+        </Box>
       )}
 
       <Box className={`grid justify-stretch items-center gap-4`}>
@@ -373,13 +397,6 @@ const RenewLCTransactionForm = ({
             <Box
               className={`grid grid-cols-3 justify-stretch items-start gap-6`}
             >
-              <Input
-                register={register}
-                errors={errors}
-                label={"Change Status Date"}
-                type={"date"}
-                name={"changeStatusDate"}
-              />
               <Input
                 register={register}
                 errors={errors}

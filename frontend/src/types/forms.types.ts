@@ -150,6 +150,7 @@ interface EmployeesOptionsFormTypes {
 //Transaction
 interface TransactionFormTypes extends TransactionTypes {
   searchForEmployee: string;
+  editable: "0" | "1";
 }
 interface TransactionsOptionsFormTypes {
   page: number;

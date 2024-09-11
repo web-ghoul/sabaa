@@ -744,24 +744,24 @@ settings:
 New Edits : 
 1- Company Info Name (Done)
 2- Transaction Number will be unique (Backend)
-3- Approved is Updated Process
+3- Approved is Updated Process (Done)
 4- Employee is Created After Approved Transaction  (Backend)
 5- When Add New Transaction If Employee is Already Exist (Check With Four Things [Name , Gender , Nationality , DOB]) Continue And Updated on Existence Employee and if Employee is Exist Continue his Info at transaction  (Backend)
 6- Solve Problem Of Empty String For UID , Emirates ID and Person Code at Owners, Customers ,  Pros and Transaction  (Backend)
 7- When Create Employee With Transaction and when try open it , i got "Invalid value for _id: GULF PREFAB HOUSING!"  (Backend)
-8- Make Default Value of Status Date is Current Date
-9- Make Disable Input at transaction => label
+8- Make Default Value of Status Date is Current Date (Done)
+9- Make Disable Input at transaction => label (Done)
 10- Lc Expire Date , Status and Person Code aren't come from Transaction at Employee  (Backend)
-11- Status of Employee will named LC Status 
+11- Status of Employee will named LC Status  (Done)
 12- Link Employee With Company After Approved  (Backend)
-13- Show All Card Types at Employee Form
-14- Set Transaction Number After LC Expire Date
+13- Show All Card Types at Employee Form (Done)
+14- Set Transaction Number After LC Expire Date  (Done)
 15- Policy Number and Expire Date at Medical Insurance and OLFE when empty them at updated are not Changed To be Empty  (Backend)
-16- Set Company Name , Name , Person Code , LC Number , LC Expire Date and LC Status  and  will be labeled at top of new LC Form
-17- set Default Value of LC Status is Active
-18- UID is Required at LC Form
-19- If Search on Transaction at LC From with LC Number , iF Found Employee with Transaction Number and Transaction Status is "In Process" , it will updated on it 
-20- At LC Form , Make Default Value of Transaction Date will be Current Date
+16- Set Company Name , Name , Person Code , LC Number , LC Expire Date and LC Status  and  will be labeled at top of new LC Form  (Done)
+17- set Default Value of LC Status is Active  (Done)
+18- UID is Required at LC Form  (Done)
+19- If Search on Transaction at LC From with LC Number , iF Found Employee with Transaction Number and Transaction Status is "In Process" , it will updated on it (Done)
+20- At LC Form , Make Default Value of Transaction Date will be Current Date  (Done)
 21- Transaction Status will be approved or cancel according to Card Type
 22- At Logs of Transaction appear "ChangeStatusExpire About to be Changed at Alerts"  (Backend)
 23- Remove Change Status Date From Renew LC Form
@@ -769,4 +769,11 @@ New Edits :
 25- Every New Transaction , it Will be Canceled (LC Status) Previous Transaction   (Backend)
 26- LC Number is Unique (Backend)
 27- When Choose Card Type "National GCC" , it will be treat Like New Transaction and has edit on it and new LC Number
-28- When Update Owner or PRO , other is deleted
+28- When Update Owner or PRO , other is deleted (Backend)
+
+
+
+
+
+Notes for Amr : 
+1- Add Search by LC Number at Transaction

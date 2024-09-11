@@ -9,6 +9,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Title from "../../components/Title/Title";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { FormsContext } from "../../contexts/FormsContext";
+import { handleGetCardTypes } from "../../functions/handleGetCardTypes";
 import { getCompanies } from "../../store/companiesSlice";
 import { getJobs } from "../../store/jobsSlice";
 import { getNationalities } from "../../store/nationalitiesSlice";
@@ -236,11 +237,7 @@ const EmployeeForm = ({
             name={"cardType"}
             register={register}
             errors={errors}
-            options={[
-              "PRE APPROVAL FOR WORK PERMIT",
-              "RELATIVE PRE APPROVAL FOR WORK PERMIT",
-              "PART TIME PRE APPROVAL FOR WORK PERMIT",
-            ]}
+            options={handleGetCardTypes()}
             select
           />
           <Input
@@ -260,7 +257,7 @@ const EmployeeForm = ({
           <Input
             register={register}
             errors={errors}
-            label={"Status"}
+            label={"LC Status"}
             name={"status"}
             select
             options={selector ? selector.data : ["Loading..."]}

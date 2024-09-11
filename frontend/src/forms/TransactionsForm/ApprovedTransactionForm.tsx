@@ -12,13 +12,14 @@ const ApprovedTransactionForm = ({
   register,
   setValue,
   errors,
+  getValues,
 }: FormiksTypes) => {
   const { formsLoading } = useContext(FormsContext);
   const { handleCloseTransactionModal } = useContext(ModalsContext);
 
   useEffect(() => {
     setValue("status", "Approved");
-  }, []);
+  }, [setValue]);
 
   return (
     <Paper
@@ -34,32 +35,32 @@ const ApprovedTransactionForm = ({
           errors={errors}
           label={"Transaction Number"}
           name={"transactionNo"}
-          disabled
+          labeled={getValues("transactionNo")}
         />
         <Input
           register={register}
           errors={errors}
           label={"Card Type"}
           name={"cardType"}
-          disabled
+          labeled={getValues("cardType")}
         />
-      </Box>
-
-      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input
           register={register}
           errors={errors}
           label={"Employee English Name"}
           name={"employeeName"}
-          disabled
+          labeled={getValues("employeeName")}
         />
         <Input
           register={register}
           errors={errors}
           label={"Employee Arabic Name"}
           name={"employeeNameAr"}
-          disabled
+          labeled={getValues("employeeNameAr")}
         />
+      </Box>
+
+      <Box className={`grid grid-cols-3 justify-stretch items-start gap-6`}>
         <Input
           register={register}
           errors={errors}
@@ -86,8 +87,8 @@ const ApprovedTransactionForm = ({
           register={register}
           errors={errors}
           name={"status"}
-          value="Approved"
-          disabled
+          labeled="Approved"
+          labeledColor="!text-green-600"
         />
         <Input
           label={"Status Date"}

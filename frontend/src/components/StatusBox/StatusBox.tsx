@@ -5,7 +5,7 @@ const StatusBox = ({ status }: { status: string }) => {
   return (
     status && (
       <Box
-        className={`py-1 font-[700] px-4 md:px-3 sm:py-[2px] sm:!px-2 xs:!px-1 m-auto rounded-md sm:rounded-sm w-fit capitalize 
+        className={`py-1 font-[700] !whitespace-nowrap px-4 md:px-3 sm:py-[2px] sm:!px-2 xs:!px-1 m-auto rounded-md sm:rounded-sm w-fit capitalize 
         ${
           (s === "pending" || s === "in process" || s === "abscond") &&
           "bg-yellow-200 text-yellow-500"

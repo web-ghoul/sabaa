@@ -35,6 +35,12 @@ const LoadingTransactionsRow = ({
           <PrimaryTableCell align="center">
             <Skeleton variant="rounded" />
           </PrimaryTableCell>
+          <PrimaryTableCell align="center">
+            <Skeleton variant="rounded" />
+          </PrimaryTableCell>
+          <PrimaryTableCell align="center">
+            <Skeleton variant="rounded" />
+          </PrimaryTableCell>
           <PrimaryTableCell align="right">
             <Skeleton variant="rounded" />
           </PrimaryTableCell>
@@ -77,6 +83,9 @@ const LoadingTransactionsRow = ({
             <Skeleton variant="rounded" />
           </PrimaryTableCell>
           <PrimaryTableCell component="th" scope="row">
+            <Skeleton variant="rounded" />
+          </PrimaryTableCell>
+          <PrimaryTableCell align="center">
             <Skeleton variant="rounded" />
           </PrimaryTableCell>
           <PrimaryTableCell align="center">

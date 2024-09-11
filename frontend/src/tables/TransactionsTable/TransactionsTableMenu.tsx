@@ -96,7 +96,7 @@ const TransactionsTableMenu = ({ type }: { type: string }) => {
           handling={handleEdit}
         />
       )}
-      {type === "pre" && editableTransactionData?.status !== "Approved" && (
+      {editableTransactionData?.status !== "Approved" && (
         <TableMenuItem
           icon={<ApprovalRounded />}
           title={"Approved Status"}

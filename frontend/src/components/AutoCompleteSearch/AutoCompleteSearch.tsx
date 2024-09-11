@@ -200,7 +200,6 @@ export default function AutoCompleteSearch({
         multiple={multiple}
         value={val}
         isOptionEqualToValue={(option, value) => option?._id === value?._id}
-        filterSelectedOptions
         options={options}
         onChange={handleChange}
         renderTags={(tagValue, getTagProps) =>

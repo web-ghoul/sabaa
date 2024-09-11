@@ -628,8 +628,6 @@ interface TransactionTypes {
   companyName: string;
   employeeName: string;
   employeeNameAr: string;
-  name: string;
-  nameAr: string;
   dob: string;
   gender: string;
   idNationality: string;
@@ -641,18 +639,19 @@ interface TransactionTypes {
   uid: string;
   emiratesNo: string;
   lcNumber: string;
-  lcExpiryDate?: Date;
+  lcExpiryDate?: string;
   visitExpiryDate: Date;
   workPermitExpiryDate: Date;
-  tawjeehDate: Date;
-  medicalDate: Date;
-  changeStatusDate: Date;
-  residenceExpiryDate: Date;
+  tawjeehDate?: string;
+  medicalDate?: string;
+  changeStatusDate?: string;
+  residenceExpiryDate?: string;
   lcStatus: string;
   status: string;
   statusDate: Date;
-  salary: number;
+  salary: string;
   remarks: string;
+  type: string;
   createdAt: Date;
 }
 

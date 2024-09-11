@@ -132,10 +132,6 @@ const EmployeeDetails = ({
         </Typography>
         <Box className={classes.profileInfoClasses}>
           <DataBox
-            title={"Transaction Number"}
-            value={(data as EmployeeTypes).transactionNo}
-          />
-          <DataBox
             title={"Passport Number"}
             value={(data as EmployeeTypes).passportNumber}
           />
@@ -172,7 +168,11 @@ const EmployeeDetails = ({
             value={handleDate((data as EmployeeTypes).lcExpireDate)}
           />
           <DataBox
-            title={"Status"}
+            title={"Transaction Number"}
+            value={(data as EmployeeTypes).transactionNo}
+          />
+          <DataBox
+            title={"LC Status"}
             value={<StatusBox status={(data as EmployeeTypes).status} />}
           />
         </Box>

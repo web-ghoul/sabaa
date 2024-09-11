@@ -72,6 +72,7 @@ interface InputTypes {
   textarea?: boolean;
   disabled?: boolean;
   labeled?: string;
+  labeledColor?: string;
   change?: (value: string) => void;
 }
 

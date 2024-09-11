@@ -52,8 +52,6 @@ const TransactionForm = ({
         setValue("employeeId", employee?._id || "");
         setValue("employeeName", employee.name);
         setValue("employeeNameAr", employee.nameAr);
-        setValue("name", employee.name);
-        setValue("nameAr", employee.nameAr);
         setValue("dob", handleDateForInput(employee.dob));
         setValue("idNationality", employee.idNationality);
         setValue("nationality", employee.nationality);

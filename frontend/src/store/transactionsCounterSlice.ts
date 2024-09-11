@@ -5,10 +5,12 @@ import { TransactionsCounterValuesTypes } from "../types/store.types.ts";
 
 export const getTransactionsCounter = createAsyncThunk(
   "/transactionsCounter/getTransactionsCounter",
-  async () => {
+  async (args?: { type?: string }) => {
     const token = Cookies.get(`${import.meta.env.VITE_TOKEN_TITLE}`);
     const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/transactions/counters`,
+      `${import.meta.env.VITE_SERVER_URL}/transactions/counters?type=${
+        args && args?.type
+      }`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

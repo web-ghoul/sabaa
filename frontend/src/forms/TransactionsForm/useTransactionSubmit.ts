@@ -80,8 +80,10 @@ const useTransactionSubmit = () => {
     await server
       .patch(`/transactions/${editableTransactionData?._id}`, {
         ...values,
-        employeeId: editableTransactionData?.employeeId,
-        type: "approved",
+        type:
+          values.cardType === "NATIONAL AND GCC ELECTRONIC WORK PERMIT"
+            ? "new"
+            : "approved",
       })
       .then(() => {
         handleAlert({
@@ -99,27 +101,68 @@ const useTransactionSubmit = () => {
 
   const newLCTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
-    await server
-      .post(`/transactions`, {
-        ...values,
-        type: "new",
-      })
-      .then(() => {
+    if (values.lcNumber) {
+      if (!values.lcExpiryDate || !values.lcStatus) {
         handleAlert({
-          msg: "New Labour Card is created successfully",
-          status: "success",
+          msg: "Enter LC Expire Date and LC Status",
+          status: "error",
         });
-        handleCloseTransactionModal();
-        getData();
-      })
-      .catch((err) => {
-        handleCatchError(err);
-      });
+        handleCloseFormsLoading();
+        return;
+      }
+    }
+    if (values.cardType === "NATIONAL AND GCC ELECTRONIC WORK PERMIT") {
+      if (!values.status) {
+        values.status = "In Process";
+      }
+    }
+    if (values.editable === "0") {
+      await server
+        .post(`/transactions`, {
+          ...values,
+          type: "new",
+        })
+        .then(() => {
+          handleAlert({
+            msg: "New Labour Card is created successfully",
+            status: "success",
+          });
+          handleCloseTransactionModal();
+          getData();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    } else {
+      await server
+        .patch(`/transactions/${editableTransactionData?._id}`, values)
+        .then(() => {
+          handleAlert({
+            msg: "New Labour Card is updated successfully",
+            status: "success",
+          });
+          handleCloseTransactionModal();
+          getData();
+        })
+        .catch((err) => {
+          handleCatchError(err);
+        });
+    }
     handleCloseFormsLoading();
   };
 
   const editNewLCTransaction = async (values: TransactionFormTypes) => {
     handleOpenFormsLoading();
+    if (values.lcNumber) {
+      if (!values.lcExpiryDate || !values.lcStatus) {
+        handleAlert({
+          msg: "Enter LC Expire Date and LC Status",
+          status: "error",
+        });
+        handleCloseFormsLoading();
+        return;
+      }
+    }
     await server
       .patch(`/transactions/${editableTransactionData?._id}`, values)
       .then(() => {
