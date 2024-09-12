@@ -10,7 +10,7 @@ export class Transaction {
   @Prop({ type: String })
   transactionNo: string;
 
-  @Prop({ type: String, ref: 'Employee', required: true })
+  @Prop({ type: String, ref: 'Employee'})
   employeeId: string;
 
   @Prop({ type: String, required: true })
@@ -60,6 +60,9 @@ export class Transaction {
 
   @Prop()
   lcNumber: string;
+
+  @Prop({ type: String, enum: ['active', 'cancel']})
+  lcStatus: string; 
 
   @Prop()
   lcNo: string;
@@ -112,15 +115,20 @@ export const TransactionSchema = SchemaFactory.createForClass(Transaction);
 
 TransactionSchema.index(
   { uid: 1, deleted: 1, transactionNo: 1},
-  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true, $ne: "" } } }
 );
 
 TransactionSchema.index(
   { transactionNo: 1, deleted: 1},
-  { unique: true, partialFilterExpression: { deleted: false, transactionNo: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, transactionNo: { $exists: true }  } } 
+);
+
+TransactionSchema.index(
+  { lcNumber: 1, deleted: 1},
+  { unique: true, partialFilterExpression: { deleted: false, lcNumber: { $exists: true, $ne: "" }  } } 
 );
 
 TransactionSchema.index(
   { emiratesNo: 1, deleted: 1, transactionNo: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, emiratesNo: { $exists: true, $ne: "" } } }
 );

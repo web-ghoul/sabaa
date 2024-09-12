@@ -54,6 +54,9 @@ export class Employee {
     @Prop({type : String})
     medicalPolicyNo : string
 
+    @Prop({ type: Date })
+    medicalExpiryDate: Date;
+
     @Prop({type : Object})
     iLOE: object
 
@@ -123,7 +126,7 @@ export const EmployeeSchema = SchemaFactory.createForClass(Employee);
 
 EmployeeSchema.index(
   { personCode: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true , $ne: "" } } }
 );
 
 EmployeeSchema.index(
@@ -137,32 +140,38 @@ EmployeeSchema.index(
 );
 
 EmployeeSchema.index(
+  { lcNumber: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false, lcNumber: { $exists: true, $ne: "" } } }
+);
+
+
+EmployeeSchema.index(
   { uid: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, uid: { $exists: true , $ne: "" } } }
 );
 
 EmployeeSchema.index(
   { visaFileNumber: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, visaFileNumber: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, visaFileNumber: { $exists: true , $ne: ""} } }
 );
 
 EmployeeSchema.index(
   { emiratesId: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true, $ne: "" } } }
 );
 
 EmployeeSchema.index(
   { cardNumber: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, cardNumber: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, cardNumber: { $exists: true, $ne: "" } } }
 );
 
 EmployeeSchema.index(
   { medicalPolicyNo: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, medicalPolicyNo: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, medicalPolicyNo: { $exists: true, $ne: "" } } }
 );
 
 EmployeeSchema.index(
   { iLOEPolicyNo: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, iLOEPolicyNo: { $exists: true } } }
+  { unique: true, partialFilterExpression: { deleted: false, iLOEPolicyNo: { $exists: true, $ne: "" } } }
 );
 

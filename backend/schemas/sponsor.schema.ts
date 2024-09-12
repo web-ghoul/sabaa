@@ -56,6 +56,21 @@ export class Sponsor {
   @Prop()
   job: string;
 
+  @Prop({type : Object})
+  medical : object
+
+  @Prop({type : String})
+  medicalPolicyNo : string
+
+  @Prop({ type: Date })
+  medicalExpiryDate: Date;
+
+  @Prop({type : Object})
+  iLOE: object
+
+  @Prop({type : String})
+  iLOEPolicyNo: string
+
   @Prop()
   residenceExpiryDate: Date;
 

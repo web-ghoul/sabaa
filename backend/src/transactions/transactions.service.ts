@@ -8,6 +8,7 @@ import { Employee } from 'schemas/employee.schema';
 import { Transaction } from 'schemas/transaction.schema';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
+import { CompanyService } from 'src/company/company.service';
 
 @Injectable()
 export class TransactionsService {
@@ -15,10 +16,15 @@ export class TransactionsService {
     @InjectModel('Employee') private employeeModel: Model<Employee>,
     @InjectModel('Transaction') private transactionModel: Model<Transaction>,
     @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+    private companyService: CompanyService,
   ) {}
   async create(createTransactionDto: CreateTransactionDto, id: mongoose.Types.ObjectId) {
     try {
       createTransactionDto.userId = id;
+      if(createTransactionDto.type == "new" || createTransactionDto.type == "renew")
+      {
+        await this.update(createTransactionDto.canceledTransactionId as any , {lcStatus: "cancel"})
+      }
       if (createTransactionDto.employeeId) {
         const newObj = {
           companyName: createTransactionDto.companyName,
@@ -34,7 +40,7 @@ export class TransactionsService {
         );
         return await this.transactionModel.create(createTransactionDto);
       }
-
+      if(createTransactionDto.type == "Approved"){
       const newObj = {
         name: createTransactionDto.employeeName,
         nameAr: createTransactionDto.employeeNameAr,
@@ -46,16 +52,18 @@ export class TransactionsService {
         dob: createTransactionDto.dob,
         gender: createTransactionDto.gender,
         job: createTransactionDto.job,
-        companyId: createTransactionDto.companyName,
-        companyName: createTransactionDto.companyId,
+        companyId: new mongoose.Types.ObjectId(createTransactionDto.companyId),
+        companyName: createTransactionDto.companyName,
         lcNumber: createTransactionDto.lcNumber,
         lcExpiryDate: createTransactionDto.lcExpiryDate,
         cardType: createTransactionDto.cardType,
         transactionNo: createTransactionDto.transactionNo,
       };
-      const newEmp = await this.employeeModel.create(newObj);
-      createTransactionDto.employeeId = newEmp._id as any;
 
+      const newEmp = await this.employeeModel.create(newObj);
+      await this.companyService.addEmployee(createTransactionDto.companyId, newEmp._id as any)
+      createTransactionDto.employeeId = newEmp._id as any;
+    }
       return await this.transactionModel.create(createTransactionDto);
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -295,14 +303,27 @@ export class TransactionsService {
     await workbook.xlsx.write(res);
     res.end();
   }
-  async getCounters() {
+  async getCounters(type?: string) {
+    console.log(type);
+  
+    const filter: any = { deleted: false };
+    const deletedFilter: any = { deleted: true };
+  
+    // Only add the type to the filter if it's defined
+    if (type) {
+      filter.type = type;
+      deletedFilter.type = type;
+    }
+  
     const [count, deleted] = await Promise.all([
-      this.transactionModel.countDocuments({ deleted: false }),
-      this.transactionModel.countDocuments({ deleted: true }),
+      this.transactionModel.countDocuments(filter),
+      this.transactionModel.countDocuments(deletedFilter),
     ]);
+  
     return {
       count,
       deleted,
     };
   }
+  
 }

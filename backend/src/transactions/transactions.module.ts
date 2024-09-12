@@ -14,6 +14,7 @@ import { Tasaheel, TasaheelSchema } from 'schemas/tasaheel.schema';
 import { Company, CompanySchema } from 'schemas/company.schema';
 import { EmployeesModule } from 'src/employees/employees.module';
 import { EmployeePdfGenerator } from 'src/employees/pdfGenerators/EmployeePdfMaker';
+import { CompanyService } from 'src/company/company.service';
 
 
 @Module({
@@ -28,6 +29,6 @@ import { EmployeePdfGenerator } from 'src/employees/pdfGenerators/EmployeePdfMak
     ]),
   ],
   controllers: [TransactionsController],
-  providers: [TransactionsService, LogInterceptor, EmployeesService,EmployeePdfGenerator],
+  providers: [TransactionsService, LogInterceptor, EmployeesService,EmployeePdfGenerator,CompanyService],
 })
 export class TransactionsModule {}

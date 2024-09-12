@@ -71,6 +71,21 @@ export class Owner {
     // @Prop({default: false})
     // isPro: boolean;
 
+    @Prop({type : Object})
+    medical : object
+
+    @Prop({type : String})
+    medicalPolicyNo : string
+
+    @Prop({ type: Date })
+    medicalExpiryDate: Date;
+
+    @Prop({type : Object})
+    iLOE: object
+
+    @Prop({type : String})
+    iLOEPolicyNo: string
+
     @Prop()
     gender: string;
   
@@ -104,7 +119,7 @@ OwnerSchema.index(
 
 OwnerSchema.index(
     { uid : 1, deleted: 1 },
-    { unique: true,  partialFilterExpression: { deleted: false } }
+    { unique: true,  partialFilterExpression: { deleted: false, uid: { $exists: true , $ne: ""} } }
   );
 
 OwnerSchema.index(
