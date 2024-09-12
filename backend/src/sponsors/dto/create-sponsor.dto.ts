@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsDate, IsBoolean, IsMongoId, IsEmail } from 'class-validator';
+import { IsString, IsOptional, IsDate, IsBoolean, IsMongoId, IsEmail, IsDateString, IsObject } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ObjectId } from 'mongoose';
 
@@ -56,6 +56,27 @@ export class CreateSponsorDto {
   @IsOptional()
   @IsString()
   address?: string;
+
+  
+  @IsOptional()
+  @IsObject()
+  medical: object;
+
+  @IsOptional()
+  @IsString()
+  medicalPolicyNo: string;
+
+  @IsOptional()
+  @IsDateString()
+  medicalExpiryDate: Date;
+
+  @IsOptional()
+  @IsString()
+  iLOEPolicyNo: string;
+
+  @IsOptional()
+  @IsObject()
+  iLOE: object;
 
   @IsOptional()
   @IsDate()

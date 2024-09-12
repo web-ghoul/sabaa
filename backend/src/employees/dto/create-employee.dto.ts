@@ -65,6 +65,18 @@ export class CreateEmployeeDto {
   medical: object;
 
   @IsOptional()
+  @IsString()
+  medicalPolicyNo: string;
+
+  @IsOptional()
+  @IsDateString()
+  medicalExpiryDate: Date;
+
+  @IsOptional()
+  @IsString()
+  iLOEPolicyNo: string;
+
+  @IsOptional()
   @IsObject()
   iLOE: object;
 

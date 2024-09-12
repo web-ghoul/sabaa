@@ -7,11 +7,20 @@ export class CreateTransactionDto {
   transactionNo: string;
 
   @IsMongoId()
+  @IsOptional()
   employeeId: ObjectId;
-
+  
   @IsOptional()
   @IsString()
   serialNo?: string;
+
+  @IsOptional()
+  @IsString()
+  lcStatus?: string;
+
+  @IsMongoId()
+  @IsOptional()
+  canceledTransactionId: ObjectId;
 
   @IsString()
   companyCode: string;

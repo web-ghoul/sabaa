@@ -14,8 +14,9 @@ import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { EChannelSchema } from 'schemas/eChannel.schema';
 import { Tasaheel, TasaheelSchema } from 'schemas/tasaheel.schema';
 import { Natwasal, NatwasalSchema } from 'schemas/natwasal.schema';
+import { TransactionSchema } from 'schemas/transaction.schema';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'EChannel', schema: EChannelSchema },{ name: Natwasal.name, schema: NatwasalSchema },{ name: Tasaheel.name, schema: TasaheelSchema },{ name: Employee.name, schema: EmployeeSchema },{ name: Company.name, schema: CompanySchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
+  imports: [MongooseModule.forFeature([{ name: 'Transaction', schema: EChannelSchema },{ name: 'EChannel', schema: TransactionSchema },{ name: Natwasal.name, schema: NatwasalSchema },{ name: Tasaheel.name, schema: TasaheelSchema },{ name: Employee.name, schema: EmployeeSchema },{ name: Company.name, schema: CompanySchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]),MulterModule.register({
     storage: diskStorage({
       destination: './upload/employee',
       filename: (req, file, cb) => {

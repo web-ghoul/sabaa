@@ -12,6 +12,8 @@ import { Tasaheel } from 'schemas/tasaheel.schema';
 import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { Transaction } from 'schemas/transaction.schema';
+
 
 @Injectable()
 export class EmployeesService {
@@ -22,7 +24,9 @@ export class EmployeesService {
     @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
     @InjectModel('Tasaheel') private eTasaheelModel: Model<Tasaheel>,
     @InjectModel('Natwasal') private eNatwasalModel: Model<Natwasal>,
+    @InjectModel('Transaction') private transactionModel: Model<Transaction>,
     private readonly employeePdfGenerator: EmployeePdfGenerator,
+   
   ) {}
   async create(
     createEmployeeDto: CreateEmployeeDto,
@@ -143,14 +147,15 @@ export class EmployeesService {
 
   async findOne(id: string) {
     const [employee, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
-      await this.employeeModel.findById(id).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
+      await this.employeeModel.findById(id,{deleted: false}).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
       this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
       this.eChannelModel.findOne({employee:id, deleted: false}),
       this.eNatwasalModel.findOne({employee:id, deleted: false}),
       this.eTasaheelModel.findOne({employee:id, deleted: false}),
-
+      
     ])
-    return {employee,activities,eChannel,eNatwasal,eTasaheel};
+    const transactionData = await this.transactionModel.findOne({transactionNo: employee.transactionNo, deleted: false});
+    return {employee,activities,eChannel,eNatwasal,eTasaheel,transactionData};
   }
 
   async update(

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDate, IsOptional, IsMongoId } from 'class-validator';
+import { IsString, IsDate, IsOptional, IsMongoId, IsDateString, IsObject } from 'class-validator';
 import { ObjectId } from 'mongoose';
 
 export class CreateOwnerDto {
@@ -42,6 +42,27 @@ export class CreateOwnerDto {
   @ApiProperty()
   @IsString()
   state: string;
+
+  
+  @IsOptional()
+  @IsObject()
+  medical: object;
+
+  @IsOptional()
+  @IsString()
+  medicalPolicyNo: string;
+
+  @IsOptional()
+  @IsDateString()
+  medicalExpiryDate: Date;
+
+  @IsOptional()
+  @IsString()
+  iLOEPolicyNo: string;
+
+  @IsOptional()
+  @IsObject()
+  iLOE: object;
 
   @ApiProperty()
   @IsDate()

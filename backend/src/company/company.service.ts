@@ -197,6 +197,20 @@ export class CompanyService {
     }
   }
 
+  async addEmployee(id: string, employeeId: string) {
+    try {
+      return await this.companyModel.findByIdAndUpdate(
+        id,
+        {
+          $addToSet: { employees: employeeId }, // Add only if employeeId is not already in the array
+        },
+        { new: true },
+      );
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
+    }
+  }
+
   async remove(id: string) {
     try {
       await this.companyModel.updateOne({ _id: id }, { deleted: true });

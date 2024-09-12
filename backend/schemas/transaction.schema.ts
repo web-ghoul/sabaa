@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, {HydratedDocument, ObjectId } from 'mongoose';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 
 export type TransactionDocument = HydratedDocument<Transaction>;
 
@@ -10,7 +10,7 @@ export class Transaction {
   @Prop({ type: String })
   transactionNo: string;
 
-  @Prop({ type: String, ref: 'Employee', required: true })
+  @Prop({ type: String, ref: 'Employee' })
   employeeId: string;
 
   @Prop({ type: String, required: true })
@@ -61,6 +61,9 @@ export class Transaction {
   @Prop()
   lcNumber: string;
 
+  @Prop({ type: String, enum: ['Active', 'Cancel'], default: 'Active' })
+  lcStatus: string;
+
   @Prop()
   lcNo: string;
 
@@ -81,9 +84,6 @@ export class Transaction {
 
   @Prop({ type: Date })
   changeStatusDate: Date;
-
-  @Prop({ default: 'Active' })
-  lcStatus: string;
 
   @Prop({ default: 'In Process' })
   status: string;
@@ -118,8 +118,7 @@ TransactionSchema.index(
     unique: true,
     partialFilterExpression: {
       deleted: false,
-      type: { $ne: 'approved' },
-      uid: { $exists: true },
+      uid: { $exists: true, $ne: '' },
     },
   },
 );
@@ -130,8 +129,18 @@ TransactionSchema.index(
     unique: true,
     partialFilterExpression: {
       deleted: false,
-      type: { $ne: 'approved' },
       transactionNo: { $exists: true },
+    },
+  },
+);
+
+TransactionSchema.index(
+  { lcNumber: 1, deleted: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      lcNumber: { $exists: true, $ne: '' },
     },
   },
 );
@@ -142,8 +151,7 @@ TransactionSchema.index(
     unique: true,
     partialFilterExpression: {
       deleted: false,
-      type: { $ne: 'approved' },
-      emiratesNo: { $exists: true },
+      emiratesNo: { $exists: true, $ne: '' },
     },
   },
 );

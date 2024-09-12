@@ -105,23 +105,41 @@ export const OwnerSchema = SchemaFactory.createForClass(Owner);
 
 OwnerSchema.index(
   { emiratesId: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, emiratesId: { $exists: true , $ne: ""} } }
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      emiratesId: { $exists: true, $ne: '' },
+    },
+  },
 );
 OwnerSchema.index(
   { personCode: 1, deleted: 1 },
-  { unique: true, partialFilterExpression: { deleted: false, personCode: { $exists: true , $ne: ""} } }
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      personCode: { $exists: true, $ne: '' },
+    },
+  },
 );
 
 OwnerSchema.index(
-    { uid : 1, deleted: 1 },
-    { unique: true,  partialFilterExpression: { deleted: false } }
-  );
+  { uid: 1, deleted: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      deleted: false,
+      uid: { $exists: true, $ne: '' },
+    },
+  },
+);
 
 OwnerSchema.index(
-{ name : 1, deleted: 1 },
-{ unique: true,  partialFilterExpression: { deleted: false } }
+  { name: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
 );
 OwnerSchema.index(
-{ nameAr : 1, deleted: 1 },
-{ unique: true,  partialFilterExpression: { deleted: false } }
+  { nameAr: 1, deleted: 1 },
+  { unique: true, partialFilterExpression: { deleted: false } },
 );

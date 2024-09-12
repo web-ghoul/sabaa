@@ -27,6 +27,7 @@ export class TransactionsController {
   @ActivityLog({ action: 'create' })
   @ApiBody({ type: CreateTransactionDto })
   create(@UserLoggedIn('id') id: mongoose.Types.ObjectId ,  @Body() createTransactionDto: any) {
+    
     return this.transactionsService.create(createTransactionDto,id);
   }
 
@@ -69,8 +70,8 @@ export class TransactionsController {
   }
 
   @Get('counters')
-  getCounters() {
-    return this.transactionsService.getCounters();
+  getCounters(@Query('type') type: string) {
+    return this.transactionsService.getCounters(type);
   }
 
   @Get('export')

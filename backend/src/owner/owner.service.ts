@@ -177,12 +177,32 @@ export class OwnerService {
     file: Express.Multer.File,
   ) {
     try {
-      updateOwnerDto.avatar = file ? file.path : undefined;
-      return await this.ownerModel.findByIdAndUpdate(id, updateOwnerDto);
+      // Set avatar path if the file exists
+      if (file) {
+        updateOwnerDto.avatar = file.path;
+      } else {
+        delete updateOwnerDto.avatar; // Avoid sending undefined
+      }
+  
+      // Prepare update object with $set to force update
+      const updateFields = { 
+        ...updateOwnerDto, 
+        medical: updateOwnerDto.medical || {} // Ensure medical is set to an empty object if it's passed
+      };
+  
+      console.log(updateFields);
+      
+      // Use $set to ensure fields are updated
+      return await this.ownerModel.findByIdAndUpdate(
+        id,
+        { $set: updateFields },
+        { new: true } // Return the updated document
+      );
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
     }
   }
+  
 
   async remove(id: string) {
     try {
