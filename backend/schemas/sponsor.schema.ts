@@ -80,18 +80,6 @@ export class Sponsor {
   @Prop()
   status: string;
 
-  @Prop({ type: Object })
-  medical: object;
-
-  @Prop({ type: String })
-  medicalPolicyNo: string;
-
-  @Prop({ type: Object })
-  iLOE: object;
-
-  @Prop({ type: String })
-  iLOEPolicyNo: string;
-
   @Prop()
   relativeRelation: string;
 
