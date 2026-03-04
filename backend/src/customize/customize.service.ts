@@ -1,13 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import fs from 'fs/promises';
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class CustomizeService {
+  constructor(private cloudinaryService: CloudinaryService) {}
   private filePath = __dirname + '/../data/customize.json';
   async create(createCustomizeDto: object, logo?: Express.Multer.File) {
     try {
       // Convert the object to a JSON string
-      createCustomizeDto['logo'] = logo ? logo.path : undefined;
+      if (logo) {
+        const upload = await this.cloudinaryService.uploadFile(
+          logo,
+          'customize',
+        );
+        createCustomizeDto['logo'] = upload.secure_url;
+      }
+
       if (createCustomizeDto['logo'] == undefined) {
         delete createCustomizeDto['logo'];
         const { logo } = await this.findAll();

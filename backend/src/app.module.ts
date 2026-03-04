@@ -1,62 +1,86 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import * as dotenv from 'dotenv';
+import { OwnerSchema } from 'schemas/owner.schema';
+import { User, UserSchema } from 'schemas/user.schema';
+import { ActivitiesModule } from './activities/activities.module';
+import { AlertsModule } from './alerts/alerts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthModule } from './auth/auth.module';
+import { CompanyModule } from './company/company.module';
+import { CustomizeModule } from './customize/customize.module';
+import { DynamicSelectsModule } from './dynamic-selects/dynamic-selects.module';
+import { EChannelModule } from './e-channel/e-channel.module';
+import { EmployeesModule } from './employees/employees.module';
+import { CustomErrorFilter } from './filters/CustomErrorFilter';
+import { ImmgcardModule } from './immgcard/immgcard.module';
+import { JobTitleModule } from './job-title/job-title.module';
+import { MailsModule } from './mails/mails.module';
+import { NationalityModule } from './nationality/nationality.module';
+import { NatwasalsModule } from './natwasals/natwasals.module';
+import { OwnerModule } from './owner/owner.module';
+import { PermissionModule } from './permission/permission.module';
+import { ReportsModule } from './reports/reports.module';
+import { SponsorsModule } from './sponsors/sponsors.module';
+import { TasheelsModule } from './tasheels/tasheels.module';
+import { TransactionsModule } from './transactions/transactions.module';
 import { UserModule } from './user/user.module';
 import { WorkPermitModule } from './work-permit/work-permit.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from './auth/auth.module';
-import * as dotenv from 'dotenv';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { OwnerModule } from './owner/owner.module';
-import { AuthGuard } from './auth/auth.guard';
-import { NationalityModule } from './nationality/nationality.module';
-import { JobTitleModule } from './job-title/job-title.module';
-import { CompanyModule } from './company/company.module';
-import { ImmgcardModule } from './immgcard/immgcard.module';
-import { User, UserSchema } from 'schemas/user.schema';
-import { EmployeesModule } from './employees/employees.module';
-import { ActivitiesModule } from './activities/activities.module';
-import { MailsModule } from './mails/mails.module';
-import { OwnerSchema } from 'schemas/owner.schema';
-import { CustomErrorFilter } from './filters/CustomErrorFilter';
-import { SponsorsModule } from './sponsors/sponsors.module';
-import { EChannelModule } from './e-channel/e-channel.module';
-import { TasheelsModule } from './tasheels/tasheels.module';
-import { NatwasalsModule } from './natwasals/natwasals.module';
-import { TransactionsModule } from './transactions/transactions.module';
-import { AlertsModule } from './alerts/alerts.module';
-import { ReportsModule } from './reports/reports.module';
-import { PermissionModule } from './permission/permission.module';
-import { DynamicSelectsModule } from './dynamic-selects/dynamic-selects.module';
-import { CustomizeModule } from './customize/customize.module';
 
 dotenv.config();
 @Module({
-  imports: [UserModule, WorkPermitModule, CompanyModule, OwnerModule, NationalityModule,MongooseModule.forRoot(process.env.DB_CONN_LOCAL),MongooseModule.forFeature([{name:User.name,schema:UserSchema}]), AuthModule,ThrottlerModule.forRoot([{
-    ttl: 20000,
-    limit: 100,
-  },
-  
-]), JobTitleModule, ImmgcardModule, EmployeesModule, ActivitiesModule,
-MailsModule,MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]), SponsorsModule, EChannelModule, TasheelsModule, NatwasalsModule, TransactionsModule, AlertsModule, ReportsModule, PermissionModule, DynamicSelectsModule, CustomizeModule],
+  imports: [
+    UserModule,
+    WorkPermitModule,
+    CompanyModule,
+    OwnerModule,
+    NationalityModule,
+    MongooseModule.forRoot(process.env.DB),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    AuthModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 20000,
+        limit: 100,
+      },
+    ]),
+    JobTitleModule,
+    ImmgcardModule,
+    EmployeesModule,
+    ActivitiesModule,
+    MailsModule,
+    MongooseModule.forFeature([{ name: 'Owner', schema: OwnerSchema }]),
+    SponsorsModule,
+    EChannelModule,
+    TasheelsModule,
+    NatwasalsModule,
+    TransactionsModule,
+    AlertsModule,
+    ReportsModule,
+    PermissionModule,
+    DynamicSelectsModule,
+    CustomizeModule,
+  ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard
+      useClass: ThrottlerGuard,
     },
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
+      useClass: AuthGuard,
     },
-    {
-      provide: APP_GUARD,
-      useClass: MongooseModule
-    },
+
     {
       provide: APP_FILTER,
       useClass: CustomErrorFilter,
-    },],
+    },
+  ],
 })
 export class AppModule {}

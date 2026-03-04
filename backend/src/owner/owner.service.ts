@@ -11,6 +11,7 @@ import * as exceljs from 'exceljs';
 import { EChannel } from 'schemas/eChannel.schema';
 import { Tasaheel } from 'schemas/tasaheel.schema';
 import { Natwasal } from 'schemas/natwasal.schema';
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class OwnerService {
@@ -21,6 +22,7 @@ export class OwnerService {
     @InjectModel('EChannel') private eChannelModel: Model<EChannel>,
     @InjectModel('Tasaheel') private eTasaheelModel: Model<Tasaheel>,
     @InjectModel('Natwasal') private eNatwasalModel: Model<Natwasal>,
+    private cloudinaryService: CloudinaryService,
   ) {}
   async create(
     createOwnerDto: CreateOwnerDto,
@@ -28,16 +30,19 @@ export class OwnerService {
     user: ObjectId,
   ) {
     try {
-      
-
       if (Array.isArray(createOwnerDto)) {
-        createOwnerDto.map((owner) => {
+        for (const owner of createOwnerDto) {
           owner.user = user;
-          // owner.avatar = file ? file.path : undefined;
-        });
+        }
       } else {
+        if (file) {
+          const upload = await this.cloudinaryService.uploadFile(
+            file,
+            'owners',
+          );
+          createOwnerDto.avatar = upload.secure_url;
+        }
         createOwnerDto.user = user;
-        createOwnerDto.avatar = file ? file.path : undefined;
       }
 
       return await this.ownerModel.create(createOwnerDto);
@@ -73,7 +78,7 @@ export class OwnerService {
       }
       const sort: any = {};
       sort['status'] = 1;
-      sort['residenceExpiryDate'] = 1 ;
+      sort['residenceExpiryDate'] = 1;
       sort['createdAt'] = -1;
       if (sortType == 'name_asc') {
         sort['name'] = 1;
@@ -93,16 +98,18 @@ export class OwnerService {
       }
 
       const query: any = {
-        $and: [{$or: [
-          { name: { $regex: new RegExp(search, 'i') } },
-          { nameAr: { $regex: new RegExp(search, 'i') } },
-          { personCode: { $regex: new RegExp(search, 'i') } },
-          { phone: { $regex: new RegExp(search, 'i') } },
-          { uid: { $regex: new RegExp(search, 'i') } },
-          { emiratesId: { $regex: new RegExp(search, 'i') } },
-        ]}
-      ],
-        
+        $and: [
+          {
+            $or: [
+              { name: { $regex: new RegExp(search, 'i') } },
+              { nameAr: { $regex: new RegExp(search, 'i') } },
+              { personCode: { $regex: new RegExp(search, 'i') } },
+              { phone: { $regex: new RegExp(search, 'i') } },
+              { uid: { $regex: new RegExp(search, 'i') } },
+              { emiratesId: { $regex: new RegExp(search, 'i') } },
+            ],
+          },
+        ],
       };
       dobFrom != ''
         ? (query['dob'] = { $gte: new Date(dobFrom), $lte: new Date(dobTo) })
@@ -113,19 +120,19 @@ export class OwnerService {
         ? (query['deleted'] = deleted)
         : (query['deleted'] = false);
 
-
       status != '' ? (query['status'] = status) : undefined;
       residenceFrom != ''
-        ? (query['residenceExpiryDate'] = { $gte: new Date(residenceFrom), $lte: new Date(residenceTo) })
+        ? (query['residenceExpiryDate'] = {
+            $gte: new Date(residenceFrom),
+            $lte: new Date(residenceTo),
+          })
         : undefined;
-      
 
-      if(type == 'owner'){
-        query['$and'].push({ $or : [{type: 'owner'},{type: 'owner&pro'}]});
-      }else if (type == 'pro') {
-        query['$and'].push({ $or : [{type: 'pro'},{type: 'owner&pro'}]});
-      }else
-      {
+      if (type == 'owner') {
+        query['$and'].push({ $or: [{ type: 'owner' }, { type: 'owner&pro' }] });
+      } else if (type == 'pro') {
+        query['$and'].push({ $or: [{ type: 'pro' }, { type: 'owner&pro' }] });
+      } else {
         type != '' ? (query['type'] = type) : undefined;
       }
 
@@ -147,28 +154,27 @@ export class OwnerService {
   }
 
   async findOne(id: string) {
-    const [owner, companies, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
-      this.ownerModel.findById(id).populate({ path: 'sponsors', model: 'Sponsor' }),
-      this.companyModel
-        .find({ $or:[
-          {ownerId: id },
-          {proCode: id },
-        ]
-        , deleted: false})
-        .populate([
-          { path: 'ownerId', model: 'Owner' },
-          { path: 'proCode', model: 'Owner' },
-          
-
-        ])
-        .exec(),
-        this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "owner"}),
-        this.eChannelModel.findOne({owner:id, deleted: false}),
-        this.eNatwasalModel.findOne({owner:id , deleted: false}),
-        this.eTasaheelModel.findOne({owner:id, deleted: false}),
-      
-    ]);
-    return { owner, companies, activities,eChannel,eNatwasal,eTasaheel };
+    const [owner, companies, activities, eChannel, eNatwasal, eTasaheel] =
+      await Promise.all([
+        this.ownerModel
+          .findById(id)
+          .populate({ path: 'sponsors', model: 'Sponsor' }),
+        this.companyModel
+          .find({ $or: [{ ownerId: id }, { proCode: id }], deleted: false })
+          .populate([
+            { path: 'ownerId', model: 'Owner' },
+            { path: 'proCode', model: 'Owner' },
+          ])
+          .exec(),
+        this.activityModel.find({
+          id: new mongoose.Types.ObjectId(id),
+          route: 'owner',
+        }),
+        this.eChannelModel.findOne({ owner: id, deleted: false }),
+        this.eNatwasalModel.findOne({ owner: id, deleted: false }),
+        this.eTasaheelModel.findOne({ owner: id, deleted: false }),
+      ]);
+    return { owner, companies, activities, eChannel, eNatwasal, eTasaheel };
   }
 
   async update(
@@ -179,30 +185,30 @@ export class OwnerService {
     try {
       // Set avatar path if the file exists
       if (file) {
-        updateOwnerDto.avatar = file.path;
+        const upload = await this.cloudinaryService.uploadFile(file, 'owners');
+        updateOwnerDto.avatar = upload.secure_url;
       } else {
         delete updateOwnerDto.avatar; // Avoid sending undefined
       }
-  
+
       // Prepare update object with $set to force update
-      const updateFields = { 
-        ...updateOwnerDto, 
-        medical: updateOwnerDto.medical || {} // Ensure medical is set to an empty object if it's passed
+      const updateFields = {
+        ...updateOwnerDto,
+        medical: updateOwnerDto.medical || {}, // Ensure medical is set to an empty object if it's passed
       };
-  
+
       console.log(updateFields);
-      
+
       // Use $set to ensure fields are updated
       return await this.ownerModel.findByIdAndUpdate(
         id,
         { $set: updateFields },
-        { new: true } // Return the updated document
+        { new: true }, // Return the updated document
       );
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
     }
   }
-  
 
   async remove(id: string) {
     try {
@@ -214,7 +220,7 @@ export class OwnerService {
         ),
       ]);
 
-      return {_id: id} ; 
+      return { _id: id };
     } catch (err) {
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
@@ -239,7 +245,6 @@ export class OwnerService {
     };
   }
 
-
   async export(@Res() res: Response, type: string = 'owner', fileName: string) {
     const owners = await this.ownerModel.find({ deleted: false, type: type });
 
@@ -259,7 +264,11 @@ export class OwnerService {
       { header: 'State', key: 'state', width: 20 },
       { header: 'Address', key: 'address', width: 20 },
       { header: 'Sponsor', key: 'sponsor', width: 20 },
-      { header: 'Residence Expiry Date', key: 'residenceExpiryDate', width: 20 },
+      {
+        header: 'Residence Expiry Date',
+        key: 'residenceExpiryDate',
+        width: 20,
+      },
       { header: 'File IMMG No', key: 'fileImmgNo', width: 20 },
       { header: 'Status', key: 'status', width: 20 },
       { header: 'Type', key: 'type', width: 20 },
@@ -269,7 +278,7 @@ export class OwnerService {
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    owners.forEach(owner => {
+    owners.forEach((owner) => {
       worksheet.addRow({
         uid: owner.uid,
         name: owner.name,
@@ -295,8 +304,14 @@ export class OwnerService {
       });
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileName}.xlsx`,
+    );
     await workbook.xlsx.write(res);
 
     res.end();

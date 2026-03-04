@@ -12,18 +12,26 @@ import { ResetOtp, ResetOtpSchema } from 'schemas/resetOtp.schema';
 import { Permission, PermissionSchema } from 'schemas/permissions.schema';
 import { PermissionModule } from 'src/permission/permission.module';
 import { PermissionService } from 'src/permission/permission.service';
+import { MailsModule } from 'src/mails/mails.module';
 
 dotenv.config();
 @Module({
-  imports:[MongooseModule.forFeature([{name:User.name,schema:UserSchema},{name:Permission.name,schema:PermissionSchema},{name:ResetOtp.name,schema:ResetOtpSchema}]),
-  JwtModule.register({
-    global: true,
-    secret : process.env.Secret_Password,
-    signOptions: { expiresIn: '1d' },
-  }), PermissionModule
-],
+  imports: [
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Permission.name, schema: PermissionSchema },
+      { name: ResetOtp.name, schema: ResetOtpSchema },
+    ]),
+    JwtModule.register({
+      global: true,
+      secret: process.env.Secret_Password,
+      signOptions: { expiresIn: '1d' },
+    }),
+    PermissionModule,
+    MailsModule,
+  ],
   controllers: [AuthController],
-  providers: [AuthService,AuthGuard,MailsService,VerificationCodeGenerator,PermissionService],
-  exports:[AuthGuard]
+  providers: [AuthService, AuthGuard],
+  exports: [AuthGuard],
 })
 export class AuthModule {}

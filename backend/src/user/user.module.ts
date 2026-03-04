@@ -9,26 +9,28 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
+import { memoryStorage } from 'multer';
+import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema },{ name: ActivityLog.name, schema: ActivityLogSchema }]) ,JwtModule.registerAsync({
-    useFactory: async () => ({
-      secret: process.env.Secret_Password,
-      signOptions: { expiresIn: '1d' },
+  imports: [
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: ActivityLog.name, schema: ActivityLogSchema },
+    ]),
+    JwtModule.registerAsync({
+      useFactory: async () => ({
+        secret: process.env.Secret_Password,
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
-  }),
-  MulterModule.register({
-    storage: diskStorage({
-      destination: './upload/user',
-      filename: (req, file, cb) => {
-        // Generate a unique suffix
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        // Construct the filename using the original fieldname and unique suffix
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-      },
+    MulterModule.register({
+      storage: memoryStorage(),
     }),
-  }),],
+    CloudinaryModule,
+  ],
   controllers: [UserController],
   providers: [UserService],
-  exports: [UserService]
+  exports: [UserService],
 })
 export class UserModule {}

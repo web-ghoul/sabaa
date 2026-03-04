@@ -4,11 +4,9 @@ import { ReportsController } from './reports.controller';
 import { CompanyModule } from 'src/company/company.module';
 import { CompanyService } from 'src/company/company.service';
 
-
-
 @Module({
   imports: [CompanyModule],
   controllers: [ReportsController],
-  providers: [ReportsService,CompanyService],
+  providers: [ReportsService],
 })
 export class ReportsModule {}

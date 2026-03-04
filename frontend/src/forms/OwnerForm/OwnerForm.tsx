@@ -33,12 +33,12 @@ const OwnerForm = ({
     useContext(FormsContext);
   const { handleCloseOwnerModal } = useContext(ModalsContext);
   const { nationalities } = useSelector(
-    (state: RootState) => state.nationalities
+    (state: RootState) => state.nationalities,
   );
   const { jobs } = useSelector((state: RootState) => state.jobs);
   const { selector } = useSelector((state: RootState) => state.selector);
   const [checked, setChecked] = useState(
-    editableOwnerData ? editableOwnerData?.type === "owner&pro" : false
+    editableOwnerData ? editableOwnerData?.type === "owner&pro" : false,
   );
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -50,6 +50,8 @@ const OwnerForm = ({
     }
   };
   const dispatch = useDispatch<AppDispatch>();
+
+  console.log(errors);
 
   useEffect(() => {
     dispatch(getNationalities({ limit: -1 }));
@@ -77,7 +79,7 @@ const OwnerForm = ({
 
       {useMemo(
         () => type && <UploadImage title={"Owner Avatar"} variant={type} />,
-        [type]
+        [type],
       )}
 
       <FormControlLabel

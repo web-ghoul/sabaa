@@ -8,13 +8,14 @@ import * as crypto from 'crypto';
 import { ActivityLog } from 'schemas/activityLog.schema';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
-
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company.name) private companyModel: Model<Company>,
-    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   encrypt(text: string): string {
@@ -31,24 +32,30 @@ export class CompanyService {
   //   decrypted += decipher.final('utf8');
   //   return decrypted;
   // }
-  async create(createCompanyDto: CreateCompanyDto, file: Express.Multer.File, user: ObjectId) {
+  async create(
+    createCompanyDto: CreateCompanyDto,
+    file: Express.Multer.File,
+    user: ObjectId,
+  ) {
     try {
       if (Array.isArray(createCompanyDto)) {
-        createCompanyDto.map((company) => {
-          //x._id = x.licenseNo + x.state ;
-          // company.logo = file ? file.path : undefined;
-          company.user = user
-        });
+        for (const company of createCompanyDto) {
+          company.user = user;
+        }
       } else {
-        //createCompanyDto._id = createCompanyDto.licenseNo + createCompanyDto.state;
-        createCompanyDto.logo = file ? file.path : undefined;
+        if (file) {
+          const upload = await this.cloudinaryService.uploadFile(
+            file,
+            'companies',
+          );
+          createCompanyDto.logo = upload.secure_url;
+        }
         createCompanyDto.user = user;
-
       }
-      
+
       return await this.companyModel.create(createCompanyDto);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
@@ -62,7 +69,6 @@ export class CompanyService {
     id: string,
     filterQuery: any,
   ): Promise<Company[]> {
-    
     try {
       const projection: any = {};
       if (fields && fields.length > 0) {
@@ -73,7 +79,8 @@ export class CompanyService {
       if (id) {
         return this.companyModel
           .find({
-            $nor: [{ ownerId: id }, { proCode: id }],deleted: false
+            $nor: [{ ownerId: id }, { proCode: id }],
+            deleted: false,
           })
           .select(projection)
           .limit(limit)
@@ -87,7 +94,7 @@ export class CompanyService {
       } else {
         sort['createdAt'] = -1;
       }
-      //query variable 
+      //query variable
       const query = {
         $or: [
           { name: { $regex: new RegExp(search, 'i') } },
@@ -128,12 +135,12 @@ export class CompanyService {
             $lte: filterQuery?.IMMGTo ? filterQuery?.IMMGTo : new Date(),
           })
         : undefined;
-      
-      filterQuery?.deleted != undefined ? query['deleted'] = filterQuery?.deleted : query['deleted'] = false  ;
-        
+
+      filterQuery?.deleted != undefined
+        ? (query['deleted'] = filterQuery?.deleted)
+        : (query['deleted'] = false);
+
       // console.log(filterQuery);
-      
-      
 
       return this.companyModel
         .find(query)
@@ -143,7 +150,7 @@ export class CompanyService {
         .sort(sort);
     } catch (err) {
       console.log(err);
-      
+
       throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
@@ -151,34 +158,33 @@ export class CompanyService {
   async findOne(id: string) {
     const [data, activities] = await Promise.all([
       this.companyModel
-      .findById(id)
-      .populate([
-        { 
-          path: 'ownerId', 
-          model: 'Owner',
-          match: { deleted: false } // Only include if deleted is false
-        },
-        { 
-          path: 'proCode', 
-          model: 'Owner',
-          match: { deleted: false } // Only include if deleted is false
-        },
-        { 
-          path: 'employees', 
-          model: 'Employee',
-          match: { deleted: false } // Only include if deleted is false
-        }
-      ])
-      .exec(),
-      this.activityModel.find({id: id, route: "company"}).exec()
-    ]) ;
-      // if(data?.password)
-      //   {
-      //     data.password = this.encrypt(data.password);
-      //   }
+        .findById(id)
+        .populate([
+          {
+            path: 'ownerId',
+            model: 'Owner',
+            match: { deleted: false }, // Only include if deleted is false
+          },
+          {
+            path: 'proCode',
+            model: 'Owner',
+            match: { deleted: false }, // Only include if deleted is false
+          },
+          {
+            path: 'employees',
+            model: 'Employee',
+            match: { deleted: false }, // Only include if deleted is false
+          },
+        ])
+        .exec(),
+      this.activityModel.find({ id: id, route: 'company' }).exec(),
+    ]);
+    // if(data?.password)
+    //   {
+    //     data.password = this.encrypt(data.password);
+    //   }
 
-      return {data,activities} ;
-    
+    return { data, activities };
   }
 
   async update(
@@ -187,8 +193,13 @@ export class CompanyService {
     file: Express.Multer.File,
   ) {
     try {
-      //updateCompanyDto._id = updateCompanyDto.licenseNo + updateCompanyDto.state;
-      updateCompanyDto.logo = file ? file.path : undefined;
+      if (file) {
+        const upload = await this.cloudinaryService.uploadFile(
+          file,
+          'companies',
+        );
+        updateCompanyDto.logo = upload.secure_url;
+      }
       return await this.companyModel.findByIdAndUpdate(id, updateCompanyDto, {
         new: true,
       });
@@ -214,7 +225,7 @@ export class CompanyService {
   async remove(id: string) {
     try {
       await this.companyModel.updateOne({ _id: id }, { deleted: true });
-      return {_id : id}
+      return { _id: id };
     } catch (err) {
       throw new HttpException(
         'Error while deleting company',
@@ -233,7 +244,7 @@ export class CompanyService {
       const fields: any = {};
       if (typeOfPerson == 'owner') {
         fields.ownerId = Id;
-      } else if(typeOfPerson == 'pro') {
+      } else if (typeOfPerson == 'pro') {
         fields.proCode = Id;
       }
       if (operation == 'adding') {
@@ -242,7 +253,7 @@ export class CompanyService {
         query = { $pull: fields };
       }
 
-      await this.companyModel.updateMany({ _id: { $in: companyId}}, query);
+      await this.companyModel.updateMany({ _id: { $in: companyId } }, query);
 
       return { message: 'success' };
     } catch (err) {
@@ -254,18 +265,18 @@ export class CompanyService {
   }
 
   async getCounters() {
-    const [count,deleted] = await Promise.all([
+    const [count, deleted] = await Promise.all([
       this.companyModel.countDocuments({ deleted: false }),
-    this.companyModel.countDocuments({ deleted: true })
-    ]) ;
+      this.companyModel.countDocuments({ deleted: true }),
+    ]);
     return {
       count,
-      deleted
+      deleted,
     };
   }
 
-  async export(res: Response,fileName: string) {
-    const companies = await this.companyModel.find({deleted : false});
+  async export(res: Response, fileName: string) {
+    const companies = await this.companyModel.find({ deleted: false });
 
     const workbook = new exceljs.Workbook();
     const worksheet = workbook.addWorksheet('Companies');
@@ -294,8 +305,16 @@ export class CompanyService {
       { header: 'Website', key: 'website', width: 20 },
       { header: 'TRN', key: 'trn', width: 20 },
       { header: 'Email', key: 'email', width: 20 },
-      { header: 'Tenancy Contract Value', key: 'tenancyContractValue', width: 20 },
-      { header: 'Tenancy Contract Expiry', key: 'tenancyContractExp', width: 20 },
+      {
+        header: 'Tenancy Contract Value',
+        key: 'tenancyContractValue',
+        width: 20,
+      },
+      {
+        header: 'Tenancy Contract Expiry',
+        key: 'tenancyContractExp',
+        width: 20,
+      },
       { header: 'Remarks', key: 'remarks', width: 20 },
       { header: 'Country', key: 'country', width: 20 },
       { header: 'Zip Code', key: 'zipCode', width: 20 },
@@ -307,7 +326,7 @@ export class CompanyService {
       { header: 'Password', key: 'password', width: 20 },
     ];
 
-    companies.forEach(company => {
+    companies.forEach((company) => {
       worksheet.addRow({
         name: company.name,
         nameAr: company.nameAr,
@@ -346,8 +365,14 @@ export class CompanyService {
       });
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileName}.xlsx`,
+    );
     await workbook.xlsx.write(res);
 
     res.end();

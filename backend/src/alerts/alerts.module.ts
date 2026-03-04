@@ -10,8 +10,15 @@ import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 import { ActivityLogSchema } from 'schemas/activityLog.schema';
 
 @Module({
-  imports: [ScheduleModule.forRoot(), ActivitiesModule, MongooseModule.forFeature([{ name: 'Transaction', schema: TransactionSchema },{ name: ActivityLog.name, schema: ActivityLogSchema }])],
+  imports: [
+    ScheduleModule.forRoot(),
+    ActivitiesModule,
+    MongooseModule.forFeature([
+      { name: 'Transaction', schema: TransactionSchema },
+      { name: ActivityLog.name, schema: ActivityLogSchema },
+    ]),
+  ],
   controllers: [AlertsController],
-  providers: [AlertsService, ActivitiesService],
+  providers: [AlertsService],
 })
 export class AlertsModule {}

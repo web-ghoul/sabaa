@@ -13,7 +13,7 @@ import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Transaction } from 'schemas/transaction.schema';
-
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class EmployeesService {
@@ -26,7 +26,7 @@ export class EmployeesService {
     @InjectModel('Natwasal') private eNatwasalModel: Model<Natwasal>,
     @InjectModel('Transaction') private transactionModel: Model<Transaction>,
     private readonly employeePdfGenerator: EmployeePdfGenerator,
-   
+    private cloudinaryService: CloudinaryService,
   ) {}
   async create(
     createEmployeeDto: CreateEmployeeDto,
@@ -35,13 +35,18 @@ export class EmployeesService {
   ) {
     try {
       if (Array.isArray(createEmployeeDto)) {
-        createEmployeeDto.map((employee) => {
+        for (const employee of createEmployeeDto) {
           employee.user = user;
-          // employee.avatar = file ? file.path : undefined;
-        });
+        }
       } else {
+        if (file) {
+          const upload = await this.cloudinaryService.uploadFile(
+            file,
+            'employees',
+          );
+          createEmployeeDto.avatar = upload.secure_url;
+        }
         createEmployeeDto.user = user;
-        createEmployeeDto.avatar = file ? file.path : undefined;
       }
 
       // createEmployeeDto.avatar = file ? file.path : undefined;
@@ -84,7 +89,6 @@ export class EmployeesService {
     deleted: boolean = false,
   ) {
     try {
-      
       const projection: any = {};
       if (fields && fields.length > 0) {
         fields.forEach((field) => {
@@ -93,7 +97,7 @@ export class EmployeesService {
       }
       const sort: any = {};
       sort['status'] = 1;
-      sort['lcExpireDate'] = 1 ;
+      sort['lcExpireDate'] = 1;
       sort['createdAt'] = -1;
       if (sortType == 'lc_expire_date') {
         sort['lcExpireDate'] = 1;
@@ -128,9 +132,7 @@ export class EmployeesService {
       gender != '' ? (query['gender'] = gender) : undefined;
 
       // console.log(query);
-      
 
-      
       return this.employeeModel
         .find(query)
         .select(projection)
@@ -146,16 +148,31 @@ export class EmployeesService {
   }
 
   async findOne(id: string) {
-    const [employee, activities,eChannel,eNatwasal,eTasaheel] = await Promise.all([
-      await this.employeeModel.findById(id,{deleted: false}).populate([{ path: 'sponsors', model: 'Sponsor' },{ path: 'companyId', model: 'Company' }]),
-      this.activityModel.find({id: new mongoose.Types.ObjectId(id), route: "employee"}).exec(),
-      this.eChannelModel.findOne({employee:id, deleted: false}),
-      this.eNatwasalModel.findOne({employee:id, deleted: false}),
-      this.eTasaheelModel.findOne({employee:id, deleted: false}),
-      
-    ])
-    const transactionData = await this.transactionModel.findOne({transactionNo: employee.transactionNo, deleted: false});
-    return {employee,activities,eChannel,eNatwasal,eTasaheel,transactionData};
+    const [employee, activities, eChannel, eNatwasal, eTasaheel] =
+      await Promise.all([
+        await this.employeeModel.findById(id, { deleted: false }).populate([
+          { path: 'sponsors', model: 'Sponsor' },
+          { path: 'companyId', model: 'Company' },
+        ]),
+        this.activityModel
+          .find({ id: new mongoose.Types.ObjectId(id), route: 'employee' })
+          .exec(),
+        this.eChannelModel.findOne({ employee: id, deleted: false }),
+        this.eNatwasalModel.findOne({ employee: id, deleted: false }),
+        this.eTasaheelModel.findOne({ employee: id, deleted: false }),
+      ]);
+    const transactionData = await this.transactionModel.findOne({
+      transactionNo: employee.transactionNo,
+      deleted: false,
+    });
+    return {
+      employee,
+      activities,
+      eChannel,
+      eNatwasal,
+      eTasaheel,
+      transactionData,
+    };
   }
 
   async update(
@@ -164,7 +181,13 @@ export class EmployeesService {
     file: Express.Multer.File,
   ) {
     try {
-      updateEmployeeDto.avatar = file ? file.path : undefined;
+      if (file) {
+        const upload = await this.cloudinaryService.uploadFile(
+          file,
+          'employees',
+        );
+        updateEmployeeDto.avatar = upload.secure_url;
+      }
       // const oldData = await this.employeeModel.findById(id);
       if (updateEmployeeDto?.companyId == undefined) {
         updateEmployeeDto.companyId = [];
@@ -242,18 +265,16 @@ export class EmployeesService {
   async checkExistance(createEmployeeDto: CreateEmployeeDto) {
     const employee = await this.employeeModel.findOne({
       gender: createEmployeeDto.gender,
-       nationality: createEmployeeDto.nationality,
-       dob: createEmployeeDto.dob,
-       name: createEmployeeDto.name,
-     });
+      nationality: createEmployeeDto.nationality,
+      dob: createEmployeeDto.dob,
+      name: createEmployeeDto.name,
+    });
 
-     if(employee)
-       {
-         return employee;  
-       }else
-       {
-        throw  new HttpException("employee not found",HttpStatus.NOT_FOUND)
-       }
+    if (employee) {
+      return employee;
+    } else {
+      throw new HttpException('employee not found', HttpStatus.NOT_FOUND);
+    }
   }
   async report(res: Response) {
     const employees = await this.employeeModel.find({ deleted: false });
@@ -275,9 +296,9 @@ export class EmployeesService {
     pdfDoc.end();
   }
 
-  async employeePdf(id : string,res: Response){
+  async employeePdf(id: string, res: Response) {
     const employeeData = await this.employeeModel.findById(id);
-    const pdfDoc =  this.employeePdfGenerator.employeePdf(employeeData);
+    const pdfDoc = this.employeePdfGenerator.employeePdf(employeeData);
     // console.log(pdfDoc);
 
     res.setHeader('Content-Type', 'application/pdf');
@@ -288,7 +309,6 @@ export class EmployeesService {
 
     pdfDoc.pipe(res);
     pdfDoc.end();
-    
   }
 
   async export(res: Response, fileName: string) {

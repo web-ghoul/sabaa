@@ -11,20 +11,23 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 
+import { memoryStorage } from 'multer';
+import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Sponsor.name, schema: SponsorSchema },{ name: Owner.name, schema: OwnerSchema },{ name: ActivityLog.name, schema: ActivityLogSchema },{ name: Employee.name, schema: EmployeeSchema }]),
-  MulterModule.register({
-    storage: diskStorage({
-      destination: './upload/sponsor',
-      filename: (req, file, cb) => {
-        // Generate a unique suffix
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        // Construct the filename using the original fieldname and unique suffix
-        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-      },
+  imports: [
+    MongooseModule.forFeature([
+      { name: Sponsor.name, schema: SponsorSchema },
+      { name: Owner.name, schema: OwnerSchema },
+      { name: ActivityLog.name, schema: ActivityLogSchema },
+      { name: Employee.name, schema: EmployeeSchema },
+    ]),
+    MulterModule.register({
+      storage: memoryStorage(),
     }),
-  }),],
+    CloudinaryModule,
+  ],
   controllers: [SponsorsController],
-  providers: [SponsorsService,LogInterceptor],
+  providers: [SponsorsService, LogInterceptor],
 })
 export class SponsorsModule {}

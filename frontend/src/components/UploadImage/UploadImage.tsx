@@ -30,20 +30,20 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
     variant === "editCompanyInfo"
       ? companyInfoLogo || defaultLogo
       : variant === "addCompany" || variant === "editCompany"
-      ? companyImage || defaultCompany
-      : variant === "addOwner" || variant === "editOwner"
-      ? ownerImage || defaultAvatar
-      : variant === "addPro" || variant === "editPro"
-      ? proImage || defaultAvatar
-      : variant === "addCustomer" || variant === "editCustomer"
-      ? customerImage || defaultAvatar
-      : variant === "addSponsor" || variant === "editSponsor"
-      ? sponsorImage || defaultAvatar
-      : variant === "addUser" || variant === "editUser"
-      ? userImage || defaultAvatar
-      : variant === "addEmployee" || variant === "editEmployee"
-      ? employeeImage || defaultAvatar
-      : defaultAvatar
+        ? companyImage || defaultCompany
+        : variant === "addOwner" || variant === "editOwner"
+          ? ownerImage || defaultAvatar
+          : variant === "addPro" || variant === "editPro"
+            ? proImage || defaultAvatar
+            : variant === "addCustomer" || variant === "editCustomer"
+              ? customerImage || defaultAvatar
+              : variant === "addSponsor" || variant === "editSponsor"
+                ? sponsorImage || defaultAvatar
+                : variant === "addUser" || variant === "editUser"
+                  ? userImage || defaultAvatar
+                  : variant === "addEmployee" || variant === "editEmployee"
+                    ? employeeImage || defaultAvatar
+                    : defaultAvatar,
   );
 
   const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,20 +76,20 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
       variant === "editCompanyInfo"
         ? companyInfoLogo || defaultLogo
         : variant === "addCompany" || variant === "editCompany"
-        ? companyImage || defaultCompany
-        : variant === "addOwner" || variant === "editOwner"
-        ? ownerImage || defaultAvatar
-        : variant === "addPro" || variant === "editPro"
-        ? proImage || defaultAvatar
-        : variant === "addCustomer" || variant === "editCustomer"
-        ? customerImage || defaultAvatar
-        : variant === "addSponsor" || variant === "editSponsor"
-        ? sponsorImage || defaultAvatar
-        : variant === "addUser" || variant === "editUser"
-        ? userImage || defaultAvatar
-        : variant === "addEmployee" || variant === "editEmployee"
-        ? employeeImage || defaultAvatar
-        : defaultAvatar
+          ? companyImage || defaultCompany
+          : variant === "addOwner" || variant === "editOwner"
+            ? ownerImage || defaultAvatar
+            : variant === "addPro" || variant === "editPro"
+              ? proImage || defaultAvatar
+              : variant === "addCustomer" || variant === "editCustomer"
+                ? customerImage || defaultAvatar
+                : variant === "addSponsor" || variant === "editSponsor"
+                  ? sponsorImage || defaultAvatar
+                  : variant === "addUser" || variant === "editUser"
+                    ? userImage || defaultAvatar
+                    : variant === "addEmployee" || variant === "editEmployee"
+                      ? employeeImage || defaultAvatar
+                      : defaultAvatar,
     );
   }, [
     companyImage,
@@ -122,11 +122,8 @@ const UploadImage = ({ variant, title }: UploadImageTypes) => {
             chosenImage instanceof File
               ? URL.createObjectURL(chosenImage)
               : chosenImage.split("/")[1] === "images"
-              ? chosenImage
-              : `${import.meta.env.VITE_SERVER_URL}/${chosenImage}`.replaceAll(
-                  "\\",
-                  "/"
-                )
+                ? chosenImage
+                : `${chosenImage}`
           })`,
         }}
       >

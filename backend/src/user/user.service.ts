@@ -4,126 +4,153 @@ import { User } from 'schemas/user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Model, ObjectId, Schema } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { Express } from 'express'
+import { Express } from 'express';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
 import { ActivityLog } from 'schemas/activityLog.schema';
-
+import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class UserService {
-  
-  constructor(@InjectModel(User.name) private userModel: Model<User>,
-  @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>
- ) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(ActivityLog.name) private activityModel: Model<ActivityLog>,
+    private cloudinaryService: CloudinaryService,
+  ) {}
 
-  async createUser(createUserDto: CreateUserDto ,file: Express.Multer.File, user: ObjectId): Promise<object> {
+  async createUser(
+    createUserDto: CreateUserDto,
+    file: Express.Multer.File,
+    user: ObjectId,
+  ): Promise<object> {
     //const secretPassword = this.configService.get<string>('SECRET_PASSWORD');
     // Hash the password
-    const emailIsTaken = await this.userModel.findOne({email: createUserDto.email});
-    if(emailIsTaken)
-    {
+    const emailIsTaken = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+    if (emailIsTaken) {
       throw new HttpException('Email is already used', HttpStatus.FORBIDDEN);
     }
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10 );
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
     // Create a new user instance with the hashed password
+    let avatarUrl = undefined;
+    if (file) {
+      const upload = await this.cloudinaryService.uploadFile(file, 'users');
+      avatarUrl = upload.secure_url;
+    }
+
     const createdUser = new this.userModel({
       ...createUserDto,
-      avatar: file ? file.path : undefined,
+      avatar: avatarUrl,
       password: hashedPassword, // Replace plain password with hashed password
     });
     createUserDto.user = user;
 
     // Save the user to the database
-    try{
+    try {
       const user = await createdUser.save();
 
-      return user ; 
-
-    }catch(err)
-    {
-      throw new HttpException(err , HttpStatus.FORBIDDEN);
+      return user;
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
 
-  async updateUser(updateUserDto: UpdateUserDto ,file: Express.Multer.File, id : ObjectId): Promise<object> {
+  async updateUser(
+    updateUserDto: UpdateUserDto,
+    file: Express.Multer.File,
+    id: ObjectId,
+  ): Promise<object> {
     //const secretPassword = this.configService.get<string>('SECRET_PASSWORD');
     // Hash the password
-    const emailIsTaken = await this.userModel.findOne({email: updateUserDto.email});
-    if(emailIsTaken && id != emailIsTaken._id)
-    {
+    const emailIsTaken = await this.userModel.findOne({
+      email: updateUserDto.email,
+    });
+    if (emailIsTaken && id != emailIsTaken._id) {
       throw new HttpException('Email is already used', HttpStatus.FORBIDDEN);
     }
     // Create a new user instance with the hashed password
-    const updateUser = {
+    let avatarUrl = undefined;
+    if (file) {
+      const upload = await this.cloudinaryService.uploadFile(file, 'users');
+      avatarUrl = upload.secure_url;
+    }
+
+    const updateUser: any = {
       ...updateUserDto,
-      avatar: file ? file.path : undefined,
     };
-    try{
-       
-      return this.userModel.findByIdAndUpdate(id,updateUser)
-    }catch(err)
-    {
-      throw new HttpException(err , HttpStatus.FORBIDDEN);
+    if (avatarUrl) {
+      updateUser.avatar = avatarUrl;
+    }
+    try {
+      return this.userModel.findByIdAndUpdate(id, updateUser);
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
     // Save the user to the database
-
-    
   }
 
-  listUsers(limit: number, page: number, search:string,sortType:string,status:string = '',role:string = '', deleted: boolean = false): Promise<User[]> {
-
-    const sort:any = {}
-    if(sortType == "name_asc")
-    {
-      sort["name"] = 1; 
-    }else
-    {
-      sort["createdAt"] = -1; 
+  listUsers(
+    limit: number,
+    page: number,
+    search: string,
+    sortType: string,
+    status: string = '',
+    role: string = '',
+    deleted: boolean = false,
+  ): Promise<User[]> {
+    const sort: any = {};
+    if (sortType == 'name_asc') {
+      sort['name'] = 1;
+    } else {
+      sort['createdAt'] = -1;
     }
     const query = {
-      name: { $regex: new RegExp(search, "i") },}
+      name: { $regex: new RegExp(search, 'i') },
+    };
 
-    status != '' ? query['status'] = status : null;
-    role != '' ? query['role'] = role : null;
-    deleted != false ? query['deleted'] = deleted : query['deleted'] = false;
+    status != '' ? (query['status'] = status) : null;
+    role != '' ? (query['role'] = role) : null;
+    deleted != false
+      ? (query['deleted'] = deleted)
+      : (query['deleted'] = false);
 
-    console.log(query)
+    console.log(query);
 
-    return this.userModel.find(query, "-password").limit(limit).skip(page*limit).sort(sort);
-}
-  async displayUser(id: Schema.Types.ObjectId){
+    return this.userModel
+      .find(query, '-password')
+      .limit(limit)
+      .skip(page * limit)
+      .sort(sort);
+  }
+  async displayUser(id: Schema.Types.ObjectId) {
     const [user, activities] = await Promise.all([
       this.userModel.findById(id),
-      this.activityModel.find({id: id, route: "user"})
-    ])
-    return {user, activities}
+      this.activityModel.find({ id: id, route: 'user' }),
+    ]);
+    return { user, activities };
   }
-  async findOne(email: string){
-    const user= await this.userModel.findOne({email: email})
+  async findOne(email: string) {
+    const user = await this.userModel.findOne({ email: email });
 
     return user;
   }
   async userCounters(): Promise<object> {
-    const [roles,count,deleted] = await Promise.all([
+    const [roles, count, deleted] = await Promise.all([
       this.userModel.aggregate([
-      {
-        $group: {
-          _id: "$role",
-          count: { $sum: 1 },
+        {
+          $group: {
+            _id: '$role',
+            count: { $sum: 1 },
+          },
         },
-      },
-    ])
-  ,
-  this.userModel.countDocuments({ deleted: false }),
-  this.userModel.countDocuments({ deleted: true })
-]
-)
-    return {roles , count , deleted}
-
-
+      ]),
+      this.userModel.countDocuments({ deleted: false }),
+      this.userModel.countDocuments({ deleted: true }),
+    ]);
+    return { roles, count, deleted };
 
     // return this.userModel.aggregate( [
     //   {
@@ -145,20 +172,20 @@ export class UserService {
     //   }
     // ]);
   }
- 
 
-  async deleteUser(id: ObjectId){
-    try{
-      await this.userModel.findByIdAndUpdate(id, {deleted: true});    
-      return {_id: id} ;   
-    }catch(err)
-    {
-      throw new HttpException("Error while deleting user" , HttpStatus.FORBIDDEN);
+  async deleteUser(id: ObjectId) {
+    try {
+      await this.userModel.findByIdAndUpdate(id, { deleted: true });
+      return { _id: id };
+    } catch (err) {
+      throw new HttpException(
+        'Error while deleting user',
+        HttpStatus.FORBIDDEN,
+      );
     }
-    
   }
 
-  async export(@Res() res: Response,fileName: string) {
+  async export(@Res() res: Response, fileName: string) {
     const users = await this.userModel.find();
 
     const workbook = new exceljs.Workbook();
@@ -175,7 +202,7 @@ export class UserService {
       { header: 'Deleted', key: 'deleted', width: 10 },
     ];
 
-    users.forEach(user => {
+    users.forEach((user) => {
       worksheet.addRow({
         _id: user._id.toString(),
         name: user.name,
@@ -189,8 +216,14 @@ export class UserService {
       });
     });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename=${fileName}.xlsx`,
+    );
     await workbook.xlsx.write(res);
 
     res.end();

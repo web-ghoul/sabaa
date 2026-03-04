@@ -25,11 +25,7 @@ const Logo = ({ color, noTitle, handling }: LogoTypes) => {
         className={`rounded-full overflow-hidden w-[40px] h-[40px] md:w-[35px] md:h-[35px] sm:!w-[35px] sm:!h-[35px] bg-no-repeat bg-cover bg-center`}
         sx={{
           backgroundImage: `url("${
-            customizes
-              ? `${
-                  import.meta.env.VITE_SERVER_URL
-                }/${customizes?.logo?.replaceAll("\\", "/")}`
-              : "/images/icon_fit.png"
+            customizes ? `${customizes?.logo}` : "/images/icon_fit.png"
           }")`,
         }}
       />
