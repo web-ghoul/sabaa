@@ -4,9 +4,9 @@ import { EChannelController } from './e-channel.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EChannelSchema } from '../schemas/eChannel.schema';
 
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 import { ActivityLogSchema } from '../schemas/activityLog.schema';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { Employee, EmployeeSchema } from '../schemas/employee.schema';
 import { Owner, OwnerSchema } from '../schemas/owner.schema';
 

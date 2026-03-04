@@ -6,13 +6,13 @@ import { User, UserSchema } from '../schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth.guard';
 import * as dotenv from 'dotenv';
-import { MailsService } from 'src/mails/mails.service';
-import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
+import { MailsService } from '../mails/mails.service';
+import VerificationCodeGenerator from '../utils/code-generator/VerificationCodeGenerator';
 import { ResetOtp, ResetOtpSchema } from '../schemas/resetOtp.schema';
 import { Permission, PermissionSchema } from '../schemas/permissions.schema';
-import { PermissionModule } from 'src/permission/permission.module';
-import { PermissionService } from 'src/permission/permission.service';
-import { MailsModule } from 'src/mails/mails.module';
+import { PermissionModule } from '../permission/permission.module';
+import { PermissionService } from '../permission/permission.service';
+import { MailsModule } from '../mails/mails.module';
 
 dotenv.config();
 @Module({

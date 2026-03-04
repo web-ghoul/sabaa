@@ -9,7 +9,7 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
 import { ActivityLog } from '../schemas/activityLog.schema';
-import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
+import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class UserService {

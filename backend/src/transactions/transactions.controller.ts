@@ -1,16 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Query, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 import { Response } from 'express';
-import { UserLoggedIn } from 'src/utils/userLoggedIn.decorator';
+import { UserLoggedIn } from '../utils/userLoggedIn.decorator';
 import mongoose from 'mongoose';
 
-ApiTags('transactions')
+ApiTags('transactions');
 @Controller([
   'work-permit',
   'approved-work-permit',
@@ -26,9 +37,11 @@ export class TransactionsController {
   @UseInterceptors(LogInterceptor)
   @ActivityLog({ action: 'create' })
   @ApiBody({ type: CreateTransactionDto })
-  create(@UserLoggedIn('id') id: mongoose.Types.ObjectId ,  @Body() createTransactionDto: any) {
-    
-    return this.transactionsService.create(createTransactionDto,id);
+  create(
+    @UserLoggedIn('id') id: mongoose.Types.ObjectId,
+    @Body() createTransactionDto: any,
+  ) {
+    return this.transactionsService.create(createTransactionDto, id);
   }
 
   @Get()
@@ -48,7 +61,6 @@ export class TransactionsController {
     @Query('changeStatusDateFrom') changeStatusDateFrom: string,
     @Query('changeStatusDateTo') changeStatusDateTo: string,
     @Query('userId') userId: mongoose.Types.ObjectId,
-
   ) {
     return this.transactionsService.findAll(
       +limit,
@@ -65,7 +77,7 @@ export class TransactionsController {
       residenceFrom,
       changeStatusDateFrom,
       changeStatusDateTo,
-      userId
+      userId,
     );
   }
 

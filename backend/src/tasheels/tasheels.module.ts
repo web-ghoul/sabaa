@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TasheelsService } from './tasheels.service';
 import { TasheelsController } from './tasheels.controller';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TasaheelSchema } from '../schemas/tasaheel.schema';
 import { CompanySchema } from '../schemas/company.schema';

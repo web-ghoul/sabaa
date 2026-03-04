@@ -1,13 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, Query, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { EChannelService } from './e-channel.service';
 import { CreateEChannelDto } from './dto/create-e-channel.dto';
 import { UpdateEChannelDto } from './dto/update-e-channel.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 import { Response } from 'express';
 
-ApiTags('e-channel')
+ApiTags('e-channel');
 @Controller(['e-channel', 'e-channels'])
 export class EChannelController {
   constructor(private readonly eChannelService: EChannelService) {}

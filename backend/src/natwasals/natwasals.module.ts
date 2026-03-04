@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { NatwasalsService } from './natwasals.service';
 import { NatwasalsController } from './natwasals.controller';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CompanySchema } from '../schemas/company.schema';
 import { OwnerSchema } from '../schemas/owner.schema';

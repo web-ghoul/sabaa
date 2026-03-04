@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as Joi from 'joi';
 import { Model } from 'mongoose';
 import { ResetOtp } from '../schemas/resetOtp.schema';
-import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
-import { joiValidator } from 'src/utils/joi/joiValidator';
+import VerificationCodeGenerator from '../utils/code-generator/VerificationCodeGenerator';
+import { joiValidator } from '../utils/joi/joiValidator';
 
 @Injectable()
 export class MailsService {

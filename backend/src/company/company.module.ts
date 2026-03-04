@@ -6,12 +6,12 @@ import { CompanySchema } from '../schemas/company.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { ActivityLogSchema } from '../schemas/activityLog.schema';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 
 import { memoryStorage } from 'multer';
-import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 
 @Module({
   imports: [

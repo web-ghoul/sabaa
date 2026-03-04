@@ -13,7 +13,7 @@ import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Transaction } from '../schemas/transaction.schema';
-import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
+import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class EmployeesService {
