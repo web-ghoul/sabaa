@@ -19,6 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "strict":true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "schemas/*": ["src/schemas/*"]
+    }
   }
 }
