@@ -13,7 +13,7 @@ import {
   validationErrorHandler,
   prodErrors,
 } from './error-handlers';
-import { CustomError } from 'src/utils/CustomError';
+import { CustomError } from '../utils/CustomError';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { OwnerDocument } from '../schemas/owner.schema';

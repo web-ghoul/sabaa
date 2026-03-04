@@ -1,3 +1,5 @@
 design_material
 .hintrc
 .package-lock.json
+config.bat
+node_modules

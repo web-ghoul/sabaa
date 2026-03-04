@@ -10,7 +10,7 @@ import { diskStorage } from 'multer';
 import * as path from 'path';
 import { ActivityLog, ActivityLogSchema } from '../schemas/activityLog.schema';
 import { memoryStorage } from 'multer';
-import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 
 @Module({
   imports: [

@@ -7,14 +7,14 @@ import { diskStorage } from 'multer';
 import { MulterModule } from '@nestjs/platform-express';
 import * as path from 'path';
 import { Company, CompanySchema } from '../schemas/company.schema';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { ActivityLog, ActivityLogSchema } from '../schemas/activityLog.schema';
 import { EChannelSchema } from '../schemas/eChannel.schema';
 import { Natwasal, NatwasalSchema } from '../schemas/natwasal.schema';
 import { Tasaheel, TasaheelSchema } from '../schemas/tasaheel.schema';
 
 import { memoryStorage } from 'multer';
-import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 
 @Module({
   imports: [

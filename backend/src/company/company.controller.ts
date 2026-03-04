@@ -20,9 +20,9 @@ import { Company } from '../schemas/company.schema';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { User } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
+import { User } from '../utils/decorators/User.decorator';
 import { Response } from 'express';
 
 @ApiTags('Company')

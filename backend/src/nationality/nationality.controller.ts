@@ -14,9 +14,9 @@ import { Nationality } from '../schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
 import { NationalityService } from './nationality.service';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { User } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
+import { User } from '../utils/decorators/User.decorator';
 @ApiTags('Nationality')
 @Controller(['nationality', 'nationalities'])
 export class NationalityController {

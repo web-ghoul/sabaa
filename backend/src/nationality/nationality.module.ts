@@ -3,9 +3,9 @@ import { NationalityService } from './nationality.service';
 import { NationalityController } from './nationality.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Nationality, NationalitySchema } from '../schemas/nationality.schema';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { ActivityLogSchema } from '../schemas/activityLog.schema';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 
 @Module({
   imports: [

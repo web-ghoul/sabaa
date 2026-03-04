@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { Model } from 'mongoose';
 import { OwnerDocument } from '../schemas/owner.schema';
-import { CustomError } from 'src/utils/CustomError';
+import { CustomError } from '../utils/CustomError';
 
 export const devErrors = (res: Response, error: CustomError) => {
   res.status(error.statusCode).json({

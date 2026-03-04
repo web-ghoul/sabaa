@@ -1,48 +1,106 @@
 import { Owner } from './entities/owner.entity';
-import { Controller, Get, Post, Body, Param, Delete, Query, Patch, ParseFilePipe, UploadedFile, MaxFileSizeValidator, FileTypeValidator, UseInterceptors, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Patch,
+  ParseFilePipe,
+  UploadedFile,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  UseInterceptors,
+  Res,
+} from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { User } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
+import { User } from '../utils/decorators/User.decorator';
 
 import { Response } from 'express';
 
+ApiTags('owner');
 
-ApiTags('owner')
-
-@Controller(['owner', 'pro', 'customer',"owners","officers","customers"])
+@Controller(['owner', 'pro', 'customer', 'owners', 'officers', 'customers'])
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post()
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "create"})
+  @ActivityLog({ action: 'create' })
   @ApiBody({ type: CreateOwnerDto })
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@User("id") user, @Body() createOwnerDto: CreateOwnerDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
-    new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
-
-    return this.ownerService.create(createOwnerDto,file,user);
+  create(
+    @User('id') user,
+    @Body() createOwnerDto: CreateOwnerDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'image' }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.ownerService.create(createOwnerDto, file, user);
   }
 
   @Get()
-  findAll(@Query('limit') limit: number, @Query('page') page: number, @Query('search') search: string,@Query('select') selectFields: string[],@Query('sort')sort:string,@Query('dobFrom')dobFrom:string,@Query('nationality')nationality:string,@Query('state')state:string,@Query('dobTo')dobTo:string,@Query('deleted')deleted:boolean,@Query('type')type:string,@Query('status')status:string,@Query('residenceTo')residenceTo:string,@Query('residenceFrom')residenceFrom:string): Promise<Owner[]> {
-    return this.ownerService.findAll(limit,page,search,selectFields,sort,nationality,state,dobFrom,dobTo,deleted,type,status,residenceFrom,residenceTo);
+  findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number,
+    @Query('search') search: string,
+    @Query('select') selectFields: string[],
+    @Query('sort') sort: string,
+    @Query('dobFrom') dobFrom: string,
+    @Query('nationality') nationality: string,
+    @Query('state') state: string,
+    @Query('dobTo') dobTo: string,
+    @Query('deleted') deleted: boolean,
+    @Query('type') type: string,
+    @Query('status') status: string,
+    @Query('residenceTo') residenceTo: string,
+    @Query('residenceFrom') residenceFrom: string,
+  ): Promise<Owner[]> {
+    return this.ownerService.findAll(
+      limit,
+      page,
+      search,
+      selectFields,
+      sort,
+      nationality,
+      state,
+      dobFrom,
+      dobTo,
+      deleted,
+      type,
+      status,
+      residenceFrom,
+      residenceTo,
+    );
   }
-  @Get("counters")
-  getCounters(@Query('type') type:string) {
+  @Get('counters')
+  getCounters(@Query('type') type: string) {
     return this.ownerService.getCounters(type);
   }
 
-  @Get("export")
-  export(@Res()  res: Response,@Query('type') type: string,@Query('fileName') fileName: string) {
-    return this.ownerService.export(res,type,fileName);  
+  @Get('export')
+  export(
+    @Res() res: Response,
+    @Query('type') type: string,
+    @Query('fileName') fileName: string,
+  ) {
+    return this.ownerService.export(res, type, fileName);
   }
-
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -52,22 +110,33 @@ export class OwnerController {
   @Patch(':id')
   @UseInterceptors(FileInterceptor('avatar'))
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "update"})
-  update(@Param('id') id: string, @Body() updateOwnerDto: UpdateOwnerDto, @UploadedFile(new ParseFilePipe({validators: [new MaxFileSizeValidator({ maxSize: 10000000 }),
-    new FileTypeValidator({ fileType: 'image' })],fileIsRequired: false})) file: Express.Multer.File) {
-    return this.ownerService.update(id, updateOwnerDto,file);
+  @ActivityLog({ action: 'update' })
+  update(
+    @Param('id') id: string,
+    @Body() updateOwnerDto: UpdateOwnerDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 10000000 }),
+          new FileTypeValidator({ fileType: 'image' }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.ownerService.update(id, updateOwnerDto, file);
   }
 
   @Delete(':id')
   @UseInterceptors(LogInterceptor)
-  @ActivityLog({action: "delete"})
+  @ActivityLog({ action: 'delete' })
   remove(@Param('id') id: string) {
     return this.ownerService.remove(id);
   }
 
   @Post('import')
-  importOwners(@Body() createOwnerDto: CreateOwnerDto[])
-  {
+  importOwners(@Body() createOwnerDto: CreateOwnerDto[]) {
     return this.ownerService.importOwners(createOwnerDto);
   }
 }

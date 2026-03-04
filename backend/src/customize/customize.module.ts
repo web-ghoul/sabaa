@@ -6,7 +6,7 @@ import { diskStorage } from 'multer';
 import * as path from 'path';
 
 import { memoryStorage } from 'multer';
-import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
+import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';
 
 @Module({
   imports: [

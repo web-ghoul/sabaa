@@ -11,9 +11,9 @@ import {
   resetPasswordDto,
 } from './dtos/createOtp.dto';
 
-import { MailsService } from 'src/mails/mails.service';
+import { MailsService } from '../mails/mails.service';
 import { ResetOtp } from '../schemas/resetOtp.schema';
-import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
+import VerificationCodeGenerator from '../utils/code-generator/VerificationCodeGenerator';
 import { Permission } from '../schemas/permissions.schema';
 
 @Injectable()

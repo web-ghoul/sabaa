@@ -14,9 +14,9 @@ import { CreateJobTitleDto } from './dto/create-job-title.dto';
 import { UpdateJobTitleDto } from './dto/update-job-title.dto';
 import { JobTitle } from '../schemas/jobTitle.schema';
 import { ApiTags } from '@nestjs/swagger';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { User } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
+import { User } from '../utils/decorators/User.decorator';
 
 @ApiTags('Job-Title')
 @Controller(['job-title', 'jobs'])

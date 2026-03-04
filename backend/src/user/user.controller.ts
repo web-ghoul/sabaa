@@ -22,14 +22,14 @@ import { ObjectId } from 'mongoose';
 
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Roles } from 'src/auth/roles.decorator';
-import { Role } from 'src/enum/role.enum';
+import { Roles } from '../auth/roles.decorator';
+import { Role } from '../enum/role.enum';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '../schemas/user.schema';
 import { Response } from 'express';
-import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { User as UserDecorator } from 'src/utils/decorators/User.decorator';
+import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
+import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
+import { User as UserDecorator } from '../utils/decorators/User.decorator';
 
 // import { Request } from 'express';
 @ApiTags('User')

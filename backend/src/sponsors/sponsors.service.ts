@@ -6,7 +6,7 @@ import mongoose, { Model, ObjectId } from 'mongoose';
 import { Sponsor } from '../schemas/sponsor.schema';
 import { Owner } from '../schemas/owner.schema';
 import { Employee } from '../schemas/employee.schema';
-import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
+import { CloudinaryService } from '../utils/cloudinary/cloudinary.service';
 
 @Injectable()
 export class SponsorsService {
