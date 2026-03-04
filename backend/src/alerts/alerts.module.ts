@@ -5,9 +5,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ActivitiesModule } from 'src/activities/activities.module';
 import { ActivitiesService } from 'src/activities/activities.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TransactionSchema } from 'schemas/transaction.schema';
+import { TransactionSchema } from '../schemas/transaction.schema';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
-import { ActivityLogSchema } from 'schemas/activityLog.schema';
+import { ActivityLogSchema } from '../schemas/activityLog.schema';
 
 @Module({
   imports: [

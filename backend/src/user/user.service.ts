@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'schemas/user.schema';
+import { User } from '../schemas/user.schema';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Model, ObjectId, Schema } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
@@ -8,7 +8,7 @@ import { Express } from 'express';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
-import { ActivityLog } from 'schemas/activityLog.schema';
+import { ActivityLog } from '../schemas/activityLog.schema';
 import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()

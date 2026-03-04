@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
 import { Model } from 'mongoose';
-import { EChannel } from 'schemas/eChannel.schema';
-import { Employee } from 'schemas/employee.schema';
-import { Owner } from 'schemas/owner.schema';
+import { EChannel } from '../schemas/eChannel.schema';
+import { Employee } from '../schemas/employee.schema';
+import { Owner } from '../schemas/owner.schema';
 import { CreateEChannelDto } from './dto/create-e-channel.dto';
 import { UpdateEChannelDto } from './dto/update-e-channel.dto';
 

@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CompanyController } from './company.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CompanySchema } from 'schemas/company.schema';
+import { CompanySchema } from '../schemas/company.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
-import { ActivityLogSchema } from 'schemas/activityLog.schema';
+import { ActivityLogSchema } from '../schemas/activityLog.schema';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';
 
 import { memoryStorage } from 'multer';

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-import { Nationality } from 'schemas/nationality.schema';
+import { Nationality } from '../schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
 
@@ -12,21 +12,18 @@ export class NationalityService {
   ) {}
 
   async create(
-    createNationalityDto: CreateNationalityDto,user: ObjectId
+    createNationalityDto: CreateNationalityDto,
+    user: ObjectId,
   ): Promise<Nationality> {
-
     if (Array.isArray(createNationalityDto)) {
       createNationalityDto.map((nationality) => {
-        
-        nationality.user = user
+        nationality.user = user;
       });
     } else {
-      createNationalityDto.user = user
-
+      createNationalityDto.user = user;
     }
-    // createNationalityDto.user = user ; 
+    // createNationalityDto.user = user ;
     return await this.nationalityModel.create(createNationalityDto);
-    
   }
 
   findAll(
@@ -78,10 +75,7 @@ export class NationalityService {
         updateNationalityDto,
       );
     } catch (err) {
-      throw new HttpException(
-        err,
-        HttpStatus.FORBIDDEN,
-      );
+      throw new HttpException(err, HttpStatus.FORBIDDEN);
     }
   }
 

@@ -10,7 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Nationality } from 'schemas/nationality.schema';
+import { Nationality } from '../schemas/nationality.schema';
 import { CreateNationalityDto } from './dto/create-nationality.dto';
 import { UpdateNationalityDto } from './dto/update-nationality.dto';
 import { NationalityService } from './nationality.service';

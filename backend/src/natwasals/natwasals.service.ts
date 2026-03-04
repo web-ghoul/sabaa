@@ -3,10 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
 import { Model } from 'mongoose';
-import { Company } from 'schemas/company.schema';
-import { Employee } from 'schemas/employee.schema';
-import { Natwasal } from 'schemas/natwasal.schema';
-import { Owner } from 'schemas/owner.schema';
+import { Company } from '../schemas/company.schema';
+import { Employee } from '../schemas/employee.schema';
+import { Natwasal } from '../schemas/natwasal.schema';
+import { Owner } from '../schemas/owner.schema';
 import { CreateNatwasalDto } from './dto/create-natwasal.dto';
 import { UpdateNatwasalDto } from './dto/update-natwasal.dto';
 

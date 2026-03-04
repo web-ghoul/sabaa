@@ -5,7 +5,7 @@ import { MailsController } from './mails.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ResetOtp, ResetOtpSchema } from 'schemas/resetOtp.schema';
+import { ResetOtp, ResetOtpSchema } from '../schemas/resetOtp.schema';
 import VerificationCodeGenerator from 'src/utils/code-generator/VerificationCodeGenerator';
 
 @Module({

@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-import { Company } from 'schemas/company.schema';
+import { Company } from '../schemas/company.schema';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import * as crypto from 'crypto';
-import { ActivityLog } from 'schemas/activityLog.schema';
+import { ActivityLog } from '../schemas/activityLog.schema';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
 import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';

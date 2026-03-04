@@ -3,9 +3,9 @@ import { CreateSponsorDto } from './dto/create-sponsor.dto';
 import { UpdateSponsorDto } from './dto/update-sponsor.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, ObjectId } from 'mongoose';
-import { Sponsor } from 'schemas/sponsor.schema';
-import { Owner } from 'schemas/owner.schema';
-import { Employee } from 'schemas/employee.schema';
+import { Sponsor } from '../schemas/sponsor.schema';
+import { Owner } from '../schemas/owner.schema';
+import { Employee } from '../schemas/employee.schema';
 import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()

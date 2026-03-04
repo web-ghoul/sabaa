@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JobTitleService } from './job-title.service';
 import { CreateJobTitleDto } from './dto/create-job-title.dto';
 import { UpdateJobTitleDto } from './dto/update-job-title.dto';
-import { JobTitle } from 'schemas/jobTitle.schema';
+import { JobTitle } from '../schemas/jobTitle.schema';
 import { ApiTags } from '@nestjs/swagger';
 import { LogInterceptor } from 'src/utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from 'src/utils/interceptors/logAcitivities.decorator';

@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'schemas/user.schema';
+import { User, UserSchema } from '../schemas/user.schema';
 import { UserService } from './user.service';
 
 import { JwtModule } from '@nestjs/jwt';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
-import { ActivityLog, ActivityLogSchema } from 'schemas/activityLog.schema';
+import { ActivityLog, ActivityLogSchema } from '../schemas/activityLog.schema';
 import { memoryStorage } from 'multer';
 import { CloudinaryModule } from 'src/utils/cloudinary/cloudinary.module';
 

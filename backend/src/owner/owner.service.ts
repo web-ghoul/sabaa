@@ -2,15 +2,15 @@ import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Owner } from 'schemas/owner.schema';
+import { Owner } from '../schemas/owner.schema';
 import mongoose, { Model, ObjectId } from 'mongoose';
-import { Company } from 'schemas/company.schema';
-import { ActivityLog } from 'schemas/activityLog.schema';
+import { Company } from '../schemas/company.schema';
+import { ActivityLog } from '../schemas/activityLog.schema';
 import { Response } from 'express';
 import * as exceljs from 'exceljs';
-import { EChannel } from 'schemas/eChannel.schema';
-import { Tasaheel } from 'schemas/tasaheel.schema';
-import { Natwasal } from 'schemas/natwasal.schema';
+import { EChannel } from '../schemas/eChannel.schema';
+import { Tasaheel } from '../schemas/tasaheel.schema';
+import { Natwasal } from '../schemas/natwasal.schema';
 import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()

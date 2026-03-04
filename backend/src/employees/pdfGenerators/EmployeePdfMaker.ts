@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PdfGenerator } from '../../utils/PdfMaker/IPdfMaker';
-import { Employee } from 'schemas/employee.schema';
+import { Employee } from '../../schemas/employee.schema';
 
 @Injectable()
 export class EmployeePdfGenerator extends PdfGenerator {
@@ -14,40 +14,43 @@ export class EmployeePdfGenerator extends PdfGenerator {
       },
     });
   }
- 
 
   employeePdf(employee: Employee) {
     console.log(employee);
-    
+
     const docDefinition = {
       content: [
         {
           columns: [
             { image: 'path/to/logo.png', width: 50 },
             { text: 'Employee Detail', style: 'header' },
-            { text: 'Monday, 8 April 2024\n12:18:44 AM', alignment: 'right', style: 'subheader' }
-          ]
+            {
+              text: 'Monday, 8 April 2024\n12:18:44 AM',
+              alignment: 'right',
+              style: 'subheader',
+            },
+          ],
         },
         { text: ' ' },
         {
           columns: [
             { text: 'Person Code :', bold: true },
-            { text: '00108048165952' }
-          ]
+            { text: '00108048165952' },
+          ],
         },
         {
           columns: [
             { text: 'Employee Name :', bold: true },
-            { text: 'AHMED ELDESSOUKI ELSAYED YOUSSEF' }
-          ]
+            { text: 'AHMED ELDESSOUKI ELSAYED YOUSSEF' },
+          ],
         },
         {
           columns: [
             { text: 'Nationality :', bold: true },
             { text: 'EGYPT' },
             { text: 'Date Of Birth :', bold: true },
-            { text: '20/10/2000' }
-          ]
+            { text: '20/10/2000' },
+          ],
         },
         { text: ' ' },
         {
@@ -55,9 +58,15 @@ export class EmployeePdfGenerator extends PdfGenerator {
             widths: [150, '*'],
             body: [
               [{ text: 'Person Code :', bold: true }, '00108048165952'],
-              [{ text: 'Employee Name :', bold: true }, 'AHMED ELDESSOUKI ELSAYED YOUSSEF'],
+              [
+                { text: 'Employee Name :', bold: true },
+                'AHMED ELDESSOUKI ELSAYED YOUSSEF',
+              ],
               [{ text: 'Company Code :', bold: true }, '895198'],
-              [{ text: 'Company Name :', bold: true }, 'AL THAHAB BLDG CONT CO LLC'],
+              [
+                { text: 'Company Name :', bold: true },
+                'AL THAHAB BLDG CONT CO LLC',
+              ],
               [{ text: 'Date Of Birth :', bold: true }, '20/10/2000'],
               [{ text: 'Gender :', bold: true }, 'Male'],
               [{ text: 'Nationality :', bold: true }, 'EGYPT'],
@@ -71,28 +80,24 @@ export class EmployeePdfGenerator extends PdfGenerator {
               [{ text: 'Work Permit Expiry :', bold: true }, '19/03/2025'],
               [{ text: 'Card Type :', bold: true }, 'RENEW WORK PERMIT'],
               [{ text: 'Card Status :', bold: true }, 'Active'],
-              [{ text: 'Residence Expiry Date :', bold: true }, '25/10/2025']
-            ]
-          }
-        }
+              [{ text: 'Residence Expiry Date :', bold: true }, '25/10/2025'],
+            ],
+          },
+        },
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          alignment: 'center'
+          alignment: 'center',
         },
         subheader: {
           fontSize: 12,
-          alignment: 'right'
-        }
-      }
+          alignment: 'right',
+        },
+      },
     };
 
     return this.generatePdf(docDefinition);
   }
-
-  
-
-  
 }

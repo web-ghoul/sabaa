@@ -3,16 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as exceljs from 'exceljs';
 import { Response } from 'express';
 import mongoose, { Model, ObjectId } from 'mongoose';
-import { ActivityLog } from 'schemas/activityLog.schema';
-import { Company } from 'schemas/company.schema';
-import { EChannel } from 'schemas/eChannel.schema';
-import { Employee } from 'schemas/employee.schema';
-import { Natwasal } from 'schemas/natwasal.schema';
-import { Tasaheel } from 'schemas/tasaheel.schema';
+import { ActivityLog } from '../schemas/activityLog.schema';
+import { Company } from '../schemas/company.schema';
+import { EChannel } from '../schemas/eChannel.schema';
+import { Employee } from '../schemas/employee.schema';
+import { Natwasal } from '../schemas/natwasal.schema';
+import { Tasaheel } from '../schemas/tasaheel.schema';
 import { EmployeePdfGenerator } from './pdfGenerators/EmployeePdfMaker';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { Transaction } from 'schemas/transaction.schema';
+import { Transaction } from '../schemas/transaction.schema';
 import { CloudinaryService } from 'src/utils/cloudinary/cloudinary.service';
 
 @Injectable()
