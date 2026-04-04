@@ -1,33 +1,33 @@
-import { MoreVertRounded } from '@mui/icons-material';
+import { MoreVertRounded } from "@mui/icons-material";
 import {
   IconButton,
   TableBody,
   TableHead,
   TableRow,
   useMediaQuery,
-} from '@mui/material';
-import { MouseEvent, useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useSearchParams } from 'react-router-dom';
-import UserBox from '../../components/UserBox/UserBox';
-import { AppContext } from '../../contexts/AppContext';
-import { FormsContext } from '../../contexts/FormsContext';
-import { handleRandomNumber } from '../../functions/handleRandomNumber';
-import { AppDispatch } from '../../store/store';
-import { getTasheelsCounter } from '../../store/tasheelsCounterSlice';
-import { getTasheels, reverseTasheels } from '../../store/tasheelsSlice';
+} from "@mui/material";
+import { MouseEvent, useContext, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
+import UserBox from "../../components/UserBox/UserBox";
+import { AppContext } from "../../contexts/AppContext";
+import { FormsContext } from "../../contexts/FormsContext";
+import { handleRandomNumber } from "../../functions/handleRandomNumber";
+import { AppDispatch } from "../../store/store";
+import { getTasheelsCounter } from "../../store/tasheelsCounterSlice";
+import { getTasheels, reverseTasheels } from "../../store/tasheelsSlice";
 import {
   EmployeeTypes,
   OwnerTypes,
   TasheelTypes,
-} from '../../types/store.types';
-import { TasheelsTableTypes } from '../../types/tables.types';
-import PrimaryTable from '../PrimaryTable';
-import { PrimaryTableCell } from '../PrimaryTableCell';
-import { PrimaryTableRow } from '../PrimaryTableRow';
-import SortBox from '../SortBox';
-import LoadingTasheelsRow from './LoadingTasheelsRow';
-import TasheelsTableMenu from './TasheelsTableMenu';
+} from "../../types/store.types";
+import { TasheelsTableTypes } from "../../types/tables.types";
+import PrimaryTable from "../PrimaryTable";
+import { PrimaryTableCell } from "../PrimaryTableCell";
+import { PrimaryTableRow } from "../PrimaryTableRow";
+import SortBox from "../SortBox";
+import LoadingTasheelsRow from "./LoadingTasheelsRow";
+import TasheelsTableMenu from "./TasheelsTableMenu";
 
 const TasheelsTable = ({
   data,
@@ -41,19 +41,19 @@ const TasheelsTable = ({
   const [searchParams, setSearchParams] = useSearchParams();
   // const { setEChannelIndex } = useContext(ExcelsContext);
   const { setEditableTasheelData } = useContext(FormsContext);
-  const mdScreen = useMediaQuery('(max-width:992px)');
-  const smScreen = useMediaQuery('(max-width:768px)');
-  const lgScreen = useMediaQuery('(max-width:1200px)');
+  const mdScreen = useMediaQuery("(max-width:992px)");
+  const smScreen = useMediaQuery("(max-width:768px)");
+  const lgScreen = useMediaQuery("(max-width:1200px)");
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSortByName = () => {
-    if (searchParams.get('sort') === 'name_asc') {
-      handleAddQuery({ sort: 'name_desc' });
+    if (searchParams.get("sort") === "name_asc") {
+      handleAddQuery({ sort: "name_desc" });
       dispatch(reverseTasheels());
-      setSearchParams({ ...queries, sort: 'name_desc' });
+      setSearchParams({ ...queries, sort: "name_desc" });
     } else {
-      handleAddQuery({ sort: 'name_asc' });
-      const all = { ...queries, sort: 'name_asc' };
+      handleAddQuery({ sort: "name_asc" });
+      const all = { ...queries, sort: "name_asc" };
       dispatch(getTasheels(all));
       setSearchParams(all);
     }
@@ -61,7 +61,7 @@ const TasheelsTable = ({
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
-    index: number
+    index: number,
   ) => {
     if (data) {
       setEditableTasheelData(data[index]);
@@ -114,7 +114,7 @@ const TasheelsTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => {
-              const type = (row as TasheelTypes).type.toLowerCase();
+              const type = (row as TasheelTypes).type?.toLowerCase() || "";
               return (
                 <PrimaryTableRow key={i}>
                   <PrimaryTableCell component="th" scope="row">
@@ -125,18 +125,18 @@ const TasheelsTable = ({
                               (row.owner as OwnerTypes)._id
                             }`
                           : type === "officer"
-                          ? `${import.meta.env.VITE_PROS_ROUTE}/${
-                              (row.owner as OwnerTypes)._id
-                            }`
-                          : type === "customer"
-                          ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
-                              (row.owner as OwnerTypes)._id
-                            }`
-                          : type === "employee"
-                          ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-                              (row.employee as EmployeeTypes)._id
-                            }`
-                          : ""
+                            ? `${import.meta.env.VITE_PROS_ROUTE}/${
+                                (row.owner as OwnerTypes)._id
+                              }`
+                            : type === "customer"
+                              ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                                  (row.owner as OwnerTypes)._id
+                                }`
+                              : type === "employee"
+                                ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                                    (row.employee as EmployeeTypes)._id
+                                  }`
+                                : ""
                       }
                     >
                       <UserBox

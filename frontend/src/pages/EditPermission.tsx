@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -30,5 +30,19 @@ const EditPermission = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingEditPermission = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Box className="grid gap-3">
+        {[...Array(10)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={40} />
+        ))}
+      </Box>
+      <Skeleton variant="rounded" height={48} width={120} />
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default EditPermission;

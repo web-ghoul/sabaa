@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -13,11 +13,11 @@ import CustomersTable from "../tables/CustomersTable/CustomersTable";
 
 const Customers = () => {
   const { customers, isLoading } = useSelector(
-    (state: RootState) => state.customers
+    (state: RootState) => state.customers,
   );
   const { pageContainerClasses } = useContext(AppContext);
   const { customersCounter } = useSelector(
-    (state: RootState) => state.customersCounter
+    (state: RootState) => state.customersCounter,
   );
   const dispatch = useDispatch<AppDispatch>();
   const { handleGetQueries } = useQueries();
@@ -44,5 +44,24 @@ const Customers = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingCustomers = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Box className="flex gap-3">
+        {[...Array(3)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={40} sx={{ flex: 1 }} />
+        ))}
+      </Box>
+      <Box>
+        <Skeleton variant="rounded" height={40} sx={{ mb: 1 }} />
+        {[...Array(5)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={32} sx={{ mb: 0.5 }} />
+        ))}
+      </Box>
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default Customers;

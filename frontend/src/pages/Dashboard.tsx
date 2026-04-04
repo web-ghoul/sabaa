@@ -1,6 +1,6 @@
-import { Box, Divider, Paper } from "@mui/material";
+import { Box, Divider, Paper, Skeleton } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Counter from "../components/Counter/Counter";
 import Title from "../components/Title/Title";
@@ -24,11 +24,19 @@ import { getRecentPros } from "../store/recentProsSlice";
 import { getRecentUsers } from "../store/recentUsersSlice";
 import { AppDispatch, RootState } from "../store/store";
 import { getUsersCounter } from "../store/usersCounterSlice";
-import CompaniesTable from "../tables/CompaniesTable/CompaniesTable";
-import CustomersTable from "../tables/CustomersTable/CustomersTable";
-import EmployeesTable from "../tables/EmployeesTable/EmployeesTable";
-import OwnersTable from "../tables/OwnersTable/OwnersTable";
-import ProsTable from "../tables/ProsTable/ProsTable";
+
+// Lazy load heavy components
+const CompaniesTable = lazy(
+  () => import("../tables/CompaniesTable/CompaniesTable"),
+);
+const CustomersTable = lazy(
+  () => import("../tables/CustomersTable/CustomersTable"),
+);
+const EmployeesTable = lazy(
+  () => import("../tables/EmployeesTable/EmployeesTable"),
+);
+const OwnersTable = lazy(() => import("../tables/OwnersTable/OwnersTable"));
+const ProsTable = lazy(() => import("../tables/ProsTable/ProsTable"));
 
 const sectionClasses = `grid justify-stretch items-start gap-4 md:grid-cols-1 md:gap-3 sm:!gap-2`;
 
@@ -37,33 +45,33 @@ const Dashboard = () => {
   const { token } = useSelector((state: RootState) => state.auth);
   const recentOwners = useSelector((state: RootState) => state.recentOwners);
   const recentCompanies = useSelector(
-    (state: RootState) => state.recentCompanies
+    (state: RootState) => state.recentCompanies,
   );
   const recentCustomers = useSelector(
-    (state: RootState) => state.recentCustomers
+    (state: RootState) => state.recentCustomers,
   );
   const recentActivities = useSelector(
-    (state: RootState) => state.recentActivities
+    (state: RootState) => state.recentActivities,
   );
   const recentPros = useSelector((state: RootState) => state.recentPros);
   const recentEmployees = useSelector(
-    (state: RootState) => state.recentEmployees
+    (state: RootState) => state.recentEmployees,
   );
   const ownersCounter = useSelector((state: RootState) => state.ownersCounter);
   const employeesCounter = useSelector(
-    (state: RootState) => state.employeesCounter
+    (state: RootState) => state.employeesCounter,
   );
   const prosCounter = useSelector((state: RootState) => state.prosCounter);
   const companiesCounter = useSelector(
-    (state: RootState) => state.companiesCounter
+    (state: RootState) => state.companiesCounter,
   );
   const customersCounter = useSelector(
-    (state: RootState) => state.customersCounter
+    (state: RootState) => state.customersCounter,
   );
   const usersCounter = useSelector((state: RootState) => state.usersCounter);
   const jobsCounter = useSelector((state: RootState) => state.jobsCounter);
   const nationalitiesCounter = useSelector(
-    (state: RootState) => state.nationalitiesCounter
+    (state: RootState) => state.nationalitiesCounter,
   );
 
   useEffect(() => {
@@ -127,18 +135,20 @@ const Dashboard = () => {
           <Box className={sectionClasses}>
             <Paper className="paper">
               <Title title={"Recent Owners"} head="h4" align={"left"} />
-              <OwnersTable
-                data={recentOwners.recentOwners}
-                count={
-                  recentOwners.recentOwners
-                    ? recentOwners.recentOwners.length
-                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
-                }
-                isLoading={recentOwners.isLoading}
-                actions={false}
-                sort={false}
-                recent={true}
-              />
+              <Suspense fallback={<Skeleton variant="rounded" height={300} />}>
+                <OwnersTable
+                  data={recentOwners.recentOwners}
+                  count={
+                    recentOwners.recentOwners
+                      ? recentOwners.recentOwners.length
+                      : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                  }
+                  isLoading={recentOwners.isLoading}
+                  actions={false}
+                  sort={false}
+                  recent={true}
+                />
+              </Suspense>
             </Paper>
             <Paper className="paper">
               <Title title={"Recent Activitis"} head="h4" align={"left"} />
@@ -149,50 +159,56 @@ const Dashboard = () => {
             </Paper>
             <Paper className="paper">
               <Title title={"Recent Employees"} head="h4" align={"left"} />
-              <EmployeesTable
-                data={recentEmployees.recentEmployees}
-                count={
-                  recentEmployees.recentEmployees
-                    ? recentEmployees.recentEmployees.length
-                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
-                }
-                isLoading={recentEmployees.isLoading}
-                actions={false}
-                sort={false}
-                recent={true}
-              />
+              <Suspense fallback={<Skeleton variant="rounded" height={300} />}>
+                <EmployeesTable
+                  data={recentEmployees.recentEmployees}
+                  count={
+                    recentEmployees.recentEmployees
+                      ? recentEmployees.recentEmployees.length
+                      : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                  }
+                  isLoading={recentEmployees.isLoading}
+                  actions={false}
+                  sort={false}
+                  recent={true}
+                />
+              </Suspense>
             </Paper>
             <Paper className="paper">
               <Title title={"Recent Customers"} head="h4" align={"left"} />
-              <CustomersTable
-                data={recentCustomers.recentCustomers}
-                isLoading={recentCustomers.isLoading}
-                count={
-                  recentCustomers.recentCustomers
-                    ? recentCustomers.recentCustomers.length
-                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
-                }
-                actions={false}
-                sort={false}
-                recent={true}
-              />
+              <Suspense fallback={<Skeleton variant="rounded" height={300} />}>
+                <CustomersTable
+                  data={recentCustomers.recentCustomers}
+                  isLoading={recentCustomers.isLoading}
+                  count={
+                    recentCustomers.recentCustomers
+                      ? recentCustomers.recentCustomers.length
+                      : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                  }
+                  actions={false}
+                  sort={false}
+                  recent={true}
+                />
+              </Suspense>
             </Paper>
           </Box>
           <Box className={sectionClasses}>
             <Paper className="paper">
               <Title title={"Recent Companies"} head="h4" align={"left"} />
-              <CompaniesTable
-                data={recentCompanies.recentCompanies}
-                count={
-                  recentCompanies.recentCompanies
-                    ? recentCompanies.recentCompanies.length
-                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
-                }
-                isLoading={recentCompanies.isLoading}
-                actions={false}
-                sort={false}
-                recent={true}
-              />
+              <Suspense fallback={<Skeleton variant="rounded" height={300} />}>
+                <CompaniesTable
+                  data={recentCompanies.recentCompanies}
+                  count={
+                    recentCompanies.recentCompanies
+                      ? recentCompanies.recentCompanies.length
+                      : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                  }
+                  isLoading={recentCompanies.isLoading}
+                  actions={false}
+                  sort={false}
+                  recent={true}
+                />
+              </Suspense>
             </Paper>
             <Paper className={`paper`}>
               <Title title={"Overview"} head={"h4"} align={"left"} />
@@ -293,18 +309,20 @@ const Dashboard = () => {
                 head="h4"
                 align={"left"}
               />
-              <ProsTable
-                data={recentPros.recentPros}
-                count={
-                  recentPros.recentPros
-                    ? recentPros.recentPros.length
-                    : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
-                }
-                isLoading={recentPros.isLoading}
-                actions={false}
-                sort={false}
-                recent={true}
-              />
+              <Suspense fallback={<Skeleton variant="rounded" height={300} />}>
+                <ProsTable
+                  data={recentPros.recentPros}
+                  count={
+                    recentPros.recentPros
+                      ? recentPros.recentPros.length
+                      : +`${import.meta.env.VITE_RECENT_LIMIT_PAGES || 5}`
+                  }
+                  isLoading={recentPros.isLoading}
+                  actions={false}
+                  sort={false}
+                  recent={true}
+                />
+              </Suspense>
             </Paper>
           </Box>
         </Box>
@@ -312,5 +330,29 @@ const Dashboard = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingDashboard = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-start gap-8">
+      <Box className="grid justify-between items-center gap-4 grid-cols-3 md:grid-cols-2 sm:!grid-cols-1">
+        {[...Array(6)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={100} />
+        ))}
+      </Box>
+      <Box className="grid justify-stretch items-start grid-cols-2 gap-4 md:grid-cols-1">
+        <Box className="grid gap-4">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} variant="rounded" height={200} />
+          ))}
+        </Box>
+        <Box className="grid gap-4">
+          <Skeleton variant="rounded" height={300} />
+          <Skeleton variant="rounded" height={400} />
+          <Skeleton variant="rounded" height={200} />
+        </Box>
+      </Box>
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default Dashboard;

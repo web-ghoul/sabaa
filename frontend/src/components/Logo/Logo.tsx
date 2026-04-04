@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { handleImage } from "../../functions/handleImage";
 import { RootState } from "../../store/store";
 import { LogoTypes } from "../../types/components.types";
 
@@ -25,7 +26,7 @@ const Logo = ({ color, noTitle, handling }: LogoTypes) => {
         className={`rounded-full overflow-hidden w-[40px] h-[40px] md:w-[35px] md:h-[35px] sm:!w-[35px] sm:!h-[35px] bg-no-repeat bg-cover bg-center`}
         sx={{
           backgroundImage: `url("${
-            customizes ? `${customizes?.logo}` : "/images/icon_fit.png"
+            handleImage(customizes?.logo) || "/images/icon_fit.png"
           }")`,
         }}
       />

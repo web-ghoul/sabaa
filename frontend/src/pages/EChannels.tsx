@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -13,11 +13,11 @@ import EChannelsTable from "../tables/EChannelsTable/EChannelsTable";
 
 const EChannels = () => {
   const { eChannels, isLoading } = useSelector(
-    (state: RootState) => state.eChannels
+    (state: RootState) => state.eChannels,
   );
   const { pageContainerClasses } = useContext(AppContext);
   const { eChannelsCounter } = useSelector(
-    (state: RootState) => state.eChannelsCounter
+    (state: RootState) => state.eChannelsCounter,
   );
 
   const dispatch = useDispatch<AppDispatch>();
@@ -45,5 +45,24 @@ const EChannels = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingEChannels = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Box className="flex gap-3">
+        {[...Array(3)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={40} sx={{ flex: 1 }} />
+        ))}
+      </Box>
+      <Box>
+        <Skeleton variant="rounded" height={40} sx={{ mb: 1 }} />
+        {[...Array(5)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={32} sx={{ mb: 0.5 }} />
+        ))}
+      </Box>
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default EChannels;

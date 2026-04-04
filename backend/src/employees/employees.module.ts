@@ -5,8 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Employee, EmployeeSchema } from '../schemas/employee.schema';
 import { Company, CompanySchema } from '../schemas/company.schema';
 import { MulterModule } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import * as path from 'path';
 import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';
 import { ActivityLogSchema } from '../schemas/activityLog.schema';

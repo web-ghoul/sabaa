@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -28,5 +28,19 @@ const EditEmployee = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingEditEmployee = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Box className="grid grid-cols-2 gap-4">
+        {[...Array(8)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={56} />
+        ))}
+      </Box>
+      <Skeleton variant="rounded" height={48} width={120} />
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default EditEmployee;

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -55,5 +55,23 @@ const UploadCustomers = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingUploadCustomers = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Skeleton
+        variant="rounded"
+        height={150}
+        sx={{ border: "2px dashed #ccc" }}
+      />
+      <Box className="grid gap-4">
+        {[...Array(2)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={60} />
+        ))}
+      </Box>
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default UploadCustomers;

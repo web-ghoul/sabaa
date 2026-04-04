@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { handleAlert } from "../../functions/handleAlert";
+import { handleImage } from "../../functions/handleImage";
 import { logout } from "../../store/auth";
 import { UserBoxTypes } from "../../types/components.types";
 import Item from "./Item";
@@ -72,11 +73,8 @@ const UserBox = ({
         } bg-no-repeat bg-cover bg-center`}
         sx={{
           backgroundImage: `url(${
-            avatar
-              ? `${avatar}`
-              : variant === "company"
-                ? defaultCompany
-                : defaultAvatar
+            handleImage(avatar) ||
+            (variant === "company" ? defaultCompany : defaultAvatar)
           })`,
         }}
       />

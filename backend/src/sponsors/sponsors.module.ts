@@ -8,8 +8,6 @@ import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor'
 import { ActivityLog, ActivityLogSchema } from '../schemas/activityLog.schema';
 import { Employee, EmployeeSchema } from '../schemas/employee.schema';
 import { MulterModule } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import * as path from 'path';
 
 import { memoryStorage } from 'multer';
 import { CloudinaryModule } from '../utils/cloudinary/cloudinary.module';

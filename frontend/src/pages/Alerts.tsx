@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import BreadCrumbs from "../components/BreadCrumbs/BreadCrumbs";
@@ -28,5 +28,18 @@ const Alerts = () => {
     </PrimaryBox>
   );
 };
+
+export const LoadingAlerts = () => (
+  <PrimaryBox>
+    <PrimaryContainer className="grid justify-stretch items-center gap-6 md:gap-4 sm:!gap-3">
+      <Skeleton variant="rounded" width={150} height={24} />
+      <Box className="grid gap-3">
+        {[...Array(5)].map((_, i) => (
+          <Skeleton key={i} variant="rounded" height={80} />
+        ))}
+      </Box>
+    </PrimaryContainer>
+  </PrimaryBox>
+);
 
 export default Alerts;

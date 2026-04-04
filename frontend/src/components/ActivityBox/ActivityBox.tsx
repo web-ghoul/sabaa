@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext";
 import { handleDate } from "../../functions/handleDate";
 import { handleDateForPost } from "../../functions/handleDateForPost";
+import { handleImage } from "../../functions/handleImage";
 import { ActivityTypes } from "../../types/store.types";
 
 const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
@@ -21,11 +22,7 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
       >
         <LazyLoadImage
           alt={"avatar"}
-          src={
-            userId?.avatar
-              ? `${import.meta.env.VITE_SERVER_URL}/${userId?.avatar}`
-              : defaultAvatar
-          }
+          src={handleImage(userId?.avatar) || defaultAvatar}
         />
       </Box>
       <Box className={`grid justify-start items-center gap-2 sm:!gap-1`}>
@@ -44,28 +41,29 @@ const ActivityBox = ({ activity }: { activity: ActivityTypes }) => {
                 ? ownerType === "owner"
                   ? import.meta.env.VITE_OWNERS_ROUTE
                   : ownerType === "pro"
-                  ? import.meta.env.VITE_PROS_ROUTE
-                  : ownerType === "customer" &&
-                    import.meta.env.VITE_CUSTOMERS_ROUTE
+                    ? import.meta.env.VITE_PROS_ROUTE
+                    : ownerType === "customer" &&
+                      import.meta.env.VITE_CUSTOMERS_ROUTE
                 : route === "user"
-                ? import.meta.env.VITE_USERS_ROUTE
-                : route === "job-title"
-                ? import.meta.env.VITE_JOBS_ROUTE
-                : route === "employee"
-                ? import.meta.env.VITE_EMPLOYEES_ROUTE
-                : route === "nationality"
-                ? import.meta.env.VITE_NATIONALITIES_ROUTE
-                : route === "company" && import.meta.env.VITE_COMPANIES_ROUTE
+                  ? import.meta.env.VITE_USERS_ROUTE
+                  : route === "job-title"
+                    ? import.meta.env.VITE_JOBS_ROUTE
+                    : route === "employee"
+                      ? import.meta.env.VITE_EMPLOYEES_ROUTE
+                      : route === "nationality"
+                        ? import.meta.env.VITE_NATIONALITIES_ROUTE
+                        : route === "company" &&
+                          import.meta.env.VITE_COMPANIES_ROUTE
             }/${id}`}
           >
             <Typography variant={"h6"} className={`!font-[700] !capitalize`}>
               {route === "job-title"
                 ? "Job"
                 : route === "owner"
-                ? ownerType === "pro"
-                  ? "Officer"
-                  : ownerType
-                : route}
+                  ? ownerType === "pro"
+                    ? "Officer"
+                    : ownerType
+                  : route}
             </Typography>
           </Link>
         </Box>

@@ -7,7 +7,7 @@ import { InputTypes } from "../../types/components.types";
 
 function getError<T extends FieldValues>(
   errors: FieldErrors<T>,
-  name: Path<T>
+  name: Path<T>,
 ): string | undefined {
   const error = errors[name];
   if (error && typeof error === "object" && "message" in error) {
@@ -69,7 +69,7 @@ const Input = ({
             }}
             {...register(name)}
             onChange={(
-              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => {
               if (change) {
                 change(e.target.value);
@@ -81,11 +81,7 @@ const Input = ({
             <option value={""}>{`Select ${label}`}</option>
             {options &&
               options.map((option: string, i: number) => (
-                <option
-                  value={values ? values[i] : option}
-                  key={i}
-                  selected={option === value}
-                >
+                <option value={values ? values[i] : option} key={i}>
                   {option}
                 </option>
               ))}
@@ -118,7 +114,7 @@ const Input = ({
             }}
             {...register(name)}
             onChange={(
-              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+              e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => {
               if (change) {
                 change(e.target.value);
@@ -174,7 +170,7 @@ const Input = ({
               : ""
           }
           onChange={(
-            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+            e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
           ) => {
             if (change) {
               change(e.target.value);

@@ -4,8 +4,6 @@ import { CompanyController } from './company.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CompanySchema } from '../schemas/company.schema';
 import { MulterModule } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import * as path from 'path';
 import { LogInterceptor } from '../utils/interceptors/logActivities.interceptor';
 import { ActivityLogSchema } from '../schemas/activityLog.schema';
 import { ActivityLog } from '../utils/interceptors/logAcitivities.decorator';

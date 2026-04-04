@@ -60,7 +60,7 @@ const NatwasalsTable = ({
 
   const handleOpenMenu = (
     event: MouseEvent<HTMLButtonElement>,
-    index: number
+    index: number,
   ) => {
     if (data) {
       setEditableNatwasalData(data[index]);
@@ -113,7 +113,7 @@ const NatwasalsTable = ({
           ? data &&
             data.length > 0 &&
             data.map((row, i) => {
-              const type = (row as NatwasalTypes).type.toLowerCase();
+              const type = (row as NatwasalTypes).type?.toLowerCase() || "";
               return (
                 <PrimaryTableRow key={i}>
                   <PrimaryTableCell component="th" scope="row">
@@ -124,18 +124,18 @@ const NatwasalsTable = ({
                               (row.owner as OwnerTypes)._id
                             }`
                           : type === "officer"
-                          ? `${import.meta.env.VITE_PROS_ROUTE}/${
-                              (row.owner as OwnerTypes)._id
-                            }`
-                          : type === "customer"
-                          ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
-                              (row.owner as OwnerTypes)._id
-                            }`
-                          : type === "employee"
-                          ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
-                              (row.employee as EmployeeTypes)._id
-                            }`
-                          : ""
+                            ? `${import.meta.env.VITE_PROS_ROUTE}/${
+                                (row.owner as OwnerTypes)._id
+                              }`
+                            : type === "customer"
+                              ? `${import.meta.env.VITE_CUSTOMERS_ROUTE}/${
+                                  (row.owner as OwnerTypes)._id
+                                }`
+                              : type === "employee"
+                                ? `${import.meta.env.VITE_EMPLOYEES_ROUTE}/${
+                                    (row.employee as EmployeeTypes)._id
+                                  }`
+                                : ""
                       }
                     >
                       <UserBox
