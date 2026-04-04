@@ -3,7 +3,6 @@ dotenv.config();
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 // import { CustomErrorFilter } from './filters/CustomErrorFilter';
 
@@ -17,9 +16,9 @@ export async function bootstrap() {
   app.enableCors({
     origin: [
       process.env.SITE_URL,
-      'http://localhost:5174',
-      'http://localhost:5173',
-      'http://localhost:3000',
+      // 'http://localhost:5174',
+      // 'http://localhost:5173',
+      // 'http://localhost:3000',
     ],
     credentials: true,
   });
@@ -28,7 +27,7 @@ export async function bootstrap() {
     .setTitle('Sabaa API')
     .setDescription('The Sabaa API description')
     .setVersion('1.0')
-    .addServer(process.env.SITE_URL || `http://localhost:3000`)
+    .addServer(process.env.SITE_URL || `http://localhost:4000`)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('ApiDoc', app, document);
